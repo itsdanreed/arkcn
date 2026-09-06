@@ -69,10 +69,10 @@
     "command",
     "dropdown-menu",
     "kbd",
+    "lib/utils",
     "popover",
     "separator",
-    "sidebar",
-    "utils"
+    "sidebar"
   ],
   "files": [
     {

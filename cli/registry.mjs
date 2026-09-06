@@ -26,6 +26,7 @@ export function createRegistry(base) {
     source: remote ? base : "bundled",
     index: () => cached("index.json", JSON.parse),
     item: (name) => cached(`items/${name}.json`, JSON.parse).catch(() => null),
+    itemPath: (name) => `items/${name}.json`,
     baseCss: () => cached("base.css", (s) => s),
     /** Every item needed to install `names`, dependencies first, each once. */
     async closure(names) {

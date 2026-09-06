@@ -13,7 +13,7 @@
   ],
   "dependencies": {},
   "registryDependencies": [
-    "utils"
+    "lib/utils"
   ],
   "files": [
     {

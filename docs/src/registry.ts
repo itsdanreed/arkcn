@@ -26,7 +26,7 @@ export const registry = index as unknown as {
 }
 export const version = registry.version
 
-const itemModules = import.meta.glob<{ default: RegistryItem }>("../../registry/items/*.json")
+const itemModules = import.meta.glob<{ default: RegistryItem }>("../../registry/items/**/*.json")
 
 export async function loadItem(name: string): Promise<RegistryItem | null> {
   const loader = itemModules[`../../registry/items/${name}.json`]

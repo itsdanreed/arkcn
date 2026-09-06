@@ -107,7 +107,7 @@ export async function init(cwd, registry, flags) {
     else ok(`${vite.file} already has the alias and the Tailwind plugin`)
   }
 
-  const { items } = await registry.closure(["utils"])
+  const { items } = await registry.closure(["lib/utils"])
   for (const item of items) writeItem(cwd, config, item, { overwrite: false })
   ok(`Wrote ${targetPath(config, "lib/utils.ts")}`)
 

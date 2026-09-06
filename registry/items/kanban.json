@@ -38,9 +38,9 @@
   "registryDependencies": [
     "badge",
     "button",
-    "drag-preview",
-    "live-region",
-    "utils"
+    "lib/drag-preview",
+    "lib/utils",
+    "live-region"
   ],
   "files": [
     {

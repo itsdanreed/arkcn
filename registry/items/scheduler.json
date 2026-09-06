@@ -40,10 +40,10 @@
   },
   "registryDependencies": [
     "button",
-    "controllable",
+    "lib/controllable",
+    "lib/utils",
     "live-region",
-    "segment-group",
-    "utils"
+    "segment-group"
   ],
   "files": [
     {

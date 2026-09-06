@@ -15,7 +15,9 @@ every Radix-backed component to `@ark-ui/react` as its backing primitive, one co
 
 ## CLI, registry, and MCP
 - `scripts/build-registry.mjs` generates `registry/` (committed, and shipped in the package): one
-  item per `src/components/ui/*.tsx` (type `ui`), `src/lib/*.ts` (`lib`), `src/hooks/*.ts` (`hook`)
+  item per `src/components/ui/*.tsx` (type `ui`, bare name), `src/lib/*.ts` (`lib`, named
+  `lib/<file>`), `src/hooks/*.ts` (`hook`, `hooks/<file>`; the prefixes keep `table` the component
+  distinct from `lib/table` the engine)
   with file contents, `registryDependencies` (imports through `@/`), `dependencies` (external
   packages, versions from package.json peers; react excluded), a `css` fragment, `docs` (the
   matching CLAUDE.md section), and a description. `registry/base.css` is the stylesheet minus

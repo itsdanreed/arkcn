@@ -28,7 +28,7 @@
   "registryDependencies": [
     "dialog",
     "input-group",
-    "utils"
+    "lib/utils"
   ],
   "files": [
     {

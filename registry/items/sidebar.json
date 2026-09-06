@@ -35,13 +35,13 @@
   },
   "registryDependencies": [
     "button",
+    "hooks/use-mobile",
     "input",
+    "lib/utils",
     "separator",
     "sheet",
     "skeleton",
-    "tooltip",
-    "use-mobile",
-    "utils"
+    "tooltip"
   ],
   "files": [
     {

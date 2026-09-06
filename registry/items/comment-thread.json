@@ -41,11 +41,11 @@
   "registryDependencies": [
     "avatar",
     "button",
-    "controllable",
     "kbd",
-    "popover",
-    "time",
-    "utils"
+    "lib/controllable",
+    "lib/time",
+    "lib/utils",
+    "popover"
   ],
   "files": [
     {

@@ -1,8 +1,10 @@
 {
-  "name": "utils",
+  "name": "lib/utils",
   "type": "lib",
   "description": "- **Feature parity** with the shadcn original: same exported names, same props surface where Ark supports it, same visual result, same variants. - **Ark's tree wins** where the structure differs (e.g.",
-  "exports": [],
+  "exports": [
+    "cn"
+  ],
   "dependencies": {
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.6.0"

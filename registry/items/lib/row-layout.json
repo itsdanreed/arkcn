@@ -1,8 +1,12 @@
 {
-  "name": "row-layout",
+  "name": "lib/row-layout",
   "type": "lib",
   "description": "Rows-and-columns layout helpers for the Canvas primitive. A layout is `Row[]`, each row a list of items with a `width` (flex-grow weight). Drops above/below an item create a row, beside it a column; the resize handle shifts width between ne",
-  "exports": [],
+  "exports": [
+    "applyRowDrop",
+    "resizeRowItems",
+    "removeRowItem"
+  ],
   "dependencies": {},
   "registryDependencies": [
     "canvas"

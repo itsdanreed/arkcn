@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.2
+
+- Registry: lib modules and hooks are namespaced (`lib/utils`, `hooks/use-mobile`), fixing a collision where `add table` installed the table engine instead of the Table component and the docs page showed no parts.
+
 ## 0.1.1
 
 - `init` now edits Vite's template `tsconfig` (JSON with comments) and adds the alias and Tailwind plugin to `vite.config.ts`.

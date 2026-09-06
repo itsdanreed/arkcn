@@ -16,7 +16,7 @@
   "registryDependencies": [
     "dialog",
     "kbd",
-    "utils"
+    "lib/utils"
   ],
   "files": [
     {

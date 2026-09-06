@@ -19,8 +19,8 @@
   },
   "registryDependencies": [
     "button",
-    "popover",
-    "utils"
+    "lib/utils",
+    "popover"
   ],
   "files": [
     {

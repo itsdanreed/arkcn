@@ -25,11 +25,11 @@
   },
   "registryDependencies": [
     "checkbox",
-    "controllable",
-    "data-table-adapter",
+    "lib/controllable",
+    "lib/data-table-adapter",
+    "lib/utils",
     "live-region",
-    "select",
-    "utils"
+    "select"
   ],
   "files": [
     {

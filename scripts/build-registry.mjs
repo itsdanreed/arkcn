@@ -4,7 +4,7 @@
 // "/* @registry:component <name> */" and "/* @registry:end */" in src/styles/arkcn.css),
 // and a short description (first block comment or JSDoc of the file, or the CLAUDE.md heading).
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs"
-import { join } from "node:path"
+import { dirname, join } from "node:path"
 
 const root = new URL("..", import.meta.url).pathname
 const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"))
@@ -12,10 +12,12 @@ const versions = { ...pkg.devDependencies, ...pkg.peerDependencies }
 const optionalPeers = new Set(Object.keys(pkg.peerDependenciesMeta ?? {}))
 const requiredPeers = Object.keys(pkg.peerDependencies).filter((d) => !optionalPeers.has(d))
 
+// Item names: components are bare ("button"); lib and hooks are namespaced ("lib/utils",
+// "hooks/use-mobile") so a component and a lib module can share a file name (table).
 const sources = [
-  { dir: "src/components/ui", type: "ui", target: "components/ui", ext: ".tsx" },
-  { dir: "src/lib", type: "lib", target: "lib", ext: ".ts" },
-  { dir: "src/hooks", type: "hook", target: "hooks", ext: ".ts" },
+  { dir: "src/components/ui", type: "ui", target: "components/ui", ext: ".tsx", prefix: "" },
+  { dir: "src/lib", type: "lib", target: "lib", ext: ".ts", prefix: "lib/" },
+  { dir: "src/hooks", type: "hook", target: "hooks", ext: ".ts", prefix: "hooks/" },
 ]
 
 const packageOf = (spec) => {
@@ -77,17 +79,15 @@ for (const source of sources) {
   for (const file of readdirSync(dir)
     .filter((f) => f.endsWith(source.ext))
     .sort()) {
-    const name = file.slice(0, -source.ext.length)
+    const base = file.slice(0, -source.ext.length)
+    const name = source.prefix + base
     const content = readFileSync(join(dir, file), "utf8")
     const registryDependencies = new Set()
     const dependencies = new Set()
     for (const m of content.matchAll(/from\s+"([^"]+)"/g)) {
       const spec = m[1]
       if (spec.startsWith("@/")) {
-        const target = spec
-          .replace(/^@\//, "")
-          .replace(/^components\/ui\//, "")
-          .replace(/^(lib|hooks)\//, "")
+        const target = spec.replace(/^@\//, "").replace(/^components\/ui\//, "")
         if (target !== name) registryDependencies.add(target)
       } else if (!spec.startsWith(".")) {
         const dep = packageOf(spec)
@@ -102,18 +102,18 @@ for (const source of sources) {
           .map((e) => e.trim())
           .filter((e) => e && !e.startsWith("type "))
           .map((e) => e.replace(/^\w+ as /, ""))
-      : []
+      : [...content.matchAll(/^export (?:async )?(?:function|const|class) (\w+)/gm)].map((m) => m[1])
     items.push({
       name,
       type: source.type,
-      description: describe(content, name),
+      description: describe(content, base),
       ark,
       exports: exportsList,
       dependencies: Object.fromEntries([...dependencies].sort().map((d) => [d, versions[d] ?? "latest"])),
       registryDependencies: [...registryDependencies].sort(),
       files: [{ path: `${source.target}/${file}`, content }],
       css: fragments.get(name),
-      docs: docsFor(name),
+      docs: docsFor(base),
     })
   }
 }
@@ -121,7 +121,10 @@ for (const source of sources) {
 const out = join(root, "registry")
 rmSync(out, { recursive: true, force: true })
 mkdirSync(join(out, "items"), { recursive: true })
-for (const item of items) writeFileSync(join(out, "items", `${item.name}.json`), JSON.stringify(item, null, 2) + "\n")
+for (const item of items) {
+  mkdirSync(join(out, "items", dirname(item.name)), { recursive: true })
+  writeFileSync(join(out, "items", `${item.name}.json`), JSON.stringify(item, null, 2) + "\n")
+}
 writeFileSync(join(out, "base.css"), base)
 writeFileSync(
   join(out, "index.json"),
@@ -130,17 +133,19 @@ writeFileSync(
       name: pkg.name,
       version: pkg.version,
       baseDependencies: Object.fromEntries(requiredPeers.map((d) => [d, versions[d]])),
-      items: items.map(({ name, type, description, ark, exports: exportsList, dependencies, registryDependencies, files, css }) => ({
-        name,
-        type,
-        description,
-        ark,
-        exports: exportsList,
-        dependencies: Object.keys(dependencies),
-        registryDependencies,
-        files: files.map((f) => f.path),
-        css: !!css,
-      })),
+      items: items.map(
+        ({ name, type, description, ark, exports: exportsList, dependencies, registryDependencies, files, css }) => ({
+          name,
+          type,
+          description,
+          ark,
+          exports: exportsList,
+          dependencies: Object.keys(dependencies),
+          registryDependencies,
+          files: files.map((f) => f.path),
+          css: !!css,
+        })
+      ),
     },
     null,
     2

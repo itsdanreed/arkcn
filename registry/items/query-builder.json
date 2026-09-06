@@ -37,10 +37,10 @@
   },
   "registryDependencies": [
     "button",
-    "controllable",
     "input",
-    "select",
-    "utils"
+    "lib/controllable",
+    "lib/utils",
+    "select"
   ],
   "files": [
     {

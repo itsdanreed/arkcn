@@ -11,7 +11,7 @@
     "react-resizable-panels": "^4.12.3"
   },
   "registryDependencies": [
-    "utils"
+    "lib/utils"
   ],
   "files": [
     {

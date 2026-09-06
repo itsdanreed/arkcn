@@ -16,8 +16,8 @@
   "registryDependencies": [
     "button",
     "input",
-    "textarea",
-    "utils"
+    "lib/utils",
+    "textarea"
   ],
   "files": [
     {

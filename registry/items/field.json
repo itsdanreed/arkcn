@@ -19,8 +19,8 @@
   },
   "registryDependencies": [
     "label",
-    "separator",
-    "utils"
+    "lib/utils",
+    "separator"
   ],
   "files": [
     {

@@ -15,7 +15,7 @@
     "@ark-ui/react": "^5.39.1"
   },
   "registryDependencies": [
-    "utils"
+    "lib/utils"
   ],
   "files": [
     {

@@ -14,7 +14,7 @@
     "recharts": "^3.8.0"
   },
   "registryDependencies": [
-    "utils"
+    "lib/utils"
   ],
   "files": [
     {

@@ -21,8 +21,8 @@
   "dependencies": {},
   "registryDependencies": [
     "button",
-    "time",
-    "utils"
+    "lib/time",
+    "lib/utils"
   ],
   "files": [
     {

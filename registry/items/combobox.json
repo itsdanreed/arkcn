@@ -39,7 +39,7 @@
   "registryDependencies": [
     "button",
     "input-group",
-    "utils"
+    "lib/utils"
   ],
   "files": [
     {

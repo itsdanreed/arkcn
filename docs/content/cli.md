@@ -16,7 +16,7 @@ Bootstraps the project: config file, `lib/utils`, base styles, alias, base packa
 npx @multicomma/arkcn add <name...> [--all] [--overwrite] [--yes] [--no-install]
 ```
 
-Copies each component and **everything it imports**: other components, `lib` modules, hooks. Imports are rewritten to your alias and directories. Components with their own CSS (the rich text editor, for example) get their block appended to your stylesheet between `/* arkcn:component <name> */` markers.
+Copies each component and **everything it imports**: other components, `lib` modules, hooks. Helpers are named with a prefix in the registry (`lib/utils`, `hooks/use-mobile`) so they never collide with a component of the same name. Imports are rewritten to your alias and directories. Components with their own CSS (the rich text editor, for example) get their block appended to your stylesheet between `/* arkcn:component <name> */` markers.
 
 Files you have edited are kept unless you pass `--overwrite`. Packages the files need are installed with your package manager (npm, pnpm, yarn, and bun are detected from the lockfile); `--no-install` prints them instead.
 

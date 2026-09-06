@@ -29,10 +29,10 @@
   },
   "registryDependencies": [
     "button",
-    "controllable",
     "input-group",
-    "popover",
-    "utils"
+    "lib/controllable",
+    "lib/utils",
+    "popover"
   ],
   "files": [
     {

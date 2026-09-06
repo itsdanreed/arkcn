@@ -25,7 +25,7 @@
   },
   "registryDependencies": [
     "button",
-    "utils"
+    "lib/utils"
   ],
   "files": [
     {

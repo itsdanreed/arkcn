@@ -27,9 +27,9 @@
     "lucide-react": "^1.41.0"
   },
   "registryDependencies": [
-    "drag-preview",
-    "live-region",
-    "utils"
+    "lib/drag-preview",
+    "lib/utils",
+    "live-region"
   ],
   "files": [
     {

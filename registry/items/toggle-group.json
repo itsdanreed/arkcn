@@ -13,8 +13,8 @@
     "class-variance-authority": "^0.7.1"
   },
   "registryDependencies": [
-    "toggle",
-    "utils"
+    "lib/utils",
+    "toggle"
   ],
   "files": [
     {

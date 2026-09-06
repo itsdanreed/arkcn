@@ -1,8 +1,11 @@
 {
-  "name": "time",
+  "name": "lib/time",
   "type": "lib",
   "description": "`src/components/ui/activity-feed.tsx` is a compositional timeline of events on the WAI-ARIA feed pattern (`role=\"feed\"`, focusable articles, PageUp/PageDown move, Ctrl+Home/End jump): `ActivityFeed` > `ActivityFeedGroup` > `ActivityFeedGrou",
-  "exports": [],
+  "exports": [
+    "formatRelativeTime",
+    "formatCompactAge"
+  ],
   "dependencies": {},
   "registryDependencies": [],
   "files": [

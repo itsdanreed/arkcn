@@ -33,9 +33,9 @@
   },
   "registryDependencies": [
     "button",
-    "controllable",
-    "live-region",
-    "utils"
+    "lib/controllable",
+    "lib/utils",
+    "live-region"
   ],
   "files": [
     {

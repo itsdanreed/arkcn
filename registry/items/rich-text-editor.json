@@ -36,12 +36,12 @@
     "button",
     "input",
     "kbd",
+    "lib/utils",
     "popover",
     "select",
     "separator",
     "toggle",
-    "tooltip",
-    "utils"
+    "tooltip"
   ],
   "files": [
     {

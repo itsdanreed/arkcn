@@ -1,5 +1,5 @@
 {
-  "name": "data-table-adapter",
+  "name": "lib/data-table-adapter",
   "type": "lib",
   "description": "The contract the data table parts render against. `<DataTable>` accepts any object that satisfies it, so the parts are independent of where the rows, sorting, filtering, and paging come from. The built-in engine in `@/lib/table` satisfies i",
   "exports": [],

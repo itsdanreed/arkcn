@@ -196,9 +196,13 @@ export function ComponentPage({ name }: { name: string }) {
             Also installs{" "}
             {item.registryDependencies.map((d) => (
               <React.Fragment key={d}>
-                <Link to={`/docs/components/${d}`} className="font-medium text-foreground">
-                  {d}
-                </Link>{" "}
+                {d.includes("/") ? (
+                  <code className="rounded-md bg-muted px-1 py-0.5 font-mono text-xs">{d}</code>
+                ) : (
+                  <Link to={`/docs/components/${d}`} className="font-medium text-foreground">
+                    {d}
+                  </Link>
+                )}{" "}
               </React.Fragment>
             ))}
           </p>

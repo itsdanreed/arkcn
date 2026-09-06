@@ -41,17 +41,18 @@
     "button",
     "checkbox",
     "command",
-    "data-table-adapter",
     "dropdown-menu",
     "floating-toolbar",
     "input",
+    "lib/data-table-adapter",
+    "lib/table",
+    "lib/utils",
     "live-region",
     "popover",
     "select",
     "separator",
     "table",
-    "tooltip",
-    "utils"
+    "tooltip"
   ],
   "files": [
     {

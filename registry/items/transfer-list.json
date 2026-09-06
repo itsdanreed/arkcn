@@ -27,10 +27,10 @@
   "registryDependencies": [
     "button",
     "checkbox",
-    "controllable",
     "input-group",
-    "live-region",
-    "utils"
+    "lib/controllable",
+    "lib/utils",
+    "live-region"
   ],
   "files": [
     {

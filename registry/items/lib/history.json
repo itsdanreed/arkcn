@@ -1,8 +1,10 @@
 {
-  "name": "history",
+  "name": "lib/history",
   "type": "lib",
   "description": "Undo/redo state for any immutable value. `set` records a history entry unless `{ commit: false }` is passed (live drags, typing); `checkpoint` snapshots the present before such a sequence so one undo restores it.",
-  "exports": [],
+  "exports": [
+    "useHistory"
+  ],
   "dependencies": {},
   "registryDependencies": [],
   "files": [

@@ -40,8 +40,8 @@
   },
   "registryDependencies": [
     "button",
-    "live-region",
-    "utils"
+    "lib/utils",
+    "live-region"
   ],
   "files": [
     {

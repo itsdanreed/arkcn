@@ -50,9 +50,9 @@
   },
   "registryDependencies": [
     "button",
-    "controllable",
-    "scroll-area",
-    "utils"
+    "lib/controllable",
+    "lib/utils",
+    "scroll-area"
   ],
   "files": [
     {
