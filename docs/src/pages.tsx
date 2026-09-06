@@ -9,6 +9,7 @@ import { Outline } from "./layout"
 import { guideByPath } from "./nav"
 import { groupedComponents, loadItem, registry, title, type RegistryItem } from "./registry"
 import { Link } from "./router"
+import { cn } from "@/lib/utils"
 import { descriptions } from "./descriptions"
 
 const guideModules = import.meta.glob<string>("../content/*.md", { query: "?raw", import: "default", eager: true })
@@ -102,7 +103,7 @@ export function ComponentsIndex() {
   )
 }
 
-function ComponentPreview({ name }: { name: string }) {
+function useExample(name: string) {
   const key = `./examples/${name}.tsx`
   const [Example, setExample] = React.useState<React.ComponentType | null>(null)
   const [source, setSource] = React.useState<string>("")
@@ -119,7 +120,41 @@ function ComponentPreview({ name }: { name: string }) {
       cancelled = true
     }
   }, [key])
-  if (!exampleModules[key]) return null
+  return { exists: !!exampleModules[key], Example, source }
+}
+
+/** Wide, data-heavy components get a taller full-width frame. */
+const wide = new Set([
+  "data-table",
+  "data-grid",
+  "kanban",
+  "gantt",
+  "scheduler",
+  "node-graph",
+  "canvas",
+  "query-builder",
+  "rich-text-editor",
+  "activity-feed",
+  "comment-thread",
+  "chat",
+  "app-shell",
+  "sidebar",
+  "transfer-list",
+  "chart",
+  "carousel",
+  "resizable",
+  "floating-toolbar",
+  "menubar",
+  "navigation-menu",
+  "steps",
+  "table",
+  "virtual-list",
+  "tree-view",
+  "json-tree-view",
+])
+
+function ComponentPreview({ name, example }: { name: string; example: ReturnType<typeof useExample> }) {
+  const { Example, source } = example
   return (
     <Tabs defaultValue="preview" className="mb-8">
       <TabsList variant="line">
@@ -127,7 +162,13 @@ function ComponentPreview({ name }: { name: string }) {
         <TabsTrigger value="code">Code</TabsTrigger>
       </TabsList>
       <TabsContent value="preview">
-        <div data-slot="docs-preview" className="flex min-h-72 items-center justify-center rounded-lg border p-8">
+        <div
+          data-slot="docs-preview"
+          className={cn(
+            "flex min-h-72 items-center justify-center rounded-lg border p-8",
+            wide.has(name) && "min-h-96 items-stretch p-4 *:min-w-0 *:flex-1"
+          )}
+        >
           {Example ? <Example /> : <span className="text-sm text-muted-foreground">Loading…</span>}
         </div>
       </TabsContent>
@@ -136,13 +177,6 @@ function ComponentPreview({ name }: { name: string }) {
       </TabsContent>
     </Tabs>
   )
-}
-
-function usageSnippet(item: RegistryItem) {
-  const parts = item.exports.filter((e) => /^[A-Z]/.test(e))
-  const first = parts[0] ?? title(item.name).replace(/\s/g, "")
-  const importLine = `import { ${parts.slice(0, 8).join(", ")}${parts.length > 8 ? ", …" : ""} } from "@/components/ui/${item.name}"`
-  return `${importLine}\n\nexport function Example() {\n  return <${first} />\n}`
 }
 
 export function ComponentPage({ name }: { name: string }) {
@@ -157,7 +191,8 @@ export function ComponentPage({ name }: { name: string }) {
       cancelled = true
     }
   }, [name])
-  const outline = useOutline(item ? `${name}:loaded` : name)
+  const example = useExample(name)
+  const outline = useOutline(item ? `${name}:loaded:${example.source ? 1 : 0}` : name)
   if (item === undefined) return <p className="text-sm text-muted-foreground">Loading…</p>
   if (!item) return <NotFound />
   const entry = registry.items.find((i) => i.name === name)
@@ -186,7 +221,7 @@ export function ComponentPage({ name }: { name: string }) {
         </div>
       </PageTitle>
 
-      <ComponentPreview name={name} />
+      {example.exists && <ComponentPreview name={name} example={example} />}
 
       <div className="docs-prose prose max-w-none prose-neutral dark:prose-invert prose-headings:font-semibold prose-headings:tracking-tight">
         <h2 id="installation">Installation</h2>
@@ -209,7 +244,11 @@ export function ComponentPage({ name }: { name: string }) {
         )}
 
         <h2 id="usage">Usage</h2>
-        <CodeBlock code={usageSnippet(item)} className="not-prose" />
+        <CodeBlock
+          code={`import { ${parts.slice(0, 6).join(", ")}${parts.length > 6 ? ", …" : ""} } from "@/components/ui/${name}"`}
+          className="not-prose"
+        />
+        {example.source && <CodeBlock code={example.source} className="not-prose mt-3" maxHeight={480} />}
 
         <h2 id="anatomy">Anatomy</h2>
         <p>
