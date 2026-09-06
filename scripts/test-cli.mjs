@@ -21,8 +21,15 @@ try {
     join(cwd, "package.json"),
     JSON.stringify({ name: "app", dependencies: { react: "^19", tailwindcss: "^4.0.0" } })
   )
-  writeFileSync(join(cwd, "tsconfig.json"), JSON.stringify({ compilerOptions: { strict: true } }))
-  writeFileSync(join(cwd, "vite.config.ts"), "export default {}\n")
+  // Vite's template: JSON with comments, and a config without alias or Tailwind.
+  writeFileSync(
+    join(cwd, "tsconfig.json"),
+    '{\n  "compilerOptions": {\n    /* Bundler mode */\n    "strict": true, // strict\n    "jsx": "react-jsx"\n  }\n}\n'
+  )
+  writeFileSync(
+    join(cwd, "vite.config.ts"),
+    'import { defineConfig } from "vite"\nimport react from "@vitejs/plugin-react"\n\nexport default defineConfig({\n  plugins: [react()],\n})\n'
+  )
 
   const initOut = run("init", "--yes", "--no-install")
   assert(existsSync(join(cwd, "arkcn.json")), "init writes arkcn.json")
@@ -30,12 +37,19 @@ try {
   const css = readFileSync(join(cwd, "src/index.css"), "utf8")
   assert(css.startsWith('@import "tailwindcss";'), "init creates the stylesheet with the tailwind import")
   assert(css.includes("@custom-variant data-selected"), "init merges the base styles")
+  const tsconfig = readFileSync(join(cwd, "tsconfig.json"), "utf8")
   assert(
-    JSON.parse(readFileSync(join(cwd, "tsconfig.json"), "utf8")).compilerOptions.paths["@/*"],
-    "init adds the alias"
+    /"paths": \{\s*"@\/\*": \["\.\/src\/\*"\]/.test(tsconfig) && tsconfig.includes("/* Bundler mode */"),
+    "init adds the alias to a JSONC tsconfig and keeps comments"
   )
   assert(/Needed:.*@ark-ui\/react/.test(initOut), "init lists base dependencies when not installing")
-  assert(/Add the alias to vite.config.ts/.test(initOut), "init warns about the vite alias")
+  assert(/Needed:.*@tailwindcss\/vite/.test(initOut), "init lists the vite tailwind plugin")
+  const vite = readFileSync(join(cwd, "vite.config.ts"), "utf8")
+  assert(
+    vite.includes("plugins: [tailwindcss(), react()]") &&
+      vite.includes('"@": path.resolve(import.meta.dirname, "./src")'),
+    "init adds the tailwind plugin and alias to vite.config.ts"
+  )
 
   const addOut = run("add", "data-grid", "rich-text-editor", "--no-install")
   for (const f of [

@@ -4,6 +4,7 @@ import {
   CONFIG_FILE,
   defaultConfig,
   detectBundlerAlias,
+  ensureViteConfig,
   detectPackageManager,
   ensureTsconfigAlias,
   installDependencies,
@@ -96,10 +97,15 @@ export async function init(cwd, registry, flags) {
   else if (alias === "ok") ok(`tsconfig already maps "${config.alias}/*"`)
   else warn(`Add "paths": { "${config.alias}/*": ["./${config.srcDir}/*"] } to your tsconfig compilerOptions.`)
   const bundler = detectBundlerAlias(cwd, config.alias)
-  if (bundler.framework === "vite" && !bundler.ok)
-    warn(
-      `Add the alias to ${bundler.file}: resolve.alias { "${config.alias}": path.resolve(__dirname, "./${config.srcDir}") }`
-    )
+  if (bundler.framework === "vite") {
+    const vite = ensureViteConfig(cwd, config.alias, config.srcDir)
+    if (vite.added.length) ok(`Added ${vite.added.join(" and ")} to ${vite.file}`)
+    else if (vite.manual)
+      warn(
+        `Add to ${vite.file}: the @tailwindcss/vite plugin and resolve.alias { "${config.alias}": "./${config.srcDir}" }`
+      )
+    else ok(`${vite.file} already has the alias and the Tailwind plugin`)
+  }
 
   const { items } = await registry.closure(["utils"])
   for (const item of items) writeItem(cwd, config, item, { overwrite: false })
@@ -118,6 +124,7 @@ export async function init(cwd, registry, flags) {
   const deps = Object.entries(index.baseDependencies)
     .filter(([dep]) => !installedVersion(cwd, dep))
     .map(([dep, version]) => `${dep}@${version}`)
+  if (bundler.framework === "vite" && !installedVersion(cwd, "@tailwindcss/vite")) deps.push("@tailwindcss/vite")
   await install(cwd, deps, flags)
   log(`\nNext: ${c.cyan("npx @multicomma/arkcn add button card dialog")}`)
 }

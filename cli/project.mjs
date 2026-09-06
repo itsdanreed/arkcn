@@ -120,31 +120,77 @@ export function installDependencies(cwd, deps) {
   return { ok: result.status === 0, pm, args }
 }
 
-/** Ensure tsconfig paths has "<alias>/*": ["./<srcDir>/*"]. Returns "ok" | "added" | "manual". */
+/**
+ * Ensure tsconfig paths has "<alias>/*": ["./<srcDir>/*"]. Works on JSON with comments (Vite's
+ * templates) by inserting text instead of re-serialising. Returns "ok" | "added" | "manual".
+ */
 export function ensureTsconfigAlias(cwd, alias, srcDir = "src") {
   for (const name of ["tsconfig.app.json", "tsconfig.json"]) {
     const file = join(cwd, name)
     if (!existsSync(file)) continue
     const raw = readFileSync(file, "utf8")
-    let json
-    try {
-      json = JSON.parse(
-        raw
-          .replace(/\/\*[\s\S]*?\*\//g, "")
-          .replace(/^\s*\/\/.*$/gm, "")
-          .replace(/,(\s*[}\]])/g, "$1")
-      )
-    } catch {
-      return "manual"
+    const key = `"${alias}/*"`
+    if (raw.includes(key)) return "ok"
+    const entry = `${key}: ["./${srcDir}/*"]`
+    const pathsMatch = raw.match(/"paths"\s*:\s*\{/)
+    if (pathsMatch) {
+      const at = pathsMatch.index + pathsMatch[0].length
+      const rest = raw.slice(at)
+      const empty = /^\s*\}/.test(rest)
+      writeFileSync(file, raw.slice(0, at) + `\n      ${entry}${empty ? "" : ","}` + rest)
+      return "added"
     }
-    const paths = json.compilerOptions?.paths ?? {}
-    if (paths[`${alias}/*`]) return "ok"
-    if (raw.includes("//") || raw.includes("/*")) return "manual"
-    json.compilerOptions = { ...json.compilerOptions, paths: { ...paths, [`${alias}/*`]: [`./${srcDir}/*`] } }
-    writeFileSync(file, JSON.stringify(json, null, 2) + "\n")
+    const optionsMatch = raw.match(/"compilerOptions"\s*:\s*\{/)
+    if (!optionsMatch) continue
+    const at = optionsMatch.index + optionsMatch[0].length
+    const rest = raw.slice(at)
+    const empty = /^\s*\}/.test(rest)
+    writeFileSync(file, raw.slice(0, at) + `\n    "paths": {\n      ${entry}\n    }${empty ? "" : ","}` + rest)
     return "added"
   }
   return "manual"
+}
+
+/**
+ * Ensure a Vite config has the "@" alias and the Tailwind plugin. Returns what was added.
+ * Next.js reads tsconfig paths on its own, so it only needs the tsconfig step.
+ */
+export function ensureViteConfig(cwd, alias, srcDir = "src") {
+  const name = ["vite.config.ts", "vite.config.mts", "vite.config.js", "vite.config.mjs"].find((n) =>
+    existsSync(join(cwd, n))
+  )
+  if (!name) return { file: null, added: [] }
+  const file = join(cwd, name)
+  let raw = readFileSync(file, "utf8")
+  const added = []
+  const hasAlias = raw.includes(`"${alias}"`) || raw.includes(`'${alias}'`) || raw.includes("tsconfigPaths")
+  const hasTailwind = raw.includes("@tailwindcss/vite")
+  const config = raw.match(/defineConfig\(\s*\{/)
+  if (!config) return { file: name, added, manual: !hasAlias || !hasTailwind }
+  if (!hasTailwind) {
+    raw = `import tailwindcss from "@tailwindcss/vite"\n` + raw
+    const plugins = raw.match(/plugins\s*:\s*\[/)
+    if (plugins) {
+      const at = plugins.index + plugins[0].length
+      raw = raw.slice(0, at) + "tailwindcss(), " + raw.slice(at)
+    } else {
+      const m = raw.match(/defineConfig\(\s*\{/)
+      raw = raw.slice(0, m.index + m[0].length) + "\n  plugins: [tailwindcss()]," + raw.slice(m.index + m[0].length)
+    }
+    added.push("tailwind plugin")
+  }
+  if (!hasAlias) {
+    if (!/from ["']node:path["']|from ["']path["']/.test(raw)) raw = `import path from "node:path"\n` + raw
+    const m = raw.match(/defineConfig\(\s*\{/)
+    const at = m.index + m[0].length
+    raw =
+      raw.slice(0, at) +
+      `\n  resolve: {\n    alias: { "${alias}": path.resolve(import.meta.dirname, "./${srcDir}") },\n  },` +
+      raw.slice(at)
+    added.push("alias")
+  }
+  if (added.length) writeFileSync(file, raw)
+  return { file: name, added }
 }
 
 export function detectBundlerAlias(cwd, alias) {
