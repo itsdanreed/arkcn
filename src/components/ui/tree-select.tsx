@@ -9,6 +9,14 @@ import { Button } from "@/components/ui/button"
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group"
 import { PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import {
+  VirtualList,
+  VirtualListContent,
+  VirtualListItem,
+  VirtualListItems,
+  VirtualListViewport,
+  useVirtualList,
+} from "@/components/ui/virtual-list"
+import {
   TreeView,
   TreeViewBranch,
   TreeViewBranchContent,
@@ -17,6 +25,7 @@ import {
   TreeViewBranchIndicator,
   TreeViewBranchText,
   TreeViewBranchTrigger,
+  TreeViewContext,
   TreeViewItem,
   TreeViewItemIndicator,
   TreeViewItemText,
@@ -537,20 +546,26 @@ type TreeSelectRenderNode<T extends TreeNode> = (node: T) => React.ReactNode
 const TreeSelectRenderContext = React.createContext<TreeSelectRenderNode<TreeNode> | undefined>(undefined)
 
 /**
- * The tree inside the popup. Renders every node of the (filtered) collection;
- * pass a render-prop child to customise the row label.
+ * The tree inside the popup, virtualized: only the visible (expanded) nodes in view are in
+ * the DOM, so large trees stay fast. Pass a render-prop child to customise the row label.
  */
 function TreeSelectTree<T extends TreeNode>({
   className,
   children,
+  rowHeight = 28,
   ...props
-}: Omit<React.ComponentProps<typeof TreeViewTree>, "children"> & { children?: TreeSelectRenderNode<T> }) {
+}: Omit<React.ComponentProps<typeof TreeViewTree>, "children"> & {
+  children?: TreeSelectRenderNode<T>
+  /** Row height in px (rows are measured; this is the estimate). */
+  rowHeight?: number
+}) {
   const ctx = useTreeSelect<T>()
   const searching = ctx.query.trim().length > 0
   const searchExpanded = React.useMemo(
     () => (searching ? ctx.filtered.getBranchValues() : null),
     [searching, ctx.filtered]
   )
+  const scrollTo = React.useRef<(index: number) => void>(() => {})
   const roots = ctx.filtered.getNodeChildren(ctx.filtered.rootNode)
   if (roots.length === 0) return null
   return (
@@ -570,19 +585,99 @@ function TreeSelectTree<T extends TreeNode>({
         onExpandedChange={({ expandedValue }) => {
           if (!searching) ctx.setExpandedValue(expandedValue)
         }}
+        scrollToIndexFn={({ index }) => scrollTo.current(index)}
         data-slot="tree-select-tree"
         className="w-full"
       >
-        <TreeViewTree className={cn("max-h-72 overflow-y-auto", className)} {...props}>
-          {roots.map((node, index) => (
-            <TreeSelectNode key={ctx.filtered.getNodeValue(node)} node={node} indexPath={[index]} />
-          ))}
-        </TreeViewTree>
+        <TreeViewContext>
+          {(api) => {
+            const visible = api.getVisibleNodes()
+            return (
+              <VirtualList
+                count={visible.length}
+                estimateSize={rowHeight}
+                gap={1}
+                getItemKey={(i) => ctx.filtered.getNodeValue(visible[i].node as T)}
+              >
+                <TreeSelectVirtualRows
+                  visible={visible as { node: T; indexPath: number[] }[]}
+                  scrollTo={scrollTo}
+                  className={className}
+                  {...props}
+                />
+              </VirtualList>
+            )
+          }}
+        </TreeViewContext>
       </TreeView>
     </TreeSelectRenderContext.Provider>
   )
 }
 
+function TreeSelectVirtualRows<T extends TreeNode>({
+  visible,
+  scrollTo,
+  className,
+  ...props
+}: Omit<React.ComponentProps<typeof TreeViewTree>, "children"> & {
+  visible: { node: T; indexPath: number[] }[]
+  scrollTo: React.MutableRefObject<(index: number) => void>
+}) {
+  const virtual = useVirtualList()
+  React.useLayoutEffect(() => {
+    scrollTo.current = (index) => virtual.scrollToIndex(index)
+  })
+  return (
+    <TreeViewTree className={cn("block", className)} {...props}>
+      <VirtualListViewport className="max-h-72">
+        <VirtualListContent>
+          <VirtualListItems>
+            {(row) => {
+              const entry = visible[row.index]
+              return (
+                <VirtualListItem index={row.index}>
+                  <TreeSelectRow node={entry.node} indexPath={entry.indexPath} />
+                </VirtualListItem>
+              )
+            }}
+          </VirtualListItems>
+        </VirtualListContent>
+      </VirtualListViewport>
+    </TreeViewTree>
+  )
+}
+
+/** One flat row (branch control or leaf) for the virtualized tree. */
+function TreeSelectRow<T extends TreeNode>({ node, indexPath }: { node: T; indexPath: number[] }) {
+  const ctx = useTreeSelect<T>()
+  const render = React.useContext(TreeSelectRenderContext)
+  const value = ctx.filtered.getNodeValue(node)
+  const label = render ? render(node) : ctx.filtered.stringifyNode(node)
+  const isBranch = ctx.filtered.isBranchNode(node)
+  return (
+    <TreeViewNodeProvider node={node} indexPath={indexPath}>
+      {isBranch ? (
+        <TreeViewBranch data-slot="tree-select-branch">
+          <TreeViewBranchControl>
+            <TreeViewBranchTrigger>
+              <TreeViewBranchIndicator />
+            </TreeViewBranchTrigger>
+            {ctx.multiple && <TreeViewNodeCheckbox />}
+            <TreeViewBranchText>{label}</TreeViewBranchText>
+          </TreeViewBranchControl>
+        </TreeViewBranch>
+      ) : (
+        <TreeViewItem data-slot="tree-select-item" data-value={value}>
+          {ctx.multiple && <TreeViewNodeCheckbox />}
+          <TreeViewItemText>{label}</TreeViewItemText>
+          {!ctx.multiple && <TreeViewItemIndicator />}
+        </TreeViewItem>
+      )}
+    </TreeViewNodeProvider>
+  )
+}
+
+/** Nested (non-virtual) rendering of a node and its children; useful outside the popup. */
 function TreeSelectNode<T extends TreeNode>({ node, indexPath }: { node: T; indexPath: number[] }) {
   const ctx = useTreeSelect<T>()
   const render = React.useContext(TreeSelectRenderContext)

@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { flushSync } from "react-dom"
 import { cn } from "@/lib/utils"
 
 /* -------------------------------- context -------------------------------- */
@@ -171,8 +172,17 @@ function VirtualList({
     return () => ro.disconnect()
   }, [])
 
+  // Instant scrolls also flush the window synchronously, so a caller can focus a row right
+  // after `scrollToIndex` (keyboard navigation in listboxes and trees relies on this).
   const scrollToOffset = React.useCallback((offset: number, behavior: ScrollBehavior = "auto") => {
-    viewportRef.current?.scrollTo({ top: offset, behavior })
+    const el = viewportRef.current
+    if (!el) return
+    if (behavior === "smooth") {
+      el.scrollTo({ top: offset, behavior })
+      return
+    }
+    el.scrollTop = offset
+    flushSync(() => setScrollTop(el.scrollTop))
   }, [])
 
   const pending = React.useRef<{ index: number; align: ScrollAlign; tries: number } | null>(null)
@@ -259,11 +269,15 @@ function VirtualListScroll({ onScroll }: { onScroll: (top: number) => void }) {
 
 /* --------------------------------- parts --------------------------------- */
 
-function VirtualListViewport({ className, ...props }: React.ComponentProps<"div">) {
+function VirtualListViewport({ className, ref, ...props }: React.ComponentProps<"div">) {
   const ctx = useVirtualList()
   return (
     <div
-      ref={ctx.viewportRef}
+      ref={(el) => {
+        ctx.viewportRef.current = el
+        if (typeof ref === "function") ref(el)
+        else if (ref) ref.current = el
+      }}
       data-slot="virtual-list-viewport"
       className={cn("relative min-h-0 overflow-y-auto overscroll-contain", className)}
       {...props}

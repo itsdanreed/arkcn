@@ -16,6 +16,14 @@ import { LiveRegion, useLiveRegion } from "@/components/ui/live-region"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group"
+import {
+  VirtualList,
+  VirtualListContent,
+  VirtualListItem,
+  VirtualListItems,
+  VirtualListViewport,
+  useVirtualList,
+} from "@/components/ui/virtual-list"
 
 /* -------------------------------- context -------------------------------- */
 
@@ -294,7 +302,7 @@ function TransferListPanel({ side, className, ...props }: React.ComponentProps<"
         data-side={side}
         data-disabled={ctx.disabled ? "" : undefined}
         className={cn(
-          "flex min-h-64 min-w-0 flex-col overflow-hidden rounded-lg border border-input bg-background text-sm dark:bg-input/30 data-disabled:opacity-50",
+          "flex h-80 min-w-0 flex-col overflow-hidden rounded-lg border border-input bg-background text-sm dark:bg-input/30 data-disabled:opacity-50",
           className
         )}
         {...props}
@@ -397,96 +405,143 @@ function TransferListSearch({
 const TransferListRenderContext = React.createContext<((item: unknown) => React.ReactNode) | undefined>(undefined)
 
 /**
- * The listbox for one side. Roving focus; ↑/↓ move, Space toggles, Shift+↑/↓ extends,
- * ⌘/Ctrl+A selects all, Enter (or double-click) moves the focused item across.
+ * The listbox for one side, virtualized so thousands of items stay cheap. Roving focus;
+ * ↑/↓ move, Space toggles, Shift+↑/↓ extends, ⌘/Ctrl+A selects all, Enter (or double-click)
+ * moves the focused item across.
  */
 function TransferListItems<T = TransferListItemBase>({
   className,
   children,
-  onKeyDown,
+  rowHeight = 28,
   ...props
-}: Omit<React.ComponentProps<"div">, "children"> & { children?: (item: T) => React.ReactNode }) {
+}: Omit<React.ComponentProps<"div">, "children"> & {
+  children?: (item: T) => React.ReactNode
+  /** Row height in px (rows are measured; this is the estimate). */
+  rowHeight?: number
+}) {
   const ctx = useTransferList<T>()
   const side = useTransferListSide()
-  const ref = React.useRef<HTMLDivElement>(null)
   const list = ctx.visible[side]
-  const values = list.map(ctx.itemToValue)
+  const values = React.useMemo(() => list.map(ctx.itemToValue), [list, ctx.itemToValue])
+  return (
+    <TransferListRenderContext.Provider value={children as ((item: unknown) => React.ReactNode) | undefined}>
+      <VirtualList
+        count={list.length}
+        estimateSize={rowHeight}
+        gap={1}
+        getItemKey={(i) => values[i]}
+        className={cn("min-h-0 flex-1", list.length === 0 && "hidden")}
+      >
+        <TransferListListbox list={list} values={values} className={className} {...props} />
+      </VirtualList>
+    </TransferListRenderContext.Provider>
+  )
+}
+
+function TransferListListbox<T>({
+  list,
+  values,
+  className,
+  onKeyDown,
+  ...props
+}: Omit<React.ComponentProps<"div">, "children"> & { list: T[]; values: string[] }) {
+  const ctx = useTransferList<T>()
+  const side = useTransferListSide()
+  const virtual = useVirtualList()
+  const ref = React.useRef<HTMLDivElement>(null)
   const focused = ctx.focused[side]
   const active = focused && values.includes(focused) ? focused : (values[0] ?? null)
 
   const focusValue = (v: string) => {
     ctx.setFocused(side, v)
+    // Scroll first (synchronous window update), then the row exists to focus.
+    virtual.scrollToIndex(values.indexOf(v))
     ref.current?.querySelector<HTMLElement>(`[data-slot=transfer-list-item][data-value="${CSS.escape(v)}"]`)?.focus()
   }
 
   return (
-    <TransferListRenderContext.Provider value={children as ((item: unknown) => React.ReactNode) | undefined}>
-      <div
-        ref={ref}
-        data-slot="transfer-list-items"
-        role="listbox"
-        aria-multiselectable
-        aria-label={side === "source" ? "Available" : "Selected"}
-        data-active-value={active ?? undefined}
-        className={cn("flex min-h-0 flex-1 flex-col gap-px overflow-y-auto p-1 outline-none", className)}
-        onKeyDown={(event) => {
-          onKeyDown?.(event)
-          if (event.defaultPrevented || ctx.disabled) return
-          const enabledValues = list.filter((i) => !ctx.itemDisabled(i)).map(ctx.itemToValue)
-          const index = active ? values.indexOf(active) : -1
-          const step = (delta: number) => {
-            const next = values[Math.max(0, Math.min(values.length - 1, index + delta))]
-            if (!next) return
-            if (event.shiftKey && active && enabledValues.includes(active)) ctx.selectRange(side, active, next)
-            focusValue(next)
-          }
-          switch (event.key) {
-            case "ArrowDown":
+    <VirtualListViewport
+      ref={ref}
+      data-slot="transfer-list-items"
+      role="listbox"
+      aria-multiselectable
+      aria-label={side === "source" ? "Available" : "Selected"}
+      data-active-value={active ?? undefined}
+      className={cn("min-h-0 flex-1 p-1 outline-none", className)}
+      onKeyDown={(event) => {
+        onKeyDown?.(event)
+        if (event.defaultPrevented || ctx.disabled) return
+        const enabledValues = list.filter((i) => !ctx.itemDisabled(i)).map(ctx.itemToValue)
+        const index = active ? values.indexOf(active) : -1
+        const step = (delta: number) => {
+          const next = values[Math.max(0, Math.min(values.length - 1, index + delta))]
+          if (!next) return
+          if (event.shiftKey && active && enabledValues.includes(active)) ctx.selectRange(side, active, next)
+          focusValue(next)
+        }
+        switch (event.key) {
+          case "ArrowDown":
+            event.preventDefault()
+            step(1)
+            break
+          case "ArrowUp":
+            event.preventDefault()
+            step(-1)
+            break
+          case "PageDown":
+            event.preventDefault()
+            step(10)
+            break
+          case "PageUp":
+            event.preventDefault()
+            step(-10)
+            break
+          case "Home":
+            event.preventDefault()
+            if (values[0]) focusValue(values[0])
+            break
+          case "End":
+            event.preventDefault()
+            if (values.length) focusValue(values[values.length - 1])
+            break
+          case " ":
+            event.preventDefault()
+            if (active && enabledValues.includes(active)) ctx.toggle(side, active)
+            break
+          case "Enter":
+            event.preventDefault()
+            if (active && enabledValues.includes(active)) {
+              const next = values[index + 1] ?? values[index - 1] ?? null
+              ctx.move(side === "source" ? "right" : "left", [active])
+              ctx.setFocused(side, next)
+              if (next) queueMicrotask(() => focusValue(next))
+            }
+            break
+          case "a":
+          case "A":
+            if (event.metaKey || event.ctrlKey) {
               event.preventDefault()
-              step(1)
-              break
-            case "ArrowUp":
-              event.preventDefault()
-              step(-1)
-              break
-            case "Home":
-              event.preventDefault()
-              if (values[0]) focusValue(values[0])
-              break
-            case "End":
-              event.preventDefault()
-              if (values.length) focusValue(values[values.length - 1])
-              break
-            case " ":
-              event.preventDefault()
-              if (active && enabledValues.includes(active)) ctx.toggle(side, active)
-              break
-            case "Enter":
-              event.preventDefault()
-              if (active && enabledValues.includes(active)) {
-                const next = values[index + 1] ?? values[index - 1] ?? null
-                ctx.move(side === "source" ? "right" : "left", [active])
-                ctx.setFocused(side, next)
-                if (next) queueMicrotask(() => focusValue(next))
-              }
-              break
-            case "a":
-            case "A":
-              if (event.metaKey || event.ctrlKey) {
-                event.preventDefault()
-                ctx.selectAll(side, true)
-              }
-              break
-          }
-        }}
-        {...props}
-      >
-        {list.map((item) => {
-          const v = ctx.itemToValue(item)
-          return <TransferListItem key={v} item={item} tabIndex={v === active ? 0 : -1} />
-        })}
-      </div>
-    </TransferListRenderContext.Provider>
+              ctx.selectAll(side, true)
+            }
+            break
+        }
+      }}
+      {...props}
+    >
+      <VirtualListContent>
+        <VirtualListItems>
+          {(row) => {
+            const item = list[row.index]
+            const v = values[row.index]
+            return (
+              <VirtualListItem index={row.index} className="px-0">
+                <TransferListItem item={item} tabIndex={v === active ? 0 : -1} />
+              </VirtualListItem>
+            )
+          }}
+        </VirtualListItems>
+      </VirtualListContent>
+    </VirtualListViewport>
   )
 }
 

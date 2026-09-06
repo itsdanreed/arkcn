@@ -2993,7 +2993,8 @@
         "input-group",
         "lib/controllable",
         "lib/utils",
-        "live-region"
+        "live-region",
+        "virtual-list"
       ],
       "files": [
         "components/ui/transfer-list.tsx"
@@ -3033,7 +3034,8 @@
         "lib/controllable",
         "lib/utils",
         "popover",
-        "tree-view"
+        "tree-view",
+        "virtual-list"
       ],
       "files": [
         "components/ui/tree-select.tsx"
