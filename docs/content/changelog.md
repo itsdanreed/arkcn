@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.1.3
+
+- Registry items carry `parts`: every exported part with its props (type, required, default, description). The MCP `get_component` returns them, and the docs render them.
+
 ## 0.1.2
 
 - Registry: lib modules and hooks are namespaced (`lib/utils`, `hooks/use-mobile`), fixing a collision where `add table` installed the table engine instead of the Table component and the docs page showed no parts.
