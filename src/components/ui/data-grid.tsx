@@ -234,8 +234,7 @@ function DataGrid<TData>({
   const [focus, setFocus] = React.useState<CellAddress | null>(null)
   const [range, setRange] = React.useState<CellRange | null>(null)
   const [editing, setEditing] = React.useState<(CellAddress & { seed?: string }) | null>(null)
-  const { message: announcement, announce: setAnnouncement } = useLiveRegion()
-  const announce = React.useCallback((message: string) => setAnnouncement(message), [])
+  const { message: announcement, announce } = useLiveRegion()
   const [focusRequest, setFocusRequest] = React.useState(0)
   const activeEditor = React.useRef<{ close: () => void } | null>(null)
   const registerEditor = React.useCallback((handle: { close: () => void }) => {

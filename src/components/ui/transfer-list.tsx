@@ -223,6 +223,7 @@ function TransferList<T = TransferListItemBase>({
       setValueState,
       onValueChange,
       titles,
+      setAnnouncement,
     ]
   )
 

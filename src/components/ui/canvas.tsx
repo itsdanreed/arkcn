@@ -85,57 +85,66 @@ function Canvas({
     onDropRef.current = onDrop
   })
 
-  const grab = React.useCallback((nodeId: string | null) => {
-    setGrabbed(nodeId)
-    setAnnouncement(
-      nodeId
-        ? `Picked up ${nodeId}. Arrow up or down moves it to its own row, left or right moves it beside a neighbour. Space or Enter drops, Escape cancels.`
-        : "Dropped."
-    )
-  }, [])
+  const grab = React.useCallback(
+    (nodeId: string | null) => {
+      setGrabbed(nodeId)
+      setAnnouncement(
+        nodeId
+          ? `Picked up ${nodeId}. Arrow up or down moves it to its own row, left or right moves it beside a neighbour. Space or Enter drops, Escape cancels.`
+          : "Dropped."
+      )
+    },
+    [setAnnouncement]
+  )
 
-  const moveByKey = React.useCallback((nodeId: string, direction: CanvasDirection) => {
-    const root = ref.current
-    const node = root?.querySelector<HTMLElement>(`[data-slot=canvas-node][data-value="${cssEscape(nodeId)}"]`)
-    const row = node?.closest<HTMLElement>("[data-slot=canvas-row]")
-    if (!root || !node || !row) return
-    const siblings = Array.from(row.querySelectorAll<HTMLElement>(":scope > [data-slot=canvas-node]"))
-    const index = siblings.indexOf(node)
-    let target: CanvasTarget | null = null
-    if (direction === "up") {
-      const first = siblings[0]
-      // Already alone at the top of its row: hop above the previous row instead.
-      if (siblings.length === 1) {
-        const rows = Array.from(root.querySelectorAll<HTMLElement>("[data-slot=canvas-row]"))
-        const prev = rows[rows.indexOf(row) - 1]?.querySelector<HTMLElement>("[data-slot=canvas-node]")
-        if (!prev) return
-        target = { type: "node", id: prev.dataset.value ?? "", edge: "top" }
-      } else target = { type: "node", id: first.dataset.value ?? "", edge: "top" }
-    } else if (direction === "down") {
-      const last = siblings[siblings.length - 1]
-      if (siblings.length === 1) {
-        const rows = Array.from(root.querySelectorAll<HTMLElement>("[data-slot=canvas-row]"))
-        const next = rows[rows.indexOf(row) + 1]?.querySelector<HTMLElement>("[data-slot=canvas-node]")
-        if (!next) return
-        target = { type: "node", id: next.dataset.value ?? "", edge: "bottom" }
-      } else target = { type: "node", id: last.dataset.value ?? "", edge: "bottom" }
-    } else {
-      const neighbour = siblings[direction === "left" ? index - 1 : index + 1]
-      if (!neighbour) return
-      target = { type: "node", id: neighbour.dataset.value ?? "", edge: direction }
-    }
-    // A vertical drop on the node itself means "pull me out into a new row"; horizontal is a no-op.
-    if (target.type === "node" && target.id === nodeId && (target.edge === "left" || target.edge === "right")) return
-    onDropRef.current?.({ source: { type: "node", id: nodeId }, target })
-    setAnnouncement(`Moved ${nodeId} ${direction}.`)
-    const nodeSelector = `[data-slot=canvas-node][data-value="${cssEscape(nodeId)}"]`
-    focusLater(`${nodeSelector} [data-slot=canvas-node-handle]`, nodeSelector)
-  }, [])
+  const moveByKey = React.useCallback(
+    (nodeId: string, direction: CanvasDirection) => {
+      const root = ref.current
+      const node = root?.querySelector<HTMLElement>(`[data-slot=canvas-node][data-value="${cssEscape(nodeId)}"]`)
+      const row = node?.closest<HTMLElement>("[data-slot=canvas-row]")
+      if (!root || !node || !row) return
+      const siblings = Array.from(row.querySelectorAll<HTMLElement>(":scope > [data-slot=canvas-node]"))
+      const index = siblings.indexOf(node)
+      let target: CanvasTarget | null = null
+      if (direction === "up") {
+        const first = siblings[0]
+        // Already alone at the top of its row: hop above the previous row instead.
+        if (siblings.length === 1) {
+          const rows = Array.from(root.querySelectorAll<HTMLElement>("[data-slot=canvas-row]"))
+          const prev = rows[rows.indexOf(row) - 1]?.querySelector<HTMLElement>("[data-slot=canvas-node]")
+          if (!prev) return
+          target = { type: "node", id: prev.dataset.value ?? "", edge: "top" }
+        } else target = { type: "node", id: first.dataset.value ?? "", edge: "top" }
+      } else if (direction === "down") {
+        const last = siblings[siblings.length - 1]
+        if (siblings.length === 1) {
+          const rows = Array.from(root.querySelectorAll<HTMLElement>("[data-slot=canvas-row]"))
+          const next = rows[rows.indexOf(row) + 1]?.querySelector<HTMLElement>("[data-slot=canvas-node]")
+          if (!next) return
+          target = { type: "node", id: next.dataset.value ?? "", edge: "bottom" }
+        } else target = { type: "node", id: last.dataset.value ?? "", edge: "bottom" }
+      } else {
+        const neighbour = siblings[direction === "left" ? index - 1 : index + 1]
+        if (!neighbour) return
+        target = { type: "node", id: neighbour.dataset.value ?? "", edge: direction }
+      }
+      // A vertical drop on the node itself means "pull me out into a new row"; horizontal is a no-op.
+      if (target.type === "node" && target.id === nodeId && (target.edge === "left" || target.edge === "right")) return
+      onDropRef.current?.({ source: { type: "node", id: nodeId }, target })
+      setAnnouncement(`Moved ${nodeId} ${direction}.`)
+      const nodeSelector = `[data-slot=canvas-node][data-value="${cssEscape(nodeId)}"]`
+      focusLater(`${nodeSelector} [data-slot=canvas-node-handle]`, nodeSelector)
+    },
+    [setAnnouncement]
+  )
 
-  const dropFromPalette = React.useCallback((data: unknown) => {
-    onDropRef.current?.({ source: { type: "palette", data }, target: { type: "area" } })
-    setAnnouncement("Added to the canvas.")
-  }, [])
+  const dropFromPalette = React.useCallback(
+    (data: unknown) => {
+      onDropRef.current?.({ source: { type: "palette", data }, target: { type: "area" } })
+      setAnnouncement("Added to the canvas.")
+    },
+    [setAnnouncement]
+  )
 
   React.useEffect(
     () =>

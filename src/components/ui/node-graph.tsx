@@ -283,7 +283,7 @@ function NodeGraph({
   const [draggingNodes, setDraggingNodes] = React.useState(false)
   const [panning, setPanning] = React.useState(false)
   const [spaceHeld, setSpaceHeld] = React.useState(false)
-  const { message: announcement, announce: setAnnouncement } = useLiveRegion()
+  const { message: announcement, announce } = useLiveRegion()
   const spaceRef = React.useRef(false)
   React.useEffect(() => {
     const down = (event: KeyboardEvent) => {
@@ -360,8 +360,6 @@ function NodeGraph({
     },
     [setSelectionState]
   )
-
-  const announce = React.useCallback((message: string) => setAnnouncement(message), [])
 
   const screenToGraph = React.useCallback((client: XY): XY => {
     const rect = viewportRef.current?.getBoundingClientRect()

@@ -140,56 +140,62 @@ function Kanban({
   const callbacks = React.useRef({ onCardMove, onColumnMove })
   callbacks.current = { onCardMove, onColumnMove }
 
-  const grab = React.useCallback((item: KanbanGrabbed | null) => {
-    setGrabbed(item)
-    setAnnouncement(
-      item
-        ? `Picked up ${item.type} ${item.id}. Use the arrow keys to move, Space or Enter to drop, Escape to cancel.`
-        : "Dropped."
-    )
-  }, [])
+  const grab = React.useCallback(
+    (item: KanbanGrabbed | null) => {
+      setGrabbed(item)
+      setAnnouncement(
+        item
+          ? `Picked up ${item.type} ${item.id}. Use the arrow keys to move, Space or Enter to drop, Escape to cancel.`
+          : "Dropped."
+      )
+    },
+    [setAnnouncement]
+  )
 
-  const moveByKey = React.useCallback((item: KanbanGrabbed, direction: "up" | "down" | "left" | "right") => {
-    const root = ref.current
-    if (!root) return
-    const columnEls = Array.from(root.querySelectorAll<HTMLElement>("[data-slot=kanban-column]"))
-    const columnIds = columnEls.map((el) => el.dataset.value ?? "")
-    const columnName = (el: HTMLElement) =>
-      el.querySelector("[data-slot=kanban-column-title]")?.textContent ?? el.dataset.value
+  const moveByKey = React.useCallback(
+    (item: KanbanGrabbed, direction: "up" | "down" | "left" | "right") => {
+      const root = ref.current
+      if (!root) return
+      const columnEls = Array.from(root.querySelectorAll<HTMLElement>("[data-slot=kanban-column]"))
+      const columnIds = columnEls.map((el) => el.dataset.value ?? "")
+      const columnName = (el: HTMLElement) =>
+        el.querySelector("[data-slot=kanban-column-title]")?.textContent ?? el.dataset.value
 
-    if (item.type === "column") {
-      const fromIndex = columnIds.indexOf(item.id)
-      const toIndex = direction === "left" ? fromIndex - 1 : direction === "right" ? fromIndex + 1 : fromIndex
-      if (fromIndex < 0 || toIndex === fromIndex || toIndex < 0 || toIndex >= columnIds.length) return
-      callbacks.current.onColumnMove?.({ columnId: item.id, fromIndex, toIndex })
-      setAnnouncement(`Moved column to position ${toIndex + 1} of ${columnIds.length}.`)
-      focusLater(`[data-slot=kanban-column][data-value="${cssEscape(item.id)}"] [data-slot=kanban-column-handle]`)
-      return
-    }
+      if (item.type === "column") {
+        const fromIndex = columnIds.indexOf(item.id)
+        const toIndex = direction === "left" ? fromIndex - 1 : direction === "right" ? fromIndex + 1 : fromIndex
+        if (fromIndex < 0 || toIndex === fromIndex || toIndex < 0 || toIndex >= columnIds.length) return
+        callbacks.current.onColumnMove?.({ columnId: item.id, fromIndex, toIndex })
+        setAnnouncement(`Moved column to position ${toIndex + 1} of ${columnIds.length}.`)
+        focusLater(`[data-slot=kanban-column][data-value="${cssEscape(item.id)}"] [data-slot=kanban-column-handle]`)
+        return
+      }
 
-    const fromColumnEl = columnEls.find((el) => cardsOf(el).some((c) => c.dataset.value === item.id))
-    if (!fromColumnEl) return
-    const fromColumnId = fromColumnEl.dataset.value ?? ""
-    const fromCards = cardsOf(fromColumnEl)
-    const fromIndex = fromCards.findIndex((c) => c.dataset.value === item.id)
-    let toColumnId = fromColumnId
-    let toIndex = fromIndex
-    if (direction === "up" || direction === "down") {
-      toIndex = direction === "up" ? fromIndex - 1 : fromIndex + 1
-      if (toIndex < 0 || toIndex >= fromCards.length) return
-    } else {
-      const ci = columnIds.indexOf(fromColumnId)
-      const targetEl = columnEls[direction === "left" ? ci - 1 : ci + 1]
-      if (!targetEl) return
-      toColumnId = targetEl.dataset.value ?? ""
-      toIndex = Math.min(fromIndex, cardsOf(targetEl).length)
-    }
-    callbacks.current.onCardMove?.({ cardId: item.id, fromColumnId, toColumnId, fromIndex, toIndex })
-    const targetEl = columnEls[columnIds.indexOf(toColumnId)]
-    const count = toColumnId === fromColumnId ? fromCards.length : cardsOf(targetEl).length + 1
-    setAnnouncement(`Moved to ${columnName(targetEl)}, position ${toIndex + 1} of ${count}.`)
-    focusLater(`[data-slot=kanban-card][data-value="${cssEscape(item.id)}"]`)
-  }, [])
+      const fromColumnEl = columnEls.find((el) => cardsOf(el).some((c) => c.dataset.value === item.id))
+      if (!fromColumnEl) return
+      const fromColumnId = fromColumnEl.dataset.value ?? ""
+      const fromCards = cardsOf(fromColumnEl)
+      const fromIndex = fromCards.findIndex((c) => c.dataset.value === item.id)
+      let toColumnId = fromColumnId
+      let toIndex = fromIndex
+      if (direction === "up" || direction === "down") {
+        toIndex = direction === "up" ? fromIndex - 1 : fromIndex + 1
+        if (toIndex < 0 || toIndex >= fromCards.length) return
+      } else {
+        const ci = columnIds.indexOf(fromColumnId)
+        const targetEl = columnEls[direction === "left" ? ci - 1 : ci + 1]
+        if (!targetEl) return
+        toColumnId = targetEl.dataset.value ?? ""
+        toIndex = Math.min(fromIndex, cardsOf(targetEl).length)
+      }
+      callbacks.current.onCardMove?.({ cardId: item.id, fromColumnId, toColumnId, fromIndex, toIndex })
+      const targetEl = columnEls[columnIds.indexOf(toColumnId)]
+      const count = toColumnId === fromColumnId ? fromCards.length : cardsOf(targetEl).length + 1
+      setAnnouncement(`Moved to ${columnName(targetEl)}, position ${toIndex + 1} of ${count}.`)
+      focusLater(`[data-slot=kanban-card][data-value="${cssEscape(item.id)}"]`)
+    },
+    [setAnnouncement]
+  )
 
   React.useEffect(() => {
     const root = ref.current

@@ -38,6 +38,14 @@ every Radix-backed component to `@ark-ui/react` as its backing primitive, one co
 - Publishing: `npm publish --access public` (prepublishOnly runs `check`). The demo repo does not
   use the CLI; it aliases the package source.
 
+## Lint policy
+`npm run lint` runs oxlint with `--deny-warnings`, so any warning fails the check and the publish.
+`react-hooks/exhaustive-deps` is an error. The React Compiler advisory rules (`react/refs`,
+`react/immutability`, `react/set-state-in-effect`, `react/purity`, `react/use-memo`) and the
+Fast Refresh rule `react/only-export-components` are off: this library is not compiled by the
+React Compiler, uses the latest-ref pattern deliberately, and its files export hooks and helpers
+next to components by design.
+
 ## Porting rules
 - **Feature parity** with the shadcn original: same exported names, same props surface
   where Ark supports it, same visual result, same variants.

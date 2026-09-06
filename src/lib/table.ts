@@ -305,7 +305,7 @@ export function useTable<TData>(options: TableOptions<TData>): Table<TData> {
       }
       return row
     })
-  }, [data, getRowId, columns, columnById, enableRowSelection])
+  }, [data, getRowId, columnById, enableRowSelection])
 
   /* Filtering */
   const globallyFilteredRows = React.useMemo(() => {

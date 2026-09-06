@@ -111,7 +111,8 @@ function MenubarMenu({
   const ctx = useMenubar("MenubarMenu")
   const generated = React.useId()
   const id = valueProp ?? generated
-  React.useEffect(() => ctx.register(id), [ctx.register, id])
+  const { register } = ctx
+  React.useEffect(() => register(id), [register, id])
   return (
     <MenubarMenuContext.Provider value={id}>
       <MenubarPrimitive.Root

@@ -188,8 +188,7 @@ function Gantt({
   /* Interaction */
   const [interaction, setInteraction] = React.useState<Interaction | null>(null)
   const [grabbed, setGrabbed] = React.useState<string | null>(null)
-  const { message: announcement, announce: setAnnouncement } = useLiveRegion()
-  const announce = React.useCallback((message: string) => setAnnouncement(message), [])
+  const { message: announcement, announce } = useLiveRegion()
   const onBarChangeRef = React.useRef(onBarChange)
   React.useEffect(() => {
     onBarChangeRef.current = onBarChange
