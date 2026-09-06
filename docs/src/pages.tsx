@@ -171,7 +171,7 @@ function ComponentPreview({ name, example }: { name: string; example: ReturnType
           data-slot="docs-preview"
           className={cn(
             "flex min-h-72 items-center justify-center rounded-lg border p-8",
-            wide.has(name) && "min-h-96 items-stretch p-4 *:min-w-0 *:flex-1"
+            wide.has(name) && "min-h-96 p-4 *:min-w-0 *:flex-1"
           )}
         >
           {Example ? <Example /> : <span className="text-sm text-muted-foreground">Loading…</span>}
