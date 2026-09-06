@@ -121,9 +121,19 @@ for (const source of sources) {
   }
 }
 
+// Write in place (no rm -rf): the docs dev server watches this folder, and a moment with
+// index.json missing leaves its module graph broken until a restart. Stale items are pruned.
 const out = join(root, "registry")
-rmSync(out, { recursive: true, force: true })
 mkdirSync(join(out, "items"), { recursive: true })
+const expected = new Set(items.map((item) => join(out, "items", `${item.name}.json`)))
+const prune = (dir) => {
+  for (const entry of readdirSync(dir, { withFileTypes: true })) {
+    const full = join(dir, entry.name)
+    if (entry.isDirectory()) prune(full)
+    else if (!expected.has(full)) rmSync(full)
+  }
+}
+prune(join(out, "items"))
 for (const item of items) {
   mkdirSync(join(out, "items", dirname(item.name)), { recursive: true })
   writeFileSync(join(out, "items", `${item.name}.json`), JSON.stringify(item, null, 2) + "\n")
