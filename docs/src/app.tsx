@@ -7,7 +7,7 @@ import { ComponentPage, ComponentsIndex, GuidePage, Home, NotFound, OutlineProvi
 import { RouterProvider, useRoute } from "./router"
 
 function Routes() {
-  const { path } = useRoute()
+  const { path, navigate } = useRoute()
   const [outline, setOutline] = React.useState<React.ReactNode>(null)
   const component = path.match(/^\/docs\/components\/([a-z0-9-]+)$/)?.[1]
   let page: React.ReactNode
@@ -17,7 +17,7 @@ function Routes() {
   else if (path.startsWith("/docs")) page = <GuidePage path={path} />
   else page = <NotFound />
   return (
-    <RouterProvider value={{ path, navigate: useRoute().navigate }}>
+    <RouterProvider value={{ path, navigate }}>
       <OutlineProvider value={setOutline}>
         <Layout outline={outline}>{page}</Layout>
       </OutlineProvider>
