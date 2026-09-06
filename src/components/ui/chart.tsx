@@ -20,6 +20,7 @@ export type ChartConfig = Record<
 >
 
 type ChartContextProps = {
+  /** Series config: label, icon, and color (or theme colors) per data key; exposed as `--color-<key>`. */
   config: ChartConfig
 }
 
@@ -43,8 +44,10 @@ function ChartContainer({
   initialDimension = INITIAL_DIMENSION,
   ...props
 }: React.ComponentProps<"div"> & {
+  /** Series config: label, icon, and color (or theme colors) per data key; exposed as `--color-<key>`. */
   config: ChartConfig
   children: React.ComponentProps<typeof RechartsPrimitive.ResponsiveContainer>["children"]
+  /** Width and height used before the container measures itself. */
   initialDimension?: {
     width: number
     height: number
@@ -120,10 +123,15 @@ function ChartTooltipContent({
   labelKey,
 }: React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
   React.ComponentProps<"div"> & {
+    /** Hide the tooltip label. */
     hideLabel?: boolean
+    /** Hide the color indicator in each row. */
     hideIndicator?: boolean
+    /** Indicator style: `dot`, `line`, or `dashed`. */
     indicator?: "line" | "dot" | "dashed"
+    /** Data key used for the series name. */
     nameKey?: string
+    /** Data key used for the tooltip label. */
     labelKey?: string
   } & Omit<RechartsPrimitive.DefaultTooltipContentProps<TooltipValueType, TooltipNameType>, "accessibilityLayer">) {
   const { config } = useChart()
@@ -238,7 +246,9 @@ function ChartLegendContent({
   verticalAlign = "bottom",
   nameKey,
 }: React.ComponentProps<"div"> & {
+  /** Hide the series icon. */
   hideIcon?: boolean
+  /** Data key used for the series name. */
   nameKey?: string
 } & RechartsPrimitive.DefaultLegendContentProps) {
   const { config } = useChart()

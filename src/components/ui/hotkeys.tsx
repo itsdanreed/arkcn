@@ -108,6 +108,7 @@ function formatHotkey(hotkey: string, mac = isMac()): string[][] {
 
 type HotkeyEntry = {
   id: string
+  /** Key combination such as `mod+k`, or a sequence such as `g d`. */
   hotkey: string
   label: string
   group: string
@@ -152,6 +153,7 @@ function HotkeysProvider({
   children: React.ReactNode
   /** Opens the shortcuts dialog; `null` disables it. */
   dialogHotkey?: string | null
+  /** Milliseconds allowed between keys of a sequence. */
   sequenceTimeout?: number
 }) {
   const [entries, setEntries] = React.useState<HotkeyEntry[]>([])
@@ -222,6 +224,7 @@ function HotkeysProvider({
 
 /** Register a hotkey for the lifetime of the component. Listed in `HotkeysDialog` when it has a label. */
 function useHotkey(
+  /** Key combination such as `mod+k`, or a sequence such as `g d`. */
   hotkey: string,
   handler: (event: KeyboardEvent) => void,
   options: { label?: string; group?: string; enabled?: boolean; allowInInput?: boolean } = {}

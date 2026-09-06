@@ -183,6 +183,7 @@ function valueLabel(rule: QueryRule, field: QueryField | undefined): string {
 
 /** Natural-language sentence, e.g. "Status is Active and Created is after 2026-01-01". */
 function describeQuery(
+  /** The group node this part renders. */
   group: QueryGroup,
   { fields, operators = defaultOperators }: DescribeOptions,
   depth = 0
@@ -215,7 +216,9 @@ function pruneQuery(group: QueryGroup, operators = defaultOperators): QueryGroup
  * ------------------------------------------------------------------------- */
 
 type QueryBuilderContextValue = {
+  /** Fields the user can filter on: `{ name, label, type, options, operators, placeholder }`. */
   fields: QueryField[]
+  /** Operator definitions; defaults to `defaultOperators`. */
   operators: QueryOperator[]
   value: QueryGroup
   disabled: boolean
@@ -263,7 +266,9 @@ function QueryBuilder({
   children,
   ...props
 }: Omit<React.ComponentProps<"div">, "defaultValue" | "onChange"> & {
+  /** Fields the user can filter on: `{ name, label, type, options, operators, placeholder }`. */
   fields: QueryField[]
+  /** Operator definitions; defaults to `defaultOperators`. */
   operators?: QueryOperator[]
   value?: QueryGroup
   defaultValue?: QueryGroup
@@ -412,6 +417,7 @@ function QueryBuilderMatch({
 }: Omit<React.ComponentProps<typeof Select>, "collection" | "value" | "onValueChange"> & {
   /** Text before the select. Defaults to "Match" at the top level and "Where" in nested groups. */
   before?: React.ReactNode
+  /** Text rendered after the match select. */
   after?: React.ReactNode
 }) {
   const { setMatch, disabled } = useQueryBuilder()
@@ -580,6 +586,7 @@ function QueryBuilderOperatorSelect({ className, ...props }: PickerProps & { cla
 }
 
 type ValueEditorRenderProps = {
+  /** The rule node this part renders. */
   rule: QueryRule
   field: QueryField | undefined
   operator: QueryOperator | undefined

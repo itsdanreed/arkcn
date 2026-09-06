@@ -18,6 +18,7 @@
           "name": "opts",
           "type": "Partial<OptionsType>",
           "required": false,
+          "description": "Embla carousel options.",
           "from": "arkcn"
         },
         {
@@ -25,36 +26,42 @@
           "type": "\"horizontal\" | \"vertical\"",
           "required": false,
           "default": "\"horizontal\"",
+          "description": "Layout direction of the part.",
           "from": "arkcn"
         },
         {
           "name": "plugins",
           "type": "CreatePluginType<LoosePluginType, {}>[]",
           "required": false,
+          "description": "Embla plugins.",
           "from": "arkcn"
         },
         {
           "name": "setApi",
           "type": "((api: EmblaCarouselType | undefined) => void)",
           "required": false,
+          "description": "Receives the Embla API once the carousel mounts.",
           "from": "arkcn"
         },
         {
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -66,18 +73,21 @@
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -89,18 +99,21 @@
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -112,6 +125,7 @@
           "name": "asChild",
           "type": "boolean",
           "required": false,
+          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
           "from": "arkcn"
         },
         {
@@ -119,6 +133,7 @@
           "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
           "required": false,
           "default": "\"icon-sm\"",
+          "description": "Size variant; sets a `data-size` attribute.",
           "from": "arkcn"
         },
         {
@@ -126,24 +141,28 @@
           "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
           "required": false,
           "default": "\"outline\"",
+          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
           "from": "arkcn"
         },
         {
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -155,6 +174,7 @@
           "name": "asChild",
           "type": "boolean",
           "required": false,
+          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
           "from": "arkcn"
         },
         {
@@ -162,6 +182,7 @@
           "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
           "required": false,
           "default": "\"icon-sm\"",
+          "description": "Size variant; sets a `data-size` attribute.",
           "from": "arkcn"
         },
         {
@@ -169,24 +190,28 @@
           "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
           "required": false,
           "default": "\"outline\"",
+          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
           "from": "arkcn"
         },
         {
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -203,7 +228,7 @@
   "files": [
     {
       "path": "components/ui/carousel.tsx",
-      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport useEmblaCarousel, { type UseEmblaCarouselType } from \"embla-carousel-react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { ChevronLeftIcon, ChevronRightIcon } from \"lucide-react\"\n\ntype CarouselApi = UseEmblaCarouselType[1]\ntype UseCarouselParameters = Parameters<typeof useEmblaCarousel>\ntype CarouselOptions = UseCarouselParameters[0]\ntype CarouselPlugin = UseCarouselParameters[1]\n\ntype CarouselProps = {\n  opts?: CarouselOptions\n  plugins?: CarouselPlugin\n  orientation?: \"horizontal\" | \"vertical\"\n  setApi?: (api: CarouselApi) => void\n}\n\ntype CarouselContextProps = {\n  carouselRef: ReturnType<typeof useEmblaCarousel>[0]\n  api: ReturnType<typeof useEmblaCarousel>[1]\n  scrollPrev: () => void\n  scrollNext: () => void\n  canScrollPrev: boolean\n  canScrollNext: boolean\n} & CarouselProps\n\nconst CarouselContext = React.createContext<CarouselContextProps | null>(null)\n\nfunction useCarousel() {\n  const context = React.useContext(CarouselContext)\n\n  if (!context) {\n    throw new Error(\"useCarousel must be used within a <Carousel />\")\n  }\n\n  return context\n}\n\nfunction Carousel({\n  orientation = \"horizontal\",\n  opts,\n  setApi,\n  plugins,\n  className,\n  children,\n  ...props\n}: React.ComponentProps<\"div\"> & CarouselProps) {\n  const [carouselRef, api] = useEmblaCarousel(\n    {\n      ...opts,\n      axis: orientation === \"horizontal\" ? \"x\" : \"y\",\n    },\n    plugins\n  )\n  const [canScrollPrev, setCanScrollPrev] = React.useState(false)\n  const [canScrollNext, setCanScrollNext] = React.useState(false)\n\n  const onSelect = React.useCallback((api: CarouselApi) => {\n    if (!api) return\n    setCanScrollPrev(api.canScrollPrev())\n    setCanScrollNext(api.canScrollNext())\n  }, [])\n\n  const scrollPrev = React.useCallback(() => {\n    api?.scrollPrev()\n  }, [api])\n\n  const scrollNext = React.useCallback(() => {\n    api?.scrollNext()\n  }, [api])\n\n  const handleKeyDown = React.useCallback(\n    (event: React.KeyboardEvent<HTMLDivElement>) => {\n      if (event.key === \"ArrowLeft\") {\n        event.preventDefault()\n        scrollPrev()\n      } else if (event.key === \"ArrowRight\") {\n        event.preventDefault()\n        scrollNext()\n      }\n    },\n    [scrollPrev, scrollNext]\n  )\n\n  React.useEffect(() => {\n    if (!api || !setApi) return\n    setApi(api)\n  }, [api, setApi])\n\n  React.useEffect(() => {\n    if (!api) return\n    onSelect(api)\n    api.on(\"reInit\", onSelect)\n    api.on(\"select\", onSelect)\n\n    return () => {\n      api?.off(\"select\", onSelect)\n    }\n  }, [api, onSelect])\n\n  return (\n    <CarouselContext.Provider\n      value={{\n        carouselRef,\n        api: api,\n        opts,\n        orientation: orientation || (opts?.axis === \"y\" ? \"vertical\" : \"horizontal\"),\n        scrollPrev,\n        scrollNext,\n        canScrollPrev,\n        canScrollNext,\n      }}\n    >\n      <div\n        onKeyDownCapture={handleKeyDown}\n        className={cn(\"relative\", className)}\n        role=\"region\"\n        aria-roledescription=\"carousel\"\n        data-slot=\"carousel\"\n        {...props}\n      >\n        {children}\n      </div>\n    </CarouselContext.Provider>\n  )\n}\n\nfunction CarouselContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  const { carouselRef, orientation } = useCarousel()\n\n  return (\n    <div ref={carouselRef} className=\"overflow-hidden\" data-slot=\"carousel-content\">\n      <div className={cn(\"flex\", orientation === \"horizontal\" ? \"-ml-4\" : \"-mt-4 flex-col\", className)} {...props} />\n    </div>\n  )\n}\n\nfunction CarouselItem({ className, ...props }: React.ComponentProps<\"div\">) {\n  const { orientation } = useCarousel()\n\n  return (\n    <div\n      role=\"group\"\n      aria-roledescription=\"slide\"\n      data-slot=\"carousel-item\"\n      className={cn(\"min-w-0 shrink-0 grow-0 basis-full\", orientation === \"horizontal\" ? \"pl-4\" : \"pt-4\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction CarouselPrevious({\n  className,\n  variant = \"outline\",\n  size = \"icon-sm\",\n  asChild,\n  children,\n  ...props\n}: React.ComponentProps<typeof Button>) {\n  const { orientation, scrollPrev, canScrollPrev } = useCarousel()\n\n  return (\n    <Button\n      data-slot=\"carousel-previous\"\n      variant={variant}\n      size={size}\n      className={cn(\n        \"absolute touch-manipulation rounded-full\",\n        orientation === \"horizontal\" ? \"inset-y-0 -left-12 my-auto\" : \"-top-12 left-1/2 -translate-x-1/2 rotate-90\",\n        className\n      )}\n      disabled={!canScrollPrev}\n      onClick={scrollPrev}\n      asChild={asChild}\n      {...props}\n    >\n      {asChild\n        ? children\n        : (children ?? (\n            <>\n              <ChevronLeftIcon />\n              <span className=\"sr-only\">Previous slide</span>\n            </>\n          ))}\n    </Button>\n  )\n}\n\nfunction CarouselNext({\n  className,\n  variant = \"outline\",\n  size = \"icon-sm\",\n  asChild,\n  children,\n  ...props\n}: React.ComponentProps<typeof Button>) {\n  const { orientation, scrollNext, canScrollNext } = useCarousel()\n\n  return (\n    <Button\n      data-slot=\"carousel-next\"\n      variant={variant}\n      size={size}\n      className={cn(\n        \"absolute touch-manipulation rounded-full\",\n        orientation === \"horizontal\" ? \"inset-y-0 -right-12 my-auto\" : \"-bottom-12 left-1/2 -translate-x-1/2 rotate-90\",\n        className\n      )}\n      disabled={!canScrollNext}\n      onClick={scrollNext}\n      asChild={asChild}\n      {...props}\n    >\n      {asChild\n        ? children\n        : (children ?? (\n            <>\n              <ChevronRightIcon />\n              <span className=\"sr-only\">Next slide</span>\n            </>\n          ))}\n    </Button>\n  )\n}\n\nexport { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, useCarousel }\n"
+      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport useEmblaCarousel, { type UseEmblaCarouselType } from \"embla-carousel-react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { ChevronLeftIcon, ChevronRightIcon } from \"lucide-react\"\n\ntype CarouselApi = UseEmblaCarouselType[1]\ntype UseCarouselParameters = Parameters<typeof useEmblaCarousel>\ntype CarouselOptions = UseCarouselParameters[0]\ntype CarouselPlugin = UseCarouselParameters[1]\n\ntype CarouselProps = {\n  /** Embla carousel options. */\n  opts?: CarouselOptions\n  /** Embla plugins. */\n  plugins?: CarouselPlugin\n  orientation?: \"horizontal\" | \"vertical\"\n  /** Receives the Embla API once the carousel mounts. */\n  setApi?: (api: CarouselApi) => void\n}\n\ntype CarouselContextProps = {\n  carouselRef: ReturnType<typeof useEmblaCarousel>[0]\n  api: ReturnType<typeof useEmblaCarousel>[1]\n  scrollPrev: () => void\n  scrollNext: () => void\n  canScrollPrev: boolean\n  canScrollNext: boolean\n} & CarouselProps\n\nconst CarouselContext = React.createContext<CarouselContextProps | null>(null)\n\nfunction useCarousel() {\n  const context = React.useContext(CarouselContext)\n\n  if (!context) {\n    throw new Error(\"useCarousel must be used within a <Carousel />\")\n  }\n\n  return context\n}\n\nfunction Carousel({\n  orientation = \"horizontal\",\n  opts,\n  setApi,\n  plugins,\n  className,\n  children,\n  ...props\n}: React.ComponentProps<\"div\"> & CarouselProps) {\n  const [carouselRef, api] = useEmblaCarousel(\n    {\n      ...opts,\n      axis: orientation === \"horizontal\" ? \"x\" : \"y\",\n    },\n    plugins\n  )\n  const [canScrollPrev, setCanScrollPrev] = React.useState(false)\n  const [canScrollNext, setCanScrollNext] = React.useState(false)\n\n  const onSelect = React.useCallback((api: CarouselApi) => {\n    if (!api) return\n    setCanScrollPrev(api.canScrollPrev())\n    setCanScrollNext(api.canScrollNext())\n  }, [])\n\n  const scrollPrev = React.useCallback(() => {\n    api?.scrollPrev()\n  }, [api])\n\n  const scrollNext = React.useCallback(() => {\n    api?.scrollNext()\n  }, [api])\n\n  const handleKeyDown = React.useCallback(\n    (event: React.KeyboardEvent<HTMLDivElement>) => {\n      if (event.key === \"ArrowLeft\") {\n        event.preventDefault()\n        scrollPrev()\n      } else if (event.key === \"ArrowRight\") {\n        event.preventDefault()\n        scrollNext()\n      }\n    },\n    [scrollPrev, scrollNext]\n  )\n\n  React.useEffect(() => {\n    if (!api || !setApi) return\n    setApi(api)\n  }, [api, setApi])\n\n  React.useEffect(() => {\n    if (!api) return\n    onSelect(api)\n    api.on(\"reInit\", onSelect)\n    api.on(\"select\", onSelect)\n\n    return () => {\n      api?.off(\"select\", onSelect)\n    }\n  }, [api, onSelect])\n\n  return (\n    <CarouselContext.Provider\n      value={{\n        carouselRef,\n        api: api,\n        opts,\n        orientation: orientation || (opts?.axis === \"y\" ? \"vertical\" : \"horizontal\"),\n        scrollPrev,\n        scrollNext,\n        canScrollPrev,\n        canScrollNext,\n      }}\n    >\n      <div\n        onKeyDownCapture={handleKeyDown}\n        className={cn(\"relative\", className)}\n        role=\"region\"\n        aria-roledescription=\"carousel\"\n        data-slot=\"carousel\"\n        {...props}\n      >\n        {children}\n      </div>\n    </CarouselContext.Provider>\n  )\n}\n\nfunction CarouselContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  const { carouselRef, orientation } = useCarousel()\n\n  return (\n    <div ref={carouselRef} className=\"overflow-hidden\" data-slot=\"carousel-content\">\n      <div className={cn(\"flex\", orientation === \"horizontal\" ? \"-ml-4\" : \"-mt-4 flex-col\", className)} {...props} />\n    </div>\n  )\n}\n\nfunction CarouselItem({ className, ...props }: React.ComponentProps<\"div\">) {\n  const { orientation } = useCarousel()\n\n  return (\n    <div\n      role=\"group\"\n      aria-roledescription=\"slide\"\n      data-slot=\"carousel-item\"\n      className={cn(\"min-w-0 shrink-0 grow-0 basis-full\", orientation === \"horizontal\" ? \"pl-4\" : \"pt-4\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction CarouselPrevious({\n  className,\n  variant = \"outline\",\n  size = \"icon-sm\",\n  asChild,\n  children,\n  ...props\n}: React.ComponentProps<typeof Button>) {\n  const { orientation, scrollPrev, canScrollPrev } = useCarousel()\n\n  return (\n    <Button\n      data-slot=\"carousel-previous\"\n      variant={variant}\n      size={size}\n      className={cn(\n        \"absolute touch-manipulation rounded-full\",\n        orientation === \"horizontal\" ? \"inset-y-0 -left-12 my-auto\" : \"-top-12 left-1/2 -translate-x-1/2 rotate-90\",\n        className\n      )}\n      disabled={!canScrollPrev}\n      onClick={scrollPrev}\n      asChild={asChild}\n      {...props}\n    >\n      {asChild\n        ? children\n        : (children ?? (\n            <>\n              <ChevronLeftIcon />\n              <span className=\"sr-only\">Previous slide</span>\n            </>\n          ))}\n    </Button>\n  )\n}\n\nfunction CarouselNext({\n  className,\n  variant = \"outline\",\n  size = \"icon-sm\",\n  asChild,\n  children,\n  ...props\n}: React.ComponentProps<typeof Button>) {\n  const { orientation, scrollNext, canScrollNext } = useCarousel()\n\n  return (\n    <Button\n      data-slot=\"carousel-next\"\n      variant={variant}\n      size={size}\n      className={cn(\n        \"absolute touch-manipulation rounded-full\",\n        orientation === \"horizontal\" ? \"inset-y-0 -right-12 my-auto\" : \"-bottom-12 left-1/2 -translate-x-1/2 rotate-90\",\n        className\n      )}\n      disabled={!canScrollNext}\n      onClick={scrollNext}\n      asChild={asChild}\n      {...props}\n    >\n      {asChild\n        ? children\n        : (children ?? (\n            <>\n              <ChevronRightIcon />\n              <span className=\"sr-only\">Next slide</span>\n            </>\n          ))}\n    </Button>\n  )\n}\n\nexport { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, useCarousel }\n"
     }
   ]
 }

@@ -31,6 +31,7 @@ function Attachment({
   ...props
 }: React.ComponentProps<"div"> &
   VariantProps<typeof attachmentVariants> & {
+    /** Upload state: `idle`, `uploading`, `processing`, `error`, or `done`; sets `data-state`. */
     state?: "idle" | "uploading" | "processing" | "error" | "done"
   }) {
   return (

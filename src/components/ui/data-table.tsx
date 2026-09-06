@@ -221,9 +221,11 @@ function DataTableFacetedFilter<TData, TValue>({
   options,
 }: {
   table?: DataTableInstance<TData>
+  /** Id of the column this filter applies to. */
   columnId?: string
   column?: DataTableColumn<TData, TValue>
   title?: string
+  /** Facet options as `{ value, label, icon? }`. */
   options: FacetOption[]
 }) {
   const table = useDataTableContext(tableProp)
@@ -581,6 +583,7 @@ function DataTableBody<TData>({
   ...props
 }: Omit<React.ComponentProps<typeof TableBody>, "children"> & {
   table?: DataTableInstance<TData>
+  /** Content shown when there are no rows. */
   empty?: React.ReactNode
   children: (row: DataTableRowInstance<TData>) => React.ReactNode
 }) {
@@ -676,6 +679,7 @@ function DataTablePageSize<TData>({
   children,
 }: {
   table?: DataTableInstance<TData>
+  /** Choices offered in the page size select. */
   pageSizes?: number[]
   className?: string
   children?: React.ReactNode
@@ -823,6 +827,7 @@ function DataTableBulkActions<TData>({
   ...props
 }: React.ComponentProps<"div"> & {
   table?: DataTableInstance<TData>
+  /** Noun used in the selection announcement, e.g. `task`. */
   entityName?: string
 }) {
   const table = useDataTableContext(tableProp)
@@ -892,6 +897,7 @@ function DataTableBulkActionsCount<TData>({
   ...props
 }: React.ComponentProps<"div"> & {
   table?: DataTableInstance<TData>
+  /** Noun used in the selection announcement, e.g. `task`. */
   entityName?: string
 }) {
   const table = useDataTableContext(tableProp)

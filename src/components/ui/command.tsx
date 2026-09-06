@@ -167,6 +167,7 @@ function CommandGroup({
   children,
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.ItemGroup> & {
+  /** Group heading text. */
   heading?: React.ReactNode
 }) {
   return (

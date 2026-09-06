@@ -63,6 +63,7 @@ type TreeSelectContextValue<T extends TreeNode = TreeNode> = {
   multiple: boolean
   selectableBranches: boolean
   closeOnSelect: boolean
+  /** Controlled open branches. */
   expandedValue: string[]
   setExpandedValue: (value: string[]) => void
   open: boolean
@@ -107,8 +108,11 @@ type TreeSelectProps<T extends TreeNode> = Omit<
   selectableBranches?: boolean
   /** Close after a pick. Defaults to `!multiple`. */
   closeOnSelect?: boolean
+  /** Controlled open branches. */
   expandedValue?: string[]
+  /** Branches open initially when uncontrolled. */
   defaultExpandedValue?: string[]
+  /** Called when branches open or close. */
   onExpandedChange?: (details: { expandedValue: string[] }) => void
   open?: boolean
   defaultOpen?: boolean
@@ -328,6 +332,7 @@ function TreeSelectValue<T extends TreeNode>({
   ...props
 }: Omit<React.ComponentProps<"span">, "children"> & {
   placeholder?: React.ReactNode
+  /** Rendered between the selected labels. */
   separator?: string
   children?: (nodes: T[]) => React.ReactNode
 }) {

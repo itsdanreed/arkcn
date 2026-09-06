@@ -26,24 +26,28 @@
           "name": "busy",
           "type": "boolean",
           "required": false,
+          "description": "Set while more items are loading; sets `aria-busy` on the feed.",
           "from": "arkcn"
         },
         {
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -55,18 +59,21 @@
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -78,18 +85,21 @@
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -101,18 +111,21 @@
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -124,18 +137,21 @@
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -147,18 +163,21 @@
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -170,18 +189,21 @@
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -193,18 +215,21 @@
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -216,18 +241,21 @@
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -239,30 +267,35 @@
           "name": "date",
           "type": "Date",
           "required": true,
+          "description": "The date this part represents.",
           "from": "arkcn"
         },
         {
           "name": "now",
           "type": "Date",
           "required": false,
+          "description": "Reference time for relative labels (defaults to the render time).",
           "from": "arkcn"
         },
         {
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -274,18 +307,21 @@
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -297,18 +333,21 @@
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -320,36 +359,42 @@
           "name": "asChild",
           "type": "boolean",
           "required": false,
+          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
           "from": "arkcn"
         },
         {
           "name": "size",
           "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
           "required": false,
+          "description": "Size variant; sets a `data-size` attribute.",
           "from": "arkcn"
         },
         {
           "name": "variant",
           "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
           "required": false,
+          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
           "from": "arkcn"
         },
         {
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]
@@ -361,18 +406,21 @@
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]

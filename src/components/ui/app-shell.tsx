@@ -60,6 +60,7 @@ type SidebarCollapsible = "offcanvas" | "icon" | "none"
 type AppShellContextValue = {
   variant: SidebarVariant
   setVariant: (variant: SidebarVariant) => void
+  /** Controlled sidebar collapse mode: `offcanvas`, `icon`, or `none`. */
   collapsible: SidebarCollapsible
   setCollapsible: (collapsible: SidebarCollapsible) => void
   searchOpen: boolean
@@ -91,10 +92,15 @@ function AppShell({
   ...sidebarProviderProps
 }: Omit<React.ComponentProps<typeof SidebarProvider>, "children"> & {
   variant?: SidebarVariant
+  /** Initial sidebar variant when uncontrolled. */
   defaultVariant?: SidebarVariant
+  /** Called when the sidebar variant changes. */
   onVariantChange?: (variant: SidebarVariant) => void
+  /** Controlled sidebar collapse mode: `offcanvas`, `icon`, or `none`. */
   collapsible?: SidebarCollapsible
+  /** Initial collapse mode when uncontrolled. */
   defaultCollapsible?: SidebarCollapsible
+  /** Called when the collapse mode changes. */
   onCollapsibleChange?: (collapsible: SidebarCollapsible) => void
   /** Toggle the search dialog with Cmd/Ctrl+K. */
   searchShortcut?: boolean
@@ -308,6 +314,7 @@ function AppShellNavCollapsible({
   active?: boolean
   defaultOpen?: boolean
   tooltip?: string
+  /** Element rendered as the trigger for the collapsible group. */
   trigger: React.ReactNode
   /** Rendered inside the flyout when the sidebar is collapsed to icons. */
   menu?: React.ReactNode
@@ -674,6 +681,7 @@ function AppShellNotificationsTrigger({
 }: React.ComponentProps<typeof Button> & {
   /** Unread count shown as a badge; hidden when 0. */
   count?: number
+  /** Cap for the badge count; larger counts render as `max+`. */
   max?: number
 }) {
   const label = count > max ? `${max}+` : String(count)
@@ -763,6 +771,7 @@ function AppShellNotificationItem({
   children,
   ...props
 }: React.ComponentProps<"li"> & {
+  /** Mark the notification unread; sets `data-unread` and shows the indicator. */
   unread?: boolean
   /** Render the item's child (e.g. an anchor or button) as the interactive surface. */
   asChild?: boolean
@@ -894,7 +903,9 @@ function AppShellThemeToggle({
   className,
   ...props
 }: Omit<React.ComponentProps<typeof Button>, "onChange"> & {
+  /** Current theme: `light`, `dark`, or `system`. */
   theme: Theme
+  /** Called with the next theme when the toggle is used. */
   onThemeChange: (theme: Theme) => void
 }) {
   return (

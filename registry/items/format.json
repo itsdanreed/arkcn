@@ -57,6 +57,7 @@
           "name": "style",
           "type": "keyof NumberFormatOptionsStyleRegistry",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "typescript"
         }
       ]

@@ -19,6 +19,7 @@ type VirtualItem = {
 type ScrollAlign = "auto" | "start" | "center" | "end"
 
 type VirtualListContextValue = {
+  /** Total number of rows. */
   count: number
   items: VirtualItem[]
   totalSize: number
@@ -28,6 +29,7 @@ type VirtualListContextValue = {
   scrollToIndex: (index: number, options?: { align?: ScrollAlign; behavior?: ScrollBehavior }) => void
   scrollToOffset: (offset: number, behavior?: ScrollBehavior) => void
   viewportRef: React.RefObject<HTMLDivElement | null>
+  /** Stable React key for a row index. */
   getItemKey: (index: number) => React.Key
 }
 
@@ -56,14 +58,19 @@ function findIndex(starts: Float64Array, count: number, offset: number) {
 /* ---------------------------------- root --------------------------------- */
 
 type VirtualListProps = Omit<React.ComponentProps<"div">, "children"> & {
+  /** Total number of rows. */
   count: number
   /** Row height before measurement (a number, or per index). */
   estimateSize?: number | ((index: number) => number)
   /** Rows rendered beyond the visible window on each side. */
   overscan?: number
+  /** Space between rows in px. */
   gap?: number
+  /** Space before the first row in px. */
   paddingStart?: number
+  /** Space after the last row in px. */
   paddingEnd?: number
+  /** Stable React key for a row index. */
   getItemKey?: (index: number) => React.Key
   /** Fires when the rendered window changes. */
   onRangeChange?: (range: { start: number; end: number } | null) => void

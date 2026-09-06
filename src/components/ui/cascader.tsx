@@ -410,6 +410,7 @@ function CascaderValue<T extends TreeNode>({
   ...props
 }: Omit<React.ComponentProps<"span">, "children"> & {
   placeholder?: React.ReactNode
+  /** Rendered between path segments. */
   separator?: React.ReactNode
   children?: (path: T[]) => React.ReactNode
 }) {

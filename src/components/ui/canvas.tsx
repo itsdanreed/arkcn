@@ -154,6 +154,7 @@ function Canvas({
           const data = source.data as DragData
           setDragging(data.type === "node" ? { type: "node", id: data.id } : { type: "palette" })
         },
+        /** Called with `{ source, target }` for every drop: a palette item or node onto a node edge or the empty area. */
         onDrop: ({ source, location }) => {
           setDragging(null)
           const data = source.data as DragData
@@ -257,6 +258,7 @@ function CanvasPaletteItem({ data, className, onKeyDown, ...props }: React.Compo
       getInitialData: (): DragData => ({ instanceId, type: "palette", data: dataRef.current }),
       onGenerateDragPreview: (args) => cloneDragPreview(args),
       onDragStart: () => setIsDragging(true),
+      /** Called with `{ source, target }` for every drop: a palette item or node onto a node edge or the empty area. */
       onDrop: () => setIsDragging(false),
     })
   }, [instanceId])
@@ -310,6 +312,7 @@ function CanvasArea({ className, ...props }: React.ComponentProps<"div">) {
           setIsOver((prev) => (prev === over ? prev : over))
         },
         onDragLeave: () => setIsOver(false),
+        /** Called with `{ source, target }` for every drop: a palette item or node onto a node edge or the empty area. */
         onDrop: () => setIsOver(false),
       }),
       autoScrollForElements({ element: el, canScroll: ({ source }) => isOwnData(instanceId, source.data) })
@@ -437,6 +440,7 @@ function CanvasNode({
           setClosestEdge((prev) => (prev === edge ? prev : edge))
         },
         onDragLeave: () => setClosestEdge(null),
+        /** Called with `{ source, target }` for every drop: a palette item or node onto a node edge or the empty area. */
         onDrop: () => setClosestEdge(null),
       }),
     ]
@@ -448,6 +452,7 @@ function CanvasNode({
           getInitialData: (): DragData => ({ instanceId, type: "node", id: value }),
           onGenerateDragPreview: (args) => cloneDragPreview(args),
           onDragStart: () => setIsDragging(true),
+          /** Called with `{ source, target }` for every drop: a palette item or node onto a node edge or the empty area. */
           onDrop: () => setIsDragging(false),
         })
       )
@@ -602,8 +607,11 @@ function CanvasResizeHandle({
   className,
   ...props
 }: Omit<React.ComponentProps<"div">, "onResize"> & {
+  /** Called while dragging with the width change as a fraction of the row width. */
   onResize: (deltaFraction: number) => void
+  /** Called once when the resize drag starts. */
   onResizeStart?: () => void
+  /** Called once when the resize drag ends. */
   onResizeEnd?: () => void
 }) {
   const row = React.useContext(RowContext)

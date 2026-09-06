@@ -14,18 +14,21 @@
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "arkcn"
         },
         {
           "name": "dir",
           "type": "Direction",
           "required": false,
+          "description": "Text direction, `ltr` or `rtl`.",
           "from": "arkcn"
         },
         {
           "name": "direction",
           "type": "Direction",
           "required": false,
+          "description": "Alias of `dir`.",
           "from": "arkcn"
         }
       ]
@@ -36,7 +39,7 @@
   "files": [
     {
       "path": "components/ui/direction.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ntype Direction = \"ltr\" | \"rtl\"\n\n/**\n * Ark UI has no global direction provider; each Ark component accepts a `dir`\n * prop and its `LocaleProvider` derives direction from a locale. This mirrors\n * Radix's `DirectionProvider`: a plain React context you can read with\n * `useDirection` and forward to Ark components as `dir`.\n */\nconst DirectionContext = React.createContext<Direction | undefined>(undefined)\n\nfunction DirectionProvider({\n  dir,\n  direction,\n  children,\n}: {\n  dir?: Direction\n  direction?: Direction\n  children?: React.ReactNode\n}) {\n  return <DirectionContext.Provider value={direction ?? dir}>{children}</DirectionContext.Provider>\n}\n\nfunction useDirection(localDir?: Direction): Direction {\n  const globalDir = React.useContext(DirectionContext)\n  return localDir ?? globalDir ?? \"ltr\"\n}\n\nexport { DirectionProvider, useDirection }\n"
+      "content": "\"use client\"\n\nimport * as React from \"react\"\n\ntype Direction = \"ltr\" | \"rtl\"\n\n/**\n * Ark UI has no global direction provider; each Ark component accepts a `dir`\n * prop and its `LocaleProvider` derives direction from a locale. This mirrors\n * Radix's `DirectionProvider`: a plain React context you can read with\n * `useDirection` and forward to Ark components as `dir`.\n */\nconst DirectionContext = React.createContext<Direction | undefined>(undefined)\n\nfunction DirectionProvider({\n  dir,\n  direction,\n  children,\n}: {\n  /** Text direction, `ltr` or `rtl`. */\n  dir?: Direction\n  /** Alias of `dir`. */\n  direction?: Direction\n  children?: React.ReactNode\n}) {\n  return <DirectionContext.Provider value={direction ?? dir}>{children}</DirectionContext.Provider>\n}\n\nfunction useDirection(localDir?: Direction): Direction {\n  const globalDir = React.useContext(DirectionContext)\n  return localDir ?? globalDir ?? \"ltr\"\n}\n\nexport { DirectionProvider, useDirection }\n"
     }
   ]
 }

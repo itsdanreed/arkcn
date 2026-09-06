@@ -127,7 +127,9 @@ function Kanban({
   children,
   ...props
 }: React.ComponentProps<"div"> & {
+  /** Called with `{ cardId, fromColumnId, toColumnId, fromIndex, toIndex }`; apply it with `moveCard`. */
   onCardMove?: (details: KanbanCardMoveDetails) => void
+  /** Called with `{ columnId, fromIndex, toIndex }`; apply it with `moveColumn`. */
   onColumnMove?: (details: KanbanColumnMoveDetails) => void
 }) {
   const [instanceId] = React.useState(() => Symbol("kanban"))
@@ -221,6 +223,7 @@ function Kanban({
           type: data.type,
           id: data.type === "card" ? data.cardId : data.columnId,
           columnId: data.type === "card" ? data.columnId : undefined,
+          /** Height of the drop slot, normally the dragged card's height. */
           height: source.element.getBoundingClientRect().height,
         })
       },

@@ -1,0 +1,71 @@
+{
+  "activity-feed": {
+    "busy": "Set while more items are loading; sets `aria-busy` on the feed.",
+    "now": "Reference time for relative labels (defaults to the render time)."
+  },
+  "app-shell": {
+    "fixed": "Pin the header, or size the main area to the viewport so the page scrolls inside it.",
+    "fluid": "Let the main area use the full width instead of the content max width.",
+    "fallback": "Text shown while the avatar image is missing or loading.",
+    "alt": "Alternative text for the avatar image.",
+    "src": "Avatar image URL."
+  },
+  "aspect-ratio": { "ratio": "Width divided by height, e.g. `16 / 9`." },
+  "calendar": { "locale": "date-fns locale for month and weekday names." },
+  "canvas": {
+    "onDrop": "Called with `{ source, target }` for every drop: a palette item or node onto a node edge or the empty area.",
+    "edge": "Which edge of the node the indicator marks.",
+    "gap": "Gap between the indicator line and the node edge.",
+    "data": "Payload passed back untouched in `onDrop` when this palette item is dropped."
+  },
+  "cascader": {
+    "depth": "Column depth, starting at 0 for the first column; sets `data-depth`.",
+    "path": "Nodes from the first level down to the matched node.",
+    "separator": "Rendered between path segments."
+  },
+  "chart": {
+    "config": "Series config: label, icon, and color (or theme colors) per data key; exposed as `--color-<key>`.",
+    "id": "Unique id for the generated style element."
+  },
+  "comment-thread": {
+    "authorId": "Id of the person who wrote the comment.",
+    "now": "Reference time for relative labels.",
+    "text": "Plain text with `@Full Name` mentions.",
+    "personId": "Id of the mentioned person.",
+    "emoji": "The reaction emoji.",
+    "count": "How many people reacted."
+  },
+  "gantt": {
+    "end": "Bar end (a whole day).",
+    "start": "Bar start (a whole day).",
+    "progress": "Completion from 0 to 100, drawn as the filled part of the bar.",
+    "links": "Dependencies as `{ from, to }` bar ids, drawn as arrows."
+  },
+  "hotkeys": { "hotkey": "Key combination such as `mod+k`, or a sequence such as `g d`." },
+  "kanban": {
+    "edge": "Which edge the indicator marks.",
+    "gap": "Gap between the indicator and the edge.",
+    "height": "Height of the drop slot, normally the dragged card's height."
+  },
+  "live-region": {
+    "message": "Text announced to screen readers.",
+    "assertive": "Use `role=\"alert\"` and `aria-live=\"assertive\"` instead of polite."
+  },
+  "node-graph": {
+    "gap": "Spacing between the port rows.",
+    "position": "Node position in graph coordinates.",
+    "connected": "Whether the port has at least one edge; sets `data-connected`."
+  },
+  "pagination": { "text": "Visible label." },
+  "popconfirm": { "showArrow": "Render the arrow pointing at the trigger." },
+  "query-builder": {
+    "group": "The group node this part renders.",
+    "rule": "The rule node this part renders."
+  },
+  "scheduler": { "end": "Event end.", "start": "Event start." },
+  "transfer-list": { "direction": "`right` moves source to target; `left` moves target to source." },
+  "tree-select": {
+    "showRemove": "Render the remove button on the chip.",
+    "indexPath": "Position of the node in the tree."
+  }
+}

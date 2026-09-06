@@ -70,6 +70,7 @@ function ContextMenuItem({
   ...props
 }: Omit<React.ComponentProps<typeof ContextMenuPrimitive.Item>, "value"> & {
   value?: string
+  /** Indent the item to align with items that have an indicator. */
   inset?: boolean
   variant?: "default" | "destructive"
 }) {
@@ -117,8 +118,10 @@ function ContextMenuCheckboxItem({
   value,
   ...props
 }: Omit<React.ComponentProps<typeof ContextMenuPrimitive.CheckboxItem>, "checked" | "value"> & {
+  /** Checked state of the item. */
   checked?: boolean
   value?: string
+  /** Indent the item to align with items that have an indicator. */
   inset?: boolean
 }) {
   const id = React.useId()
@@ -149,6 +152,7 @@ function ContextMenuRadioItem({
   inset,
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.RadioItem> & {
+  /** Indent the item to align with items that have an indicator. */
   inset?: boolean
 }) {
   return (
@@ -171,6 +175,7 @@ function ContextMenuLabel({
   inset,
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.ItemGroupLabel> & {
+  /** Indent the item to align with items that have an indicator. */
   inset?: boolean
 }) {
   return (
@@ -220,6 +225,7 @@ function ContextMenuSubTrigger({
   children,
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.TriggerItem> & {
+  /** Indent the item to align with items that have an indicator. */
   inset?: boolean
 }) {
   return (

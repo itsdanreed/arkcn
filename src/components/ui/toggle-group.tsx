@@ -9,12 +9,14 @@ import { toggleVariants } from "@/components/ui/toggle"
 
 const ToggleGroupVariantContext = React.createContext<
   VariantProps<typeof toggleVariants> & {
+    /** Gap between items; 0 joins them into one control. */
     spacing?: number
     orientation?: "horizontal" | "vertical"
   }
 >({
   size: "default",
   variant: "default",
+  /** Gap between items; 0 joins them into one control. */
   spacing: 2,
   orientation: "horizontal",
 })
@@ -29,6 +31,7 @@ function ToggleGroup({
   ...props
 }: React.ComponentProps<typeof ToggleGroupPrimitive.Root> &
   VariantProps<typeof toggleVariants> & {
+    /** Gap between items; 0 joins them into one control. */
     spacing?: number
   }) {
   return (

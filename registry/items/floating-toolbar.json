@@ -13,6 +13,7 @@
           "name": "onEscape",
           "type": "(() => void)",
           "required": false,
+          "description": "Called when Escape is pressed.",
           "from": "arkcn"
         },
         {
@@ -20,24 +21,28 @@
           "type": "boolean",
           "required": false,
           "default": "true",
+          "description": "The controlled open state.",
           "from": "arkcn"
         },
         {
           "name": "children",
           "type": "ReactNode",
           "required": false,
+          "description": "Content rendered inside the part.",
           "from": "@types/react"
         },
         {
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
         },
         {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
         }
       ]

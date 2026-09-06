@@ -249,6 +249,7 @@ function MenubarItem({
   ...props
 }: Omit<React.ComponentProps<typeof MenubarPrimitive.Item>, "value"> & {
   value?: string
+  /** Indent the item to align with items that have an indicator. */
   inset?: boolean
   variant?: "default" | "destructive"
 }) {
@@ -293,8 +294,10 @@ function MenubarCheckboxItem({
   value,
   ...props
 }: Omit<React.ComponentProps<typeof MenubarPrimitive.CheckboxItem>, "checked" | "value"> & {
+  /** Checked state of the item. */
   checked?: boolean
   value?: string
+  /** Indent the item to align with items that have an indicator. */
   inset?: boolean
 }) {
   const id = React.useId()
@@ -325,6 +328,7 @@ function MenubarRadioItem({
   inset,
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.RadioItem> & {
+  /** Indent the item to align with items that have an indicator. */
   inset?: boolean
 }) {
   return (
@@ -347,6 +351,7 @@ function MenubarLabel({
   inset,
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.ItemGroupLabel> & {
+  /** Indent the item to align with items that have an indicator. */
   inset?: boolean
 }) {
   return (
@@ -396,6 +401,7 @@ function MenubarSubTrigger({
   children,
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.TriggerItem> & {
+  /** Indent the item to align with items that have an indicator. */
   inset?: boolean
 }) {
   return (

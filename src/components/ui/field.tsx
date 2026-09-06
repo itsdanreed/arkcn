@@ -164,6 +164,7 @@ function FieldError({
   errors,
   ...props
 }: React.ComponentProps<"div"> & {
+  /** Error messages to render; a string, an array, or an object with a `message`. */
   errors?: Array<{ message?: string } | undefined>
 }) {
   const content = useMemo(() => {

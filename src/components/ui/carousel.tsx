@@ -11,9 +11,12 @@ type CarouselOptions = UseCarouselParameters[0]
 type CarouselPlugin = UseCarouselParameters[1]
 
 type CarouselProps = {
+  /** Embla carousel options. */
   opts?: CarouselOptions
+  /** Embla plugins. */
   plugins?: CarouselPlugin
   orientation?: "horizontal" | "vertical"
+  /** Receives the Embla API once the carousel mounts. */
   setApi?: (api: CarouselApi) => void
 }
 

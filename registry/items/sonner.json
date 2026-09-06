@@ -13,6 +13,7 @@
           "name": "className",
           "type": "string",
           "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "sonner"
         },
         {
@@ -109,6 +110,7 @@
           "name": "style",
           "type": "CSSProperties",
           "required": false,
+          "description": "Inline styles applied to the rendered element.",
           "from": "sonner"
         },
         {

@@ -81,16 +81,22 @@ type BarStore = ReturnType<typeof createBarStore>
 type Interaction = {
   id: string
   type: "move" | "resize-start" | "resize-end"
+  /** First date on the time scale. */
   start: Date
+  /** Last date on the time scale. */
   end: Date
 }
 
 type GanttContextValue = {
+  /** First date on the time scale. */
   start: Date
+  /** Last date on the time scale. */
   end: Date
   days: number
   dayWidth: number
+  /** Height of every row in px. */
   rowHeight: number
+  /** Width of the sticky label column in px. */
   sidebarWidth: number
   scale: GanttScale
   editable: boolean
@@ -148,19 +154,28 @@ function Gantt({
   children,
   ...props
 }: Omit<React.ComponentProps<"div">, "onChange"> & {
+  /** First date on the time scale. */
   start: Date
+  /** Last date on the time scale. */
   end: Date
   /** Pixels per day; controllable. Zooming changes it. */
   dayWidth?: number
+  /** Initial pixels per day when uncontrolled. */
   defaultDayWidth?: number
+  /** Called when the zoom changes. */
   onDayWidthChange?: (dayWidth: number) => void
+  /** Lower bound for zooming out. */
   minDayWidth?: number
+  /** Upper bound for zooming in. */
   maxDayWidth?: number
   /** Header tiers. Defaults from `dayWidth`: month below 16px, week below 32px, else day. */
   scale?: GanttScale
+  /** Height of every row in px. */
   rowHeight?: number
+  /** Width of the sticky label column in px. */
   sidebarWidth?: number
   editable?: boolean
+  /** Called with `{ id, start, end }` snapped to whole days after a move, resize, or keyboard change. */
   onBarChange?: (change: GanttBarChange) => void
 }) {
   const viewportRef = React.useRef<HTMLDivElement>(null)

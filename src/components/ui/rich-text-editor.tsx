@@ -114,13 +114,16 @@ function RichTextEditor({
 }: Omit<React.ComponentProps<"div">, "content" | "onChange"> & {
   /** Controlled HTML. Prefer `defaultContent` + `onChange` unless you need to replace the document. */
   content?: string
+  /** Initial HTML when uncontrolled. */
   defaultContent?: string
   onChange?: (change: RichTextChange) => void
   placeholder?: string
   editable?: boolean
+  /** Focus the editor on mount. */
   autofocus?: boolean
   /** Extra tiptap extensions appended to the built-in set. */
   extensions?: Extensions
+  /** Maximum characters; the count shows `data-over` past it. */
   characterLimit?: number
   /** Escape hatch for any other `useEditor` option. */
   editorOptions?: Partial<UseEditorOptions>
@@ -196,8 +199,11 @@ function RichTextEditor({
 type ActionDef = {
   label: string
   icon: React.ComponentType<{ className?: string }>
+  /** Keyboard shortcut shown in the tooltip. */
   shortcut?: string
+  /** Whether the toggle is pressed. */
   isActive?: (editor: Editor) => boolean
+  /** Whether the action can run right now; disables the control when false. */
   canRun?: (editor: Editor) => boolean
   run: (editor: Editor) => void
 }
@@ -208,133 +214,171 @@ const actions = {
   bold: {
     label: "Bold",
     icon: BoldIcon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘B",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive("bold"),
     run: (e) => chain(e).toggleBold().run(),
   },
   italic: {
     label: "Italic",
     icon: ItalicIcon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘I",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive("italic"),
     run: (e) => chain(e).toggleItalic().run(),
   },
   underline: {
     label: "Underline",
     icon: UnderlineIcon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘U",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive("underline"),
     run: (e) => chain(e).toggleUnderline().run(),
   },
   strike: {
     label: "Strikethrough",
     icon: StrikethroughIcon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘⇧S",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive("strike"),
     run: (e) => chain(e).toggleStrike().run(),
   },
   code: {
     label: "Inline code",
     icon: CodeIcon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘E",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive("code"),
     run: (e) => chain(e).toggleCode().run(),
   },
   highlight: {
     label: "Highlight",
     icon: HighlighterIcon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘⇧H",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive("highlight"),
     run: (e) => chain(e).toggleHighlight().run(),
   },
   paragraph: {
     label: "Paragraph",
     icon: PilcrowIcon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘⌥0",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive("paragraph"),
     run: (e) => chain(e).setParagraph().run(),
   },
   heading1: {
     label: "Heading 1",
     icon: Heading1Icon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘⌥1",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive("heading", { level: 1 }),
     run: (e) => chain(e).toggleHeading({ level: 1 }).run(),
   },
   heading2: {
     label: "Heading 2",
     icon: Heading2Icon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘⌥2",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive("heading", { level: 2 }),
     run: (e) => chain(e).toggleHeading({ level: 2 }).run(),
   },
   heading3: {
     label: "Heading 3",
     icon: Heading3Icon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘⌥3",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive("heading", { level: 3 }),
     run: (e) => chain(e).toggleHeading({ level: 3 }).run(),
   },
   bulletList: {
     label: "Bullet list",
     icon: ListIcon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘⇧8",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive("bulletList"),
     run: (e) => chain(e).toggleBulletList().run(),
   },
   orderedList: {
     label: "Numbered list",
     icon: ListOrderedIcon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘⇧7",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive("orderedList"),
     run: (e) => chain(e).toggleOrderedList().run(),
   },
   taskList: {
     label: "Task list",
     icon: ListChecksIcon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘⇧9",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive("taskList"),
     run: (e) => chain(e).toggleTaskList().run(),
   },
   blockquote: {
     label: "Quote",
     icon: QuoteIcon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘⇧B",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive("blockquote"),
     run: (e) => chain(e).toggleBlockquote().run(),
   },
   codeBlock: {
     label: "Code block",
     icon: SquareCodeIcon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘⌥C",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive("codeBlock"),
     run: (e) => chain(e).toggleCodeBlock().run(),
   },
   alignLeft: {
     label: "Align left",
     icon: AlignLeftIcon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘⇧L",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive({ textAlign: "left" }),
     run: (e) => chain(e).setTextAlign("left").run(),
   },
   alignCenter: {
     label: "Align center",
     icon: AlignCenterIcon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘⇧E",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive({ textAlign: "center" }),
     run: (e) => chain(e).setTextAlign("center").run(),
   },
   alignRight: {
     label: "Align right",
     icon: AlignRightIcon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘⇧R",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive({ textAlign: "right" }),
     run: (e) => chain(e).setTextAlign("right").run(),
   },
   alignJustify: {
     label: "Justify",
     icon: AlignJustifyIcon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘⇧J",
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive({ textAlign: "justify" }),
     run: (e) => chain(e).setTextAlign("justify").run(),
   },
@@ -347,21 +391,27 @@ const actions = {
   undo: {
     label: "Undo",
     icon: Undo2Icon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘Z",
+    /** Whether the action can run right now; disables the control when false. */
     canRun: (e) => e.can().undo(),
     run: (e) => chain(e).undo().run(),
   },
   redo: {
     label: "Redo",
     icon: Redo2Icon,
+    /** Keyboard shortcut shown in the tooltip. */
     shortcut: "⌘⇧Z",
+    /** Whether the action can run right now; disables the control when false. */
     canRun: (e) => e.can().redo(),
     run: (e) => chain(e).redo().run(),
   },
   unsetLink: {
     label: "Remove link",
     icon: UnlinkIcon,
+    /** Whether the toggle is pressed. */
     isActive: (e) => e.isActive("link"),
+    /** Whether the action can run right now; disables the control when false. */
     canRun: (e) => e.isActive("link"),
     run: (e) => chain(e).unsetLink().run(),
   },
@@ -440,6 +490,7 @@ function ControlTooltip({
   children,
 }: {
   label: React.ReactNode
+  /** Keyboard shortcut shown in the tooltip. */
   shortcut?: string
   children: React.ReactElement
 }) {
@@ -458,8 +509,11 @@ type ControlProps = {
   /** A built-in action; supplies icon, label, shortcut and behaviour. */
   name?: ActionName
   label?: string
+  /** Keyboard shortcut shown in the tooltip. */
   shortcut?: string
+  /** Whether the toggle is pressed. */
   isActive?: (editor: Editor) => boolean
+  /** Whether the action can run right now; disables the control when false. */
   canRun?: (editor: Editor) => boolean
   onToggle?: (editor: Editor) => void
   tooltip?: boolean

@@ -120,7 +120,9 @@ function ComboboxInput({
   showClear = false,
   ...props
 }: Omit<React.ComponentProps<typeof ComboboxPrimitive.Input>, "id"> & {
+  /** Render the open/close trigger in the control. */
   showTrigger?: boolean
+  /** Render the clear button in the control. */
   showClear?: boolean
 }) {
   return (
@@ -316,6 +318,7 @@ function ComboboxChip({
 }: React.ComponentProps<"div"> & {
   /** The selected value this chip represents. */
   value: string
+  /** Render the remove button on the chip. */
   showRemove?: boolean
 }) {
   const combobox = useComboboxContext()

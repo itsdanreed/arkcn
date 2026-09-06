@@ -141,6 +141,7 @@ function Sidebar({
 }: React.ComponentProps<"div"> & {
   side?: "left" | "right"
   variant?: "sidebar" | "floating" | "inset"
+  /** Collapse mode: `offcanvas`, `icon`, or `none`. */
   collapsible?: "offcanvas" | "icon" | "none"
 }) {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
@@ -473,6 +474,7 @@ function SidebarMenuButton({
   ...props
 }: React.ComponentProps<"button"> & {
   asChild?: boolean
+  /** Marks the current item. */
   isActive?: boolean
   tooltip?: string | React.ComponentProps<typeof TooltipContent>
 } & VariantProps<typeof sidebarMenuButtonVariants>) {
@@ -516,6 +518,7 @@ function SidebarMenuAction({
   ...props
 }: React.ComponentProps<"button"> & {
   asChild?: boolean
+  /** Only reveal the action when the item is hovered or focused. */
   showOnHover?: boolean
 }) {
   const Comp = ark.button
@@ -555,6 +558,7 @@ function SidebarMenuSkeleton({
   showIcon = false,
   ...props
 }: React.ComponentProps<"div"> & {
+  /** Render an icon placeholder in the skeleton. */
   showIcon?: boolean
 }) {
   // Random width between 50 to 90%.
@@ -617,6 +621,7 @@ function SidebarMenuSubButton({
 }: React.ComponentProps<"a"> & {
   asChild?: boolean
   size?: "sm" | "md"
+  /** Marks the current item. */
   isActive?: boolean
 }) {
   const Comp = ark.a

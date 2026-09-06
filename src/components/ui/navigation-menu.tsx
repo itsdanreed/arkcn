@@ -10,6 +10,7 @@ function NavigationMenu({
   viewport = true,
   ...props
 }: React.ComponentProps<typeof NavigationMenuPrimitive.Root> & {
+  /** Render content in the shared viewport instead of inline. */
   viewport?: boolean
 }) {
   return (

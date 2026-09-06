@@ -27,16 +27,22 @@ type TransferListItemBase = { value: string; label: string; disabled?: boolean }
 type TransferListValueChangeDetails<T> = {
   /** Values now on the target side, in catalog order. */
   value: string[]
+  /** Every item, in catalog order. */
   items: T[]
   /** What just moved and where. */
   moved: T[]
+  /** `right` moves source to target; `left` moves target to source. */
   direction: TransferListDirection
 }
 
 type TransferListContextValue<T = TransferListItemBase> = {
+  /** Every item, in catalog order. */
   items: T[]
+  /** Unique value for an item. */
   itemToValue: (item: T) => string
+  /** Label for an item. */
   itemToString: (item: T) => string
+  /** Returns true for items that can never move. */
   itemDisabled: (item: T) => boolean
   value: string[]
   /** Items on each side, in catalog order. */
@@ -78,9 +84,13 @@ const sideOf = (direction: TransferListDirection): TransferListSide => (directio
 /* ---------------------------------- root --------------------------------- */
 
 type TransferListProps<T> = Omit<React.ComponentProps<"div">, "defaultValue" | "onChange"> & {
+  /** Every item, in catalog order. */
   items: T[]
+  /** Unique value for an item. */
   itemToValue?: (item: T) => string
+  /** Label for an item. */
   itemToString?: (item: T) => string
+  /** Returns true for items that can never move. */
   itemDisabled?: (item: T) => boolean
   /** Values on the target side. Kept in catalog order. */
   value?: string[]
@@ -205,6 +215,7 @@ function TransferList<T = TransferListItemBase>({
       )
       onValueChange?.({
         value: next,
+        /** Every item, in catalog order. */
         items: items.filter((i) => next.includes(itemToValue(i))),
         moved: movedItems,
         direction,

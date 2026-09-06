@@ -93,6 +93,7 @@ function DropdownMenuItem({
   ...props
 }: Omit<React.ComponentProps<typeof DropdownMenuPrimitive.Item>, "value"> & {
   value?: string
+  /** Indent the item to align with items that have an indicator. */
   inset?: boolean
   variant?: "default" | "destructive"
 }) {
@@ -137,8 +138,10 @@ function DropdownMenuCheckboxItem({
   value,
   ...props
 }: Omit<React.ComponentProps<typeof DropdownMenuPrimitive.CheckboxItem>, "checked" | "value"> & {
+  /** Checked state of the item. */
   checked?: boolean
   value?: string
+  /** Indent the item to align with items that have an indicator. */
   inset?: boolean
 }) {
   const id = React.useId()
@@ -169,6 +172,7 @@ function DropdownMenuRadioItem({
   inset,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.RadioItem> & {
+  /** Indent the item to align with items that have an indicator. */
   inset?: boolean
 }) {
   return (
@@ -191,6 +195,7 @@ function DropdownMenuLabel({
   inset,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.ItemGroupLabel> & {
+  /** Indent the item to align with items that have an indicator. */
   inset?: boolean
 }) {
   return (
@@ -240,6 +245,7 @@ function DropdownMenuSubTrigger({
   children,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.TriggerItem> & {
+  /** Indent the item to align with items that have an indicator. */
   inset?: boolean
 }) {
   return (

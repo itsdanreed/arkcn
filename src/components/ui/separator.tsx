@@ -12,6 +12,7 @@ function Separator({
   ...props
 }: React.ComponentProps<"div"> & {
   orientation?: "horizontal" | "vertical"
+  /** Hide the separator from assistive technology. */
   decorative?: boolean
 }) {
   return (

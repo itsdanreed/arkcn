@@ -102,6 +102,7 @@ type DataGridContextValue<TData = unknown> = {
   layoutById: Map<string, ColumnLayout>
   templateColumns: string
   totalWidth: number
+  /** Fixed height of every row in px. */
   rowHeight: number
   setWidth: (columnId: string, width: number) => void
   focus: CellAddress | null
@@ -166,12 +167,19 @@ function DataGrid<TData>({
   ...props
 }: Omit<React.ComponentProps<"div">, "children"> & {
   table: DataTableInstance<TData>
+  /** Per-column grid behaviour keyed by column id: editor type, width, pinning, options, format and parse. */
   columns?: DataGridColumnConfig[]
+  /** Fixed height of every row in px. */
   rowHeight?: number
+  /** Rows rendered beyond the visible window on each side. */
   overscan?: number
+  /** Called with `{ row, columnId, value, previous }` when a cell edit commits; the consumer applies it. */
   onCellChange?: (change: DataGridCellChange<TData>) => void
+  /** Controlled column widths by column id. */
   columnSizing?: Record<string, number>
+  /** Initial column widths when uncontrolled. */
   defaultColumnSizing?: Record<string, number>
+  /** Called when a column is resized. */
   onColumnSizingChange?: (sizing: Record<string, number>) => void
   children?: React.ReactNode
 }) {

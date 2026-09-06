@@ -57,14 +57,20 @@ type CreateState = { start: Date; end: Date } | null
 type SchedulerContextValue = {
   date: Date
   setDate: (date: Date) => void
+  /** Controlled view: `day`, `week`, or `month`. */
   view: SchedulerView
   setView: (view: SchedulerView) => void
   range: { start: Date; end: Date }
   days: Date[]
+  /** First day of the week, 0 for Sunday. */
   weekStartsOn: 0 | 1 | 2 | 3 | 4 | 5 | 6
+  /** Pixels per hour in the time grid. */
   hourHeight: number
+  /** Snap and keyboard step in minutes. */
   slotMinutes: number
+  /** First hour shown in the time grid. */
   minHour: number
+  /** Last hour shown in the time grid. */
   maxHour: number
   editable: boolean
   interaction: Interaction | null
@@ -98,7 +104,9 @@ function visibleRange(date: Date, view: SchedulerView, weekStartsOn: SchedulerCo
   if (view === "day") return { start: startOfDay(date), end: startOfDay(date) }
   if (view === "week") return { start: startOfWeek(date, { weekStartsOn }), end: endOfWeek(date, { weekStartsOn }) }
   return {
+    /** Event start. */
     start: startOfWeek(startOfMonth(date), { weekStartsOn }),
+    /** Event end. */
     end: endOfWeek(endOfMonth(date), { weekStartsOn }),
   }
 }
@@ -127,17 +135,28 @@ function Scheduler({
   ...props
 }: Omit<React.ComponentProps<"div">, "onChange"> & {
   date?: Date
+  /** Initial anchor date when uncontrolled. */
   defaultDate?: Date
+  /** Called when the anchor date changes. */
   onDateChange?: (date: Date) => void
+  /** Controlled view: `day`, `week`, or `month`. */
   view?: SchedulerView
+  /** Initial view when uncontrolled. */
   defaultView?: SchedulerView
+  /** Called when the view changes. */
   onViewChange?: (view: SchedulerView) => void
+  /** First day of the week, 0 for Sunday. */
   weekStartsOn?: SchedulerContextValue["weekStartsOn"]
+  /** Pixels per hour in the time grid. */
   hourHeight?: number
+  /** Snap and keyboard step in minutes. */
   slotMinutes?: number
+  /** First hour shown in the time grid. */
   minHour?: number
+  /** Last hour shown in the time grid. */
   maxHour?: number
   editable?: boolean
+  /** Called with `{ id, start, end }` snapped to `slotMinutes` after a move, resize, or keyboard change. */
   onEventChange?: (change: SchedulerEventChange) => void
   /** Drag on empty time (or a month cell click) proposes a new event. */
   onCreate?: (range: { start: Date; end: Date; allDay?: boolean }) => void
@@ -268,7 +287,9 @@ function Scheduler({
       const column = (pointer.currentTarget as HTMLElement).getBoundingClientRect()
       const originMin = yToMinutes(pointer.clientY - column.top)
       let current: NonNullable<CreateState> = {
+        /** Event start. */
         start: withMinutes(day, originMin),
+        /** Event end. */
         end: withMinutes(day, originMin + slotMinutes),
       }
       let dragged = false
@@ -352,14 +373,18 @@ function Scheduler({
       const next =
         part === "end"
           ? {
+              /** Event start. */
               start: event.start,
+              /** Event end. */
               end: addMinutes(
                 event.end,
                 Math.max(deltaMinutes, slotMinutes - differenceInMinutes(event.end, event.start))
               ),
             }
           : {
+              /** Event start. */
               start: addDays(addMinutes(event.start, deltaMinutes), deltaDays),
+              /** Event end. */
               end: addDays(addMinutes(event.end, deltaMinutes), deltaDays),
             }
       onEventChangeRef.current?.({ id: event.id, ...next })
@@ -772,6 +797,7 @@ function SchedulerDayColumn<T extends EventLike>({
   ...props
 }: Omit<React.ComponentProps<"div">, "children"> & {
   date: Date
+  /** Events shown in this column; overlaps are laid out side by side. */
   events: T[]
   children: (event: T) => React.ReactNode
 }) {

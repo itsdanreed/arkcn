@@ -17,7 +17,9 @@ function DirectionProvider({
   direction,
   children,
 }: {
+  /** Text direction, `ltr` or `rtl`. */
   dir?: Direction
+  /** Alias of `dir`. */
   direction?: Direction
   children?: React.ReactNode
 }) {

@@ -22,6 +22,7 @@ function ResizableHandle({
   className,
   ...props
 }: ResizablePrimitive.SeparatorProps & {
+  /** Render a visible grip on the handle. */
   withHandle?: boolean
 }) {
   return (

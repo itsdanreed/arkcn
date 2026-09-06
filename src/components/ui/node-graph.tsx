@@ -39,9 +39,11 @@ type NodeGraphConnection = { source: NodeGraphPortRef; target: NodeGraphPortRef 
 type NodeGraphSelection = { nodes: string[]; edges: string[] }
 type NodeGraphNodeMove = { id: string; position: XY }
 type NodeGraphConnectingState = {
+  /** Output-side port as `{ nodeId, portId }`. */
   source: NodeGraphPortRef & { side: NodeGraphPortSide; type: string }
   /** Cursor position in graph coordinates. */
   position: XY
+  /** Input-side port as `{ nodeId, portId }`. */
   target: (NodeGraphPortRef & { side: NodeGraphPortSide; type: string }) | null
   valid: boolean
 }
@@ -121,13 +123,17 @@ type LayoutStore = ReturnType<typeof createLayoutStore>
 
 type NodeGraphContextValue = {
   store: LayoutStore
+  /** Controlled pan and zoom as `{ x, y, zoom }`. */
   viewport: NodeGraphViewportState
   setViewport: (next: NodeGraphViewportState | ((prev: NodeGraphViewportState) => NodeGraphViewportState)) => void
   viewportRef: React.RefObject<HTMLDivElement | null>
   size: { width: number; height: number }
+  /** Lower zoom bound. */
   minZoom: number
+  /** Upper zoom bound. */
   maxZoom: number
   snapGrid: number
+  /** Controlled selection as `{ nodes, edges }` ids. */
   selection: NodeGraphSelection
   setSelection: (next: NodeGraphSelection) => void
   connecting: NodeGraphConnectingState | null
@@ -208,13 +214,21 @@ function useControllable<T>(value: T | undefined, defaultValue: T, onChange?: (v
  * ------------------------------------------------------------------------- */
 
 type NodeGraphProps = Omit<React.ComponentProps<"div">, "onSelect"> & {
+  /** Controlled pan and zoom as `{ x, y, zoom }`. */
   viewport?: NodeGraphViewportState
+  /** Initial pan and zoom when uncontrolled. */
   defaultViewport?: NodeGraphViewportState
+  /** Called with `{ x, y, zoom }` while panning or zooming. */
   onViewportChange?: (viewport: NodeGraphViewportState) => void
+  /** Controlled selection as `{ nodes, edges }` ids. */
   selection?: NodeGraphSelection
+  /** Initial selected nodes and edges when uncontrolled. */
   defaultSelection?: NodeGraphSelection
+  /** Called with `{ nodes, edges }` when the selection changes. */
   onSelectionChange?: (selection: NodeGraphSelection) => void
+  /** Lower zoom bound. */
   minZoom?: number
+  /** Upper zoom bound. */
   maxZoom?: number
   /** Grid size nodes snap to while dragging and nudging. `0` disables snapping. */
   snapGrid?: number
@@ -473,6 +487,7 @@ function NodeGraph({
           }
           lastMoves = [...starts].map(([id, start]) => ({
             id,
+            /** Node position in graph coordinates. */
             position: { x: snap(start.x + dx, snapGrid), y: snap(start.y + dy, snapGrid) },
           }))
           latest.current.onNodesMove?.(lastMoves)
@@ -498,7 +513,9 @@ function NodeGraph({
       const [source, target] = a.side === "output" ? [a, b] : [b, a]
       if (isValidConnection) {
         return isValidConnection({
+          /** Output-side port as `{ nodeId, portId }`. */
           source: { nodeId: source.nodeId, portId: source.portId },
+          /** Input-side port as `{ nodeId, portId }`. */
           target: { nodeId: target.nodeId, portId: target.portId },
           sourceType: source.type,
           targetType: target.type,
@@ -531,6 +548,7 @@ function NodeGraph({
           const anchored = target && validate(source, target) ? store.getPortPosition(target) : null
           state = {
             source,
+            /** Node position in graph coordinates. */
             position: anchored ?? screenToGraph({ x: e.clientX, y: e.clientY }),
             target,
             valid: !!anchored,
@@ -542,12 +560,15 @@ function NodeGraph({
           if (state.target && state.valid) {
             const [from, to] = source.side === "output" ? [source, state.target] : [state.target, source]
             latest.current.onConnect?.({
+              /** Output-side port as `{ nodeId, portId }`. */
               source: { nodeId: from.nodeId, portId: from.portId },
+              /** Input-side port as `{ nodeId, portId }`. */
               target: { nodeId: to.nodeId, portId: to.portId },
             })
           } else if (!state.target) {
             latest.current.onConnectEnd?.({
               source,
+              /** Node position in graph coordinates. */
               position: screenToGraph({ x: e.clientX, y: e.clientY }),
               client: { x: e.clientX, y: e.clientY },
             })
@@ -1056,7 +1077,9 @@ function NodeGraphEdge({
   ...props
 }: Omit<React.ComponentProps<"g">, "children" | "target"> & {
   value: string
+  /** Output-side port as `{ nodeId, portId }`. */
   source: NodeGraphPortRef
+  /** Input-side port as `{ nodeId, portId }`. */
   target: NodeGraphPortRef
   selected?: boolean
   /** Render prop for labels; receives the path midpoint. */

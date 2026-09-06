@@ -35,8 +35,11 @@ import { useControllable } from "@/lib/controllable"
 type Person = { id: string; name: string; initials?: string; avatar?: string }
 
 type ThreadContextValue = {
+  /** People who can be mentioned and whose names and initials are rendered. */
   people: Person[]
+  /** Id of the signed-in person; their comments get `data-own` and mentions of them `data-self`. */
   currentUserId?: string
+  /** Id of the comment being replied to (controlled). */
   replyTo: string | null
   setReplyTo: (id: string | null) => void
   editing: string | null
@@ -77,9 +80,13 @@ function CommentThread({
   className,
   ...props
 }: React.ComponentProps<"div"> & {
+  /** People who can be mentioned and whose names and initials are rendered. */
   people?: Person[]
+  /** Id of the signed-in person; their comments get `data-own` and mentions of them `data-self`. */
   currentUserId?: string
+  /** Id of the comment being replied to (controlled). */
   replyTo?: string | null
+  /** Called when the reply target changes. */
   onReplyToChange?: (id: string | null) => void
 }) {
   const [replyTo, setReplyTo] = useControllable<string | null>(replyToProp, null, onReplyToChange)
@@ -383,6 +390,7 @@ function CommentEmpty({ className, ...props }: React.ComponentProps<"div">) {
 type MentionState = { query: string; start: number; index: number } | null
 
 type ComposerContextValue = {
+  /** People who can be mentioned and whose names and initials are rendered. */
   people: Person[]
   value: string
   setValue: (value: string) => void
@@ -424,13 +432,16 @@ function CommentComposer({
   children,
   ...props
 }: Omit<React.ComponentProps<"div">, "onSubmit" | "defaultValue"> & {
+  /** People who can be mentioned and whose names and initials are rendered. */
   people?: Person[]
   value?: string
   defaultValue?: string
   onValueChange?: (value: string) => void
   /** Called with the trimmed text and the ids of mentioned people. */
   onSubmit?: (comment: { text: string; mentions: string[] }) => void
+  /** Called when the composer is cancelled with Escape or the cancel trigger. */
   onCancel?: () => void
+  /** Maximum number of mention suggestions shown. */
   maxSuggestions?: number
 }) {
   const [value, setValue] = useControllable(valueProp, defaultValue, onValueChange)
