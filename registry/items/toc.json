@@ -1,0 +1,17 @@
+{
+  "name": "toc",
+  "type": "ui",
+  "description": "",
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/toc.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Toc as TocPrimitive } from \"@ark-ui/react\"\n\nfunction Toc({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Root>) {\n  return <TocPrimitive.Root data-slot=\"toc\" className={cn(\"w-full text-sm\", className)} {...props} />\n}\n\nfunction TocContext({ ...props }: React.ComponentProps<typeof TocPrimitive.Context>) {\n  return <TocPrimitive.Context {...props} />\n}\n\nfunction TocNav({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Nav>) {\n  return <TocPrimitive.Nav data-slot=\"toc-nav\" className={cn(\"flex flex-col gap-2\", className)} {...props} />\n}\n\nfunction TocTitle({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Title>) {\n  return (\n    <TocPrimitive.Title\n      data-slot=\"toc-title\"\n      className={cn(\"text-xs font-medium text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TocContent({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Content>) {\n  return <TocPrimitive.Content data-slot=\"toc-content\" className={cn(\"relative\", className)} {...props} />\n}\n\nfunction TocList({ className, ...props }: React.ComponentProps<typeof TocPrimitive.List>) {\n  return <TocPrimitive.List data-slot=\"toc-list\" className={cn(\"flex flex-col border-l\", className)} {...props} />\n}\n\nfunction TocItem({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Item>) {\n  return <TocPrimitive.Item data-slot=\"toc-item\" className={cn(\"flex\", className)} {...props} />\n}\n\nfunction TocLink({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Link>) {\n  return (\n    <TocPrimitive.Link\n      data-slot=\"toc-link\"\n      className={cn(\n        \"-ml-px flex-1 border-l border-transparent py-1 pl-[calc(var(--depth,1)*(--spacing(3)))] text-muted-foreground transition-colors hover:text-foreground data-active:border-foreground data-active:text-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TocIndicator({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Indicator>) {\n  return (\n    <TocPrimitive.Indicator\n      data-slot=\"toc-indicator\"\n      className={cn(\"w-px bg-foreground transition-all\", className)}\n      {...props}\n    />\n  )\n}\n\nexport { Toc, TocContent, TocContext, TocIndicator, TocItem, TocLink, TocList, TocNav, TocTitle }\n"
+    }
+  ]
+}

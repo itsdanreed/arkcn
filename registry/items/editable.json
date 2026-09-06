@@ -1,0 +1,17 @@
+{
+  "name": "editable",
+  "type": "ui",
+  "description": "",
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/editable.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Editable as EditablePrimitive } from \"@ark-ui/react\"\n\nfunction Editable({ className, ...props }: React.ComponentProps<typeof EditablePrimitive.Root>) {\n  return (\n    <EditablePrimitive.Root data-slot=\"editable\" className={cn(\"flex w-full flex-col gap-1.5\", className)} {...props} />\n  )\n}\n\nfunction EditableContext({ ...props }: React.ComponentProps<typeof EditablePrimitive.Context>) {\n  return <EditablePrimitive.Context {...props} />\n}\n\nfunction EditableLabel({ className, ...props }: React.ComponentProps<typeof EditablePrimitive.Label>) {\n  return (\n    <EditablePrimitive.Label\n      data-slot=\"editable-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction EditableArea({ className, ...props }: React.ComponentProps<typeof EditablePrimitive.Area>) {\n  return <EditablePrimitive.Area data-slot=\"editable-area\" className={cn(\"relative w-full\", className)} {...props} />\n}\n\nfunction EditablePreview({ className, ...props }: React.ComponentProps<typeof EditablePrimitive.Preview>) {\n  return (\n    <EditablePrimitive.Preview\n      data-slot=\"editable-preview\"\n      className={cn(\n        \"inline-flex h-8 w-full items-center rounded-lg px-2.5 text-sm transition-colors hover:bg-muted data-placeholder-shown:text-muted-foreground data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction EditableInput({ className, ...props }: React.ComponentProps<typeof EditablePrimitive.Input>) {\n  return (\n    <EditablePrimitive.Input\n      data-slot=\"editable-input\"\n      className={cn(\n        \"h-8 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive dark:bg-input/30\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction EditableControl({ className, ...props }: React.ComponentProps<typeof EditablePrimitive.Control>) {\n  return (\n    <EditablePrimitive.Control\n      data-slot=\"editable-control\"\n      className={cn(\"flex items-center gap-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction EditableEditTrigger({ ...props }: React.ComponentProps<typeof EditablePrimitive.EditTrigger>) {\n  return <EditablePrimitive.EditTrigger data-slot=\"editable-edit-trigger\" {...props} />\n}\n\nfunction EditableSubmitTrigger({ ...props }: React.ComponentProps<typeof EditablePrimitive.SubmitTrigger>) {\n  return <EditablePrimitive.SubmitTrigger data-slot=\"editable-submit-trigger\" {...props} />\n}\n\nfunction EditableCancelTrigger({ ...props }: React.ComponentProps<typeof EditablePrimitive.CancelTrigger>) {\n  return <EditablePrimitive.CancelTrigger data-slot=\"editable-cancel-trigger\" {...props} />\n}\n\nexport {\n  Editable,\n  EditableArea,\n  EditableCancelTrigger,\n  EditableContext,\n  EditableControl,\n  EditableEditTrigger,\n  EditableInput,\n  EditableLabel,\n  EditablePreview,\n  EditableSubmitTrigger,\n}\n"
+    }
+  ]
+}

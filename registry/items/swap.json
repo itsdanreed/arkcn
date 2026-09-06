@@ -1,0 +1,17 @@
+{
+  "name": "swap",
+  "type": "ui",
+  "description": "",
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/swap.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Swap as SwapPrimitive } from \"@ark-ui/react\"\n\nfunction Swap({ className, ...props }: React.ComponentProps<typeof SwapPrimitive.Root>) {\n  return (\n    <SwapPrimitive.Root\n      data-slot=\"swap\"\n      className={cn(\n        \"relative inline-grid cursor-pointer place-items-center select-none *:col-start-1 *:row-start-1\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SwapIndicator({ className, ...props }: React.ComponentProps<typeof SwapPrimitive.Indicator>) {\n  return (\n    <SwapPrimitive.Indicator\n      data-slot=\"swap-indicator\"\n      className={cn(\n        \"transition-[opacity,transform] duration-200 data-[state=closed]:scale-75 data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nexport { Swap, SwapIndicator }\n"
+    }
+  ]
+}

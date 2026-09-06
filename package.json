@@ -9,6 +9,10 @@
   ],
   "files": [
     "src",
+    "bin",
+    "cli",
+    "mcp",
+    "registry",
     "README.md"
   ],
   "exports": {
@@ -22,9 +26,12 @@
   "scripts": {
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "lint": "oxlint && node scripts/check-quotes.mjs && node scripts/check-ark-parts.mjs && npm run -s format:check",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"scripts/**/*.mjs\" \"*.{json,md}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"scripts/**/*.mjs\" \"*.{json,md}\"",
-    "check": "npm run -s typecheck && npm run -s lint"
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"{scripts,cli,bin,mcp}/**/*.mjs\" \"*.{json,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"{scripts,cli,bin,mcp}/**/*.mjs\" \"*.{json,md}\"",
+    "check": "npm run -s build:registry && npm run -s typecheck && npm run -s lint && npm run -s test:cli",
+    "build:registry": "node scripts/build-registry.mjs",
+    "test:cli": "node scripts/test-cli.mjs",
+    "prepublishOnly": "npm run -s check"
   },
   "peerDependencies": {
     "react": "^19.2.8",
@@ -179,5 +186,13 @@
     "prettier": "^3.9.6",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "typescript": "~6.0.2"
+  },
+  "bin": {
+    "ui-toolkit": "bin/ui-toolkit.mjs",
+    "ui-toolkit-mcp": "bin/ui-toolkit-mcp.mjs"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^4.5.4"
   }
 }

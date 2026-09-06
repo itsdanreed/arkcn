@@ -4,7 +4,7 @@ import { readdirSync, readFileSync, statSync } from "node:fs"
 import { join, relative } from "node:path"
 import ts from "typescript"
 
-const roots = ["src", "tests", "scripts", "vite.config.ts", "playwright.config.ts"]
+const roots = ["src", "scripts", "cli", "bin", "mcp"]
 const offenders = []
 
 function walk(path) {

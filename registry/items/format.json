@@ -1,0 +1,15 @@
+{
+  "name": "format",
+  "type": "ui",
+  "description": "Locale-aware formatting helpers from Ark, wrapping `Intl`.",
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/format.tsx",
+      "content": "import * as React from \"react\"\nimport { Format as FormatPrimitive } from \"@ark-ui/react\"\n\n/** Locale-aware formatting helpers from Ark, wrapping `Intl`. */\n\nfunction FormatNumber({ ...props }: React.ComponentProps<typeof FormatPrimitive.Number>) {\n  return <FormatPrimitive.Number {...props} />\n}\n\nfunction FormatByte({ ...props }: React.ComponentProps<typeof FormatPrimitive.Byte>) {\n  return <FormatPrimitive.Byte {...props} />\n}\n\nfunction FormatTime({ ...props }: React.ComponentProps<typeof FormatPrimitive.Time>) {\n  return <FormatPrimitive.Time {...props} />\n}\n\nfunction FormatRelativeTime({ ...props }: React.ComponentProps<typeof FormatPrimitive.RelativeTime>) {\n  return <FormatPrimitive.RelativeTime {...props} />\n}\n\nexport { FormatByte, FormatNumber, FormatRelativeTime, FormatTime }\n"
+    }
+  ]
+}

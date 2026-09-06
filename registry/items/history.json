@@ -1,0 +1,14 @@
+{
+  "name": "history",
+  "type": "lib",
+  "description": "Undo/redo state for any immutable value. `set` records a history entry unless `{ commit: false }` is passed (live drags, typing); `checkpoint` snapshots the present before such a sequence so one undo restores it.",
+  "dependencies": {},
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "lib/history.ts",
+      "content": "import * as React from \"react\"\n\n/**\n * Undo/redo state for any immutable value. `set` records a history entry\n * unless `{ commit: false }` is passed (live drags, typing); `checkpoint`\n * snapshots the present before such a sequence so one undo restores it.\n */\nexport function useHistory<T>(initial: T | (() => T), limit = 100) {\n  const [state, setState] = React.useState(() => ({\n    past: [] as T[],\n    present: typeof initial === \"function\" ? (initial as () => T)() : initial,\n    future: [] as T[],\n  }))\n  const set = React.useCallback(\n    (update: T | ((prev: T) => T), options?: { commit?: boolean }) =>\n      setState((s) => {\n        const next = typeof update === \"function\" ? (update as (prev: T) => T)(s.present) : update\n        if (Object.is(next, s.present)) return s\n        if (options?.commit === false) return { ...s, present: next }\n        return { past: [...s.past.slice(-(limit - 1)), s.present], present: next, future: [] }\n      }),\n    [limit]\n  )\n  const checkpoint = React.useCallback(\n    () => setState((s) => ({ past: [...s.past.slice(-(limit - 1)), s.present], present: s.present, future: [] })),\n    [limit]\n  )\n  const undo = React.useCallback(\n    () =>\n      setState((s) =>\n        s.past.length\n          ? { past: s.past.slice(0, -1), present: s.past[s.past.length - 1], future: [s.present, ...s.future] }\n          : s\n      ),\n    []\n  )\n  const redo = React.useCallback(\n    () =>\n      setState((s) =>\n        s.future.length ? { past: [...s.past, s.present], present: s.future[0], future: s.future.slice(1) } : s\n      ),\n    []\n  )\n  const reset = React.useCallback((value: T) => setState({ past: [], present: value, future: [] }), [])\n  return {\n    present: state.present,\n    set,\n    checkpoint,\n    undo,\n    redo,\n    reset,\n    canUndo: state.past.length > 0,\n    canRedo: state.future.length > 0,\n  }\n}\n"
+    }
+  ],
+  "docs": "## Shared hooks\n`src/lib/history.ts` exports `useHistory(initial, limit)` → `{ present, set(next, { commit }),\ncheckpoint, undo, redo, reset, canUndo, canRedo }`; the node graph and form builder use it. Never\nadd a local copy. There is no native `<select>` component any more (`native-select.tsx` was\nremoved); always use `Select`."
+}

@@ -13,6 +13,31 @@ tests live in the demo repo, so after changing a primitive run the demo's `npm t
 React 19 + TypeScript + Tailwind v4. Baseline is shadcn `radix-nova` style (Radix-backed). Goal: port
 every Radix-backed component to `@ark-ui/react` as its backing primitive, one component at a time.
 
+## CLI, registry, and MCP
+- `scripts/build-registry.mjs` generates `registry/` (committed, and shipped in the package): one
+  item per `src/components/ui/*.tsx` (type `ui`), `src/lib/*.ts` (`lib`), `src/hooks/*.ts` (`hook`)
+  with file contents, `registryDependencies` (imports through `@/`), `dependencies` (external
+  packages, versions from package.json peers; react excluded), a `css` fragment, `docs` (the
+  matching CLAUDE.md section), and a description. `registry/base.css` is the stylesheet minus
+  fragments; `registry/index.json` the manifest with `baseDependencies` (required peers).
+  Component-specific CSS in `src/styles/ui-toolkit.css` must sit between
+  `/* @registry:component <name> */` and `/* @registry:end */` so `add` can merge it. `npm run
+  check` rebuilds the registry first; commit the result.
+- `bin/ui-toolkit.mjs` + `cli/` is the zero-dependency CLI (`init`, `add`, `list`, `diff`) with
+  `ui-toolkit.json` in the target project (`alias`, `srcDir`, `componentsDir`, `libDir`,
+  `hooksDir`, `css`). `cli/registry.mjs` reads the bundled registry, a directory, or a URL
+  (`--registry`, `UI_TOOLKIT_REGISTRY`); `cli/project.mjs` owns file writing, import rewriting,
+  CSS merging (base and per-component marker blocks), tsconfig alias insertion, package-manager
+  detection and install; `cli/commands.mjs` the commands plus the pure helpers (`writeItem`,
+  `findConflicts`, `missingDependencies`) the MCP reuses. `scripts/test-cli.mjs` runs init, add,
+  diff, overwrite, and a custom alias/dir against a temp project (part of `npm run check`).
+- `bin/ui-toolkit-mcp.mjs` + `mcp/server.mjs` is the stdio MCP server (`@modelcontextprotocol/sdk`
+  + `zod`, the package's only runtime deps): tools `list_components`, `search_components`,
+  `get_component`, `get_docs`, `plan_install`, `add_components` (writes files and CSS, never runs
+  the package manager) and a `ui-toolkit://registry/index` resource.
+- Publishing: `npm publish --access public` (prepublishOnly runs `check`). The demo repo does not
+  use the CLI; it aliases the package source.
+
 ## Porting rules
 - **Feature parity** with the shadcn original: same exported names, same props surface
   where Ark supports it, same visual result, same variants.

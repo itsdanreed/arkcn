@@ -1,0 +1,14 @@
+{
+  "name": "form",
+  "type": "lib",
+  "description": "`src/lib/form.ts` exports `useForm(defaultValues, validate, onSubmit, { mode })`: a small, dependency-free hook (values, per-field errors, validating submit) that pairs with the `Field*` parts.",
+  "dependencies": {},
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "lib/form.ts",
+      "content": "import * as React from \"react\"\n\ntype Errors<T> = Partial<Record<keyof T, string>>\n\n/**\n * A small, dependency-free form hook: values, per-field errors, and a submit\n * handler that validates first. Pair it with the `Field*` parts\n * (`data-invalid` on `Field`, `aria-invalid` on the control, `FieldError` for\n * the message). Validation is a plain function so any schema library can be\n * adapted by returning its messages keyed by field.\n */\nexport function useForm<T extends object>(\n  defaultValues: T,\n  validate: (values: T) => Errors<T>,\n  onSubmit: (values: T) => void,\n  options: { mode?: \"onSubmit\" | \"onChange\" } = {}\n) {\n  const [values, setValues] = React.useState<T>(defaultValues)\n  const [errors, setErrors] = React.useState<Errors<T>>({})\n  const [submitted, setSubmitted] = React.useState(false)\n\n  const setValue = <K extends keyof T>(key: K, value: T[K]) => {\n    setValues((prev) => {\n      const next = { ...prev, [key]: value }\n      if (options.mode === \"onChange\" || submitted) setErrors(validate(next))\n      return next\n    })\n  }\n\n  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {\n    event.preventDefault()\n    setSubmitted(true)\n    const nextErrors = validate(values)\n    setErrors(nextErrors)\n    if (Object.keys(nextErrors).length === 0) onSubmit(values)\n  }\n\n  return { values, errors, setValue, setValues, handleSubmit }\n}\n"
+    }
+  ],
+  "docs": "## Forms\n`src/lib/form.ts` exports `useForm(defaultValues, validate, onSubmit, { mode })`: a small,\ndependency-free hook (values, per-field errors, validating submit) that pairs with the\n`Field*` parts. It is the toolkit's one form approach; do not add react-hook-form/zod. All\ndemo forms use it. Shared demo-only helpers live in `src/demo/lib/` (`showSubmittedData`,\n`DatePicker`)."
+}

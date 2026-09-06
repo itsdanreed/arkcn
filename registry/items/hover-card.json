@@ -1,0 +1,17 @@
+{
+  "name": "hover-card",
+  "type": "ui",
+  "description": "",
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/hover-card.tsx",
+      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { HoverCard as HoverCardPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\n\nfunction HoverCard({\n  positioning,\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: React.ComponentProps<typeof HoverCardPrimitive.Root>) {\n  return (\n    <HoverCardPrimitive.Root\n      positioning={{ placement: \"bottom\", gutter: 4, ...positioning }}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction HoverCardTrigger({ ...props }: React.ComponentProps<typeof HoverCardPrimitive.Trigger>) {\n  return <HoverCardPrimitive.Trigger data-slot=\"hover-card-trigger\" {...props} />\n}\n\nfunction HoverCardPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction HoverCardContext({ ...props }: React.ComponentProps<typeof HoverCardPrimitive.Context>) {\n  return <HoverCardPrimitive.Context {...props} />\n}\n\nfunction HoverCardPositioner({ className, ...props }: React.ComponentProps<typeof HoverCardPrimitive.Positioner>) {\n  return (\n    <HoverCardPrimitive.Positioner\n      data-slot=\"hover-card-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction HoverCardArrow({ className, ...props }: React.ComponentProps<typeof HoverCardPrimitive.Arrow>) {\n  return (\n    <HoverCardPrimitive.Arrow\n      data-slot=\"hover-card-arrow\"\n      className={cn(\"[--arrow-background:var(--color-popover)] [--arrow-size:0.625rem]\", className)}\n      {...props}\n    >\n      <HoverCardPrimitive.ArrowTip\n        data-slot=\"hover-card-arrow-tip\"\n        className=\"border-t border-l border-foreground/10\"\n      />\n    </HoverCardPrimitive.Arrow>\n  )\n}\n\nfunction HoverCardContent({ className, ...props }: React.ComponentProps<typeof HoverCardPrimitive.Content>) {\n  return (\n    <HoverCardPortal>\n      <HoverCardPositioner>\n        <HoverCardPrimitive.Content\n          data-slot=\"hover-card-content\"\n          className={cn(\n            \"z-50 w-64 origin-(--transform-origin) rounded-lg bg-popover p-2.5 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </HoverCardPositioner>\n    </HoverCardPortal>\n  )\n}\n\nexport {\n  HoverCard,\n  HoverCardArrow,\n  HoverCardContent,\n  HoverCardContext,\n  HoverCardPortal,\n  HoverCardPositioner,\n  HoverCardTrigger,\n}\n"
+    }
+  ]
+}

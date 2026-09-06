@@ -1,0 +1,17 @@
+{
+  "name": "spinner",
+  "type": "ui",
+  "description": "",
+  "dependencies": {
+    "lucide-react": "^1.41.0"
+  },
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/spinner.tsx",
+      "content": "import { cn } from \"@/lib/utils\"\nimport { Loader2Icon } from \"lucide-react\"\n\nfunction Spinner({ className, ...props }: React.ComponentProps<\"svg\">) {\n  return (\n    <Loader2Icon\n      data-slot=\"spinner\"\n      role=\"status\"\n      aria-label=\"Loading\"\n      className={cn(\"size-4 animate-spin\", className)}\n      {...props}\n    />\n  )\n}\n\nexport { Spinner }\n"
+    }
+  ]
+}

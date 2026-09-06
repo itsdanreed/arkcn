@@ -1,0 +1,17 @@
+{
+  "name": "qr-code",
+  "type": "ui",
+  "description": "",
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/qr-code.tsx",
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { QrCode as QrCodePrimitive } from \"@ark-ui/react\"\n\nfunction QrCode({ className, children, ...props }: React.ComponentProps<typeof QrCodePrimitive.Root>) {\n  return (\n    <QrCodePrimitive.Root data-slot=\"qr-code\" className={cn(\"inline-flex\", className)} {...props}>\n      {children ?? (\n        <QrCodeFrame>\n          <QrCodePattern />\n        </QrCodeFrame>\n      )}\n    </QrCodePrimitive.Root>\n  )\n}\n\nfunction QrCodeContext({ ...props }: React.ComponentProps<typeof QrCodePrimitive.Context>) {\n  return <QrCodePrimitive.Context {...props} />\n}\n\nfunction QrCodeFrame({ className, ...props }: React.ComponentProps<typeof QrCodePrimitive.Frame>) {\n  return (\n    <QrCodePrimitive.Frame\n      data-slot=\"qr-code-frame\"\n      className={cn(\"size-40 rounded-lg border bg-background fill-foreground p-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction QrCodePattern({ ...props }: React.ComponentProps<typeof QrCodePrimitive.Pattern>) {\n  return <QrCodePrimitive.Pattern data-slot=\"qr-code-pattern\" {...props} />\n}\n\nfunction QrCodeOverlay({ className, ...props }: React.ComponentProps<typeof QrCodePrimitive.Overlay>) {\n  return (\n    <QrCodePrimitive.Overlay\n      data-slot=\"qr-code-overlay\"\n      className={cn(\"flex items-center justify-center rounded-md bg-background p-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction QrCodeDownloadTrigger({ ...props }: React.ComponentProps<typeof QrCodePrimitive.DownloadTrigger>) {\n  return <QrCodePrimitive.DownloadTrigger data-slot=\"qr-code-download-trigger\" {...props} />\n}\n\nexport { QrCode, QrCodeContext, QrCodeDownloadTrigger, QrCodeFrame, QrCodeOverlay, QrCodePattern }\n"
+    }
+  ]
+}

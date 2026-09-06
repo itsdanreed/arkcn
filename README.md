@@ -7,22 +7,65 @@ data grid, data table engine, kanban, gantt, scheduler, node graph, query builde
 Every part is exported on its own, carries a `data-slot`, and is styled through Ark's data attributes.
 Triggers are polymorphic via `asChild`.
 
-## Use
+## Install components
 
-The components are meant to be **copied into your project**, shadcn style: each file lands in
-`src/components/ui`, shared helpers in `src/lib` and `src/hooks`, and the styles are merged into
-your stylesheet after `@import "tailwindcss"`. Tailwind then scans them like any other project file.
-A CLI (`init` / `add`) that does this is in progress; until then copy the files by hand. Every
-component imports its siblings through the `@/` alias (`@/components/ui/button`, `@/lib/utils`).
+```bash
+npx @itsdanreed/ui-toolkit init            # ui-toolkit.json, src/lib/utils.ts, base styles, "@/" alias check, base deps
+npx @itsdanreed/ui-toolkit add button card dialog data-grid
+npx @itsdanreed/ui-toolkit list            # everything in the registry (--type all, `list data-grid --docs`)
+npx @itsdanreed/ui-toolkit diff            # which installed files you changed locally
+```
 
-The package can also be consumed directly from `node_modules` (this is what the demo app does):
-import `@itsdanreed/ui-toolkit/styles.css`, alias `@/components/ui`, `@/lib`, and `@/hooks` to the
-package source, and add `@source "../node_modules/@itsdanreed/ui-toolkit/src"` so Tailwind scans it,
-since it does not scan `node_modules` on its own.
+`init` writes `ui-toolkit.json` (alias, `srcDir`, component/lib/hooks dirs, stylesheet), merges the
+toolkit's tokens, custom variants, utilities, and keyframes into your stylesheet after
+`@import "tailwindcss"` (between `/* ui-toolkit:base */` markers, so re-running refreshes them),
+makes sure the `@/*` path alias exists, and installs the base packages (Ark UI, lucide, clsx,
+tailwind-merge, cva, tw-animate-css, the typography plugin). Tailwind v4 is required.
 
-Heavy dependencies (tiptap, pragmatic drag and drop, recharts, embla, date-fns, react-day-picker,
-input-otp, react-resizable-panels, sonner, next-themes) are optional peers: install the ones the
-components you use need.
+`add` copies the component **and everything it imports** (other components, `lib`, `hooks`) into
+your project with imports rewritten to your alias, appends any component-specific CSS block, and
+installs the packages those files need (tiptap for the editor, pragmatic drag and drop for kanban,
+and so on). Files you have edited are kept unless you pass `--overwrite`; `diff --verbose` shows
+what changed. `--no-install` skips the package manager, `--all` adds every component.
+
+The components then belong to you: edit them freely, exactly as with shadcn/ui.
+
+### Registry
+
+The CLI reads a registry generated from this repo (`npm run build:registry` → `registry/`), bundled
+in the npm package so a CLI version always installs a matching component set and works offline.
+The same folder is committed here, so you can also read it from a URL, for example to pick up
+components newer than your installed CLI:
+
+```bash
+npx @itsdanreed/ui-toolkit add kanban --registry https://raw.githubusercontent.com/itsdanreed/ui-toolkit/main/registry
+# or export UI_TOOLKIT_REGISTRY=...
+```
+
+Each item is `registry/items/<name>.json`: files with content, `registryDependencies`,
+`dependencies` (with versions), an optional `css` fragment, and `docs`. `registry/index.json` is the
+manifest and `registry/base.css` the init payload.
+
+## MCP server
+
+The package also ships an MCP server so agents (Claude Code, Cursor, and others) can browse the
+registry, read documentation and source, and copy components into a project:
+
+```json
+{ "mcpServers": { "ui-toolkit": { "command": "npx", "args": ["-y", "-p", "@itsdanreed/ui-toolkit", "ui-toolkit-mcp"] } } }
+```
+
+Tools: `list_components`, `search_components`, `get_component` (source, deps, css, docs),
+`get_docs`, `plan_install` (dry run against a project), `add_components` (writes files and CSS,
+returns the packages to install). Pass `--registry=<url>` to read a hosted registry.
+
+## Consume from node_modules instead
+
+The demo app imports the package source directly: import `@itsdanreed/ui-toolkit/styles.css`,
+alias `@/components/ui`, `@/lib`, and `@/hooks` to `node_modules/@itsdanreed/ui-toolkit/src/...`,
+and add `@source "../node_modules/@itsdanreed/ui-toolkit/src"` because Tailwind does not scan
+`node_modules`. Heavy dependencies (tiptap, pragmatic drag and drop, recharts, embla, date-fns,
+react-day-picker, input-otp, react-resizable-panels, sonner, next-themes) are optional peers.
 
 The demo application lives in the `ui-toolkit-demo` repository.
 
@@ -30,5 +73,6 @@ The demo application lives in the `ui-toolkit-demo` repository.
 
 ```bash
 npm install
-npm run check   # typecheck + lint (oxlint with Tailwind rules, quotes, Ark part coverage, Prettier)
+npm run check   # registry build + typecheck + lint (oxlint with Tailwind rules, quotes, Ark part coverage, Prettier) + CLI e2e test
+npm publish     # prepublishOnly runs the same check
 ```
