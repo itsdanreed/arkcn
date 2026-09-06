@@ -55,7 +55,15 @@ listed in `docs/src/nav.ts`) and components grouped by `groups` in `docs/src/reg
 "On this page" outline, and generated component pages (`docs/src/pages.tsx`): live preview from
 `docs/src/examples/<name>.tsx` (Preview/Code tabs, source via `?raw`), install command, usage
 snippet, anatomy from the registry `exports`, the CLAUDE.md section as "Reference", and the source.
-Page descriptions come from `docs/src/descriptions.ts` (fall back to the registry). Markdown is
+Page descriptions come from `docs/src/descriptions.ts` (fall back to the registry). Each
+component page has a **Props** section: `scripts/props.mjs` runs the TypeScript compiler over
+every exported part and records name, type, required, default (JSDoc `@default` or the wrapper's
+destructuring default), description, and origin; props from React's generic HTML attributes are
+skipped, Ark/zag props keep their own docs. Descriptions for our own props come from JSDoc on the
+prop (write `/** … */` above every prop in a props type), or from `scripts/prop-docs.json` for
+inline one-line types that cannot carry JSDoc, or from the shared-name fallbacks in `props.mjs`.
+`npm run check` must leave zero undocumented arkcn props (count with the snippet in git history
+of this section, or read `registry/items/*.json` `parts`). The MCP `get_component` returns `parts`. Markdown is
 `marked` + Prism (`docs/src/markdown.tsx`, `code.tsx`). `npm run docs:build` builds and
 `scripts/docs-routes.mjs` copies `index.html` into every route folder; deploy `docs/dist` to
 multicomma.com/arkcn. The docs type-check (`docs/tsconfig.json`) and lint are part of `npm run
