@@ -2,6 +2,9 @@
   "name": "separator",
   "type": "ui",
   "description": "Ark UI has no Separator primitive. This mirrors Radix's: a `div` with `role=\"separator\"` (or `role=\"none\"` when decorative) and `data-orientation`.",
+  "exports": [
+    "Separator"
+  ],
   "dependencies": {},
   "registryDependencies": [
     "utils"

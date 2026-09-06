@@ -2,6 +2,10 @@
   "name": "direction",
   "type": "ui",
   "description": "",
+  "exports": [
+    "DirectionProvider",
+    "useDirection"
+  ],
   "dependencies": {},
   "registryDependencies": [],
   "files": [

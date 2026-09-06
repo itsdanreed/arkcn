@@ -2,6 +2,22 @@
   "name": "activity-feed",
   "type": "ui",
   "description": "ActivityFeed — a compositional, data-agnostic timeline of events. The consumer maps its events to items; the feed adds the connector line, the marker column, relative times and the WAI-ARIA feed pattern (articles are focusable; PageUp/PageD",
+  "exports": [
+    "ActivityFeed",
+    "ActivityFeedGroup",
+    "ActivityFeedGroupLabel",
+    "ActivityFeedItems",
+    "ActivityFeedItem",
+    "ActivityFeedItemMarker",
+    "ActivityFeedItemContent",
+    "ActivityFeedItemHeader",
+    "ActivityFeedItemActor",
+    "ActivityFeedItemTime",
+    "ActivityFeedItemBody",
+    "ActivityFeedItemActions",
+    "ActivityFeedLoadMoreTrigger",
+    "ActivityFeedEmpty"
+  ],
   "dependencies": {},
   "registryDependencies": [
     "button",

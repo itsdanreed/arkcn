@@ -2,6 +2,25 @@
   "name": "tour",
   "type": "ui",
   "description": "",
+  "ark": "Tour",
+  "exports": [
+    "Tour",
+    "TourActionTrigger",
+    "TourActions",
+    "TourArrow",
+    "TourBackdrop",
+    "TourCloseTrigger",
+    "TourContent",
+    "TourContext",
+    "TourControl",
+    "TourDescription",
+    "TourPortal",
+    "TourPositioner",
+    "TourProgressText",
+    "TourSpotlight",
+    "TourTitle",
+    "useTour"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

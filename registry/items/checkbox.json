@@ -2,6 +2,18 @@
   "name": "checkbox",
   "type": "ui",
   "description": "",
+  "ark": "Checkbox",
+  "exports": [
+    "Checkbox",
+    "CheckboxContext",
+    "CheckboxControl",
+    "CheckboxGroup",
+    "CheckboxHiddenInput",
+    "CheckboxIndicator",
+    "CheckboxLabel",
+    "CheckboxRoot",
+    "CheckboxGroupProvider"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

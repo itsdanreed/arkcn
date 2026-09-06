@@ -69,6 +69,13 @@ react-day-picker, input-otp, react-resizable-panels, sonner, next-themes) are op
 
 The demo application lives in the `arkcn-demo` repository.
 
+## Docs
+
+The documentation site lives in `docs/` (Vite, base path `/arkcn/`) and reads the registry, so component
+pages are generated; live examples are in `docs/src/examples`. `npm run docs:dev` serves it,
+`npm run docs:build` writes `docs/dist` with an `index.html` per route (no SPA fallback needed): upload
+that folder to `multicomma.com/arkcn`.
+
 ## Develop
 
 ```bash

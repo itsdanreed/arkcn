@@ -2,6 +2,18 @@
   "name": "popconfirm",
   "type": "ui",
   "description": "Popconfirm — a lightweight inline confirmation on Ark's Popover, for actions that need a \"are you sure?\" without a modal dialog. Compose it: `Popconfirm` > `PopconfirmTrigger` + `PopconfirmContent` > (`PopconfirmHeader` > `PopconfirmIcon` +",
+  "exports": [
+    "Popconfirm",
+    "PopconfirmCancelTrigger",
+    "PopconfirmConfirmTrigger",
+    "PopconfirmContent",
+    "PopconfirmDescription",
+    "PopconfirmFooter",
+    "PopconfirmHeader",
+    "PopconfirmIcon",
+    "PopconfirmTitle",
+    "PopconfirmTrigger"
+  ],
   "dependencies": {
     "lucide-react": "^1.41.0"
   },

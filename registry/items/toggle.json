@@ -2,6 +2,13 @@
   "name": "toggle",
   "type": "ui",
   "description": "",
+  "ark": "Toggle",
+  "exports": [
+    "Toggle",
+    "ToggleContext",
+    "ToggleIndicator",
+    "toggleVariants"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "class-variance-authority": "^0.7.1"

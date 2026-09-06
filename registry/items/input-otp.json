@@ -2,6 +2,12 @@
   "name": "input-otp",
   "type": "ui",
   "description": "",
+  "exports": [
+    "InputOTP",
+    "InputOTPGroup",
+    "InputOTPSlot",
+    "InputOTPSeparator"
+  ],
   "dependencies": {
     "input-otp": "^1.5.0",
     "lucide-react": "^1.41.0"

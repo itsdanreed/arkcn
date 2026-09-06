@@ -2,6 +2,14 @@
   "name": "message",
   "type": "ui",
   "description": "",
+  "exports": [
+    "MessageGroup",
+    "Message",
+    "MessageAvatar",
+    "MessageContent",
+    "MessageFooter",
+    "MessageHeader"
+  ],
   "dependencies": {},
   "registryDependencies": [
     "utils"

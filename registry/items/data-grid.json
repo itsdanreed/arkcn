@@ -2,6 +2,23 @@
   "name": "data-grid",
   "type": "ui",
   "description": "`src/components/ui/data-grid.tsx` is an editable, keyboard-driven grid on the same source-agnostic `DataTableInstance` contract as the data table (`useDataTable` with a huge `pageSize` feeds it every row; `DataTable` toolbar parts can wrap ",
+  "exports": [
+    "DataGrid",
+    "DataGridContainer",
+    "DataGridHeader",
+    "DataGridHeaderRow",
+    "DataGridHead",
+    "DataGridHeadWithResize",
+    "DataGridResizeHandle",
+    "DataGridBody",
+    "DataGridRow",
+    "DataGridCell",
+    "DataGridSelectAll",
+    "DataGridSelectRow",
+    "DataGridEmpty",
+    "useDataGrid",
+    "useDataGridRow"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

@@ -2,6 +2,18 @@
   "name": "toc",
   "type": "ui",
   "description": "",
+  "ark": "Toc",
+  "exports": [
+    "Toc",
+    "TocContent",
+    "TocContext",
+    "TocIndicator",
+    "TocItem",
+    "TocLink",
+    "TocList",
+    "TocNav",
+    "TocTitle"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

@@ -2,6 +2,22 @@
   "name": "navigation-menu",
   "type": "ui",
   "description": "",
+  "ark": "NavigationMenu",
+  "exports": [
+    "NavigationMenu",
+    "NavigationMenuArrow",
+    "NavigationMenuContent",
+    "NavigationMenuContext",
+    "NavigationMenuIndicator",
+    "NavigationMenuItem",
+    "NavigationMenuLink",
+    "NavigationMenuList",
+    "NavigationMenuTrigger",
+    "NavigationMenuViewport",
+    "NavigationMenuViewportPositioner",
+    "navigationMenuTriggerStyle",
+    "NavigationMenuItemIndicator"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "class-variance-authority": "^0.7.1",

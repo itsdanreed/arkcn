@@ -2,6 +2,18 @@
   "name": "field",
   "type": "ui",
   "description": "",
+  "exports": [
+    "Field",
+    "FieldLabel",
+    "FieldDescription",
+    "FieldError",
+    "FieldGroup",
+    "FieldLegend",
+    "FieldSeparator",
+    "FieldSet",
+    "FieldContent",
+    "FieldTitle"
+  ],
   "dependencies": {
     "class-variance-authority": "^0.7.1"
   },

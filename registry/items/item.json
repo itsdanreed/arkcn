@@ -2,6 +2,18 @@
   "name": "item",
   "type": "ui",
   "description": "",
+  "exports": [
+    "Item",
+    "ItemMedia",
+    "ItemContent",
+    "ItemActions",
+    "ItemGroup",
+    "ItemSeparator",
+    "ItemTitle",
+    "ItemDescription",
+    "ItemHeader",
+    "ItemFooter"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "class-variance-authority": "^0.7.1"

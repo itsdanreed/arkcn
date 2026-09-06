@@ -2,6 +2,16 @@
   "name": "accordion",
   "type": "ui",
   "description": "",
+  "ark": "Accordion",
+  "exports": [
+    "Accordion",
+    "AccordionContent",
+    "AccordionContext",
+    "AccordionItem",
+    "AccordionItemContext",
+    "AccordionItemIndicator",
+    "AccordionTrigger"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

@@ -2,6 +2,9 @@
   "name": "floating-toolbar",
   "type": "ui",
   "description": "FloatingToolbar — the snackbar-style action bar that floats over a page (bulk actions on tables, pending edits on grids). Arrow keys move between its buttons, Home/End jump, and Escape calls `onEscape` unless focus is in a nested menu. Rend",
+  "exports": [
+    "FloatingToolbar"
+  ],
   "dependencies": {},
   "registryDependencies": [
     "utils"

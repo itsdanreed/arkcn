@@ -2,6 +2,7 @@
   "name": "use-mobile",
   "type": "hook",
   "description": "",
+  "exports": [],
   "dependencies": {},
   "registryDependencies": [],
   "files": [

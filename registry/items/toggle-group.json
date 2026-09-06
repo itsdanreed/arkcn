@@ -2,6 +2,12 @@
   "name": "toggle-group",
   "type": "ui",
   "description": "",
+  "ark": "ToggleGroup",
+  "exports": [
+    "ToggleGroup",
+    "ToggleGroupContext",
+    "ToggleGroupItem"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "class-variance-authority": "^0.7.1"

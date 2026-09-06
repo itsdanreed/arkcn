@@ -2,6 +2,20 @@
   "name": "progress",
   "type": "ui",
   "description": "",
+  "ark": "Progress",
+  "exports": [
+    "Progress",
+    "ProgressCircle",
+    "ProgressCircleRange",
+    "ProgressCircleTrack",
+    "ProgressContext",
+    "ProgressLabel",
+    "ProgressRange",
+    "ProgressRoot",
+    "ProgressTrack",
+    "ProgressValueText",
+    "ProgressView"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

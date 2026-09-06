@@ -2,6 +2,9 @@
   "name": "spinner",
   "type": "ui",
   "description": "",
+  "exports": [
+    "Spinner"
+  ],
   "dependencies": {
     "lucide-react": "^1.41.0"
   },

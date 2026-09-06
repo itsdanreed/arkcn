@@ -2,6 +2,18 @@
   "name": "angle-slider",
   "type": "ui",
   "description": "",
+  "ark": "AngleSlider",
+  "exports": [
+    "AngleSlider",
+    "AngleSliderContext",
+    "AngleSliderControl",
+    "AngleSliderHiddenInput",
+    "AngleSliderLabel",
+    "AngleSliderMarker",
+    "AngleSliderMarkerGroup",
+    "AngleSliderThumb",
+    "AngleSliderValueText"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

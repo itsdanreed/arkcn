@@ -2,6 +2,24 @@
   "name": "transfer-list",
   "type": "ui",
   "description": "`src/components/ui/transfer-list.tsx` moves items between two lists.",
+  "exports": [
+    "TransferList",
+    "TransferListControls",
+    "TransferListEmpty",
+    "TransferListItem",
+    "TransferListItemIndicator",
+    "TransferListItemText",
+    "TransferListItems",
+    "TransferListMoveAllTrigger",
+    "TransferListMoveTrigger",
+    "TransferListPanel",
+    "TransferListPanelCount",
+    "TransferListPanelHeader",
+    "TransferListPanelTitle",
+    "TransferListSearch",
+    "TransferListSelectAll",
+    "useTransferList"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

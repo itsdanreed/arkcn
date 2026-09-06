@@ -2,6 +2,12 @@
   "name": "alert",
   "type": "ui",
   "description": "",
+  "exports": [
+    "Alert",
+    "AlertTitle",
+    "AlertDescription",
+    "AlertAction"
+  ],
   "dependencies": {
     "class-variance-authority": "^0.7.1"
   },

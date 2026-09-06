@@ -2,6 +2,9 @@
   "name": "aspect-ratio",
   "type": "ui",
   "description": "Ark UI has no AspectRatio primitive. This mirrors Radix's: a wrapper with a percentage padding-bottom, and an absolutely positioned content box.",
+  "exports": [
+    "AspectRatio"
+  ],
   "dependencies": {},
   "registryDependencies": [],
   "files": [

@@ -2,6 +2,14 @@
   "name": "empty",
   "type": "ui",
   "description": "",
+  "exports": [
+    "Empty",
+    "EmptyHeader",
+    "EmptyTitle",
+    "EmptyDescription",
+    "EmptyContent",
+    "EmptyMedia"
+  ],
   "dependencies": {
     "class-variance-authority": "^0.7.1"
   },

@@ -2,6 +2,14 @@
   "name": "chart",
   "type": "ui",
   "description": "",
+  "exports": [
+    "ChartContainer",
+    "ChartTooltip",
+    "ChartTooltipContent",
+    "ChartLegend",
+    "ChartLegendContent",
+    "ChartStyle"
+  ],
   "dependencies": {
     "recharts": "^3.8.0"
   },

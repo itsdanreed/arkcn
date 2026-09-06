@@ -2,6 +2,10 @@
   "name": "badge",
   "type": "ui",
   "description": "",
+  "exports": [
+    "Badge",
+    "badgeVariants"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "class-variance-authority": "^0.7.1"

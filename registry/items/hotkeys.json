@@ -2,6 +2,16 @@
   "name": "hotkeys",
   "type": "ui",
   "description": "-------------------------------- parsing --------------------------------",
+  "exports": [
+    "HotkeyKbd",
+    "HotkeysDialog",
+    "HotkeysProvider",
+    "formatHotkey",
+    "parseHotkey",
+    "useHotkey",
+    "useHotkeys",
+    "useHotkeysDialog"
+  ],
   "dependencies": {},
   "registryDependencies": [
     "dialog",

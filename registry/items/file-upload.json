@@ -2,6 +2,23 @@
   "name": "file-upload",
   "type": "ui",
   "description": "",
+  "ark": "FileUpload",
+  "exports": [
+    "FileUpload",
+    "FileUploadClearTrigger",
+    "FileUploadContext",
+    "FileUploadDropzone",
+    "FileUploadHiddenInput",
+    "FileUploadItem",
+    "FileUploadItemDeleteTrigger",
+    "FileUploadItemGroup",
+    "FileUploadItemName",
+    "FileUploadItemPreview",
+    "FileUploadItemPreviewImage",
+    "FileUploadItemSizeText",
+    "FileUploadLabel",
+    "FileUploadTrigger"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

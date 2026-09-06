@@ -2,6 +2,7 @@
   "name": "table",
   "type": "lib",
   "description": "A small headless table engine: column definitions, sorting, global and per-column filtering with faceted counts, pagination, row selection, and column visibility. No external dependencies.",
+  "exports": [],
   "dependencies": {},
   "registryDependencies": [
     "controllable"

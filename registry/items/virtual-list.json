@@ -2,6 +2,15 @@
   "name": "virtual-list",
   "type": "ui",
   "description": "-------------------------------- context --------------------------------",
+  "exports": [
+    "VirtualList",
+    "VirtualListContent",
+    "VirtualListEmpty",
+    "VirtualListItem",
+    "VirtualListItems",
+    "VirtualListViewport",
+    "useVirtualList"
+  ],
   "dependencies": {},
   "registryDependencies": [
     "utils"

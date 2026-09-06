@@ -2,6 +2,9 @@
   "name": "label",
   "type": "ui",
   "description": "Ark UI has no standalone Label primitive (its labels live inside each component's anatomy). This mirrors Radix's: a native `label` that ignores double-click text selection.",
+  "exports": [
+    "Label"
+  ],
   "dependencies": {},
   "registryDependencies": [
     "utils"

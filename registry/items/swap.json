@@ -2,6 +2,11 @@
   "name": "swap",
   "type": "ui",
   "description": "",
+  "ark": "Swap",
+  "exports": [
+    "Swap",
+    "SwapIndicator"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

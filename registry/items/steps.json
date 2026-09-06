@@ -2,6 +2,22 @@
   "name": "steps",
   "type": "ui",
   "description": "",
+  "ark": "Steps",
+  "exports": [
+    "Steps",
+    "StepsCompletedContent",
+    "StepsContent",
+    "StepsContext",
+    "StepsIndicator",
+    "StepsItem",
+    "StepsItemContext",
+    "StepsList",
+    "StepsNextTrigger",
+    "StepsPrevTrigger",
+    "StepsProgress",
+    "StepsSeparator",
+    "StepsTrigger"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

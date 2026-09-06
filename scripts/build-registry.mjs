@@ -94,10 +94,21 @@ for (const source of sources) {
         if (dep !== "react" && dep !== "react-dom") dependencies.add(dep)
       }
     }
+    const ark = content.match(/(\w+) as \w+Primitive/)?.[1]
+    const exportBlock = content.match(/\nexport \{([\s\S]*?)\}/)
+    const exportsList = exportBlock
+      ? exportBlock[1]
+          .split(",")
+          .map((e) => e.trim())
+          .filter((e) => e && !e.startsWith("type "))
+          .map((e) => e.replace(/^\w+ as /, ""))
+      : []
     items.push({
       name,
       type: source.type,
       description: describe(content, name),
+      ark,
+      exports: exportsList,
       dependencies: Object.fromEntries([...dependencies].sort().map((d) => [d, versions[d] ?? "latest"])),
       registryDependencies: [...registryDependencies].sort(),
       files: [{ path: `${source.target}/${file}`, content }],
@@ -119,10 +130,12 @@ writeFileSync(
       name: pkg.name,
       version: pkg.version,
       baseDependencies: Object.fromEntries(requiredPeers.map((d) => [d, versions[d]])),
-      items: items.map(({ name, type, description, dependencies, registryDependencies, files, css }) => ({
+      items: items.map(({ name, type, description, ark, exports: exportsList, dependencies, registryDependencies, files, css }) => ({
         name,
         type,
         description,
+        ark,
+        exports: exportsList,
         dependencies: Object.keys(dependencies),
         registryDependencies,
         files: files.map((f) => f.path),

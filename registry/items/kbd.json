@@ -2,6 +2,10 @@
   "name": "kbd",
   "type": "ui",
   "description": "",
+  "exports": [
+    "Kbd",
+    "KbdGroup"
+  ],
   "dependencies": {},
   "registryDependencies": [
     "utils"

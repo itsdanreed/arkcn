@@ -2,6 +2,9 @@
   "name": "input",
   "type": "ui",
   "description": "",
+  "exports": [
+    "Input"
+  ],
   "dependencies": {},
   "registryDependencies": [
     "utils"

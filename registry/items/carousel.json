@@ -2,6 +2,14 @@
   "name": "carousel",
   "type": "ui",
   "description": "",
+  "exports": [
+    "Carousel",
+    "CarouselContent",
+    "CarouselItem",
+    "CarouselPrevious",
+    "CarouselNext",
+    "useCarousel"
+  ],
   "dependencies": {
     "embla-carousel-react": "^8.6.0",
     "lucide-react": "^1.41.0"

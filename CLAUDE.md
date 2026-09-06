@@ -46,6 +46,19 @@ Fast Refresh rule `react/only-export-components` are off: this library is not co
 React Compiler, uses the latest-ref pattern deliberately, and its files export hooks and helpers
 next to components by design.
 
+## Docs site
+`docs/` is the documentation site (Vite app, base `/arkcn/`, alias `@` → `../src`, `@docs` → `docs/src`),
+shadcn-style: header with search (⌘K) and theme toggle, sidebar of guides (`docs/content/*.md`,
+listed in `docs/src/nav.ts`) and components grouped by `groups` in `docs/src/registry.ts`, an
+"On this page" outline, and generated component pages (`docs/src/pages.tsx`): live preview from
+`docs/src/examples/<name>.tsx` (Preview/Code tabs, source via `?raw`), install command, usage
+snippet, anatomy from the registry `exports`, the CLAUDE.md section as "Reference", and the source.
+Page descriptions come from `docs/src/descriptions.ts` (fall back to the registry). Markdown is
+`marked` + Prism (`docs/src/markdown.tsx`, `code.tsx`). `npm run docs:build` builds and
+`scripts/docs-routes.mjs` copies `index.html` into every route folder; deploy `docs/dist` to
+multicomma.com/arkcn. The docs type-check (`docs/tsconfig.json`) and lint are part of `npm run
+check`. Add an example for a new component by dropping `docs/src/examples/<name>.tsx`.
+
 ## Porting rules
 - **Feature parity** with the shadcn original: same exported names, same props surface
   where Ark supports it, same visual result, same variants.

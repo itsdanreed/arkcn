@@ -2,6 +2,16 @@
   "name": "avatar",
   "type": "ui",
   "description": "",
+  "ark": "Avatar",
+  "exports": [
+    "Avatar",
+    "AvatarBadge",
+    "AvatarContext",
+    "AvatarFallback",
+    "AvatarGroup",
+    "AvatarGroupCount",
+    "AvatarImage"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

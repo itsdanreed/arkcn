@@ -2,6 +2,25 @@
   "name": "command",
   "type": "ui",
   "description": "- **Feature parity** with the shadcn original: same exported names, same props surface where Ark supports it, same visual result, same variants. - **Ark's tree wins** where the structure differs (e.g.",
+  "ark": "Listbox",
+  "exports": [
+    "Command",
+    "CommandContext",
+    "CommandDialog",
+    "CommandEmpty",
+    "CommandGroup",
+    "CommandGroupLabel",
+    "CommandInput",
+    "CommandItem",
+    "CommandItemIndicator",
+    "CommandItemText",
+    "CommandList",
+    "CommandSeparator",
+    "CommandShortcut",
+    "createListCollection",
+    "useFilter",
+    "useListCollection"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

@@ -2,6 +2,14 @@
   "name": "input-group",
   "type": "ui",
   "description": "",
+  "exports": [
+    "InputGroup",
+    "InputGroupAddon",
+    "InputGroupTrigger",
+    "InputGroupText",
+    "InputGroupInput",
+    "InputGroupTextarea"
+  ],
   "dependencies": {
     "class-variance-authority": "^0.7.1"
   },

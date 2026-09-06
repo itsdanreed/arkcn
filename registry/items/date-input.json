@@ -2,6 +2,17 @@
   "name": "date-input",
   "type": "ui",
   "description": "",
+  "ark": "DateInput",
+  "exports": [
+    "DateInput",
+    "DateInputContext",
+    "DateInputControl",
+    "DateInputHiddenInput",
+    "DateInputLabel",
+    "DateInputSegment",
+    "DateInputSegmentContext",
+    "DateInputSegmentGroup"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

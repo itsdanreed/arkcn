@@ -2,6 +2,26 @@
   "name": "drawer",
   "type": "ui",
   "description": "- **Feature parity** with the shadcn original: same exported names, same props surface where Ark supports it, same visual result, same variants. - **Ark's tree wins** where the structure differs (e.g.",
+  "ark": "Drawer",
+  "exports": [
+    "Drawer",
+    "DrawerClose",
+    "DrawerContent",
+    "DrawerContext",
+    "DrawerDescription",
+    "DrawerFooter",
+    "DrawerGrabber",
+    "DrawerHeader",
+    "DrawerOverlay",
+    "DrawerPortal",
+    "DrawerPositioner",
+    "DrawerSwipeArea",
+    "DrawerTitle",
+    "DrawerTrigger",
+    "DrawerIndent",
+    "DrawerIndentBackground",
+    "DrawerStack"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

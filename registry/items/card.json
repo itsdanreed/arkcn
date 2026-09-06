@@ -2,6 +2,15 @@
   "name": "card",
   "type": "ui",
   "description": "",
+  "exports": [
+    "Card",
+    "CardHeader",
+    "CardFooter",
+    "CardTitle",
+    "CardAction",
+    "CardDescription",
+    "CardContent"
+  ],
   "dependencies": {},
   "registryDependencies": [
     "utils"

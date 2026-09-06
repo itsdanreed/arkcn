@@ -2,6 +2,19 @@
   "name": "editable",
   "type": "ui",
   "description": "",
+  "ark": "Editable",
+  "exports": [
+    "Editable",
+    "EditableArea",
+    "EditableCancelTrigger",
+    "EditableContext",
+    "EditableControl",
+    "EditableEditTrigger",
+    "EditableInput",
+    "EditableLabel",
+    "EditablePreview",
+    "EditableSubmitTrigger"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

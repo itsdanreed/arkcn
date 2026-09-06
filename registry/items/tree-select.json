@@ -2,6 +2,25 @@
   "name": "tree-select",
   "type": "ui",
   "description": "Both live on Ark's `TreeCollection` (`createTreeCollection`, re-exported) and a Popover, and own only the open state, the search query, and the value (`value`/`defaultValue`/`onValueChange`, always a `string[]`); the trigger is a focusable ",
+  "ark": "Popover",
+  "exports": [
+    "TreeSelect",
+    "TreeSelectChip",
+    "TreeSelectChips",
+    "TreeSelectClearTrigger",
+    "TreeSelectContent",
+    "TreeSelectEmpty",
+    "TreeSelectHiddenInput",
+    "TreeSelectIndicator",
+    "TreeSelectNode",
+    "TreeSelectSearch",
+    "TreeSelectTree",
+    "TreeSelectTrigger",
+    "TreeSelectValue",
+    "collapseValues",
+    "createTreeCollection",
+    "useTreeSelect"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

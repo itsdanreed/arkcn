@@ -15,7 +15,12 @@
     "better-tailwindcss/no-unnecessary-whitespace": "error",
     "better-tailwindcss/no-deprecated-classes": "error",
     "better-tailwindcss/no-conflicting-classes": "error",
-    "better-tailwindcss/no-unknown-classes": "error",
+    "better-tailwindcss/no-unknown-classes": [
+      "error",
+      {
+        "ignore": ["docs-prose", "docs-code", "not-prose", "^language-", "^token"]
+      }
+    ],
     "react/refs": "off",
     "react/immutability": "off",
     "react/set-state-in-effect": "off",

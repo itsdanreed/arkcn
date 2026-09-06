@@ -2,6 +2,10 @@
   "name": "live-region",
   "type": "ui",
   "description": "Shared screen-reader announcer. `announce` re-fires even when the same text is announced twice, and `clearAfter` (ms) empties the region so stale text is not re-read when a user lands on it.",
+  "exports": [
+    "LiveRegion",
+    "useLiveRegion"
+  ],
   "dependencies": {},
   "registryDependencies": [
     "utils"

@@ -2,6 +2,15 @@
   "name": "pagination",
   "type": "ui",
   "description": "",
+  "exports": [
+    "Pagination",
+    "PaginationContent",
+    "PaginationEllipsis",
+    "PaginationItem",
+    "PaginationLink",
+    "PaginationNext",
+    "PaginationPrevious"
+  ],
   "dependencies": {
     "lucide-react": "^1.41.0"
   },

@@ -2,6 +2,16 @@
   "name": "hover-card",
   "type": "ui",
   "description": "",
+  "ark": "HoverCard",
+  "exports": [
+    "HoverCard",
+    "HoverCardArrow",
+    "HoverCardContent",
+    "HoverCardContext",
+    "HoverCardPortal",
+    "HoverCardPositioner",
+    "HoverCardTrigger"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

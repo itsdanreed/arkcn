@@ -2,6 +2,18 @@
   "name": "radio-group",
   "type": "ui",
   "description": "",
+  "ark": "RadioGroup",
+  "exports": [
+    "RadioGroup",
+    "RadioGroupContext",
+    "RadioGroupIndicator",
+    "RadioGroupItem",
+    "RadioGroupItemContext",
+    "RadioGroupItemControl",
+    "RadioGroupItemHiddenInput",
+    "RadioGroupItemText",
+    "RadioGroupLabel"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

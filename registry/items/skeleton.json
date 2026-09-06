@@ -2,6 +2,9 @@
   "name": "skeleton",
   "type": "ui",
   "description": "",
+  "exports": [
+    "Skeleton"
+  ],
   "dependencies": {},
   "registryDependencies": [
     "utils"

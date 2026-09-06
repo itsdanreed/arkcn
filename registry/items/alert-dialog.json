@@ -2,6 +2,23 @@
   "name": "alert-dialog",
   "type": "ui",
   "description": "",
+  "ark": "Dialog",
+  "exports": [
+    "AlertDialog",
+    "AlertDialogAction",
+    "AlertDialogCancel",
+    "AlertDialogContent",
+    "AlertDialogContext",
+    "AlertDialogDescription",
+    "AlertDialogFooter",
+    "AlertDialogHeader",
+    "AlertDialogMedia",
+    "AlertDialogOverlay",
+    "AlertDialogPortal",
+    "AlertDialogPositioner",
+    "AlertDialogTitle",
+    "AlertDialogTrigger"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

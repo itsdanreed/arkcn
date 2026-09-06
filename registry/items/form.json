@@ -2,6 +2,7 @@
   "name": "form",
   "type": "lib",
   "description": "`src/lib/form.ts` exports `useForm(defaultValues, validate, onSubmit, { mode })`: a small, dependency-free hook (values, per-field errors, validating submit) that pairs with the `Field*` parts.",
+  "exports": [],
   "dependencies": {},
   "registryDependencies": [],
   "files": [

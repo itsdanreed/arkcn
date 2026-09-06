@@ -2,6 +2,16 @@
   "name": "rating-group",
   "type": "ui",
   "description": "",
+  "ark": "RatingGroup",
+  "exports": [
+    "RatingGroup",
+    "RatingGroupContext",
+    "RatingGroupControl",
+    "RatingGroupHiddenInput",
+    "RatingGroupItem",
+    "RatingGroupItemContext",
+    "RatingGroupLabel"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

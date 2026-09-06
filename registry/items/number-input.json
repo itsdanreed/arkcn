@@ -2,6 +2,19 @@
   "name": "number-input",
   "type": "ui",
   "description": "",
+  "ark": "NumberInput",
+  "exports": [
+    "NumberInput",
+    "NumberInputContext",
+    "NumberInputControl",
+    "NumberInputDecrementTrigger",
+    "NumberInputIncrementTrigger",
+    "NumberInputInput",
+    "NumberInputLabel",
+    "NumberInputScrubber",
+    "NumberInputTriggers",
+    "NumberInputValueText"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

@@ -2,6 +2,7 @@
   "name": "controllable",
   "type": "lib",
   "description": "Both live on Ark's `TreeCollection` (`createTreeCollection`, re-exported) and a Popover, and own only the open state, the search query, and the value (`value`/`defaultValue`/`onValueChange`, always a `string[]`); the trigger is a focusable ",
+  "exports": [],
   "dependencies": {},
   "registryDependencies": [],
   "files": [

@@ -2,6 +2,18 @@
   "name": "segment-group",
   "type": "ui",
   "description": "",
+  "ark": "SegmentGroup",
+  "exports": [
+    "SegmentGroup",
+    "SegmentGroupContext",
+    "SegmentGroupIndicator",
+    "SegmentGroupItem",
+    "SegmentGroupItemContext",
+    "SegmentGroupItemControl",
+    "SegmentGroupItemHiddenInput",
+    "SegmentGroupItemText",
+    "SegmentGroupLabel"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

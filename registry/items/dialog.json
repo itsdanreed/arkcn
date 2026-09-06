@@ -2,6 +2,21 @@
   "name": "dialog",
   "type": "ui",
   "description": "",
+  "ark": "Dialog",
+  "exports": [
+    "Dialog",
+    "DialogClose",
+    "DialogContent",
+    "DialogContext",
+    "DialogDescription",
+    "DialogFooter",
+    "DialogHeader",
+    "DialogOverlay",
+    "DialogPortal",
+    "DialogPositioner",
+    "DialogTitle",
+    "DialogTrigger"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

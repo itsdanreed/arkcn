@@ -2,6 +2,23 @@
   "name": "canvas",
   "type": "ui",
   "description": "Canvas — a compositional, data-agnostic drag-and-drop layout surface on Pragmatic drag and drop. Items come from a palette (`CanvasPaletteItem`, carrying arbitrary `data`) or are existing nodes (`CanvasNode`). Nodes are drop targets on all ",
+  "exports": [
+    "Canvas",
+    "CanvasArea",
+    "CanvasDropIndicator",
+    "CanvasEmpty",
+    "CanvasNode",
+    "CanvasNodeActions",
+    "CanvasNodeHandle",
+    "CanvasNodeHeader",
+    "CanvasNodeOverlay",
+    "CanvasNodeTitle",
+    "CanvasPalette",
+    "CanvasPaletteItem",
+    "CanvasResizeHandle",
+    "CanvasRow",
+    "useCanvas"
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "@atlaskit/pragmatic-drag-and-drop": "^3.1.0",

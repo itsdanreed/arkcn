@@ -1,0 +1,79 @@
+@import "tailwindcss";
+@import "@fontsource-variable/geist";
+@import "../../src/styles/arkcn.css";
+@source "../../src";
+
+@theme inline {
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* Prism tokens on the theme palette */
+.docs-code {
+  --code-comment: oklch(0.6 0 0);
+  --code-keyword: oklch(0.55 0.2 300);
+  --code-string: oklch(0.55 0.15 150);
+  --code-tag: oklch(0.5 0.15 250);
+  --code-attr: oklch(0.55 0.12 60);
+  --code-punct: oklch(0.55 0 0);
+}
+.dark .docs-code {
+  --code-comment: oklch(0.6 0 0);
+  --code-keyword: oklch(0.8 0.15 300);
+  --code-string: oklch(0.8 0.12 150);
+  --code-tag: oklch(0.8 0.12 250);
+  --code-attr: oklch(0.85 0.1 60);
+  --code-punct: oklch(0.7 0 0);
+}
+.docs-code .token.comment,
+.docs-code .token.prolog,
+.docs-code .token.doctype,
+.docs-code .token.cdata {
+  color: var(--code-comment);
+  font-style: italic;
+}
+.docs-code .token.keyword,
+.docs-code .token.boolean,
+.docs-code .token.number {
+  color: var(--code-keyword);
+}
+.docs-code .token.string,
+.docs-code .token.attr-value,
+.docs-code .token.template-string {
+  color: var(--code-string);
+}
+.docs-code .token.tag,
+.docs-code .token.class-name,
+.docs-code .token.function {
+  color: var(--code-tag);
+}
+.docs-code .token.attr-name,
+.docs-code .token.property {
+  color: var(--code-attr);
+}
+.docs-code .token.punctuation,
+.docs-code .token.operator {
+  color: var(--code-punct);
+}
+
+/* Prose tweaks for the docs body */
+.docs-prose :where(h2):not(:where(.not-prose *)) {
+  scroll-margin-top: 5rem;
+}
+.docs-prose :where(h3):not(:where(.not-prose *)) {
+  scroll-margin-top: 5rem;
+}
+.docs-prose :where(pre):not(:where(.not-prose *)) {
+  padding: 0;
+  background: transparent;
+}
+.docs-prose :where(code):not(:where(.not-prose *))::before,
+.docs-prose :where(code):not(:where(.not-prose *))::after {
+  content: none;
+}
+.docs-prose :where(:not(pre) > code):not(:where(.not-prose *)) {
+  border-radius: 0.375rem;
+  background: var(--muted);
+  padding: 0.15rem 0.35rem;
+  font-size: 0.85em;
+  font-weight: 500;
+}

@@ -2,6 +2,9 @@
   "name": "textarea",
   "type": "ui",
   "description": "",
+  "exports": [
+    "Textarea"
+  ],
   "dependencies": {},
   "registryDependencies": [
     "utils"

@@ -1,23 +1,33 @@
 {
   "name": "@multicomma/arkcn",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "baseDependencies": {
+    "@ark-ui/react": "^5.39.1",
+    "@tailwindcss/typography": "^0.5.20",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.41.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "@ark-ui/react": "^5.39.1",
-    "tailwindcss": "^4.3.3",
-    "lucide-react": "^1.41.0",
-    "clsx": "^2.1.1",
     "tailwind-merge": "^3.6.0",
-    "class-variance-authority": "^0.7.1",
-    "tw-animate-css": "^1.4.0",
-    "@tailwindcss/typography": "^0.5.20"
+    "tailwindcss": "^4.3.3",
+    "tw-animate-css": "^1.4.0"
   },
   "items": [
     {
       "name": "accordion",
       "type": "ui",
       "description": "",
+      "ark": "Accordion",
+      "exports": [
+        "Accordion",
+        "AccordionContent",
+        "AccordionContext",
+        "AccordionItem",
+        "AccordionItemContext",
+        "AccordionItemIndicator",
+        "AccordionTrigger"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -34,6 +44,22 @@
       "name": "activity-feed",
       "type": "ui",
       "description": "ActivityFeed — a compositional, data-agnostic timeline of events. The consumer maps its events to items; the feed adds the connector line, the marker column, relative times and the WAI-ARIA feed pattern (articles are focusable; PageUp/PageD",
+      "exports": [
+        "ActivityFeed",
+        "ActivityFeedGroup",
+        "ActivityFeedGroupLabel",
+        "ActivityFeedItems",
+        "ActivityFeedItem",
+        "ActivityFeedItemMarker",
+        "ActivityFeedItemContent",
+        "ActivityFeedItemHeader",
+        "ActivityFeedItemActor",
+        "ActivityFeedItemTime",
+        "ActivityFeedItemBody",
+        "ActivityFeedItemActions",
+        "ActivityFeedLoadMoreTrigger",
+        "ActivityFeedEmpty"
+      ],
       "dependencies": [],
       "registryDependencies": [
         "button",
@@ -49,6 +75,23 @@
       "name": "alert-dialog",
       "type": "ui",
       "description": "",
+      "ark": "Dialog",
+      "exports": [
+        "AlertDialog",
+        "AlertDialogAction",
+        "AlertDialogCancel",
+        "AlertDialogContent",
+        "AlertDialogContext",
+        "AlertDialogDescription",
+        "AlertDialogFooter",
+        "AlertDialogHeader",
+        "AlertDialogMedia",
+        "AlertDialogOverlay",
+        "AlertDialogPortal",
+        "AlertDialogPositioner",
+        "AlertDialogTitle",
+        "AlertDialogTrigger"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -65,6 +108,12 @@
       "name": "alert",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Alert",
+        "AlertTitle",
+        "AlertDescription",
+        "AlertAction"
+      ],
       "dependencies": [
         "class-variance-authority"
       ],
@@ -80,6 +129,18 @@
       "name": "angle-slider",
       "type": "ui",
       "description": "",
+      "ark": "AngleSlider",
+      "exports": [
+        "AngleSlider",
+        "AngleSliderContext",
+        "AngleSliderControl",
+        "AngleSliderHiddenInput",
+        "AngleSliderLabel",
+        "AngleSliderMarker",
+        "AngleSliderMarkerGroup",
+        "AngleSliderThumb",
+        "AngleSliderValueText"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -95,6 +156,62 @@
       "name": "app-shell",
       "type": "ui",
       "description": "`src/components/ui/app-shell.tsx` is a compositional, router-agnostic shell built on `sidebar.tsx` (shadcn-admin layout): `AppShell` (context: sidebar variant/collapsible, search open state, `searchShortcut` for cmd/ctrl+K), `AppShellSideba",
+      "exports": [
+        "AppShell",
+        "AppShellBrand",
+        "AppShellBrandChevron",
+        "AppShellBrandDescription",
+        "AppShellBrandLogo",
+        "AppShellBrandText",
+        "AppShellBrandTitle",
+        "AppShellCommandDialog",
+        "AppShellContent",
+        "AppShellHeader",
+        "AppShellHeaderActions",
+        "AppShellMain",
+        "AppShellNav",
+        "AppShellNavBadge",
+        "AppShellNavCollapsible",
+        "AppShellNavItem",
+        "AppShellNavLabel",
+        "AppShellNavLink",
+        "AppShellNavList",
+        "AppShellNavMenuLink",
+        "AppShellNavSubItem",
+        "AppShellNavSubLink",
+        "AppShellNotificationItem",
+        "AppShellNotificationItemContent",
+        "AppShellNotificationItemDescription",
+        "AppShellNotificationItemIcon",
+        "AppShellNotificationItemIndicator",
+        "AppShellNotificationItemTime",
+        "AppShellNotificationItemTitle",
+        "AppShellNotifications",
+        "AppShellNotificationsActionTrigger",
+        "AppShellNotificationsContent",
+        "AppShellNotificationsEmpty",
+        "AppShellNotificationsFooter",
+        "AppShellNotificationsHeader",
+        "AppShellNotificationsList",
+        "AppShellNotificationsTitle",
+        "AppShellNotificationsTrigger",
+        "AppShellSearch",
+        "AppShellSidebar",
+        "AppShellSkipLink",
+        "AppShellThemeToggle",
+        "AppShellTopNav",
+        "AppShellTopNavLink",
+        "AppShellTopNavMenu",
+        "AppShellUser",
+        "AppShellUserAvatar",
+        "AppShellUserEmail",
+        "AppShellUserName",
+        "AppShellUserText",
+        "AppShellSidebarContent",
+        "AppShellSidebarFooter",
+        "AppShellSidebarHeader",
+        "useAppShell"
+      ],
       "dependencies": [
         "lucide-react"
       ],
@@ -120,6 +237,9 @@
       "name": "aspect-ratio",
       "type": "ui",
       "description": "Ark UI has no AspectRatio primitive. This mirrors Radix's: a wrapper with a percentage padding-bottom, and an absolutely positioned content box.",
+      "exports": [
+        "AspectRatio"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -131,6 +251,17 @@
       "name": "attachment",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Attachment",
+        "AttachmentGroup",
+        "AttachmentMedia",
+        "AttachmentContent",
+        "AttachmentTitle",
+        "AttachmentDescription",
+        "AttachmentActions",
+        "AttachmentActionTrigger",
+        "AttachmentTrigger"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "class-variance-authority"
@@ -148,6 +279,16 @@
       "name": "avatar",
       "type": "ui",
       "description": "",
+      "ark": "Avatar",
+      "exports": [
+        "Avatar",
+        "AvatarBadge",
+        "AvatarContext",
+        "AvatarFallback",
+        "AvatarGroup",
+        "AvatarGroupCount",
+        "AvatarImage"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -163,6 +304,10 @@
       "name": "badge",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Badge",
+        "badgeVariants"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "class-variance-authority"
@@ -179,6 +324,15 @@
       "name": "breadcrumb",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Breadcrumb",
+        "BreadcrumbList",
+        "BreadcrumbItem",
+        "BreadcrumbLink",
+        "BreadcrumbPage",
+        "BreadcrumbSeparator",
+        "BreadcrumbEllipsis"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -195,6 +349,12 @@
       "name": "bubble",
       "type": "ui",
       "description": "",
+      "exports": [
+        "BubbleGroup",
+        "Bubble",
+        "BubbleContent",
+        "BubbleReactions"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "class-variance-authority"
@@ -211,6 +371,12 @@
       "name": "button-group",
       "type": "ui",
       "description": "",
+      "exports": [
+        "ButtonGroup",
+        "ButtonGroupSeparator",
+        "ButtonGroupText",
+        "buttonGroupVariants"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "class-variance-authority"
@@ -228,6 +394,10 @@
       "name": "button",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Button",
+        "buttonVariants"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "class-variance-authority"
@@ -244,6 +414,10 @@
       "name": "calendar",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Calendar",
+        "CalendarDayButton"
+      ],
       "dependencies": [
         "lucide-react",
         "react-day-picker"
@@ -261,6 +435,23 @@
       "name": "canvas",
       "type": "ui",
       "description": "Canvas — a compositional, data-agnostic drag-and-drop layout surface on Pragmatic drag and drop. Items come from a palette (`CanvasPaletteItem`, carrying arbitrary `data`) or are existing nodes (`CanvasNode`). Nodes are drop targets on all ",
+      "exports": [
+        "Canvas",
+        "CanvasArea",
+        "CanvasDropIndicator",
+        "CanvasEmpty",
+        "CanvasNode",
+        "CanvasNodeActions",
+        "CanvasNodeHandle",
+        "CanvasNodeHeader",
+        "CanvasNodeOverlay",
+        "CanvasNodeTitle",
+        "CanvasPalette",
+        "CanvasPaletteItem",
+        "CanvasResizeHandle",
+        "CanvasRow",
+        "useCanvas"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "@atlaskit/pragmatic-drag-and-drop",
@@ -282,6 +473,15 @@
       "name": "card",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Card",
+        "CardHeader",
+        "CardFooter",
+        "CardTitle",
+        "CardAction",
+        "CardDescription",
+        "CardContent"
+      ],
       "dependencies": [],
       "registryDependencies": [
         "utils"
@@ -295,6 +495,14 @@
       "name": "carousel",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Carousel",
+        "CarouselContent",
+        "CarouselItem",
+        "CarouselPrevious",
+        "CarouselNext",
+        "useCarousel"
+      ],
       "dependencies": [
         "embla-carousel-react",
         "lucide-react"
@@ -312,6 +520,27 @@
       "name": "cascader",
       "type": "ui",
       "description": "-------------------------------- helpers --------------------------------",
+      "ark": "Popover",
+      "exports": [
+        "Cascader",
+        "CascaderClearTrigger",
+        "CascaderColumn",
+        "CascaderColumns",
+        "CascaderContent",
+        "CascaderEmpty",
+        "CascaderHiddenInput",
+        "CascaderIndicator",
+        "CascaderItem",
+        "CascaderItemIndicator",
+        "CascaderItemText",
+        "CascaderSearch",
+        "CascaderSearchResult",
+        "CascaderSearchResults",
+        "CascaderTrigger",
+        "CascaderValue",
+        "createTreeCollection",
+        "useCascader"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -332,6 +561,14 @@
       "name": "chart",
       "type": "ui",
       "description": "",
+      "exports": [
+        "ChartContainer",
+        "ChartTooltip",
+        "ChartTooltipContent",
+        "ChartLegend",
+        "ChartLegendContent",
+        "ChartStyle"
+      ],
       "dependencies": [
         "recharts"
       ],
@@ -347,6 +584,47 @@
       "name": "chat",
       "type": "ui",
       "description": "`src/components/ui/chat.tsx` is a compositional, data-agnostic chat layout primitive (sidebar with search and conversation list, panel with header/messages/composer, empty state).",
+      "exports": [
+        "Chat",
+        "ChatBackTrigger",
+        "ChatBody",
+        "ChatComposer",
+        "ChatComposerActions",
+        "ChatComposerField",
+        "ChatComposerInput",
+        "ChatComposerSendTrigger",
+        "ChatContext",
+        "ChatConversationInfo",
+        "ChatConversationItem",
+        "ChatConversationList",
+        "ChatConversationName",
+        "ChatConversationPreview",
+        "ChatDateSeparator",
+        "ChatEmpty",
+        "ChatEmptyContent",
+        "ChatEmptyDescription",
+        "ChatEmptyIcon",
+        "ChatEmptyTitle",
+        "ChatHeader",
+        "ChatHeaderActions",
+        "ChatHeaderDescription",
+        "ChatHeaderInfo",
+        "ChatHeaderText",
+        "ChatHeaderTitle",
+        "ChatMessage",
+        "ChatMessageTime",
+        "ChatMessages",
+        "ChatPanel",
+        "ChatSearch",
+        "ChatSidebar",
+        "ChatSidebarHeader",
+        "ChatSidebarHeading",
+        "ChatSidebarTitle",
+        "chatMessageVariants",
+        "getInitials",
+        "groupBy",
+        "useChat"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "class-variance-authority",
@@ -367,6 +645,18 @@
       "name": "checkbox",
       "type": "ui",
       "description": "",
+      "ark": "Checkbox",
+      "exports": [
+        "Checkbox",
+        "CheckboxContext",
+        "CheckboxControl",
+        "CheckboxGroup",
+        "CheckboxHiddenInput",
+        "CheckboxIndicator",
+        "CheckboxLabel",
+        "CheckboxRoot",
+        "CheckboxGroupProvider"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -383,6 +673,17 @@
       "name": "clipboard",
       "type": "ui",
       "description": "",
+      "ark": "Clipboard",
+      "exports": [
+        "Clipboard",
+        "ClipboardContext",
+        "ClipboardControl",
+        "ClipboardIndicator",
+        "ClipboardInput",
+        "ClipboardLabel",
+        "ClipboardTrigger",
+        "ClipboardValueText"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -400,6 +701,14 @@
       "name": "collapsible",
       "type": "ui",
       "description": "",
+      "ark": "Collapsible",
+      "exports": [
+        "Collapsible",
+        "CollapsibleContent",
+        "CollapsibleContext",
+        "CollapsibleIndicator",
+        "CollapsibleTrigger"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -413,6 +722,39 @@
       "name": "color-picker",
       "type": "ui",
       "description": "",
+      "ark": "ColorPicker",
+      "exports": [
+        "ColorPicker",
+        "ColorPickerArea",
+        "ColorPickerAreaBackground",
+        "ColorPickerAreaThumb",
+        "ColorPickerChannelInput",
+        "ColorPickerChannelSlider",
+        "ColorPickerChannelSliderLabel",
+        "ColorPickerChannelSliderThumb",
+        "ColorPickerChannelSliderTrack",
+        "ColorPickerChannelSliderValueText",
+        "ColorPickerContent",
+        "ColorPickerContext",
+        "ColorPickerControl",
+        "ColorPickerEyeDropperTrigger",
+        "ColorPickerFormatSelect",
+        "ColorPickerFormatTrigger",
+        "ColorPickerHiddenInput",
+        "ColorPickerLabel",
+        "ColorPickerPortal",
+        "ColorPickerPositioner",
+        "ColorPickerSwatch",
+        "ColorPickerSwatchGroup",
+        "ColorPickerSwatchIndicator",
+        "ColorPickerSwatchTrigger",
+        "ColorPickerTransparencyGrid",
+        "ColorPickerTrigger",
+        "ColorPickerValueSwatch",
+        "ColorPickerValueText",
+        "ColorPickerView",
+        "parseColor"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -430,6 +772,36 @@
       "name": "combobox",
       "type": "ui",
       "description": "",
+      "ark": "Combobox",
+      "exports": [
+        "Combobox",
+        "ComboboxChip",
+        "ComboboxChips",
+        "ComboboxChipsInput",
+        "ComboboxClear",
+        "ComboboxCollection",
+        "ComboboxContent",
+        "ComboboxContext",
+        "ComboboxControl",
+        "ComboboxEmpty",
+        "ComboboxGroup",
+        "ComboboxInput",
+        "ComboboxItem",
+        "ComboboxItemIndicator",
+        "ComboboxItemText",
+        "ComboboxLabel",
+        "ComboboxList",
+        "ComboboxPositioner",
+        "ComboboxRootLabel",
+        "ComboboxSeparator",
+        "ComboboxTrigger",
+        "ComboboxValue",
+        "createListCollection",
+        "useComboboxAnchor",
+        "useFilter",
+        "useListCollection",
+        "ComboboxItemContext"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -448,6 +820,25 @@
       "name": "command",
       "type": "ui",
       "description": "- **Feature parity** with the shadcn original: same exported names, same props surface where Ark supports it, same visual result, same variants. - **Ark's tree wins** where the structure differs (e.g.",
+      "ark": "Listbox",
+      "exports": [
+        "Command",
+        "CommandContext",
+        "CommandDialog",
+        "CommandEmpty",
+        "CommandGroup",
+        "CommandGroupLabel",
+        "CommandInput",
+        "CommandItem",
+        "CommandItemIndicator",
+        "CommandItemText",
+        "CommandList",
+        "CommandSeparator",
+        "CommandShortcut",
+        "createListCollection",
+        "useFilter",
+        "useListCollection"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -466,6 +857,38 @@
       "name": "comment-thread",
       "type": "ui",
       "description": "CommentThread — compositional, data-agnostic comments with replies, reactions and a mentions composer. The consumer owns the comments and the people list; the thread owns only which comment is being replied to or edited. Mentions are plain ",
+      "exports": [
+        "CommentThread",
+        "CommentList",
+        "Comment",
+        "CommentAvatar",
+        "CommentContent",
+        "CommentHeader",
+        "CommentAuthor",
+        "CommentTime",
+        "CommentMeta",
+        "CommentBody",
+        "CommentMention",
+        "CommentReactions",
+        "CommentReaction",
+        "CommentActions",
+        "CommentReplyTrigger",
+        "CommentEditTrigger",
+        "CommentReplies",
+        "CommentEmpty",
+        "CommentComposer",
+        "CommentComposerReplyingTo",
+        "CommentComposerInput",
+        "CommentComposerMentionList",
+        "CommentComposerFooter",
+        "CommentComposerHint",
+        "CommentComposerSubmitTrigger",
+        "CommentComposerCancelTrigger",
+        "useCommentThread",
+        "useComment",
+        "extractMentions",
+        "renderMentions"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -488,6 +911,33 @@
       "name": "context-menu",
       "type": "ui",
       "description": "",
+      "ark": "Menu",
+      "exports": [
+        "ContextMenu",
+        "ContextMenuCheckboxItem",
+        "ContextMenuContent",
+        "ContextMenuContext",
+        "ContextMenuGroup",
+        "ContextMenuItem",
+        "ContextMenuItemIndicator",
+        "ContextMenuItemText",
+        "ContextMenuLabel",
+        "ContextMenuPortal",
+        "ContextMenuPositioner",
+        "ContextMenuRadioGroup",
+        "ContextMenuRadioItem",
+        "ContextMenuSeparator",
+        "ContextMenuShortcut",
+        "ContextMenuSub",
+        "ContextMenuSubContent",
+        "ContextMenuSubTrigger",
+        "ContextMenuTrigger",
+        "ContextMenuItemContext",
+        "ContextMenuArrow",
+        "ContextMenuArrowTip",
+        "ContextMenuClickTrigger",
+        "ContextMenuIndicator"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -504,6 +954,23 @@
       "name": "data-grid",
       "type": "ui",
       "description": "`src/components/ui/data-grid.tsx` is an editable, keyboard-driven grid on the same source-agnostic `DataTableInstance` contract as the data table (`useDataTable` with a huge `pageSize` feeds it every row; `DataTable` toolbar parts can wrap ",
+      "exports": [
+        "DataGrid",
+        "DataGridContainer",
+        "DataGridHeader",
+        "DataGridHeaderRow",
+        "DataGridHead",
+        "DataGridHeadWithResize",
+        "DataGridResizeHandle",
+        "DataGridBody",
+        "DataGridRow",
+        "DataGridCell",
+        "DataGridSelectAll",
+        "DataGridSelectRow",
+        "DataGridEmpty",
+        "useDataGrid",
+        "useDataGridRow"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -525,6 +992,37 @@
       "name": "data-table",
       "type": "ui",
       "description": "`src/lib/table.ts` is a dependency-free headless table engine (columns, sorting, global + column filters with faceted counts, pagination, row selection, visibility).",
+      "exports": [
+        "DataTable",
+        "DataTableBody",
+        "DataTableBulkActionTrigger",
+        "DataTableBulkActions",
+        "DataTableBulkActionsClear",
+        "DataTableBulkActionsCount",
+        "DataTableCell",
+        "DataTableHead",
+        "DataTableContainer",
+        "DataTableEmpty",
+        "DataTableFacetedFilter",
+        "DataTableHeader",
+        "DataTablePageInfo",
+        "DataTablePageNav",
+        "DataTablePageSize",
+        "DataTablePagination",
+        "DataTableResetFilters",
+        "DataTableRow",
+        "DataTableRowActions",
+        "DataTableSearch",
+        "DataTableSelectAll",
+        "DataTableSelectRow",
+        "DataTableTable",
+        "DataTableToolbar",
+        "DataTableToolbarGroup",
+        "DataTableViewOptions",
+        "getPageNumbers",
+        "useDataTable",
+        "useDataTableContext"
+      ],
       "dependencies": [
         "lucide-react"
       ],
@@ -554,6 +1052,17 @@
       "name": "date-input",
       "type": "ui",
       "description": "",
+      "ark": "DateInput",
+      "exports": [
+        "DateInput",
+        "DateInputContext",
+        "DateInputControl",
+        "DateInputHiddenInput",
+        "DateInputLabel",
+        "DateInputSegment",
+        "DateInputSegmentContext",
+        "DateInputSegmentGroup"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -569,6 +1078,21 @@
       "name": "dialog",
       "type": "ui",
       "description": "",
+      "ark": "Dialog",
+      "exports": [
+        "Dialog",
+        "DialogClose",
+        "DialogContent",
+        "DialogContext",
+        "DialogDescription",
+        "DialogFooter",
+        "DialogHeader",
+        "DialogOverlay",
+        "DialogPortal",
+        "DialogPositioner",
+        "DialogTitle",
+        "DialogTrigger"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -586,6 +1110,10 @@
       "name": "direction",
       "type": "ui",
       "description": "",
+      "exports": [
+        "DirectionProvider",
+        "useDirection"
+      ],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -597,6 +1125,26 @@
       "name": "drawer",
       "type": "ui",
       "description": "- **Feature parity** with the shadcn original: same exported names, same props surface where Ark supports it, same visual result, same variants. - **Ark's tree wins** where the structure differs (e.g.",
+      "ark": "Drawer",
+      "exports": [
+        "Drawer",
+        "DrawerClose",
+        "DrawerContent",
+        "DrawerContext",
+        "DrawerDescription",
+        "DrawerFooter",
+        "DrawerGrabber",
+        "DrawerHeader",
+        "DrawerOverlay",
+        "DrawerPortal",
+        "DrawerPositioner",
+        "DrawerSwipeArea",
+        "DrawerTitle",
+        "DrawerTrigger",
+        "DrawerIndent",
+        "DrawerIndentBackground",
+        "DrawerStack"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -612,6 +1160,32 @@
       "name": "dropdown-menu",
       "type": "ui",
       "description": "",
+      "ark": "Menu",
+      "exports": [
+        "DropdownMenu",
+        "DropdownMenuArrow",
+        "DropdownMenuCheckboxItem",
+        "DropdownMenuContent",
+        "DropdownMenuContext",
+        "DropdownMenuGroup",
+        "DropdownMenuItem",
+        "DropdownMenuItemIndicator",
+        "DropdownMenuItemText",
+        "DropdownMenuLabel",
+        "DropdownMenuPortal",
+        "DropdownMenuPositioner",
+        "DropdownMenuRadioGroup",
+        "DropdownMenuRadioItem",
+        "DropdownMenuSeparator",
+        "DropdownMenuShortcut",
+        "DropdownMenuSub",
+        "DropdownMenuSubContent",
+        "DropdownMenuSubTrigger",
+        "DropdownMenuTrigger",
+        "DropdownMenuItemContext",
+        "DropdownMenuContextTrigger",
+        "DropdownMenuIndicator"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -628,6 +1202,19 @@
       "name": "editable",
       "type": "ui",
       "description": "",
+      "ark": "Editable",
+      "exports": [
+        "Editable",
+        "EditableArea",
+        "EditableCancelTrigger",
+        "EditableContext",
+        "EditableControl",
+        "EditableEditTrigger",
+        "EditableInput",
+        "EditableLabel",
+        "EditablePreview",
+        "EditableSubmitTrigger"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -643,6 +1230,14 @@
       "name": "empty",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Empty",
+        "EmptyHeader",
+        "EmptyTitle",
+        "EmptyDescription",
+        "EmptyContent",
+        "EmptyMedia"
+      ],
       "dependencies": [
         "class-variance-authority"
       ],
@@ -658,6 +1253,18 @@
       "name": "field",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Field",
+        "FieldLabel",
+        "FieldDescription",
+        "FieldError",
+        "FieldGroup",
+        "FieldLegend",
+        "FieldSeparator",
+        "FieldSet",
+        "FieldContent",
+        "FieldTitle"
+      ],
       "dependencies": [
         "class-variance-authority"
       ],
@@ -675,6 +1282,23 @@
       "name": "file-upload",
       "type": "ui",
       "description": "",
+      "ark": "FileUpload",
+      "exports": [
+        "FileUpload",
+        "FileUploadClearTrigger",
+        "FileUploadContext",
+        "FileUploadDropzone",
+        "FileUploadHiddenInput",
+        "FileUploadItem",
+        "FileUploadItemDeleteTrigger",
+        "FileUploadItemGroup",
+        "FileUploadItemName",
+        "FileUploadItemPreview",
+        "FileUploadItemPreviewImage",
+        "FileUploadItemSizeText",
+        "FileUploadLabel",
+        "FileUploadTrigger"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -692,6 +1316,23 @@
       "name": "floating-panel",
       "type": "ui",
       "description": "",
+      "ark": "FloatingPanel",
+      "exports": [
+        "FloatingPanel",
+        "FloatingPanelBody",
+        "FloatingPanelCloseTrigger",
+        "FloatingPanelContent",
+        "FloatingPanelContext",
+        "FloatingPanelControl",
+        "FloatingPanelDragTrigger",
+        "FloatingPanelHeader",
+        "FloatingPanelPortal",
+        "FloatingPanelPositioner",
+        "FloatingPanelResizeTrigger",
+        "FloatingPanelStageTrigger",
+        "FloatingPanelTitle",
+        "FloatingPanelTrigger"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -709,6 +1350,9 @@
       "name": "floating-toolbar",
       "type": "ui",
       "description": "FloatingToolbar — the snackbar-style action bar that floats over a page (bulk actions on tables, pending edits on grids). Arrow keys move between its buttons, Home/End jump, and Escape calls `onEscape` unless focus is in a nested menu. Rend",
+      "exports": [
+        "FloatingToolbar"
+      ],
       "dependencies": [],
       "registryDependencies": [
         "utils"
@@ -722,6 +1366,13 @@
       "name": "format",
       "type": "ui",
       "description": "Locale-aware formatting helpers from Ark, wrapping `Intl`.",
+      "ark": "Format",
+      "exports": [
+        "FormatByte",
+        "FormatNumber",
+        "FormatRelativeTime",
+        "FormatTime"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -735,6 +1386,31 @@
       "name": "gantt",
       "type": "ui",
       "description": "`src/components/ui/gantt.tsx` is a compositional, data-agnostic timeline.",
+      "exports": [
+        "Gantt",
+        "GanttViewport",
+        "GanttHeader",
+        "GanttHeaderCorner",
+        "GanttBody",
+        "GanttGridLines",
+        "GanttRows",
+        "GanttRow",
+        "GanttRowLabel",
+        "GanttRowTrack",
+        "GanttBar",
+        "GanttBarLabel",
+        "GanttBarResizeHandle",
+        "GanttMilestone",
+        "GanttDependencies",
+        "GanttToday",
+        "GanttEmpty",
+        "GanttControls",
+        "GanttZoomInTrigger",
+        "GanttZoomOutTrigger",
+        "GanttTodayTrigger",
+        "useGantt",
+        "useGanttRow"
+      ],
       "dependencies": [
         "date-fns",
         "lucide-react"
@@ -754,6 +1430,16 @@
       "name": "hotkeys",
       "type": "ui",
       "description": "-------------------------------- parsing --------------------------------",
+      "exports": [
+        "HotkeyKbd",
+        "HotkeysDialog",
+        "HotkeysProvider",
+        "formatHotkey",
+        "parseHotkey",
+        "useHotkey",
+        "useHotkeys",
+        "useHotkeysDialog"
+      ],
       "dependencies": [],
       "registryDependencies": [
         "dialog",
@@ -769,6 +1455,16 @@
       "name": "hover-card",
       "type": "ui",
       "description": "",
+      "ark": "HoverCard",
+      "exports": [
+        "HoverCard",
+        "HoverCardArrow",
+        "HoverCardContent",
+        "HoverCardContext",
+        "HoverCardPortal",
+        "HoverCardPositioner",
+        "HoverCardTrigger"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -784,6 +1480,16 @@
       "name": "image-cropper",
       "type": "ui",
       "description": "",
+      "ark": "ImageCropper",
+      "exports": [
+        "ImageCropper",
+        "ImageCropperContext",
+        "ImageCropperGrid",
+        "ImageCropperHandle",
+        "ImageCropperImage",
+        "ImageCropperSelection",
+        "ImageCropperViewport"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -799,6 +1505,14 @@
       "name": "input-group",
       "type": "ui",
       "description": "",
+      "exports": [
+        "InputGroup",
+        "InputGroupAddon",
+        "InputGroupTrigger",
+        "InputGroupText",
+        "InputGroupInput",
+        "InputGroupTextarea"
+      ],
       "dependencies": [
         "class-variance-authority"
       ],
@@ -817,6 +1531,12 @@
       "name": "input-otp",
       "type": "ui",
       "description": "",
+      "exports": [
+        "InputOTP",
+        "InputOTPGroup",
+        "InputOTPSlot",
+        "InputOTPSeparator"
+      ],
       "dependencies": [
         "input-otp",
         "lucide-react"
@@ -833,6 +1553,9 @@
       "name": "input",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Input"
+      ],
       "dependencies": [],
       "registryDependencies": [
         "utils"
@@ -846,6 +1569,18 @@
       "name": "item",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Item",
+        "ItemMedia",
+        "ItemContent",
+        "ItemActions",
+        "ItemGroup",
+        "ItemSeparator",
+        "ItemTitle",
+        "ItemDescription",
+        "ItemHeader",
+        "ItemFooter"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "class-variance-authority"
@@ -863,6 +1598,11 @@
       "name": "json-tree-view",
       "type": "ui",
       "description": "",
+      "ark": "JsonTreeView",
+      "exports": [
+        "JsonTreeView",
+        "JsonTreeViewTree"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -878,6 +1618,32 @@
       "name": "kanban",
       "type": "ui",
       "description": "Kanban — a compositional, data-agnostic board on Pragmatic drag and drop. The consumer owns columns and cards and re-renders them from its own state; the primitive wires dragging and reports intents through `onCardMove` and `onColumnMove`. ",
+      "exports": [
+        "Kanban",
+        "KanbanAddTrigger",
+        "KanbanBoard",
+        "KanbanCard",
+        "KanbanCardDescription",
+        "KanbanCardFooter",
+        "KanbanCardHandle",
+        "KanbanCardHeader",
+        "KanbanCardTitle",
+        "KanbanColumn",
+        "KanbanColumnActions",
+        "KanbanColumnContent",
+        "KanbanColumnCount",
+        "KanbanColumnFooter",
+        "KanbanColumnHandle",
+        "KanbanColumnHeader",
+        "KanbanColumnTitle",
+        "KanbanDropIndicator",
+        "KanbanDropSlot",
+        "KanbanEmpty",
+        "moveCard",
+        "moveColumn",
+        "useKanban",
+        "useKanbanColumn"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "@atlaskit/pragmatic-drag-and-drop",
@@ -901,6 +1667,10 @@
       "name": "kbd",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Kbd",
+        "KbdGroup"
+      ],
       "dependencies": [],
       "registryDependencies": [
         "utils"
@@ -914,6 +1684,9 @@
       "name": "label",
       "type": "ui",
       "description": "Ark UI has no standalone Label primitive (its labels live inside each component's anatomy). This mirrors Radix's: a native `label` that ignores double-click text selection.",
+      "exports": [
+        "Label"
+      ],
       "dependencies": [],
       "registryDependencies": [
         "utils"
@@ -927,6 +1700,10 @@
       "name": "live-region",
       "type": "ui",
       "description": "Shared screen-reader announcer. `announce` re-fires even when the same text is announced twice, and `clearAfter` (ms) empties the region so stale text is not re-read when a user lands on it.",
+      "exports": [
+        "LiveRegion",
+        "useLiveRegion"
+      ],
       "dependencies": [],
       "registryDependencies": [
         "utils"
@@ -940,6 +1717,12 @@
       "name": "marker",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Marker",
+        "MarkerIcon",
+        "MarkerContent",
+        "markerVariants"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "class-variance-authority"
@@ -956,6 +1739,15 @@
       "name": "marquee",
       "type": "ui",
       "description": "",
+      "ark": "Marquee",
+      "exports": [
+        "Marquee",
+        "MarqueeContent",
+        "MarqueeContext",
+        "MarqueeEdge",
+        "MarqueeItem",
+        "MarqueeViewport"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -971,6 +1763,30 @@
       "name": "menubar",
       "type": "ui",
       "description": "Ark UI has no Menubar primitive. `Menubar` composes Ark `Menu` roots and adds the menubar behaviours Radix provides: one open menu at a time, hover switching between triggers once a menu is open, roving tabindex across triggers, and ArrowLe",
+      "ark": "Menu",
+      "exports": [
+        "Menubar",
+        "MenubarArrow",
+        "MenubarCheckboxItem",
+        "MenubarContent",
+        "MenubarContext",
+        "MenubarGroup",
+        "MenubarItem",
+        "MenubarItemIndicator",
+        "MenubarItemText",
+        "MenubarLabel",
+        "MenubarMenu",
+        "MenubarPortal",
+        "MenubarPositioner",
+        "MenubarRadioGroup",
+        "MenubarRadioItem",
+        "MenubarSeparator",
+        "MenubarShortcut",
+        "MenubarSub",
+        "MenubarSubContent",
+        "MenubarSubTrigger",
+        "MenubarTrigger"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -988,6 +1804,14 @@
       "name": "message",
       "type": "ui",
       "description": "",
+      "exports": [
+        "MessageGroup",
+        "Message",
+        "MessageAvatar",
+        "MessageContent",
+        "MessageFooter",
+        "MessageHeader"
+      ],
       "dependencies": [],
       "registryDependencies": [
         "utils"
@@ -1001,6 +1825,22 @@
       "name": "navigation-menu",
       "type": "ui",
       "description": "",
+      "ark": "NavigationMenu",
+      "exports": [
+        "NavigationMenu",
+        "NavigationMenuArrow",
+        "NavigationMenuContent",
+        "NavigationMenuContext",
+        "NavigationMenuIndicator",
+        "NavigationMenuItem",
+        "NavigationMenuLink",
+        "NavigationMenuList",
+        "NavigationMenuTrigger",
+        "NavigationMenuViewport",
+        "NavigationMenuViewportPositioner",
+        "navigationMenuTriggerStyle",
+        "NavigationMenuItemIndicator"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "class-variance-authority",
@@ -1018,6 +1858,37 @@
       "name": "node-graph",
       "type": "ui",
       "description": "NodeGraph — a compositional, data-agnostic node editor in the spirit of visual scripting graphs. The consumer owns nodes and edges; the graph owns only the viewport (pan/zoom), the selection, and in-flight interactions (dragging nodes, draw",
+      "exports": [
+        "NodeGraph",
+        "NodeGraphViewport",
+        "NodeGraphBackground",
+        "NodeGraphSurface",
+        "NodeGraphEdges",
+        "NodeGraphEdge",
+        "NodeGraphConnectionLine",
+        "NodeGraphSelectionBox",
+        "NodeGraphNode",
+        "NodeGraphNodeHeader",
+        "NodeGraphNodeActions",
+        "NodeGraphNodeTitle",
+        "NodeGraphNodeSubtitle",
+        "NodeGraphNodeBody",
+        "NodeGraphNodeInputs",
+        "NodeGraphNodeOutputs",
+        "NodeGraphNodeFooter",
+        "NodeGraphPort",
+        "NodeGraphPortPin",
+        "NodeGraphPortLabel",
+        "NodeGraphControls",
+        "NodeGraphZoomInTrigger",
+        "NodeGraphZoomOutTrigger",
+        "NodeGraphFitViewTrigger",
+        "NodeGraphZoomValue",
+        "NodeGraphMinimap",
+        "NodeGraphEmpty",
+        "useNodeGraph",
+        "getBezierPath"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "class-variance-authority",
@@ -1037,6 +1908,19 @@
       "name": "number-input",
       "type": "ui",
       "description": "",
+      "ark": "NumberInput",
+      "exports": [
+        "NumberInput",
+        "NumberInputContext",
+        "NumberInputControl",
+        "NumberInputDecrementTrigger",
+        "NumberInputIncrementTrigger",
+        "NumberInputInput",
+        "NumberInputLabel",
+        "NumberInputScrubber",
+        "NumberInputTriggers",
+        "NumberInputValueText"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -1053,6 +1937,15 @@
       "name": "pagination",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Pagination",
+        "PaginationContent",
+        "PaginationEllipsis",
+        "PaginationItem",
+        "PaginationLink",
+        "PaginationNext",
+        "PaginationPrevious"
+      ],
       "dependencies": [
         "lucide-react"
       ],
@@ -1069,6 +1962,16 @@
       "name": "password-input",
       "type": "ui",
       "description": "",
+      "ark": "PasswordInput",
+      "exports": [
+        "PasswordInput",
+        "PasswordInputContext",
+        "PasswordInputControl",
+        "PasswordInputIndicator",
+        "PasswordInputInput",
+        "PasswordInputLabel",
+        "PasswordInputVisibilityTrigger"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -1085,6 +1988,18 @@
       "name": "popconfirm",
       "type": "ui",
       "description": "Popconfirm — a lightweight inline confirmation on Ark's Popover, for actions that need a \"are you sure?\" without a modal dialog. Compose it: `Popconfirm` > `PopconfirmTrigger` + `PopconfirmContent` > (`PopconfirmHeader` > `PopconfirmIcon` +",
+      "exports": [
+        "Popconfirm",
+        "PopconfirmCancelTrigger",
+        "PopconfirmConfirmTrigger",
+        "PopconfirmContent",
+        "PopconfirmDescription",
+        "PopconfirmFooter",
+        "PopconfirmHeader",
+        "PopconfirmIcon",
+        "PopconfirmTitle",
+        "PopconfirmTrigger"
+      ],
       "dependencies": [
         "lucide-react"
       ],
@@ -1102,6 +2017,22 @@
       "name": "popover",
       "type": "ui",
       "description": "",
+      "ark": "Popover",
+      "exports": [
+        "Popover",
+        "PopoverAnchor",
+        "PopoverArrow",
+        "PopoverClose",
+        "PopoverContent",
+        "PopoverContext",
+        "PopoverDescription",
+        "PopoverHeader",
+        "PopoverPortal",
+        "PopoverPositioner",
+        "PopoverTitle",
+        "PopoverTrigger",
+        "PopoverIndicator"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -1118,6 +2049,20 @@
       "name": "progress",
       "type": "ui",
       "description": "",
+      "ark": "Progress",
+      "exports": [
+        "Progress",
+        "ProgressCircle",
+        "ProgressCircleRange",
+        "ProgressCircleTrack",
+        "ProgressContext",
+        "ProgressLabel",
+        "ProgressRange",
+        "ProgressRoot",
+        "ProgressTrack",
+        "ProgressValueText",
+        "ProgressView"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -1133,6 +2078,15 @@
       "name": "qr-code",
       "type": "ui",
       "description": "",
+      "ark": "QrCode",
+      "exports": [
+        "QrCode",
+        "QrCodeContext",
+        "QrCodeDownloadTrigger",
+        "QrCodeFrame",
+        "QrCodeOverlay",
+        "QrCodePattern"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -1148,6 +2102,35 @@
       "name": "query-builder",
       "type": "ui",
       "description": "`src/components/ui/query-builder.tsx` is a compositional filter builder designed for low cognitive load: it reads like a sentence instead of the usual AND/OR toggles per row.",
+      "exports": [
+        "QueryBuilder",
+        "QueryBuilderGroup",
+        "QueryBuilderGroupHeader",
+        "QueryBuilderMatch",
+        "QueryBuilderGroupBody",
+        "QueryBuilderGroupFooter",
+        "QueryBuilderRule",
+        "QueryBuilderFieldSelect",
+        "QueryBuilderOperatorSelect",
+        "QueryBuilderValueEditor",
+        "QueryBuilderRuleActions",
+        "QueryBuilderAddRuleTrigger",
+        "QueryBuilderAddGroupTrigger",
+        "QueryBuilderRemoveTrigger",
+        "QueryBuilderSummary",
+        "QueryBuilderEmpty",
+        "useQueryBuilder",
+        "useQueryBuilderGroup",
+        "useQueryBuilderRule",
+        "createRule",
+        "createGroup",
+        "isGroup",
+        "isComplete",
+        "operatorsFor",
+        "defaultOperators",
+        "describeQuery",
+        "pruneQuery"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -1168,6 +2151,18 @@
       "name": "radio-group",
       "type": "ui",
       "description": "",
+      "ark": "RadioGroup",
+      "exports": [
+        "RadioGroup",
+        "RadioGroupContext",
+        "RadioGroupIndicator",
+        "RadioGroupItem",
+        "RadioGroupItemContext",
+        "RadioGroupItemControl",
+        "RadioGroupItemHiddenInput",
+        "RadioGroupItemText",
+        "RadioGroupLabel"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -1183,6 +2178,16 @@
       "name": "rating-group",
       "type": "ui",
       "description": "",
+      "ark": "RatingGroup",
+      "exports": [
+        "RatingGroup",
+        "RatingGroupContext",
+        "RatingGroupControl",
+        "RatingGroupHiddenInput",
+        "RatingGroupItem",
+        "RatingGroupItemContext",
+        "RatingGroupLabel"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -1199,6 +2204,11 @@
       "name": "resizable",
       "type": "ui",
       "description": "",
+      "exports": [
+        "ResizableHandle",
+        "ResizablePanel",
+        "ResizablePanelGroup"
+      ],
       "dependencies": [
         "react-resizable-panels"
       ],
@@ -1214,6 +2224,23 @@
       "name": "rich-text-editor",
       "type": "ui",
       "description": "`src/components/ui/rich-text-editor.tsx` is a compositional editor on **tiptap** (`@tiptap/react`, StarterKit with link/underline, `@tiptap/extensions` Placeholder + CharacterCount, task list, highlight, text align, image, TableKit; `extens",
+      "exports": [
+        "RichTextEditor",
+        "RichTextEditorToolbar",
+        "RichTextEditorToolbarGroup",
+        "RichTextEditorToolbarSeparator",
+        "RichTextEditorToggle",
+        "RichTextEditorTrigger",
+        "RichTextEditorBlockSelect",
+        "RichTextEditorLinkTrigger",
+        "RichTextEditorImageTrigger",
+        "RichTextEditorContent",
+        "RichTextEditorBubbleMenu",
+        "RichTextEditorFooter",
+        "RichTextEditorCharacterCount",
+        "useRichTextEditor",
+        "richTextActions"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "@tiptap/extension-highlight",
@@ -1247,6 +2274,38 @@
       "name": "scheduler",
       "type": "ui",
       "description": "`src/components/ui/scheduler.tsx` is a compositional, data-agnostic calendar.",
+      "exports": [
+        "Scheduler",
+        "SchedulerToolbar",
+        "SchedulerPrevTrigger",
+        "SchedulerNextTrigger",
+        "SchedulerTodayTrigger",
+        "SchedulerTitle",
+        "SchedulerViewSelect",
+        "SchedulerTimeGrid",
+        "SchedulerTimeGridHeader",
+        "SchedulerDayHeadings",
+        "SchedulerAllDayRow",
+        "SchedulerTimeGridBody",
+        "SchedulerTimeGutter",
+        "SchedulerDayColumns",
+        "SchedulerDayColumn",
+        "SchedulerEvent",
+        "SchedulerEventTitle",
+        "SchedulerEventTime",
+        "SchedulerEventResizeHandle",
+        "SchedulerCreatePreview",
+        "SchedulerNowIndicator",
+        "SchedulerMonthGrid",
+        "SchedulerMonthHeader",
+        "SchedulerMonthBody",
+        "SchedulerMonthCell",
+        "SchedulerMonthEvent",
+        "SchedulerMonthMore",
+        "useScheduler",
+        "layoutLanes",
+        "visibleRange"
+      ],
       "dependencies": [
         "date-fns",
         "lucide-react"
@@ -1267,6 +2326,16 @@
       "name": "scroll-area",
       "type": "ui",
       "description": "",
+      "ark": "ScrollArea",
+      "exports": [
+        "ScrollArea",
+        "ScrollAreaContent",
+        "ScrollAreaContext",
+        "ScrollAreaCorner",
+        "ScrollAreaThumb",
+        "ScrollAreaViewport",
+        "ScrollBar"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -1282,6 +2351,18 @@
       "name": "segment-group",
       "type": "ui",
       "description": "",
+      "ark": "SegmentGroup",
+      "exports": [
+        "SegmentGroup",
+        "SegmentGroupContext",
+        "SegmentGroupIndicator",
+        "SegmentGroupItem",
+        "SegmentGroupItemContext",
+        "SegmentGroupItemControl",
+        "SegmentGroupItemHiddenInput",
+        "SegmentGroupItemText",
+        "SegmentGroupLabel"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -1297,6 +2378,31 @@
       "name": "select",
       "type": "ui",
       "description": "`src/lib/history.ts` exports `useHistory(initial, limit)` → `{ present, set(next, { commit }), checkpoint, undo, redo, reset, canUndo, canRedo }`; the node graph and form builder use it. Never add a local copy.",
+      "ark": "Select",
+      "exports": [
+        "Select",
+        "SelectClearTrigger",
+        "SelectContent",
+        "SelectContext",
+        "SelectControl",
+        "SelectGroup",
+        "SelectHiddenSelect",
+        "SelectIndicator",
+        "SelectItem",
+        "SelectItemIndicator",
+        "SelectItemText",
+        "SelectLabel",
+        "SelectList",
+        "SelectPositioner",
+        "SelectRootLabel",
+        "SelectScrollDownButton",
+        "SelectScrollUpButton",
+        "SelectSeparator",
+        "SelectTrigger",
+        "SelectValue",
+        "createListCollection",
+        "SelectItemContext"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -1313,6 +2419,9 @@
       "name": "separator",
       "type": "ui",
       "description": "Ark UI has no Separator primitive. This mirrors Radix's: a `div` with `role=\"separator\"` (or `role=\"none\"` when decorative) and `data-orientation`.",
+      "exports": [
+        "Separator"
+      ],
       "dependencies": [],
       "registryDependencies": [
         "utils"
@@ -1326,6 +2435,21 @@
       "name": "sheet",
       "type": "ui",
       "description": "",
+      "ark": "Dialog",
+      "exports": [
+        "Sheet",
+        "SheetTrigger",
+        "SheetClose",
+        "SheetContent",
+        "SheetContext",
+        "SheetHeader",
+        "SheetFooter",
+        "SheetOverlay",
+        "SheetPortal",
+        "SheetPositioner",
+        "SheetTitle",
+        "SheetDescription"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -1343,6 +2467,32 @@
       "name": "sidebar",
       "type": "ui",
       "description": "`src/components/ui/app-shell.tsx` is a compositional, router-agnostic shell built on `sidebar.tsx` (shadcn-admin layout): `AppShell` (context: sidebar variant/collapsible, search open state, `searchShortcut` for cmd/ctrl+K), `AppShellSideba",
+      "exports": [
+        "Sidebar",
+        "SidebarContent",
+        "SidebarFooter",
+        "SidebarGroup",
+        "SidebarGroupAction",
+        "SidebarGroupContent",
+        "SidebarGroupLabel",
+        "SidebarHeader",
+        "SidebarInput",
+        "SidebarInset",
+        "SidebarMenu",
+        "SidebarMenuAction",
+        "SidebarMenuBadge",
+        "SidebarMenuButton",
+        "SidebarMenuItem",
+        "SidebarMenuSkeleton",
+        "SidebarMenuSub",
+        "SidebarMenuSubButton",
+        "SidebarMenuSubItem",
+        "SidebarProvider",
+        "SidebarRail",
+        "SidebarSeparator",
+        "SidebarTrigger",
+        "useSidebar"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "class-variance-authority",
@@ -1367,6 +2517,17 @@
       "name": "signature-pad",
       "type": "ui",
       "description": "",
+      "ark": "SignaturePad",
+      "exports": [
+        "SignaturePad",
+        "SignaturePadClearTrigger",
+        "SignaturePadContext",
+        "SignaturePadControl",
+        "SignaturePadGuide",
+        "SignaturePadHiddenInput",
+        "SignaturePadLabel",
+        "SignaturePadSegment"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -1384,6 +2545,9 @@
       "name": "skeleton",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Skeleton"
+      ],
       "dependencies": [],
       "registryDependencies": [
         "utils"
@@ -1397,6 +2561,22 @@
       "name": "slider",
       "type": "ui",
       "description": "",
+      "ark": "Slider",
+      "exports": [
+        "Slider",
+        "SliderContext",
+        "SliderControl",
+        "SliderHiddenInput",
+        "SliderLabel",
+        "SliderMarker",
+        "SliderMarkerGroup",
+        "SliderRange",
+        "SliderRoot",
+        "SliderThumb",
+        "SliderTrack",
+        "SliderValueText",
+        "SliderDraggingIndicator"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -1412,6 +2592,9 @@
       "name": "sonner",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Toaster"
+      ],
       "dependencies": [
         "lucide-react",
         "next-themes",
@@ -1427,6 +2610,9 @@
       "name": "spinner",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Spinner"
+      ],
       "dependencies": [
         "lucide-react"
       ],
@@ -1442,6 +2628,22 @@
       "name": "steps",
       "type": "ui",
       "description": "",
+      "ark": "Steps",
+      "exports": [
+        "Steps",
+        "StepsCompletedContent",
+        "StepsContent",
+        "StepsContext",
+        "StepsIndicator",
+        "StepsItem",
+        "StepsItemContext",
+        "StepsList",
+        "StepsNextTrigger",
+        "StepsPrevTrigger",
+        "StepsProgress",
+        "StepsSeparator",
+        "StepsTrigger"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -1459,6 +2661,11 @@
       "name": "swap",
       "type": "ui",
       "description": "",
+      "ark": "Swap",
+      "exports": [
+        "Swap",
+        "SwapIndicator"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -1474,6 +2681,16 @@
       "name": "switch",
       "type": "ui",
       "description": "`id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working.",
+      "ark": "Switch",
+      "exports": [
+        "Switch",
+        "SwitchContext",
+        "SwitchControl",
+        "SwitchHiddenInput",
+        "SwitchLabel",
+        "SwitchRoot",
+        "SwitchThumb"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -1489,6 +2706,16 @@
       "name": "table",
       "type": "ui",
       "description": "`src/lib/table.ts` is a dependency-free headless table engine (columns, sorting, global + column filters with faceted counts, pagination, row selection, visibility).",
+      "exports": [
+        "Table",
+        "TableHeader",
+        "TableBody",
+        "TableFooter",
+        "TableHead",
+        "TableRow",
+        "TableCell",
+        "TableCaption"
+      ],
       "dependencies": [],
       "registryDependencies": [
         "utils"
@@ -1502,6 +2729,16 @@
       "name": "tabs",
       "type": "ui",
       "description": "",
+      "ark": "Tabs",
+      "exports": [
+        "Tabs",
+        "TabsContent",
+        "TabsContext",
+        "TabsIndicator",
+        "TabsList",
+        "TabsTrigger",
+        "tabsListVariants"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "class-variance-authority"
@@ -1518,6 +2755,22 @@
       "name": "tags-input",
       "type": "ui",
       "description": "",
+      "ark": "TagsInput",
+      "exports": [
+        "TagsInput",
+        "TagsInputClearTrigger",
+        "TagsInputContext",
+        "TagsInputControl",
+        "TagsInputHiddenInput",
+        "TagsInputInput",
+        "TagsInputItem",
+        "TagsInputItemContext",
+        "TagsInputItemDeleteTrigger",
+        "TagsInputItemInput",
+        "TagsInputItemPreview",
+        "TagsInputItemText",
+        "TagsInputLabel"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -1534,6 +2787,9 @@
       "name": "textarea",
       "type": "ui",
       "description": "",
+      "exports": [
+        "Textarea"
+      ],
       "dependencies": [],
       "registryDependencies": [
         "utils"
@@ -1547,6 +2803,16 @@
       "name": "timer",
       "type": "ui",
       "description": "",
+      "ark": "Timer",
+      "exports": [
+        "Timer",
+        "TimerActionTrigger",
+        "TimerArea",
+        "TimerContext",
+        "TimerControl",
+        "TimerItem",
+        "TimerSeparator"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -1563,6 +2829,18 @@
       "name": "toc",
       "type": "ui",
       "description": "",
+      "ark": "Toc",
+      "exports": [
+        "Toc",
+        "TocContent",
+        "TocContext",
+        "TocIndicator",
+        "TocItem",
+        "TocLink",
+        "TocList",
+        "TocNav",
+        "TocTitle"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -1578,6 +2856,12 @@
       "name": "toggle-group",
       "type": "ui",
       "description": "",
+      "ark": "ToggleGroup",
+      "exports": [
+        "ToggleGroup",
+        "ToggleGroupContext",
+        "ToggleGroupItem"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "class-variance-authority"
@@ -1595,6 +2879,13 @@
       "name": "toggle",
       "type": "ui",
       "description": "",
+      "ark": "Toggle",
+      "exports": [
+        "Toggle",
+        "ToggleContext",
+        "ToggleIndicator",
+        "toggleVariants"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "class-variance-authority"
@@ -1611,6 +2902,17 @@
       "name": "tooltip",
       "type": "ui",
       "description": "",
+      "ark": "Portal",
+      "exports": [
+        "Tooltip",
+        "TooltipArrow",
+        "TooltipContent",
+        "TooltipContext",
+        "TooltipPortal",
+        "TooltipPositioner",
+        "TooltipProvider",
+        "TooltipTrigger"
+      ],
       "dependencies": [
         "@ark-ui/react"
       ],
@@ -1626,6 +2928,25 @@
       "name": "tour",
       "type": "ui",
       "description": "",
+      "ark": "Tour",
+      "exports": [
+        "Tour",
+        "TourActionTrigger",
+        "TourActions",
+        "TourArrow",
+        "TourBackdrop",
+        "TourCloseTrigger",
+        "TourContent",
+        "TourContext",
+        "TourControl",
+        "TourDescription",
+        "TourPortal",
+        "TourPositioner",
+        "TourProgressText",
+        "TourSpotlight",
+        "TourTitle",
+        "useTour"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -1643,6 +2964,24 @@
       "name": "transfer-list",
       "type": "ui",
       "description": "`src/components/ui/transfer-list.tsx` moves items between two lists.",
+      "exports": [
+        "TransferList",
+        "TransferListControls",
+        "TransferListEmpty",
+        "TransferListItem",
+        "TransferListItemIndicator",
+        "TransferListItemText",
+        "TransferListItems",
+        "TransferListMoveAllTrigger",
+        "TransferListMoveTrigger",
+        "TransferListPanel",
+        "TransferListPanelCount",
+        "TransferListPanelHeader",
+        "TransferListPanelTitle",
+        "TransferListSearch",
+        "TransferListSelectAll",
+        "useTransferList"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -1664,6 +3003,25 @@
       "name": "tree-select",
       "type": "ui",
       "description": "Both live on Ark's `TreeCollection` (`createTreeCollection`, re-exported) and a Popover, and own only the open state, the search query, and the value (`value`/`defaultValue`/`onValueChange`, always a `string[]`); the trigger is a focusable ",
+      "ark": "Popover",
+      "exports": [
+        "TreeSelect",
+        "TreeSelectChip",
+        "TreeSelectChips",
+        "TreeSelectClearTrigger",
+        "TreeSelectContent",
+        "TreeSelectEmpty",
+        "TreeSelectHiddenInput",
+        "TreeSelectIndicator",
+        "TreeSelectNode",
+        "TreeSelectSearch",
+        "TreeSelectTree",
+        "TreeSelectTrigger",
+        "TreeSelectValue",
+        "collapseValues",
+        "createTreeCollection",
+        "useTreeSelect"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -1685,6 +3043,29 @@
       "name": "tree-view",
       "type": "ui",
       "description": "",
+      "ark": "TreeView",
+      "exports": [
+        "TreeView",
+        "TreeViewBranch",
+        "TreeViewBranchContent",
+        "TreeViewBranchControl",
+        "TreeViewBranchIndentGuide",
+        "TreeViewBranchIndicator",
+        "TreeViewBranchText",
+        "TreeViewBranchTrigger",
+        "TreeViewContext",
+        "TreeViewItem",
+        "TreeViewItemIndicator",
+        "TreeViewItemText",
+        "TreeViewLabel",
+        "TreeViewNodeCheckbox",
+        "TreeViewNodeCheckboxIndicator",
+        "TreeViewNodeContext",
+        "TreeViewNodeProvider",
+        "TreeViewNodeRenameInput",
+        "TreeViewTree",
+        "createTreeCollection"
+      ],
       "dependencies": [
         "@ark-ui/react",
         "lucide-react"
@@ -1701,6 +3082,15 @@
       "name": "virtual-list",
       "type": "ui",
       "description": "-------------------------------- context --------------------------------",
+      "exports": [
+        "VirtualList",
+        "VirtualListContent",
+        "VirtualListEmpty",
+        "VirtualListItem",
+        "VirtualListItems",
+        "VirtualListViewport",
+        "useVirtualList"
+      ],
       "dependencies": [],
       "registryDependencies": [
         "utils"
@@ -1714,6 +3104,7 @@
       "name": "controllable",
       "type": "lib",
       "description": "Both live on Ark's `TreeCollection` (`createTreeCollection`, re-exported) and a Popover, and own only the open state, the search query, and the value (`value`/`defaultValue`/`onValueChange`, always a `string[]`); the trigger is a focusable ",
+      "exports": [],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1725,6 +3116,7 @@
       "name": "data-table-adapter",
       "type": "lib",
       "description": "The contract the data table parts render against. `<DataTable>` accepts any object that satisfies it, so the parts are independent of where the rows, sorting, filtering, and paging come from. The built-in engine in `@/lib/table` satisfies i",
+      "exports": [],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1736,6 +3128,7 @@
       "name": "drag-preview",
       "type": "lib",
       "description": "`src/components/ui/kanban.tsx` is a compositional, data-agnostic board on `@atlaskit/pragmatic-drag-and-drop` (+ `-hitbox` closest-edge/reorder index, `-auto-scroll`).",
+      "exports": [],
       "dependencies": [
         "@atlaskit/pragmatic-drag-and-drop"
       ],
@@ -1749,6 +3142,7 @@
       "name": "form",
       "type": "lib",
       "description": "`src/lib/form.ts` exports `useForm(defaultValues, validate, onSubmit, { mode })`: a small, dependency-free hook (values, per-field errors, validating submit) that pairs with the `Field*` parts.",
+      "exports": [],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1760,6 +3154,7 @@
       "name": "history",
       "type": "lib",
       "description": "Undo/redo state for any immutable value. `set` records a history entry unless `{ commit: false }` is passed (live drags, typing); `checkpoint` snapshots the present before such a sequence so one undo restores it.",
+      "exports": [],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1771,6 +3166,7 @@
       "name": "row-layout",
       "type": "lib",
       "description": "Rows-and-columns layout helpers for the Canvas primitive. A layout is `Row[]`, each row a list of items with a `width` (flex-grow weight). Drops above/below an item create a row, beside it a column; the resize handle shifts width between ne",
+      "exports": [],
       "dependencies": [],
       "registryDependencies": [
         "canvas"
@@ -1784,6 +3180,7 @@
       "name": "table",
       "type": "lib",
       "description": "A small headless table engine: column definitions, sorting, global and per-column filtering with faceted counts, pagination, row selection, and column visibility. No external dependencies.",
+      "exports": [],
       "dependencies": [],
       "registryDependencies": [
         "controllable"
@@ -1797,6 +3194,7 @@
       "name": "time",
       "type": "lib",
       "description": "`src/components/ui/activity-feed.tsx` is a compositional timeline of events on the WAI-ARIA feed pattern (`role=\"feed\"`, focusable articles, PageUp/PageDown move, Ctrl+Home/End jump): `ActivityFeed` > `ActivityFeedGroup` > `ActivityFeedGrou",
+      "exports": [],
       "dependencies": [],
       "registryDependencies": [],
       "files": [
@@ -1808,6 +3206,7 @@
       "name": "utils",
       "type": "lib",
       "description": "- **Feature parity** with the shadcn original: same exported names, same props surface where Ark supports it, same visual result, same variants. - **Ark's tree wins** where the structure differs (e.g.",
+      "exports": [],
       "dependencies": [
         "clsx",
         "tailwind-merge"
@@ -1822,6 +3221,7 @@
       "name": "use-mobile",
       "type": "hook",
       "description": "",
+      "exports": [],
       "dependencies": [],
       "registryDependencies": [],
       "files": [

@@ -2,6 +2,11 @@
   "name": "resizable",
   "type": "ui",
   "description": "",
+  "exports": [
+    "ResizableHandle",
+    "ResizablePanel",
+    "ResizablePanelGroup"
+  ],
   "dependencies": {
     "react-resizable-panels": "^4.12.3"
   },

@@ -2,6 +2,7 @@
   "name": "drag-preview",
   "type": "lib",
   "description": "`src/components/ui/kanban.tsx` is a compositional, data-agnostic board on `@atlaskit/pragmatic-drag-and-drop` (+ `-hitbox` closest-edge/reorder index, `-auto-scroll`).",
+  "exports": [],
   "dependencies": {
     "@atlaskit/pragmatic-drag-and-drop": "^3.1.0"
   },
