@@ -31,7 +31,7 @@ every Radix-backed component to `@ark-ui/react` as its backing primitive, one co
   detection and install; `cli/commands.mjs` the commands plus the pure helpers (`writeItem`,
   `findConflicts`, `missingDependencies`) the MCP reuses. `scripts/test-cli.mjs` runs init, add,
   diff, overwrite, and a custom alias/dir against a temp project (part of `npm run check`).
-- `bin/tideui-mcp.mjs` + `mcp/server.mjs` is the stdio MCP server (`@modelcontextprotocol/sdk`
+- `bin/tideui-mcp.mjs` (also `tideui mcp`) + `mcp/server.mjs` is the stdio MCP server (`@modelcontextprotocol/sdk`
   + `zod`, the package's only runtime deps): tools `list_components`, `search_components`,
   `get_component`, `get_docs`, `plan_install`, `add_components` (writes files and CSS, never runs
   the package manager) and a `tide://registry/index` resource.

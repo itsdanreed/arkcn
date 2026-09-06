@@ -52,12 +52,12 @@ The package also ships an MCP server so agents (Claude Code, Cursor, and others)
 registry, read documentation and source, and copy components into a project:
 
 ```json
-{ "mcpServers": { "tideui": { "command": "npx", "args": ["-y", "-p", "tideui", "tideui-mcp"] } } }
+{ "mcpServers": { "tideui": { "command": "npx", "args": ["-y", "tideui", "mcp"] } } }
 ```
 
 Tools: `list_components`, `search_components`, `get_component` (source, deps, css, docs),
 `get_docs`, `plan_install` (dry run against a project), `add_components` (writes files and CSS,
-returns the packages to install). Pass `--registry=<url>` to read a hosted registry.
+returns the packages to install). `npx tideui mcp` and `tideui-mcp` are the same server; pass `--registry <url>` to read a hosted registry.
 
 ## Consume from node_modules instead
 

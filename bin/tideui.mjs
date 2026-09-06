@@ -11,12 +11,14 @@ ${c.bold("Usage")}
   npx tideui add <name...> [--all] [--overwrite] [--yes] [--no-install]
   npx tideui list [name...] [--type ui|lib|hook|all] [--docs]
   npx tideui diff [name...] [--verbose]
+  npx tideui mcp
 
 ${c.bold("Commands")}
   init   Write tide.json, lib/utils, the base styles, check the "@/" alias, install base deps
   add    Copy components (and everything they import) into your project, merge their styles, install deps
   list   Show the registry, or one item with --docs
   diff   Show which installed files were changed locally since they were added
+  mcp    Start the Model Context Protocol server (stdio) for agents
 
 ${c.bold("Options")}
   --registry <url|dir>  Read the registry from a URL or directory instead of the bundled copy
@@ -62,6 +64,11 @@ try {
     case "diff":
       await diff(cwd, registry, names, values)
       break
+    case "mcp": {
+      const { startServer } = await import("../mcp/server.mjs")
+      await startServer({ registryBase: values.registry ?? process.env.TIDE_REGISTRY })
+      break
+    }
     default:
       log(help)
       if (command && !values.help) fail(`Unknown command: ${command}`)
