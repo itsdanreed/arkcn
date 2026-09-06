@@ -6,6 +6,54 @@
     "Kbd",
     "KbdGroup"
   ],
+  "parts": [
+    {
+      "name": "Kbd",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "KbdGroup",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {},
   "registryDependencies": [
     "lib/utils"

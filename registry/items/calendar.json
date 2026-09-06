@@ -6,6 +6,499 @@
     "Calendar",
     "CalendarDayButton"
   ],
+  "parts": [
+    {
+      "name": "Calendar",
+      "props": [
+        {
+          "name": "buttonVariant",
+          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
+          "required": false,
+          "default": "\"ghost\"",
+          "from": "arkcn"
+        },
+        {
+          "name": "animate",
+          "type": "boolean",
+          "required": false,
+          "description": "Animate navigating between months.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false,
+          "description": "The aria-label attribute to add to the container element.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "aria-labelledby",
+          "type": "string",
+          "required": false,
+          "description": "The aria-labelledby attribute to add to the container element.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "autoFocus",
+          "type": "boolean",
+          "required": false,
+          "description": "When a selection mode is set, DayPicker will focus the first selected day\n(if set) or today's date (if not disabled).\n\nUse this prop when you need to focus DayPicker after a user action, for\nimproved accessibility.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "broadcastCalendar",
+          "type": "boolean",
+          "required": false,
+          "description": "Display the weeks in the month following the broadcast calendar. Setting\nthis prop will ignore {@link weekStartsOn} (always Monday) and\n{@link showOutsideDays} will default to true.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "captionLayout",
+          "type": "\"label\" | \"dropdown\" | \"dropdown-months\" | \"dropdown-years\"",
+          "required": false,
+          "default": "\"label\"",
+          "description": "Show dropdowns to navigate between months or years.\n\n- `label`: Displays the month and year as a label. Default value.\n- `dropdown`: Displays dropdowns for both month and year navigation.\n- `dropdown-months`: Displays a dropdown only for the month navigation.\n- `dropdown-years`: Displays a dropdown only for the year navigation.\n\n**Note:** By default, showing the dropdown will set the {@link startMonth}\nto 100 years ago and {@link endMonth} to the end of the current year. You\ncan override this behavior by explicitly setting `startMonth` and\n`endMonth`.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Class name to add to the root element.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "classNames",
+          "type": "Partial<ClassNames>",
+          "required": false,
+          "description": "Change the class names used by DayPicker.\n\nUse this prop when you need to change the default class names — for\nexample, when importing the style via CSS modules or when using a CSS\nframework.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "components",
+          "type": "Partial<CustomComponents>",
+          "required": false,
+          "description": "Change the components used for rendering the calendar elements.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "dateLib",
+          "type": "Partial<DateLib>",
+          "required": false,
+          "description": "Replace the default date library with a custom one. Experimental: not\nguaranteed to be stable (may not respect semver).",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "defaultMonth",
+          "type": "Date",
+          "required": false,
+          "description": "The initial month to show in the calendar.\n\nUse this prop to let DayPicker control the current month. If you need to\nset the month programmatically, use {@link month} and {@link onMonthChange}.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "dir",
+          "type": "string",
+          "required": false,
+          "description": "The text direction of the calendar. Use `ltr` for left-to-right (default)\nor `rtl` for right-to-left.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "disabled",
+          "type": "Matcher | Matcher[]",
+          "required": false,
+          "description": "Apply the `disabled` modifier to the matching days. Disabled days cannot be\nselected when in a selection mode is set.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "disableNavigation",
+          "type": "boolean",
+          "required": false,
+          "description": "Disable the navigation between months. This prop won't hide the navigation:\nto hide the navigation, use {@link hideNavigation}.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "endMonth",
+          "type": "Date",
+          "required": false,
+          "description": "The latest month to end the month navigation.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "firstWeekContainsDate",
+          "type": "1 | 4",
+          "required": false,
+          "description": "The day of January that is always in the first week of the year.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "fixedWeeks",
+          "type": "boolean",
+          "required": false,
+          "description": "Display always 6 weeks per each month, regardless of the month’s number of\nweeks. Weeks will be filled with the days from the next month.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "footer",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Add a footer to the calendar, acting as a live region.\n\nUse this prop to communicate the calendar's status to screen readers.\nPrefer strings over complex UI elements.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "formatters",
+          "type": "Partial<Formatters>",
+          "required": false,
+          "description": "Formatters used to format dates to strings. Use this prop to override the\ndefault functions.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "hidden",
+          "type": "Matcher | Matcher[]",
+          "required": false,
+          "description": "Apply the `hidden` modifier to the matching days. Will hide them from the\ncalendar.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "hideNavigation",
+          "type": "boolean",
+          "required": false,
+          "description": "Hide the navigation buttons. This prop won't disable the navigation: to\ndisable the navigation, use {@link disableNavigation}.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "hideWeekdays",
+          "type": "boolean",
+          "required": false,
+          "description": "Hide the row displaying the weekday row header.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "A unique id to add to the root element.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "ISOWeek",
+          "type": "boolean",
+          "required": false,
+          "description": "Use ISO week dates instead of the locale setting. Setting this prop will\nignore `weekStartsOn` and `firstWeekContainsDate`.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "labels",
+          "type": "Partial<Labels>",
+          "required": false,
+          "description": "Labels creators to override the defaults. Use this prop to customize the\naria-label attributes in DayPicker.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "lang",
+          "type": "string",
+          "required": false,
+          "description": "Add the language tag to the container element.\n\nWhen omitted, DayPicker uses the active locale code (`locale.code`). Set\nthis prop to override the language tag.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "locale",
+          "type": "Partial<DayPickerLocale>",
+          "required": false,
+          "description": "The locale object used to localize dates. Pass a locale from\n`react-day-picker/locale` to localize the calendar.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "mode",
+          "type": "\"multiple\" | \"single\" | \"range\"",
+          "required": false,
+          "description": "Enable the selection of a single day, multiple days, or a range of days.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "modifiers",
+          "type": "Record<string, Matcher | Matcher[] | undefined>",
+          "required": false,
+          "description": "Add modifiers to the matching days.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "modifiersClassNames",
+          "type": "ModifiersClassNames",
+          "required": false,
+          "description": "Change the class name for the day matching the `modifiers`.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "modifiersStyles",
+          "type": "ModifiersStyles",
+          "required": false,
+          "description": "Change the class name for the day matching the {@link modifiers}.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "month",
+          "type": "Date",
+          "required": false,
+          "description": "The month displayed in the calendar.\n\nAs opposed to `defaultMonth`, use this prop with `onMonthChange` to change\nthe month programmatically.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "navLayout",
+          "type": "\"around\" | \"after\"",
+          "required": false,
+          "description": "Adjust the positioning of the navigation buttons.\n\n- `around`: Displays the buttons on either side of the caption.\n- `after`: Displays the buttons after the caption. This ensures the tab order\n  matches the visual order.\n\nIf not set, DayPicker preserves its legacy layout, but the tab order may\nnot align with the visual order when using `captionLayout=\"dropdown\"`.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "nonce",
+          "type": "string",
+          "required": false,
+          "description": "A cryptographic nonce (\"number used once\") which can be used by Content\nSecurity Policy for the inline `style` attributes.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "noonSafe",
+          "type": "boolean",
+          "required": false,
+          "description": "Keep calendar math at noon in the configured {@link timeZone} to avoid\nhistorical second-level offsets drifting dates across midnight.\n\nThis prop sets the time of the dates to noon (12:00).",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "numberOfMonths",
+          "type": "number",
+          "required": false,
+          "description": "The number of displayed months.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "numerals",
+          "type": "Numerals",
+          "required": false,
+          "description": "The numeral system to use when formatting dates.\n\n- `latn`: Latin (Western Arabic)\n- `arab`: Arabic-Indic\n- `arabext`: Eastern Arabic-Indic (Persian)\n- `deva`: Devanagari\n- `beng`: Bengali\n- `guru`: Gurmukhi\n- `gujr`: Gujarati\n- `orya`: Oriya\n- `tamldec`: Tamil\n- `telu`: Telugu\n- `knda`: Kannada\n- `mlym`: Malayalam",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "onDayBlur",
+          "type": "DayEventHandler<FocusEvent<Element, Element>>",
+          "required": false,
+          "description": "Event handler when a day is blurred.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "onDayClick",
+          "type": "DayEventHandler<MouseEvent<Element, MouseEvent>>",
+          "required": false,
+          "description": "Event handler when a day is clicked.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "onDayFocus",
+          "type": "DayEventHandler<FocusEvent<Element, Element>>",
+          "required": false,
+          "description": "Event handler when a day is focused.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "onDayKeyDown",
+          "type": "DayEventHandler<KeyboardEvent<Element>>",
+          "required": false,
+          "description": "Event handler when a key is pressed on a day.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "onDayMouseEnter",
+          "type": "DayEventHandler<MouseEvent<Element, MouseEvent>>",
+          "required": false,
+          "description": "Event handler when the mouse enters a day.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "onDayMouseLeave",
+          "type": "DayEventHandler<MouseEvent<Element, MouseEvent>>",
+          "required": false,
+          "description": "Event handler when the mouse leaves a day.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "onMonthChange",
+          "type": "MonthChangeEventHandler",
+          "required": false,
+          "description": "Event fired when the user navigates between months.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "onNextClick",
+          "type": "MonthChangeEventHandler",
+          "required": false,
+          "description": "Event handler when the next month button is clicked.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "onPrevClick",
+          "type": "MonthChangeEventHandler",
+          "required": false,
+          "description": "Event handler when the previous month button is clicked.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "pagedNavigation",
+          "type": "boolean",
+          "required": false,
+          "description": "Paginate the month navigation displaying the `numberOfMonths` at a time.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the selection is required.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "reverseMonths",
+          "type": "boolean",
+          "required": false,
+          "description": "Render the months in reversed order (when {@link numberOfMonths} is set) to\ndisplay the most recent month first.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "reverseYears",
+          "type": "boolean",
+          "required": false,
+          "description": "Reverse the order of years in the dropdown when using\n`captionLayout=\"dropdown\"` or `captionLayout=\"dropdown-years\"`.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "role",
+          "type": "\"dialog\" | \"application\"",
+          "required": false,
+          "description": "The role attribute to add to the container element.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "showOutsideDays",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show the outside days (days falling in the next or the previous month).\n\n**Note:** when a {@link broadcastCalendar} is set, this prop defaults to\ntrue.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "showWeekNumber",
+          "type": "boolean",
+          "required": false,
+          "description": "Show the week numbers column. Weeks are numbered according to the local\nweek index.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "startMonth",
+          "type": "Date",
+          "required": false,
+          "description": "The earliest month to start the month navigation.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Style to apply to the root element.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "styles",
+          "type": "Partial<Styles>",
+          "required": false,
+          "description": "Change the inline styles of the HTML elements.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "timeZone",
+          "type": "string",
+          "required": false,
+          "description": "The time zone (IANA or UTC offset) to use in the calendar (experimental).\n\nSee\n[Wikipedia](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)\nfor the possible values.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "description": "Add a `title` attribute to the container element.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "today",
+          "type": "Date",
+          "required": false,
+          "description": "The today’s date. Default is the current date. This date will get the\n`today` modifier to style the day.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "useAdditionalDayOfYearTokens",
+          "type": "boolean",
+          "required": false,
+          "description": "Enable `YY` and `YYYY` for day of year tokens when formatting or parsing\ndates.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "useAdditionalWeekYearTokens",
+          "type": "boolean",
+          "required": false,
+          "description": "Enable `DD` and `DDDD` for week year tokens when formatting or parsing\ndates.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "weekStartsOn",
+          "type": "0 | 1 | 2 | 3 | 4 | 5 | 6",
+          "required": false,
+          "description": "The index of the first day of the week (0 - Sunday). Overrides the locale's\ndefault.",
+          "from": "react-day-picker"
+        }
+      ]
+    },
+    {
+      "name": "CalendarDayButton",
+      "props": [
+        {
+          "name": "locale",
+          "type": "Partial<DayPickerLocale>",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "day",
+          "type": "CalendarDay",
+          "required": true,
+          "description": "The day to render.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "modifiers",
+          "type": "Modifiers",
+          "required": true,
+          "description": "The modifiers to apply to the day.",
+          "from": "react-day-picker"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "lucide-react": "^1.41.0",
     "react-day-picker": "^10.0.1"

@@ -20,6 +20,552 @@
     "TransferListSelectAll",
     "useTransferList"
   ],
+  "parts": [
+    {
+      "name": "TransferList",
+      "props": [
+        {
+          "name": "items",
+          "type": "T[]",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string[]",
+          "required": false,
+          "default": "[]",
+          "from": "arkcn"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "from": "arkcn"
+        },
+        {
+          "name": "filter",
+          "type": "((item: T, query: string) => boolean)",
+          "required": false,
+          "description": "Case-insensitive label match by default.",
+          "from": "arkcn"
+        },
+        {
+          "name": "itemDisabled",
+          "type": "((item: T) => boolean)",
+          "required": false,
+          "default": "(item) => !!(item as TransferListItemBase).disabled",
+          "from": "arkcn"
+        },
+        {
+          "name": "itemToString",
+          "type": "((item: T) => string)",
+          "required": false,
+          "default": "(item) => (item as TransferListItemBase).label",
+          "from": "arkcn"
+        },
+        {
+          "name": "itemToValue",
+          "type": "((item: T) => string)",
+          "required": false,
+          "default": "(item) => (item as TransferListItemBase).value",
+          "from": "arkcn"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: TransferListValueChangeDetails<T>) => void)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "titles",
+          "type": "Partial<Record<TransferListSide, string>>",
+          "required": false,
+          "description": "Labels for the live region: \"Moved 3 items to {target}\".",
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "string[]",
+          "required": false,
+          "description": "Values on the target side. Kept in catalog order.",
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TransferListControls",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TransferListEmpty",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TransferListItem",
+      "props": [
+        {
+          "name": "item",
+          "type": "T",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TransferListItemIndicator",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TransferListItemText",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TransferListItems",
+      "props": [
+        {
+          "name": "children",
+          "type": "((item: T) => ReactNode)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TransferListMoveAllTrigger",
+      "props": [
+        {
+          "name": "direction",
+          "type": "TransferListDirection",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TransferListMoveTrigger",
+      "props": [
+        {
+          "name": "direction",
+          "type": "TransferListDirection",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TransferListPanel",
+      "props": [
+        {
+          "name": "side",
+          "type": "TransferListSide",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TransferListPanelCount",
+      "props": [
+        {
+          "name": "children",
+          "type": "((selected: number, total: number) => ReactNode)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TransferListPanelHeader",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TransferListPanelTitle",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TransferListSearch",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TransferListSelectAll",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultChecked",
+          "type": "CheckedState",
+          "required": false,
+          "description": "The initial checked state of the checkbox when rendered.\nUse when you don't need to control the checked state of the checkbox.",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the checkbox is disabled",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "form",
+          "type": "string",
+          "required": false,
+          "description": "The id of the form that the checkbox belongs to.",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the checkbox. Useful for composition.",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the checkbox is invalid",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the input field in a checkbox.\nUseful for form submission.",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the checkbox is read-only",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the checkbox is required",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "default": "\"on\"",
+          "description": "The value of checkbox input. Useful for form submission.",
+          "from": "@zag-js/checkbox"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

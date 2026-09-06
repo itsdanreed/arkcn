@@ -14,6 +14,353 @@
     "TocNav",
     "TocTitle"
   ],
+  "parts": [
+    {
+      "name": "Toc",
+      "props": [
+        {
+          "name": "items",
+          "type": "TocItem[]",
+          "required": true,
+          "description": "The TOC items with `value` (slug/id) and `depth` (heading level).",
+          "from": "@zag-js/toc"
+        },
+        {
+          "name": "activeIds",
+          "type": "string[]",
+          "required": false,
+          "description": "The controlled active heading ids.",
+          "from": "@zag-js/toc"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "autoScroll",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to auto-scroll the TOC container so the first active item\nis visible when active headings change.",
+          "from": "@zag-js/toc"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultActiveIds",
+          "type": "string[]",
+          "required": false,
+          "description": "The default active heading ids when rendered.\nUse when you don't need to control the active headings.",
+          "from": "@zag-js/toc"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the TOC. Useful for composition.",
+          "from": "@zag-js/toc"
+        },
+        {
+          "name": "onActiveChange",
+          "type": "((details: ActiveChangeDetails) => void)",
+          "required": false,
+          "description": "Callback when the active (visible) headings change.",
+          "from": "@zag-js/toc"
+        },
+        {
+          "name": "rootMargin",
+          "type": "string",
+          "required": false,
+          "default": "\"-20px 0px -40% 0px\"",
+          "description": "The root margin for the IntersectionObserver.\nControls the effective viewport area for determining active headings.",
+          "from": "@zag-js/toc"
+        },
+        {
+          "name": "scrollBehavior",
+          "type": "ScrollBehavior",
+          "required": false,
+          "default": "\"smooth\"",
+          "description": "The default scroll behavior used when auto-scrolling the TOC container\nand when scrolling to a heading (via link click or `api.scrollTo`).\nCan be overridden per-call by passing `behavior` to `api.scrollTo`.",
+          "from": "@zag-js/toc"
+        },
+        {
+          "name": "scrollEl",
+          "type": "(() => HTMLElement | null)",
+          "required": false,
+          "description": "Function that returns the scroll container element to observe within.\nDefaults to the document/viewport.",
+          "from": "@zag-js/toc"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "threshold",
+          "type": "number | number[]",
+          "required": false,
+          "default": "0",
+          "description": "The IntersectionObserver threshold. A value of `0` means the heading is\nactive as soon as even one pixel is visible within the root margin area.",
+          "from": "@zag-js/toc"
+        }
+      ]
+    },
+    {
+      "name": "TocContent",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TocContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseTocContext) => ReactNode",
+          "required": true,
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "TocIndicator",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TocItem",
+      "props": [
+        {
+          "name": "item",
+          "type": "TocItem",
+          "required": true,
+          "description": "The TOC item",
+          "from": "@zag-js/toc"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TocLink",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TocList",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TocNav",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "placement",
+          "type": "\"left\" | \"right\"",
+          "required": false,
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TocTitle",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

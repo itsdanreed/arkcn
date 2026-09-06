@@ -19,6 +19,402 @@
     "useDataGrid",
     "useDataGridRow"
   ],
+  "parts": [
+    {
+      "name": "DataGrid",
+      "props": [
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "columns",
+          "type": "DataGridColumnConfig[]",
+          "required": false,
+          "default": "[]",
+          "from": "arkcn"
+        },
+        {
+          "name": "columnSizing",
+          "type": "Record<string, number>",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "defaultColumnSizing",
+          "type": "Record<string, number>",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "onCellChange",
+          "type": "((change: DataGridCellChange<TData>) => void)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "onColumnSizingChange",
+          "type": "((sizing: Record<string, number>) => void)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "overscan",
+          "type": "number",
+          "required": false,
+          "default": "6",
+          "from": "arkcn"
+        },
+        {
+          "name": "rowHeight",
+          "type": "number",
+          "required": false,
+          "default": "36",
+          "from": "arkcn"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataGridContainer",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataGridHeader",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataGridHeaderRow",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataGridHead",
+      "props": [
+        {
+          "name": "column",
+          "type": "string",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataGridHeadWithResize",
+      "props": [
+        {
+          "name": "column",
+          "type": "string",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataGridResizeHandle",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataGridBody",
+      "props": [
+        {
+          "name": "children",
+          "type": "(row: DataTableRow<TData>, index: number) => ReactNode",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataGridRow",
+      "props": [
+        {
+          "name": "index",
+          "type": "number",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "row",
+          "type": "DataTableRow<TData>",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataGridCell",
+      "props": [
+        {
+          "name": "column",
+          "type": "string",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "editable",
+          "type": "boolean",
+          "required": false,
+          "description": "Override the column config for this cell.",
+          "from": "arkcn"
+        },
+        {
+          "name": "editor",
+          "type": "((props: EditorRenderProps) => ReactNode)",
+          "required": false,
+          "description": "Custom editor; return `undefined` to use the default for the column type.",
+          "from": "arkcn"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataGridSelectAll",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataGridSelectRow",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataGridEmpty",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

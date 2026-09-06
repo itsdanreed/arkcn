@@ -12,6 +12,418 @@
     "ImageCropperSelection",
     "ImageCropperViewport"
   ],
+  "parts": [
+    {
+      "name": "ImageCropper",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "aspectRatio",
+          "type": "number",
+          "required": false,
+          "description": "The aspect ratio to maintain for the crop area (width / height).\nFor example, an aspect ratio of 16 / 9 will maintain a width to height ratio of 16:9.\nIf not provided, the crop area can be freely resized.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "cropShape",
+          "type": "\"circle\" | \"rectangle\"",
+          "required": false,
+          "default": "\"rectangle\"",
+          "description": "The shape of the crop area.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "defaultFlip",
+          "type": "FlipState",
+          "required": false,
+          "default": "{ horizontal: false, vertical: false }",
+          "description": "The initial flip state to apply to the image.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "defaultRotation",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "description": "The initial rotation to apply to the image in degrees.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "defaultZoom",
+          "type": "number",
+          "required": false,
+          "default": "1",
+          "description": "The initial zoom factor to apply to the image.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "fixedCropArea",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether the crop area is fixed in size and position.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "flip",
+          "type": "FlipState",
+          "required": false,
+          "description": "The controlled flip state of the image.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the image cropper elements",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "initialCrop",
+          "type": "Rect",
+          "required": false,
+          "description": "The initial rectangle of the crop area.\nIf not provided, a smart default will be computed based on viewport size and aspect ratio.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "maxHeight",
+          "type": "number",
+          "required": false,
+          "default": "Infinity",
+          "description": "The maximum height of the crop area",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "maxWidth",
+          "type": "number",
+          "required": false,
+          "default": "Infinity",
+          "description": "The maximum width of the crop area",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "maxZoom",
+          "type": "number",
+          "required": false,
+          "default": "5",
+          "description": "The maximum zoom factor allowed.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "minHeight",
+          "type": "number",
+          "required": false,
+          "default": "40",
+          "description": "The minimum height of the crop area",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "minWidth",
+          "type": "number",
+          "required": false,
+          "default": "40",
+          "description": "The minimum width of the crop area",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "minZoom",
+          "type": "number",
+          "required": false,
+          "default": "1",
+          "description": "The minimum zoom factor allowed.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "nudgeStep",
+          "type": "number",
+          "required": false,
+          "default": "1",
+          "description": "The base nudge step for keyboard arrow keys (in pixels).",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "nudgeStepCtrl",
+          "type": "number",
+          "required": false,
+          "default": "50",
+          "description": "The nudge step when Ctrl/Cmd key is held (in pixels).",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "nudgeStepShift",
+          "type": "number",
+          "required": false,
+          "default": "10",
+          "description": "The nudge step when Shift key is held (in pixels).",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "onCropChange",
+          "type": "((details: CropChangeDetails) => void)",
+          "required": false,
+          "description": "Callback fired when the crop area changes.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "onFlipChange",
+          "type": "((details: FlipChangeDetails) => void)",
+          "required": false,
+          "description": "Callback fired when the flip state changes.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "onRotationChange",
+          "type": "((details: RotationChangeDetails) => void)",
+          "required": false,
+          "description": "Callback fired when the rotation changes.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "onZoomChange",
+          "type": "((details: ZoomChangeDetails) => void)",
+          "required": false,
+          "description": "Callback fired when the zoom level changes.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "rotation",
+          "type": "number",
+          "required": false,
+          "description": "The controlled rotation of the image in degrees (0 - 360).",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "translations",
+          "type": "IntlTranslations",
+          "required": false,
+          "description": "Specifies the localized strings that identify accessibility elements and their states.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "zoom",
+          "type": "number",
+          "required": false,
+          "description": "The controlled zoom level of the image.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "zoomSensitivity",
+          "type": "number",
+          "required": false,
+          "default": "2",
+          "description": "Controls how responsive pinch-to-zoom is.",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "zoomStep",
+          "type": "number",
+          "required": false,
+          "default": "0.1",
+          "description": "The amount of zoom applied per wheel step.",
+          "from": "@zag-js/image-cropper"
+        }
+      ]
+    },
+    {
+      "name": "ImageCropperContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseImageCropperContext) => ReactNode",
+          "required": true,
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "ImageCropperGrid",
+      "props": [
+        {
+          "name": "axis",
+          "type": "\"horizontal\" | \"vertical\"",
+          "required": true,
+          "description": "The axis of the grid lines to display",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "ImageCropperHandle",
+      "props": [
+        {
+          "name": "position",
+          "type": "HandlePosition",
+          "required": true,
+          "description": "The position of the handle",
+          "from": "@zag-js/image-cropper"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "ImageCropperImage",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "ImageCropperSelection",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "ImageCropperViewport",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

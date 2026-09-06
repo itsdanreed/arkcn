@@ -25,6 +25,749 @@
     "TreeViewTree",
     "createTreeCollection"
   ],
+  "parts": [
+    {
+      "name": "TreeView",
+      "props": [
+        {
+          "name": "collection",
+          "type": "TreeCollection<T>",
+          "required": true,
+          "description": "The collection of tree nodes",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "canRename",
+          "type": "((node: T, indexPath: IndexPath) => boolean)",
+          "required": false,
+          "description": "Function to determine if a node can be renamed",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "checkedValue",
+          "type": "string[]",
+          "required": false,
+          "description": "The controlled checked node value",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultCheckedValue",
+          "type": "string[]",
+          "required": false,
+          "description": "The initial checked node value when rendered.\nUse when you don't need to control the checked node value.",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "defaultExpandedValue",
+          "type": "string[]",
+          "required": false,
+          "description": "The initial expanded node ids when rendered.\nUse when you don't need to control the expanded node value.",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "defaultFocusedValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The initial focused node value when rendered.\nUse when you don't need to control the focused node value.",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "defaultSelectedValue",
+          "type": "string[]",
+          "required": false,
+          "description": "The initial selected node value when rendered.\nUse when you don't need to control the selected node value.",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "expandedValue",
+          "type": "string[]",
+          "required": false,
+          "description": "The controlled expanded node ids",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "expandOnClick",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether clicking on a branch should open it or not",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "focusedValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The value of the focused node",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the tree elements. Useful for composition.",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "loadChildren",
+          "type": "((details: LoadChildrenDetails<T>) => Promise<T[]>)",
+          "required": false,
+          "description": "Function to load children for a node asynchronously.\nWhen provided, branches will wait for this promise to resolve before expanding.",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onBeforeRename",
+          "type": "((details: RenameCompleteDetails) => boolean)",
+          "required": false,
+          "description": "Called before a rename is completed. Return false to prevent the rename.",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onCheckedChange",
+          "type": "((details: CheckedChangeDetails) => void)",
+          "required": false,
+          "description": "Called when the checked value changes",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onExpandedChange",
+          "type": "((details: ExpandedChangeDetails<T>) => void)",
+          "required": false,
+          "description": "Called when the tree is opened or closed",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onFocusChange",
+          "type": "((details: FocusChangeDetails<T>) => void)",
+          "required": false,
+          "description": "Called when the focused node changes",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onLoadChildrenComplete",
+          "type": "((details: LoadChildrenCompleteDetails<T>) => void)",
+          "required": false,
+          "description": "Called when a node finishes loading children",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onLoadChildrenError",
+          "type": "((details: LoadChildrenErrorDetails<T>) => void)",
+          "required": false,
+          "description": "Called when loading children fails for one or more nodes",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onRenameComplete",
+          "type": "((details: RenameCompleteDetails) => void)",
+          "required": false,
+          "description": "Called when a node label rename is completed",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onRenameStart",
+          "type": "((details: RenameStartDetails<T>) => void)",
+          "required": false,
+          "description": "Called when a node starts being renamed",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onSelectionChange",
+          "type": "((details: SelectionChangeDetails<T>) => void)",
+          "required": false,
+          "description": "Called when the selection changes",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "scrollToIndexFn",
+          "type": "((details: ScrollToIndexDetails<T>) => void)",
+          "required": false,
+          "description": "Function to scroll to a specific index.\nUseful for virtualized tree views.",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "selectedValue",
+          "type": "string[]",
+          "required": false,
+          "description": "The controlled selected node value",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "selectionMode",
+          "type": "\"multiple\" | \"single\"",
+          "required": false,
+          "default": "\"single\"",
+          "description": "Whether the tree supports multiple selection\n- \"single\": only one node can be selected\n- \"multiple\": multiple nodes can be selected",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "translations",
+          "type": "IntlTranslations",
+          "required": false,
+          "description": "Specifies the localized strings that identifies the accessibility elements and their states",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "typeahead",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether the tree supports typeahead search",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewBranch",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewBranchContent",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewBranchControl",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewBranchIndentGuide",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewBranchIndicator",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewBranchText",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewBranchTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseTreeViewContext<unknown>) => ReactNode",
+          "required": true,
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewItem",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewItemIndicator",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewItemText",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewLabel",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewNodeCheckbox",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewNodeCheckboxIndicator",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "fallback",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "indeterminate",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewNodeContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseTreeViewNodeContext) => ReactNode",
+          "required": true,
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewNodeProvider",
+      "props": [
+        {
+          "name": "indexPath",
+          "type": "number[]",
+          "required": true,
+          "description": "The index path of the tree node",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "node",
+          "type": "T",
+          "required": true,
+          "description": "The tree node",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewNodeRenameInput",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeViewTree",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

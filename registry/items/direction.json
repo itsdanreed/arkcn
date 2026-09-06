@@ -6,6 +6,31 @@
     "DirectionProvider",
     "useDirection"
   ],
+  "parts": [
+    {
+      "name": "DirectionProvider",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "dir",
+          "type": "Direction",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "direction",
+          "type": "Direction",
+          "required": false,
+          "from": "arkcn"
+        }
+      ]
+    }
+  ],
   "dependencies": {},
   "registryDependencies": [],
   "files": [

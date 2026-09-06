@@ -7,7 +7,7 @@ import { CodeBlock } from "./code"
 import { Markdown, useOutline } from "./markdown"
 import { Outline } from "./layout"
 import { guideByPath } from "./nav"
-import { groupedComponents, loadItem, registry, title, type RegistryItem } from "./registry"
+import { groupedComponents, loadItem, registry, title, type PartDoc, type RegistryItem } from "./registry"
 import { Link } from "./router"
 import { cn } from "@/lib/utils"
 import { descriptions } from "./descriptions"
@@ -281,6 +281,23 @@ export function ComponentPage({ name }: { name: string }) {
           </>
         )}
 
+        {item.parts && item.parts.some((p) => p.props.length > 0) && (
+          <>
+            <h2 id="props">Props</h2>
+            <p>
+              Every part also accepts the attributes of the element it renders. Props from Ark UI and zag are shown with
+              their own descriptions; parts without extra props are omitted.
+            </p>
+            <div className="not-prose flex flex-col gap-3">
+              {item.parts
+                .filter((p) => p.props.length > 0)
+                .map((part, i) => (
+                  <PartProps key={part.name} part={part} open={i === 0} />
+                ))}
+            </div>
+          </>
+        )}
+
         <h2 id="source">Source</h2>
         <p className="text-sm text-muted-foreground">
           {item.files.map((f) => f.path).join(", ")} — {entry?.files.length ?? 1} file,{" "}
@@ -289,6 +306,50 @@ export function ComponentPage({ name }: { name: string }) {
         <CodeBlock code={item.files[0].content} maxHeight={520} className="not-prose" />
       </div>
     </WithOutline>
+  )
+}
+
+function PartProps({ part, open }: { part: PartDoc; open: boolean }) {
+  return (
+    <details data-slot="docs-part-props" open={open} className="group/part rounded-lg border">
+      <summary className="flex cursor-pointer items-center gap-2 px-3 py-2 text-sm font-medium select-none">
+        <code className="font-mono">{part.name}</code>
+        <span className="text-xs font-normal text-muted-foreground">{part.props.length} props</span>
+      </summary>
+      <div className="overflow-x-auto border-t">
+        <table className="w-full text-sm">
+          <thead className="text-left text-xs text-muted-foreground">
+            <tr>
+              <th className="px-3 py-1.5 font-medium">Prop</th>
+              <th className="px-3 py-1.5 font-medium">Type</th>
+              <th className="px-3 py-1.5 font-medium">Default</th>
+              <th className="px-3 py-1.5 font-medium">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            {part.props.map((prop) => (
+              <tr key={prop.name} className="border-t align-top">
+                <td className="px-3 py-1.5 whitespace-nowrap">
+                  <code className="font-mono text-xs">{prop.name}</code>
+                  {prop.required && (
+                    <span className="ml-1 text-destructive" title="required">
+                      *
+                    </span>
+                  )}
+                </td>
+                <td className="max-w-64 px-3 py-1.5">
+                  <code className="font-mono text-xs wrap-break-word text-muted-foreground">{prop.type}</code>
+                </td>
+                <td className="px-3 py-1.5 whitespace-nowrap">
+                  {prop.default !== undefined && <code className="font-mono text-xs">{prop.default}</code>}
+                </td>
+                <td className="min-w-56 px-3 py-1.5 text-muted-foreground">{prop.description}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </details>
   )
 }
 

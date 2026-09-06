@@ -11,7 +11,17 @@ export type RegistryEntry = {
   files: string[]
   css: boolean
 }
+export type PropDoc = {
+  name: string
+  type: string
+  required: boolean
+  default?: string
+  description?: string
+  from: string
+}
+export type PartDoc = { name: string; props: PropDoc[] }
 export type RegistryItem = Omit<RegistryEntry, "files" | "dependencies" | "css"> & {
+  parts?: PartDoc[]
   files: { path: string; content: string }[]
   dependencies: Record<string, string>
   css?: string

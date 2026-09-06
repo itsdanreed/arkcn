@@ -5,6 +5,7 @@
   "exports": [
     "useHistory"
   ],
+  "parts": [],
   "dependencies": {},
   "registryDependencies": [],
   "files": [

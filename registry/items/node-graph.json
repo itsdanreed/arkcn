@@ -33,6 +33,931 @@
     "useNodeGraph",
     "getBezierPath"
   ],
+  "parts": [
+    {
+      "name": "NodeGraph",
+      "props": [
+        {
+          "name": "defaultSelection",
+          "type": "NodeGraphSelection",
+          "required": false,
+          "default": "EMPTY_SELECTION",
+          "from": "arkcn"
+        },
+        {
+          "name": "defaultViewport",
+          "type": "NodeGraphViewportState",
+          "required": false,
+          "default": "{ x: 0, y: 0, zoom: 1 }",
+          "from": "arkcn"
+        },
+        {
+          "name": "edgeAt",
+          "type": "((port: NodeGraphPortDetails) => NodeGraphPortDetails | null)",
+          "required": false,
+          "description": "Enables re-routing: return the other end of the single link attached to `port` (or null).\nDragging from such a pin then calls `onDisconnect(port)` and continues the drag from that other end.",
+          "from": "arkcn"
+        },
+        {
+          "name": "isValidConnection",
+          "type": "((connection: NodeGraphConnection & { sourceType: string; targetType: string; }) => boolean)",
+          "required": false,
+          "description": "Override the built-in check (sides differ, nodes differ, port types match or are \"any\").",
+          "from": "arkcn"
+        },
+        {
+          "name": "maxZoom",
+          "type": "number",
+          "required": false,
+          "default": "2",
+          "from": "arkcn"
+        },
+        {
+          "name": "minZoom",
+          "type": "number",
+          "required": false,
+          "default": "0.25",
+          "from": "arkcn"
+        },
+        {
+          "name": "onConnect",
+          "type": "((connection: NodeGraphConnection) => void)",
+          "required": false,
+          "description": "A connection was completed on a valid port. `source` is always the output side.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onConnectEnd",
+          "type": "((details: { source: NodeGraphPortRef & { side: NodeGraphPortSide; type: string; }; position: XY; client: XY; }) => void)",
+          "required": false,
+          "description": "A connection was released on empty space; `position` is in graph coordinates.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onDelete",
+          "type": "((selection: NodeGraphSelection) => void)",
+          "required": false,
+          "description": "Delete/Backspace with a selection.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onDisconnect",
+          "type": "((details: NodeGraphPortDetails) => void)",
+          "required": false,
+          "description": "Alt+click on a port pin: the conventional \"break links\" gesture.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onEdgeContextMenu",
+          "type": "((details: { id: string; position: XY; client: XY; }) => void)",
+          "required": false,
+          "description": "Right-click on an edge.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onNodeContextMenu",
+          "type": "((details: { id: string; position: XY; client: XY; }) => void)",
+          "required": false,
+          "description": "Right-click on a node (selects it first unless already selected).",
+          "from": "arkcn"
+        },
+        {
+          "name": "onNodesMove",
+          "type": "((moves: NodeGraphNodeMove[]) => void)",
+          "required": false,
+          "description": "Live position updates while nodes are dragged or nudged.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onNodesMoveEnd",
+          "type": "((moves: NodeGraphNodeMove[]) => void)",
+          "required": false,
+          "description": "Fired once when a drag or nudge finishes, with the final positions.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onPaneContextMenu",
+          "type": "((details: { position: XY; client: XY; }) => void)",
+          "required": false,
+          "description": "Right-click on empty space (a right-drag pans instead).",
+          "from": "arkcn"
+        },
+        {
+          "name": "onPortContextMenu",
+          "type": "((details: NodeGraphPortRef & { side: NodeGraphPortSide; type: string; } & { position: XY; client: XY; }) => void)",
+          "required": false,
+          "description": "Right-click on a port pin.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onSelectionChange",
+          "type": "((selection: NodeGraphSelection) => void)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "onViewportChange",
+          "type": "((viewport: NodeGraphViewportState) => void)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "selection",
+          "type": "NodeGraphSelection",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "snapGrid",
+          "type": "number",
+          "required": false,
+          "default": "20",
+          "description": "Grid size nodes snap to while dragging and nudging. `0` disables snapping.",
+          "from": "arkcn"
+        },
+        {
+          "name": "viewport",
+          "type": "NodeGraphViewportState",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphViewport",
+      "props": [
+        {
+          "name": "panOnScroll",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Plain wheel pans instead of zooming (pinch / ctrl+wheel always zooms).",
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphBackground",
+      "props": [
+        {
+          "name": "gap",
+          "type": "number",
+          "required": false,
+          "default": "20",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"dots\" | \"lines\"",
+          "required": false,
+          "default": "\"dots\"",
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphSurface",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphEdges",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphEdge",
+      "props": [
+        {
+          "name": "source",
+          "type": "NodeGraphPortRef",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "target",
+          "type": "NodeGraphPortRef",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "((details: { midpoint: XY; from: XY; to: XY; }) => ReactNode)",
+          "required": false,
+          "description": "Render prop for labels; receives the path midpoint.",
+          "from": "arkcn"
+        },
+        {
+          "name": "selected",
+          "type": "boolean",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphConnectionLine",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphSelectionBox",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphNode",
+      "props": [
+        {
+          "name": "position",
+          "type": "XY",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "selected",
+          "type": "boolean",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphNodeHeader",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphNodeActions",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphNodeTitle",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphNodeSubtitle",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphNodeBody",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphNodeInputs",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphNodeOutputs",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphNodeFooter",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphPort",
+      "props": [
+        {
+          "name": "side",
+          "type": "NodeGraphPortSide",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "connected",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "from": "arkcn"
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "default": "\"any\"",
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphPortPin",
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"circle\" | \"exec\" | null",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphPortLabel",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphControls",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphZoomInTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphZoomOutTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphFitViewTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphZoomValue",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphMinimap",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraphEmpty",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "class-variance-authority": "^0.7.1",

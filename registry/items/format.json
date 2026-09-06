@@ -9,6 +9,114 @@
     "FormatRelativeTime",
     "FormatTime"
   ],
+  "parts": [
+    {
+      "name": "FormatByte",
+      "props": [
+        {
+          "name": "value",
+          "type": "number",
+          "required": true,
+          "description": "The byte size to format",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "unit",
+          "type": "\"bit\" | \"byte\"",
+          "required": false,
+          "description": "The unit granularity to display",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "unitDisplay",
+          "type": "\"long\" | \"short\" | \"narrow\"",
+          "required": false,
+          "description": "The unit display",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "unitSystem",
+          "type": "\"decimal\" | \"binary\"",
+          "required": false,
+          "description": "The unit system to use for formatting",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "FormatNumber",
+      "props": [
+        {
+          "name": "value",
+          "type": "number",
+          "required": true,
+          "description": "The number to format",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "keyof NumberFormatOptionsStyleRegistry",
+          "required": false,
+          "from": "typescript"
+        }
+      ]
+    },
+    {
+      "name": "FormatRelativeTime",
+      "props": [
+        {
+          "name": "value",
+          "type": "Date",
+          "required": true,
+          "description": "The date to format",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "RelativeTimeFormatStyle",
+          "required": false,
+          "description": "The length of the internationalized message.",
+          "from": "typescript"
+        }
+      ]
+    },
+    {
+      "name": "FormatTime",
+      "props": [
+        {
+          "name": "value",
+          "type": "string | Date",
+          "required": true,
+          "description": "The time to format",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "amLabel",
+          "type": "string",
+          "required": false,
+          "from": "@zag-js/i18n-utils"
+        },
+        {
+          "name": "format",
+          "type": "TimeFormat",
+          "required": false,
+          "from": "@zag-js/i18n-utils"
+        },
+        {
+          "name": "pmLabel",
+          "type": "string",
+          "required": false,
+          "from": "@zag-js/i18n-utils"
+        },
+        {
+          "name": "withSeconds",
+          "type": "boolean",
+          "required": false,
+          "from": "@zag-js/i18n-utils"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

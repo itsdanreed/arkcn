@@ -5,6 +5,38 @@
   "exports": [
     "AspectRatio"
   ],
+  "parts": [
+    {
+      "name": "AspectRatio",
+      "props": [
+        {
+          "name": "ratio",
+          "type": "number",
+          "required": false,
+          "default": "1 / 1",
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {},
   "registryDependencies": [],
   "files": [

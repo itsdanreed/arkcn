@@ -11,6 +11,197 @@
     "VirtualListViewport",
     "useVirtualList"
   ],
+  "parts": [
+    {
+      "name": "VirtualList",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "estimateSize",
+          "type": "number | ((index: number) => number)",
+          "required": false,
+          "default": "36",
+          "description": "Row height before measurement (a number, or per index).",
+          "from": "arkcn"
+        },
+        {
+          "name": "gap",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "from": "arkcn"
+        },
+        {
+          "name": "getItemKey",
+          "type": "((index: number) => Key)",
+          "required": false,
+          "default": "(index) => index",
+          "from": "arkcn"
+        },
+        {
+          "name": "onRangeChange",
+          "type": "((range: { start: number; end: number; } | null) => void)",
+          "required": false,
+          "description": "Fires when the rendered window changes.",
+          "from": "arkcn"
+        },
+        {
+          "name": "overscan",
+          "type": "number",
+          "required": false,
+          "default": "6",
+          "description": "Rows rendered beyond the visible window on each side.",
+          "from": "arkcn"
+        },
+        {
+          "name": "paddingEnd",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "from": "arkcn"
+        },
+        {
+          "name": "paddingStart",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "from": "arkcn"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "VirtualListContent",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "VirtualListEmpty",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "VirtualListItem",
+      "props": [
+        {
+          "name": "index",
+          "type": "number",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "VirtualListItems",
+      "props": [
+        {
+          "name": "children",
+          "type": "(item: VirtualItem) => ReactNode",
+          "required": true,
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "VirtualListViewport",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {},
   "registryDependencies": [
     "lib/utils"

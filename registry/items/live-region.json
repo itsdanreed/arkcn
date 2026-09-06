@@ -6,6 +6,44 @@
     "LiveRegion",
     "useLiveRegion"
   ],
+  "parts": [
+    {
+      "name": "LiveRegion",
+      "props": [
+        {
+          "name": "message",
+          "type": "string",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "assertive",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {},
   "registryDependencies": [
     "lib/utils"

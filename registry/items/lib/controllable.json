@@ -5,6 +5,7 @@
   "exports": [
     "useControllable"
   ],
+  "parts": [],
   "dependencies": {},
   "registryDependencies": [],
   "files": [

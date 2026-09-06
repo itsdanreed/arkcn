@@ -18,6 +18,765 @@
     "SliderValueText",
     "SliderDraggingIndicator"
   ],
+  "parts": [
+    {
+      "name": "Slider",
+      "props": [
+        {
+          "name": "aria-label",
+          "type": "string[]",
+          "required": false,
+          "description": "The aria-label of each slider thumb. Useful for providing an accessible name to the slider",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "aria-labelledby",
+          "type": "string[]",
+          "required": false,
+          "description": "The `id` of the elements that labels each slider thumb. Useful for providing an accessible name to the slider",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultValue",
+          "type": "number[]",
+          "required": false,
+          "description": "The initial value of the slider when rendered.\nUse when you don't need to control the value of the slider.",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the slider is disabled",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "form",
+          "type": "string",
+          "required": false,
+          "description": "The associate form of the underlying input element.",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "getAriaValueText",
+          "type": "((details: ValueTextDetails) => string)",
+          "required": false,
+          "description": "Function that returns a human readable value for the slider thumb",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the slider. Useful for composition.",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the slider is invalid",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "largeStep",
+          "type": "number",
+          "required": false,
+          "default": "10 * step",
+          "description": "The step value of the slider when the `Shift` key is held, or the\n`PageUp`/`PageDown` keys are used.",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false,
+          "default": "100",
+          "description": "The maximum value of the slider",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "description": "The minimum value of the slider",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "minStepsBetweenThumbs",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "description": "The minimum permitted steps between multiple thumbs.\n\n`minStepsBetweenThumbs` * `step` should reflect the gap between the thumbs.\n\n- `step: 1` and `minStepsBetweenThumbs: 10` => gap is `10`\n- `step: 10` and `minStepsBetweenThumbs: 2` => gap is `20`",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name associated with each slider thumb (when used in a form)",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "onFocusChange",
+          "type": "((details: FocusChangeDetails) => void)",
+          "required": false,
+          "description": "Function invoked when the slider's focused index changes",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function invoked when the value of the slider changes",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "onValueChangeEnd",
+          "type": "((details: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function invoked when the slider value change is done",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "required": false,
+          "default": "\"horizontal\"",
+          "description": "The orientation of the slider",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "origin",
+          "type": "\"center\" | \"end\" | \"start\"",
+          "required": false,
+          "default": "\"start\"",
+          "description": "The origin of the slider range. The track is filled from the origin\nto the thumb for single values.\n- \"start\": Useful when the value represents an absolute value\n- \"center\": Useful when the value represents an offset (relative)\n- \"end\": Useful when the value represents an offset from the end",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the slider is read-only",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "step",
+          "type": "number",
+          "required": false,
+          "default": "1",
+          "description": "The step value of the slider",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "thumbAlignment",
+          "type": "\"center\" | \"contain\"",
+          "required": false,
+          "default": "\"contain\"",
+          "description": "The alignment of the slider thumb relative to the track\n- `center`: the thumb will extend beyond the bounds of the slider track.\n- `contain`: the thumb will be contained within the bounds of the track.",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "thumbCollisionBehavior",
+          "type": "\"push\" | \"none\" | \"swap\"",
+          "required": false,
+          "default": "\"none\"",
+          "description": "Controls how thumbs behave when they collide during pointer interactions.\n- `none` (default): Thumbs cannot move past each other; excess movement is ignored.\n- `push`: Thumbs push each other without restoring their previous positions when dragged back.\n- `swap`: Thumbs swap places when dragged past each other.",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "thumbSize",
+          "type": "{ width: number; height: number; }",
+          "required": false,
+          "description": "The slider thumbs dimensions",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "value",
+          "type": "number[]",
+          "required": false,
+          "description": "The controlled value of the slider",
+          "from": "@zag-js/slider"
+        }
+      ]
+    },
+    {
+      "name": "SliderContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseSliderContext) => ReactNode",
+          "required": true,
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "SliderControl",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SliderHiddenInput",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SliderLabel",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SliderMarker",
+      "props": [
+        {
+          "name": "value",
+          "type": "number",
+          "required": true,
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SliderMarkerGroup",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SliderRange",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SliderRoot",
+      "props": [
+        {
+          "name": "aria-label",
+          "type": "string[]",
+          "required": false,
+          "description": "The aria-label of each slider thumb. Useful for providing an accessible name to the slider",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "aria-labelledby",
+          "type": "string[]",
+          "required": false,
+          "description": "The `id` of the elements that labels each slider thumb. Useful for providing an accessible name to the slider",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultValue",
+          "type": "number[]",
+          "required": false,
+          "description": "The initial value of the slider when rendered.\nUse when you don't need to control the value of the slider.",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the slider is disabled",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "form",
+          "type": "string",
+          "required": false,
+          "description": "The associate form of the underlying input element.",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "getAriaValueText",
+          "type": "((details: ValueTextDetails) => string)",
+          "required": false,
+          "description": "Function that returns a human readable value for the slider thumb",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the slider. Useful for composition.",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the slider is invalid",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "largeStep",
+          "type": "number",
+          "required": false,
+          "default": "10 * step",
+          "description": "The step value of the slider when the `Shift` key is held, or the\n`PageUp`/`PageDown` keys are used.",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false,
+          "default": "100",
+          "description": "The maximum value of the slider",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "description": "The minimum value of the slider",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "minStepsBetweenThumbs",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "description": "The minimum permitted steps between multiple thumbs.\n\n`minStepsBetweenThumbs` * `step` should reflect the gap between the thumbs.\n\n- `step: 1` and `minStepsBetweenThumbs: 10` => gap is `10`\n- `step: 10` and `minStepsBetweenThumbs: 2` => gap is `20`",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name associated with each slider thumb (when used in a form)",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "onFocusChange",
+          "type": "((details: FocusChangeDetails) => void)",
+          "required": false,
+          "description": "Function invoked when the slider's focused index changes",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function invoked when the value of the slider changes",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "onValueChangeEnd",
+          "type": "((details: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function invoked when the slider value change is done",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "required": false,
+          "default": "\"horizontal\"",
+          "description": "The orientation of the slider",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "origin",
+          "type": "\"center\" | \"end\" | \"start\"",
+          "required": false,
+          "default": "\"start\"",
+          "description": "The origin of the slider range. The track is filled from the origin\nto the thumb for single values.\n- \"start\": Useful when the value represents an absolute value\n- \"center\": Useful when the value represents an offset (relative)\n- \"end\": Useful when the value represents an offset from the end",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the slider is read-only",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "step",
+          "type": "number",
+          "required": false,
+          "default": "1",
+          "description": "The step value of the slider",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "thumbAlignment",
+          "type": "\"center\" | \"contain\"",
+          "required": false,
+          "default": "\"contain\"",
+          "description": "The alignment of the slider thumb relative to the track\n- `center`: the thumb will extend beyond the bounds of the slider track.\n- `contain`: the thumb will be contained within the bounds of the track.",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "thumbCollisionBehavior",
+          "type": "\"push\" | \"none\" | \"swap\"",
+          "required": false,
+          "default": "\"none\"",
+          "description": "Controls how thumbs behave when they collide during pointer interactions.\n- `none` (default): Thumbs cannot move past each other; excess movement is ignored.\n- `push`: Thumbs push each other without restoring their previous positions when dragged back.\n- `swap`: Thumbs swap places when dragged past each other.",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "thumbSize",
+          "type": "{ width: number; height: number; }",
+          "required": false,
+          "description": "The slider thumbs dimensions",
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "value",
+          "type": "number[]",
+          "required": false,
+          "description": "The controlled value of the slider",
+          "from": "@zag-js/slider"
+        }
+      ]
+    },
+    {
+      "name": "SliderThumb",
+      "props": [
+        {
+          "name": "index",
+          "type": "number",
+          "required": true,
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "from": "@zag-js/slider"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SliderTrack",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SliderValueText",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SliderDraggingIndicator",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

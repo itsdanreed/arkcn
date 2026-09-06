@@ -4,6 +4,7 @@
 // "/* @registry:component <name> */" and "/* @registry:end */" in src/styles/arkcn.css),
 // and a short description (first block comment or JSDoc of the file, or the CLAUDE.md heading).
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs"
+import { createPropsExtractor } from "./props.mjs"
 import { dirname, join } from "node:path"
 
 const root = new URL("..", import.meta.url).pathname
@@ -72,6 +73,7 @@ for (const m of css.matchAll(marker)) {
 base += css.slice(cursor)
 base = base.replace(/^\/\*[\s\S]*?\*\/\n/, "").trim() + "\n"
 
+const extractProps = createPropsExtractor()
 const items = []
 for (const source of sources) {
   const dir = join(root, source.dir)
@@ -109,6 +111,7 @@ for (const source of sources) {
       description: describe(content, base),
       ark,
       exports: exportsList,
+      parts: source.type === "ui" ? extractProps(`${source.dir}/${file}`) : [],
       dependencies: Object.fromEntries([...dependencies].sort().map((d) => [d, versions[d] ?? "latest"])),
       registryDependencies: [...registryDependencies].sort(),
       files: [{ path: `${source.target}/${file}`, content }],

@@ -6,6 +6,7 @@
     "formatRelativeTime",
     "formatCompactAge"
   ],
+  "parts": [],
   "dependencies": {},
   "registryDependencies": [],
   "files": [

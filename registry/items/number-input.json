@@ -15,6 +15,497 @@
     "NumberInputTriggers",
     "NumberInputValueText"
   ],
+  "parts": [
+    {
+      "name": "NumberInput",
+      "props": [
+        {
+          "name": "allowMouseWheel",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to allow mouse wheel to change the value",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "allowOverflow",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to allow the value overflow the min/max range",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "clampValueOnBlur",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to clamp the value when the input loses focus (blur)",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "description": "The initial value of the input when rendered.\nUse when you don't need to control the value of the input.",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the number input is disabled.",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "focusInputOnChange",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to focus input when the value changes",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "form",
+          "type": "string",
+          "required": false,
+          "description": "The associate form of the input element.",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "formatOptions",
+          "type": "NumberFormatOptions",
+          "required": false,
+          "description": "The options to pass to the `Intl.NumberFormat` constructor",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the number input. Useful for composition.",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "inputMode",
+          "type": "InputMode",
+          "required": false,
+          "default": "\"decimal\"",
+          "description": "Hints at the type of data that might be entered by the user. It also determines\nthe type of keyboard shown to the user on mobile devices",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the number input value is invalid.",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "largeStep",
+          "type": "number",
+          "required": false,
+          "default": "10 * step",
+          "description": "The amount to increment or decrement the value by when the `Shift` key is held.",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false,
+          "default": "\"en-US\"",
+          "description": "The current locale. Based on the BCP 47 definition.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false,
+          "default": "Number.MAX_SAFE_INTEGER",
+          "description": "The maximum value of the number input",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "required": false,
+          "default": "Number.MIN_SAFE_INTEGER",
+          "description": "The minimum value of the number input",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name attribute of the number input. Useful for form submission.",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "onFocusChange",
+          "type": "((details: FocusChangeDetails) => void)",
+          "required": false,
+          "description": "Function invoked when the number input is focused",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function invoked when the value changes",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "onValueCommit",
+          "type": "((details: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function invoked when the value is committed (when the input is blurred or the Enter key is pressed)",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "onValueInvalid",
+          "type": "((details: ValueInvalidDetails) => void)",
+          "required": false,
+          "description": "Function invoked when the value overflows or underflows the min/max range",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "pattern",
+          "type": "string",
+          "required": false,
+          "default": "\"-?[0-9]*(.[0-9]+)?\"",
+          "description": "The pattern used to check the <input> element's value against",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the number input is readonly",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the number input is required",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "smallStep",
+          "type": "number",
+          "required": false,
+          "default": "step / 10",
+          "description": "The amount to increment or decrement the value by when the `Alt` key is held.",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "spinOnPress",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to spin the value when the increment/decrement button is pressed",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "step",
+          "type": "number",
+          "required": false,
+          "default": "1",
+          "description": "The amount to increment or decrement the value by",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "translations",
+          "type": "IntlTranslations",
+          "required": false,
+          "description": "Specifies the localized strings that identifies the accessibility elements and their states",
+          "from": "@zag-js/number-input"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The controlled value of the input",
+          "from": "@zag-js/number-input"
+        }
+      ]
+    },
+    {
+      "name": "NumberInputContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseNumberInputContext) => ReactNode",
+          "required": true,
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "NumberInputControl",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NumberInputDecrementTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NumberInputIncrementTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NumberInputInput",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NumberInputLabel",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NumberInputScrubber",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NumberInputTriggers",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NumberInputValueText",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

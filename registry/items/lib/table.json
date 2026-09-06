@@ -5,6 +5,7 @@
   "exports": [
     "useTable"
   ],
+  "parts": [],
   "dependencies": {},
   "registryDependencies": [
     "lib/controllable"

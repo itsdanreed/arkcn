@@ -11,6 +11,290 @@
     "MarqueeItem",
     "MarqueeViewport"
   ],
+  "parts": [
+    {
+      "name": "Marquee",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "autoFill",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to automatically duplicate content to fill the container.",
+          "from": "@zag-js/marquee"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultPaused",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether the marquee is paused by default.",
+          "from": "@zag-js/marquee"
+        },
+        {
+          "name": "delay",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "description": "The delay before the animation starts (in seconds).",
+          "from": "@zag-js/marquee"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the marquee. Useful for composition.",
+          "from": "@zag-js/marquee"
+        },
+        {
+          "name": "loopCount",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "description": "The number of times to loop the animation (0 = infinite).",
+          "from": "@zag-js/marquee"
+        },
+        {
+          "name": "onComplete",
+          "type": "(() => void)",
+          "required": false,
+          "description": "Function called when the marquee completes all loops and stops.\nOnly fires for finite loops (loopCount > 0).",
+          "from": "@zag-js/marquee"
+        },
+        {
+          "name": "onLoopComplete",
+          "type": "(() => void)",
+          "required": false,
+          "description": "Function called when the marquee completes one loop iteration.",
+          "from": "@zag-js/marquee"
+        },
+        {
+          "name": "onPauseChange",
+          "type": "((details: PauseStatusDetails) => void)",
+          "required": false,
+          "description": "Function called when the pause status changes.",
+          "from": "@zag-js/marquee"
+        },
+        {
+          "name": "paused",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the marquee is paused.",
+          "from": "@zag-js/marquee"
+        },
+        {
+          "name": "pauseOnInteraction",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to pause the marquee on user interaction (hover, focus).",
+          "from": "@zag-js/marquee"
+        },
+        {
+          "name": "reverse",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to reverse the animation direction.",
+          "from": "@zag-js/marquee"
+        },
+        {
+          "name": "side",
+          "type": "Side",
+          "required": false,
+          "default": "\"start\"",
+          "description": "The side/direction the marquee scrolls towards.",
+          "from": "@zag-js/marquee"
+        },
+        {
+          "name": "spacing",
+          "type": "string",
+          "required": false,
+          "default": "\"1rem\"",
+          "description": "The spacing between marquee items.",
+          "from": "@zag-js/marquee"
+        },
+        {
+          "name": "speed",
+          "type": "number",
+          "required": false,
+          "default": "50",
+          "description": "The speed of the marquee animation in pixels per second.",
+          "from": "@zag-js/marquee"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "translations",
+          "type": "IntlTranslations",
+          "required": false,
+          "description": "The localized messages to use.",
+          "from": "@zag-js/marquee"
+        }
+      ]
+    },
+    {
+      "name": "MarqueeContent",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true,
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "MarqueeContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseMarqueeContext) => ReactNode",
+          "required": true,
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "MarqueeEdge",
+      "props": [
+        {
+          "name": "side",
+          "type": "Side",
+          "required": true,
+          "description": "The side where the edge gradient should appear.",
+          "from": "@zag-js/marquee"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "MarqueeItem",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "MarqueeViewport",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

@@ -5,6 +5,139 @@
   "exports": [
     "Toaster"
   ],
+  "parts": [
+    {
+      "name": "Toaster",
+      "props": [
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "closeButton",
+          "type": "boolean",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "containerAriaLabel",
+          "type": "string",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "customAriaLabel",
+          "type": "string",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "dir",
+          "type": "\"auto\" | \"ltr\" | \"rtl\"",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "duration",
+          "type": "number",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "expand",
+          "type": "boolean",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "gap",
+          "type": "number",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "hotkey",
+          "type": "string[]",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "icons",
+          "type": "ToastIcons",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "invert",
+          "type": "boolean",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "mobileOffset",
+          "type": "Offset",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "offset",
+          "type": "Offset",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "position",
+          "type": "Position",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "richColors",
+          "type": "boolean",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "swipeDirections",
+          "type": "SwipeDirection[]",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "theme",
+          "type": "\"light\" | \"dark\" | \"system\"",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "toastOptions",
+          "type": "ToastOptions",
+          "required": false,
+          "from": "sonner"
+        },
+        {
+          "name": "visibleToasts",
+          "type": "number",
+          "required": false,
+          "from": "sonner"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "lucide-react": "^1.41.0",
     "next-themes": "^0.4.6",

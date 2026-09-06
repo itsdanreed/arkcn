@@ -12,6 +12,94 @@
     "useHotkeys",
     "useHotkeysDialog"
   ],
+  "parts": [
+    {
+      "name": "HotkeyKbd",
+      "props": [
+        {
+          "name": "hotkey",
+          "type": "string",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "HotkeysDialog",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "description",
+          "type": "ReactNode",
+          "required": false,
+          "default": "\"Shortcuts work anywhere on the page except while typing.\"",
+          "from": "arkcn"
+        },
+        {
+          "name": "title",
+          "type": "ReactNode",
+          "required": false,
+          "default": "\"Keyboard shortcuts\"",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "HotkeysProvider",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "dialogHotkey",
+          "type": "string | null",
+          "required": false,
+          "default": "\"?\"",
+          "description": "Opens the shortcuts dialog; `null` disables it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "sequenceTimeout",
+          "type": "number",
+          "required": false,
+          "default": "1000",
+          "from": "arkcn"
+        }
+      ]
+    }
+  ],
   "dependencies": {},
   "registryDependencies": [
     "dialog",

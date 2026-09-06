@@ -5,6 +5,7 @@
   "exports": [
     "useIsMobile"
   ],
+  "parts": [],
   "dependencies": {},
   "registryDependencies": [],
   "files": [

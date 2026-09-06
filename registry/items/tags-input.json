@@ -18,6 +18,608 @@
     "TagsInputItemText",
     "TagsInputLabel"
   ],
+  "parts": [
+    {
+      "name": "TagsInput",
+      "props": [
+        {
+          "name": "addOnPaste",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to add a tag when you paste values into the tag input",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "allowDuplicates",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow duplicate tags.",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "allowOverflow",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to allow tags to exceed max. In this case,\nwe'll attach `data-invalid` to the root",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "autoFocus",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the input should be auto-focused",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "blurBehavior",
+          "type": "\"clear\" | \"add\"",
+          "required": false,
+          "description": "The behavior of the tags input when the input is blurred\n- `\"add\"`: add the input value as a new tag\n- `\"clear\"`: clear the input value",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultInputValue",
+          "type": "string",
+          "required": false,
+          "description": "The initial tag input value when rendered.\nUse when you don't need to control the tag input value.",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string[]",
+          "required": false,
+          "description": "The initial tag value when rendered.\nUse when you don't need to control the tag value.",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "delimiter",
+          "type": "string | RegExp",
+          "required": false,
+          "default": "\",\"",
+          "description": "The character that serves has:\n- event key to trigger the addition of a new tag\n- character used to split tags when pasting into the input",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the tags input should be disabled",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "editable",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether a tag can be edited after creation, by pressing `Enter` or double clicking.",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "form",
+          "type": "string",
+          "required": false,
+          "description": "The associate form of the underlying input element.",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the tags input. Useful for composition.",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "inputValue",
+          "type": "string",
+          "required": false,
+          "description": "The controlled tag input's value",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the tags input is invalid",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false,
+          "default": "Infinity",
+          "description": "The max number of tags",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "maxLength",
+          "type": "number",
+          "required": false,
+          "description": "The max length of the input.",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name attribute for the input. Useful for form submissions",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "onFocusOutside",
+          "type": "((event: FocusOutsideEvent) => void)",
+          "required": false,
+          "description": "Function called when the focus is moved outside the component",
+          "from": "@zag-js/interact-outside"
+        },
+        {
+          "name": "onHighlightChange",
+          "type": "((details: HighlightChangeDetails) => void)",
+          "required": false,
+          "description": "Callback fired when a tag is highlighted by pointer or keyboard navigation",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "onInputValueChange",
+          "type": "((details: InputValueChangeDetails) => void)",
+          "required": false,
+          "description": "Callback fired when the input value is updated",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "onInteractOutside",
+          "type": "((event: InteractOutsideEvent) => void)",
+          "required": false,
+          "description": "Function called when an interaction happens outside the component",
+          "from": "@zag-js/interact-outside"
+        },
+        {
+          "name": "onPointerDownOutside",
+          "type": "((event: PointerDownOutsideEvent) => void)",
+          "required": false,
+          "description": "Function called when the pointer is pressed down outside the component",
+          "from": "@zag-js/interact-outside"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Callback fired when the tag values is updated",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "onValueInvalid",
+          "type": "((details: ValidityChangeDetails) => void)",
+          "required": false,
+          "description": "Callback fired when the max tag count is reached or the `validateTag` function returns `false`",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "The placeholder text for the input",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the tags input should be read-only",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the tags input is required",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "sanitizeValue",
+          "type": "((value: string) => string)",
+          "required": false,
+          "default": "(value) => value.trim()",
+          "description": "Function to sanitize the tag value before adding.\nUseful for trimming whitespace, normalizing case, or stripping special characters.",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "translations",
+          "type": "IntlTranslations",
+          "required": false,
+          "description": "Specifies the localized strings that identifies the accessibility elements and their states",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "validate",
+          "type": "((details: ValidateArgs) => boolean)",
+          "required": false,
+          "description": "Returns a boolean that determines whether a tag can be added.\nUseful for preventing duplicates or invalid tag values.",
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "value",
+          "type": "string[]",
+          "required": false,
+          "description": "The controlled tag value",
+          "from": "@zag-js/tags-input"
+        }
+      ]
+    },
+    {
+      "name": "TagsInputClearTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TagsInputContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseTagsInputContext) => ReactNode",
+          "required": true,
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "TagsInputControl",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TagsInputHiddenInput",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TagsInputInput",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TagsInputItem",
+      "props": [
+        {
+          "name": "index",
+          "type": "string | number",
+          "required": true,
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "from": "@zag-js/tags-input"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TagsInputItemContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseTagsInputItemContext) => ReactNode",
+          "required": true,
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "TagsInputItemDeleteTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TagsInputItemInput",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TagsInputItemPreview",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TagsInputItemText",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TagsInputLabel",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

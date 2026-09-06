@@ -19,6 +19,689 @@
     "FloatingPanelTitle",
     "FloatingPanelTrigger"
   ],
+  "parts": [
+    {
+      "name": "FloatingPanel",
+      "props": [
+        {
+          "name": "allowOverflow",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether the panel should be strictly contained within the boundary when dragging",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "closeOnEscape",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the panel should close when the escape key is pressed",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "The initial open state of the panel when rendered.\nUse when you don't need to control the open state of the panel.",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "defaultPosition",
+          "type": "Point",
+          "required": false,
+          "description": "The initial position of the panel when rendered.\nUse when you don't need to control the position of the panel.",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "defaultSize",
+          "type": "Size",
+          "required": false,
+          "description": "The default size of the panel",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "dir",
+          "type": "\"ltr\" | \"rtl\"",
+          "required": false,
+          "default": "\"ltr\"",
+          "description": "The document's text/writing direction.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the panel is disabled",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "draggable",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether the panel is draggable",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "finalFocusEl",
+          "type": "(() => HTMLElement | null)",
+          "required": false,
+          "description": "Element to receive focus when the panel is closed.\nBy default, the trigger element is focused.",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "getAnchorPosition",
+          "type": "((details: AnchorPositionDetails) => Point)",
+          "required": false,
+          "description": "Function that returns the initial position of the panel when it is opened.\nIf provided, will be used instead of the default position.",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "getBoundaryEl",
+          "type": "(() => HTMLElement | null)",
+          "required": false,
+          "description": "The boundary of the panel. Useful for recalculating the boundary rect when\nthe it is resized.",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "gridSize",
+          "type": "number",
+          "required": false,
+          "default": "1",
+          "description": "The snap grid for the panel",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the floating panel. Useful for composition.",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "initialFocusEl",
+          "type": "(() => HTMLElement | null)",
+          "required": false,
+          "description": "Element to receive focus when the panel is opened.\nBy default, the first focusable element in the content is focused.",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "lockAspectRatio",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the panel is locked to its aspect ratio",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "maxSize",
+          "type": "Size",
+          "required": false,
+          "description": "The maximum size of the panel",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "minSize",
+          "type": "Size",
+          "required": false,
+          "description": "The minimum size of the panel",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "((details: OpenChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the panel is opened or closed",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "onPositionChange",
+          "type": "((details: PositionChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the position of the panel changes via dragging",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "onPositionChangeEnd",
+          "type": "((details: PositionChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the position of the panel changes via dragging ends",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "onSizeChange",
+          "type": "((details: SizeChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the size of the panel changes via resizing",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "onSizeChangeEnd",
+          "type": "((details: SizeChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the size of the panel changes via resizing ends",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "onStageChange",
+          "type": "((details: StageChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the stage of the panel changes",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "description": "The controlled open state of the panel",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "persistRect",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the panel size and position should be preserved when it is closed",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "position",
+          "type": "Point",
+          "required": false,
+          "description": "The controlled position of the panel",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "resizable",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether the panel is resizable",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "restoreFocus",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to restore focus to the trigger when the panel is closed.",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "size",
+          "type": "Size",
+          "required": false,
+          "description": "The size of the panel",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "strategy",
+          "type": "\"absolute\" | \"fixed\"",
+          "required": false,
+          "default": "\"fixed\"",
+          "description": "The strategy to use for positioning",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "translations",
+          "type": "IntlTranslations",
+          "required": false,
+          "description": "The translations for the floating panel.",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "FloatingPanelBody",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FloatingPanelCloseTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FloatingPanelContent",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FloatingPanelContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseFloatingPanelContext) => ReactNode",
+          "required": true,
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "FloatingPanelControl",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FloatingPanelDragTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FloatingPanelHeader",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FloatingPanelPortal",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "container",
+          "type": "RefObject<HTMLElement | null>",
+          "required": false,
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "FloatingPanelPositioner",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FloatingPanelResizeTrigger",
+      "props": [
+        {
+          "name": "axis",
+          "type": "ResizeTriggerAxis",
+          "required": true,
+          "description": "The axis of the resize handle",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FloatingPanelStageTrigger",
+      "props": [
+        {
+          "name": "stage",
+          "type": "Stage",
+          "required": true,
+          "description": "The stage of the panel",
+          "from": "@zag-js/floating-panel"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FloatingPanelTitle",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FloatingPanelTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"

@@ -13,6 +13,460 @@
     "DateInputSegmentContext",
     "DateInputSegmentGroup"
   ],
+  "parts": [
+    {
+      "name": "DateInput",
+      "props": [
+        {
+          "name": "allSegments",
+          "type": "Segments",
+          "required": false,
+          "description": "The computed segments map for the formatter.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "createCalendar",
+          "type": "((identifier: CalendarIdentifier) => Calendar)",
+          "required": false,
+          "description": "A function that creates a calendar object for a given calendar identifier.\nUse this to support non-Gregorian calendars (e.g., Persian, Islamic, Buddhist).",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "defaultPlaceholderValue",
+          "type": "DateValue",
+          "required": false,
+          "description": "The initial placeholder date when rendered.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "defaultValue",
+          "type": "DateValue[]",
+          "required": false,
+          "description": "The initial selected date(s) when rendered.\nUse when you don't need to control the selected date(s).",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "dir",
+          "type": "\"ltr\" | \"rtl\"",
+          "required": false,
+          "default": "\"ltr\"",
+          "description": "The document's text/writing direction.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the date input is disabled.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "form",
+          "type": "string",
+          "required": false,
+          "description": "The `form` attribute of the hidden input element.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "format",
+          "type": "((date: DateValue, details: FormatDateDetails) => string)",
+          "required": false,
+          "description": "The format function for converting a DateValue to a string.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "formatter",
+          "type": "DateFormatter",
+          "required": false,
+          "description": "The date formatter to use.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "getRootNode",
+          "type": "(() => Node | ShadowRoot | Document)",
+          "required": false,
+          "description": "A root node to correctly resolve document in custom environments. E.x.: Iframes, Electron.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "granularity",
+          "type": "DateGranularity",
+          "required": false,
+          "default": "\"day\"",
+          "description": "Determines the smallest unit that is displayed in the date input.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "hideTimeZone",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to hide the time zone segment when the value is a `ZonedDateTime`.\nHas no effect for values without a time zone.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "hourCycle",
+          "type": "HourCycle",
+          "required": false,
+          "description": "Whether to use 12-hour or 24-hour time format.\nBy default, this is determined by the locale.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the date input. Useful for composition.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the date input is invalid",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "isDateUnavailable",
+          "type": "((date: DateValue, locale: string) => boolean)",
+          "required": false,
+          "description": "Returns whether a date is unavailable.\nWhen a committed date matches, the input is marked as invalid.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false,
+          "default": "\"en-US\"",
+          "description": "The locale (BCP 47 language tag) to use when formatting the date.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "max",
+          "type": "DateValue",
+          "required": false,
+          "description": "The maximum date that can be selected.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "min",
+          "type": "DateValue",
+          "required": false,
+          "description": "The minimum date that can be selected.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The `name` attribute of the input element.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "onFocusChange",
+          "type": "((details: FocusChangeDetails) => void)",
+          "required": false,
+          "description": "A function called when the date input gains or loses focus.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "onPlaceholderChange",
+          "type": "((details: PlaceholderChangeDetails) => void)",
+          "required": false,
+          "description": "A function called when the placeholder value changes.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the value changes.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "placeholderValue",
+          "type": "DateValue",
+          "required": false,
+          "description": "The controlled placeholder date.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the date input is read-only.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the date input is required",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "selectionMode",
+          "type": "SelectionMode",
+          "required": false,
+          "default": "\"single\"",
+          "description": "The selection mode of the date input.\n- `single` - only one date can be entered\n- `range` - a range of dates can be entered (start and end)",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "shouldForceLeadingZeros",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to always show leading zeros in month, day, and hour fields.\nWhen false, formatting follows the locale default (e.g. \"1\" instead of \"01\").",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "timeZone",
+          "type": "string",
+          "required": false,
+          "default": "\"UTC\"",
+          "description": "The time zone to use",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "translations",
+          "type": "IntlTranslations",
+          "required": false,
+          "description": "The localized messages to use.",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "value",
+          "type": "DateValue[]",
+          "required": false,
+          "description": "The controlled selected date(s).",
+          "from": "@zag-js/date-input"
+        }
+      ]
+    },
+    {
+      "name": "DateInputContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseDateInputContext) => ReactNode",
+          "required": true,
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "DateInputControl",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DateInputHiddenInput",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "index",
+          "type": "number",
+          "required": false,
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DateInputLabel",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DateInputSegment",
+      "props": [
+        {
+          "name": "segment",
+          "type": "DateSegment",
+          "required": true,
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DateInputSegmentContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(segment: DateSegment) => ReactNode",
+          "required": true,
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "DateInputSegmentGroup",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "index",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "from": "@zag-js/date-input"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },

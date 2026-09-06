@@ -8,6 +8,205 @@
     "ToggleGroupContext",
     "ToggleGroupItem"
   ],
+  "parts": [
+    {
+      "name": "ToggleGroup",
+      "props": [
+        {
+          "name": "size",
+          "type": "\"default\" | \"sm\" | \"lg\" | null",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "spacing",
+          "type": "number",
+          "required": false,
+          "default": "2",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"outline\" | null",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string[]",
+          "required": false,
+          "description": "The initial selected value of the toggle group when rendered.\nUse when you don't need to control the selected value of the toggle group.",
+          "from": "@zag-js/toggle-group"
+        },
+        {
+          "name": "deselectable",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether the toggle group allows empty selection.\n**Note:** This is ignored if `multiple` is `true`.",
+          "from": "@zag-js/toggle-group"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the toggle is disabled.",
+          "from": "@zag-js/toggle-group"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the toggle. Useful for composition.",
+          "from": "@zag-js/toggle-group"
+        },
+        {
+          "name": "loopFocus",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to loop focus inside the toggle group.",
+          "from": "@zag-js/toggle-group"
+        },
+        {
+          "name": "multiple",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to allow multiple toggles to be selected.",
+          "from": "@zag-js/toggle-group"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function to call when the toggle is clicked.",
+          "from": "@zag-js/toggle-group"
+        },
+        {
+          "name": "orientation",
+          "type": "Orientation",
+          "required": false,
+          "default": "\"horizontal\"",
+          "description": "The orientation of the toggle group.",
+          "from": "@zag-js/toggle-group"
+        },
+        {
+          "name": "rovingFocus",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to use roving tab index to manage focus.",
+          "from": "@zag-js/toggle-group"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "value",
+          "type": "string[]",
+          "required": false,
+          "description": "The controlled selected value of the toggle group.",
+          "from": "@zag-js/toggle-group"
+        }
+      ]
+    },
+    {
+      "name": "ToggleGroupContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseToggleGroupContext) => ReactNode",
+          "required": true,
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "ToggleGroupItem",
+      "props": [
+        {
+          "name": "size",
+          "type": "\"default\" | \"sm\" | \"lg\" | null",
+          "required": false,
+          "default": "\"default\"",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"outline\" | null",
+          "required": false,
+          "default": "\"default\"",
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "from": "@zag-js/toggle-group"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "from": "@zag-js/toggle-group"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "class-variance-authority": "^0.7.1"

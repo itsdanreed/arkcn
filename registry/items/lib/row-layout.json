@@ -7,6 +7,7 @@
     "resizeRowItems",
     "removeRowItem"
   ],
+  "parts": [],
   "dependencies": {},
   "registryDependencies": [
     "canvas"

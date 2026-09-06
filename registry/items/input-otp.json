@@ -8,6 +8,172 @@
     "InputOTPSlot",
     "InputOTPSeparator"
   ],
+  "parts": [
+    {
+      "name": "InputOTP",
+      "props": [
+        {
+          "name": "maxLength",
+          "type": "number",
+          "required": true,
+          "from": "input-otp"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "containerClassName",
+          "type": "string",
+          "required": false,
+          "from": "input-otp"
+        },
+        {
+          "name": "nonce",
+          "type": "string",
+          "required": false,
+          "from": "input-otp"
+        },
+        {
+          "name": "noScriptCSSFallback",
+          "type": "string | null",
+          "required": false,
+          "from": "input-otp"
+        },
+        {
+          "name": "onChange",
+          "type": "((newValue: string) => unknown)",
+          "required": false,
+          "from": "input-otp"
+        },
+        {
+          "name": "onComplete",
+          "type": "((...args: any[]) => unknown)",
+          "required": false,
+          "from": "input-otp"
+        },
+        {
+          "name": "pasteTransformer",
+          "type": "((pasted: string) => string)",
+          "required": false,
+          "from": "input-otp"
+        },
+        {
+          "name": "pushPasswordManagerStrategy",
+          "type": "\"none\" | \"increase-width\"",
+          "required": false,
+          "from": "input-otp"
+        },
+        {
+          "name": "render",
+          "type": "InputOTPRenderFn",
+          "required": false,
+          "from": "input-otp"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "textAlign",
+          "type": "\"center\" | \"left\" | \"right\"",
+          "required": false,
+          "from": "input-otp"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "from": "input-otp"
+        }
+      ]
+    },
+    {
+      "name": "InputOTPGroup",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "InputOTPSlot",
+      "props": [
+        {
+          "name": "index",
+          "type": "number",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "InputOTPSeparator",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "input-otp": "^1.5.0",
     "lucide-react": "^1.41.0"

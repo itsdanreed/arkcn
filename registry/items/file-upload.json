@@ -19,6 +19,603 @@
     "FileUploadLabel",
     "FileUploadTrigger"
   ],
+  "parts": [
+    {
+      "name": "FileUpload",
+      "props": [
+        {
+          "name": "accept",
+          "type": "Record<string, string[]> | FileMimeType | FileMimeType[]",
+          "required": false,
+          "description": "The accept file types",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "acceptedFiles",
+          "type": "File[]",
+          "required": false,
+          "description": "The controlled accepted files",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "allowDrop",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to allow drag and drop in the dropzone element",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "capture",
+          "type": "\"user\" | \"environment\"",
+          "required": false,
+          "description": "The default camera to use when capturing media",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultAcceptedFiles",
+          "type": "File[]",
+          "required": false,
+          "description": "The default accepted files when rendered.\nUse when you don't need to control the accepted files of the input.",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "directory",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to accept directories, only works in webkit browsers",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the file input is disabled",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements. Useful for composition.",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the file input is invalid",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false,
+          "default": "\"en-US\"",
+          "description": "The current locale. Based on the BCP 47 definition.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "maxFiles",
+          "type": "number",
+          "required": false,
+          "default": "1",
+          "description": "The maximum number of files",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "maxFileSize",
+          "type": "number",
+          "required": false,
+          "default": "Infinity",
+          "description": "The maximum file size in bytes",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "minFileSize",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "description": "The minimum file size in bytes",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the underlying file input",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "onFileAccept",
+          "type": "((details: FileAcceptDetails) => void)",
+          "required": false,
+          "description": "Function called when the file is accepted",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "onFileChange",
+          "type": "((details: FileChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the value changes, whether accepted or rejected",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "onFileReject",
+          "type": "((details: FileRejectDetails) => void)",
+          "required": false,
+          "description": "Function called when the file is rejected",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "preventDocumentDrop",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to prevent the drop event on the document",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the file input is read-only",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the file input is required",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "transformFiles",
+          "type": "((files: File[]) => Promise<File[]>)",
+          "required": false,
+          "description": "Function to transform the accepted files to apply transformations",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "translations",
+          "type": "IntlTranslations",
+          "required": false,
+          "description": "The localized messages to use.",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "validate",
+          "type": "((file: File, details: FileValidateDetails) => FileError[] | null)",
+          "required": false,
+          "description": "Function to validate a file",
+          "from": "@zag-js/file-upload"
+        }
+      ]
+    },
+    {
+      "name": "FileUploadClearTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FileUploadContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseFileUploadContext) => ReactNode",
+          "required": true,
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "FileUploadDropzone",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "disableClick",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to disable the click event on the dropzone",
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FileUploadHiddenInput",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FileUploadItem",
+      "props": [
+        {
+          "name": "file",
+          "type": "File",
+          "required": true,
+          "from": "@zag-js/file-upload"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FileUploadItemDeleteTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FileUploadItemGroup",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "type",
+          "type": "ItemType",
+          "required": false,
+          "from": "@zag-js/file-upload"
+        }
+      ]
+    },
+    {
+      "name": "FileUploadItemName",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FileUploadItemPreview",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "default": "'.*'",
+          "description": "The file type to match against. Matches all file types by default.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "FileUploadItemPreviewImage",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FileUploadItemSizeText",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FileUploadLabel",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FileUploadTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
   "dependencies": {
     "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"
