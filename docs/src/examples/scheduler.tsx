@@ -1,0 +1,90 @@
+import * as React from "react"
+import {
+  Scheduler,
+  SchedulerDayColumn,
+  SchedulerDayColumns,
+  SchedulerDayHeadings,
+  SchedulerEvent,
+  SchedulerEventResizeHandle,
+  SchedulerEventTime,
+  SchedulerEventTitle,
+  SchedulerNextTrigger,
+  SchedulerNowIndicator,
+  SchedulerPrevTrigger,
+  SchedulerTimeGrid,
+  SchedulerTimeGridBody,
+  SchedulerTimeGridHeader,
+  SchedulerTimeGutter,
+  SchedulerTitle,
+  SchedulerTodayTrigger,
+  SchedulerToolbar,
+  useScheduler,
+} from "@/components/ui/scheduler"
+
+type Event = { id: string; title: string; start: Date; end: Date }
+
+const today = new Date()
+const at = (dayOffset: number, hour: number, minutes = 0) => {
+  const d = new Date(today)
+  d.setDate(d.getDate() + dayOffset)
+  d.setHours(hour, minutes, 0, 0)
+  return d
+}
+const sameDay = (a: Date, b: Date) => a.toDateString() === b.toDateString()
+
+function Week({ events }: { events: Event[] }) {
+  const { days } = useScheduler()
+  return (
+    <SchedulerTimeGrid>
+      <SchedulerTimeGridHeader>
+        <SchedulerDayHeadings />
+      </SchedulerTimeGridHeader>
+      <SchedulerTimeGridBody>
+        <SchedulerTimeGutter />
+        <SchedulerDayColumns>
+          {days.map((day) => (
+            <SchedulerDayColumn key={day.toISOString()} date={day} events={events.filter((e) => sameDay(e.start, day))}>
+              {(e) => (
+                <SchedulerEvent value={e.id} start={e.start} end={e.end} className="border-sky-500/40 bg-sky-500/15">
+                  <SchedulerEventTitle>{e.title}</SchedulerEventTitle>
+                  <SchedulerEventTime />
+                  <SchedulerEventResizeHandle />
+                </SchedulerEvent>
+              )}
+            </SchedulerDayColumn>
+          ))}
+          <SchedulerNowIndicator />
+        </SchedulerDayColumns>
+      </SchedulerTimeGridBody>
+    </SchedulerTimeGrid>
+  )
+}
+
+export default function SchedulerExample() {
+  const [events, setEvents] = React.useState<Event[]>([
+    { id: "standup", title: "Standup", start: at(0, 9), end: at(0, 9, 30) },
+    { id: "design", title: "Design review", start: at(0, 11), end: at(0, 12) },
+    { id: "lunch", title: "Team lunch", start: at(1, 12, 30), end: at(1, 13, 30) },
+    { id: "planning", title: "Sprint planning", start: at(2, 14), end: at(2, 15, 30) },
+  ])
+  return (
+    <Scheduler
+      defaultView="week"
+      minHour={7}
+      maxHour={19}
+      editable
+      onEventChange={({ id, start, end }) =>
+        setEvents((prev) => prev.map((e) => (e.id === id ? { ...e, start, end } : e)))
+      }
+      className="h-112 w-full"
+    >
+      <SchedulerToolbar>
+        <SchedulerPrevTrigger />
+        <SchedulerNextTrigger />
+        <SchedulerTodayTrigger />
+        <SchedulerTitle className="ms-2" />
+      </SchedulerToolbar>
+      <Week events={events} />
+    </Scheduler>
+  )
+}
