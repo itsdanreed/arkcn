@@ -4,17 +4,17 @@ import { add, diff, init, list } from "../cli/commands.mjs"
 import { createRegistry } from "../cli/registry.mjs"
 import { c, fail, log } from "../cli/ui.mjs"
 
-const help = `${c.bold("tideui")} - copy Ark UI components into your project
+const help = `${c.bold("@multicomma/arkcn")} - copy Ark UI components into your project
 
 ${c.bold("Usage")}
-  npx tideui init [--yes] [--alias @] [--css src/index.css] [--dir src] [--no-install]
-  npx tideui add <name...> [--all] [--overwrite] [--yes] [--no-install]
-  npx tideui list [name...] [--type ui|lib|hook|all] [--docs]
-  npx tideui diff [name...] [--verbose]
-  npx tideui mcp
+  npx @multicomma/arkcn init [--yes] [--alias @] [--css src/index.css] [--dir src] [--no-install]
+  npx @multicomma/arkcn add <name...> [--all] [--overwrite] [--yes] [--no-install]
+  npx @multicomma/arkcn list [name...] [--type ui|lib|hook|all] [--docs]
+  npx @multicomma/arkcn diff [name...] [--verbose]
+  npx @multicomma/arkcn mcp
 
 ${c.bold("Commands")}
-  init   Write tide.json, lib/utils, the base styles, check the "@/" alias, install base deps
+  init   Write arkcn.json, lib/utils, the base styles, check the "@/" alias, install base deps
   add    Copy components (and everything they import) into your project, merge their styles, install deps
   list   Show the registry, or one item with --docs
   diff   Show which installed files were changed locally since they were added
@@ -22,7 +22,7 @@ ${c.bold("Commands")}
 
 ${c.bold("Options")}
   --registry <url|dir>  Read the registry from a URL or directory instead of the bundled copy
-                        (also TIDE_REGISTRY), e.g. the GitHub raw URL of registry/
+                        (also ARKCN_REGISTRY), e.g. the GitHub raw URL of registry/
   --cwd <dir>           Project directory (default: current)
 `
 
@@ -48,7 +48,7 @@ const { values, positionals } = parseArgs({
 
 const [command, ...names] = positionals
 const cwd = values.cwd ?? process.cwd()
-const registry = createRegistry(values.registry ?? process.env.TIDE_REGISTRY)
+const registry = createRegistry(values.registry ?? process.env.ARKCN_REGISTRY)
 
 try {
   switch (command) {
@@ -66,7 +66,7 @@ try {
       break
     case "mcp": {
       const { startServer } = await import("../mcp/server.mjs")
-      await startServer({ registryBase: values.registry ?? process.env.TIDE_REGISTRY })
+      await startServer({ registryBase: values.registry ?? process.env.ARKCN_REGISTRY })
       break
     }
     default:

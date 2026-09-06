@@ -1,5 +1,5 @@
 {
-  "name": "tideui",
+  "name": "@multicomma/arkcn",
   "version": "0.1.0",
   "baseDependencies": {
     "react": "^19.2.8",

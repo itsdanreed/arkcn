@@ -1,6 +1,6 @@
-/* Tide styles: tokens, custom variants, utilities, keyframes, and component CSS.
+/* arkcn styles: tokens, custom variants, utilities, keyframes, and component CSS.
    The CLI merges this into your stylesheet after "tailwindcss"; if you install the package
-   directly instead, import it: @import "tideui/styles.css"; */
+   directly instead, import it: @import "@multicomma/arkcn/styles.css"; */
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 

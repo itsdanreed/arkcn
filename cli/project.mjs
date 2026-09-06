@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import { dirname, join, relative } from "node:path"
 import { spawnSync } from "node:child_process"
 
-export const CONFIG_FILE = "tide.json"
+export const CONFIG_FILE = "arkcn.json"
 
 export const defaultConfig = {
   alias: "@",
@@ -74,10 +74,10 @@ export function readProjectFile(cwd, rel) {
   return existsSync(file) ? readFileSync(file, "utf8") : null
 }
 
-const BASE_START = "/* tide:base */"
-const BASE_END = "/* tide:base:end */"
-const fragmentStart = (name) => `/* tide:component ${name} */`
-const fragmentEnd = (name) => `/* tide:component ${name}:end */`
+const BASE_START = "/* arkcn:base */"
+const BASE_END = "/* arkcn:base:end */"
+const fragmentStart = (name) => `/* arkcn:component ${name} */`
+const fragmentEnd = (name) => `/* arkcn:component ${name}:end */`
 
 function replaceBlock(css, start, end, block) {
   const i = css.indexOf(start)

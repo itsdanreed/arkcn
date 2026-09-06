@@ -6,7 +6,7 @@ export const bundledDir = new URL("../registry/", import.meta.url).pathname
 
 /**
  * A registry source: the bundled directory by default, or a base URL (`--registry`,
- * `TIDE_REGISTRY`) such as https://raw.githubusercontent.com/itsdanreed/tide/main/registry
+ * `ARKCN_REGISTRY`) such as https://raw.githubusercontent.com/itsdanreed/arkcn/main/registry
  */
 export function createRegistry(base) {
   const remote = base && /^https?:\/\//.test(base)

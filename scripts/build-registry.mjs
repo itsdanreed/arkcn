@@ -1,7 +1,7 @@
 // Generates registry/ from src: one item per component, lib module, and hook, with file
 // contents, resolved external dependencies (versions from package.json peers), toolkit
 // dependencies (imports through the "@/" alias), CSS fragments (blocks between
-// "/* @registry:component <name> */" and "/* @registry:end */" in src/styles/tide.css),
+// "/* @registry:component <name> */" and "/* @registry:end */" in src/styles/arkcn.css),
 // and a short description (first block comment or JSDoc of the file, or the CLAUDE.md heading).
 import { existsSync, mkdirSync, readdirSync, readFileSync, rmSync, writeFileSync } from "node:fs"
 import { join } from "node:path"
@@ -57,7 +57,7 @@ const describe = (content, name) => {
   return ""
 }
 
-const css = readFileSync(join(root, "src/styles/tide.css"), "utf8")
+const css = readFileSync(join(root, "src/styles/arkcn.css"), "utf8")
 const fragments = new Map()
 let base = ""
 let cursor = 0

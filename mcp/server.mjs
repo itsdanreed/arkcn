@@ -10,9 +10,9 @@ import { mergeComponentCss, readConfig, readPackageJson, targetPath } from "../c
  * read their source and documentation, plan an install, and copy components into a project.
  */
 export async function startServer({ registryBase } = {}) {
-  const registry = createRegistry(registryBase ?? process.env.TIDE_REGISTRY)
+  const registry = createRegistry(registryBase ?? process.env.ARKCN_REGISTRY)
   const index = await registry.index()
-  const server = new McpServer({ name: "tideui", version: index.version })
+  const server = new McpServer({ name: "arkcn", version: index.version })
   const text = (value) => ({
     content: [{ type: "text", text: typeof value === "string" ? value : JSON.stringify(value, null, 2) }],
   })
@@ -21,7 +21,7 @@ export async function startServer({ registryBase } = {}) {
     "list_components",
     {
       title: "List components",
-      description: "Every item in the Tide registry (name, type, description, dependencies). Types: ui, lib, hook.",
+      description: "Every item in the arkcn registry (name, type, description, dependencies). Types: ui, lib, hook.",
       inputSchema: { type: z.enum(["ui", "lib", "hook", "all"]).default("ui") },
     },
     async ({ type }) => text(index.items.filter((i) => type === "all" || i.type === type))
@@ -80,12 +80,12 @@ export async function startServer({ registryBase } = {}) {
     {
       title: "Plan an install",
       description:
-        "Without writing anything: which files `add` would write into a project, which exist and differ, and which packages it would install. `cwd` is the project root (must contain tide.json).",
+        "Without writing anything: which files `add` would write into a project, which exist and differ, and which packages it would install. `cwd` is the project root (must contain arkcn.json).",
       inputSchema: { names: z.array(z.string()).min(1), cwd: z.string() },
     },
     async ({ names, cwd }) => {
       const config = readConfig(cwd)
-      if (!config) return text({ error: `No tide.json in ${cwd}. Run \`npx tideui init\` there first.` })
+      if (!config) return text({ error: `No arkcn.json in ${cwd}. Run \`npx @multicomma/arkcn init\` there first.` })
       const { items, missing } = await registry.closure(names)
       return text({
         missing,
@@ -107,7 +107,7 @@ export async function startServer({ registryBase } = {}) {
     },
     async ({ names, cwd, overwrite }) => {
       const config = readConfig(cwd)
-      if (!config) return text({ error: `No tide.json in ${cwd}. Run \`npx tideui init\` there first.` })
+      if (!config) return text({ error: `No arkcn.json in ${cwd}. Run \`npx @multicomma/arkcn init\` there first.` })
       if (!readPackageJson(cwd)) return text({ error: `No package.json in ${cwd}` })
       const { items, missing } = await registry.closure(names)
       if (missing.length) return text({ error: `Unknown: ${missing.join(", ")}` })
@@ -133,8 +133,8 @@ export async function startServer({ registryBase } = {}) {
 
   server.registerResource(
     "registry-index",
-    "tide://registry/index",
-    { title: "Registry index", description: "All Tide items", mimeType: "application/json" },
+    "arkcn://registry/index",
+    { title: "Registry index", description: "All arkcn items", mimeType: "application/json" },
     async (uri) => ({
       contents: [{ uri: uri.href, mimeType: "application/json", text: JSON.stringify(index, null, 2) }],
     })

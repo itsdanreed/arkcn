@@ -1,4 +1,4 @@
-# Tide
+# arkcn
 
 shadcn/ui-style React components ported to [Ark UI](https://ark-ui.com), plus data-heavy primitives:
 data grid, data table engine, kanban, gantt, scheduler, node graph, query builder, rich text editor
@@ -10,15 +10,15 @@ Triggers are polymorphic via `asChild`.
 ## Install components
 
 ```bash
-npx tideui init            # tide.json, src/lib/utils.ts, base styles, "@/" alias check, base deps
-npx tideui add button card dialog data-grid
-npx tideui list            # everything in the registry (--type all, `list data-grid --docs`)
-npx tideui diff            # which installed files you changed locally
+npx @multicomma/arkcn init            # arkcn.json, src/lib/utils.ts, base styles, "@/" alias check, base deps
+npx @multicomma/arkcn add button card dialog data-grid
+npx @multicomma/arkcn list            # everything in the registry (--type all, `list data-grid --docs`)
+npx @multicomma/arkcn diff            # which installed files you changed locally
 ```
 
-`init` writes `tide.json` (alias, `srcDir`, component/lib/hooks dirs, stylesheet), merges the
+`init` writes `arkcn.json` (alias, `srcDir`, component/lib/hooks dirs, stylesheet), merges the
 toolkit's tokens, custom variants, utilities, and keyframes into your stylesheet after
-`@import "tailwindcss"` (between `/* tide:base */` markers, so re-running refreshes them),
+`@import "tailwindcss"` (between `/* arkcn:base */` markers, so re-running refreshes them),
 makes sure the `@/*` path alias exists, and installs the base packages (Ark UI, lucide, clsx,
 tailwind-merge, cva, tw-animate-css, the typography plugin). Tailwind v4 is required.
 
@@ -38,8 +38,8 @@ The same folder is committed here, so you can also read it from a URL, for examp
 components newer than your installed CLI:
 
 ```bash
-npx tideui add kanban --registry https://raw.githubusercontent.com/itsdanreed/tide/main/registry
-# or export TIDE_REGISTRY=...
+npx @multicomma/arkcn add kanban --registry https://raw.githubusercontent.com/itsdanreed/arkcn/main/registry
+# or export ARKCN_REGISTRY=...
 ```
 
 Each item is `registry/items/<name>.json`: files with content, `registryDependencies`,
@@ -52,22 +52,22 @@ The package also ships an MCP server so agents (Claude Code, Cursor, and others)
 registry, read documentation and source, and copy components into a project:
 
 ```json
-{ "mcpServers": { "tideui": { "command": "npx", "args": ["-y", "tideui", "mcp"] } } }
+{ "mcpServers": { "@multicomma/arkcn": { "command": "npx", "args": ["-y", "@multicomma/arkcn", "mcp"] } } }
 ```
 
 Tools: `list_components`, `search_components`, `get_component` (source, deps, css, docs),
 `get_docs`, `plan_install` (dry run against a project), `add_components` (writes files and CSS,
-returns the packages to install). `npx tideui mcp` and `tideui-mcp` are the same server; pass `--registry <url>` to read a hosted registry.
+returns the packages to install). Pass `--registry <url>` to read a hosted registry.
 
 ## Consume from node_modules instead
 
-The demo app imports the package source directly: import `tideui/styles.css`,
-alias `@/components/ui`, `@/lib`, and `@/hooks` to `node_modules/tideui/src/...`,
-and add `@source "../node_modules/tideui/src"` because Tailwind does not scan
+The demo app imports the package source directly: import `@multicomma/arkcn/styles.css`,
+alias `@/components/ui`, `@/lib`, and `@/hooks` to `node_modules/@multicomma/arkcn/src/...`,
+and add `@source "../node_modules/@multicomma/arkcn/src"` because Tailwind does not scan
 `node_modules`. Heavy dependencies (tiptap, pragmatic drag and drop, recharts, embla, date-fns,
 react-day-picker, input-otp, react-resizable-panels, sonner, next-themes) are optional peers.
 
-The demo application lives in the `tide-demo` repository.
+The demo application lives in the `arkcn-demo` repository.
 
 ## Develop
 

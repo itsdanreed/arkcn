@@ -1,11 +1,11 @@
-# Tide (tideui) — shadcn/ui ported to Ark UI (component library)
+# arkcn (@multicomma/arkcn) — shadcn/ui ported to Ark UI (component library)
 
 This repository is the **library**: `src/components/ui/` (primitives), `src/lib/` (headless engines
-and hooks), `src/hooks/`, and `src/styles/tide.css` (tokens, custom variants, keyframes,
-component CSS; consumers import it after `tailwindcss`). It is published as `tideui`
+and hooks), `src/hooks/`, and `src/styles/arkcn.css` (tokens, custom variants, keyframes,
+component CSS; consumers import it after `tailwindcss`). It is published as `@multicomma/arkcn`
 with source exports (`./ui/*`, `./lib/*`, `./hooks/*`, `./styles.css`); there is no build step.
 The demo application (every `src/demo/...` reference below) lives in the sibling
-`tide-demo` repository, which consumes this package through a `file:` link and aliases
+`arkcn-demo` repository, which consumes this package through a `file:` link and aliases
 `@/components/ui`, `@/lib`, and `@/hooks` to the package source. `npm run check` here runs the
 type check and lint (oxlint with Tailwind rules, quotes, Ark part coverage, Prettier); browser
 tests live in the demo repo, so after changing a primitive run the demo's `npm test` too.
@@ -20,21 +20,21 @@ every Radix-backed component to `@ark-ui/react` as its backing primitive, one co
   packages, versions from package.json peers; react excluded), a `css` fragment, `docs` (the
   matching CLAUDE.md section), and a description. `registry/base.css` is the stylesheet minus
   fragments; `registry/index.json` the manifest with `baseDependencies` (required peers).
-  Component-specific CSS in `src/styles/tide.css` must sit between
+  Component-specific CSS in `src/styles/arkcn.css` must sit between
   `/* @registry:component <name> */` and `/* @registry:end */` so `add` can merge it. `npm run
   check` rebuilds the registry first; commit the result.
-- `bin/tideui.mjs` + `cli/` is the zero-dependency CLI (`init`, `add`, `list`, `diff`) with
-  `tide.json` in the target project (`alias`, `srcDir`, `componentsDir`, `libDir`,
+- `bin/arkcn.mjs` + `cli/` is the zero-dependency CLI (`init`, `add`, `list`, `diff`) with
+  `arkcn.json` in the target project (`alias`, `srcDir`, `componentsDir`, `libDir`,
   `hooksDir`, `css`). `cli/registry.mjs` reads the bundled registry, a directory, or a URL
-  (`--registry`, `TIDE_REGISTRY`); `cli/project.mjs` owns file writing, import rewriting,
+  (`--registry`, `ARKCN_REGISTRY`); `cli/project.mjs` owns file writing, import rewriting,
   CSS merging (base and per-component marker blocks), tsconfig alias insertion, package-manager
   detection and install; `cli/commands.mjs` the commands plus the pure helpers (`writeItem`,
   `findConflicts`, `missingDependencies`) the MCP reuses. `scripts/test-cli.mjs` runs init, add,
   diff, overwrite, and a custom alias/dir against a temp project (part of `npm run check`).
-- `bin/tideui-mcp.mjs` (also `tideui mcp`) + `mcp/server.mjs` is the stdio MCP server (`@modelcontextprotocol/sdk`
+- `arkcn mcp` (`bin/arkcn.mjs` + `mcp/server.mjs`) is the stdio MCP server (`@modelcontextprotocol/sdk`
   + `zod`, the package's only runtime deps): tools `list_components`, `search_components`,
   `get_component`, `get_docs`, `plan_install`, `add_components` (writes files and CSS, never runs
-  the package manager) and a `tide://registry/index` resource.
+  the package manager) and a `arkcn://registry/index` resource.
 - Publishing: `npm publish --access public` (prepublishOnly runs `check`). The demo repo does not
   use the CLI; it aliases the package source.
 
@@ -546,4 +546,4 @@ Only reusable primitives live there. Page-shaped compositions (settings layout, 
 live under `src/demo/<page>/`. `chat.tsx` stays in the toolkit as reusable parts imported by
 the chat demo page. Do not mention shadcn, shadcn-admin, or its author in code comments or
 demo markup; the demo persona is "Alex Morgan" (alex.morgan@example.com, initials AM) and the
-demo brand is "Tide".
+demo brand is "arkcn".

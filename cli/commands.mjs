@@ -119,7 +119,7 @@ export async function init(cwd, registry, flags) {
     .filter(([dep]) => !installedVersion(cwd, dep))
     .map(([dep, version]) => `${dep}@${version}`)
   await install(cwd, deps, flags)
-  log(`\nNext: ${c.cyan("npx tideui add button card dialog")}`)
+  log(`\nNext: ${c.cyan("npx @multicomma/arkcn add button card dialog")}`)
 }
 
 async function install(cwd, deps, flags) {
@@ -133,12 +133,12 @@ async function install(cwd, deps, flags) {
 /** `add`: closure of components, files, CSS fragments, dependencies. */
 export async function add(cwd, registry, names, flags) {
   const config = readConfig(cwd)
-  if (!config) fail(`No ${CONFIG_FILE}. Run ${c.cyan("npx tideui init")} first.`)
+  if (!config) fail(`No ${CONFIG_FILE}. Run ${c.cyan("npx @multicomma/arkcn init")} first.`)
   const index = await registry.index()
   const wanted = flags.all ? index.items.filter((i) => i.type === "ui").map((i) => i.name) : names
   if (wanted.length === 0) fail("Nothing to add. Pass component names or --all.")
   const { items, missing } = await registry.closure(wanted)
-  if (missing.length) fail(`Unknown: ${missing.join(", ")}. See ${c.cyan("npx tideui list")}.`)
+  if (missing.length) fail(`Unknown: ${missing.join(", ")}. See ${c.cyan("npx @multicomma/arkcn list")}.`)
 
   let overwrite = !!flags.overwrite
   const conflicts = findConflicts(cwd, config, items)
