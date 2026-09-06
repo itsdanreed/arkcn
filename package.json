@@ -26,8 +26,8 @@
   "scripts": {
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p docs/tsconfig.json --noEmit",
     "lint": "oxlint --deny-warnings && node scripts/check-quotes.mjs && node scripts/check-ark-parts.mjs && npm run -s format:check",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\" \"docs/content/*.md\" \"{scripts,cli,bin,mcp}/**/*.mjs\" \"*.{json,md}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\" \"docs/content/*.md\" \"{scripts,cli,bin,mcp}/**/*.mjs\" \"*.{json,md}\"",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\" \"docs/content/**/*.md\" \"{scripts,cli,bin,mcp}/**/*.mjs\" \"*.{json,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\" \"docs/content/**/*.md\" \"{scripts,cli,bin,mcp}/**/*.mjs\" \"*.{json,md}\"",
     "check": "npm run -s build:registry && npm run -s typecheck && npm run -s lint && npm run -s test:cli",
     "build:registry": "node scripts/build-registry.mjs",
     "test:cli": "node scripts/test-cli.mjs",

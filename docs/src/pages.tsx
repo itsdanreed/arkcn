@@ -13,6 +13,11 @@ import { cn } from "@/lib/utils"
 import { descriptions } from "./descriptions"
 
 const guideModules = import.meta.glob<string>("../content/*.md", { query: "?raw", import: "default", eager: true })
+const componentGuides = import.meta.glob<string>("../content/components/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+})
 const exampleModules = import.meta.glob<{ default: React.ComponentType }>("./examples/*.tsx")
 const exampleSources = import.meta.glob<string>("./examples/*.tsx", { query: "?raw", import: "default" })
 
@@ -274,11 +279,15 @@ export function ComponentPage({ name }: { name: string }) {
           </>
         )}
 
-        {item.docs && (
-          <>
-            <h2 id="reference">Reference</h2>
-            <Markdown source={item.docs.replace(/^## .*\n/, "")} />
-          </>
+        {componentGuides[`../content/components/${name}.md`] ? (
+          <Markdown source={componentGuides[`../content/components/${name}.md`]} />
+        ) : (
+          item.docs && (
+            <>
+              <h2 id="reference">Reference</h2>
+              <Markdown source={item.docs.replace(/^## .*\n/, "")} />
+            </>
+          )
         )}
 
         {item.parts && item.parts.some((p) => p.props.length > 0) && (

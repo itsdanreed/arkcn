@@ -54,7 +54,9 @@ shadcn-style: header with search (⌘K) and theme toggle, sidebar of guides (`do
 listed in `docs/src/nav.ts`) and components grouped by `groups` in `docs/src/registry.ts`, an
 "On this page" outline, and generated component pages (`docs/src/pages.tsx`): live preview from
 `docs/src/examples/<name>.tsx` (Preview/Code tabs, source via `?raw`), install command, usage
-snippet, anatomy from the registry `exports`, the CLAUDE.md section as "Reference", and the source.
+snippet, anatomy from the registry `exports`, a hand-written guide from `docs/content/components/<name>.md` when one exists (reader-facing
+prose: how it works, parts, keyboard, notes; 26 so far, one per data primitive and shell part),
+otherwise the CLAUDE.md section as "Reference", and the source.
 Page descriptions come from `docs/src/descriptions.ts` (fall back to the registry). Each
 component page has a **Props** section: `scripts/props.mjs` runs the TypeScript compiler over
 every exported part and records name, type, required, default (JSDoc `@default` or the wrapper's
