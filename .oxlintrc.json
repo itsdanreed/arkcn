@@ -4,7 +4,7 @@
   "jsPlugins": ["eslint-plugin-better-tailwindcss"],
   "settings": {
     "better-tailwindcss": {
-      "entryPoint": "src/index.css"
+      "entryPoint": "src/styles/index.css"
     }
   },
   "rules": {

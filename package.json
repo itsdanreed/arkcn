@@ -1,24 +1,45 @@
 {
-  "name": "ui-toolkit",
-  "private": true,
-  "version": "0.0.0",
+  "name": "@itsdanreed/ui-toolkit",
+  "version": "0.1.0",
+  "description": "shadcn/ui-style components ported to Ark UI, plus data-heavy primitives (data grid, kanban, gantt, scheduler, node graph, ...). Tailwind v4.",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "oxlint && node scripts/check-slots.mjs && node scripts/check-quotes.mjs && node scripts/check-ark-parts.mjs && npm run -s format:check",
-    "preview": "vite preview",
-    "test": "playwright test",
-    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"tests/**/*.ts\" \"scripts/**/*.mjs\" \"*.{ts,mjs,json}\"",
-    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"tests/**/*.ts\" \"scripts/**/*.mjs\" \"*.{ts,mjs,json}\""
+  "license": "MIT",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "src",
+    "README.md"
+  ],
+  "exports": {
+    "./ui/*": "./src/components/ui/*.tsx",
+    "./lib/*": "./src/lib/*.ts",
+    "./hooks/*": "./src/hooks/*.ts",
+    "./styles.css": "./src/styles/ui-toolkit.css",
+    "./src/*": "./src/*",
+    "./package.json": "./package.json"
   },
-  "dependencies": {
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "oxlint && node scripts/check-quotes.mjs && node scripts/check-ark-parts.mjs && npm run -s format:check",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"scripts/**/*.mjs\" \"*.{json,md}\"",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"scripts/**/*.mjs\" \"*.{json,md}\"",
+    "check": "npm run -s typecheck && npm run -s lint"
+  },
+  "peerDependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
     "@ark-ui/react": "^5.39.1",
+    "tailwindcss": "^4.3.3",
+    "lucide-react": "^1.41.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.6.0",
+    "class-variance-authority": "^0.7.1",
+    "tw-animate-css": "^1.4.0",
+    "@tailwindcss/typography": "^0.5.20",
     "@atlaskit/pragmatic-drag-and-drop": "^3.1.0",
     "@atlaskit/pragmatic-drag-and-drop-auto-scroll": "^3.2.0",
     "@atlaskit/pragmatic-drag-and-drop-hitbox": "^2.2.0",
-    "@fontsource-variable/geist": "^5.3.0",
-    "@tailwindcss/vite": "^4.3.3",
     "@tiptap/extension-highlight": "^3.31.3",
     "@tiptap/extension-image": "^3.31.3",
     "@tiptap/extension-table": "^3.31.3",
@@ -32,35 +53,131 @@
     "@tiptap/pm": "^3.31.3",
     "@tiptap/react": "^3.31.3",
     "@tiptap/starter-kit": "^3.31.3",
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
     "date-fns": "^4.4.0",
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.5.0",
-    "lucide-react": "^1.41.0",
     "next-themes": "^0.4.6",
-    "react": "^19.2.8",
     "react-day-picker": "^10.0.1",
+    "react-resizable-panels": "^4.12.3",
+    "recharts": "^3.8.0",
+    "sonner": "^2.0.8"
+  },
+  "peerDependenciesMeta": {
+    "@atlaskit/pragmatic-drag-and-drop": {
+      "optional": true
+    },
+    "@atlaskit/pragmatic-drag-and-drop-auto-scroll": {
+      "optional": true
+    },
+    "@atlaskit/pragmatic-drag-and-drop-hitbox": {
+      "optional": true
+    },
+    "@tiptap/extension-highlight": {
+      "optional": true
+    },
+    "@tiptap/extension-image": {
+      "optional": true
+    },
+    "@tiptap/extension-table": {
+      "optional": true
+    },
+    "@tiptap/extension-table-cell": {
+      "optional": true
+    },
+    "@tiptap/extension-table-header": {
+      "optional": true
+    },
+    "@tiptap/extension-table-row": {
+      "optional": true
+    },
+    "@tiptap/extension-task-item": {
+      "optional": true
+    },
+    "@tiptap/extension-task-list": {
+      "optional": true
+    },
+    "@tiptap/extension-text-align": {
+      "optional": true
+    },
+    "@tiptap/extensions": {
+      "optional": true
+    },
+    "@tiptap/pm": {
+      "optional": true
+    },
+    "@tiptap/react": {
+      "optional": true
+    },
+    "@tiptap/starter-kit": {
+      "optional": true
+    },
+    "date-fns": {
+      "optional": true
+    },
+    "embla-carousel-react": {
+      "optional": true
+    },
+    "input-otp": {
+      "optional": true
+    },
+    "next-themes": {
+      "optional": true
+    },
+    "react-day-picker": {
+      "optional": true
+    },
+    "react-resizable-panels": {
+      "optional": true
+    },
+    "recharts": {
+      "optional": true
+    },
+    "sonner": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "react": "^19.2.8",
     "react-dom": "^19.2.8",
+    "@ark-ui/react": "^5.39.1",
+    "tailwindcss": "^4.3.3",
+    "lucide-react": "^1.41.0",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^3.6.0",
+    "class-variance-authority": "^0.7.1",
+    "tw-animate-css": "^1.4.0",
+    "@tailwindcss/typography": "^0.5.20",
+    "@atlaskit/pragmatic-drag-and-drop": "^3.1.0",
+    "@atlaskit/pragmatic-drag-and-drop-auto-scroll": "^3.2.0",
+    "@atlaskit/pragmatic-drag-and-drop-hitbox": "^2.2.0",
+    "@tiptap/extension-highlight": "^3.31.3",
+    "@tiptap/extension-image": "^3.31.3",
+    "@tiptap/extension-table": "^3.31.3",
+    "@tiptap/extension-table-cell": "^3.31.3",
+    "@tiptap/extension-table-header": "^3.31.3",
+    "@tiptap/extension-table-row": "^3.31.3",
+    "@tiptap/extension-task-item": "^3.31.3",
+    "@tiptap/extension-task-list": "^3.31.3",
+    "@tiptap/extension-text-align": "^3.31.3",
+    "@tiptap/extensions": "^3.31.3",
+    "@tiptap/pm": "^3.31.3",
+    "@tiptap/react": "^3.31.3",
+    "@tiptap/starter-kit": "^3.31.3",
+    "date-fns": "^4.4.0",
+    "embla-carousel-react": "^8.6.0",
+    "input-otp": "^1.5.0",
+    "next-themes": "^0.4.6",
+    "react-day-picker": "^10.0.1",
     "react-resizable-panels": "^4.12.3",
     "recharts": "^3.8.0",
     "sonner": "^2.0.8",
-    "tailwind-merge": "^3.6.0",
-    "tailwindcss": "^4.3.3",
-    "tw-animate-css": "^1.4.0"
-  },
-  "devDependencies": {
-    "@playwright/test": "^1.63.0",
-    "@tailwindcss/typography": "^0.5.20",
     "@types/node": "^24.13.3",
     "@types/react": "^19.2.18",
     "@types/react-dom": "^19.2.4",
-    "@vitejs/plugin-react": "^6.1.0",
     "eslint-plugin-better-tailwindcss": "^4.7.0",
     "oxlint": "^1.79.0",
     "prettier": "^3.9.6",
     "prettier-plugin-tailwindcss": "^0.8.1",
-    "typescript": "~6.0.2",
-    "vite": "^8.2.2"
+    "typescript": "~6.0.2"
   }
 }

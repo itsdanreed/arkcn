@@ -1,6 +1,9 @@
-@import "tailwindcss";
+/* UI Toolkit styles. Import after "tailwindcss" in your stylesheet:
+   @import "tailwindcss";
+   @import "@itsdanreed/ui-toolkit/styles.css";
+   @source "../node_modules/@itsdanreed/ui-toolkit/src";
+*/
 @import "tw-animate-css";
-@import "@fontsource-variable/geist";
 @plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:is(.dark *));

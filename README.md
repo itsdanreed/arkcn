@@ -1,32 +1,36 @@
-# React + TypeScript + Vite
+# UI Toolkit
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+shadcn/ui-style React components ported to [Ark UI](https://ark-ui.com), plus data-heavy primitives:
+data grid, data table engine, kanban, gantt, scheduler, node graph, query builder, rich text editor
+(tiptap), tree select, cascader, transfer list, virtual list, hotkeys, and more. Tailwind v4.
 
-Currently, two official plugins are available:
+Every part is exported on its own, carries a `data-slot`, and is styled through Ark's data attributes.
+Triggers are polymorphic via `asChild`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Use
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```css
+@import "tailwindcss";
+@import "@itsdanreed/ui-toolkit/styles.css";
+@source "../node_modules/@itsdanreed/ui-toolkit/src";
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+Components import each other through the `@/` alias (`@/components/ui/button`, `@/lib/utils`), so point
+that alias at the package source, or copy the files you need into your own `src/components/ui`:
+
+```json
+{ "paths": { "@/components/ui/*": ["./node_modules/@itsdanreed/ui-toolkit/src/components/ui/*"], "@/lib/*": ["./node_modules/@itsdanreed/ui-toolkit/src/lib/*"], "@/hooks/*": ["./node_modules/@itsdanreed/ui-toolkit/src/hooks/*"], "@/*": ["./src/*"] } }
+```
+
+Heavy dependencies (tiptap, pragmatic drag and drop, recharts, embla, date-fns, react-day-picker,
+input-otp, react-resizable-panels, sonner, next-themes) are optional peers: install the ones the
+components you use need.
+
+The demo application lives in the `ui-toolkit-demo` repository.
+
+## Develop
+
+```bash
+npm install
+npm run check   # typecheck + lint (oxlint with Tailwind rules, quotes, Ark part coverage, Prettier)
+```

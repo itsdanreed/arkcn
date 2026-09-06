@@ -1,8 +1,17 @@
-# UI Toolkit — shadcn/ui ported to Ark UI
+# UI Toolkit — shadcn/ui ported to Ark UI (component library)
 
-Vite + React 19 + TypeScript + Tailwind v4. Components live in `src/components/ui/`.
-Baseline is shadcn `radix-nova` style (Radix-backed). Goal: port every Radix-backed
-component to `@ark-ui/react` as its backing primitive, one component at a time.
+This repository is the **library**: `src/components/ui/` (primitives), `src/lib/` (headless engines
+and hooks), `src/hooks/`, and `src/styles/ui-toolkit.css` (tokens, custom variants, keyframes,
+component CSS; consumers import it after `tailwindcss`). It is published as `@itsdanreed/ui-toolkit`
+with source exports (`./ui/*`, `./lib/*`, `./hooks/*`, `./styles.css`); there is no build step.
+The demo application (every `src/demo/...` reference below) lives in the sibling
+`ui-toolkit-demo` repository, which consumes this package through a `file:` link and aliases
+`@/components/ui`, `@/lib`, and `@/hooks` to the package source. `npm run check` here runs the
+type check and lint (oxlint with Tailwind rules, quotes, Ark part coverage, Prettier); browser
+tests live in the demo repo, so after changing a primitive run the demo's `npm test` too.
+
+React 19 + TypeScript + Tailwind v4. Baseline is shadcn `radix-nova` style (Radix-backed). Goal: port
+every Radix-backed component to `@ark-ui/react` as its backing primitive, one component at a time.
 
 ## Porting rules
 - **Feature parity** with the shadcn original: same exported names, same props surface
@@ -134,38 +143,6 @@ Messages render newest-first inside a reversed column so the stream stays pinned
 bottom. `src/demo/chat/` is the reference implementation (chats page from shadcn-admin).
 `src/app.tsx` mounts the chat demo at the `/inbox` hash route inside the app shell.
 
-## Apps
-`src/demo/apps/apps-view.tsx` (demo-only, not a toolkit primitive) is a compositional "app integrations" view
-(shadcn-admin apps page). `Apps` owns only the query state, each controllable
-(`search`/`filter`/`sort` + `default*` + `on*Change`); items and filtering are the
-consumer's (`applyAppsQuery` is an optional helper). Parts: `AppsHeader/Title/Description`,
-`AppsToolbar/ToolbarGroup`, `AppsSearch`, `AppsFilter` (Select over `options`),
-`AppsSort` (icon-trigger Select, asc/desc by default), `AppsSeparator`, `AppsGrid`
-(scrolls inside a fixed main with `scroll-fade-b`), `AppsEmpty`, and
-`AppCard/Header/Logo/Action/Body/Title/Description` (`connected` drives the
-highlighted action and a `data-connected` attribute). `src/demo/apps/` is the reference
-(brand icons copied from shadcn-admin) and `src/app.tsx` mounts it at `/integrations` with
-`AppShellMain fixed`.
-
-## Settings
-`src/demo/settings/settings-layout.tsx` (demo-only, not a toolkit primitive) is a compositional, router-agnostic settings layout
-(shadcn-admin settings pages). `Settings` owns only the active section id
-(`value`/`onValueChange`, usually the href). Parts: `SettingsHeader/Title/Description`,
-`SettingsSeparator`, `SettingsBody`, `SettingsNav` with `SettingsNavSelect` (Select over
-`options`, shown below `md`) and `SettingsNavList` (horizontal scroller that stacks
-vertically at `lg`) + `SettingsNavLink` (`value`, `asChild` anchor, sets active) +
-`SettingsNavIcon`, `SettingsContent`, and `SettingsSection/Header/Title/Description/
-Separator/Body` (scrolling, `scroll-fade-b`) + `SettingsSectionContent` (`lg:max-w-xl`).
-Forms are the consumer's: `src/demo/settings/` rebuilds the five reference forms
-(profile, account, appearance, notifications, display) on `Field*` parts with a tiny
-local `useForm` helper (no react-hook-form/zod dependency) and `showSubmittedData`
-(sonner). `src/app.tsx` mounts it for every `/settings*` hash route with `AppShellMain fixed`.
-`SelectTrigger` has `variant="unstyled"` (layout only, no chrome) for hosts that draw their own
-frame, e.g. a grid cell. Never render a native `<select>`.
-Gotcha: never pass `id` to an Ark part (e.g. `ComboboxInput`, `SelectTrigger`); it breaks
-Ark's internal DOM lookups. Use the root's `ids` prop (`ids={{ input, trigger, hiddenInput }}`)
-when a label needs an `htmlFor` target.
-
 ## Kanban
 `src/components/ui/kanban.tsx` is a compositional, data-agnostic board on
 `@atlaskit/pragmatic-drag-and-drop` (+ `-hitbox` closest-edge/reorder index, `-auto-scroll`).
@@ -191,43 +168,6 @@ picks up (`data-grabbed`, `aria-pressed`), arrows move within/between columns vi
 moved item, and a visually hidden live region announces each step. Native drag previews are
 crisp clones via `cloneDragPreview` in `src/lib/drag-preview.ts`.
 `src/demo/kanban/` is the reference (tasks data, route `/projects/board`, `AppShellMain fixed`).
-
-## Mock pages (demo only, no new primitives)
-- `src/demo/import/`: a reusable import-mapping system with dedicated, linkable routes:
-  `/import` (upload flow), `/import/mappings` (library), `/import/mappings/new` and
-  `/import/mappings/:id` (editor page with back link), `/import/history` (table), and
-  `/import/history/:id` (import details page with back link). The master view only hosts the
-  three lists; details and the editor are their own pages so notifications can deep-link
-  (see `src/demo/shell/notifications.tsx`). The sidebar keeps `/import` active for nested
-  paths via the prefix rule in `src/demo/shell/router.tsx`.
-  A **mapping** (`SavedMapping`, in-memory store with `useMappings`/`saveMapping`) is built
-  once from a sample CSV in an editor (sample file → structure → columns → save) and remembers
-  the file's header signature plus the structure: `Instance`s assembled from `objectDefs`
-  (identity field, allowed parents; the same object can appear twice, e.g. a "Secondary
-  contact" detected by `detectExtraCopies`; rows sharing an identity collapse into one record).
-  The **Import** tab uploads a file, `matchMappings` scores saved mappings by matched headers,
-  the best (≥60%) is applied with a read-only `StructureSummary`, missing/extra columns and
-  estimated counts, and required gaps block the import; otherwise it offers to create a mapping
-  from that file. Import is a three-step flow (select file with preview → mapping → status with
-  a simulated progress run and created/updated results). The **History** tab lists every
-  import with file, mapping, actor, time, rows, result, status, and a 24h Undo (Popconfirm);
-  records live in the same in-memory store (`useImportHistory`, `addImport`, `updateImport`).
-  Clicking a history row (or "View results" after a run) opens the **import details page**
-  (`/import/history/:id`): summary stats, a per-object created/updated table, **Conflicts**
-  (rows whose identity matched an existing record but differ; each field shows Existing vs
-  Imported as radio-style value options, per-conflict "Keep all"/"Use imported", global
-  "Use imported for all", and "Apply" commits fully decided conflicts via
-  `chooseConflict`/`applyResolutions`; existing values stay until applied), and **Skipped**
-  rows with reasons. Mock conflicts come from `mockConflicts` and attach when a run completes.
-  No live tree preview (the user rejected it). Ark gotcha hit here: `DropdownMenuLabel` must
-  be inside `DropdownMenuGroup` or opening the menu throws.
-- `src/demo/tickets/` (`/tickets`, fixed main): queue list (Inbox/Mine/Unassigned/Closed
-  segment views, search, status dot, unread weight, escalated-priority badge only) + one
-  conversation at a time (status select in the header, customer/agent/internal-note thread,
-  Reply vs Internal note composer with Send and Send & solve, ⌘↵), properties in a right
-  aside at `xl` or a Sheet below, list-vs-detail on mobile, and a New ticket dialog.
-Both are designed to minimise cognitive load: one decision per row, defaults filled in, only
-exceptions surfaced.
 
 ## Shared hooks
 `src/lib/history.ts` exports `useHistory(initial, limit)` → `{ present, set(next, { commit }),
@@ -458,18 +398,6 @@ a live region announces. Event parts spread `props` first so an `asChild` wrappe
 (`/projects/calendar`): categories with colors, all-day strip, overlapping meetings in lanes, event popover
 (title, category, delete), new-event dialog from drag-to-create or the toolbar, undo/redo.
 
-## Dashboard widgets (rows and columns on Canvas)
-There is no separate widget-grid primitive or widgets page: the dashboard's Overview tab is a
-customizable widget board using the same rows-and-columns model as the form builder, on the
-`Canvas` primitive (drop above/below a widget for a new row, beside it for a column,
-`CanvasResizeHandle` between siblings; a vertical keyboard move on a node with siblings pulls it
-out into its own row). The pure layout helpers live in `src/lib/row-layout.ts`
-(`applyRowDrop(rows, details, { create, rowId })`, `resizeRowItems`, `removeRowItem`; a layout
-is `{ id, items: { id, width }[] }[]`) and are shared by the form builder model and
-`src/demo/dashboard/widgets.tsx` (`DashboardWidgets`): a widget catalog as the palette,
-`CanvasNode` cards with a header (handle, title, remove), a Customize switch (`Canvas` palette
-and handles only when on), and Save / Reset persisted in `localStorage` (demo only).
-
 ## Tree select and cascader
 Both live on Ark's `TreeCollection` (`createTreeCollection`, re-exported) and a Popover, and own
 only the open state, the search query, and the value (`value`/`defaultValue`/`onValueChange`,
@@ -561,31 +489,6 @@ heights and go-to-line, and a 10k-contact listbox with search).
   `ShellHotkeys`; the user menu has a "Keyboard shortcuts" item. Pages register their own with
   `useHotkey` and a `group`.
 
-## Demo app structure (SaaS layout)
-The demo is organised as a product, not a component list. Nav groups in `src/demo/shell/nav-data.tsx`
-and routes in `src/app.tsx`: **Home** Dashboard `/`; **Work** Projects (collapsible: Tasks
-`/projects/tasks`, Board `/projects/board`, Timeline `/projects/timeline`, Calendar
-`/projects/calendar`), Documents `/documents` (rich text), Forms `/forms` (form builder),
-Automations `/automations` (node graph); **Customers** Contacts `/contacts` (data grid), Segments
-`/segments` (query builder), Inbox `/inbox` (chat), Tickets `/tickets`, Activity `/activity`;
-**Data** Import `/import…`, Integrations `/integrations` (apps), Audit log `/audit-log` (virtual
-list); **Organization** Members `/members` (users table), Roles & access `/access` (tree select,
-cascader, transfer list), Settings `/settings…`; **Other** Help Center, auth and error pages.
-`src/demo/auth/` holds the sign in, sign up, and forgot password pages (`/sign-in`, `/sign-up`,
-`/forgot-password`), rendered outside the shell in `AuthLayout` (centered card, brand mark, terms
-footer) on `Field*` + `Input` + `PasswordInput` with `useForm`; sign in and sign up navigate home
-on success, forgot password flips to a "check your inbox" state, and the user menu's Sign out goes
-to `/sign-in`. `src/demo/errors/` holds the full-page error states on one `ErrorPage` composition (code, title,
-description, optional icon and extra actions, Go back + Back to home): 401 `/errors/unauthorized`
-(Sign in), 403 `/errors/forbidden` (Request access), 404 `/errors/not-found`, 500
-`/errors/internal-server-error` (Try again), 503 `/errors/maintenance-error` (View status). Any
-path outside `knownExact`/`knownPrefixes` in `src/app.tsx` renders the 404 with the path; add new
-routes there. `legacyRoutes` in `src/app.tsx` redirects the old component-named paths (`/kanban`, `/pickers`,
-…) so bookmarks and docs keep working; `fixedRoutes` lists the viewport-height pages. Page
-headings use the product names. The command menu is generated from the nav, notifications
-deep-link into `/inbox`, `/members`, `/projects/tasks`, and `/import/...`, and `g` + letter
-hotkeys go to dashboard, tasks, board, calendar, import, settings.
-
 ## App shell
 `src/components/ui/app-shell.tsx` is a compositional, router-agnostic shell built on
 `sidebar.tsx` (shadcn-admin layout): `AppShell` (context: sidebar variant/collapsible,
@@ -604,13 +507,6 @@ and `AppShellHeaderActions` uses the header's `gap-3 sm:gap-4` to match shadcn-a
 `src/demo/shell/` is the reference (nav data, hash router, team/user menus, command menu)
 and `src/app.tsx` wraps every demo route in it. `AppShellDemo` takes `headerStart` for
 page-specific header content (the dashboard passes its `AppShellTopNav` + `AppShellTopNavMenu`).
-
-## Dashboard
-`src/demo/dashboard/` is the shadcn-admin dashboard at `/`: top nav in the header, a
-`SegmentGroup` switcher (Overview / Analytics, two disabled) driving controlled `Tabs` content; Overview is the `DashboardWidgets` board (see below), Analytics uses `StatCard`s on `Card`, an Overview bar chart and an
-Analytics area chart on `ChartContainer` (`var(--color-*)` from `ChartConfig`, `ChartTooltip`,
-`ChartLegend`), recent sales list on `Avatar`, and simple CSS bar lists. Data is seeded
-(deterministic) in `data.ts`. No new primitives were needed.
 
 ## Scope of `src/components/ui`
 Only reusable primitives live there. Page-shaped compositions (settings layout, apps view)
