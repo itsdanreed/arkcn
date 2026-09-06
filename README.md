@@ -9,18 +9,16 @@ Triggers are polymorphic via `asChild`.
 
 ## Use
 
-```css
-@import "tailwindcss";
-@import "@itsdanreed/ui-toolkit/styles.css";
-@source "../node_modules/@itsdanreed/ui-toolkit/src";
-```
+The components are meant to be **copied into your project**, shadcn style: each file lands in
+`src/components/ui`, shared helpers in `src/lib` and `src/hooks`, and the styles are merged into
+your stylesheet after `@import "tailwindcss"`. Tailwind then scans them like any other project file.
+A CLI (`init` / `add`) that does this is in progress; until then copy the files by hand. Every
+component imports its siblings through the `@/` alias (`@/components/ui/button`, `@/lib/utils`).
 
-Components import each other through the `@/` alias (`@/components/ui/button`, `@/lib/utils`), so point
-that alias at the package source, or copy the files you need into your own `src/components/ui`:
-
-```json
-{ "paths": { "@/components/ui/*": ["./node_modules/@itsdanreed/ui-toolkit/src/components/ui/*"], "@/lib/*": ["./node_modules/@itsdanreed/ui-toolkit/src/lib/*"], "@/hooks/*": ["./node_modules/@itsdanreed/ui-toolkit/src/hooks/*"], "@/*": ["./src/*"] } }
-```
+The package can also be consumed directly from `node_modules` (this is what the demo app does):
+import `@itsdanreed/ui-toolkit/styles.css`, alias `@/components/ui`, `@/lib`, and `@/hooks` to the
+package source, and add `@source "../node_modules/@itsdanreed/ui-toolkit/src"` so Tailwind scans it,
+since it does not scan `node_modules` on its own.
 
 Heavy dependencies (tiptap, pragmatic drag and drop, recharts, embla, date-fns, react-day-picker,
 input-otp, react-resizable-panels, sonner, next-themes) are optional peers: install the ones the

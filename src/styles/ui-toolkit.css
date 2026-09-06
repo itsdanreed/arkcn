@@ -1,8 +1,6 @@
-/* UI Toolkit styles. Import after "tailwindcss" in your stylesheet:
-   @import "tailwindcss";
-   @import "@itsdanreed/ui-toolkit/styles.css";
-   @source "../node_modules/@itsdanreed/ui-toolkit/src";
-*/
+/* UI Toolkit styles: tokens, custom variants, utilities, keyframes, and component CSS.
+   The CLI merges this into your stylesheet after "tailwindcss"; if you install the package
+   directly instead, import it: @import "@itsdanreed/ui-toolkit/styles.css"; */
 @import "tw-animate-css";
 @plugin "@tailwindcss/typography";
 
