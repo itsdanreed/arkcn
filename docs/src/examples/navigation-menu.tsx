@@ -5,7 +5,6 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  NavigationMenuViewport,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
 
@@ -40,7 +39,6 @@ export default function NavigationMenuExample() {
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>
-      <NavigationMenuViewport />
     </NavigationMenu>
   )
 }

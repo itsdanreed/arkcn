@@ -1,26 +1,13 @@
-import {
-  Slider,
-  SliderControl,
-  SliderLabel,
-  SliderRange,
-  SliderThumb,
-  SliderTrack,
-  SliderValueText,
-} from "@/components/ui/slider"
+import { Slider, SliderLabel, SliderValueText } from "@/components/ui/slider"
 
+// Slider renders the track, range, and thumbs itself; children go above them.
 export default function SliderExample() {
   return (
     <Slider defaultValue={[40]} className="w-72">
-      <div className="mb-2 flex justify-between text-sm">
+      <div className="flex justify-between text-sm">
         <SliderLabel>Volume</SliderLabel>
         <SliderValueText />
       </div>
-      <SliderControl>
-        <SliderTrack>
-          <SliderRange />
-        </SliderTrack>
-        <SliderThumb index={0} />
-      </SliderControl>
     </Slider>
   )
 }
