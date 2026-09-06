@@ -5,8 +5,8 @@ import { tmpdir } from "node:os"
 import { join } from "node:path"
 
 const root = new URL("..", import.meta.url).pathname
-const bin = join(root, "bin/ui-toolkit.mjs")
-const cwd = mkdtempSync(join(tmpdir(), "ui-toolkit-cli-"))
+const bin = join(root, "bin/tideui.mjs")
+const cwd = mkdtempSync(join(tmpdir(), "tideui-cli-"))
 const run = (...args) =>
   execFileSync("node", [bin, ...args, "--cwd", cwd], { encoding: "utf8", env: { ...process.env, NO_COLOR: "1" } })
 const assert = (cond, msg) => {
@@ -25,7 +25,7 @@ try {
   writeFileSync(join(cwd, "vite.config.ts"), "export default {}\n")
 
   const initOut = run("init", "--yes", "--no-install")
-  assert(existsSync(join(cwd, "ui-toolkit.json")), "init writes ui-toolkit.json")
+  assert(existsSync(join(cwd, "tide.json")), "init writes tide.json")
   assert(existsSync(join(cwd, "src/lib/utils.ts")), "init writes lib/utils.ts")
   const css = readFileSync(join(cwd, "src/index.css"), "utf8")
   assert(css.startsWith('@import "tailwindcss";'), "init creates the stylesheet with the tailwind import")
@@ -50,8 +50,8 @@ try {
     assert(existsSync(join(cwd, f)), `add writes ${f}`)
   assert(/@tiptap\/react/.test(addOut), "add lists the editor's packages")
   const css2 = readFileSync(join(cwd, "src/index.css"), "utf8")
-  assert(css2.includes("/* ui-toolkit:component rich-text-editor */"), "add merges the component css fragment")
-  assert(css2.split("ui-toolkit:base */").length === 2, "base block appears once")
+  assert(css2.includes("/* tide:component rich-text-editor */"), "add merges the component css fragment")
+  assert(css2.split("tide:base */").length === 2, "base block appears once")
 
   // Every "@/..." import of a written file resolves to a written file.
   const written = execFileSync("find", [join(cwd, "src"), "-type", "f"], { encoding: "utf8" })
@@ -78,7 +78,7 @@ try {
   assert(/same/.test(run("diff", "data-grid")), "add --overwrite restores the registry version")
 
   // Custom alias and directories are honoured.
-  const cwd2 = mkdtempSync(join(tmpdir(), "ui-toolkit-cli2-"))
+  const cwd2 = mkdtempSync(join(tmpdir(), "tideui-cli2-"))
   writeFileSync(join(cwd2, "package.json"), JSON.stringify({ name: "app2", dependencies: { tailwindcss: "^4.0.0" } }))
   execFileSync("node", [bin, "init", "--yes", "--no-install", "--alias", "~", "--dir", "app", "--cwd", cwd2], {
     encoding: "utf8",

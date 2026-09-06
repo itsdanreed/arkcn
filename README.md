@@ -1,4 +1,4 @@
-# UI Toolkit
+# Tide
 
 shadcn/ui-style React components ported to [Ark UI](https://ark-ui.com), plus data-heavy primitives:
 data grid, data table engine, kanban, gantt, scheduler, node graph, query builder, rich text editor
@@ -10,15 +10,15 @@ Triggers are polymorphic via `asChild`.
 ## Install components
 
 ```bash
-npx @itsdanreed/ui-toolkit init            # ui-toolkit.json, src/lib/utils.ts, base styles, "@/" alias check, base deps
-npx @itsdanreed/ui-toolkit add button card dialog data-grid
-npx @itsdanreed/ui-toolkit list            # everything in the registry (--type all, `list data-grid --docs`)
-npx @itsdanreed/ui-toolkit diff            # which installed files you changed locally
+npx tideui init            # tide.json, src/lib/utils.ts, base styles, "@/" alias check, base deps
+npx tideui add button card dialog data-grid
+npx tideui list            # everything in the registry (--type all, `list data-grid --docs`)
+npx tideui diff            # which installed files you changed locally
 ```
 
-`init` writes `ui-toolkit.json` (alias, `srcDir`, component/lib/hooks dirs, stylesheet), merges the
+`init` writes `tide.json` (alias, `srcDir`, component/lib/hooks dirs, stylesheet), merges the
 toolkit's tokens, custom variants, utilities, and keyframes into your stylesheet after
-`@import "tailwindcss"` (between `/* ui-toolkit:base */` markers, so re-running refreshes them),
+`@import "tailwindcss"` (between `/* tide:base */` markers, so re-running refreshes them),
 makes sure the `@/*` path alias exists, and installs the base packages (Ark UI, lucide, clsx,
 tailwind-merge, cva, tw-animate-css, the typography plugin). Tailwind v4 is required.
 
@@ -38,8 +38,8 @@ The same folder is committed here, so you can also read it from a URL, for examp
 components newer than your installed CLI:
 
 ```bash
-npx @itsdanreed/ui-toolkit add kanban --registry https://raw.githubusercontent.com/itsdanreed/ui-toolkit/main/registry
-# or export UI_TOOLKIT_REGISTRY=...
+npx tideui add kanban --registry https://raw.githubusercontent.com/itsdanreed/tide/main/registry
+# or export TIDE_REGISTRY=...
 ```
 
 Each item is `registry/items/<name>.json`: files with content, `registryDependencies`,
@@ -52,7 +52,7 @@ The package also ships an MCP server so agents (Claude Code, Cursor, and others)
 registry, read documentation and source, and copy components into a project:
 
 ```json
-{ "mcpServers": { "ui-toolkit": { "command": "npx", "args": ["-y", "-p", "@itsdanreed/ui-toolkit", "ui-toolkit-mcp"] } } }
+{ "mcpServers": { "tideui": { "command": "npx", "args": ["-y", "-p", "tideui", "tideui-mcp"] } } }
 ```
 
 Tools: `list_components`, `search_components`, `get_component` (source, deps, css, docs),
@@ -61,13 +61,13 @@ returns the packages to install). Pass `--registry=<url>` to read a hosted regis
 
 ## Consume from node_modules instead
 
-The demo app imports the package source directly: import `@itsdanreed/ui-toolkit/styles.css`,
-alias `@/components/ui`, `@/lib`, and `@/hooks` to `node_modules/@itsdanreed/ui-toolkit/src/...`,
-and add `@source "../node_modules/@itsdanreed/ui-toolkit/src"` because Tailwind does not scan
+The demo app imports the package source directly: import `tideui/styles.css`,
+alias `@/components/ui`, `@/lib`, and `@/hooks` to `node_modules/tideui/src/...`,
+and add `@source "../node_modules/tideui/src"` because Tailwind does not scan
 `node_modules`. Heavy dependencies (tiptap, pragmatic drag and drop, recharts, embla, date-fns,
 react-day-picker, input-otp, react-resizable-panels, sonner, next-themes) are optional peers.
 
-The demo application lives in the `ui-toolkit-demo` repository.
+The demo application lives in the `tide-demo` repository.
 
 ## Develop
 

@@ -1,7 +1,7 @@
 {
-  "name": "@itsdanreed/ui-toolkit",
+  "name": "tideui",
   "version": "0.1.0",
-  "description": "shadcn/ui-style components ported to Ark UI, plus data-heavy primitives (data grid, kanban, gantt, scheduler, node graph, ...). Tailwind v4.",
+  "description": "Tide: shadcn/ui-style components ported to Ark UI, plus data-heavy primitives (data grid, kanban, gantt, scheduler, node graph, ...). Tailwind v4. Ships a copy-into-your-project CLI and an MCP server.",
   "type": "module",
   "license": "MIT",
   "sideEffects": [
@@ -19,7 +19,7 @@
     "./ui/*": "./src/components/ui/*.tsx",
     "./lib/*": "./src/lib/*.ts",
     "./hooks/*": "./src/hooks/*.ts",
-    "./styles.css": "./src/styles/ui-toolkit.css",
+    "./styles.css": "./src/styles/tide.css",
     "./src/*": "./src/*",
     "./package.json": "./package.json"
   },
@@ -188,11 +188,16 @@
     "typescript": "~6.0.2"
   },
   "bin": {
-    "ui-toolkit": "bin/ui-toolkit.mjs",
-    "ui-toolkit-mcp": "bin/ui-toolkit-mcp.mjs"
+    "tideui": "bin/tideui.mjs",
+    "tideui-mcp": "bin/tideui-mcp.mjs"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.30.0",
     "zod": "^4.5.4"
+  },
+  "homepage": "https://tideui.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/itsdanreed/tide.git"
   }
 }

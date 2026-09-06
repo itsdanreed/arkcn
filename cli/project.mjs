@@ -2,7 +2,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs"
 import { dirname, join, relative } from "node:path"
 import { spawnSync } from "node:child_process"
 
-export const CONFIG_FILE = "ui-toolkit.json"
+export const CONFIG_FILE = "tide.json"
 
 export const defaultConfig = {
   alias: "@",
@@ -74,10 +74,10 @@ export function readProjectFile(cwd, rel) {
   return existsSync(file) ? readFileSync(file, "utf8") : null
 }
 
-const BASE_START = "/* ui-toolkit:base */"
-const BASE_END = "/* ui-toolkit:base:end */"
-const fragmentStart = (name) => `/* ui-toolkit:component ${name} */`
-const fragmentEnd = (name) => `/* ui-toolkit:component ${name}:end */`
+const BASE_START = "/* tide:base */"
+const BASE_END = "/* tide:base:end */"
+const fragmentStart = (name) => `/* tide:component ${name} */`
+const fragmentEnd = (name) => `/* tide:component ${name}:end */`
 
 function replaceBlock(css, start, end, block) {
   const i = css.indexOf(start)
