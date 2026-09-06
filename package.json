@@ -34,7 +34,8 @@
     "prepublishOnly": "npm run -s check",
     "docs:dev": "vite --config docs/vite.config.ts --port 5180",
     "docs:build": "npm run -s build:registry && vite build --config docs/vite.config.ts && node scripts/docs-routes.mjs",
-    "docs:preview": "vite preview --config docs/vite.config.ts --port 5181"
+    "docs:preview": "vite preview --config docs/vite.config.ts --port 5181",
+    "version": "npm run -s docs:build"
   },
   "peerDependencies": {
     "@ark-ui/react": "^5.39.1",
