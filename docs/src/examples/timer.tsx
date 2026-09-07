@@ -3,7 +3,7 @@ import { Timer, TimerActionTrigger, TimerArea, TimerControl, TimerItem, TimerSep
 
 export default function TimerExample() {
   return (
-    <Timer targetMs={5 * 60 * 1000} countdown>
+    <Timer startMs={5 * 60 * 1000} countdown>
       <TimerArea>
         <TimerItem type="minutes" />
         <TimerSeparator>:</TimerSeparator>
@@ -17,6 +17,9 @@ export default function TimerExample() {
           <Button size="sm" variant="outline">
             Pause
           </Button>
+        </TimerActionTrigger>
+        <TimerActionTrigger action="resume" asChild>
+          <Button size="sm">Resume</Button>
         </TimerActionTrigger>
         <TimerActionTrigger action="reset" asChild>
           <Button size="sm" variant="ghost">

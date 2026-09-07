@@ -10,6 +10,7 @@ import {
   CommentComposerHint,
   CommentComposerInput,
   CommentComposerMentionList,
+  CommentComposerReplyingTo,
   CommentComposerSubmitTrigger,
   CommentContent,
   CommentHeader,
@@ -93,6 +94,7 @@ export default function CommentThreadExample() {
         onCancel={() => setReplyTo(null)}
         className="mt-2"
       >
+        <CommentComposerReplyingTo />
         <CommentComposerInput placeholder="Write a comment… type @ to mention" />
         <CommentComposerMentionList />
         <CommentComposerFooter>

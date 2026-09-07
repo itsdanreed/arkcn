@@ -2,7 +2,7 @@ import { JsonTreeView, JsonTreeViewTree } from "@/components/ui/json-tree-view"
 
 const data = {
   name: "arkcn",
-  version: "0.1.3",
+  version: "0.1.4",
   private: false,
   peers: ["react", "@ark-ui/react", "tailwindcss"],
   registry: { items: 113, css: 1 },

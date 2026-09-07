@@ -80,7 +80,7 @@ export default function QueryBuilderExample() {
   const [query, setQuery] = React.useState<QueryGroup>(() =>
     createGroup("all", [
       createRule(fields, undefined, { field: "plan", operator: "is", value: "pro" }),
-      createRule(fields, undefined, { field: "seats", operator: "gt", value: 5 }),
+      createRule(fields, undefined, { field: "seats", operator: "greaterThan", value: 5 }),
     ])
   )
   return (

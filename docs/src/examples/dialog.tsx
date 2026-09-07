@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import {
   Dialog,
   DialogContent,
+  DialogClose,
   DialogDescription,
   DialogFooter,
   DialogHeader,
@@ -27,7 +28,9 @@ export default function DialogExample() {
           <Input id="dialog-name" defaultValue="Alex Morgan" />
         </div>
         <DialogFooter>
-          <Button>Save changes</Button>
+          <DialogClose asChild>
+            <Button>Save changes</Button>
+          </DialogClose>
         </DialogFooter>
       </DialogContent>
     </Dialog>

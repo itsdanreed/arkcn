@@ -3,6 +3,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import {
   Chat,
   ChatBody,
+  ChatBackTrigger,
   ChatComposer,
   ChatComposerField,
   ChatComposerInput,
@@ -85,6 +86,7 @@ export default function ChatExample() {
       {thread && (
         <ChatPanel>
           <ChatHeader>
+            <ChatBackTrigger />
             <ChatHeaderInfo>
               <Avatar>
                 <AvatarFallback>{thread.initials}</AvatarFallback>

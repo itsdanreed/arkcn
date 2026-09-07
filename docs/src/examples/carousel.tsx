@@ -3,20 +3,22 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 
 export default function CarouselExample() {
   return (
-    <Carousel className="w-full max-w-xs">
-      <CarouselContent>
-        {Array.from({ length: 5 }, (_, i) => (
-          <CarouselItem key={i}>
-            <Card>
-              <CardContent className="flex aspect-square items-center justify-center text-3xl font-semibold">
-                {i + 1}
-              </CardContent>
-            </Card>
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious />
-      <CarouselNext />
-    </Carousel>
+    <div className="w-full px-10">
+      <Carousel className="mx-auto w-full max-w-xs">
+        <CarouselContent>
+          {Array.from({ length: 5 }, (_, i) => (
+            <CarouselItem key={i}>
+              <Card>
+                <CardContent className="flex aspect-square items-center justify-center text-3xl font-semibold">
+                  {i + 1}
+                </CardContent>
+              </Card>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+      </Carousel>
+    </div>
   )
 }

@@ -117,20 +117,34 @@ function StepsProgress({ className, ...props }: React.ComponentProps<typeof Step
   )
 }
 
-function StepsPrevTrigger({ className, children, ...props }: React.ComponentProps<typeof StepsPrimitive.PrevTrigger>) {
+function StepsPrevTrigger({
+  className,
+  children,
+  asChild,
+  ...props
+}: React.ComponentProps<typeof StepsPrimitive.PrevTrigger>) {
   return (
     <StepsPrimitive.PrevTrigger data-slot="steps-prev-trigger" className={cn(className)} asChild {...props}>
-      <Button variant="outline" size="sm">
-        {children}
-      </Button>
+      {asChild ? (
+        children
+      ) : (
+        <Button variant="outline" size="sm">
+          {children}
+        </Button>
+      )}
     </StepsPrimitive.PrevTrigger>
   )
 }
 
-function StepsNextTrigger({ className, children, ...props }: React.ComponentProps<typeof StepsPrimitive.NextTrigger>) {
+function StepsNextTrigger({
+  className,
+  children,
+  asChild,
+  ...props
+}: React.ComponentProps<typeof StepsPrimitive.NextTrigger>) {
   return (
     <StepsPrimitive.NextTrigger data-slot="steps-next-trigger" className={cn(className)} asChild {...props}>
-      <Button size="sm">{children}</Button>
+      {asChild ? children : <Button size="sm">{children}</Button>}
     </StepsPrimitive.NextTrigger>
   )
 }

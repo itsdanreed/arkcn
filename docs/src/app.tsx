@@ -13,7 +13,7 @@ function Routes() {
   let page: React.ReactNode
   if (path === "/") page = <Home />
   else if (path === "/docs/components") page = <ComponentsIndex />
-  else if (component) page = <ComponentPage name={component} />
+  else if (component) page = <ComponentPage key={component} name={component} />
   else if (path.startsWith("/docs")) page = <GuidePage path={path} />
   else page = <NotFound />
   return (

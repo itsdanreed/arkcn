@@ -10,6 +10,7 @@ import {
   ColorPickerLabel,
   ColorPickerSwatch,
   ColorPickerSwatchGroup,
+  ColorPickerSwatchTrigger,
   ColorPickerTrigger,
   ColorPickerValueSwatch,
 } from "@/components/ui/color-picker"
@@ -18,7 +19,7 @@ const swatches = ["#ef4444", "#f59e0b", "#22c55e", "#3b82f6", "#8b5cf6"]
 
 export default function ColorPickerExample() {
   return (
-    <ColorPicker defaultValue={parseColor("#3b82f6")} className="w-72">
+    <ColorPicker defaultFormat="hsla" defaultValue={parseColor("#3b82f6").toFormat("hsla")} className="w-72">
       <ColorPickerLabel>Accent</ColorPickerLabel>
       <ColorPickerControl>
         <ColorPickerChannelInput channel="hex" />
@@ -37,7 +38,9 @@ export default function ColorPickerExample() {
         </div>
         <ColorPickerSwatchGroup>
           {swatches.map((c) => (
-            <ColorPickerSwatch key={c} value={c} />
+            <ColorPickerSwatchTrigger key={c} value={parseColor(c).toFormat("hsla")} aria-label={`Select ${c}`}>
+              <ColorPickerSwatch value={c} />
+            </ColorPickerSwatchTrigger>
           ))}
         </ColorPickerSwatchGroup>
       </ColorPickerContent>

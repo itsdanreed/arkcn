@@ -1,3 +1,5 @@
+import * as React from "react"
+import { toast } from "sonner"
 import { DownloadIcon, FileTextIcon, XIcon } from "lucide-react"
 import {
   Attachment,
@@ -11,6 +13,7 @@ import {
 } from "@/components/ui/attachment"
 
 export default function AttachmentExample() {
+  const [uploading, setUploading] = React.useState(true)
   return (
     <AttachmentGroup className="w-80">
       <Attachment>
@@ -22,25 +25,30 @@ export default function AttachmentExample() {
           <AttachmentDescription>2.4 MB</AttachmentDescription>
         </AttachmentContent>
         <AttachmentActions>
-          <AttachmentActionTrigger aria-label="Download">
+          <AttachmentActionTrigger
+            aria-label="Download"
+            onClick={() => toast("Download selected", { description: "Connect this action to your file URL." })}
+          >
             <DownloadIcon />
           </AttachmentActionTrigger>
         </AttachmentActions>
       </Attachment>
-      <Attachment state="uploading">
-        <AttachmentMedia>
-          <FileTextIcon />
-        </AttachmentMedia>
-        <AttachmentContent>
-          <AttachmentTitle>Roadmap.key</AttachmentTitle>
-          <AttachmentDescription>Uploading…</AttachmentDescription>
-        </AttachmentContent>
-        <AttachmentActions>
-          <AttachmentActionTrigger aria-label="Cancel">
-            <XIcon />
-          </AttachmentActionTrigger>
-        </AttachmentActions>
-      </Attachment>
+      {uploading && (
+        <Attachment state="uploading">
+          <AttachmentMedia>
+            <FileTextIcon />
+          </AttachmentMedia>
+          <AttachmentContent>
+            <AttachmentTitle>Roadmap.key</AttachmentTitle>
+            <AttachmentDescription>Uploading…</AttachmentDescription>
+          </AttachmentContent>
+          <AttachmentActions>
+            <AttachmentActionTrigger aria-label="Cancel" onClick={() => setUploading(false)}>
+              <XIcon />
+            </AttachmentActionTrigger>
+          </AttachmentActions>
+        </Attachment>
+      )}
     </AttachmentGroup>
   )
 }

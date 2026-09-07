@@ -101,10 +101,11 @@ function SearchDialog() {
       <Button
         variant="outline"
         size="sm"
-        className="w-full justify-start gap-2 text-muted-foreground sm:w-56"
+        aria-label="Search docs"
+        className="w-8 justify-center gap-2 px-0 text-muted-foreground sm:w-56 sm:justify-start sm:px-2.5"
         onClick={() => setOpen(true)}
       >
-        <SearchIcon /> Search docs…
+        <SearchIcon /> <span className="hidden sm:inline">Search docs…</span>
         <Kbd className="ml-auto hidden sm:inline-flex">⌘K</Kbd>
       </Button>
       <Dialog open={open} onOpenChange={({ open }) => setOpen(open)}>

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import {
   Sheet,
   SheetContent,
+  SheetClose,
   SheetDescription,
   SheetFooter,
   SheetHeader,
@@ -21,7 +22,9 @@ export default function SheetExample() {
           <SheetDescription>Make changes to your profile here.</SheetDescription>
         </SheetHeader>
         <SheetFooter>
-          <Button>Save</Button>
+          <SheetClose asChild>
+            <Button>Save</Button>
+          </SheetClose>
         </SheetFooter>
       </SheetContent>
     </Sheet>

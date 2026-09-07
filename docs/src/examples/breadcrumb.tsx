@@ -1,3 +1,4 @@
+import { Link } from "@docs/router"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,11 +13,15 @@ export default function BreadcrumbExample() {
     <Breadcrumb>
       <BreadcrumbList>
         <BreadcrumbItem>
-          <BreadcrumbLink href="#">Home</BreadcrumbLink>
+          <BreadcrumbLink asChild>
+            <Link to="/">Home</Link>
+          </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>
-          <BreadcrumbLink href="#">Components</BreadcrumbLink>
+          <BreadcrumbLink asChild>
+            <Link to="/docs/components">Components</Link>
+          </BreadcrumbLink>
         </BreadcrumbItem>
         <BreadcrumbSeparator />
         <BreadcrumbItem>

@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import {
   Steps,
   StepsContent,
+  StepsCompletedContent,
   StepsIndicator,
   StepsItem,
   StepsList,
@@ -32,6 +33,7 @@ export default function StepsExample() {
           {label} step content.
         </StepsContent>
       ))}
+      <StepsCompletedContent>All steps complete.</StepsCompletedContent>
       <div className="flex gap-2">
         <StepsPrevTrigger asChild>
           <Button variant="outline" size="sm">

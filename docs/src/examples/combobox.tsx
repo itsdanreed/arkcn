@@ -28,7 +28,7 @@ export default function ComboboxExample() {
     <Combobox
       collection={collection}
       onInputValueChange={({ inputValue }) => filter(inputValue)}
-      onOpenChange={({ open }) => open && filter("")}
+      onOpenChange={({ open }) => !open && filter("")}
       openOnClick
     >
       <ComboboxInput placeholder="Select language" className="w-56" />

@@ -81,7 +81,7 @@ function ColorPickerTrigger({
       {...props}
     >
       {children ?? (
-        <ColorPickerTransparencyGrid className="rounded-md">
+        <ColorPickerTransparencyGrid className="rounded-sm">
           <ColorPickerValueSwatch />
         </ColorPickerTransparencyGrid>
       )}
@@ -96,7 +96,7 @@ function ColorPickerValueSwatch({
   return (
     <ColorPickerPrimitive.ValueSwatch
       data-slot="color-picker-value-swatch"
-      className={cn("size-full rounded-[inherit]", className)}
+      className={cn("size-full rounded-sm", className)}
       {...props}
     />
   )

@@ -1,3 +1,4 @@
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
@@ -10,8 +11,10 @@ export default function CardExample() {
       </CardHeader>
       <CardContent className="text-sm text-muted-foreground">Cards compose a header, content, and footer.</CardContent>
       <CardFooter className="justify-end gap-2">
-        <Button variant="outline">Cancel</Button>
-        <Button>Deploy</Button>
+        <Button variant="outline" onClick={() => toast("Demo project cancelled")}>
+          Cancel
+        </Button>
+        <Button onClick={() => toast("Demo project deployed")}>Deploy</Button>
       </CardFooter>
     </Card>
   )

@@ -46,7 +46,7 @@ function TourSpotlight({ className, ...props }: React.ComponentProps<typeof Tour
 }
 
 function TourPositioner({ className, ...props }: React.ComponentProps<typeof TourPrimitive.Positioner>) {
-  return <TourPrimitive.Positioner data-slot="tour-positioner" className={cn("[--z-index:50]", className)} {...props} />
+  return <TourPrimitive.Positioner data-slot="tour-positioner" className={cn("z-50", className)} {...props} />
 }
 
 function TourContent({ className, ...props }: React.ComponentProps<typeof TourPrimitive.Content>) {

@@ -30,6 +30,7 @@ type Edge = { id: string; source: { nodeId: string; portId: string }; target: { 
 const pinColor = { number: "text-emerald-500", string: "text-fuchsia-500" }
 
 export default function NodeGraphExample() {
+  const nextEdgeId = React.useRef(3)
   const [nodes, setNodes] = React.useState<Node[]>([
     {
       id: "a",
@@ -73,7 +74,10 @@ export default function NodeGraphExample() {
           prev.map((n) => ({ ...n, position: moves.find((m) => m.id === n.id)?.position ?? n.position }))
         )
       }
-      onConnect={({ source, target }) => setEdges((prev) => [...prev, { id: `e${prev.length + 1}`, source, target }])}
+      onConnect={({ source, target }) => {
+        const id = `e${nextEdgeId.current++}`
+        setEdges((prev) => [...prev, { id, source, target }])
+      }}
       onDelete={({ nodes: ids, edges: edgeIds }) => {
         setNodes((prev) => prev.filter((n) => !ids.includes(n.id)))
         setEdges((prev) =>

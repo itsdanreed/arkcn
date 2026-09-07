@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.1.4
+
+- Fix Steps and Timer trigger composition with `asChild`, and keep Tour controls above the backdrop.
+- Give the color picker's value swatch rounded square corners.
+- Repair documentation examples for search, color selection, countdowns, pagination, navigation, and action feedback.
+- Reset previews between component routes and fix mobile header, carousel, and chat layouts.
+- Audit all 111 documentation pages, including interactions with 83 widget examples.
+
 ## 0.1.3
 
 - Registry items carry `parts`: every exported part with its props (type, required, default, description). The MCP `get_component` returns them, and the docs render them.

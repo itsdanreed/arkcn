@@ -1,3 +1,4 @@
+import { toast } from "sonner"
 import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { FloatingToolbar } from "@/components/ui/floating-toolbar"
@@ -11,10 +12,24 @@ export default function FloatingToolbarExample() {
       </Button>
       <FloatingToolbar open={open} onEscape={() => setOpen(false)} className="absolute bottom-4">
         <span className="px-2 text-sm">3 selected</span>
-        <Button size="sm" variant="ghost">
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={() => {
+            toast("3 demo items archived")
+            setOpen(false)
+          }}
+        >
           Archive
         </Button>
-        <Button size="sm" variant="ghost">
+        <Button
+          size="sm"
+          variant="ghost"
+          onClick={() => {
+            toast("3 demo items deleted")
+            setOpen(false)
+          }}
+        >
           Delete
         </Button>
       </FloatingToolbar>

@@ -5,7 +5,8 @@ const items = [
   { value: "installation", label: "Installation", depth: 2 },
   { value: "usage", label: "Usage", depth: 2 },
   { value: "anatomy", label: "Anatomy", depth: 2 },
-  { value: "reference", label: "Reference", depth: 2 },
+  { value: "props", label: "Props", depth: 2 },
+  { value: "source", label: "Source", depth: 2 },
 ]
 
 export default function TocExample() {

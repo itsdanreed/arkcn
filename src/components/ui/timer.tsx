@@ -53,13 +53,18 @@ function TimerControl({ className, ...props }: React.ComponentProps<typeof Timer
 function TimerActionTrigger({
   className,
   children,
+  asChild,
   ...props
 }: React.ComponentProps<typeof TimerPrimitive.ActionTrigger>) {
   return (
     <TimerPrimitive.ActionTrigger data-slot="timer-action-trigger" className={cn(className)} asChild {...props}>
-      <Button variant="outline" size="sm">
-        {children}
-      </Button>
+      {asChild ? (
+        children
+      ) : (
+        <Button variant="outline" size="sm">
+          {children}
+        </Button>
+      )}
     </TimerPrimitive.ActionTrigger>
   )
 }
