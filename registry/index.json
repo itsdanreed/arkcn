@@ -836,6 +836,7 @@
         "@ark-ui/react"
       ],
       "registryDependencies": [
+        "button",
         "lib/utils"
       ],
       "files": [

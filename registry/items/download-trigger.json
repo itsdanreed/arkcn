@@ -67,12 +67,13 @@
     "@ark-ui/react": "^5.39.1"
   },
   "registryDependencies": [
+    "button",
     "lib/utils"
   ],
   "files": [
     {
       "path": "components/ui/download-trigger.tsx",
-      "content": "\"use client\"\nimport * as React from \"react\"\nimport { DownloadTrigger as DownloadTriggerPrimitive, useDownload } from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction DownloadTriggerRoot({ className, ...props }: DownloadTriggerRootProps) {\n  return (\n    <DownloadTriggerPrimitive\n      data-slot=\"download-trigger\"\n      className={cn(\n        \"inline-flex h-8 items-center justify-center rounded-lg border border-input px-2.5 text-sm font-medium outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype DownloadTriggerRootProps = React.ComponentProps<typeof DownloadTriggerPrimitive>\n\nconst DownloadTrigger = {\n  Root: DownloadTriggerRoot,\n}\n\nexport { DownloadTrigger, useDownload, type DownloadTriggerRootProps }\n"
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport { DownloadTrigger as DownloadTriggerPrimitive, useDownload } from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\nimport { buttonVariants } from \"@/components/ui/button\"\n\nfunction DownloadTriggerRoot({ className, ...props }: DownloadTriggerRootProps) {\n  return (\n    <DownloadTriggerPrimitive\n      data-slot=\"download-trigger\"\n      className={cn(!props.asChild && buttonVariants({ variant: \"outline\" }), className)}\n      {...props}\n    />\n  )\n}\n\ntype DownloadTriggerRootProps = React.ComponentProps<typeof DownloadTriggerPrimitive>\n\nconst DownloadTrigger = {\n  Root: DownloadTriggerRoot,\n}\n\nexport { DownloadTrigger, useDownload, type DownloadTriggerRootProps }\n"
     }
   ]
 }

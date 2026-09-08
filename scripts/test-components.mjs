@@ -36,6 +36,7 @@ const { Field } = await import("../src/components/ui/field.tsx")
 const { Fieldset } = await import("../src/components/ui/fieldset.tsx")
 const { TransferList } = await import("../src/components/ui/transfer-list.tsx")
 const { AppShell } = await import("../src/components/ui/app-shell.tsx")
+const { DownloadTrigger } = await import("../src/components/ui/download-trigger.tsx")
 const h = React.createElement
 const render = (component, props, child) => renderToStaticMarkup(h(component, props, child))
 assert.equal(typeof Card, "object")
@@ -44,6 +45,14 @@ assert.equal(Accordion.ItemTrigger.name, "AccordionItemTrigger")
 assert.equal(AppShell.NotificationItem.name, "AppShellNotificationItem")
 assert.equal(typeof Button, "function")
 assert.equal("Root" in Button, false)
+const download = render(
+  DownloadTrigger.Root,
+  { asChild: true, data: "report", fileName: "report.txt", mimeType: "text/plain" },
+  h(Button, null, "Download")
+)
+const plainButton = render(Button, {}, "Download")
+assert.equal(download.match(/class="([^"]*)"/)?.[1], plainButton.match(/class="([^"]*)"/)?.[1])
+assert.equal((download.match(/<button/g) ?? []).length, 1)
 const card = render(
   Card.Root,
   { asChild: true, className: "outer", "data-test": "card" },
