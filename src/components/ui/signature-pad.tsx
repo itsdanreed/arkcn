@@ -1,5 +1,6 @@
 "use client"
 
+import { useSignaturePad, useSignaturePadContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { SignaturePad as SignaturePadPrimitive } from "@ark-ui/react"
@@ -7,7 +8,7 @@ import { XIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
-function SignaturePad({ className, ...props }: React.ComponentProps<typeof SignaturePadPrimitive.Root>) {
+function SignaturePadRoot({ className, ...props }: SignaturePadRootProps) {
   return (
     <SignaturePadPrimitive.Root
       data-slot="signature-pad"
@@ -17,11 +18,11 @@ function SignaturePad({ className, ...props }: React.ComponentProps<typeof Signa
   )
 }
 
-function SignaturePadContext({ ...props }: React.ComponentProps<typeof SignaturePadPrimitive.Context>) {
+function SignaturePadContext({ ...props }: SignaturePadContextProps) {
   return <SignaturePadPrimitive.Context {...props} />
 }
 
-function SignaturePadLabel({ className, ...props }: React.ComponentProps<typeof SignaturePadPrimitive.Label>) {
+function SignaturePadLabel({ className, ...props }: SignaturePadLabelProps) {
   return (
     <SignaturePadPrimitive.Label
       data-slot="signature-pad-label"
@@ -31,11 +32,7 @@ function SignaturePadLabel({ className, ...props }: React.ComponentProps<typeof 
   )
 }
 
-function SignaturePadControl({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof SignaturePadPrimitive.Control>) {
+function SignaturePadControl({ className, children, ...props }: SignaturePadControlProps) {
   return (
     <SignaturePadPrimitive.Control
       data-slot="signature-pad-control"
@@ -45,18 +42,26 @@ function SignaturePadControl({
       )}
       {...props}
     >
-      {children ?? (
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
         <>
-          <SignaturePadSegment />
-          <SignaturePadGuide />
-          <SignaturePadClearTrigger />
+          {children ?? (
+            <>
+              <SignaturePadSegment />
+              <SignaturePadGuide />
+              <SignaturePadClearTrigger />
+            </>
+          )}
         </>
       )}
     </SignaturePadPrimitive.Control>
   )
 }
 
-function SignaturePadSegment({ className, ...props }: React.ComponentProps<typeof SignaturePadPrimitive.Segment>) {
+function SignaturePadSegment({ className, ...props }: SignaturePadSegmentProps) {
   return (
     <SignaturePadPrimitive.Segment
       data-slot="signature-pad-segment"
@@ -66,7 +71,7 @@ function SignaturePadSegment({ className, ...props }: React.ComponentProps<typeo
   )
 }
 
-function SignaturePadGuide({ className, ...props }: React.ComponentProps<typeof SignaturePadPrimitive.Guide>) {
+function SignaturePadGuide({ className, ...props }: SignaturePadGuideProps) {
   return (
     <SignaturePadPrimitive.Guide
       data-slot="signature-pad-guide"
@@ -76,11 +81,7 @@ function SignaturePadGuide({ className, ...props }: React.ComponentProps<typeof 
   )
 }
 
-function SignaturePadClearTrigger({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof SignaturePadPrimitive.ClearTrigger>) {
+function SignaturePadClearTrigger({ className, children, ...props }: SignaturePadClearTriggerProps) {
   return (
     <SignaturePadPrimitive.ClearTrigger
       data-slot="signature-pad-clear-trigger"
@@ -88,25 +89,77 @@ function SignaturePadClearTrigger({
       asChild
       {...props}
     >
-      <Button variant="ghost" size="icon-sm">
-        {children ?? <XIcon />}
-        <span className="sr-only">Clear</span>
-      </Button>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <Button variant="ghost" size="icon-sm">
+            {children ?? <XIcon />}
+            <span className="sr-only">Clear</span>
+          </Button>
+        </>
+      )}
     </SignaturePadPrimitive.ClearTrigger>
   )
 }
 
-function SignaturePadHiddenInput({ ...props }: React.ComponentProps<typeof SignaturePadPrimitive.HiddenInput>) {
+function SignaturePadHiddenInput({ ...props }: SignaturePadHiddenInputProps) {
   return <SignaturePadPrimitive.HiddenInput {...props} />
 }
 
+function SignaturePadRootProvider({ className, ...props }: SignaturePadRootProviderProps) {
+  return (
+    <SignaturePadPrimitive.RootProvider
+      data-slot="signature-pad"
+      className={cn("flex w-full flex-col gap-1.5", className)}
+      {...props}
+    />
+  )
+}
+
+type SignaturePadRootProps = React.ComponentProps<typeof SignaturePadPrimitive.Root>
+
+type SignaturePadRootProviderProps = React.ComponentProps<typeof SignaturePadPrimitive.RootProvider>
+
+type SignaturePadClearTriggerProps = React.ComponentProps<typeof SignaturePadPrimitive.ClearTrigger>
+
+type SignaturePadContextProps = React.ComponentProps<typeof SignaturePadPrimitive.Context>
+
+type SignaturePadControlProps = React.ComponentProps<typeof SignaturePadPrimitive.Control>
+
+type SignaturePadGuideProps = React.ComponentProps<typeof SignaturePadPrimitive.Guide>
+
+type SignaturePadHiddenInputProps = React.ComponentProps<typeof SignaturePadPrimitive.HiddenInput>
+
+type SignaturePadLabelProps = React.ComponentProps<typeof SignaturePadPrimitive.Label>
+
+type SignaturePadSegmentProps = React.ComponentProps<typeof SignaturePadPrimitive.Segment>
+
+const SignaturePad = {
+  Root: SignaturePadRoot,
+  RootProvider: SignaturePadRootProvider,
+  ClearTrigger: SignaturePadClearTrigger,
+  Context: SignaturePadContext,
+  Control: SignaturePadControl,
+  Guide: SignaturePadGuide,
+  HiddenInput: SignaturePadHiddenInput,
+  Label: SignaturePadLabel,
+  Segment: SignaturePadSegment,
+}
+
 export {
+  useSignaturePad,
+  useSignaturePadContext,
   SignaturePad,
-  SignaturePadClearTrigger,
-  SignaturePadContext,
-  SignaturePadControl,
-  SignaturePadGuide,
-  SignaturePadHiddenInput,
-  SignaturePadLabel,
-  SignaturePadSegment,
+  type SignaturePadRootProps,
+  type SignaturePadRootProviderProps,
+  type SignaturePadClearTriggerProps,
+  type SignaturePadContextProps,
+  type SignaturePadControlProps,
+  type SignaturePadGuideProps,
+  type SignaturePadHiddenInputProps,
+  type SignaturePadLabelProps,
+  type SignaturePadSegmentProps,
 }

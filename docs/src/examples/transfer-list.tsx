@@ -1,18 +1,5 @@
 import * as React from "react"
-import {
-  TransferList,
-  TransferListControls,
-  TransferListEmpty,
-  TransferListItems,
-  TransferListMoveAllTrigger,
-  TransferListMoveTrigger,
-  TransferListPanel,
-  TransferListPanelCount,
-  TransferListPanelHeader,
-  TransferListPanelTitle,
-  TransferListSearch,
-  TransferListSelectAll,
-} from "@/components/ui/transfer-list"
+import { TransferList } from "@/components/ui/transfer-list"
 
 const permissions = [
   { value: "read", label: "View records" },
@@ -26,38 +13,38 @@ const permissions = [
 export default function TransferListExample() {
   const [granted, setGranted] = React.useState(["read", "export"])
   return (
-    <TransferList
+    <TransferList.Root
       items={permissions}
       value={granted}
       onValueChange={({ value }) => setGranted(value)}
       className="w-full max-w-xl"
     >
-      <TransferListPanel side="source">
-        <TransferListPanelHeader>
-          <TransferListSelectAll />
-          <TransferListPanelTitle>Available</TransferListPanelTitle>
-          <TransferListPanelCount />
-        </TransferListPanelHeader>
-        <TransferListSearch placeholder="Filter" />
-        <TransferListItems />
-        <TransferListEmpty />
-      </TransferListPanel>
-      <TransferListControls>
-        <TransferListMoveAllTrigger direction="right" />
-        <TransferListMoveTrigger direction="right" />
-        <TransferListMoveTrigger direction="left" />
-        <TransferListMoveAllTrigger direction="left" />
-      </TransferListControls>
-      <TransferListPanel side="target">
-        <TransferListPanelHeader>
-          <TransferListSelectAll />
-          <TransferListPanelTitle>Granted</TransferListPanelTitle>
-          <TransferListPanelCount />
-        </TransferListPanelHeader>
-        <TransferListSearch placeholder="Filter" />
-        <TransferListItems />
-        <TransferListEmpty />
-      </TransferListPanel>
-    </TransferList>
+      <TransferList.Panel side="source">
+        <TransferList.PanelHeader>
+          <TransferList.SelectAll />
+          <TransferList.PanelTitle>Available</TransferList.PanelTitle>
+          <TransferList.PanelCount />
+        </TransferList.PanelHeader>
+        <TransferList.Search placeholder="Filter" />
+        <TransferList.Items />
+        <TransferList.Empty />
+      </TransferList.Panel>
+      <TransferList.Controls>
+        <TransferList.MoveAllTrigger direction="right" />
+        <TransferList.MoveTrigger direction="right" />
+        <TransferList.MoveTrigger direction="left" />
+        <TransferList.MoveAllTrigger direction="left" />
+      </TransferList.Controls>
+      <TransferList.Panel side="target">
+        <TransferList.PanelHeader>
+          <TransferList.SelectAll />
+          <TransferList.PanelTitle>Granted</TransferList.PanelTitle>
+          <TransferList.PanelCount />
+        </TransferList.PanelHeader>
+        <TransferList.Search placeholder="Filter" />
+        <TransferList.Items />
+        <TransferList.Empty />
+      </TransferList.Panel>
+    </TransferList.Root>
   )
 }

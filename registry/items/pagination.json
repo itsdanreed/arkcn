@@ -2,19 +2,159 @@
   "name": "pagination",
   "type": "ui",
   "description": "",
+  "ark": "Pagination",
   "exports": [
-    "Pagination",
-    "PaginationContent",
-    "PaginationEllipsis",
-    "PaginationItem",
-    "PaginationLink",
-    "PaginationNext",
-    "PaginationPrevious"
+    "usePagination",
+    "usePaginationContext",
+    "Pagination"
   ],
   "parts": [
     {
-      "name": "Pagination",
+      "name": "Pagination.Root",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "boundaryCount",
+          "type": "number",
+          "required": false,
+          "default": "1",
+          "description": "Number of pages to show at the beginning and end",
+          "from": "@zag-js/pagination"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "required": false,
+          "description": "Total number of data items",
+          "from": "@zag-js/pagination"
+        },
+        {
+          "name": "defaultPage",
+          "type": "number",
+          "required": false,
+          "default": "1",
+          "description": "The initial active page when rendered.\nUse when you don't need to control the active page of the pagination.",
+          "from": "@zag-js/pagination"
+        },
+        {
+          "name": "defaultPageSize",
+          "type": "number",
+          "required": false,
+          "default": "10",
+          "description": "The initial number of data items per page when rendered.\nUse when you don't need to control the page size of the pagination.",
+          "from": "@zag-js/pagination"
+        },
+        {
+          "name": "getPageUrl",
+          "type": "((details: PageUrlDetails) => string)",
+          "required": false,
+          "description": "Function to generate href attributes for pagination links.\nOnly used when `type` is set to \"link\".",
+          "from": "@zag-js/pagination"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the accordion. Useful for composition.",
+          "from": "@zag-js/pagination"
+        },
+        {
+          "name": "onPageChange",
+          "type": "((details: PageChangeDetails) => void)",
+          "required": false,
+          "description": "Called when the page number is changed",
+          "from": "@zag-js/pagination"
+        },
+        {
+          "name": "onPageSizeChange",
+          "type": "((details: PageSizeChangeDetails) => void)",
+          "required": false,
+          "description": "Called when the page size is changed",
+          "from": "@zag-js/pagination"
+        },
+        {
+          "name": "page",
+          "type": "number",
+          "required": false,
+          "description": "The controlled active page",
+          "from": "@zag-js/pagination"
+        },
+        {
+          "name": "pageSize",
+          "type": "number",
+          "required": false,
+          "description": "The controlled number of data items per page",
+          "from": "@zag-js/pagination"
+        },
+        {
+          "name": "siblingCount",
+          "type": "number",
+          "required": false,
+          "default": "1",
+          "description": "Number of pages to show beside active page",
+          "from": "@zag-js/pagination"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "translations",
+          "type": "IntlTranslations",
+          "required": false,
+          "description": "Specifies the localized strings that identifies the accessibility elements and their states",
+          "from": "@zag-js/pagination"
+        },
+        {
+          "name": "type",
+          "type": "\"button\" | \"link\"",
+          "required": false,
+          "default": "\"button\"",
+          "description": "The type of the trigger element",
+          "from": "@zag-js/pagination"
+        }
+      ]
+    },
+    {
+      "name": "Pagination.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UsePaginationReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -39,8 +179,27 @@
       ]
     },
     {
-      "name": "PaginationContent",
+      "name": "Pagination.Context",
       "props": [
+        {
+          "name": "children",
+          "type": "(context: UsePaginationContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Pagination.FirstTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -65,8 +224,15 @@
       ]
     },
     {
-      "name": "PaginationEllipsis",
+      "name": "Pagination.LastTrigger",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -91,8 +257,15 @@
       ]
     },
     {
-      "name": "PaginationItem",
+      "name": "Pagination.NextTrigger",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -117,7 +290,160 @@
       ]
     },
     {
-      "name": "PaginationLink",
+      "name": "Pagination.PrevTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Pagination.Content",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Pagination.Ellipsis",
+      "props": [
+        {
+          "name": "index",
+          "type": "number",
+          "required": true,
+          "description": "Position of the item in its list.",
+          "from": "@zag-js/pagination"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Pagination.Item",
+      "props": [
+        {
+          "name": "type",
+          "type": "\"page\"",
+          "required": true,
+          "description": "Type of the part.",
+          "from": "@zag-js/pagination"
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@zag-js/pagination"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Pagination.Link",
       "props": [
         {
           "name": "isActive",
@@ -135,6 +461,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -158,7 +491,7 @@
       ]
     },
     {
-      "name": "PaginationNext",
+      "name": "Pagination.Next",
       "props": [
         {
           "name": "isActive",
@@ -183,6 +516,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -206,7 +546,7 @@
       ]
     },
     {
-      "name": "PaginationPrevious",
+      "name": "Pagination.Previous",
       "props": [
         {
           "name": "isActive",
@@ -229,6 +569,13 @@
           "default": "\"Previous\"",
           "description": "Visible label.",
           "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -255,6 +602,7 @@
     }
   ],
   "dependencies": {
+    "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"
   },
   "registryDependencies": [
@@ -264,7 +612,7 @@
   "files": [
     {
       "path": "components/ui/pagination.tsx",
-      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { ChevronLeftIcon, ChevronRightIcon, MoreHorizontalIcon } from \"lucide-react\"\n\nfunction Pagination({ className, ...props }: React.ComponentProps<\"nav\">) {\n  return (\n    <nav\n      role=\"navigation\"\n      aria-label=\"pagination\"\n      data-slot=\"pagination\"\n      className={cn(\"mx-auto flex w-full justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction PaginationContent({ className, ...props }: React.ComponentProps<\"ul\">) {\n  return <ul data-slot=\"pagination-content\" className={cn(\"flex items-center gap-0.5\", className)} {...props} />\n}\n\nfunction PaginationItem({ ...props }: React.ComponentProps<\"li\">) {\n  return <li data-slot=\"pagination-item\" {...props} />\n}\n\ntype PaginationLinkProps = {\n  /** Marks the current page link. */\n  isActive?: boolean\n} & Pick<React.ComponentProps<typeof Button>, \"size\"> &\n  React.ComponentProps<\"a\">\n\nfunction PaginationLink({ className, isActive, size = \"icon\", ...props }: PaginationLinkProps) {\n  return (\n    <Button asChild variant={isActive ? \"outline\" : \"ghost\"} size={size} className={cn(className)}>\n      <a aria-current={isActive ? \"page\" : undefined} data-slot=\"pagination-link\" data-active={isActive} {...props} />\n    </Button>\n  )\n}\n\nfunction PaginationPrevious({\n  className,\n  text = \"Previous\",\n  ...props\n}: React.ComponentProps<typeof PaginationLink> & { text?: string }) {\n  return (\n    <PaginationLink aria-label=\"Go to previous page\" size=\"default\" className={cn(\"pl-1.5!\", className)} {...props}>\n      <ChevronLeftIcon data-icon=\"inline-start\" />\n      <span className=\"hidden sm:block\">{text}</span>\n    </PaginationLink>\n  )\n}\n\nfunction PaginationNext({\n  className,\n  text = \"Next\",\n  ...props\n}: React.ComponentProps<typeof PaginationLink> & { text?: string }) {\n  return (\n    <PaginationLink aria-label=\"Go to next page\" size=\"default\" className={cn(\"pr-1.5!\", className)} {...props}>\n      <span className=\"hidden sm:block\">{text}</span>\n      <ChevronRightIcon data-icon=\"inline-end\" />\n    </PaginationLink>\n  )\n}\n\nfunction PaginationEllipsis({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span\n      aria-hidden\n      data-slot=\"pagination-ellipsis\"\n      className={cn(\"flex size-8 items-center justify-center [&_svg:not([class*='size-'])]:size-4\", className)}\n      {...props}\n    >\n      <MoreHorizontalIcon />\n      <span className=\"sr-only\">More pages</span>\n    </span>\n  )\n}\n\nexport {\n  Pagination,\n  PaginationContent,\n  PaginationEllipsis,\n  PaginationItem,\n  PaginationLink,\n  PaginationNext,\n  PaginationPrevious,\n}\n"
+      "content": "import { Pagination as PaginationPrimitive, usePagination, usePaginationContext } from \"@ark-ui/react\"\nimport { ark } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { ChevronLeftIcon, ChevronRightIcon } from \"lucide-react\"\n\nfunction PaginationContent({ className, ...props }: PaginationContentProps) {\n  return <ark.ul data-slot=\"pagination-content\" className={cn(\"flex items-center gap-0.5\", className)} {...props} />\n}\n\ntype PaginationLinkProps = {\n  /** Marks the current page link. */\n  isActive?: boolean\n} & Pick<React.ComponentProps<typeof Button>, \"size\"> &\n  React.ComponentProps<typeof ark.a>\n\nfunction PaginationLink({ className, isActive, size = \"icon\", ...props }: PaginationLinkProps) {\n  return (\n    <Button asChild variant={isActive ? \"outline\" : \"ghost\"} size={size} className={cn(className)}>\n      <ark.a\n        aria-current={isActive ? \"page\" : undefined}\n        data-slot=\"pagination-link\"\n        data-active={isActive}\n        {...props}\n      />\n    </Button>\n  )\n}\n\nfunction PaginationPrevious({ className, text = \"Previous\", ...props }: PaginationPreviousProps) {\n  return (\n    <PaginationLink aria-label=\"Go to previous page\" size=\"default\" className={cn(\"pl-1.5!\", className)} {...props}>\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <ChevronLeftIcon data-icon=\"inline-start\" />\n          <span className=\"hidden sm:block\">{text}</span>\n        </>\n      )}\n    </PaginationLink>\n  )\n}\n\nfunction PaginationNext({ className, text = \"Next\", ...props }: PaginationNextProps) {\n  return (\n    <PaginationLink aria-label=\"Go to next page\" size=\"default\" className={cn(\"pr-1.5!\", className)} {...props}>\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <span className=\"hidden sm:block\">{text}</span>\n          <ChevronRightIcon data-icon=\"inline-end\" />\n        </>\n      )}\n    </PaginationLink>\n  )\n}\n\nfunction PaginationRoot({ className, ...props }: PaginationRootProps) {\n  return (\n    <PaginationPrimitive.Root\n      data-slot=\"pagination-root\"\n      className={cn(\"flex items-center justify-center gap-1\", className)}\n      {...props}\n    />\n  )\n}\nfunction PaginationRootProvider({ className, ...props }: PaginationRootProviderProps) {\n  return (\n    <PaginationPrimitive.RootProvider\n      data-slot=\"pagination-root-provider\"\n      className={cn(\"flex items-center justify-center gap-1\", className)}\n      {...props}\n    />\n  )\n}\nfunction PaginationContext(props: PaginationContextProps) {\n  return <PaginationPrimitive.Context {...props} />\n}\nfunction PaginationItem({ className, ...props }: PaginationItemProps) {\n  return (\n    <PaginationPrimitive.Item\n      data-slot=\"pagination-item\"\n      className={cn(\n        \"inline-flex size-8 items-center justify-center rounded-lg text-sm outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-selected:border data-selected:border-input data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\nfunction PaginationEllipsis({ className, ...props }: PaginationEllipsisProps) {\n  return (\n    <PaginationPrimitive.Ellipsis\n      data-slot=\"pagination-ellipsis\"\n      className={cn(\n        \"inline-flex size-8 items-center justify-center rounded-lg text-sm outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-selected:border data-selected:border-input data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\nfunction PaginationFirstTrigger({ className, ...props }: PaginationFirstTriggerProps) {\n  return (\n    <PaginationPrimitive.FirstTrigger\n      data-slot=\"pagination-first-trigger\"\n      className={cn(\n        \"inline-flex size-8 items-center justify-center rounded-lg text-sm outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-selected:border data-selected:border-input data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\nfunction PaginationLastTrigger({ className, ...props }: PaginationLastTriggerProps) {\n  return (\n    <PaginationPrimitive.LastTrigger\n      data-slot=\"pagination-last-trigger\"\n      className={cn(\n        \"inline-flex size-8 items-center justify-center rounded-lg text-sm outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-selected:border data-selected:border-input data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\nfunction PaginationNextTrigger({ className, ...props }: PaginationNextTriggerProps) {\n  return (\n    <PaginationPrimitive.NextTrigger\n      data-slot=\"pagination-next-trigger\"\n      className={cn(\n        \"inline-flex size-8 items-center justify-center rounded-lg text-sm outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-selected:border data-selected:border-input data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\nfunction PaginationPrevTrigger({ className, ...props }: PaginationPrevTriggerProps) {\n  return (\n    <PaginationPrimitive.PrevTrigger\n      data-slot=\"pagination-prev-trigger\"\n      className={cn(\n        \"inline-flex size-8 items-center justify-center rounded-lg text-sm outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-selected:border data-selected:border-input data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype PaginationRootProps = React.ComponentProps<typeof PaginationPrimitive.Root>\n\ntype PaginationRootProviderProps = React.ComponentProps<typeof PaginationPrimitive.RootProvider>\n\ntype PaginationContextProps = React.ComponentProps<typeof PaginationPrimitive.Context>\n\ntype PaginationFirstTriggerProps = React.ComponentProps<typeof PaginationPrimitive.FirstTrigger>\n\ntype PaginationLastTriggerProps = React.ComponentProps<typeof PaginationPrimitive.LastTrigger>\n\ntype PaginationNextTriggerProps = React.ComponentProps<typeof PaginationPrimitive.NextTrigger>\n\ntype PaginationPrevTriggerProps = React.ComponentProps<typeof PaginationPrimitive.PrevTrigger>\n\ntype PaginationContentProps = React.ComponentProps<typeof ark.ul>\n\ntype PaginationEllipsisProps = React.ComponentProps<typeof PaginationPrimitive.Ellipsis>\n\ntype PaginationItemProps = React.ComponentProps<typeof PaginationPrimitive.Item>\n\ntype PaginationNextProps = React.ComponentProps<typeof PaginationLink> & { text?: string }\n\ntype PaginationPreviousProps = React.ComponentProps<typeof PaginationLink> & { text?: string }\n\nconst Pagination = {\n  Root: PaginationRoot,\n  RootProvider: PaginationRootProvider,\n  Context: PaginationContext,\n  FirstTrigger: PaginationFirstTrigger,\n  LastTrigger: PaginationLastTrigger,\n  NextTrigger: PaginationNextTrigger,\n  PrevTrigger: PaginationPrevTrigger,\n  Content: PaginationContent,\n  Ellipsis: PaginationEllipsis,\n  Item: PaginationItem,\n  Link: PaginationLink,\n  Next: PaginationNext,\n  Previous: PaginationPrevious,\n}\n\nexport {\n  usePagination,\n  usePaginationContext,\n  Pagination,\n  type PaginationRootProps,\n  type PaginationRootProviderProps,\n  type PaginationContextProps,\n  type PaginationFirstTriggerProps,\n  type PaginationLastTriggerProps,\n  type PaginationNextTriggerProps,\n  type PaginationPrevTriggerProps,\n  type PaginationContentProps,\n  type PaginationEllipsisProps,\n  type PaginationItemProps,\n  type PaginationLinkProps,\n  type PaginationNextProps,\n  type PaginationPreviousProps,\n}\n"
     }
   ]
 }

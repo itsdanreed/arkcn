@@ -3,102 +3,18 @@
   "type": "ui",
   "description": "",
   "exports": [
-    "Breadcrumb",
-    "BreadcrumbList",
-    "BreadcrumbItem",
-    "BreadcrumbLink",
-    "BreadcrumbPage",
-    "BreadcrumbSeparator",
-    "BreadcrumbEllipsis"
+    "Breadcrumb"
   ],
   "parts": [
     {
-      "name": "Breadcrumb",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "BreadcrumbList",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "BreadcrumbItem",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "BreadcrumbLink",
+      "name": "Breadcrumb.Root",
       "props": [
         {
           "name": "asChild",
           "type": "boolean",
           "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -124,8 +40,15 @@
       ]
     },
     {
-      "name": "BreadcrumbPage",
+      "name": "Breadcrumb.List",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -150,8 +73,15 @@
       ]
     },
     {
-      "name": "BreadcrumbSeparator",
+      "name": "Breadcrumb.Item",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -176,8 +106,114 @@
       ]
     },
     {
-      "name": "BreadcrumbEllipsis",
+      "name": "Breadcrumb.Link",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Breadcrumb.Page",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Breadcrumb.Separator",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Breadcrumb.Ellipsis",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -212,7 +248,7 @@
   "files": [
     {
       "path": "components/ui/breadcrumb.tsx",
-      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { ark } from \"@ark-ui/react\"\nimport { ChevronRightIcon, MoreHorizontalIcon } from \"lucide-react\"\n\nfunction Breadcrumb({ className, ...props }: React.ComponentProps<\"nav\">) {\n  return <nav aria-label=\"breadcrumb\" data-slot=\"breadcrumb\" className={cn(className)} {...props} />\n}\n\nfunction BreadcrumbList({ className, ...props }: React.ComponentProps<\"ol\">) {\n  return (\n    <ol\n      data-slot=\"breadcrumb-list\"\n      className={cn(\"flex flex-wrap items-center gap-1.5 text-sm wrap-break-word text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction BreadcrumbItem({ className, ...props }: React.ComponentProps<\"li\">) {\n  return <li data-slot=\"breadcrumb-item\" className={cn(\"inline-flex items-center gap-1\", className)} {...props} />\n}\n\nfunction BreadcrumbLink({\n  asChild,\n  className,\n  ...props\n}: React.ComponentProps<\"a\"> & {\n  asChild?: boolean\n}) {\n  const Comp = ark.a\n\n  return (\n    <Comp\n      asChild={asChild}\n      data-slot=\"breadcrumb-link\"\n      className={cn(\"transition-colors hover:text-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction BreadcrumbPage({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span\n      data-slot=\"breadcrumb-page\"\n      role=\"link\"\n      aria-disabled=\"true\"\n      aria-current=\"page\"\n      className={cn(\"font-normal text-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction BreadcrumbSeparator({ children, className, ...props }: React.ComponentProps<\"li\">) {\n  return (\n    <li\n      data-slot=\"breadcrumb-separator\"\n      role=\"presentation\"\n      aria-hidden=\"true\"\n      className={cn(\"[&>svg]:size-3.5\", className)}\n      {...props}\n    >\n      {children ?? <ChevronRightIcon />}\n    </li>\n  )\n}\n\nfunction BreadcrumbEllipsis({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span\n      data-slot=\"breadcrumb-ellipsis\"\n      role=\"presentation\"\n      aria-hidden=\"true\"\n      className={cn(\"flex size-5 items-center justify-center [&>svg]:size-4\", className)}\n      {...props}\n    >\n      <MoreHorizontalIcon />\n      <span className=\"sr-only\">More</span>\n    </span>\n  )\n}\n\nexport {\n  Breadcrumb,\n  BreadcrumbList,\n  BreadcrumbItem,\n  BreadcrumbLink,\n  BreadcrumbPage,\n  BreadcrumbSeparator,\n  BreadcrumbEllipsis,\n}\n"
+      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { ark } from \"@ark-ui/react\"\nimport { ChevronRightIcon, MoreHorizontalIcon } from \"lucide-react\"\n\nfunction BreadcrumbRoot({ className, ...props }: BreadcrumbRootProps) {\n  return <ark.nav aria-label=\"breadcrumb\" data-slot=\"breadcrumb\" className={cn(className)} {...props} />\n}\n\nfunction BreadcrumbList({ className, ...props }: BreadcrumbListProps) {\n  return (\n    <ark.ol\n      data-slot=\"breadcrumb-list\"\n      className={cn(\"flex flex-wrap items-center gap-1.5 text-sm wrap-break-word text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction BreadcrumbItem({ className, ...props }: BreadcrumbItemProps) {\n  return <ark.li data-slot=\"breadcrumb-item\" className={cn(\"inline-flex items-center gap-1\", className)} {...props} />\n}\n\nfunction BreadcrumbLink({ asChild, className, ...props }: BreadcrumbLinkProps) {\n  const Comp = ark.a\n\n  return (\n    <Comp\n      asChild={asChild}\n      data-slot=\"breadcrumb-link\"\n      className={cn(\"transition-colors hover:text-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction BreadcrumbPage({ className, ...props }: BreadcrumbPageProps) {\n  return (\n    <ark.span\n      data-slot=\"breadcrumb-page\"\n      role=\"link\"\n      aria-disabled=\"true\"\n      aria-current=\"page\"\n      className={cn(\"font-normal text-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction BreadcrumbSeparator({ children, className, ...props }: BreadcrumbSeparatorProps) {\n  return (\n    <ark.li\n      data-slot=\"breadcrumb-separator\"\n      role=\"presentation\"\n      aria-hidden=\"true\"\n      className={cn(\"[&>svg]:size-3.5\", className)}\n      {...props}\n    >\n      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <ChevronRightIcon />}</>}\n    </ark.li>\n  )\n}\n\nfunction BreadcrumbEllipsis({ className, ...props }: BreadcrumbEllipsisProps) {\n  return (\n    <ark.span\n      data-slot=\"breadcrumb-ellipsis\"\n      role=\"presentation\"\n      aria-hidden=\"true\"\n      className={cn(\"flex size-5 items-center justify-center [&>svg]:size-4\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <MoreHorizontalIcon />\n          <span className=\"sr-only\">More</span>\n        </>\n      )}\n    </ark.span>\n  )\n}\n\ntype BreadcrumbRootProps = React.ComponentProps<typeof ark.nav>\n\ntype BreadcrumbListProps = React.ComponentProps<typeof ark.ol>\n\ntype BreadcrumbItemProps = React.ComponentProps<typeof ark.li>\n\ntype BreadcrumbLinkProps = React.ComponentProps<typeof ark.a> & {\n  asChild?: boolean\n}\n\ntype BreadcrumbPageProps = React.ComponentProps<typeof ark.span>\n\ntype BreadcrumbSeparatorProps = React.ComponentProps<typeof ark.li>\n\ntype BreadcrumbEllipsisProps = React.ComponentProps<typeof ark.span>\n\nconst Breadcrumb = {\n  Root: BreadcrumbRoot,\n  List: BreadcrumbList,\n  Item: BreadcrumbItem,\n  Link: BreadcrumbLink,\n  Page: BreadcrumbPage,\n  Separator: BreadcrumbSeparator,\n  Ellipsis: BreadcrumbEllipsis,\n}\n\nexport {\n  Breadcrumb,\n  type BreadcrumbRootProps,\n  type BreadcrumbListProps,\n  type BreadcrumbItemProps,\n  type BreadcrumbLinkProps,\n  type BreadcrumbPageProps,\n  type BreadcrumbSeparatorProps,\n  type BreadcrumbEllipsisProps,\n}\n"
     }
   ]
 }

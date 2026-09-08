@@ -4,23 +4,14 @@
   "description": "",
   "ark": "NavigationMenu",
   "exports": [
+    "useNavigationMenu",
+    "useNavigationMenuContext",
     "NavigationMenu",
-    "NavigationMenuArrow",
-    "NavigationMenuContent",
-    "NavigationMenuContext",
-    "NavigationMenuIndicator",
-    "NavigationMenuItem",
-    "NavigationMenuLink",
-    "NavigationMenuList",
-    "NavigationMenuTrigger",
-    "NavigationMenuViewport",
-    "NavigationMenuViewportPositioner",
-    "navigationMenuTriggerStyle",
-    "NavigationMenuItemIndicator"
+    "navigationMenuTriggerStyle"
   ],
   "parts": [
     {
-      "name": "NavigationMenu",
+      "name": "NavigationMenu.Root",
       "props": [
         {
           "name": "viewport",
@@ -172,7 +163,71 @@
       ]
     },
     {
-      "name": "NavigationMenuArrow",
+      "name": "NavigationMenu.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseNavigationMenuReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenu.Arrow",
       "props": [
         {
           "name": "asChild",
@@ -205,7 +260,7 @@
       ]
     },
     {
-      "name": "NavigationMenuContent",
+      "name": "NavigationMenu.Content",
       "props": [
         {
           "name": "asChild",
@@ -245,7 +300,7 @@
       ]
     },
     {
-      "name": "NavigationMenuContext",
+      "name": "NavigationMenu.Context",
       "props": [
         {
           "name": "children",
@@ -257,7 +312,7 @@
       ]
     },
     {
-      "name": "NavigationMenuIndicator",
+      "name": "NavigationMenu.Indicator",
       "props": [
         {
           "name": "asChild",
@@ -290,7 +345,7 @@
       ]
     },
     {
-      "name": "NavigationMenuItem",
+      "name": "NavigationMenu.Item",
       "props": [
         {
           "name": "value",
@@ -337,7 +392,7 @@
       ]
     },
     {
-      "name": "NavigationMenuLink",
+      "name": "NavigationMenu.Link",
       "props": [
         {
           "name": "asChild",
@@ -399,7 +454,7 @@
       ]
     },
     {
-      "name": "NavigationMenuList",
+      "name": "NavigationMenu.List",
       "props": [
         {
           "name": "asChild",
@@ -432,7 +487,7 @@
       ]
     },
     {
-      "name": "NavigationMenuTrigger",
+      "name": "NavigationMenu.Trigger",
       "props": [
         {
           "name": "asChild",
@@ -472,7 +527,7 @@
       ]
     },
     {
-      "name": "NavigationMenuViewport",
+      "name": "NavigationMenu.Viewport",
       "props": [
         {
           "name": "asChild",
@@ -505,11 +560,11 @@
       ]
     },
     {
-      "name": "NavigationMenuViewportPositioner",
+      "name": "NavigationMenu.ViewportPositioner",
       "props": [
         {
           "name": "align",
-          "type": "\"center\" | \"end\" | \"start\"",
+          "type": "\"center\" | \"start\" | \"end\"",
           "required": false,
           "description": "Placement of the viewport for css variables `(--viewport-x, --viewport-y)`.",
           "from": "@zag-js/navigation-menu"
@@ -545,7 +600,7 @@
       ]
     },
     {
-      "name": "NavigationMenuItemIndicator",
+      "name": "NavigationMenu.ItemIndicator",
       "props": [
         {
           "name": "asChild",
@@ -589,7 +644,7 @@
   "files": [
     {
       "path": "components/ui/navigation-menu.tsx",
-      "content": "import * as React from \"react\"\nimport { cva } from \"class-variance-authority\"\nimport { cn } from \"@/lib/utils\"\nimport { NavigationMenu as NavigationMenuPrimitive } from \"@ark-ui/react\"\nimport { ChevronDownIcon } from \"lucide-react\"\n\nfunction NavigationMenu({\n  className,\n  children,\n  viewport = true,\n  ...props\n}: React.ComponentProps<typeof NavigationMenuPrimitive.Root> & {\n  /** Render content in the shared viewport instead of inline. */\n  viewport?: boolean\n}) {\n  return (\n    <NavigationMenuPrimitive.Root\n      data-slot=\"navigation-menu\"\n      data-viewport={viewport}\n      className={cn(\"group/navigation-menu relative flex max-w-max flex-1 items-center justify-center\", className)}\n      {...props}\n    >\n      {children}\n      {viewport && (\n        <NavigationMenuViewportPositioner>\n          <NavigationMenuViewport />\n        </NavigationMenuViewportPositioner>\n      )}\n    </NavigationMenuPrimitive.Root>\n  )\n}\n\nfunction NavigationMenuContext({ ...props }: React.ComponentProps<typeof NavigationMenuPrimitive.Context>) {\n  return <NavigationMenuPrimitive.Context {...props} />\n}\n\nfunction NavigationMenuList({ className, ...props }: React.ComponentProps<typeof NavigationMenuPrimitive.List>) {\n  return (\n    <NavigationMenuPrimitive.List\n      data-slot=\"navigation-menu-list\"\n      className={cn(\"group flex flex-1 list-none items-center justify-center gap-0\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction NavigationMenuItem({\n  className,\n  value,\n  ...props\n}: Omit<React.ComponentProps<typeof NavigationMenuPrimitive.Item>, \"value\"> & {\n  /** Identifies the item. Auto-generated when omitted. */\n  value?: string\n}) {\n  const id = React.useId()\n  return (\n    <NavigationMenuPrimitive.Item\n      data-slot=\"navigation-menu-item\"\n      value={value ?? id}\n      className={cn(\n        // Ark measures the trigger via offsetLeft for the indicator, so the\n        // item must not be the offset parent while a viewport is rendered.\n        \"group-data-[viewport=false]/navigation-menu:relative\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nconst navigationMenuTriggerStyle = cva(\n  \"group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center rounded-lg px-2.5 py-1.5 text-sm font-medium transition-all outline-none hover:bg-muted focus-visible:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-open:bg-muted/50 data-open:hover:bg-muted data-open:focus-visible:bg-muted\"\n)\n\nfunction NavigationMenuTrigger({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof NavigationMenuPrimitive.Trigger>) {\n  return (\n    <NavigationMenuPrimitive.Trigger\n      data-slot=\"navigation-menu-trigger\"\n      className={cn(navigationMenuTriggerStyle(), \"group\", className)}\n      {...props}\n    >\n      {children}{\" \"}\n      <ChevronDownIcon\n        className=\"relative top-px ml-1 size-3 transition duration-300 group-data-open/navigation-menu-trigger:rotate-180\"\n        aria-hidden=\"true\"\n      />\n    </NavigationMenuPrimitive.Trigger>\n  )\n}\n\nfunction NavigationMenuContent({ className, ...props }: React.ComponentProps<typeof NavigationMenuPrimitive.Content>) {\n  return (\n    <NavigationMenuPrimitive.Content\n      data-slot=\"navigation-menu-content\"\n      className={cn(\n        \"top-0 left-0 w-full p-1 ease-[cubic-bezier(0.22,1,0.36,1)] group-data-[viewport=false]/navigation-menu:top-full group-data-[viewport=false]/navigation-menu:mt-1.5 group-data-[viewport=false]/navigation-menu:overflow-hidden group-data-[viewport=false]/navigation-menu:rounded-lg group-data-[viewport=false]/navigation-menu:bg-popover group-data-[viewport=false]/navigation-menu:text-popover-foreground group-data-[viewport=false]/navigation-menu:shadow-sm group-data-[viewport=false]/navigation-menu:ring-1 group-data-[viewport=false]/navigation-menu:ring-foreground/10 group-data-[viewport=false]/navigation-menu:duration-300 **:data-[slot=navigation-menu-link]:focus-visible:ring-0 **:data-[slot=navigation-menu-link]:focus-visible:outline-none md:absolute md:w-auto data-open:animate-in data-open:fade-in group-data-[viewport=false]/navigation-menu:data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out group-data-[viewport=false]/navigation-menu:data-closed:zoom-out-95\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction NavigationMenuViewportPositioner({\n  className,\n  ...props\n}: React.ComponentProps<typeof NavigationMenuPrimitive.ViewportPositioner>) {\n  return (\n    <NavigationMenuPrimitive.ViewportPositioner\n      data-slot=\"navigation-menu-viewport-positioner\"\n      className={cn(\"absolute top-full left-0 isolate z-50 flex w-full justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction NavigationMenuViewport({\n  className,\n  ...props\n}: React.ComponentProps<typeof NavigationMenuPrimitive.Viewport>) {\n  return (\n    <NavigationMenuPrimitive.Viewport\n      data-slot=\"navigation-menu-viewport\"\n      className={cn(\n        \"relative mt-1.5 h-(--viewport-height) w-full origin-[top_center] overflow-hidden rounded-lg bg-popover text-popover-foreground shadow-sm ring-1 ring-foreground/10 transition-[width,height] duration-100 md:w-(--viewport-width) data-open:animate-in data-open:zoom-in-90 data-closed:animate-out data-closed:zoom-out-90\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction NavigationMenuLink({ className, ...props }: React.ComponentProps<typeof NavigationMenuPrimitive.Link>) {\n  return (\n    <NavigationMenuPrimitive.Link\n      data-slot=\"navigation-menu-link\"\n      className={cn(\n        \"flex items-center gap-2 rounded-lg p-2 text-sm transition-all outline-none hover:bg-muted focus-visible:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1 in-data-[slot=navigation-menu-content]:rounded-md data-current:bg-muted/50 data-current:hover:bg-muted data-current:focus-visible:bg-muted [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction NavigationMenuIndicator({\n  className,\n  ...props\n}: React.ComponentProps<typeof NavigationMenuPrimitive.Indicator>) {\n  return (\n    <NavigationMenuPrimitive.Indicator\n      data-slot=\"navigation-menu-indicator\"\n      className={cn(\n        \"absolute top-full left-0 z-1 flex h-1.5 w-(--trigger-width) translate-x-(--trigger-x) items-end justify-center overflow-hidden transition-[width,transform] duration-200 data-open:animate-in data-open:fade-in data-closed:animate-out data-closed:fade-out\",\n        className\n      )}\n      {...props}\n    >\n      <div className=\"relative top-[60%] size-2 rotate-45 rounded-tl-sm bg-border shadow-md\" />\n    </NavigationMenuPrimitive.Indicator>\n  )\n}\n\nfunction NavigationMenuArrow({ className, ...props }: React.ComponentProps<typeof NavigationMenuPrimitive.Arrow>) {\n  return <NavigationMenuPrimitive.Arrow data-slot=\"navigation-menu-arrow\" className={cn(className)} {...props} />\n}\n\n/** Marks the active item inside `NavigationMenuIndicator` (the sliding pointer). */\nfunction NavigationMenuItemIndicator({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof NavigationMenuPrimitive.ItemIndicator>) {\n  return (\n    <NavigationMenuPrimitive.ItemIndicator\n      data-slot=\"navigation-menu-item-indicator\"\n      className={cn(\"inline-flex items-center justify-center\", className)}\n      {...props}\n    >\n      {children ?? <span className=\"size-2 rotate-45 rounded-tl-sm bg-border\" />}\n    </NavigationMenuPrimitive.ItemIndicator>\n  )\n}\n\nexport {\n  NavigationMenu,\n  NavigationMenuArrow,\n  NavigationMenuContent,\n  NavigationMenuContext,\n  NavigationMenuIndicator,\n  NavigationMenuItem,\n  NavigationMenuLink,\n  NavigationMenuList,\n  NavigationMenuTrigger,\n  NavigationMenuViewport,\n  NavigationMenuViewportPositioner,\n  navigationMenuTriggerStyle,\n  NavigationMenuItemIndicator,\n}\n"
+      "content": "import { useNavigationMenu, useNavigationMenuContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cva } from \"class-variance-authority\"\nimport { cn } from \"@/lib/utils\"\nimport { NavigationMenu as NavigationMenuPrimitive } from \"@ark-ui/react\"\nimport { ChevronDownIcon } from \"lucide-react\"\n\nfunction NavigationMenuRoot({ className, children, viewport = true, ...props }: NavigationMenuRootProps) {\n  return (\n    <NavigationMenuPrimitive.Root\n      data-slot=\"navigation-menu\"\n      data-viewport={viewport}\n      className={cn(\"group/navigation-menu relative flex max-w-max flex-1 items-center justify-center\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children}\n          {viewport && (\n            <NavigationMenuViewportPositioner>\n              <NavigationMenuViewport />\n            </NavigationMenuViewportPositioner>\n          )}\n        </>\n      )}\n    </NavigationMenuPrimitive.Root>\n  )\n}\n\nfunction NavigationMenuContext({ ...props }: NavigationMenuContextProps) {\n  return <NavigationMenuPrimitive.Context {...props} />\n}\n\nfunction NavigationMenuList({ className, ...props }: NavigationMenuListProps) {\n  return (\n    <NavigationMenuPrimitive.List\n      data-slot=\"navigation-menu-list\"\n      className={cn(\"group flex flex-1 list-none items-center justify-center gap-0\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction NavigationMenuItem({ className, value, ...props }: NavigationMenuItemProps) {\n  const id = React.useId()\n  return (\n    <NavigationMenuPrimitive.Item\n      data-slot=\"navigation-menu-item\"\n      value={value ?? id}\n      className={cn(\n        // Ark measures the trigger via offsetLeft for the indicator, so the\n        // item must not be the offset parent while a viewport is rendered.\n        \"group-data-[viewport=false]/navigation-menu:relative\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nconst navigationMenuTriggerStyle = cva(\n  \"group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center rounded-lg px-2.5 py-1.5 text-sm font-medium transition-all outline-none hover:bg-muted focus-visible:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-open:bg-muted/50 data-open:hover:bg-muted data-open:focus-visible:bg-muted\"\n)\n\nfunction NavigationMenuTrigger({ className, children, ...props }: NavigationMenuTriggerProps) {\n  return (\n    <NavigationMenuPrimitive.Trigger\n      data-slot=\"navigation-menu-trigger\"\n      className={cn(navigationMenuTriggerStyle(), \"group\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children}{\" \"}\n          <ChevronDownIcon\n            className=\"relative top-px ml-1 size-3 transition duration-300 group-data-open/navigation-menu-trigger:rotate-180\"\n            aria-hidden=\"true\"\n          />\n        </>\n      )}\n    </NavigationMenuPrimitive.Trigger>\n  )\n}\n\nfunction NavigationMenuContent({ className, ...props }: NavigationMenuContentProps) {\n  return (\n    <NavigationMenuPrimitive.Content\n      data-slot=\"navigation-menu-content\"\n      className={cn(\n        \"top-0 left-0 w-full p-1 ease-[cubic-bezier(0.22,1,0.36,1)] group-data-[viewport=false]/navigation-menu:top-full group-data-[viewport=false]/navigation-menu:mt-1.5 group-data-[viewport=false]/navigation-menu:overflow-hidden group-data-[viewport=false]/navigation-menu:rounded-lg group-data-[viewport=false]/navigation-menu:bg-popover group-data-[viewport=false]/navigation-menu:text-popover-foreground group-data-[viewport=false]/navigation-menu:shadow-sm group-data-[viewport=false]/navigation-menu:ring-1 group-data-[viewport=false]/navigation-menu:ring-foreground/10 group-data-[viewport=false]/navigation-menu:duration-300 **:data-[slot=navigation-menu-link]:focus-visible:ring-0 **:data-[slot=navigation-menu-link]:focus-visible:outline-none md:absolute md:w-auto data-open:animate-in data-open:fade-in group-data-[viewport=false]/navigation-menu:data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out group-data-[viewport=false]/navigation-menu:data-closed:zoom-out-95\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction NavigationMenuViewportPositioner({ className, ...props }: NavigationMenuViewportPositionerProps) {\n  return (\n    <NavigationMenuPrimitive.ViewportPositioner\n      data-slot=\"navigation-menu-viewport-positioner\"\n      className={cn(\"absolute top-full left-0 isolate z-50 flex w-full justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction NavigationMenuViewport({ className, ...props }: NavigationMenuViewportProps) {\n  return (\n    <NavigationMenuPrimitive.Viewport\n      data-slot=\"navigation-menu-viewport\"\n      className={cn(\n        \"relative mt-1.5 h-(--viewport-height) w-full origin-[top_center] overflow-hidden rounded-lg bg-popover text-popover-foreground shadow-sm ring-1 ring-foreground/10 transition-[width,height] duration-100 md:w-(--viewport-width) data-open:animate-in data-open:zoom-in-90 data-closed:animate-out data-closed:zoom-out-90\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction NavigationMenuLink({ className, ...props }: NavigationMenuLinkProps) {\n  return (\n    <NavigationMenuPrimitive.Link\n      data-slot=\"navigation-menu-link\"\n      className={cn(\n        \"flex items-center gap-2 rounded-lg p-2 text-sm transition-all outline-none hover:bg-muted focus-visible:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1 in-data-[slot=navigation-menu-content]:rounded-md data-current:bg-muted/50 data-current:hover:bg-muted data-current:focus-visible:bg-muted [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction NavigationMenuIndicator({ className, ...props }: NavigationMenuIndicatorProps) {\n  return (\n    <NavigationMenuPrimitive.Indicator\n      data-slot=\"navigation-menu-indicator\"\n      className={cn(\n        \"absolute top-full left-0 z-1 flex h-1.5 w-(--trigger-width) translate-x-(--trigger-x) items-end justify-center overflow-hidden transition-[width,transform] duration-200 data-open:animate-in data-open:fade-in data-closed:animate-out data-closed:fade-out\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <div className=\"relative top-[60%] size-2 rotate-45 rounded-tl-sm bg-border shadow-md\" />\n        </>\n      )}\n    </NavigationMenuPrimitive.Indicator>\n  )\n}\n\nfunction NavigationMenuArrow({ className, ...props }: NavigationMenuArrowProps) {\n  return <NavigationMenuPrimitive.Arrow data-slot=\"navigation-menu-arrow\" className={cn(className)} {...props} />\n}\n\n/** Marks the active item inside `NavigationMenuIndicator` (the sliding pointer). */\nfunction NavigationMenuItemIndicator({ className, children, ...props }: NavigationMenuItemIndicatorProps) {\n  return (\n    <NavigationMenuPrimitive.ItemIndicator\n      data-slot=\"navigation-menu-item-indicator\"\n      className={cn(\"inline-flex items-center justify-center\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>{children ?? <span className=\"size-2 rotate-45 rounded-tl-sm bg-border\" />}</>\n      )}\n    </NavigationMenuPrimitive.ItemIndicator>\n  )\n}\n\nfunction NavigationMenuRootProvider({ className, ...props }: NavigationMenuRootProviderProps) {\n  return (\n    <NavigationMenuPrimitive.RootProvider\n      data-slot=\"navigation-menu\"\n      className={cn(\"group/navigation-menu relative flex max-w-max flex-1 items-center justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\ntype NavigationMenuRootProps = React.ComponentProps<typeof NavigationMenuPrimitive.Root> & {\n  /** Render content in the shared viewport instead of inline. */\n  viewport?: boolean\n}\n\ntype NavigationMenuRootProviderProps = React.ComponentProps<typeof NavigationMenuPrimitive.RootProvider>\n\ntype NavigationMenuArrowProps = React.ComponentProps<typeof NavigationMenuPrimitive.Arrow>\n\ntype NavigationMenuContentProps = React.ComponentProps<typeof NavigationMenuPrimitive.Content>\n\ntype NavigationMenuContextProps = React.ComponentProps<typeof NavigationMenuPrimitive.Context>\n\ntype NavigationMenuIndicatorProps = React.ComponentProps<typeof NavigationMenuPrimitive.Indicator>\n\ntype NavigationMenuItemProps = Omit<React.ComponentProps<typeof NavigationMenuPrimitive.Item>, \"value\"> & {\n  /** Identifies the item. Auto-generated when omitted. */\n  value?: string\n}\n\ntype NavigationMenuLinkProps = React.ComponentProps<typeof NavigationMenuPrimitive.Link>\n\ntype NavigationMenuListProps = React.ComponentProps<typeof NavigationMenuPrimitive.List>\n\ntype NavigationMenuTriggerProps = React.ComponentProps<typeof NavigationMenuPrimitive.Trigger>\n\ntype NavigationMenuViewportProps = React.ComponentProps<typeof NavigationMenuPrimitive.Viewport>\n\ntype NavigationMenuViewportPositionerProps = React.ComponentProps<typeof NavigationMenuPrimitive.ViewportPositioner>\n\ntype NavigationMenuItemIndicatorProps = React.ComponentProps<typeof NavigationMenuPrimitive.ItemIndicator>\n\nconst NavigationMenu = {\n  Root: NavigationMenuRoot,\n  RootProvider: NavigationMenuRootProvider,\n  Arrow: NavigationMenuArrow,\n  Content: NavigationMenuContent,\n  Context: NavigationMenuContext,\n  Indicator: NavigationMenuIndicator,\n  Item: NavigationMenuItem,\n  Link: NavigationMenuLink,\n  List: NavigationMenuList,\n  Trigger: NavigationMenuTrigger,\n  Viewport: NavigationMenuViewport,\n  ViewportPositioner: NavigationMenuViewportPositioner,\n  ItemIndicator: NavigationMenuItemIndicator,\n}\n\nexport {\n  useNavigationMenu,\n  useNavigationMenuContext,\n  NavigationMenu,\n  navigationMenuTriggerStyle,\n  type NavigationMenuRootProps,\n  type NavigationMenuRootProviderProps,\n  type NavigationMenuArrowProps,\n  type NavigationMenuContentProps,\n  type NavigationMenuContextProps,\n  type NavigationMenuIndicatorProps,\n  type NavigationMenuItemProps,\n  type NavigationMenuLinkProps,\n  type NavigationMenuListProps,\n  type NavigationMenuTriggerProps,\n  type NavigationMenuViewportProps,\n  type NavigationMenuViewportPositionerProps,\n  type NavigationMenuItemIndicatorProps,\n}\n"
     }
   ]
 }

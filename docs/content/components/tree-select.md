@@ -6,7 +6,7 @@ The tree inside the popup is virtualized: only the expanded nodes that are in vi
 
 ## Parts
 
-`TreeSelectTrigger` is a focusable combobox: Enter, Space, or Down opens it, and Backspace removes the last chip in multiple mode. Inside it, `TreeSelectValue` shows labels as text, or `TreeSelectChips` shows removable `TreeSelectChip` elements, followed by `TreeSelectClearTrigger` and `TreeSelectIndicator`. `TreeSelectContent` matches the trigger's width and holds `TreeSelectSearch` (filters the collection keeping ancestors, auto-expands matches, Down moves into the tree), `TreeSelectTree` (a render-prop child customises the row label), and `TreeSelectEmpty`. `TreeSelectHiddenInput name=` adds inputs for native forms.
+`TreeSelect.Trigger` is a focusable combobox: Enter, Space, or Down opens it, and Backspace removes the last chip in multiple mode. Inside it, `TreeSelect.Value` shows labels as text, or `TreeSelect.Chips` shows removable `TreeSelect.Chip` elements, followed by `TreeSelect.ClearTrigger` and `TreeSelect.Indicator`. `TreeSelect.Content` matches the trigger's width and holds `TreeSelect.Search` (filters the collection keeping ancestors, auto-expands matches, Down moves into the tree), `TreeSelect.Tree` (a render-prop child customises the row label), and `TreeSelect.Empty`. `TreeSelectHiddenInput name=` adds inputs for native forms.
 
 ## Notes
 

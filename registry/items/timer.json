@@ -4,17 +4,13 @@
   "description": "",
   "ark": "Timer",
   "exports": [
-    "Timer",
-    "TimerActionTrigger",
-    "TimerArea",
-    "TimerContext",
-    "TimerControl",
-    "TimerItem",
-    "TimerSeparator"
+    "useTimer",
+    "useTimerContext",
+    "Timer"
   ],
   "parts": [
     {
-      "name": "Timer",
+      "name": "Timer.Root",
       "props": [
         {
           "name": "asChild",
@@ -111,7 +107,47 @@
       ]
     },
     {
-      "name": "TimerActionTrigger",
+      "name": "Timer.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseTimerReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Timer.ActionTrigger",
       "props": [
         {
           "name": "action",
@@ -150,7 +186,7 @@
       ]
     },
     {
-      "name": "TimerArea",
+      "name": "Timer.Area",
       "props": [
         {
           "name": "asChild",
@@ -183,7 +219,7 @@
       ]
     },
     {
-      "name": "TimerContext",
+      "name": "Timer.Context",
       "props": [
         {
           "name": "children",
@@ -195,7 +231,7 @@
       ]
     },
     {
-      "name": "TimerControl",
+      "name": "Timer.Control",
       "props": [
         {
           "name": "asChild",
@@ -228,7 +264,7 @@
       ]
     },
     {
-      "name": "TimerItem",
+      "name": "Timer.Item",
       "props": [
         {
           "name": "type",
@@ -268,7 +304,7 @@
       ]
     },
     {
-      "name": "TimerSeparator",
+      "name": "Timer.Separator",
       "props": [
         {
           "name": "asChild",
@@ -311,7 +347,7 @@
   "files": [
     {
       "path": "components/ui/timer.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Timer as TimerPrimitive } from \"@ark-ui/react\"\n\nimport { Button } from \"@/components/ui/button\"\n\nfunction Timer({ className, ...props }: React.ComponentProps<typeof TimerPrimitive.Root>) {\n  return (\n    <TimerPrimitive.Root data-slot=\"timer\" className={cn(\"flex flex-col items-center gap-3\", className)} {...props} />\n  )\n}\n\nfunction TimerContext({ ...props }: React.ComponentProps<typeof TimerPrimitive.Context>) {\n  return <TimerPrimitive.Context {...props} />\n}\n\nfunction TimerArea({ className, ...props }: React.ComponentProps<typeof TimerPrimitive.Area>) {\n  return (\n    <TimerPrimitive.Area\n      data-slot=\"timer-area\"\n      className={cn(\"flex items-center gap-1 font-mono text-2xl font-medium tabular-nums\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TimerItem({ className, ...props }: React.ComponentProps<typeof TimerPrimitive.Item>) {\n  return (\n    <TimerPrimitive.Item\n      data-slot=\"timer-item\"\n      className={cn(\"flex min-w-10 items-center justify-center rounded-lg bg-muted px-2 py-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TimerSeparator({ className, children, ...props }: React.ComponentProps<typeof TimerPrimitive.Separator>) {\n  return (\n    <TimerPrimitive.Separator data-slot=\"timer-separator\" className={cn(\"text-muted-foreground\", className)} {...props}>\n      {children ?? \":\"}\n    </TimerPrimitive.Separator>\n  )\n}\n\nfunction TimerControl({ className, ...props }: React.ComponentProps<typeof TimerPrimitive.Control>) {\n  return (\n    <TimerPrimitive.Control data-slot=\"timer-control\" className={cn(\"flex items-center gap-2\", className)} {...props} />\n  )\n}\n\nfunction TimerActionTrigger({\n  className,\n  children,\n  asChild,\n  ...props\n}: React.ComponentProps<typeof TimerPrimitive.ActionTrigger>) {\n  return (\n    <TimerPrimitive.ActionTrigger data-slot=\"timer-action-trigger\" className={cn(className)} asChild {...props}>\n      {asChild ? (\n        children\n      ) : (\n        <Button variant=\"outline\" size=\"sm\">\n          {children}\n        </Button>\n      )}\n    </TimerPrimitive.ActionTrigger>\n  )\n}\n\nexport { Timer, TimerActionTrigger, TimerArea, TimerContext, TimerControl, TimerItem, TimerSeparator }\n"
+      "content": "\"use client\"\n\nimport { useTimer, useTimerContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Timer as TimerPrimitive } from \"@ark-ui/react\"\n\nimport { Button } from \"@/components/ui/button\"\n\nfunction TimerRoot({ className, ...props }: TimerRootProps) {\n  return (\n    <TimerPrimitive.Root data-slot=\"timer\" className={cn(\"flex flex-col items-center gap-3\", className)} {...props} />\n  )\n}\n\nfunction TimerContext({ ...props }: TimerContextProps) {\n  return <TimerPrimitive.Context {...props} />\n}\n\nfunction TimerArea({ className, ...props }: TimerAreaProps) {\n  return (\n    <TimerPrimitive.Area\n      data-slot=\"timer-area\"\n      className={cn(\"flex items-center gap-1 font-mono text-2xl font-medium tabular-nums\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TimerItem({ className, ...props }: TimerItemProps) {\n  return (\n    <TimerPrimitive.Item\n      data-slot=\"timer-item\"\n      className={cn(\"flex min-w-10 items-center justify-center rounded-lg bg-muted px-2 py-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TimerSeparator({ className, children, ...props }: TimerSeparatorProps) {\n  return (\n    <TimerPrimitive.Separator data-slot=\"timer-separator\" className={cn(\"text-muted-foreground\", className)} {...props}>\n      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? \":\"}</>}\n    </TimerPrimitive.Separator>\n  )\n}\n\nfunction TimerControl({ className, ...props }: TimerControlProps) {\n  return (\n    <TimerPrimitive.Control data-slot=\"timer-control\" className={cn(\"flex items-center gap-2\", className)} {...props} />\n  )\n}\n\nfunction TimerActionTrigger({ className, children, asChild, ...props }: TimerActionTriggerProps) {\n  return (\n    <TimerPrimitive.ActionTrigger data-slot=\"timer-action-trigger\" className={cn(className)} asChild {...props}>\n      {asChild ? (\n        children\n      ) : (\n        <Button variant=\"outline\" size=\"sm\">\n          {children}\n        </Button>\n      )}\n    </TimerPrimitive.ActionTrigger>\n  )\n}\n\nfunction TimerRootProvider({ className, ...props }: TimerRootProviderProps) {\n  return (\n    <TimerPrimitive.RootProvider\n      data-slot=\"timer\"\n      className={cn(\"flex flex-col items-center gap-3\", className)}\n      {...props}\n    />\n  )\n}\n\ntype TimerRootProps = React.ComponentProps<typeof TimerPrimitive.Root>\n\ntype TimerRootProviderProps = React.ComponentProps<typeof TimerPrimitive.RootProvider>\n\ntype TimerActionTriggerProps = React.ComponentProps<typeof TimerPrimitive.ActionTrigger>\n\ntype TimerAreaProps = React.ComponentProps<typeof TimerPrimitive.Area>\n\ntype TimerContextProps = React.ComponentProps<typeof TimerPrimitive.Context>\n\ntype TimerControlProps = React.ComponentProps<typeof TimerPrimitive.Control>\n\ntype TimerItemProps = React.ComponentProps<typeof TimerPrimitive.Item>\n\ntype TimerSeparatorProps = React.ComponentProps<typeof TimerPrimitive.Separator>\n\nconst Timer = {\n  Root: TimerRoot,\n  RootProvider: TimerRootProvider,\n  ActionTrigger: TimerActionTrigger,\n  Area: TimerArea,\n  Context: TimerContext,\n  Control: TimerControl,\n  Item: TimerItem,\n  Separator: TimerSeparator,\n}\n\nexport {\n  useTimer,\n  useTimerContext,\n  Timer,\n  type TimerRootProps,\n  type TimerRootProviderProps,\n  type TimerActionTriggerProps,\n  type TimerAreaProps,\n  type TimerContextProps,\n  type TimerControlProps,\n  type TimerItemProps,\n  type TimerSeparatorProps,\n}\n"
     }
   ]
 }

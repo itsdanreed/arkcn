@@ -1,3 +1,4 @@
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import {
   addDays,
@@ -137,7 +138,7 @@ const clamp = (v: number, min: number, max: number) => Math.min(max, Math.max(mi
  * Root
  * ------------------------------------------------------------------------- */
 
-function Gantt({
+function GanttRoot({
   start: startProp,
   end: endProp,
   dayWidth: dayWidthProp,
@@ -153,31 +154,7 @@ function Gantt({
   className,
   children,
   ...props
-}: Omit<React.ComponentProps<"div">, "onChange"> & {
-  /** First date on the time scale. */
-  start: Date
-  /** Last date on the time scale. */
-  end: Date
-  /** Pixels per day; controllable. Zooming changes it. */
-  dayWidth?: number
-  /** Initial pixels per day when uncontrolled. */
-  defaultDayWidth?: number
-  /** Called when the zoom changes. */
-  onDayWidthChange?: (dayWidth: number) => void
-  /** Lower bound for zooming out. */
-  minDayWidth?: number
-  /** Upper bound for zooming in. */
-  maxDayWidth?: number
-  /** Header tiers. Defaults from `dayWidth`: month below 16px, week below 32px, else day. */
-  scale?: GanttScale
-  /** Height of every row in px. */
-  rowHeight?: number
-  /** Width of the sticky label column in px. */
-  sidebarWidth?: number
-  editable?: boolean
-  /** Called with `{ id, start, end }` snapped to whole days after a move, resize, or keyboard change. */
-  onBarChange?: (change: GanttBarChange) => void
-}) {
+}: GanttRootProps) {
   const viewportRef = React.useRef<HTMLDivElement>(null)
   const start = React.useMemo(() => startOfDay(startProp), [startProp])
   const end = React.useMemo(() => startOfDay(endProp), [endProp])
@@ -370,7 +347,7 @@ function Gantt({
 
   return (
     <GanttContext.Provider value={ctx}>
-      <div
+      <ark.div
         data-slot="gantt"
         data-scale={scale}
         data-editable={editable ? "" : undefined}
@@ -379,9 +356,17 @@ function Gantt({
         style={{ ["--gantt-sidebar" as string]: `${sidebarWidth}px`, ["--gantt-row" as string]: `${rowHeight}px` }}
         {...props}
       >
-        {children}
-        <LiveRegion data-slot="gantt-live-region" message={announcement} />
-      </div>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            {children}
+            <LiveRegion.Root data-slot="gantt-live-region" message={announcement} />
+          </>
+        )}
+      </ark.div>
     </GanttContext.Provider>
   )
 }
@@ -390,10 +375,10 @@ function Gantt({
  * Viewport, header, body
  * ------------------------------------------------------------------------- */
 
-function GanttViewport({ className, ...props }: React.ComponentProps<"div">) {
+function GanttViewport({ className, ...props }: GanttViewportProps) {
   const { viewportRef } = useGantt()
   return (
-    <div
+    <ark.div
       ref={viewportRef}
       data-slot="gantt-viewport"
       className={cn("relative min-h-0 flex-1 overflow-auto rounded-xl border bg-background text-sm", className)}
@@ -403,7 +388,7 @@ function GanttViewport({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 /** Two-tier sticky header; the tiers depend on the scale. */
-function GanttHeader({ className, ...props }: React.ComponentProps<"div">) {
+function GanttHeader({ className, ...props }: GanttHeaderProps) {
   const { start, end, days, dayWidth, scale, sidebarWidth } = useGantt()
   const width = days * dayWidth
   const tiers = React.useMemo(() => {
@@ -449,47 +434,55 @@ function GanttHeader({ className, ...props }: React.ComponentProps<"div">) {
   }, [start, end, days, dayWidth, scale])
 
   return (
-    <div
+    <ark.div
       data-slot="gantt-header"
       className={cn("sticky top-0 z-30 flex bg-muted text-xs text-muted-foreground", className)}
       style={{ width: sidebarWidth + width }}
       {...props}
     >
-      <GanttHeaderCorner />
-      <div className="relative shrink-0" style={{ width }}>
-        <div className="flex h-7 border-b">
-          {tiers.top.map((cell) => (
-            <div
-              key={cell.key}
-              className="absolute inset-y-0 flex items-center truncate border-e px-2 font-medium"
-              style={{ left: cell.left, width: cell.width }}
-            >
-              {cell.label}
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <GanttHeaderCorner />
+          <div className="relative shrink-0" style={{ width }}>
+            <div className="flex h-7 border-b">
+              {tiers.top.map((cell) => (
+                <div
+                  key={cell.key}
+                  className="absolute inset-y-0 flex items-center truncate border-e px-2 font-medium"
+                  style={{ left: cell.left, width: cell.width }}
+                >
+                  {cell.label}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-        <div className="flex h-7 border-b">
-          {tiers.bottom.map((cell) => (
-            <div
-              key={cell.key}
-              data-weekend={cell.weekend ? "" : undefined}
-              data-today={cell.today ? "" : undefined}
-              className="absolute flex h-7 items-center justify-center truncate border-e data-today:font-semibold data-today:text-foreground data-weekend:bg-foreground/3"
-              style={{ left: cell.left, width: cell.width, top: 28 }}
-            >
-              {cell.width >= 18 ? cell.label : ""}
+            <div className="flex h-7 border-b">
+              {tiers.bottom.map((cell) => (
+                <div
+                  key={cell.key}
+                  data-weekend={cell.weekend ? "" : undefined}
+                  data-today={cell.today ? "" : undefined}
+                  className="absolute flex h-7 items-center justify-center truncate border-e data-today:font-semibold data-today:text-foreground data-weekend:bg-foreground/3"
+                  style={{ left: cell.left, width: cell.width, top: 28 }}
+                >
+                  {cell.width >= 18 ? cell.label : ""}
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
-      </div>
-    </div>
+          </div>
+        </>
+      )}
+    </ark.div>
   )
 }
 
 /** The sticky cell above the sidebar; put a title or a search box in it. */
-function GanttHeaderCorner({ className, ...props }: React.ComponentProps<"div">) {
+function GanttHeaderCorner({ className, ...props }: GanttHeaderCornerProps) {
   return (
-    <div
+    <ark.div
       data-slot="gantt-header-corner"
       className={cn(
         "sticky left-0 z-40 flex h-14 shrink-0 items-end border-e border-b bg-muted px-3 pb-2 font-medium",
@@ -501,10 +494,10 @@ function GanttHeaderCorner({ className, ...props }: React.ComponentProps<"div">)
   )
 }
 
-function GanttBody({ className, style, ...props }: React.ComponentProps<"div">) {
+function GanttBody({ className, style, ...props }: GanttBodyProps) {
   const { days, dayWidth, sidebarWidth } = useGantt()
   return (
-    <div
+    <ark.div
       data-slot="gantt-body"
       className={cn("relative", className)}
       style={{ width: sidebarWidth + days * dayWidth, ...style }}
@@ -514,7 +507,7 @@ function GanttBody({ className, style, ...props }: React.ComponentProps<"div">) 
 }
 
 /** Vertical day/week lines and weekend shading behind the bars. */
-function GanttGridLines({ className, ...props }: React.ComponentProps<"div">) {
+function GanttGridLines({ className, ...props }: GanttGridLinesProps) {
   const { start, end, dayWidth, scale, sidebarWidth } = useGantt()
   const cells = React.useMemo(() => {
     if (scale === "month")
@@ -524,25 +517,33 @@ function GanttGridLines({ className, ...props }: React.ComponentProps<"div">) {
     return eachDayOfInterval({ start, end }).map((d) => ({ date: d, weekend: isWeekend(d) }))
   }, [start, end, scale])
   return (
-    <div
+    <ark.div
       data-slot="gantt-grid-lines"
       aria-hidden
       className={cn("pointer-events-none absolute inset-y-0", className)}
       style={{ left: sidebarWidth, right: 0 }}
       {...props}
     >
-      {cells.map((cell) => (
-        <div
-          key={cell.date.toISOString()}
-          data-weekend={cell.weekend ? "" : undefined}
-          className="absolute inset-y-0 border-e border-border/60 data-weekend:bg-foreground/2.5"
-          style={{
-            left: differenceInCalendarDays(cell.date, start) * dayWidth,
-            width: scale === "day" ? dayWidth : undefined,
-          }}
-        />
-      ))}
-    </div>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          {cells.map((cell) => (
+            <div
+              key={cell.date.toISOString()}
+              data-weekend={cell.weekend ? "" : undefined}
+              className="absolute inset-y-0 border-e border-border/60 data-weekend:bg-foreground/2.5"
+              style={{
+                left: differenceInCalendarDays(cell.date, start) * dayWidth,
+                width: scale === "day" ? dayWidth : undefined,
+              }}
+            />
+          ))}
+        </>
+      )}
+    </ark.div>
   )
 }
 
@@ -551,16 +552,16 @@ function GanttGridLines({ className, ...props }: React.ComponentProps<"div">) {
  * ------------------------------------------------------------------------- */
 
 /** Groups the rows; keep bars inside so dependency lines can find them. */
-function GanttRows({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="gantt-rows" className={cn("relative", className)} {...props} />
+function GanttRows({ className, ...props }: GanttRowsProps) {
+  return <ark.div data-slot="gantt-rows" className={cn("relative", className)} {...props} />
 }
 
-function GanttRow({ value, className, children, ...props }: React.ComponentProps<"div"> & { value: string }) {
+function GanttRow({ value, className, children, ...props }: GanttRowProps) {
   const { rowHeight } = useGantt()
   const ctx = React.useMemo(() => ({ value }), [value])
   return (
     <RowContext.Provider value={ctx}>
-      <div
+      <ark.div
         data-slot="gantt-row"
         data-value={value}
         className={cn("group/row flex border-b hover:bg-muted/30", className)}
@@ -568,15 +569,15 @@ function GanttRow({ value, className, children, ...props }: React.ComponentProps
         {...props}
       >
         {children}
-      </div>
+      </ark.div>
     </RowContext.Provider>
   )
 }
 
 /** Sticky sidebar cell for the row. */
-function GanttRowLabel({ className, ...props }: React.ComponentProps<"div">) {
+function GanttRowLabel({ className, ...props }: GanttRowLabelProps) {
   return (
-    <div
+    <ark.div
       data-slot="gantt-row-label"
       className={cn(
         "sticky left-0 z-20 flex shrink-0 items-center gap-2 border-e bg-background px-3 text-sm transition-colors",
@@ -590,10 +591,10 @@ function GanttRowLabel({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 /** The timeline part of a row; bars are positioned inside it. */
-function GanttRowTrack({ className, ...props }: React.ComponentProps<"div">) {
+function GanttRowTrack({ className, ...props }: GanttRowTrackProps) {
   const { days, dayWidth } = useGantt()
   return (
-    <div
+    <ark.div
       data-slot="gantt-row-track"
       className={cn("relative shrink-0", className)}
       style={{ width: days * dayWidth }}
@@ -620,7 +621,7 @@ function GanttBar({
   onKeyDown,
   onBlur,
   ...props
-}: React.ComponentProps<"div"> & { value: string; start: Date; end: Date; progress?: number }) {
+}: GanttBarProps) {
   const gantt = useGantt()
   useGanttRow()
   const ref = React.useRef<HTMLDivElement>(null)
@@ -642,7 +643,7 @@ function GanttBar({
 
   return (
     <BarContext.Provider value={registration}>
-      <div
+      <ark.div
         ref={ref}
         data-slot="gantt-bar"
         data-value={value}
@@ -688,37 +689,44 @@ function GanttBar({
         }}
         {...props}
       >
-        {progress !== undefined && (
-          <div
-            data-slot="gantt-bar-progress"
-            aria-hidden
-            className="absolute inset-y-0 left-0 bg-primary/30"
-            style={{ width: `${clamp(progress, 0, 1) * 100}%` }}
-          />
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            {progress !== undefined && (
+              <div
+                data-slot="gantt-bar-progress"
+                aria-hidden
+                className="absolute inset-y-0 left-0 bg-primary/30"
+                style={{ width: `${clamp(progress, 0, 1) * 100}%` }}
+              />
+            )}
+            {children}
+          </>
         )}
-        {children}
-      </div>
+      </ark.div>
     </BarContext.Provider>
   )
 }
 
-function GanttBarLabel({ className, ...props }: React.ComponentProps<"span">) {
+function GanttBarLabel({ className, ...props }: GanttBarLabelProps) {
   return (
-    <span data-slot="gantt-bar-label" className={cn("relative z-10 truncate px-2 font-medium", className)} {...props} />
+    <ark.span
+      data-slot="gantt-bar-label"
+      className={cn("relative z-10 truncate px-2 font-medium", className)}
+      {...props}
+    />
   )
 }
 
-function GanttBarResizeHandle({
-  side,
-  className,
-  onPointerDown,
-  ...props
-}: React.ComponentProps<"div"> & { side: "start" | "end" }) {
+function GanttBarResizeHandle({ side, className, onPointerDown, ...props }: GanttBarResizeHandleProps) {
   const gantt = useGantt()
   const bar = React.useContext(BarContext)
   if (!gantt.editable || !bar) return null
   return (
-    <div
+    <ark.div
       data-slot="gantt-bar-resize-handle"
       data-side={side}
       role="separator"
@@ -741,14 +749,7 @@ function GanttBarResizeHandle({
 }
 
 /** A single-day marker rendered as a diamond. */
-function GanttMilestone({
-  value,
-  date,
-  className,
-  style,
-  children,
-  ...props
-}: React.ComponentProps<"div"> & { value: string; date: Date }) {
+function GanttMilestone({ value, date, className, style, children, ...props }: GanttMilestoneProps) {
   const gantt = useGantt()
   useGanttRow()
   const ref = React.useRef<HTMLDivElement>(null)
@@ -761,7 +762,7 @@ function GanttMilestone({
   const { registerBar } = gantt
   React.useLayoutEffect(() => registerBar({ ...registration, el: ref.current }), [registerBar, registration])
   return (
-    <div
+    <ark.div
       ref={ref}
       data-slot="gantt-milestone"
       data-value={value}
@@ -770,9 +771,17 @@ function GanttMilestone({
       style={{ left: gantt.xOf(day) + gantt.dayWidth / 2 - 8, ...style }}
       {...props}
     >
-      <span aria-hidden className="block size-4 rotate-45 rounded-sm bg-foreground" />
-      {children && <span className="text-xs font-medium whitespace-nowrap">{children}</span>}
-    </div>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <span aria-hidden className="block size-4 rotate-45 rounded-sm bg-foreground" />
+          {children && <span className="text-xs font-medium whitespace-nowrap">{children}</span>}
+        </>
+      )}
+    </ark.div>
   )
 }
 
@@ -781,11 +790,7 @@ function GanttMilestone({
  * ------------------------------------------------------------------------- */
 
 /** Arrows from the end of `from` to the start of `to`, measured from the registered bar elements. */
-function GanttDependencies({
-  links,
-  className,
-  ...props
-}: React.ComponentProps<"svg"> & { links: { from: string; to: string }[] }) {
+function GanttDependencies({ links, className, ...props }: GanttDependenciesProps) {
   const { barStore, dayWidth, xOf, sidebarWidth, rowHeight, days } = useGantt()
   React.useSyncExternalStore(barStore.subscribe, barStore.getVersion, barStore.getVersion)
   const svgRef = React.useRef<SVGSVGElement>(null)
@@ -816,7 +821,7 @@ function GanttDependencies({
     })
     .filter((p): p is { key: string; d: string } => !!p)
   return (
-    <svg
+    <ark.svg
       ref={svgRef}
       data-slot="gantt-dependencies"
       aria-hidden
@@ -824,38 +829,69 @@ function GanttDependencies({
       style={{ left: sidebarWidth, width: days * dayWidth, height: "100%" }}
       {...props}
     >
-      <defs>
-        <marker id={`${id}-arrow`} viewBox="0 0 6 6" refX="5" refY="3" markerWidth="6" markerHeight="6" orient="auto">
-          <path d="M 0 0 L 6 3 L 0 6 z" fill="currentColor" />
-        </marker>
-      </defs>
-      {paths.map((p) => (
-        <path key={p.key} d={p.d} fill="none" stroke="currentColor" strokeWidth={1.5} markerEnd={`url(#${id}-arrow)`} />
-      ))}
-    </svg>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <defs>
+            <marker
+              id={`${id}-arrow`}
+              viewBox="0 0 6 6"
+              refX="5"
+              refY="3"
+              markerWidth="6"
+              markerHeight="6"
+              orient="auto"
+            >
+              <path d="M 0 0 L 6 3 L 0 6 z" fill="currentColor" />
+            </marker>
+          </defs>
+          {paths.map((p) => (
+            <path
+              key={p.key}
+              d={p.d}
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={1.5}
+              markerEnd={`url(#${id}-arrow)`}
+            />
+          ))}
+        </>
+      )}
+    </ark.svg>
   )
 }
 
-function GanttToday({ className, date = new Date(), ...props }: React.ComponentProps<"div"> & { date?: Date }) {
+function GanttToday({ className, date = new Date(), ...props }: GanttTodayProps) {
   const { xOf, dayWidth, sidebarWidth, start, end } = useGantt()
   const day = startOfDay(date)
   if (day < start || day > end) return null
   return (
-    <div
+    <ark.div
       data-slot="gantt-today"
       aria-hidden
       className={cn("pointer-events-none absolute inset-y-0 w-px bg-destructive", className)}
       style={{ left: sidebarWidth + xOf(day) + dayWidth / 2 }}
       {...props}
     >
-      <span className="absolute top-0 left-1 rounded-b bg-destructive px-1 text-[10px]/4 text-white">Today</span>
-    </div>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <span className="absolute top-0 left-1 rounded-b bg-destructive px-1 text-[10px]/4 text-white">Today</span>
+        </>
+      )}
+    </ark.div>
   )
 }
 
-function GanttEmpty({ className, ...props }: React.ComponentProps<"div">) {
+function GanttEmpty({ className, ...props }: GanttEmptyProps) {
   return (
-    <div
+    <ark.div
       data-slot="gantt-empty"
       className={cn("flex h-32 items-center justify-center text-sm text-muted-foreground", className)}
       {...props}
@@ -867,11 +903,11 @@ function GanttEmpty({ className, ...props }: React.ComponentProps<"div">) {
  * Controls
  * ------------------------------------------------------------------------- */
 
-function GanttControls({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="gantt-controls" className={cn("flex items-center gap-1", className)} {...props} />
+function GanttControls({ className, ...props }: GanttControlsProps) {
+  return <ark.div data-slot="gantt-controls" className={cn("flex items-center gap-1", className)} {...props} />
 }
 
-function GanttZoomInTrigger({ asChild, children, onClick, ...props }: React.ComponentProps<typeof Button>) {
+function GanttZoomInTrigger({ asChild, children, onClick, ...props }: GanttZoomInTriggerProps) {
   const { zoomIn } = useGantt()
   return (
     <Button
@@ -891,7 +927,7 @@ function GanttZoomInTrigger({ asChild, children, onClick, ...props }: React.Comp
   )
 }
 
-function GanttZoomOutTrigger({ asChild, children, onClick, ...props }: React.ComponentProps<typeof Button>) {
+function GanttZoomOutTrigger({ asChild, children, onClick, ...props }: GanttZoomOutTriggerProps) {
   const { zoomOut } = useGantt()
   return (
     <Button
@@ -911,7 +947,7 @@ function GanttZoomOutTrigger({ asChild, children, onClick, ...props }: React.Com
   )
 }
 
-function GanttTodayTrigger({ asChild, children, onClick, ...props }: React.ComponentProps<typeof Button>) {
+function GanttTodayTrigger({ asChild, children, onClick, ...props }: GanttTodayTriggerProps) {
   const { scrollToDate } = useGantt()
   return (
     <Button
@@ -936,30 +972,126 @@ function GanttTodayTrigger({ asChild, children, onClick, ...props }: React.Compo
   )
 }
 
+type GanttRootProps = Omit<React.ComponentProps<typeof ark.div>, "onChange"> & {
+  /** First date on the time scale. */
+  start: Date
+  /** Last date on the time scale. */
+  end: Date
+  /** Pixels per day; controllable. Zooming changes it. */
+  dayWidth?: number
+  /** Initial pixels per day when uncontrolled. */
+  defaultDayWidth?: number
+  /** Called when the zoom changes. */
+  onDayWidthChange?: (dayWidth: number) => void
+  /** Lower bound for zooming out. */
+  minDayWidth?: number
+  /** Upper bound for zooming in. */
+  maxDayWidth?: number
+  /** Header tiers. Defaults from `dayWidth`: month below 16px, week below 32px, else day. */
+  scale?: GanttScale
+  /** Height of every row in px. */
+  rowHeight?: number
+  /** Width of the sticky label column in px. */
+  sidebarWidth?: number
+  editable?: boolean
+  /** Called with `{ id, start, end }` snapped to whole days after a move, resize, or keyboard change. */
+  onBarChange?: (change: GanttBarChange) => void
+}
+
+type GanttViewportProps = React.ComponentProps<typeof ark.div>
+
+type GanttHeaderProps = React.ComponentProps<typeof ark.div>
+
+type GanttHeaderCornerProps = React.ComponentProps<typeof ark.div>
+
+type GanttBodyProps = React.ComponentProps<typeof ark.div>
+
+type GanttGridLinesProps = React.ComponentProps<typeof ark.div>
+
+type GanttRowsProps = React.ComponentProps<typeof ark.div>
+
+type GanttRowProps = React.ComponentProps<typeof ark.div> & { value: string }
+
+type GanttRowLabelProps = React.ComponentProps<typeof ark.div>
+
+type GanttRowTrackProps = React.ComponentProps<typeof ark.div>
+
+type GanttBarProps = React.ComponentProps<typeof ark.div> & {
+  value: string
+  start: Date
+  end: Date
+  progress?: number
+}
+
+type GanttBarLabelProps = React.ComponentProps<typeof ark.span>
+
+type GanttBarResizeHandleProps = React.ComponentProps<typeof ark.div> & { side: "start" | "end" }
+
+type GanttMilestoneProps = React.ComponentProps<typeof ark.div> & { value: string; date: Date }
+
+type GanttDependenciesProps = React.ComponentProps<typeof ark.svg> & { links: { from: string; to: string }[] }
+
+type GanttTodayProps = React.ComponentProps<typeof ark.div> & { date?: Date }
+
+type GanttEmptyProps = React.ComponentProps<typeof ark.div>
+
+type GanttControlsProps = React.ComponentProps<typeof ark.div>
+
+type GanttZoomInTriggerProps = React.ComponentProps<typeof Button>
+
+type GanttZoomOutTriggerProps = React.ComponentProps<typeof Button>
+
+type GanttTodayTriggerProps = React.ComponentProps<typeof Button>
+
+const Gantt = {
+  Root: GanttRoot,
+  Viewport: GanttViewport,
+  Header: GanttHeader,
+  HeaderCorner: GanttHeaderCorner,
+  Body: GanttBody,
+  GridLines: GanttGridLines,
+  Rows: GanttRows,
+  Row: GanttRow,
+  RowLabel: GanttRowLabel,
+  RowTrack: GanttRowTrack,
+  Bar: GanttBar,
+  BarLabel: GanttBarLabel,
+  BarResizeHandle: GanttBarResizeHandle,
+  Milestone: GanttMilestone,
+  Dependencies: GanttDependencies,
+  Today: GanttToday,
+  Empty: GanttEmpty,
+  Controls: GanttControls,
+  ZoomInTrigger: GanttZoomInTrigger,
+  ZoomOutTrigger: GanttZoomOutTrigger,
+  TodayTrigger: GanttTodayTrigger,
+}
+
 export {
   Gantt,
-  GanttViewport,
-  GanttHeader,
-  GanttHeaderCorner,
-  GanttBody,
-  GanttGridLines,
-  GanttRows,
-  GanttRow,
-  GanttRowLabel,
-  GanttRowTrack,
-  GanttBar,
-  GanttBarLabel,
-  GanttBarResizeHandle,
-  GanttMilestone,
-  GanttDependencies,
-  GanttToday,
-  GanttEmpty,
-  GanttControls,
-  GanttZoomInTrigger,
-  GanttZoomOutTrigger,
-  GanttTodayTrigger,
   useGantt,
   useGanttRow,
   type GanttScale,
   type GanttBarChange,
+  type GanttRootProps,
+  type GanttViewportProps,
+  type GanttHeaderProps,
+  type GanttHeaderCornerProps,
+  type GanttBodyProps,
+  type GanttGridLinesProps,
+  type GanttRowsProps,
+  type GanttRowProps,
+  type GanttRowLabelProps,
+  type GanttRowTrackProps,
+  type GanttBarProps,
+  type GanttBarLabelProps,
+  type GanttBarResizeHandleProps,
+  type GanttMilestoneProps,
+  type GanttDependenciesProps,
+  type GanttTodayProps,
+  type GanttEmptyProps,
+  type GanttControlsProps,
+  type GanttZoomInTriggerProps,
+  type GanttZoomOutTriggerProps,
+  type GanttTodayTriggerProps,
 }

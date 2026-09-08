@@ -4,11 +4,11 @@ The scheduler is a calendar with day, week, and month views. You own the events 
 
 ## Time grid
 
-`SchedulerTimeGrid` has a header with `SchedulerDayHeadings` (click a day to open it) and `SchedulerAllDayRow`, then a body that scrolls to the morning on mount with `SchedulerTimeGutter` and `SchedulerDayColumns`. Render one `SchedulerDayColumn date= events=` per day from `useScheduler().days`; its render-prop child gets each event and returns a `SchedulerEvent value= start= end=` with `SchedulerEventTitle`, `SchedulerEventTime`, and `SchedulerEventResizeHandle`. Overlapping events are laid out side by side automatically. `SchedulerNowIndicator` draws the current time line.
+`Scheduler.TimeGrid` has a header with `Scheduler.DayHeadings` (click a day to open it) and `Scheduler.AllDayRow`, then a body that scrolls to the morning on mount with `Scheduler.TimeGutter` and `Scheduler.DayColumns`. Render one `SchedulerDayColumn date= events=` per day from `useScheduler().days`; its render-prop child gets each event and returns a `SchedulerEvent value= start= end=` with `Scheduler.EventTitle`, `Scheduler.EventTime`, and `Scheduler.EventResizeHandle`. Overlapping events are laid out side by side automatically. `Scheduler.NowIndicator` draws the current time line.
 
 ## Month grid
 
-`SchedulerMonthGrid` with `SchedulerMonthHeader` and `SchedulerMonthBody` renders `SchedulerMonthCell date=` cells; `SchedulerMonthEvent` chips drag between cells and shift by whole days, and `SchedulerMonthMore` shows the overflow.
+`Scheduler.MonthGrid` with `Scheduler.MonthHeader` and `Scheduler.MonthBody` renders `SchedulerMonthCell date=` cells; `Scheduler.MonthEvent` chips drag between cells and shift by whole days, and `Scheduler.MonthMore` shows the overflow.
 
 ## Keyboard
 
@@ -17,4 +17,4 @@ On a focused event: Space or Enter picks it up, up and down move by one slot, le
 ## Notes
 
 - Event parts spread your props first, so a `PopoverTrigger asChild` wrapper cannot override their pointer handlers or `data-slot`.
-- The toolbar is composed from `SchedulerPrevTrigger`, `SchedulerNextTrigger`, `SchedulerTodayTrigger`, `SchedulerTitle`, and `SchedulerViewSelect`.
+- The toolbar is composed from `Scheduler.PrevTrigger`, `Scheduler.NextTrigger`, `Scheduler.TodayTrigger`, `Scheduler.Title`, and `Scheduler.ViewSelect`.

@@ -4,24 +4,13 @@
   "description": "",
   "ark": "FloatingPanel",
   "exports": [
-    "FloatingPanel",
-    "FloatingPanelBody",
-    "FloatingPanelCloseTrigger",
-    "FloatingPanelContent",
-    "FloatingPanelContext",
-    "FloatingPanelControl",
-    "FloatingPanelDragTrigger",
-    "FloatingPanelHeader",
-    "FloatingPanelPortal",
-    "FloatingPanelPositioner",
-    "FloatingPanelResizeTrigger",
-    "FloatingPanelStageTrigger",
-    "FloatingPanelTitle",
-    "FloatingPanelTrigger"
+    "useFloatingPanel",
+    "useFloatingPanelContext",
+    "FloatingPanel"
   ],
   "parts": [
     {
-      "name": "FloatingPanel",
+      "name": "FloatingPanel.Root",
       "props": [
         {
           "name": "allowOverflow",
@@ -325,7 +314,79 @@
       ]
     },
     {
-      "name": "FloatingPanelBody",
+      "name": "FloatingPanel.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseFloatingPanelReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "FloatingPanel.Body",
       "props": [
         {
           "name": "asChild",
@@ -358,7 +419,7 @@
       ]
     },
     {
-      "name": "FloatingPanelCloseTrigger",
+      "name": "FloatingPanel.CloseTrigger",
       "props": [
         {
           "name": "asChild",
@@ -391,7 +452,7 @@
       ]
     },
     {
-      "name": "FloatingPanelContent",
+      "name": "FloatingPanel.Content",
       "props": [
         {
           "name": "asChild",
@@ -424,7 +485,7 @@
       ]
     },
     {
-      "name": "FloatingPanelContext",
+      "name": "FloatingPanel.Context",
       "props": [
         {
           "name": "children",
@@ -436,7 +497,7 @@
       ]
     },
     {
-      "name": "FloatingPanelControl",
+      "name": "FloatingPanel.Control",
       "props": [
         {
           "name": "asChild",
@@ -469,7 +530,7 @@
       ]
     },
     {
-      "name": "FloatingPanelDragTrigger",
+      "name": "FloatingPanel.DragTrigger",
       "props": [
         {
           "name": "asChild",
@@ -502,7 +563,7 @@
       ]
     },
     {
-      "name": "FloatingPanelHeader",
+      "name": "FloatingPanel.Header",
       "props": [
         {
           "name": "asChild",
@@ -535,7 +596,7 @@
       ]
     },
     {
-      "name": "FloatingPanelPortal",
+      "name": "FloatingPanel.Portal",
       "props": [
         {
           "name": "children",
@@ -560,7 +621,7 @@
       ]
     },
     {
-      "name": "FloatingPanelPositioner",
+      "name": "FloatingPanel.Positioner",
       "props": [
         {
           "name": "asChild",
@@ -593,7 +654,7 @@
       ]
     },
     {
-      "name": "FloatingPanelResizeTrigger",
+      "name": "FloatingPanel.ResizeTrigger",
       "props": [
         {
           "name": "axis",
@@ -633,7 +694,7 @@
       ]
     },
     {
-      "name": "FloatingPanelStageTrigger",
+      "name": "FloatingPanel.StageTrigger",
       "props": [
         {
           "name": "stage",
@@ -673,7 +734,7 @@
       ]
     },
     {
-      "name": "FloatingPanelTitle",
+      "name": "FloatingPanel.Title",
       "props": [
         {
           "name": "asChild",
@@ -706,7 +767,7 @@
       ]
     },
     {
-      "name": "FloatingPanelTrigger",
+      "name": "FloatingPanel.Trigger",
       "props": [
         {
           "name": "asChild",
@@ -750,7 +811,7 @@
   "files": [
     {
       "path": "components/ui/floating-panel.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { FloatingPanel as FloatingPanelPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\nimport { Maximize2Icon, Minimize2Icon, MinusIcon, XIcon } from \"lucide-react\"\n\nimport { Button } from \"@/components/ui/button\"\n\nfunction FloatingPanel({\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: React.ComponentProps<typeof FloatingPanelPrimitive.Root>) {\n  return <FloatingPanelPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n}\n\nfunction FloatingPanelContext({ ...props }: React.ComponentProps<typeof FloatingPanelPrimitive.Context>) {\n  return <FloatingPanelPrimitive.Context {...props} />\n}\n\nfunction FloatingPanelTrigger({ ...props }: React.ComponentProps<typeof FloatingPanelPrimitive.Trigger>) {\n  return <FloatingPanelPrimitive.Trigger data-slot=\"floating-panel-trigger\" {...props} />\n}\n\nfunction FloatingPanelPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction FloatingPanelPositioner({\n  className,\n  ...props\n}: React.ComponentProps<typeof FloatingPanelPrimitive.Positioner>) {\n  return (\n    <FloatingPanelPrimitive.Positioner\n      data-slot=\"floating-panel-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FloatingPanelContent({ className, ...props }: React.ComponentProps<typeof FloatingPanelPrimitive.Content>) {\n  return (\n    <FloatingPanelPortal>\n      <FloatingPanelPositioner>\n        <FloatingPanelPrimitive.Content\n          data-slot=\"floating-panel-content\"\n          className={cn(\n            \"flex flex-col overflow-hidden rounded-xl bg-popover text-sm text-popover-foreground shadow-lg ring-1 ring-foreground/10 outline-hidden data-[stage=minimized]:h-auto data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </FloatingPanelPositioner>\n    </FloatingPanelPortal>\n  )\n}\n\nfunction FloatingPanelDragTrigger({\n  className,\n  ...props\n}: React.ComponentProps<typeof FloatingPanelPrimitive.DragTrigger>) {\n  return (\n    <FloatingPanelPrimitive.DragTrigger\n      data-slot=\"floating-panel-drag-trigger\"\n      className={cn(\"flex-1 cursor-grab select-none data-dragging:cursor-grabbing\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FloatingPanelHeader({ className, ...props }: React.ComponentProps<typeof FloatingPanelPrimitive.Header>) {\n  return (\n    <FloatingPanelPrimitive.Header\n      data-slot=\"floating-panel-header\"\n      className={cn(\"flex h-9 items-center gap-1 border-b bg-muted/50 pr-1 pl-3\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FloatingPanelTitle({ className, ...props }: React.ComponentProps<typeof FloatingPanelPrimitive.Title>) {\n  return (\n    <FloatingPanelPrimitive.Title\n      data-slot=\"floating-panel-title\"\n      className={cn(\"font-heading text-sm font-medium\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FloatingPanelControl({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof FloatingPanelPrimitive.Control>) {\n  return (\n    <FloatingPanelPrimitive.Control\n      data-slot=\"floating-panel-control\"\n      className={cn(\"flex items-center\", className)}\n      {...props}\n    >\n      {children ?? (\n        <>\n          <FloatingPanelStageTrigger stage=\"minimized\">\n            <MinusIcon />\n          </FloatingPanelStageTrigger>\n          <FloatingPanelStageTrigger stage=\"maximized\">\n            <Maximize2Icon />\n          </FloatingPanelStageTrigger>\n          <FloatingPanelStageTrigger stage=\"default\">\n            <Minimize2Icon />\n          </FloatingPanelStageTrigger>\n          <FloatingPanelCloseTrigger />\n        </>\n      )}\n    </FloatingPanelPrimitive.Control>\n  )\n}\n\nfunction FloatingPanelStageTrigger({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof FloatingPanelPrimitive.StageTrigger>) {\n  return (\n    <FloatingPanelPrimitive.StageTrigger\n      data-slot=\"floating-panel-stage-trigger\"\n      className={cn(className)}\n      asChild\n      {...props}\n    >\n      <Button variant=\"ghost\" size=\"icon-xs\">\n        {children}\n      </Button>\n    </FloatingPanelPrimitive.StageTrigger>\n  )\n}\n\nfunction FloatingPanelCloseTrigger({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof FloatingPanelPrimitive.CloseTrigger>) {\n  return (\n    <FloatingPanelPrimitive.CloseTrigger\n      data-slot=\"floating-panel-close-trigger\"\n      className={cn(className)}\n      asChild\n      {...props}\n    >\n      <Button variant=\"ghost\" size=\"icon-xs\">\n        {children ?? <XIcon />}\n        <span className=\"sr-only\">Close</span>\n      </Button>\n    </FloatingPanelPrimitive.CloseTrigger>\n  )\n}\n\nfunction FloatingPanelBody({ className, ...props }: React.ComponentProps<typeof FloatingPanelPrimitive.Body>) {\n  return (\n    <FloatingPanelPrimitive.Body\n      data-slot=\"floating-panel-body\"\n      className={cn(\"flex-1 overflow-auto p-3\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FloatingPanelResizeTrigger({\n  className,\n  ...props\n}: React.ComponentProps<typeof FloatingPanelPrimitive.ResizeTrigger>) {\n  return (\n    <FloatingPanelPrimitive.ResizeTrigger\n      data-slot=\"floating-panel-resize-trigger\"\n      className={cn(className)}\n      {...props}\n    />\n  )\n}\n\nexport {\n  FloatingPanel,\n  FloatingPanelBody,\n  FloatingPanelCloseTrigger,\n  FloatingPanelContent,\n  FloatingPanelContext,\n  FloatingPanelControl,\n  FloatingPanelDragTrigger,\n  FloatingPanelHeader,\n  FloatingPanelPortal,\n  FloatingPanelPositioner,\n  FloatingPanelResizeTrigger,\n  FloatingPanelStageTrigger,\n  FloatingPanelTitle,\n  FloatingPanelTrigger,\n}\n"
+      "content": "\"use client\"\n\nimport { useFloatingPanel, useFloatingPanelContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { FloatingPanel as FloatingPanelPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\nimport { Maximize2Icon, Minimize2Icon, MinusIcon, XIcon } from \"lucide-react\"\n\nimport { Button } from \"@/components/ui/button\"\n\nfunction FloatingPanelRoot({ lazyMount = true, unmountOnExit = true, ...props }: FloatingPanelRootProps) {\n  return <FloatingPanelPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n}\n\nfunction FloatingPanelContext({ ...props }: FloatingPanelContextProps) {\n  return <FloatingPanelPrimitive.Context {...props} />\n}\n\nfunction FloatingPanelTrigger({ ...props }: FloatingPanelTriggerProps) {\n  return <FloatingPanelPrimitive.Trigger data-slot=\"floating-panel-trigger\" {...props} />\n}\n\nfunction FloatingPanelPortal({ ...props }: FloatingPanelPortalProps) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction FloatingPanelPositioner({ className, ...props }: FloatingPanelPositionerProps) {\n  return (\n    <FloatingPanelPrimitive.Positioner\n      data-slot=\"floating-panel-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FloatingPanelContent({ className, ...props }: FloatingPanelContentProps) {\n  return (\n    <FloatingPanelPortal>\n      <FloatingPanelPositioner>\n        <FloatingPanelPrimitive.Content\n          data-slot=\"floating-panel-content\"\n          className={cn(\n            \"flex flex-col overflow-hidden rounded-xl bg-popover text-sm text-popover-foreground shadow-lg ring-1 ring-foreground/10 outline-hidden data-[stage=minimized]:h-auto data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </FloatingPanelPositioner>\n    </FloatingPanelPortal>\n  )\n}\n\nfunction FloatingPanelDragTrigger({ className, ...props }: FloatingPanelDragTriggerProps) {\n  return (\n    <FloatingPanelPrimitive.DragTrigger\n      data-slot=\"floating-panel-drag-trigger\"\n      className={cn(\"flex-1 cursor-grab select-none data-dragging:cursor-grabbing\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FloatingPanelHeader({ className, ...props }: FloatingPanelHeaderProps) {\n  return (\n    <FloatingPanelPrimitive.Header\n      data-slot=\"floating-panel-header\"\n      className={cn(\"flex h-9 items-center gap-1 border-b bg-muted/50 pr-1 pl-3\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FloatingPanelTitle({ className, ...props }: FloatingPanelTitleProps) {\n  return (\n    <FloatingPanelPrimitive.Title\n      data-slot=\"floating-panel-title\"\n      className={cn(\"font-heading text-sm font-medium\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FloatingPanelControl({ className, children, ...props }: FloatingPanelControlProps) {\n  return (\n    <FloatingPanelPrimitive.Control\n      data-slot=\"floating-panel-control\"\n      className={cn(\"flex items-center\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <>\n              <FloatingPanelStageTrigger stage=\"minimized\">\n                <MinusIcon />\n              </FloatingPanelStageTrigger>\n              <FloatingPanelStageTrigger stage=\"maximized\">\n                <Maximize2Icon />\n              </FloatingPanelStageTrigger>\n              <FloatingPanelStageTrigger stage=\"default\">\n                <Minimize2Icon />\n              </FloatingPanelStageTrigger>\n              <FloatingPanelCloseTrigger />\n            </>\n          )}\n        </>\n      )}\n    </FloatingPanelPrimitive.Control>\n  )\n}\n\nfunction FloatingPanelStageTrigger({ className, children, ...props }: FloatingPanelStageTriggerProps) {\n  return (\n    <FloatingPanelPrimitive.StageTrigger\n      data-slot=\"floating-panel-stage-trigger\"\n      className={cn(className)}\n      asChild\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <Button variant=\"ghost\" size=\"icon-xs\">\n            {children}\n          </Button>\n        </>\n      )}\n    </FloatingPanelPrimitive.StageTrigger>\n  )\n}\n\nfunction FloatingPanelCloseTrigger({ className, children, ...props }: FloatingPanelCloseTriggerProps) {\n  return (\n    <FloatingPanelPrimitive.CloseTrigger\n      data-slot=\"floating-panel-close-trigger\"\n      className={cn(className)}\n      asChild\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <Button variant=\"ghost\" size=\"icon-xs\">\n            {children ?? <XIcon />}\n            <span className=\"sr-only\">Close</span>\n          </Button>\n        </>\n      )}\n    </FloatingPanelPrimitive.CloseTrigger>\n  )\n}\n\nfunction FloatingPanelBody({ className, ...props }: FloatingPanelBodyProps) {\n  return (\n    <FloatingPanelPrimitive.Body\n      data-slot=\"floating-panel-body\"\n      className={cn(\"flex-1 overflow-auto p-3\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FloatingPanelResizeTrigger({ className, ...props }: FloatingPanelResizeTriggerProps) {\n  return (\n    <FloatingPanelPrimitive.ResizeTrigger\n      data-slot=\"floating-panel-resize-trigger\"\n      className={cn(className)}\n      {...props}\n    />\n  )\n}\n\nfunction FloatingPanelRootProvider(props: FloatingPanelRootProviderProps) {\n  return <FloatingPanelPrimitive.RootProvider {...props} />\n}\n\ntype FloatingPanelRootProps = React.ComponentProps<typeof FloatingPanelPrimitive.Root>\n\ntype FloatingPanelRootProviderProps = React.ComponentProps<typeof FloatingPanelPrimitive.RootProvider>\n\ntype FloatingPanelBodyProps = React.ComponentProps<typeof FloatingPanelPrimitive.Body>\n\ntype FloatingPanelCloseTriggerProps = React.ComponentProps<typeof FloatingPanelPrimitive.CloseTrigger>\n\ntype FloatingPanelContentProps = React.ComponentProps<typeof FloatingPanelPrimitive.Content>\n\ntype FloatingPanelContextProps = React.ComponentProps<typeof FloatingPanelPrimitive.Context>\n\ntype FloatingPanelControlProps = React.ComponentProps<typeof FloatingPanelPrimitive.Control>\n\ntype FloatingPanelDragTriggerProps = React.ComponentProps<typeof FloatingPanelPrimitive.DragTrigger>\n\ntype FloatingPanelHeaderProps = React.ComponentProps<typeof FloatingPanelPrimitive.Header>\n\ntype FloatingPanelPortalProps = React.ComponentProps<typeof PortalPrimitive>\n\ntype FloatingPanelPositionerProps = React.ComponentProps<typeof FloatingPanelPrimitive.Positioner>\n\ntype FloatingPanelResizeTriggerProps = React.ComponentProps<typeof FloatingPanelPrimitive.ResizeTrigger>\n\ntype FloatingPanelStageTriggerProps = React.ComponentProps<typeof FloatingPanelPrimitive.StageTrigger>\n\ntype FloatingPanelTitleProps = React.ComponentProps<typeof FloatingPanelPrimitive.Title>\n\ntype FloatingPanelTriggerProps = React.ComponentProps<typeof FloatingPanelPrimitive.Trigger>\n\nconst FloatingPanel = {\n  Root: FloatingPanelRoot,\n  RootProvider: FloatingPanelRootProvider,\n  Body: FloatingPanelBody,\n  CloseTrigger: FloatingPanelCloseTrigger,\n  Content: FloatingPanelContent,\n  Context: FloatingPanelContext,\n  Control: FloatingPanelControl,\n  DragTrigger: FloatingPanelDragTrigger,\n  Header: FloatingPanelHeader,\n  Portal: FloatingPanelPortal,\n  Positioner: FloatingPanelPositioner,\n  ResizeTrigger: FloatingPanelResizeTrigger,\n  StageTrigger: FloatingPanelStageTrigger,\n  Title: FloatingPanelTitle,\n  Trigger: FloatingPanelTrigger,\n}\n\nexport {\n  useFloatingPanel,\n  useFloatingPanelContext,\n  FloatingPanel,\n  type FloatingPanelRootProps,\n  type FloatingPanelRootProviderProps,\n  type FloatingPanelBodyProps,\n  type FloatingPanelCloseTriggerProps,\n  type FloatingPanelContentProps,\n  type FloatingPanelContextProps,\n  type FloatingPanelControlProps,\n  type FloatingPanelDragTriggerProps,\n  type FloatingPanelHeaderProps,\n  type FloatingPanelPortalProps,\n  type FloatingPanelPositionerProps,\n  type FloatingPanelResizeTriggerProps,\n  type FloatingPanelStageTriggerProps,\n  type FloatingPanelTitleProps,\n  type FloatingPanelTriggerProps,\n}\n"
     }
   ]
 }

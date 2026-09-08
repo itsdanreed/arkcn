@@ -1,0 +1,254 @@
+{
+  "accordion": {
+    "module": "accordion",
+    "namespace": "Accordion"
+  },
+  "angle-slider": {
+    "module": "angle-slider",
+    "namespace": "AngleSlider"
+  },
+  "avatar": {
+    "module": "avatar",
+    "namespace": "Avatar"
+  },
+  "drawer": {
+    "module": "drawer",
+    "namespace": "Drawer"
+  },
+  "carousel": {
+    "module": "carousel",
+    "namespace": "Carousel",
+    "alternative": "Embla is intentionally retained for carousel motion and plugins."
+  },
+  "checkbox": {
+    "module": "checkbox",
+    "namespace": "Checkbox"
+  },
+  "client-only": {
+    "module": "client-only",
+    "namespace": "ClientOnly",
+    "standalone": true
+  },
+  "clipboard": {
+    "module": "clipboard",
+    "namespace": "Clipboard"
+  },
+  "collapsible": {
+    "module": "collapsible",
+    "namespace": "Collapsible"
+  },
+  "color-picker": {
+    "module": "color-picker",
+    "namespace": "ColorPicker"
+  },
+  "combobox": {
+    "module": "combobox",
+    "namespace": "Combobox"
+  },
+  "date-input": {
+    "module": "date-input",
+    "namespace": "DateInput"
+  },
+  "date-picker": {
+    "module": "date-picker",
+    "namespace": "DatePicker"
+  },
+  "dialog": {
+    "module": "dialog",
+    "namespace": "Dialog"
+  },
+  "download-trigger": {
+    "module": "download-trigger",
+    "namespace": "DownloadTrigger",
+    "standalone": true
+  },
+  "editable": {
+    "module": "editable",
+    "namespace": "Editable"
+  },
+  "field": {
+    "module": "field",
+    "namespace": "Field"
+  },
+  "fieldset": {
+    "module": "fieldset",
+    "namespace": "Fieldset"
+  },
+  "file-upload": {
+    "module": "file-upload",
+    "namespace": "FileUpload"
+  },
+  "floating-panel": {
+    "module": "floating-panel",
+    "namespace": "FloatingPanel"
+  },
+  "focus-trap": {
+    "module": "focus-trap",
+    "namespace": "FocusTrap",
+    "standalone": true
+  },
+  "format": {
+    "module": "format",
+    "namespace": "Format"
+  },
+  "frame": {
+    "module": "frame",
+    "namespace": "Frame",
+    "standalone": true
+  },
+  "highlight": {
+    "module": "highlight",
+    "namespace": "Highlight",
+    "standalone": true
+  },
+  "hover-card": {
+    "module": "hover-card",
+    "namespace": "HoverCard"
+  },
+  "image-cropper": {
+    "module": "image-cropper",
+    "namespace": "ImageCropper"
+  },
+  "json-tree-view": {
+    "module": "json-tree-view",
+    "namespace": "JsonTreeView"
+  },
+  "listbox": {
+    "module": "listbox",
+    "namespace": "Listbox"
+  },
+  "marquee": {
+    "module": "marquee",
+    "namespace": "Marquee"
+  },
+  "menu": {
+    "module": "dropdown-menu",
+    "namespace": "DropdownMenu"
+  },
+  "navigation-menu": {
+    "module": "navigation-menu",
+    "namespace": "NavigationMenu"
+  },
+  "number-input": {
+    "module": "number-input",
+    "namespace": "NumberInput"
+  },
+  "pagination": {
+    "module": "pagination",
+    "namespace": "Pagination"
+  },
+  "password-input": {
+    "module": "password-input",
+    "namespace": "PasswordInput"
+  },
+  "pin-input": {
+    "module": "pin-input",
+    "namespace": "PinInput"
+  },
+  "popover": {
+    "module": "popover",
+    "namespace": "Popover"
+  },
+  "portal": {
+    "module": "portal",
+    "namespace": "Portal",
+    "standalone": true
+  },
+  "presence": {
+    "module": "presence",
+    "namespace": "Presence",
+    "standalone": true
+  },
+  "progress": {
+    "module": "progress",
+    "namespace": "Progress"
+  },
+  "qr-code": {
+    "module": "qr-code",
+    "namespace": "QrCode"
+  },
+  "radio-group": {
+    "module": "radio-group",
+    "namespace": "RadioGroup"
+  },
+  "rating-group": {
+    "module": "rating-group",
+    "namespace": "RatingGroup"
+  },
+  "scroll-area": {
+    "module": "scroll-area",
+    "namespace": "ScrollArea"
+  },
+  "segment-group": {
+    "module": "segment-group",
+    "namespace": "SegmentGroup"
+  },
+  "select": {
+    "module": "select",
+    "namespace": "Select"
+  },
+  "signature-pad": {
+    "module": "signature-pad",
+    "namespace": "SignaturePad"
+  },
+  "slider": {
+    "module": "slider",
+    "namespace": "Slider"
+  },
+  "splitter": {
+    "module": "splitter",
+    "namespace": "Splitter"
+  },
+  "steps": {
+    "module": "steps",
+    "namespace": "Steps"
+  },
+  "swap": {
+    "module": "swap",
+    "namespace": "Swap"
+  },
+  "switch": {
+    "module": "switch",
+    "namespace": "Switch"
+  },
+  "tabs": {
+    "module": "tabs",
+    "namespace": "Tabs"
+  },
+  "tags-input": {
+    "module": "tags-input",
+    "namespace": "TagsInput"
+  },
+  "timer": {
+    "module": "timer",
+    "namespace": "Timer"
+  },
+  "toast": {
+    "module": "toast",
+    "namespace": "Toast"
+  },
+  "toc": {
+    "module": "toc",
+    "namespace": "Toc"
+  },
+  "toggle": {
+    "module": "toggle",
+    "namespace": "Toggle"
+  },
+  "toggle-group": {
+    "module": "toggle-group",
+    "namespace": "ToggleGroup"
+  },
+  "tooltip": {
+    "module": "tooltip",
+    "namespace": "Tooltip"
+  },
+  "tour": {
+    "module": "tour",
+    "namespace": "Tour"
+  },
+  "tree-view": {
+    "module": "tree-view",
+    "namespace": "TreeView"
+  }
+}

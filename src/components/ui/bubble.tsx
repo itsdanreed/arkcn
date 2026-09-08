@@ -3,8 +3,8 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 import { ark } from "@ark-ui/react"
 
-function BubbleGroup({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="bubble-group" className={cn("flex min-w-0 flex-col gap-2", className)} {...props} />
+function BubbleGroup({ className, ...props }: BubbleGroupProps) {
+  return <ark.div data-slot="bubble-group" className={cn("flex min-w-0 flex-col gap-2", className)} {...props} />
 }
 
 const bubbleVariants = cva(
@@ -34,17 +34,9 @@ const bubbleVariants = cva(
   }
 )
 
-function Bubble({
-  variant = "default",
-  align = "start",
-  className,
-  ...props
-}: React.ComponentProps<"div"> &
-  VariantProps<typeof bubbleVariants> & {
-    align?: "start" | "end"
-  }) {
+function BubbleRoot({ variant = "default", align = "start", className, ...props }: BubbleRootProps) {
   return (
-    <div
+    <ark.div
       data-slot="bubble"
       data-variant={variant}
       data-align={align}
@@ -54,13 +46,7 @@ function Bubble({
   )
 }
 
-function BubbleContent({
-  asChild = false,
-  className,
-  ...props
-}: React.ComponentProps<"div"> & {
-  asChild?: boolean
-}) {
+function BubbleContent({ asChild = false, className, ...props }: BubbleContentProps) {
   const Comp = ark.div
 
   return (
@@ -96,17 +82,9 @@ const bubbleReactionsVariants = cva(
   }
 )
 
-function BubbleReactions({
-  side = "bottom",
-  align = "end",
-  className,
-  ...props
-}: React.ComponentProps<"div"> & {
-  align?: "start" | "end"
-  side?: "top" | "bottom"
-}) {
+function BubbleReactions({ side = "bottom", align = "end", className, ...props }: BubbleReactionsProps) {
   return (
-    <div
+    <ark.div
       data-slot="bubble-reactions"
       data-align={align}
       data-side={side}
@@ -116,4 +94,27 @@ function BubbleReactions({
   )
 }
 
-export { BubbleGroup, Bubble, BubbleContent, BubbleReactions }
+type BubbleRootProps = React.ComponentProps<typeof ark.div> &
+  VariantProps<typeof bubbleVariants> & {
+    align?: "start" | "end"
+  }
+
+type BubbleGroupProps = React.ComponentProps<typeof ark.div>
+
+type BubbleContentProps = React.ComponentProps<typeof ark.div> & {
+  asChild?: boolean
+}
+
+type BubbleReactionsProps = React.ComponentProps<typeof ark.div> & {
+  align?: "start" | "end"
+  side?: "top" | "bottom"
+}
+
+const Bubble = {
+  Root: BubbleRoot,
+  Group: BubbleGroup,
+  Content: BubbleContent,
+  Reactions: BubbleReactions,
+}
+
+export { Bubble, type BubbleRootProps, type BubbleGroupProps, type BubbleContentProps, type BubbleReactionsProps }

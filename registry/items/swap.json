@@ -4,12 +4,13 @@
   "description": "",
   "ark": "Swap",
   "exports": [
-    "Swap",
-    "SwapIndicator"
+    "useSwap",
+    "useSwapContext",
+    "Swap"
   ],
   "parts": [
     {
-      "name": "Swap",
+      "name": "Swap.Root",
       "props": [
         {
           "name": "asChild",
@@ -74,7 +75,47 @@
       ]
     },
     {
-      "name": "SwapIndicator",
+      "name": "Swap.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseSwapReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Swap.Indicator",
       "props": [
         {
           "name": "type",
@@ -123,7 +164,7 @@
   "files": [
     {
       "path": "components/ui/swap.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Swap as SwapPrimitive } from \"@ark-ui/react\"\n\nfunction Swap({ className, ...props }: React.ComponentProps<typeof SwapPrimitive.Root>) {\n  return (\n    <SwapPrimitive.Root\n      data-slot=\"swap\"\n      className={cn(\n        \"relative inline-grid cursor-pointer place-items-center select-none *:col-start-1 *:row-start-1\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SwapIndicator({ className, ...props }: React.ComponentProps<typeof SwapPrimitive.Indicator>) {\n  return (\n    <SwapPrimitive.Indicator\n      data-slot=\"swap-indicator\"\n      className={cn(\n        \"transition-[opacity,transform] duration-200 data-[state=closed]:scale-75 data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nexport { Swap, SwapIndicator }\n"
+      "content": "\"use client\"\n\nimport { useSwap, useSwapContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Swap as SwapPrimitive } from \"@ark-ui/react\"\n\nfunction SwapRoot({ className, ...props }: SwapRootProps) {\n  return (\n    <SwapPrimitive.Root\n      data-slot=\"swap\"\n      className={cn(\n        \"relative inline-grid cursor-pointer place-items-center select-none *:col-start-1 *:row-start-1\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SwapIndicator({ className, ...props }: SwapIndicatorProps) {\n  return (\n    <SwapPrimitive.Indicator\n      data-slot=\"swap-indicator\"\n      className={cn(\n        \"transition-[opacity,transform] duration-200 data-[state=closed]:scale-75 data-[state=closed]:opacity-0 data-[state=open]:scale-100 data-[state=open]:opacity-100\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SwapRootProvider({ className, ...props }: SwapRootProviderProps) {\n  return (\n    <SwapPrimitive.RootProvider\n      data-slot=\"swap\"\n      className={cn(\n        \"relative inline-grid cursor-pointer place-items-center select-none *:col-start-1 *:row-start-1\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype SwapRootProps = React.ComponentProps<typeof SwapPrimitive.Root>\n\ntype SwapRootProviderProps = React.ComponentProps<typeof SwapPrimitive.RootProvider>\n\ntype SwapIndicatorProps = React.ComponentProps<typeof SwapPrimitive.Indicator>\n\nconst Swap = {\n  Root: SwapRoot,\n  RootProvider: SwapRootProvider,\n  Indicator: SwapIndicator,\n}\n\nexport { useSwap, useSwapContext, Swap, type SwapRootProps, type SwapRootProviderProps, type SwapIndicatorProps }\n"
     }
   ]
 }

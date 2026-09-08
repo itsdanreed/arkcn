@@ -4,23 +4,14 @@
   "description": "",
   "ark": "TagsInput",
   "exports": [
-    "TagsInput",
-    "TagsInputClearTrigger",
-    "TagsInputContext",
-    "TagsInputControl",
-    "TagsInputHiddenInput",
-    "TagsInputInput",
-    "TagsInputItem",
-    "TagsInputItemContext",
-    "TagsInputItemDeleteTrigger",
-    "TagsInputItemInput",
-    "TagsInputItemPreview",
-    "TagsInputItemText",
-    "TagsInputLabel"
+    "useTagsInput",
+    "useTagsInputContext",
+    "useTagsInputItemContext",
+    "TagsInput"
   ],
   "parts": [
     {
-      "name": "TagsInput",
+      "name": "TagsInput.Root",
       "props": [
         {
           "name": "addOnPaste",
@@ -283,7 +274,47 @@
       ]
     },
     {
-      "name": "TagsInputClearTrigger",
+      "name": "TagsInput.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseTagsInputReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "TagsInput.ClearTrigger",
       "props": [
         {
           "name": "asChild",
@@ -316,7 +347,7 @@
       ]
     },
     {
-      "name": "TagsInputContext",
+      "name": "TagsInput.Context",
       "props": [
         {
           "name": "children",
@@ -328,7 +359,7 @@
       ]
     },
     {
-      "name": "TagsInputControl",
+      "name": "TagsInput.Control",
       "props": [
         {
           "name": "asChild",
@@ -361,7 +392,7 @@
       ]
     },
     {
-      "name": "TagsInputHiddenInput",
+      "name": "TagsInput.HiddenInput",
       "props": [
         {
           "name": "asChild",
@@ -394,7 +425,7 @@
       ]
     },
     {
-      "name": "TagsInputInput",
+      "name": "TagsInput.Input",
       "props": [
         {
           "name": "asChild",
@@ -427,7 +458,7 @@
       ]
     },
     {
-      "name": "TagsInputItem",
+      "name": "TagsInput.Item",
       "props": [
         {
           "name": "index",
@@ -481,7 +512,7 @@
       ]
     },
     {
-      "name": "TagsInputItemContext",
+      "name": "TagsInput.ItemContext",
       "props": [
         {
           "name": "children",
@@ -493,7 +524,7 @@
       ]
     },
     {
-      "name": "TagsInputItemDeleteTrigger",
+      "name": "TagsInput.ItemDeleteTrigger",
       "props": [
         {
           "name": "asChild",
@@ -526,7 +557,7 @@
       ]
     },
     {
-      "name": "TagsInputItemInput",
+      "name": "TagsInput.ItemInput",
       "props": [
         {
           "name": "asChild",
@@ -559,7 +590,7 @@
       ]
     },
     {
-      "name": "TagsInputItemPreview",
+      "name": "TagsInput.ItemPreview",
       "props": [
         {
           "name": "asChild",
@@ -592,7 +623,7 @@
       ]
     },
     {
-      "name": "TagsInputItemText",
+      "name": "TagsInput.ItemText",
       "props": [
         {
           "name": "asChild",
@@ -625,7 +656,7 @@
       ]
     },
     {
-      "name": "TagsInputLabel",
+      "name": "TagsInput.Label",
       "props": [
         {
           "name": "asChild",
@@ -668,7 +699,7 @@
   "files": [
     {
       "path": "components/ui/tags-input.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { TagsInput as TagsInputPrimitive } from \"@ark-ui/react\"\nimport { XIcon } from \"lucide-react\"\n\nfunction TagsInput({ className, ...props }: React.ComponentProps<typeof TagsInputPrimitive.Root>) {\n  return (\n    <TagsInputPrimitive.Root\n      data-slot=\"tags-input\"\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TagsInputContext({ ...props }: React.ComponentProps<typeof TagsInputPrimitive.Context>) {\n  return <TagsInputPrimitive.Context {...props} />\n}\n\nfunction TagsInputLabel({ className, ...props }: React.ComponentProps<typeof TagsInputPrimitive.Label>) {\n  return (\n    <TagsInputPrimitive.Label\n      data-slot=\"tags-input-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TagsInputControl({ className, ...props }: React.ComponentProps<typeof TagsInputPrimitive.Control>) {\n  return (\n    <TagsInputPrimitive.Control\n      data-slot=\"tags-input-control\"\n      className={cn(\n        \"flex min-h-8 w-full flex-wrap items-center gap-1 rounded-lg border border-input bg-transparent px-1.5 py-1 text-sm transition-colors has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 dark:bg-input/30 data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction TagsInputInput({ className, ...props }: Omit<React.ComponentProps<typeof TagsInputPrimitive.Input>, \"id\">) {\n  return (\n    <TagsInputPrimitive.Input\n      data-slot=\"tags-input-input\"\n      className={cn(\n        \"min-w-16 flex-1 bg-transparent px-1 text-sm outline-none placeholder:text-muted-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TagsInputItem({ className, ...props }: React.ComponentProps<typeof TagsInputPrimitive.Item>) {\n  return <TagsInputPrimitive.Item data-slot=\"tags-input-item\" className={cn(\"inline-flex\", className)} {...props} />\n}\n\nfunction TagsInputItemContext({ ...props }: React.ComponentProps<typeof TagsInputPrimitive.ItemContext>) {\n  return <TagsInputPrimitive.ItemContext {...props} />\n}\n\nfunction TagsInputItemPreview({ className, ...props }: React.ComponentProps<typeof TagsInputPrimitive.ItemPreview>) {\n  return (\n    <TagsInputPrimitive.ItemPreview\n      data-slot=\"tags-input-item-preview\"\n      className={cn(\n        \"flex h-[calc(--spacing(5.25))] items-center gap-1 rounded-sm bg-muted pr-0 pl-1.5 text-xs font-medium whitespace-nowrap text-foreground data-highlighted:ring-2 data-highlighted:ring-ring/50 data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TagsInputItemText({ ...props }: React.ComponentProps<typeof TagsInputPrimitive.ItemText>) {\n  return <TagsInputPrimitive.ItemText data-slot=\"tags-input-item-text\" {...props} />\n}\n\nfunction TagsInputItemDeleteTrigger({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof TagsInputPrimitive.ItemDeleteTrigger>) {\n  return (\n    <TagsInputPrimitive.ItemDeleteTrigger\n      data-slot=\"tags-input-item-delete-trigger\"\n      className={cn(\n        \"inline-flex size-5 items-center justify-center rounded-sm opacity-50 hover:opacity-100 [&_svg]:size-3\",\n        className\n      )}\n      {...props}\n    >\n      {children ?? <XIcon />}\n    </TagsInputPrimitive.ItemDeleteTrigger>\n  )\n}\n\nfunction TagsInputItemInput({ className, ...props }: React.ComponentProps<typeof TagsInputPrimitive.ItemInput>) {\n  return (\n    <TagsInputPrimitive.ItemInput\n      data-slot=\"tags-input-item-input\"\n      className={cn(\n        \"h-[calc(--spacing(5.25))] rounded-sm bg-muted px-1.5 text-xs ring-2 ring-ring/50 outline-none\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TagsInputClearTrigger({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof TagsInputPrimitive.ClearTrigger>) {\n  return (\n    <TagsInputPrimitive.ClearTrigger\n      data-slot=\"tags-input-clear-trigger\"\n      className={cn(\n        \"inline-flex size-6 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground [&_svg]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {children ?? <XIcon />}\n    </TagsInputPrimitive.ClearTrigger>\n  )\n}\n\nfunction TagsInputHiddenInput({ ...props }: React.ComponentProps<typeof TagsInputPrimitive.HiddenInput>) {\n  return <TagsInputPrimitive.HiddenInput {...props} />\n}\n\nexport {\n  TagsInput,\n  TagsInputClearTrigger,\n  TagsInputContext,\n  TagsInputControl,\n  TagsInputHiddenInput,\n  TagsInputInput,\n  TagsInputItem,\n  TagsInputItemContext,\n  TagsInputItemDeleteTrigger,\n  TagsInputItemInput,\n  TagsInputItemPreview,\n  TagsInputItemText,\n  TagsInputLabel,\n}\n"
+      "content": "\"use client\"\n\nimport { useTagsInput, useTagsInputContext, useTagsInputItemContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { TagsInput as TagsInputPrimitive } from \"@ark-ui/react\"\nimport { XIcon } from \"lucide-react\"\n\nfunction TagsInputRoot({ className, ...props }: TagsInputRootProps) {\n  return (\n    <TagsInputPrimitive.Root\n      data-slot=\"tags-input\"\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TagsInputContext({ ...props }: TagsInputContextProps) {\n  return <TagsInputPrimitive.Context {...props} />\n}\n\nfunction TagsInputLabel({ className, ...props }: TagsInputLabelProps) {\n  return (\n    <TagsInputPrimitive.Label\n      data-slot=\"tags-input-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TagsInputControl({ className, ...props }: TagsInputControlProps) {\n  return (\n    <TagsInputPrimitive.Control\n      data-slot=\"tags-input-control\"\n      className={cn(\n        \"flex min-h-8 w-full flex-wrap items-center gap-1 rounded-lg border border-input bg-transparent px-1.5 py-1 text-sm transition-colors has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 dark:bg-input/30 data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction TagsInputInput({ className, ...props }: TagsInputInputProps) {\n  return (\n    <TagsInputPrimitive.Input\n      data-slot=\"tags-input-input\"\n      className={cn(\n        \"min-w-16 flex-1 bg-transparent px-1 text-sm outline-none placeholder:text-muted-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TagsInputItem({ className, ...props }: TagsInputItemProps) {\n  return <TagsInputPrimitive.Item data-slot=\"tags-input-item\" className={cn(\"inline-flex\", className)} {...props} />\n}\n\nfunction TagsInputItemContext({ ...props }: TagsInputItemContextProps) {\n  return <TagsInputPrimitive.ItemContext {...props} />\n}\n\nfunction TagsInputItemPreview({ className, ...props }: TagsInputItemPreviewProps) {\n  return (\n    <TagsInputPrimitive.ItemPreview\n      data-slot=\"tags-input-item-preview\"\n      className={cn(\n        \"flex h-[calc(--spacing(5.25))] items-center gap-1 rounded-sm bg-muted pr-0 pl-1.5 text-xs font-medium whitespace-nowrap text-foreground data-highlighted:ring-2 data-highlighted:ring-ring/50 data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TagsInputItemText({ ...props }: TagsInputItemTextProps) {\n  return <TagsInputPrimitive.ItemText data-slot=\"tags-input-item-text\" {...props} />\n}\n\nfunction TagsInputItemDeleteTrigger({ className, children, ...props }: TagsInputItemDeleteTriggerProps) {\n  return (\n    <TagsInputPrimitive.ItemDeleteTrigger\n      data-slot=\"tags-input-item-delete-trigger\"\n      className={cn(\n        \"inline-flex size-5 items-center justify-center rounded-sm opacity-50 hover:opacity-100 [&_svg]:size-3\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <XIcon />}</>}\n    </TagsInputPrimitive.ItemDeleteTrigger>\n  )\n}\n\nfunction TagsInputItemInput({ className, ...props }: TagsInputItemInputProps) {\n  return (\n    <TagsInputPrimitive.ItemInput\n      data-slot=\"tags-input-item-input\"\n      className={cn(\n        \"h-[calc(--spacing(5.25))] rounded-sm bg-muted px-1.5 text-xs ring-2 ring-ring/50 outline-none\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TagsInputClearTrigger({ className, children, ...props }: TagsInputClearTriggerProps) {\n  return (\n    <TagsInputPrimitive.ClearTrigger\n      data-slot=\"tags-input-clear-trigger\"\n      className={cn(\n        \"inline-flex size-6 items-center justify-center rounded-md text-muted-foreground hover:bg-muted hover:text-foreground [&_svg]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <XIcon />}</>}\n    </TagsInputPrimitive.ClearTrigger>\n  )\n}\n\nfunction TagsInputHiddenInput({ ...props }: TagsInputHiddenInputProps) {\n  return <TagsInputPrimitive.HiddenInput {...props} />\n}\n\nfunction TagsInputRootProvider({ className, ...props }: TagsInputRootProviderProps) {\n  return (\n    <TagsInputPrimitive.RootProvider\n      data-slot=\"tags-input\"\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\ntype TagsInputRootProps = React.ComponentProps<typeof TagsInputPrimitive.Root>\n\ntype TagsInputRootProviderProps = React.ComponentProps<typeof TagsInputPrimitive.RootProvider>\n\ntype TagsInputClearTriggerProps = React.ComponentProps<typeof TagsInputPrimitive.ClearTrigger>\n\ntype TagsInputContextProps = React.ComponentProps<typeof TagsInputPrimitive.Context>\n\ntype TagsInputControlProps = React.ComponentProps<typeof TagsInputPrimitive.Control>\n\ntype TagsInputHiddenInputProps = React.ComponentProps<typeof TagsInputPrimitive.HiddenInput>\n\ntype TagsInputInputProps = Omit<React.ComponentProps<typeof TagsInputPrimitive.Input>, \"id\">\n\ntype TagsInputItemProps = React.ComponentProps<typeof TagsInputPrimitive.Item>\n\ntype TagsInputItemContextProps = React.ComponentProps<typeof TagsInputPrimitive.ItemContext>\n\ntype TagsInputItemDeleteTriggerProps = React.ComponentProps<typeof TagsInputPrimitive.ItemDeleteTrigger>\n\ntype TagsInputItemInputProps = React.ComponentProps<typeof TagsInputPrimitive.ItemInput>\n\ntype TagsInputItemPreviewProps = React.ComponentProps<typeof TagsInputPrimitive.ItemPreview>\n\ntype TagsInputItemTextProps = React.ComponentProps<typeof TagsInputPrimitive.ItemText>\n\ntype TagsInputLabelProps = React.ComponentProps<typeof TagsInputPrimitive.Label>\n\nconst TagsInput = {\n  Root: TagsInputRoot,\n  RootProvider: TagsInputRootProvider,\n  ClearTrigger: TagsInputClearTrigger,\n  Context: TagsInputContext,\n  Control: TagsInputControl,\n  HiddenInput: TagsInputHiddenInput,\n  Input: TagsInputInput,\n  Item: TagsInputItem,\n  ItemContext: TagsInputItemContext,\n  ItemDeleteTrigger: TagsInputItemDeleteTrigger,\n  ItemInput: TagsInputItemInput,\n  ItemPreview: TagsInputItemPreview,\n  ItemText: TagsInputItemText,\n  Label: TagsInputLabel,\n}\n\nexport {\n  useTagsInput,\n  useTagsInputContext,\n  useTagsInputItemContext,\n  TagsInput,\n  type TagsInputRootProps,\n  type TagsInputRootProviderProps,\n  type TagsInputClearTriggerProps,\n  type TagsInputContextProps,\n  type TagsInputControlProps,\n  type TagsInputHiddenInputProps,\n  type TagsInputInputProps,\n  type TagsInputItemProps,\n  type TagsInputItemContextProps,\n  type TagsInputItemDeleteTriggerProps,\n  type TagsInputItemInputProps,\n  type TagsInputItemPreviewProps,\n  type TagsInputItemTextProps,\n  type TagsInputLabelProps,\n}\n"
     }
   ]
 }

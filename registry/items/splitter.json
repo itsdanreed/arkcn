@@ -1,0 +1,328 @@
+{
+  "name": "splitter",
+  "type": "ui",
+  "description": "",
+  "ark": "Splitter",
+  "exports": [
+    "Splitter",
+    "useSplitter",
+    "useSplitterContext",
+    "createSplitterRegistry"
+  ],
+  "parts": [
+    {
+      "name": "Splitter.Root",
+      "props": [
+        {
+          "name": "panels",
+          "type": "PanelData[]",
+          "required": true,
+          "description": "The size constraints of the panels.",
+          "from": "@zag-js/splitter"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultSize",
+          "type": "PanelSize[]",
+          "required": false,
+          "description": "The initial size of the panels when rendered.\nUse when you don't need to control the size of the panels.",
+          "from": "@zag-js/splitter"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the splitter. Useful for composition.",
+          "from": "@zag-js/splitter"
+        },
+        {
+          "name": "keyboardResizeBy",
+          "type": "number | null",
+          "required": false,
+          "description": "The number of pixels to resize the panel by when the keyboard is used.",
+          "from": "@zag-js/splitter"
+        },
+        {
+          "name": "nonce",
+          "type": "string",
+          "required": false,
+          "description": "The nonce for the injected splitter cursor stylesheet.",
+          "from": "@zag-js/splitter"
+        },
+        {
+          "name": "onCollapse",
+          "type": "((details: ExpandCollapseDetails) => void)",
+          "required": false,
+          "description": "Function called when a panel is collapsed.",
+          "from": "@zag-js/splitter"
+        },
+        {
+          "name": "onExpand",
+          "type": "((details: ExpandCollapseDetails) => void)",
+          "required": false,
+          "description": "Function called when a panel is expanded.",
+          "from": "@zag-js/splitter"
+        },
+        {
+          "name": "onResize",
+          "type": "((details: ResizeDetails) => void)",
+          "required": false,
+          "description": "Function called when the splitter is resized.",
+          "from": "@zag-js/splitter"
+        },
+        {
+          "name": "onResizeEnd",
+          "type": "((details: ResizeEndDetails) => void)",
+          "required": false,
+          "description": "Function called when the splitter resize ends.",
+          "from": "@zag-js/splitter"
+        },
+        {
+          "name": "onResizeStart",
+          "type": "(() => void)",
+          "required": false,
+          "description": "Function called when the splitter resize starts.",
+          "from": "@zag-js/splitter"
+        },
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "required": false,
+          "default": "\"horizontal\"",
+          "description": "The orientation of the splitter. Can be `horizontal` or `vertical`",
+          "from": "@zag-js/splitter"
+        },
+        {
+          "name": "registry",
+          "type": "SplitterRegistry",
+          "required": false,
+          "description": "The splitter registry to use for multi-drag support.\nWhen provided, enables dragging at the intersection of multiple splitters.",
+          "from": "@zag-js/splitter"
+        },
+        {
+          "name": "size",
+          "type": "PanelSize[]",
+          "required": false,
+          "description": "The controlled size data of the panels",
+          "from": "@zag-js/splitter"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Splitter.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseSplitterContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Splitter.Panel",
+      "props": [
+        {
+          "name": "id",
+          "type": "string",
+          "required": true,
+          "from": "@zag-js/splitter"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Splitter.ResizeTrigger",
+      "props": [
+        {
+          "name": "id",
+          "type": "ResizeTriggerId",
+          "required": true,
+          "from": "@zag-js/splitter"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "@zag-js/splitter"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Splitter.ResizeTriggerIndicator",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Splitter.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseSplitterReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/splitter.tsx",
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport { Splitter as SplitterPrimitive, useSplitter, useSplitterContext, createSplitterRegistry } from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction SplitterContext(props: SplitterContextProps) {\n  return <SplitterPrimitive.Context {...props} />\n}\n\nfunction SplitterPanel({ className, ...props }: SplitterPanelProps) {\n  return (\n    <SplitterPrimitive.Panel\n      data-slot=\"splitter-panel\"\n      className={cn(\"min-h-0 min-w-0 overflow-auto\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SplitterResizeTrigger({ className, ...props }: SplitterResizeTriggerProps) {\n  return (\n    <SplitterPrimitive.ResizeTrigger\n      data-slot=\"splitter-resize-trigger\"\n      className={cn(\n        \"relative flex w-1 shrink-0 items-center justify-center bg-border outline-none focus-visible:ring-3 focus-visible:ring-ring/50 data-vertical:h-1 data-vertical:w-full\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SplitterResizeTriggerIndicator({ className, ...props }: SplitterResizeTriggerIndicatorProps) {\n  return (\n    <SplitterPrimitive.ResizeTriggerIndicator\n      data-slot=\"splitter-resize-trigger-indicator\"\n      className={cn(\"h-6 w-1 rounded-full bg-muted-foreground/50 data-vertical:h-1 data-vertical:w-6\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SplitterRoot({ className, ...props }: SplitterRootProps) {\n  return (\n    <SplitterPrimitive.Root\n      data-slot=\"splitter\"\n      className={cn(\"flex size-full data-vertical:flex-col\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SplitterRootProvider({ className, ...props }: SplitterRootProviderProps) {\n  return (\n    <SplitterPrimitive.RootProvider\n      data-slot=\"splitter-root-provider\"\n      className={cn(\"flex size-full data-vertical:flex-col\", className)}\n      {...props}\n    />\n  )\n}\n\nconst SplitterGetLayout = SplitterPrimitive.getLayout\n\ntype SplitterRootProps = React.ComponentProps<typeof SplitterPrimitive.Root>\n\ntype SplitterContextProps = React.ComponentProps<typeof SplitterPrimitive.Context>\n\ntype SplitterPanelProps = React.ComponentProps<typeof SplitterPrimitive.Panel>\n\ntype SplitterResizeTriggerProps = React.ComponentProps<typeof SplitterPrimitive.ResizeTrigger>\n\ntype SplitterResizeTriggerIndicatorProps = React.ComponentProps<typeof SplitterPrimitive.ResizeTriggerIndicator>\n\ntype SplitterRootProviderProps = React.ComponentProps<typeof SplitterPrimitive.RootProvider>\n\nconst Splitter = {\n  getLayout: SplitterGetLayout,\n  Root: SplitterRoot,\n  Context: SplitterContext,\n  Panel: SplitterPanel,\n  ResizeTrigger: SplitterResizeTrigger,\n  ResizeTriggerIndicator: SplitterResizeTriggerIndicator,\n  RootProvider: SplitterRootProvider,\n  createRegistry: createSplitterRegistry,\n}\n\nexport {\n  Splitter,\n  useSplitter,\n  useSplitterContext,\n  createSplitterRegistry,\n  type SplitterRootProps,\n  type SplitterContextProps,\n  type SplitterPanelProps,\n  type SplitterResizeTriggerProps,\n  type SplitterResizeTriggerIndicatorProps,\n  type SplitterRootProviderProps,\n}\n"
+    }
+  ]
+}

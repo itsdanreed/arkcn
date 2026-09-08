@@ -1,5 +1,7 @@
 "use client"
 
+import { ark } from "@ark-ui/react"
+import { useSelect, useSelectContext, useSelectItemContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import {
@@ -11,12 +13,12 @@ import {
 } from "@ark-ui/react"
 import { ChevronDownIcon, CheckIcon, ChevronUpIcon } from "lucide-react"
 
-function Select<T extends CollectionItem>({
+function SelectRoot<T extends CollectionItem>({
   positioning,
   lazyMount = true,
   unmountOnExit = true,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Root<T>>) {
+}: SelectRootProps<T>) {
   return (
     <SelectPrimitive.Root
       data-slot="select"
@@ -33,21 +35,21 @@ function Select<T extends CollectionItem>({
   )
 }
 
-function SelectContext({ ...props }: React.ComponentProps<typeof SelectPrimitive.Context>) {
+function SelectContext({ ...props }: SelectContextProps) {
   return <SelectPrimitive.Context {...props} />
 }
 
-function SelectHiddenSelect({ ...props }: React.ComponentProps<typeof SelectPrimitive.HiddenSelect>) {
+function SelectHiddenSelect({ ...props }: SelectHiddenSelectProps) {
   return <SelectPrimitive.HiddenSelect {...props} />
 }
 
-function SelectRootLabel({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Label>) {
+function SelectLabel({ className, ...props }: SelectLabelProps) {
   return (
     <SelectPrimitive.Label data-slot="select-root-label" className={cn("text-sm font-medium", className)} {...props} />
   )
 }
 
-function SelectControl({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Control>) {
+function SelectControl({ className, ...props }: SelectControlProps) {
   return (
     <SelectPrimitive.Control
       data-slot="select-control"
@@ -57,15 +59,15 @@ function SelectControl({ className, ...props }: React.ComponentProps<typeof Sele
   )
 }
 
-function SelectGroup({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.ItemGroup>) {
+function SelectItemGroup({ className, ...props }: SelectItemGroupProps) {
   return <SelectPrimitive.ItemGroup data-slot="select-group" className={cn("scroll-my-1 p-1", className)} {...props} />
 }
 
-function SelectValue({ ...props }: React.ComponentProps<typeof SelectPrimitive.ValueText>) {
+function SelectValueText({ ...props }: SelectValueTextProps) {
   return <SelectPrimitive.ValueText data-slot="select-value" {...props} />
 }
 
-function SelectIndicator({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Indicator>) {
+function SelectIndicator({ className, ...props }: SelectIndicatorProps) {
   return (
     <SelectPrimitive.Indicator
       data-slot="select-indicator"
@@ -75,7 +77,7 @@ function SelectIndicator({ className, ...props }: React.ComponentProps<typeof Se
   )
 }
 
-function SelectClearTrigger({ ...props }: React.ComponentProps<typeof SelectPrimitive.ClearTrigger>) {
+function SelectClearTrigger({ ...props }: SelectClearTriggerProps) {
   return <SelectPrimitive.ClearTrigger data-slot="select-clear-trigger" {...props} />
 }
 
@@ -85,16 +87,7 @@ function SelectClearTrigger({ ...props }: React.ComponentProps<typeof SelectPrim
  * can supply its own chrome, e.g. an editable grid cell that already draws the
  * focus ring.
  */
-function SelectTrigger({
-  className,
-  size = "default",
-  variant = "default",
-  children,
-  ...props
-}: Omit<React.ComponentProps<typeof SelectPrimitive.Trigger>, "id"> & {
-  size?: "sm" | "default"
-  variant?: "default" | "unstyled"
-}) {
+function SelectTrigger({ className, size = "default", variant = "default", children, ...props }: SelectTriggerProps) {
   return (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
@@ -116,18 +109,14 @@ function SelectTrigger({
   )
 }
 
-function SelectPositioner({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Positioner>) {
+function SelectPositioner({ className, ...props }: SelectPositionerProps) {
   return (
     <SelectPrimitive.Positioner data-slot="select-positioner" className={cn("[--z-index:50]", className)} {...props} />
   )
 }
 
 /** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */
-function SelectContent({
-  className,
-  children,
-  ...props
-}: Omit<React.ComponentProps<typeof SelectPrimitive.Content>, "id">) {
+function SelectContent({ className, children, ...props }: SelectContentProps) {
   return (
     <PortalPrimitive>
       <SelectPositioner>
@@ -139,20 +128,28 @@ function SelectContent({
           )}
           {...props}
         >
-          <SelectScrollUpButton />
-          {children}
-          <SelectScrollDownButton />
+          {props.asChild ? (
+            React.isValidElement(children) ? (
+              children
+            ) : null
+          ) : (
+            <>
+              <SelectScrollUpButton />
+              {children}
+              <SelectScrollDownButton />
+            </>
+          )}
         </SelectPrimitive.Content>
       </SelectPositioner>
     </PortalPrimitive>
   )
 }
 
-function SelectList({ ...props }: React.ComponentProps<typeof SelectPrimitive.List>) {
+function SelectList({ ...props }: SelectListProps) {
   return <SelectPrimitive.List data-slot="select-list" {...props} />
 }
 
-function SelectLabel({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.ItemGroupLabel>) {
+function SelectItemGroupLabel({ className, ...props }: SelectItemGroupLabelProps) {
   return (
     <SelectPrimitive.ItemGroupLabel
       data-slot="select-label"
@@ -162,17 +159,7 @@ function SelectLabel({ className, ...props }: React.ComponentProps<typeof Select
   )
 }
 
-function SelectItem({
-  className,
-  children,
-  item,
-  value,
-  ...props
-}: Omit<React.ComponentProps<typeof SelectPrimitive.Item>, "item"> & {
-  /** The collection item. Falls back to `value` for string collections. */
-  item?: CollectionItem
-  value?: string
-}) {
+function SelectItem({ className, children, item, value, ...props }: SelectItemProps) {
   return (
     <SelectPrimitive.Item
       data-slot="select-item"
@@ -183,19 +170,27 @@ function SelectItem({
       )}
       {...props}
     >
-      <SelectItemIndicator>
-        <CheckIcon className="pointer-events-none" />
-      </SelectItemIndicator>
-      <SelectPrimitive.ItemText data-slot="select-item-text">{children}</SelectPrimitive.ItemText>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <SelectItemIndicator>
+            <CheckIcon className="pointer-events-none" />
+          </SelectItemIndicator>
+          <SelectPrimitive.ItemText data-slot="select-item-text">{children}</SelectPrimitive.ItemText>
+        </>
+      )}
     </SelectPrimitive.Item>
   )
 }
 
-function SelectItemText({ ...props }: React.ComponentProps<typeof SelectPrimitive.ItemText>) {
+function SelectItemText({ ...props }: SelectItemTextProps) {
   return <SelectPrimitive.ItemText data-slot="select-item-text" {...props} />
 }
 
-function SelectItemIndicator({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.ItemIndicator>) {
+function SelectItemIndicator({ className, ...props }: SelectItemIndicatorProps) {
   return (
     <SelectPrimitive.ItemIndicator
       data-slot="select-item-indicator"
@@ -205,9 +200,9 @@ function SelectItemIndicator({ className, ...props }: React.ComponentProps<typeo
   )
 }
 
-function SelectSeparator({ className, ...props }: React.ComponentProps<"div">) {
+function SelectSeparator({ className, ...props }: SelectSeparatorProps) {
   return (
-    <div
+    <ark.div
       role="separator"
       aria-orientation="horizontal"
       data-slot="select-separator"
@@ -267,10 +262,10 @@ function useSelectScrollButton(direction: "up" | "down") {
   return { ref, visible, start, stop }
 }
 
-function SelectScrollUpButton({ className, onPointerEnter, onPointerLeave, ...props }: React.ComponentProps<"div">) {
+function SelectScrollUpButton({ className, onPointerEnter, onPointerLeave, ...props }: SelectScrollUpButtonProps) {
   const { ref, visible, start, stop } = useSelectScrollButton("up")
   return (
-    <div
+    <ark.div
       ref={ref}
       aria-hidden
       hidden={!visible}
@@ -289,15 +284,23 @@ function SelectScrollUpButton({ className, onPointerEnter, onPointerLeave, ...pr
       }}
       {...props}
     >
-      <ChevronUpIcon />
-    </div>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <ChevronUpIcon />
+        </>
+      )}
+    </ark.div>
   )
 }
 
-function SelectScrollDownButton({ className, onPointerEnter, onPointerLeave, ...props }: React.ComponentProps<"div">) {
+function SelectScrollDownButton({ className, onPointerEnter, onPointerLeave, ...props }: SelectScrollDownButtonProps) {
   const { ref, visible, start, stop } = useSelectScrollButton("down")
   return (
-    <div
+    <ark.div
       ref={ref}
       aria-hidden
       hidden={!visible}
@@ -316,39 +319,134 @@ function SelectScrollDownButton({ className, onPointerEnter, onPointerLeave, ...
       }}
       {...props}
     >
-      <ChevronDownIcon />
-    </div>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <ChevronDownIcon />
+        </>
+      )}
+    </ark.div>
   )
 }
 
 /** Render-prop access to one item's state (`{ selected, highlighted, disabled, ... }`). */
-function SelectItemContext({ ...props }: React.ComponentProps<typeof SelectPrimitive.ItemContext>) {
+function SelectItemContext({ ...props }: SelectItemContextProps) {
   return <SelectPrimitive.ItemContext {...props} />
 }
 
+function SelectRootProvider<T extends CollectionItem>({ className, ...props }: SelectRootProviderProps<T>) {
+  return <SelectPrimitive.RootProvider data-slot="select" className={cn(className)} {...props} />
+}
+
+type SelectItemGroupProps = React.ComponentProps<typeof SelectPrimitive.ItemGroup>
+
+type SelectValueTextProps = React.ComponentProps<typeof SelectPrimitive.ValueText>
+
+type SelectRootProps<T extends CollectionItem = CollectionItem> = React.ComponentProps<typeof SelectPrimitive.Root<T>>
+
+type SelectRootProviderProps<T extends CollectionItem = CollectionItem> = React.ComponentProps<
+  typeof SelectPrimitive.RootProvider<T>
+>
+
+type SelectClearTriggerProps = React.ComponentProps<typeof SelectPrimitive.ClearTrigger>
+
+type SelectContentProps = Omit<React.ComponentProps<typeof SelectPrimitive.Content>, "id">
+
+type SelectContextProps = React.ComponentProps<typeof SelectPrimitive.Context>
+
+type SelectControlProps = React.ComponentProps<typeof SelectPrimitive.Control>
+
+type SelectHiddenSelectProps = React.ComponentProps<typeof SelectPrimitive.HiddenSelect>
+
+type SelectIndicatorProps = React.ComponentProps<typeof SelectPrimitive.Indicator>
+
+type SelectItemProps = Omit<React.ComponentProps<typeof SelectPrimitive.Item>, "item"> & {
+  /** The collection item. Falls back to `value` for string collections. */
+  item?: CollectionItem
+  value?: string
+}
+
+type SelectItemIndicatorProps = React.ComponentProps<typeof SelectPrimitive.ItemIndicator>
+
+type SelectItemTextProps = React.ComponentProps<typeof SelectPrimitive.ItemText>
+
+type SelectItemGroupLabelProps = React.ComponentProps<typeof SelectPrimitive.ItemGroupLabel>
+
+type SelectListProps = React.ComponentProps<typeof SelectPrimitive.List>
+
+type SelectPositionerProps = React.ComponentProps<typeof SelectPrimitive.Positioner>
+
+type SelectLabelProps = React.ComponentProps<typeof SelectPrimitive.Label>
+
+type SelectScrollDownButtonProps = React.ComponentProps<typeof ark.div>
+
+type SelectScrollUpButtonProps = React.ComponentProps<typeof ark.div>
+
+type SelectSeparatorProps = React.ComponentProps<typeof ark.div>
+
+type SelectTriggerProps = Omit<React.ComponentProps<typeof SelectPrimitive.Trigger>, "id"> & {
+  size?: "sm" | "default"
+  variant?: "default" | "unstyled"
+}
+
+type SelectItemContextProps = React.ComponentProps<typeof SelectPrimitive.ItemContext>
+
+const Select = {
+  ItemGroup: SelectItemGroup,
+  ValueText: SelectValueText,
+  Root: SelectRoot,
+  RootProvider: SelectRootProvider,
+  ClearTrigger: SelectClearTrigger,
+  Content: SelectContent,
+  Context: SelectContext,
+  Control: SelectControl,
+  HiddenSelect: SelectHiddenSelect,
+  Indicator: SelectIndicator,
+  Item: SelectItem,
+  ItemIndicator: SelectItemIndicator,
+  ItemText: SelectItemText,
+  ItemGroupLabel: SelectItemGroupLabel,
+  List: SelectList,
+  Positioner: SelectPositioner,
+  Label: SelectLabel,
+  ScrollDownButton: SelectScrollDownButton,
+  ScrollUpButton: SelectScrollUpButton,
+  Separator: SelectSeparator,
+  Trigger: SelectTrigger,
+  ItemContext: SelectItemContext,
+}
+
 export {
+  useSelect,
+  useSelectContext,
+  useSelectItemContext,
   Select,
-  SelectClearTrigger,
-  SelectContent,
-  SelectContext,
-  SelectControl,
-  SelectGroup,
-  SelectHiddenSelect,
-  SelectIndicator,
-  SelectItem,
-  SelectItemIndicator,
-  SelectItemText,
-  SelectLabel,
-  SelectList,
-  SelectPositioner,
-  SelectRootLabel,
-  SelectScrollDownButton,
-  SelectScrollUpButton,
-  SelectSeparator,
-  SelectTrigger,
-  SelectValue,
   createListCollection,
   type CollectionItem,
   type ListCollection,
-  SelectItemContext,
+  type SelectItemGroupProps,
+  type SelectValueTextProps,
+  type SelectRootProps,
+  type SelectRootProviderProps,
+  type SelectClearTriggerProps,
+  type SelectContentProps,
+  type SelectContextProps,
+  type SelectControlProps,
+  type SelectHiddenSelectProps,
+  type SelectIndicatorProps,
+  type SelectItemProps,
+  type SelectItemIndicatorProps,
+  type SelectItemTextProps,
+  type SelectItemGroupLabelProps,
+  type SelectListProps,
+  type SelectPositionerProps,
+  type SelectLabelProps,
+  type SelectScrollDownButtonProps,
+  type SelectScrollUpButtonProps,
+  type SelectSeparatorProps,
+  type SelectTriggerProps,
+  type SelectItemContextProps,
 }

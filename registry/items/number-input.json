@@ -4,20 +4,13 @@
   "description": "",
   "ark": "NumberInput",
   "exports": [
-    "NumberInput",
-    "NumberInputContext",
-    "NumberInputControl",
-    "NumberInputDecrementTrigger",
-    "NumberInputIncrementTrigger",
-    "NumberInputInput",
-    "NumberInputLabel",
-    "NumberInputScrubber",
-    "NumberInputTriggers",
-    "NumberInputValueText"
+    "useNumberInput",
+    "useNumberInputContext",
+    "NumberInput"
   ],
   "parts": [
     {
-      "name": "NumberInput",
+      "name": "NumberInput.Root",
       "props": [
         {
           "name": "allowMouseWheel",
@@ -265,7 +258,47 @@
       ]
     },
     {
-      "name": "NumberInputContext",
+      "name": "NumberInput.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseNumberInputReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NumberInput.Context",
       "props": [
         {
           "name": "children",
@@ -277,7 +310,7 @@
       ]
     },
     {
-      "name": "NumberInputControl",
+      "name": "NumberInput.Control",
       "props": [
         {
           "name": "asChild",
@@ -310,7 +343,7 @@
       ]
     },
     {
-      "name": "NumberInputDecrementTrigger",
+      "name": "NumberInput.DecrementTrigger",
       "props": [
         {
           "name": "asChild",
@@ -343,7 +376,7 @@
       ]
     },
     {
-      "name": "NumberInputIncrementTrigger",
+      "name": "NumberInput.IncrementTrigger",
       "props": [
         {
           "name": "asChild",
@@ -376,7 +409,7 @@
       ]
     },
     {
-      "name": "NumberInputInput",
+      "name": "NumberInput.Input",
       "props": [
         {
           "name": "asChild",
@@ -409,7 +442,7 @@
       ]
     },
     {
-      "name": "NumberInputLabel",
+      "name": "NumberInput.Label",
       "props": [
         {
           "name": "asChild",
@@ -442,7 +475,7 @@
       ]
     },
     {
-      "name": "NumberInputScrubber",
+      "name": "NumberInput.Scrubber",
       "props": [
         {
           "name": "asChild",
@@ -475,8 +508,15 @@
       ]
     },
     {
-      "name": "NumberInputTriggers",
+      "name": "NumberInput.Triggers",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -501,7 +541,7 @@
       ]
     },
     {
-      "name": "NumberInputValueText",
+      "name": "NumberInput.ValueText",
       "props": [
         {
           "name": "asChild",
@@ -544,7 +584,7 @@
   "files": [
     {
       "path": "components/ui/number-input.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { NumberInput as NumberInputPrimitive } from \"@ark-ui/react\"\nimport { ChevronDownIcon, ChevronUpIcon } from \"lucide-react\"\n\nfunction NumberInput({ className, children, ...props }: React.ComponentProps<typeof NumberInputPrimitive.Root>) {\n  return (\n    <NumberInputPrimitive.Root\n      data-slot=\"number-input\"\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    >\n      {children ?? (\n        <NumberInputControl>\n          <NumberInputInput />\n          <NumberInputTriggers />\n        </NumberInputControl>\n      )}\n    </NumberInputPrimitive.Root>\n  )\n}\n\nfunction NumberInputContext({ ...props }: React.ComponentProps<typeof NumberInputPrimitive.Context>) {\n  return <NumberInputPrimitive.Context {...props} />\n}\n\nfunction NumberInputLabel({ className, ...props }: React.ComponentProps<typeof NumberInputPrimitive.Label>) {\n  return (\n    <NumberInputPrimitive.Label\n      data-slot=\"number-input-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction NumberInputControl({ className, ...props }: React.ComponentProps<typeof NumberInputPrimitive.Control>) {\n  return (\n    <NumberInputPrimitive.Control\n      data-slot=\"number-input-control\"\n      className={cn(\n        \"flex h-8 w-full min-w-0 items-stretch overflow-hidden rounded-lg border border-input bg-transparent transition-colors has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 dark:bg-input/30 dark:data-invalid:border-destructive/50 dark:data-invalid:ring-destructive/40 data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction NumberInputInput({\n  className,\n  ...props\n}: Omit<React.ComponentProps<typeof NumberInputPrimitive.Input>, \"id\">) {\n  return (\n    <NumberInputPrimitive.Input\n      data-slot=\"number-input-input\"\n      className={cn(\n        \"min-w-0 flex-1 bg-transparent px-2.5 py-1 text-base outline-none placeholder:text-muted-foreground md:text-sm\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction NumberInputTriggers({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"number-input-triggers\"\n      className={cn(\"flex w-6 flex-col border-l border-input\", className)}\n      {...props}\n    >\n      <NumberInputIncrementTrigger />\n      <NumberInputDecrementTrigger />\n    </div>\n  )\n}\n\nconst triggerClassName =\n  \"flex flex-1 items-center justify-center text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-3\"\n\nfunction NumberInputIncrementTrigger({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof NumberInputPrimitive.IncrementTrigger>) {\n  return (\n    <NumberInputPrimitive.IncrementTrigger\n      data-slot=\"number-input-increment-trigger\"\n      className={cn(triggerClassName, \"border-b border-input\", className)}\n      {...props}\n    >\n      {children ?? <ChevronUpIcon />}\n    </NumberInputPrimitive.IncrementTrigger>\n  )\n}\n\nfunction NumberInputDecrementTrigger({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof NumberInputPrimitive.DecrementTrigger>) {\n  return (\n    <NumberInputPrimitive.DecrementTrigger\n      data-slot=\"number-input-decrement-trigger\"\n      className={cn(triggerClassName, className)}\n      {...props}\n    >\n      {children ?? <ChevronDownIcon />}\n    </NumberInputPrimitive.DecrementTrigger>\n  )\n}\n\nfunction NumberInputScrubber({ className, ...props }: React.ComponentProps<typeof NumberInputPrimitive.Scrubber>) {\n  return (\n    <NumberInputPrimitive.Scrubber\n      data-slot=\"number-input-scrubber\"\n      className={cn(\"cursor-ew-resize select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction NumberInputValueText({ className, ...props }: React.ComponentProps<typeof NumberInputPrimitive.ValueText>) {\n  return (\n    <NumberInputPrimitive.ValueText\n      data-slot=\"number-input-value-text\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nexport {\n  NumberInput,\n  NumberInputContext,\n  NumberInputControl,\n  NumberInputDecrementTrigger,\n  NumberInputIncrementTrigger,\n  NumberInputInput,\n  NumberInputLabel,\n  NumberInputScrubber,\n  NumberInputTriggers,\n  NumberInputValueText,\n}\n"
+      "content": "\"use client\"\n\nimport { ark } from \"@ark-ui/react\"\nimport { useNumberInput, useNumberInputContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { NumberInput as NumberInputPrimitive } from \"@ark-ui/react\"\nimport { ChevronDownIcon, ChevronUpIcon } from \"lucide-react\"\n\nfunction NumberInputRoot({ className, children, ...props }: NumberInputRootProps) {\n  return (\n    <NumberInputPrimitive.Root\n      data-slot=\"number-input\"\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <NumberInputControl>\n              <NumberInputInput />\n              <NumberInputTriggers />\n            </NumberInputControl>\n          )}\n        </>\n      )}\n    </NumberInputPrimitive.Root>\n  )\n}\n\nfunction NumberInputContext({ ...props }: NumberInputContextProps) {\n  return <NumberInputPrimitive.Context {...props} />\n}\n\nfunction NumberInputLabel({ className, ...props }: NumberInputLabelProps) {\n  return (\n    <NumberInputPrimitive.Label\n      data-slot=\"number-input-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction NumberInputControl({ className, ...props }: NumberInputControlProps) {\n  return (\n    <NumberInputPrimitive.Control\n      data-slot=\"number-input-control\"\n      className={cn(\n        \"flex h-8 w-full min-w-0 items-stretch overflow-hidden rounded-lg border border-input bg-transparent transition-colors has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 dark:bg-input/30 dark:data-invalid:border-destructive/50 dark:data-invalid:ring-destructive/40 data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction NumberInputInput({ className, ...props }: NumberInputInputProps) {\n  return (\n    <NumberInputPrimitive.Input\n      data-slot=\"number-input-input\"\n      className={cn(\n        \"min-w-0 flex-1 bg-transparent px-2.5 py-1 text-base outline-none placeholder:text-muted-foreground md:text-sm\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction NumberInputTriggers({ className, ...props }: NumberInputTriggersProps) {\n  return (\n    <ark.div\n      data-slot=\"number-input-triggers\"\n      className={cn(\"flex w-6 flex-col border-l border-input\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <NumberInputIncrementTrigger />\n          <NumberInputDecrementTrigger />\n        </>\n      )}\n    </ark.div>\n  )\n}\n\nconst triggerClassName =\n  \"flex flex-1 items-center justify-center text-muted-foreground transition-colors hover:bg-muted hover:text-foreground disabled:pointer-events-none disabled:opacity-50 [&_svg]:size-3\"\n\nfunction NumberInputIncrementTrigger({ className, children, ...props }: NumberInputIncrementTriggerProps) {\n  return (\n    <NumberInputPrimitive.IncrementTrigger\n      data-slot=\"number-input-increment-trigger\"\n      className={cn(triggerClassName, \"border-b border-input\", className)}\n      {...props}\n    >\n      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <ChevronUpIcon />}</>}\n    </NumberInputPrimitive.IncrementTrigger>\n  )\n}\n\nfunction NumberInputDecrementTrigger({ className, children, ...props }: NumberInputDecrementTriggerProps) {\n  return (\n    <NumberInputPrimitive.DecrementTrigger\n      data-slot=\"number-input-decrement-trigger\"\n      className={cn(triggerClassName, className)}\n      {...props}\n    >\n      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <ChevronDownIcon />}</>}\n    </NumberInputPrimitive.DecrementTrigger>\n  )\n}\n\nfunction NumberInputScrubber({ className, ...props }: NumberInputScrubberProps) {\n  return (\n    <NumberInputPrimitive.Scrubber\n      data-slot=\"number-input-scrubber\"\n      className={cn(\"cursor-ew-resize select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction NumberInputValueText({ className, ...props }: NumberInputValueTextProps) {\n  return (\n    <NumberInputPrimitive.ValueText\n      data-slot=\"number-input-value-text\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction NumberInputRootProvider({ className, ...props }: NumberInputRootProviderProps) {\n  return (\n    <NumberInputPrimitive.RootProvider\n      data-slot=\"number-input\"\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\ntype NumberInputRootProps = React.ComponentProps<typeof NumberInputPrimitive.Root>\n\ntype NumberInputRootProviderProps = React.ComponentProps<typeof NumberInputPrimitive.RootProvider>\n\ntype NumberInputContextProps = React.ComponentProps<typeof NumberInputPrimitive.Context>\n\ntype NumberInputControlProps = React.ComponentProps<typeof NumberInputPrimitive.Control>\n\ntype NumberInputDecrementTriggerProps = React.ComponentProps<typeof NumberInputPrimitive.DecrementTrigger>\n\ntype NumberInputIncrementTriggerProps = React.ComponentProps<typeof NumberInputPrimitive.IncrementTrigger>\n\ntype NumberInputInputProps = Omit<React.ComponentProps<typeof NumberInputPrimitive.Input>, \"id\">\n\ntype NumberInputLabelProps = React.ComponentProps<typeof NumberInputPrimitive.Label>\n\ntype NumberInputScrubberProps = React.ComponentProps<typeof NumberInputPrimitive.Scrubber>\n\ntype NumberInputTriggersProps = React.ComponentProps<typeof ark.div>\n\ntype NumberInputValueTextProps = React.ComponentProps<typeof NumberInputPrimitive.ValueText>\n\nconst NumberInput = {\n  Root: NumberInputRoot,\n  RootProvider: NumberInputRootProvider,\n  Context: NumberInputContext,\n  Control: NumberInputControl,\n  DecrementTrigger: NumberInputDecrementTrigger,\n  IncrementTrigger: NumberInputIncrementTrigger,\n  Input: NumberInputInput,\n  Label: NumberInputLabel,\n  Scrubber: NumberInputScrubber,\n  Triggers: NumberInputTriggers,\n  ValueText: NumberInputValueText,\n}\n\nexport {\n  useNumberInput,\n  useNumberInputContext,\n  NumberInput,\n  type NumberInputRootProps,\n  type NumberInputRootProviderProps,\n  type NumberInputContextProps,\n  type NumberInputControlProps,\n  type NumberInputDecrementTriggerProps,\n  type NumberInputIncrementTriggerProps,\n  type NumberInputInputProps,\n  type NumberInputLabelProps,\n  type NumberInputScrubberProps,\n  type NumberInputTriggersProps,\n  type NumberInputValueTextProps,\n}\n"
     }
   ]
 }

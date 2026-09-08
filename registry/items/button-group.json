@@ -4,13 +4,11 @@
   "description": "",
   "exports": [
     "ButtonGroup",
-    "ButtonGroupSeparator",
-    "ButtonGroupText",
     "buttonGroupVariants"
   ],
   "parts": [
     {
-      "name": "ButtonGroup",
+      "name": "ButtonGroup.Root",
       "props": [
         {
           "name": "orientation",
@@ -18,6 +16,13 @@
           "required": false,
           "description": "Layout direction of the part.",
           "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -43,7 +48,7 @@
       ]
     },
     {
-      "name": "ButtonGroupSeparator",
+      "name": "ButtonGroup.Separator",
       "props": [
         {
           "name": "decorative",
@@ -61,6 +66,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -84,15 +96,15 @@
       ]
     },
     {
-      "name": "ButtonGroupText",
+      "name": "ButtonGroup.Text",
       "props": [
         {
           "name": "asChild",
           "type": "boolean",
           "required": false,
           "default": "false",
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -129,7 +141,7 @@
   "files": [
     {
       "path": "components/ui/button-group.tsx",
-      "content": "import { cva, type VariantProps } from \"class-variance-authority\"\nimport { cn } from \"@/lib/utils\"\nimport { ark } from \"@ark-ui/react\"\n\nimport { Separator } from \"@/components/ui/separator\"\n\nconst buttonGroupVariants = cva(\n  \"group/button-group flex w-fit items-stretch *:focus-visible:relative *:focus-visible:z-10 has-[>[data-slot=button-group]]:gap-2 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-lg [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1\",\n  {\n    variants: {\n      orientation: {\n        horizontal:\n          \"[&>*:not(:first-child)]:rounded-l-none [&>*:not(:first-child)]:border-l-0 [&>*:not(:last-child)]:rounded-r-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg!\",\n        vertical:\n          \"flex-col [&>*:not(:first-child)]:rounded-t-none [&>*:not(:first-child)]:border-t-0 [&>*:not(:last-child)]:rounded-b-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-b-lg!\",\n      },\n    },\n    defaultVariants: {\n      orientation: \"horizontal\",\n    },\n  }\n)\n\nfunction ButtonGroup({\n  className,\n  orientation,\n  ...props\n}: React.ComponentProps<\"div\"> & VariantProps<typeof buttonGroupVariants>) {\n  return (\n    <div\n      role=\"group\"\n      data-slot=\"button-group\"\n      data-orientation={orientation}\n      className={cn(buttonGroupVariants({ orientation }), className)}\n      {...props}\n    />\n  )\n}\n\nfunction ButtonGroupText({\n  className,\n  asChild = false,\n  ...props\n}: React.ComponentProps<\"div\"> & {\n  asChild?: boolean\n}) {\n  const Comp = ark.div\n\n  return (\n    <Comp\n      asChild={asChild}\n      className={cn(\n        \"flex items-center gap-2 rounded-lg border bg-muted px-2.5 text-sm font-medium [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ButtonGroupSeparator({\n  className,\n  orientation = \"vertical\",\n  ...props\n}: React.ComponentProps<typeof Separator>) {\n  return (\n    <Separator\n      data-slot=\"button-group-separator\"\n      orientation={orientation}\n      className={cn(\n        \"relative self-stretch bg-input data-horizontal:mx-px data-horizontal:w-auto data-vertical:my-px data-vertical:h-auto\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nexport { ButtonGroup, ButtonGroupSeparator, ButtonGroupText, buttonGroupVariants }\n"
+      "content": "import { cva, type VariantProps } from \"class-variance-authority\"\nimport { cn } from \"@/lib/utils\"\nimport { ark } from \"@ark-ui/react\"\n\nimport { Separator } from \"@/components/ui/separator\"\n\nconst buttonGroupVariants = cva(\n  \"group/button-group flex w-fit items-stretch *:focus-visible:relative *:focus-visible:z-10 has-[>[data-slot=button-group]]:gap-2 has-[select[aria-hidden=true]:last-child]:[&>[data-slot=select-trigger]:last-of-type]:rounded-r-lg [&>[data-slot=select-trigger]:not([class*='w-'])]:w-fit [&>input]:flex-1\",\n  {\n    variants: {\n      orientation: {\n        horizontal:\n          \"[&>*:not(:first-child)]:rounded-l-none [&>*:not(:first-child)]:border-l-0 [&>*:not(:last-child)]:rounded-r-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-r-lg!\",\n        vertical:\n          \"flex-col [&>*:not(:first-child)]:rounded-t-none [&>*:not(:first-child)]:border-t-0 [&>*:not(:last-child)]:rounded-b-none [&>[data-slot]:not(:has(~[data-slot]))]:rounded-b-lg!\",\n      },\n    },\n    defaultVariants: {\n      orientation: \"horizontal\",\n    },\n  }\n)\n\nfunction ButtonGroupRoot({ className, orientation, ...props }: ButtonGroupRootProps) {\n  return (\n    <ark.div\n      role=\"group\"\n      data-slot=\"button-group\"\n      data-orientation={orientation}\n      className={cn(buttonGroupVariants({ orientation }), className)}\n      {...props}\n    />\n  )\n}\n\nfunction ButtonGroupText({ className, asChild = false, ...props }: ButtonGroupTextProps) {\n  const Comp = ark.div\n\n  return (\n    <Comp\n      asChild={asChild}\n      className={cn(\n        \"flex items-center gap-2 rounded-lg border bg-muted px-2.5 text-sm font-medium [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ButtonGroupSeparator({ className, orientation = \"vertical\", ...props }: ButtonGroupSeparatorProps) {\n  return (\n    <Separator.Root\n      data-slot=\"button-group-separator\"\n      orientation={orientation}\n      className={cn(\n        \"relative self-stretch bg-input data-horizontal:mx-px data-horizontal:w-auto data-vertical:my-px data-vertical:h-auto\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype ButtonGroupRootProps = React.ComponentProps<typeof ark.div> & VariantProps<typeof buttonGroupVariants>\n\ntype ButtonGroupSeparatorProps = React.ComponentProps<typeof Separator.Root>\n\ntype ButtonGroupTextProps = React.ComponentProps<typeof ark.div> & {\n  asChild?: boolean\n}\n\nconst ButtonGroup = {\n  Root: ButtonGroupRoot,\n  Separator: ButtonGroupSeparator,\n  Text: ButtonGroupText,\n}\n\nexport {\n  ButtonGroup,\n  buttonGroupVariants,\n  type ButtonGroupRootProps,\n  type ButtonGroupSeparatorProps,\n  type ButtonGroupTextProps,\n}\n"
     }
   ]
 }

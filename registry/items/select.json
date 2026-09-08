@@ -4,32 +4,88 @@
   "description": "`src/lib/history.ts` exports `useHistory(initial, limit)` → `{ present, set(next, { commit }), checkpoint, undo, redo, reset, canUndo, canRedo }`; the node graph and form builder use it. Never add a local copy.",
   "ark": "Select",
   "exports": [
+    "useSelect",
+    "useSelectContext",
+    "useSelectItemContext",
     "Select",
-    "SelectClearTrigger",
-    "SelectContent",
-    "SelectContext",
-    "SelectControl",
-    "SelectGroup",
-    "SelectHiddenSelect",
-    "SelectIndicator",
-    "SelectItem",
-    "SelectItemIndicator",
-    "SelectItemText",
-    "SelectLabel",
-    "SelectList",
-    "SelectPositioner",
-    "SelectRootLabel",
-    "SelectScrollDownButton",
-    "SelectScrollUpButton",
-    "SelectSeparator",
-    "SelectTrigger",
-    "SelectValue",
-    "createListCollection",
-    "SelectItemContext"
+    "createListCollection"
   ],
   "parts": [
     {
-      "name": "Select",
+      "name": "Select.ItemGroup",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Select.ValueText",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "Text to display when no value is selected.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Select.Root",
       "props": [
         {
           "name": "collection",
@@ -342,7 +398,107 @@
       ]
     },
     {
-      "name": "SelectClearTrigger",
+      "name": "Select.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseSelectReturn<T>",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Select.ClearTrigger",
       "props": [
         {
           "name": "asChild",
@@ -375,7 +531,7 @@
       ]
     },
     {
-      "name": "SelectContent",
+      "name": "Select.Content",
       "props": [
         {
           "name": "asChild",
@@ -408,7 +564,7 @@
       ]
     },
     {
-      "name": "SelectContext",
+      "name": "Select.Context",
       "props": [
         {
           "name": "children",
@@ -420,7 +576,7 @@
       ]
     },
     {
-      "name": "SelectControl",
+      "name": "Select.Control",
       "props": [
         {
           "name": "asChild",
@@ -453,7 +609,7 @@
       ]
     },
     {
-      "name": "SelectGroup",
+      "name": "Select.HiddenSelect",
       "props": [
         {
           "name": "asChild",
@@ -486,7 +642,7 @@
       ]
     },
     {
-      "name": "SelectHiddenSelect",
+      "name": "Select.Indicator",
       "props": [
         {
           "name": "asChild",
@@ -519,40 +675,7 @@
       ]
     },
     {
-      "name": "SelectIndicator",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "SelectItem",
+      "name": "Select.Item",
       "props": [
         {
           "name": "item",
@@ -606,7 +729,7 @@
       ]
     },
     {
-      "name": "SelectItemIndicator",
+      "name": "Select.ItemIndicator",
       "props": [
         {
           "name": "asChild",
@@ -639,7 +762,7 @@
       ]
     },
     {
-      "name": "SelectItemText",
+      "name": "Select.ItemText",
       "props": [
         {
           "name": "asChild",
@@ -672,7 +795,7 @@
       ]
     },
     {
-      "name": "SelectLabel",
+      "name": "Select.ItemGroupLabel",
       "props": [
         {
           "name": "asChild",
@@ -705,7 +828,7 @@
       ]
     },
     {
-      "name": "SelectList",
+      "name": "Select.List",
       "props": [
         {
           "name": "asChild",
@@ -738,7 +861,7 @@
       ]
     },
     {
-      "name": "SelectPositioner",
+      "name": "Select.Positioner",
       "props": [
         {
           "name": "asChild",
@@ -771,7 +894,7 @@
       ]
     },
     {
-      "name": "SelectRootLabel",
+      "name": "Select.Label",
       "props": [
         {
           "name": "asChild",
@@ -804,8 +927,15 @@
       ]
     },
     {
-      "name": "SelectScrollDownButton",
+      "name": "Select.ScrollDownButton",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -830,8 +960,15 @@
       ]
     },
     {
-      "name": "SelectScrollUpButton",
+      "name": "Select.ScrollUpButton",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -856,8 +993,15 @@
       ]
     },
     {
-      "name": "SelectSeparator",
+      "name": "Select.Separator",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -882,7 +1026,7 @@
       ]
     },
     {
-      "name": "SelectTrigger",
+      "name": "Select.Trigger",
       "props": [
         {
           "name": "size",
@@ -931,47 +1075,7 @@
       ]
     },
     {
-      "name": "SelectValue",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "placeholder",
-          "type": "string",
-          "required": false,
-          "description": "Text to display when no value is selected.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "SelectItemContext",
+      "name": "Select.ItemContext",
       "props": [
         {
           "name": "children",
@@ -993,7 +1097,7 @@
   "files": [
     {
       "path": "components/ui/select.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport {\n  Select as SelectPrimitive,\n  Portal as PortalPrimitive,\n  createListCollection,\n  type CollectionItem,\n  type ListCollection,\n} from \"@ark-ui/react\"\nimport { ChevronDownIcon, CheckIcon, ChevronUpIcon } from \"lucide-react\"\n\nfunction Select<T extends CollectionItem>({\n  positioning,\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: React.ComponentProps<typeof SelectPrimitive.Root<T>>) {\n  return (\n    <SelectPrimitive.Root\n      data-slot=\"select\"\n      positioning={{\n        placement: \"bottom\",\n        gutter: 4,\n        sameWidth: true,\n        ...positioning,\n      }}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction SelectContext({ ...props }: React.ComponentProps<typeof SelectPrimitive.Context>) {\n  return <SelectPrimitive.Context {...props} />\n}\n\nfunction SelectHiddenSelect({ ...props }: React.ComponentProps<typeof SelectPrimitive.HiddenSelect>) {\n  return <SelectPrimitive.HiddenSelect {...props} />\n}\n\nfunction SelectRootLabel({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Label>) {\n  return (\n    <SelectPrimitive.Label data-slot=\"select-root-label\" className={cn(\"text-sm font-medium\", className)} {...props} />\n  )\n}\n\nfunction SelectControl({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Control>) {\n  return (\n    <SelectPrimitive.Control\n      data-slot=\"select-control\"\n      className={cn(\"flex items-center gap-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SelectGroup({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.ItemGroup>) {\n  return <SelectPrimitive.ItemGroup data-slot=\"select-group\" className={cn(\"scroll-my-1 p-1\", className)} {...props} />\n}\n\nfunction SelectValue({ ...props }: React.ComponentProps<typeof SelectPrimitive.ValueText>) {\n  return <SelectPrimitive.ValueText data-slot=\"select-value\" {...props} />\n}\n\nfunction SelectIndicator({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Indicator>) {\n  return (\n    <SelectPrimitive.Indicator\n      data-slot=\"select-indicator\"\n      className={cn(\"pointer-events-none text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SelectClearTrigger({ ...props }: React.ComponentProps<typeof SelectPrimitive.ClearTrigger>) {\n  return <SelectPrimitive.ClearTrigger data-slot=\"select-clear-trigger\" {...props} />\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\n/**\n * `variant=\"unstyled\"` keeps only the layout (flex, gap, icon sizing) so a host\n * can supply its own chrome, e.g. an editable grid cell that already draws the\n * focus ring.\n */\nfunction SelectTrigger({\n  className,\n  size = \"default\",\n  variant = \"default\",\n  children,\n  ...props\n}: Omit<React.ComponentProps<typeof SelectPrimitive.Trigger>, \"id\"> & {\n  size?: \"sm\" | \"default\"\n  variant?: \"default\" | \"unstyled\"\n}) {\n  return (\n    <SelectPrimitive.Trigger\n      data-slot=\"select-trigger\"\n      data-size={size}\n      data-variant={variant}\n      className={cn(\n        \"flex items-center justify-between gap-1.5 text-sm whitespace-nowrap outline-none select-none disabled:cursor-not-allowed disabled:opacity-50 data-placeholder-shown:text-muted-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n        variant === \"default\" &&\n          \"w-fit rounded-lg border border-input bg-transparent py-2 pr-2 pl-2.5 transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 data-[size=default]:h-8 data-[size=sm]:h-7 data-[size=sm]:rounded-[min(var(--radius-md),10px)] dark:bg-input/30 dark:hover:bg-input/50 dark:data-invalid:border-destructive/50 dark:data-invalid:ring-destructive/40\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n      <SelectIndicator asChild>\n        <ChevronDownIcon className=\"size-4\" />\n      </SelectIndicator>\n    </SelectPrimitive.Trigger>\n  )\n}\n\nfunction SelectPositioner({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.Positioner>) {\n  return (\n    <SelectPrimitive.Positioner data-slot=\"select-positioner\" className={cn(\"[--z-index:50]\", className)} {...props} />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction SelectContent({\n  className,\n  children,\n  ...props\n}: Omit<React.ComponentProps<typeof SelectPrimitive.Content>, \"id\">) {\n  return (\n    <PortalPrimitive>\n      <SelectPositioner>\n        <SelectPrimitive.Content\n          data-slot=\"select-content\"\n          className={cn(\n            \"relative z-50 max-h-(--available-height) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        >\n          <SelectScrollUpButton />\n          {children}\n          <SelectScrollDownButton />\n        </SelectPrimitive.Content>\n      </SelectPositioner>\n    </PortalPrimitive>\n  )\n}\n\nfunction SelectList({ ...props }: React.ComponentProps<typeof SelectPrimitive.List>) {\n  return <SelectPrimitive.List data-slot=\"select-list\" {...props} />\n}\n\nfunction SelectLabel({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.ItemGroupLabel>) {\n  return (\n    <SelectPrimitive.ItemGroupLabel\n      data-slot=\"select-label\"\n      className={cn(\"px-1.5 py-1 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SelectItem({\n  className,\n  children,\n  item,\n  value,\n  ...props\n}: Omit<React.ComponentProps<typeof SelectPrimitive.Item>, \"item\"> & {\n  /** The collection item. Falls back to `value` for string collections. */\n  item?: CollectionItem\n  value?: string\n}) {\n  return (\n    <SelectPrimitive.Item\n      data-slot=\"select-item\"\n      item={item ?? value}\n      className={cn(\n        \"relative flex w-full cursor-default items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground not-data-[variant=destructive]:data-highlighted:**:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2\",\n        className\n      )}\n      {...props}\n    >\n      <SelectItemIndicator>\n        <CheckIcon className=\"pointer-events-none\" />\n      </SelectItemIndicator>\n      <SelectPrimitive.ItemText data-slot=\"select-item-text\">{children}</SelectPrimitive.ItemText>\n    </SelectPrimitive.Item>\n  )\n}\n\nfunction SelectItemText({ ...props }: React.ComponentProps<typeof SelectPrimitive.ItemText>) {\n  return <SelectPrimitive.ItemText data-slot=\"select-item-text\" {...props} />\n}\n\nfunction SelectItemIndicator({ className, ...props }: React.ComponentProps<typeof SelectPrimitive.ItemIndicator>) {\n  return (\n    <SelectPrimitive.ItemIndicator\n      data-slot=\"select-item-indicator\"\n      className={cn(\"pointer-events-none absolute right-2 flex size-4 items-center justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SelectSeparator({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      role=\"separator\"\n      aria-orientation=\"horizontal\"\n      data-slot=\"select-separator\"\n      className={cn(\"pointer-events-none -mx-1 my-1 h-px bg-border\", className)}\n      {...props}\n    />\n  )\n}\n\n/**\n * Ark's Select content is its own scroll container and has no scroll buttons.\n * These reproduce Radix's: shown only when the content can scroll in that\n * direction, and they scroll while hovered.\n */\nfunction useSelectScrollButton(direction: \"up\" | \"down\") {\n  const ref = React.useRef<HTMLDivElement>(null)\n  const [visible, setVisible] = React.useState(false)\n  const timer = React.useRef<number | null>(null)\n\n  const getContent = React.useCallback(\n    () => ref.current?.closest<HTMLElement>('[data-slot=\"select-content\"]') ?? null,\n    []\n  )\n\n  React.useEffect(() => {\n    const content = getContent()\n    if (!content) return\n    const update = () => {\n      const canUp = content.scrollTop > 0\n      const canDown = content.scrollTop + content.clientHeight < content.scrollHeight - 1\n      setVisible(direction === \"up\" ? canUp : canDown)\n    }\n    update()\n    content.addEventListener(\"scroll\", update)\n    const observer = new ResizeObserver(update)\n    observer.observe(content)\n    return () => {\n      content.removeEventListener(\"scroll\", update)\n      observer.disconnect()\n    }\n  }, [direction, getContent])\n\n  const stop = React.useCallback(() => {\n    if (timer.current !== null) window.clearInterval(timer.current)\n    timer.current = null\n  }, [])\n\n  const start = React.useCallback(() => {\n    stop()\n    timer.current = window.setInterval(() => {\n      getContent()?.scrollBy({ top: direction === \"up\" ? -8 : 8 })\n    }, 40)\n  }, [direction, getContent, stop])\n\n  React.useEffect(() => stop, [stop])\n\n  return { ref, visible, start, stop }\n}\n\nfunction SelectScrollUpButton({ className, onPointerEnter, onPointerLeave, ...props }: React.ComponentProps<\"div\">) {\n  const { ref, visible, start, stop } = useSelectScrollButton(\"up\")\n  return (\n    <div\n      ref={ref}\n      aria-hidden\n      hidden={!visible}\n      data-slot=\"select-scroll-up-button\"\n      className={cn(\n        \"sticky top-0 z-10 flex cursor-default items-center justify-center bg-popover py-1 [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      onPointerEnter={(event) => {\n        onPointerEnter?.(event)\n        start()\n      }}\n      onPointerLeave={(event) => {\n        onPointerLeave?.(event)\n        stop()\n      }}\n      {...props}\n    >\n      <ChevronUpIcon />\n    </div>\n  )\n}\n\nfunction SelectScrollDownButton({ className, onPointerEnter, onPointerLeave, ...props }: React.ComponentProps<\"div\">) {\n  const { ref, visible, start, stop } = useSelectScrollButton(\"down\")\n  return (\n    <div\n      ref={ref}\n      aria-hidden\n      hidden={!visible}\n      data-slot=\"select-scroll-down-button\"\n      className={cn(\n        \"sticky bottom-0 z-10 flex cursor-default items-center justify-center bg-popover py-1 [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      onPointerEnter={(event) => {\n        onPointerEnter?.(event)\n        start()\n      }}\n      onPointerLeave={(event) => {\n        onPointerLeave?.(event)\n        stop()\n      }}\n      {...props}\n    >\n      <ChevronDownIcon />\n    </div>\n  )\n}\n\n/** Render-prop access to one item's state (`{ selected, highlighted, disabled, ... }`). */\nfunction SelectItemContext({ ...props }: React.ComponentProps<typeof SelectPrimitive.ItemContext>) {\n  return <SelectPrimitive.ItemContext {...props} />\n}\n\nexport {\n  Select,\n  SelectClearTrigger,\n  SelectContent,\n  SelectContext,\n  SelectControl,\n  SelectGroup,\n  SelectHiddenSelect,\n  SelectIndicator,\n  SelectItem,\n  SelectItemIndicator,\n  SelectItemText,\n  SelectLabel,\n  SelectList,\n  SelectPositioner,\n  SelectRootLabel,\n  SelectScrollDownButton,\n  SelectScrollUpButton,\n  SelectSeparator,\n  SelectTrigger,\n  SelectValue,\n  createListCollection,\n  type CollectionItem,\n  type ListCollection,\n  SelectItemContext,\n}\n"
+      "content": "\"use client\"\n\nimport { ark } from \"@ark-ui/react\"\nimport { useSelect, useSelectContext, useSelectItemContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport {\n  Select as SelectPrimitive,\n  Portal as PortalPrimitive,\n  createListCollection,\n  type CollectionItem,\n  type ListCollection,\n} from \"@ark-ui/react\"\nimport { ChevronDownIcon, CheckIcon, ChevronUpIcon } from \"lucide-react\"\n\nfunction SelectRoot<T extends CollectionItem>({\n  positioning,\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: SelectRootProps<T>) {\n  return (\n    <SelectPrimitive.Root\n      data-slot=\"select\"\n      positioning={{\n        placement: \"bottom\",\n        gutter: 4,\n        sameWidth: true,\n        ...positioning,\n      }}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction SelectContext({ ...props }: SelectContextProps) {\n  return <SelectPrimitive.Context {...props} />\n}\n\nfunction SelectHiddenSelect({ ...props }: SelectHiddenSelectProps) {\n  return <SelectPrimitive.HiddenSelect {...props} />\n}\n\nfunction SelectLabel({ className, ...props }: SelectLabelProps) {\n  return (\n    <SelectPrimitive.Label data-slot=\"select-root-label\" className={cn(\"text-sm font-medium\", className)} {...props} />\n  )\n}\n\nfunction SelectControl({ className, ...props }: SelectControlProps) {\n  return (\n    <SelectPrimitive.Control\n      data-slot=\"select-control\"\n      className={cn(\"flex items-center gap-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SelectItemGroup({ className, ...props }: SelectItemGroupProps) {\n  return <SelectPrimitive.ItemGroup data-slot=\"select-group\" className={cn(\"scroll-my-1 p-1\", className)} {...props} />\n}\n\nfunction SelectValueText({ ...props }: SelectValueTextProps) {\n  return <SelectPrimitive.ValueText data-slot=\"select-value\" {...props} />\n}\n\nfunction SelectIndicator({ className, ...props }: SelectIndicatorProps) {\n  return (\n    <SelectPrimitive.Indicator\n      data-slot=\"select-indicator\"\n      className={cn(\"pointer-events-none text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SelectClearTrigger({ ...props }: SelectClearTriggerProps) {\n  return <SelectPrimitive.ClearTrigger data-slot=\"select-clear-trigger\" {...props} />\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\n/**\n * `variant=\"unstyled\"` keeps only the layout (flex, gap, icon sizing) so a host\n * can supply its own chrome, e.g. an editable grid cell that already draws the\n * focus ring.\n */\nfunction SelectTrigger({ className, size = \"default\", variant = \"default\", children, ...props }: SelectTriggerProps) {\n  return (\n    <SelectPrimitive.Trigger\n      data-slot=\"select-trigger\"\n      data-size={size}\n      data-variant={variant}\n      className={cn(\n        \"flex items-center justify-between gap-1.5 text-sm whitespace-nowrap outline-none select-none disabled:cursor-not-allowed disabled:opacity-50 data-placeholder-shown:text-muted-foreground *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n        variant === \"default\" &&\n          \"w-fit rounded-lg border border-input bg-transparent py-2 pr-2 pl-2.5 transition-colors focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 data-[size=default]:h-8 data-[size=sm]:h-7 data-[size=sm]:rounded-[min(var(--radius-md),10px)] dark:bg-input/30 dark:hover:bg-input/50 dark:data-invalid:border-destructive/50 dark:data-invalid:ring-destructive/40\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n      <SelectIndicator asChild>\n        <ChevronDownIcon className=\"size-4\" />\n      </SelectIndicator>\n    </SelectPrimitive.Trigger>\n  )\n}\n\nfunction SelectPositioner({ className, ...props }: SelectPositionerProps) {\n  return (\n    <SelectPrimitive.Positioner data-slot=\"select-positioner\" className={cn(\"[--z-index:50]\", className)} {...props} />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction SelectContent({ className, children, ...props }: SelectContentProps) {\n  return (\n    <PortalPrimitive>\n      <SelectPositioner>\n        <SelectPrimitive.Content\n          data-slot=\"select-content\"\n          className={cn(\n            \"relative z-50 max-h-(--available-height) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        >\n          {props.asChild ? (\n            React.isValidElement(children) ? (\n              children\n            ) : null\n          ) : (\n            <>\n              <SelectScrollUpButton />\n              {children}\n              <SelectScrollDownButton />\n            </>\n          )}\n        </SelectPrimitive.Content>\n      </SelectPositioner>\n    </PortalPrimitive>\n  )\n}\n\nfunction SelectList({ ...props }: SelectListProps) {\n  return <SelectPrimitive.List data-slot=\"select-list\" {...props} />\n}\n\nfunction SelectItemGroupLabel({ className, ...props }: SelectItemGroupLabelProps) {\n  return (\n    <SelectPrimitive.ItemGroupLabel\n      data-slot=\"select-label\"\n      className={cn(\"px-1.5 py-1 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SelectItem({ className, children, item, value, ...props }: SelectItemProps) {\n  return (\n    <SelectPrimitive.Item\n      data-slot=\"select-item\"\n      item={item ?? value}\n      className={cn(\n        \"relative flex w-full cursor-default items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground not-data-[variant=destructive]:data-highlighted:**:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 *:[span]:last:flex *:[span]:last:items-center *:[span]:last:gap-2\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <SelectItemIndicator>\n            <CheckIcon className=\"pointer-events-none\" />\n          </SelectItemIndicator>\n          <SelectPrimitive.ItemText data-slot=\"select-item-text\">{children}</SelectPrimitive.ItemText>\n        </>\n      )}\n    </SelectPrimitive.Item>\n  )\n}\n\nfunction SelectItemText({ ...props }: SelectItemTextProps) {\n  return <SelectPrimitive.ItemText data-slot=\"select-item-text\" {...props} />\n}\n\nfunction SelectItemIndicator({ className, ...props }: SelectItemIndicatorProps) {\n  return (\n    <SelectPrimitive.ItemIndicator\n      data-slot=\"select-item-indicator\"\n      className={cn(\"pointer-events-none absolute right-2 flex size-4 items-center justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SelectSeparator({ className, ...props }: SelectSeparatorProps) {\n  return (\n    <ark.div\n      role=\"separator\"\n      aria-orientation=\"horizontal\"\n      data-slot=\"select-separator\"\n      className={cn(\"pointer-events-none -mx-1 my-1 h-px bg-border\", className)}\n      {...props}\n    />\n  )\n}\n\n/**\n * Ark's Select content is its own scroll container and has no scroll buttons.\n * These reproduce Radix's: shown only when the content can scroll in that\n * direction, and they scroll while hovered.\n */\nfunction useSelectScrollButton(direction: \"up\" | \"down\") {\n  const ref = React.useRef<HTMLDivElement>(null)\n  const [visible, setVisible] = React.useState(false)\n  const timer = React.useRef<number | null>(null)\n\n  const getContent = React.useCallback(\n    () => ref.current?.closest<HTMLElement>('[data-slot=\"select-content\"]') ?? null,\n    []\n  )\n\n  React.useEffect(() => {\n    const content = getContent()\n    if (!content) return\n    const update = () => {\n      const canUp = content.scrollTop > 0\n      const canDown = content.scrollTop + content.clientHeight < content.scrollHeight - 1\n      setVisible(direction === \"up\" ? canUp : canDown)\n    }\n    update()\n    content.addEventListener(\"scroll\", update)\n    const observer = new ResizeObserver(update)\n    observer.observe(content)\n    return () => {\n      content.removeEventListener(\"scroll\", update)\n      observer.disconnect()\n    }\n  }, [direction, getContent])\n\n  const stop = React.useCallback(() => {\n    if (timer.current !== null) window.clearInterval(timer.current)\n    timer.current = null\n  }, [])\n\n  const start = React.useCallback(() => {\n    stop()\n    timer.current = window.setInterval(() => {\n      getContent()?.scrollBy({ top: direction === \"up\" ? -8 : 8 })\n    }, 40)\n  }, [direction, getContent, stop])\n\n  React.useEffect(() => stop, [stop])\n\n  return { ref, visible, start, stop }\n}\n\nfunction SelectScrollUpButton({ className, onPointerEnter, onPointerLeave, ...props }: SelectScrollUpButtonProps) {\n  const { ref, visible, start, stop } = useSelectScrollButton(\"up\")\n  return (\n    <ark.div\n      ref={ref}\n      aria-hidden\n      hidden={!visible}\n      data-slot=\"select-scroll-up-button\"\n      className={cn(\n        \"sticky top-0 z-10 flex cursor-default items-center justify-center bg-popover py-1 [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      onPointerEnter={(event) => {\n        onPointerEnter?.(event)\n        start()\n      }}\n      onPointerLeave={(event) => {\n        onPointerLeave?.(event)\n        stop()\n      }}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <ChevronUpIcon />\n        </>\n      )}\n    </ark.div>\n  )\n}\n\nfunction SelectScrollDownButton({ className, onPointerEnter, onPointerLeave, ...props }: SelectScrollDownButtonProps) {\n  const { ref, visible, start, stop } = useSelectScrollButton(\"down\")\n  return (\n    <ark.div\n      ref={ref}\n      aria-hidden\n      hidden={!visible}\n      data-slot=\"select-scroll-down-button\"\n      className={cn(\n        \"sticky bottom-0 z-10 flex cursor-default items-center justify-center bg-popover py-1 [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      onPointerEnter={(event) => {\n        onPointerEnter?.(event)\n        start()\n      }}\n      onPointerLeave={(event) => {\n        onPointerLeave?.(event)\n        stop()\n      }}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <ChevronDownIcon />\n        </>\n      )}\n    </ark.div>\n  )\n}\n\n/** Render-prop access to one item's state (`{ selected, highlighted, disabled, ... }`). */\nfunction SelectItemContext({ ...props }: SelectItemContextProps) {\n  return <SelectPrimitive.ItemContext {...props} />\n}\n\nfunction SelectRootProvider<T extends CollectionItem>({ className, ...props }: SelectRootProviderProps<T>) {\n  return <SelectPrimitive.RootProvider data-slot=\"select\" className={cn(className)} {...props} />\n}\n\ntype SelectItemGroupProps = React.ComponentProps<typeof SelectPrimitive.ItemGroup>\n\ntype SelectValueTextProps = React.ComponentProps<typeof SelectPrimitive.ValueText>\n\ntype SelectRootProps<T extends CollectionItem = CollectionItem> = React.ComponentProps<typeof SelectPrimitive.Root<T>>\n\ntype SelectRootProviderProps<T extends CollectionItem = CollectionItem> = React.ComponentProps<\n  typeof SelectPrimitive.RootProvider<T>\n>\n\ntype SelectClearTriggerProps = React.ComponentProps<typeof SelectPrimitive.ClearTrigger>\n\ntype SelectContentProps = Omit<React.ComponentProps<typeof SelectPrimitive.Content>, \"id\">\n\ntype SelectContextProps = React.ComponentProps<typeof SelectPrimitive.Context>\n\ntype SelectControlProps = React.ComponentProps<typeof SelectPrimitive.Control>\n\ntype SelectHiddenSelectProps = React.ComponentProps<typeof SelectPrimitive.HiddenSelect>\n\ntype SelectIndicatorProps = React.ComponentProps<typeof SelectPrimitive.Indicator>\n\ntype SelectItemProps = Omit<React.ComponentProps<typeof SelectPrimitive.Item>, \"item\"> & {\n  /** The collection item. Falls back to `value` for string collections. */\n  item?: CollectionItem\n  value?: string\n}\n\ntype SelectItemIndicatorProps = React.ComponentProps<typeof SelectPrimitive.ItemIndicator>\n\ntype SelectItemTextProps = React.ComponentProps<typeof SelectPrimitive.ItemText>\n\ntype SelectItemGroupLabelProps = React.ComponentProps<typeof SelectPrimitive.ItemGroupLabel>\n\ntype SelectListProps = React.ComponentProps<typeof SelectPrimitive.List>\n\ntype SelectPositionerProps = React.ComponentProps<typeof SelectPrimitive.Positioner>\n\ntype SelectLabelProps = React.ComponentProps<typeof SelectPrimitive.Label>\n\ntype SelectScrollDownButtonProps = React.ComponentProps<typeof ark.div>\n\ntype SelectScrollUpButtonProps = React.ComponentProps<typeof ark.div>\n\ntype SelectSeparatorProps = React.ComponentProps<typeof ark.div>\n\ntype SelectTriggerProps = Omit<React.ComponentProps<typeof SelectPrimitive.Trigger>, \"id\"> & {\n  size?: \"sm\" | \"default\"\n  variant?: \"default\" | \"unstyled\"\n}\n\ntype SelectItemContextProps = React.ComponentProps<typeof SelectPrimitive.ItemContext>\n\nconst Select = {\n  ItemGroup: SelectItemGroup,\n  ValueText: SelectValueText,\n  Root: SelectRoot,\n  RootProvider: SelectRootProvider,\n  ClearTrigger: SelectClearTrigger,\n  Content: SelectContent,\n  Context: SelectContext,\n  Control: SelectControl,\n  HiddenSelect: SelectHiddenSelect,\n  Indicator: SelectIndicator,\n  Item: SelectItem,\n  ItemIndicator: SelectItemIndicator,\n  ItemText: SelectItemText,\n  ItemGroupLabel: SelectItemGroupLabel,\n  List: SelectList,\n  Positioner: SelectPositioner,\n  Label: SelectLabel,\n  ScrollDownButton: SelectScrollDownButton,\n  ScrollUpButton: SelectScrollUpButton,\n  Separator: SelectSeparator,\n  Trigger: SelectTrigger,\n  ItemContext: SelectItemContext,\n}\n\nexport {\n  useSelect,\n  useSelectContext,\n  useSelectItemContext,\n  Select,\n  createListCollection,\n  type CollectionItem,\n  type ListCollection,\n  type SelectItemGroupProps,\n  type SelectValueTextProps,\n  type SelectRootProps,\n  type SelectRootProviderProps,\n  type SelectClearTriggerProps,\n  type SelectContentProps,\n  type SelectContextProps,\n  type SelectControlProps,\n  type SelectHiddenSelectProps,\n  type SelectIndicatorProps,\n  type SelectItemProps,\n  type SelectItemIndicatorProps,\n  type SelectItemTextProps,\n  type SelectItemGroupLabelProps,\n  type SelectListProps,\n  type SelectPositionerProps,\n  type SelectLabelProps,\n  type SelectScrollDownButtonProps,\n  type SelectScrollUpButtonProps,\n  type SelectSeparatorProps,\n  type SelectTriggerProps,\n  type SelectItemContextProps,\n}\n"
     }
   ],
   "docs": "## Shared hooks\n`src/lib/history.ts` exports `useHistory(initial, limit)` → `{ present, set(next, { commit }),\ncheckpoint, undo, redo, reset, canUndo, canRedo }`; the node graph and form builder use it. Never\nadd a local copy. There is no native `<select>` component any more (`native-select.tsx` was\nremoved); always use `Select`."

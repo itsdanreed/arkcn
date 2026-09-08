@@ -4,19 +4,13 @@
   "description": "",
   "ark": "AngleSlider",
   "exports": [
-    "AngleSlider",
-    "AngleSliderContext",
-    "AngleSliderControl",
-    "AngleSliderHiddenInput",
-    "AngleSliderLabel",
-    "AngleSliderMarker",
-    "AngleSliderMarkerGroup",
-    "AngleSliderThumb",
-    "AngleSliderValueText"
+    "useAngleSlider",
+    "useAngleSliderContext",
+    "AngleSlider"
   ],
   "parts": [
     {
-      "name": "AngleSlider",
+      "name": "AngleSlider.Root",
       "props": [
         {
           "name": "aria-label",
@@ -142,7 +136,47 @@
       ]
     },
     {
-      "name": "AngleSliderContext",
+      "name": "AngleSlider.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseAngleSliderReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "AngleSlider.Context",
       "props": [
         {
           "name": "children",
@@ -154,7 +188,7 @@
       ]
     },
     {
-      "name": "AngleSliderControl",
+      "name": "AngleSlider.Control",
       "props": [
         {
           "name": "asChild",
@@ -187,7 +221,7 @@
       ]
     },
     {
-      "name": "AngleSliderHiddenInput",
+      "name": "AngleSlider.HiddenInput",
       "props": [
         {
           "name": "asChild",
@@ -220,7 +254,7 @@
       ]
     },
     {
-      "name": "AngleSliderLabel",
+      "name": "AngleSlider.Label",
       "props": [
         {
           "name": "asChild",
@@ -253,7 +287,7 @@
       ]
     },
     {
-      "name": "AngleSliderMarker",
+      "name": "AngleSlider.Marker",
       "props": [
         {
           "name": "value",
@@ -293,7 +327,7 @@
       ]
     },
     {
-      "name": "AngleSliderMarkerGroup",
+      "name": "AngleSlider.MarkerGroup",
       "props": [
         {
           "name": "asChild",
@@ -326,7 +360,7 @@
       ]
     },
     {
-      "name": "AngleSliderThumb",
+      "name": "AngleSlider.Thumb",
       "props": [
         {
           "name": "asChild",
@@ -359,7 +393,7 @@
       ]
     },
     {
-      "name": "AngleSliderValueText",
+      "name": "AngleSlider.ValueText",
       "props": [
         {
           "name": "asChild",
@@ -401,7 +435,7 @@
   "files": [
     {
       "path": "components/ui/angle-slider.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { AngleSlider as AngleSliderPrimitive } from \"@ark-ui/react\"\n\nfunction AngleSlider({ className, children, ...props }: React.ComponentProps<typeof AngleSliderPrimitive.Root>) {\n  return (\n    <AngleSliderPrimitive.Root\n      data-slot=\"angle-slider\"\n      className={cn(\"inline-flex flex-col items-center gap-2\", className)}\n      {...props}\n    >\n      {children ?? (\n        <>\n          <AngleSliderControl>\n            <AngleSliderThumb />\n          </AngleSliderControl>\n          <AngleSliderValueText />\n          <AngleSliderHiddenInput />\n        </>\n      )}\n    </AngleSliderPrimitive.Root>\n  )\n}\n\nfunction AngleSliderContext({ ...props }: React.ComponentProps<typeof AngleSliderPrimitive.Context>) {\n  return <AngleSliderPrimitive.Context {...props} />\n}\n\nfunction AngleSliderLabel({ className, ...props }: React.ComponentProps<typeof AngleSliderPrimitive.Label>) {\n  return (\n    <AngleSliderPrimitive.Label\n      data-slot=\"angle-slider-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AngleSliderControl({ className, ...props }: React.ComponentProps<typeof AngleSliderPrimitive.Control>) {\n  return (\n    <AngleSliderPrimitive.Control\n      data-slot=\"angle-slider-control\"\n      className={cn(\n        \"relative size-24 rounded-full border border-input bg-muted/50 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AngleSliderThumb({ className, ...props }: React.ComponentProps<typeof AngleSliderPrimitive.Thumb>) {\n  return (\n    <AngleSliderPrimitive.Thumb\n      data-slot=\"angle-slider-thumb\"\n      className={cn(\n        \"absolute inset-0 m-auto h-full w-0.5 origin-center rotate-(--angle) after:absolute after:top-1 after:left-1/2 after:size-3 after:-translate-x-1/2 after:rounded-full after:border after:border-ring after:bg-white\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AngleSliderMarkerGroup({\n  className,\n  ...props\n}: React.ComponentProps<typeof AngleSliderPrimitive.MarkerGroup>) {\n  return (\n    <AngleSliderPrimitive.MarkerGroup\n      data-slot=\"angle-slider-marker-group\"\n      className={cn(\"pointer-events-none absolute inset-0\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AngleSliderMarker({ className, ...props }: React.ComponentProps<typeof AngleSliderPrimitive.Marker>) {\n  return (\n    <AngleSliderPrimitive.Marker\n      data-slot=\"angle-slider-marker\"\n      className={cn(\n        \"absolute inset-0 m-auto h-full w-px origin-center rotate-(--marker-value) before:absolute before:top-0 before:left-0 before:h-1.5 before:w-px before:bg-border data-[state=under-value]:before:bg-primary\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AngleSliderValueText({ className, ...props }: React.ComponentProps<typeof AngleSliderPrimitive.ValueText>) {\n  return (\n    <AngleSliderPrimitive.ValueText\n      data-slot=\"angle-slider-value-text\"\n      className={cn(\"text-sm text-muted-foreground tabular-nums\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AngleSliderHiddenInput({ ...props }: React.ComponentProps<typeof AngleSliderPrimitive.HiddenInput>) {\n  return <AngleSliderPrimitive.HiddenInput {...props} />\n}\n\nexport {\n  AngleSlider,\n  AngleSliderContext,\n  AngleSliderControl,\n  AngleSliderHiddenInput,\n  AngleSliderLabel,\n  AngleSliderMarker,\n  AngleSliderMarkerGroup,\n  AngleSliderThumb,\n  AngleSliderValueText,\n}\n"
+      "content": "\"use client\"\n\nimport { useAngleSlider, useAngleSliderContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { AngleSlider as AngleSliderPrimitive } from \"@ark-ui/react\"\n\nfunction AngleSliderRoot({ className, children, ...props }: AngleSliderRootProps) {\n  return (\n    <AngleSliderPrimitive.Root\n      data-slot=\"angle-slider\"\n      className={cn(\"inline-flex flex-col items-center gap-2\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <>\n              <AngleSliderControl>\n                <AngleSliderThumb />\n              </AngleSliderControl>\n              <AngleSliderValueText />\n              <AngleSliderHiddenInput />\n            </>\n          )}\n        </>\n      )}\n    </AngleSliderPrimitive.Root>\n  )\n}\n\nfunction AngleSliderContext({ ...props }: AngleSliderContextProps) {\n  return <AngleSliderPrimitive.Context {...props} />\n}\n\nfunction AngleSliderLabel({ className, ...props }: AngleSliderLabelProps) {\n  return (\n    <AngleSliderPrimitive.Label\n      data-slot=\"angle-slider-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AngleSliderControl({ className, ...props }: AngleSliderControlProps) {\n  return (\n    <AngleSliderPrimitive.Control\n      data-slot=\"angle-slider-control\"\n      className={cn(\n        \"relative size-24 rounded-full border border-input bg-muted/50 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AngleSliderThumb({ className, ...props }: AngleSliderThumbProps) {\n  return (\n    <AngleSliderPrimitive.Thumb\n      data-slot=\"angle-slider-thumb\"\n      className={cn(\n        \"absolute inset-0 m-auto h-full w-0.5 origin-center rotate-(--angle) after:absolute after:top-1 after:left-1/2 after:size-3 after:-translate-x-1/2 after:rounded-full after:border after:border-ring after:bg-white\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AngleSliderMarkerGroup({ className, ...props }: AngleSliderMarkerGroupProps) {\n  return (\n    <AngleSliderPrimitive.MarkerGroup\n      data-slot=\"angle-slider-marker-group\"\n      className={cn(\"pointer-events-none absolute inset-0\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AngleSliderMarker({ className, ...props }: AngleSliderMarkerProps) {\n  return (\n    <AngleSliderPrimitive.Marker\n      data-slot=\"angle-slider-marker\"\n      className={cn(\n        \"absolute inset-0 m-auto h-full w-px origin-center rotate-(--marker-value) before:absolute before:top-0 before:left-0 before:h-1.5 before:w-px before:bg-border data-[state=under-value]:before:bg-primary\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AngleSliderValueText({ className, ...props }: AngleSliderValueTextProps) {\n  return (\n    <AngleSliderPrimitive.ValueText\n      data-slot=\"angle-slider-value-text\"\n      className={cn(\"text-sm text-muted-foreground tabular-nums\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AngleSliderHiddenInput({ ...props }: AngleSliderHiddenInputProps) {\n  return <AngleSliderPrimitive.HiddenInput {...props} />\n}\n\nfunction AngleSliderRootProvider({ className, ...props }: AngleSliderRootProviderProps) {\n  return (\n    <AngleSliderPrimitive.RootProvider\n      data-slot=\"angle-slider\"\n      className={cn(\"inline-flex flex-col items-center gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\ntype AngleSliderRootProps = React.ComponentProps<typeof AngleSliderPrimitive.Root>\n\ntype AngleSliderRootProviderProps = React.ComponentProps<typeof AngleSliderPrimitive.RootProvider>\n\ntype AngleSliderContextProps = React.ComponentProps<typeof AngleSliderPrimitive.Context>\n\ntype AngleSliderControlProps = React.ComponentProps<typeof AngleSliderPrimitive.Control>\n\ntype AngleSliderHiddenInputProps = React.ComponentProps<typeof AngleSliderPrimitive.HiddenInput>\n\ntype AngleSliderLabelProps = React.ComponentProps<typeof AngleSliderPrimitive.Label>\n\ntype AngleSliderMarkerProps = React.ComponentProps<typeof AngleSliderPrimitive.Marker>\n\ntype AngleSliderMarkerGroupProps = React.ComponentProps<typeof AngleSliderPrimitive.MarkerGroup>\n\ntype AngleSliderThumbProps = React.ComponentProps<typeof AngleSliderPrimitive.Thumb>\n\ntype AngleSliderValueTextProps = React.ComponentProps<typeof AngleSliderPrimitive.ValueText>\n\nconst AngleSlider = {\n  Root: AngleSliderRoot,\n  RootProvider: AngleSliderRootProvider,\n  Context: AngleSliderContext,\n  Control: AngleSliderControl,\n  HiddenInput: AngleSliderHiddenInput,\n  Label: AngleSliderLabel,\n  Marker: AngleSliderMarker,\n  MarkerGroup: AngleSliderMarkerGroup,\n  Thumb: AngleSliderThumb,\n  ValueText: AngleSliderValueText,\n}\n\nexport {\n  useAngleSlider,\n  useAngleSliderContext,\n  AngleSlider,\n  type AngleSliderRootProps,\n  type AngleSliderRootProviderProps,\n  type AngleSliderContextProps,\n  type AngleSliderControlProps,\n  type AngleSliderHiddenInputProps,\n  type AngleSliderLabelProps,\n  type AngleSliderMarkerProps,\n  type AngleSliderMarkerGroupProps,\n  type AngleSliderThumbProps,\n  type AngleSliderValueTextProps,\n}\n"
     }
   ]
 }

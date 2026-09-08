@@ -4,25 +4,6 @@
   "description": "Kanban — a compositional, data-agnostic board on Pragmatic drag and drop. The consumer owns columns and cards and re-renders them from its own state; the primitive wires dragging and reports intents through `onCardMove` and `onColumnMove`. ",
   "exports": [
     "Kanban",
-    "KanbanAddTrigger",
-    "KanbanBoard",
-    "KanbanCard",
-    "KanbanCardDescription",
-    "KanbanCardFooter",
-    "KanbanCardHandle",
-    "KanbanCardHeader",
-    "KanbanCardTitle",
-    "KanbanColumn",
-    "KanbanColumnActions",
-    "KanbanColumnContent",
-    "KanbanColumnCount",
-    "KanbanColumnFooter",
-    "KanbanColumnHandle",
-    "KanbanColumnHeader",
-    "KanbanColumnTitle",
-    "KanbanDropIndicator",
-    "KanbanDropSlot",
-    "KanbanEmpty",
     "moveCard",
     "moveColumn",
     "useKanban",
@@ -30,7 +11,7 @@
   ],
   "parts": [
     {
-      "name": "Kanban",
+      "name": "Kanban.Root",
       "props": [
         {
           "name": "onCardMove",
@@ -45,6 +26,13 @@
           "required": false,
           "description": "Called with `{ columnId, fromIndex, toIndex }`; apply it with `moveColumn`.",
           "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -70,15 +58,8 @@
       ]
     },
     {
-      "name": "KanbanAddTrigger",
+      "name": "Kanban.AddTrigger",
       "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
-        },
         {
           "name": "size",
           "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
@@ -96,63 +77,11 @@
           "from": "arkcn"
         },
         {
-          "name": "children",
-          "type": "ReactNode",
+          "name": "asChild",
+          "type": "boolean",
           "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "KanbanBoard",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "KanbanCard",
-      "props": [
-        {
-          "name": "value",
-          "type": "string",
-          "required": true,
-          "description": "The controlled value.",
-          "from": "arkcn"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -178,59 +107,7 @@
       ]
     },
     {
-      "name": "KanbanCardDescription",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "KanbanCardFooter",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "KanbanCardHandle",
+      "name": "Kanban.Board",
       "props": [
         {
           "name": "asChild",
@@ -263,59 +140,7 @@
       ]
     },
     {
-      "name": "KanbanCardHeader",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "KanbanCardTitle",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "KanbanColumn",
+      "name": "Kanban.Card",
       "props": [
         {
           "name": "value",
@@ -325,57 +150,12 @@
           "from": "arkcn"
         },
         {
-          "name": "children",
-          "type": "ReactNode",
+          "name": "asChild",
+          "type": "boolean",
           "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "KanbanColumnActions",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "KanbanColumnContent",
-      "props": [
         {
           "name": "children",
           "type": "ReactNode",
@@ -400,15 +180,279 @@
       ]
     },
     {
-      "name": "KanbanColumnCount",
+      "name": "Kanban.CardDescription",
       "props": [
         {
           "name": "asChild",
           "type": "boolean",
           "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Kanban.CardFooter",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Kanban.CardHandle",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Kanban.CardHeader",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Kanban.CardTitle",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Kanban.Column",
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "The controlled value.",
           "from": "arkcn"
         },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Kanban.ColumnActions",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Kanban.ColumnContent",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Kanban.ColumnCount",
+      "props": [
         {
           "name": "variant",
           "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
@@ -417,6 +461,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -440,33 +491,7 @@
       ]
     },
     {
-      "name": "KanbanColumnFooter",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "KanbanColumnHandle",
+      "name": "Kanban.ColumnFooter",
       "props": [
         {
           "name": "asChild",
@@ -499,8 +524,15 @@
       ]
     },
     {
-      "name": "KanbanColumnHeader",
+      "name": "Kanban.ColumnHandle",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -525,8 +557,15 @@
       ]
     },
     {
-      "name": "KanbanColumnTitle",
+      "name": "Kanban.ColumnHeader",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -551,7 +590,40 @@
       ]
     },
     {
-      "name": "KanbanDropIndicator",
+      "name": "Kanban.ColumnTitle",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Kanban.DropIndicator",
       "props": [
         {
           "name": "edge",
@@ -569,6 +641,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -592,7 +671,7 @@
       ]
     },
     {
-      "name": "KanbanDropSlot",
+      "name": "Kanban.DropSlot",
       "props": [
         {
           "name": "height",
@@ -602,6 +681,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -625,8 +711,15 @@
       ]
     },
     {
-      "name": "KanbanEmpty",
+      "name": "Kanban.Empty",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -668,7 +761,7 @@
   "files": [
     {
       "path": "components/ui/kanban.tsx",
-      "content": "import * as React from \"react\"\nimport { combine } from \"@atlaskit/pragmatic-drag-and-drop/combine\"\nimport { draggable, dropTargetForElements, monitorForElements } from \"@atlaskit/pragmatic-drag-and-drop/element/adapter\"\nimport { reorder } from \"@atlaskit/pragmatic-drag-and-drop/reorder\"\nimport { autoScrollForElements } from \"@atlaskit/pragmatic-drag-and-drop-auto-scroll/element\"\nimport { attachClosestEdge, extractClosestEdge, type Edge } from \"@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge\"\nimport { getReorderDestinationIndex } from \"@atlaskit/pragmatic-drag-and-drop-hitbox/util/get-reorder-destination-index\"\nimport { ark } from \"@ark-ui/react\"\nimport { GripVerticalIcon } from \"lucide-react\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Button } from \"@/components/ui/button\"\nimport { cloneDragPreview } from \"@/lib/drag-preview\"\nimport { cn } from \"@/lib/utils\"\nimport { LiveRegion, useLiveRegion } from \"@/components/ui/live-region\"\n\n/**\n * Kanban — a compositional, data-agnostic board on Pragmatic drag and drop.\n * The consumer owns columns and cards and re-renders them from its own state;\n * the primitive wires dragging and reports intents through `onCardMove` and\n * `onColumnMove`. `moveCard`/`moveColumn` are optional helpers for the common\n * `{ id, cards: { id }[] }[]` shape.\n */\n\ntype KanbanCardMoveDetails = {\n  cardId: string\n  fromColumnId: string\n  toColumnId: string\n  fromIndex: number\n  toIndex: number\n}\n\ntype KanbanColumnMoveDetails = {\n  columnId: string\n  fromIndex: number\n  toIndex: number\n}\n\ntype DragData =\n  | { instanceId: symbol; type: \"card\"; cardId: string; columnId: string }\n  | { instanceId: symbol; type: \"column\"; columnId: string }\n\nconst CARD_TARGET = \"kanban-card-target\"\nconst COLUMN_TARGET = \"kanban-column-target\"\n\ntype KanbanDragging = { type: \"card\" | \"column\"; id: string; columnId?: string; height: number }\n/** Where a dragged card would land: before `beforeCardId`, or at the end when null. */\ntype KanbanPreview = { columnId: string; beforeCardId: string | null }\n\ntype KanbanGrabbed = { type: \"card\" | \"column\"; id: string }\n\ntype KanbanContextValue = {\n  instanceId: symbol\n  dragging: KanbanDragging | null\n  preview: KanbanPreview | null\n  /** Keyboard \"pick up\" state; arrows move the grabbed card/column. */\n  grabbed: KanbanGrabbed | null\n  grab: (item: KanbanGrabbed | null) => void\n  moveByKey: (item: KanbanGrabbed, direction: \"up\" | \"down\" | \"left\" | \"right\") => void\n}\n\nconst focusLater = (selector: string) =>\n  requestAnimationFrame(() => requestAnimationFrame(() => document.querySelector<HTMLElement>(selector)?.focus()))\n\nconst cssEscape = (value: string) => (typeof CSS !== \"undefined\" && CSS.escape ? CSS.escape(value) : value)\n\nconst KanbanContext = React.createContext<KanbanContextValue | null>(null)\n\nfunction useKanban() {\n  const ctx = React.useContext(KanbanContext)\n  if (!ctx) throw new Error(\"Kanban parts must be used within <Kanban>\")\n  return ctx\n}\n\nconst isOwnData = (instanceId: symbol, data: Record<string | symbol, unknown>): data is DragData =>\n  data.instanceId === instanceId && (data.type === \"card\" || data.type === \"column\")\n\nfunction cardsOf(columnEl: Element) {\n  return Array.from(columnEl.querySelectorAll<HTMLElement>(\":scope [data-slot=kanban-card]\"))\n}\n\ntype DropTargetLike = { data: Record<string | symbol, unknown> }\n\n/** Resolve a card drag against the current drop targets into a concrete destination. */\nfunction resolveCardDrop(root: HTMLElement, data: Extract<DragData, { type: \"card\" }>, targets: DropTargetLike[]) {\n  const columnTarget = targets.find((t) => t.data[COLUMN_TARGET] === true)\n  if (!columnTarget) return null\n  const toColumnId = String(columnTarget.data.columnId)\n  const columnEls = Array.from(root.querySelectorAll<HTMLElement>(\"[data-slot=kanban-column]\"))\n  const fromColumnEl = columnEls.find((el) => el.dataset.value === data.columnId)\n  const toColumnEl = columnEls.find((el) => el.dataset.value === toColumnId)\n  if (!fromColumnEl || !toColumnEl) return null\n  const fromIndex = cardsOf(fromColumnEl).findIndex((el) => el.dataset.value === data.cardId)\n  const toCards = cardsOf(toColumnEl)\n  const cardTarget = targets.find((t) => t.data[CARD_TARGET] === true)\n  const sameColumn = data.columnId === toColumnId\n\n  let toIndex: number\n  if (cardTarget && String(cardTarget.data.cardId) !== data.cardId) {\n    const indexOfTarget = toCards.findIndex((el) => el.dataset.value === String(cardTarget.data.cardId))\n    const edge = extractClosestEdge(cardTarget.data)\n    toIndex = sameColumn\n      ? getReorderDestinationIndex({\n          startIndex: fromIndex,\n          indexOfTarget,\n          closestEdgeOfTarget: edge,\n          axis: \"vertical\",\n        })\n      : edge === \"bottom\"\n        ? indexOfTarget + 1\n        : indexOfTarget\n  } else if (cardTarget) {\n    // Hovering the dragged card itself: no move.\n    toIndex = fromIndex\n  } else {\n    toIndex = sameColumn ? toCards.length - 1 : toCards.length\n  }\n  const noop = sameColumn && toIndex === fromIndex\n  const remaining = toCards.filter((el) => el.dataset.value !== data.cardId)\n  const beforeCardId = remaining[toIndex]?.dataset.value ?? null\n  return { toColumnId, toIndex, fromIndex, sameColumn, noop, beforeCardId }\n}\n\nfunction Kanban({\n  onCardMove,\n  onColumnMove,\n  className,\n  children,\n  ...props\n}: React.ComponentProps<\"div\"> & {\n  /** Called with `{ cardId, fromColumnId, toColumnId, fromIndex, toIndex }`; apply it with `moveCard`. */\n  onCardMove?: (details: KanbanCardMoveDetails) => void\n  /** Called with `{ columnId, fromIndex, toIndex }`; apply it with `moveColumn`. */\n  onColumnMove?: (details: KanbanColumnMoveDetails) => void\n}) {\n  const [instanceId] = React.useState(() => Symbol(\"kanban\"))\n  const [dragging, setDragging] = React.useState<KanbanDragging | null>(null)\n  const [preview, setPreviewState] = React.useState<KanbanPreview | null>(null)\n  const [grabbed, setGrabbed] = React.useState<KanbanGrabbed | null>(null)\n  const { message: announcement, announce: setAnnouncement } = useLiveRegion()\n  const previewKey = React.useRef<string | null>(null)\n  const ref = React.useRef<HTMLDivElement>(null)\n  const callbacks = React.useRef({ onCardMove, onColumnMove })\n  callbacks.current = { onCardMove, onColumnMove }\n\n  const grab = React.useCallback(\n    (item: KanbanGrabbed | null) => {\n      setGrabbed(item)\n      setAnnouncement(\n        item\n          ? `Picked up ${item.type} ${item.id}. Use the arrow keys to move, Space or Enter to drop, Escape to cancel.`\n          : \"Dropped.\"\n      )\n    },\n    [setAnnouncement]\n  )\n\n  const moveByKey = React.useCallback(\n    (item: KanbanGrabbed, direction: \"up\" | \"down\" | \"left\" | \"right\") => {\n      const root = ref.current\n      if (!root) return\n      const columnEls = Array.from(root.querySelectorAll<HTMLElement>(\"[data-slot=kanban-column]\"))\n      const columnIds = columnEls.map((el) => el.dataset.value ?? \"\")\n      const columnName = (el: HTMLElement) =>\n        el.querySelector(\"[data-slot=kanban-column-title]\")?.textContent ?? el.dataset.value\n\n      if (item.type === \"column\") {\n        const fromIndex = columnIds.indexOf(item.id)\n        const toIndex = direction === \"left\" ? fromIndex - 1 : direction === \"right\" ? fromIndex + 1 : fromIndex\n        if (fromIndex < 0 || toIndex === fromIndex || toIndex < 0 || toIndex >= columnIds.length) return\n        callbacks.current.onColumnMove?.({ columnId: item.id, fromIndex, toIndex })\n        setAnnouncement(`Moved column to position ${toIndex + 1} of ${columnIds.length}.`)\n        focusLater(`[data-slot=kanban-column][data-value=\"${cssEscape(item.id)}\"] [data-slot=kanban-column-handle]`)\n        return\n      }\n\n      const fromColumnEl = columnEls.find((el) => cardsOf(el).some((c) => c.dataset.value === item.id))\n      if (!fromColumnEl) return\n      const fromColumnId = fromColumnEl.dataset.value ?? \"\"\n      const fromCards = cardsOf(fromColumnEl)\n      const fromIndex = fromCards.findIndex((c) => c.dataset.value === item.id)\n      let toColumnId = fromColumnId\n      let toIndex = fromIndex\n      if (direction === \"up\" || direction === \"down\") {\n        toIndex = direction === \"up\" ? fromIndex - 1 : fromIndex + 1\n        if (toIndex < 0 || toIndex >= fromCards.length) return\n      } else {\n        const ci = columnIds.indexOf(fromColumnId)\n        const targetEl = columnEls[direction === \"left\" ? ci - 1 : ci + 1]\n        if (!targetEl) return\n        toColumnId = targetEl.dataset.value ?? \"\"\n        toIndex = Math.min(fromIndex, cardsOf(targetEl).length)\n      }\n      callbacks.current.onCardMove?.({ cardId: item.id, fromColumnId, toColumnId, fromIndex, toIndex })\n      const targetEl = columnEls[columnIds.indexOf(toColumnId)]\n      const count = toColumnId === fromColumnId ? fromCards.length : cardsOf(targetEl).length + 1\n      setAnnouncement(`Moved to ${columnName(targetEl)}, position ${toIndex + 1} of ${count}.`)\n      focusLater(`[data-slot=kanban-card][data-value=\"${cssEscape(item.id)}\"]`)\n    },\n    [setAnnouncement]\n  )\n\n  React.useEffect(() => {\n    const root = ref.current\n    if (!root) return\n    const setPreview = (next: KanbanPreview | null) => {\n      const key = next ? `${next.columnId}::${next.beforeCardId ?? \"\"}` : null\n      if (key === previewKey.current) return\n      previewKey.current = key\n      setPreviewState(next)\n    }\n    const updatePreview = (data: DragData, targets: DropTargetLike[]) => {\n      if (data.type !== \"card\") return\n      const resolved = resolveCardDrop(root, data, targets)\n      setPreview(\n        resolved && !resolved.noop ? { columnId: resolved.toColumnId, beforeCardId: resolved.beforeCardId } : null\n      )\n    }\n    return monitorForElements({\n      canMonitor: ({ source }) => isOwnData(instanceId, source.data),\n      onDragStart: ({ source }) => {\n        const data = source.data as DragData\n        setDragging({\n          type: data.type,\n          id: data.type === \"card\" ? data.cardId : data.columnId,\n          columnId: data.type === \"card\" ? data.columnId : undefined,\n          /** Height of the drop slot, normally the dragged card's height. */\n          height: source.element.getBoundingClientRect().height,\n        })\n      },\n      onDrag: ({ source, location }) => updatePreview(source.data as DragData, location.current.dropTargets),\n      onDropTargetChange: ({ source, location }) =>\n        updatePreview(source.data as DragData, location.current.dropTargets),\n      onDrop: ({ source, location }) => {\n        setDragging(null)\n        setPreview(null)\n        const data = source.data as DragData\n        const targets = location.current.dropTargets\n        const columnEls = Array.from(root.querySelectorAll<HTMLElement>(\"[data-slot=kanban-column]\"))\n        const columnIds = columnEls.map((el) => el.dataset.value ?? \"\")\n\n        if (data.type === \"column\") {\n          const target = targets.find((t) => t.data[COLUMN_TARGET] === true)\n          if (!target) return\n          const targetId = String(target.data.columnId)\n          const fromIndex = columnIds.indexOf(data.columnId)\n          const indexOfTarget = columnIds.indexOf(targetId)\n          if (fromIndex < 0 || indexOfTarget < 0) return\n          const toIndex = getReorderDestinationIndex({\n            startIndex: fromIndex,\n            indexOfTarget,\n            closestEdgeOfTarget: extractClosestEdge(target.data),\n            axis: \"horizontal\",\n          })\n          if (toIndex === fromIndex) return\n          callbacks.current.onColumnMove?.({ columnId: data.columnId, fromIndex, toIndex })\n          return\n        }\n\n        const resolved = resolveCardDrop(root, data, targets)\n        if (!resolved || resolved.noop) return\n        callbacks.current.onCardMove?.({\n          cardId: data.cardId,\n          fromColumnId: data.columnId,\n          toColumnId: resolved.toColumnId,\n          fromIndex: resolved.fromIndex,\n          toIndex: resolved.toIndex,\n        })\n      },\n    })\n  }, [instanceId])\n\n  const ctx = React.useMemo(\n    () => ({ instanceId, dragging, preview, grabbed, grab, moveByKey }),\n    [instanceId, dragging, preview, grabbed, grab, moveByKey]\n  )\n  return (\n    <KanbanContext.Provider value={ctx}>\n      <div\n        ref={ref}\n        data-slot=\"kanban\"\n        data-dragging={dragging ? dragging.type : undefined}\n        data-grabbed={grabbed ? grabbed.type : undefined}\n        className={cn(\"flex min-h-0 flex-1 flex-col\", className)}\n        {...props}\n      >\n        {children}\n        <LiveRegion data-slot=\"kanban-live-region\" message={announcement} />\n      </div>\n    </KanbanContext.Provider>\n  )\n}\n\n/** Keyboard handling shared by cards and column handles. */\nfunction useKanbanKeyboard(item: KanbanGrabbed) {\n  const { grabbed, grab, moveByKey } = useKanban()\n  const isGrabbed = grabbed?.type === item.type && grabbed.id === item.id\n  const onKeyDown = (event: React.KeyboardEvent) => {\n    const key = event.key\n    if (key === \" \" || key === \"Enter\") {\n      event.preventDefault()\n      grab(isGrabbed ? null : item)\n      return\n    }\n    if (!isGrabbed) return\n    if (key === \"Escape\") {\n      event.preventDefault()\n      grab(null)\n      return\n    }\n    const direction = { ArrowUp: \"up\", ArrowDown: \"down\", ArrowLeft: \"left\", ArrowRight: \"right\" }[key] as\n      \"up\" | \"down\" | \"left\" | \"right\" | undefined\n    if (!direction) return\n    event.preventDefault()\n    moveByKey(item, direction)\n  }\n  return { isGrabbed, onKeyDown, onBlur: () => isGrabbed && grab(null) }\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Board                                                                     */\n/* -------------------------------------------------------------------------- */\n\nfunction KanbanBoard({ className, ...props }: React.ComponentProps<\"div\">) {\n  const { instanceId } = useKanban()\n  const ref = React.useRef<HTMLDivElement>(null)\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    return autoScrollForElements({\n      element: el,\n      canScroll: ({ source }) => isOwnData(instanceId, source.data),\n    })\n  }, [instanceId])\n  return (\n    <div\n      ref={ref}\n      data-slot=\"kanban-board\"\n      className={cn(\"flex min-h-0 flex-1 items-start gap-4 overflow-x-auto p-1 pb-4\", className)}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Column                                                                    */\n/* -------------------------------------------------------------------------- */\n\ntype ColumnContextValue = {\n  value: string\n  handleRef: React.RefObject<HTMLElement | null>\n  headerRef: React.RefObject<HTMLElement | null>\n  isOver: boolean\n  isDragging: boolean\n}\n\nconst ColumnContext = React.createContext<ColumnContextValue | null>(null)\n\nfunction useKanbanColumn() {\n  const ctx = React.useContext(ColumnContext)\n  if (!ctx) throw new Error(\"Kanban column parts must be used within <KanbanColumn>\")\n  return ctx\n}\n\nfunction KanbanColumn({\n  value,\n  draggable: isDraggable = true,\n  className,\n  children,\n  ...props\n}: React.ComponentProps<\"section\"> & {\n  value: string\n  /** Allow the column itself to be reordered (drag by its handle or header). */\n  draggable?: boolean\n}) {\n  const { instanceId, dragging, preview } = useKanban()\n  const ref = React.useRef<HTMLElement>(null)\n  const handleRef = React.useRef<HTMLElement | null>(null)\n  const headerRef = React.useRef<HTMLElement | null>(null)\n  const [isOver, setIsOver] = React.useState(false)\n  const [isDragging, setIsDragging] = React.useState(false)\n  const [closestEdge, setClosestEdge] = React.useState<Edge | null>(null)\n\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    const cleanups = [\n      dropTargetForElements({\n        element: el,\n        canDrop: ({ source }) => isOwnData(instanceId, source.data),\n        getIsSticky: () => true,\n        getData: ({ source, input, element }) => {\n          const base = { [COLUMN_TARGET]: true, columnId: value }\n          if ((source.data as DragData).type === \"column\") {\n            return attachClosestEdge(base, { element, input, allowedEdges: [\"left\", \"right\"] })\n          }\n          return base\n        },\n        onDragEnter: ({ source, self }) => {\n          const data = source.data as DragData\n          if (data.type === \"card\") setIsOver(true)\n          else if (data.columnId !== value) setClosestEdge(extractClosestEdge(self.data))\n        },\n        onDrag: ({ source, self }) => {\n          const data = source.data as DragData\n          if (data.type === \"column\" && data.columnId !== value) {\n            const edge = extractClosestEdge(self.data)\n            setClosestEdge((prev) => (prev === edge ? prev : edge))\n          }\n        },\n        onDragLeave: () => {\n          setIsOver(false)\n          setClosestEdge(null)\n        },\n        onDrop: () => {\n          setIsOver(false)\n          setClosestEdge(null)\n        },\n      }),\n    ]\n    if (isDraggable) {\n      cleanups.push(\n        draggable({\n          element: el,\n          dragHandle: handleRef.current ?? headerRef.current ?? undefined,\n          getInitialData: (): DragData => ({ instanceId, type: \"column\", columnId: value }),\n          onGenerateDragPreview: (args) => cloneDragPreview(args),\n          onDragStart: () => setIsDragging(true),\n          onDrop: () => setIsDragging(false),\n        })\n      )\n    }\n    return combine(...cleanups)\n  }, [instanceId, value, isDraggable])\n\n  const ctx = React.useMemo(() => ({ value, handleRef, headerRef, isOver, isDragging }), [value, isOver, isDragging])\n  return (\n    <ColumnContext.Provider value={ctx}>\n      <section\n        ref={ref}\n        data-slot=\"kanban-column\"\n        data-value={value}\n        data-over={isOver && dragging?.type === \"card\" ? \"\" : undefined}\n        data-target={preview?.columnId === value ? \"\" : undefined}\n        data-dragging={isDragging ? \"\" : undefined}\n        data-edge={closestEdge ?? undefined}\n        className={cn(\n          \"group/kanban-column relative flex max-h-full w-72 shrink-0 flex-col rounded-xl border bg-muted/40 transition-colors data-dragging:opacity-40 data-target:border-primary/30\",\n          className\n        )}\n        {...props}\n      >\n        {children}\n        {closestEdge && <KanbanDropIndicator edge={closestEdge} />}\n      </section>\n    </ColumnContext.Provider>\n  )\n}\n\nfunction KanbanColumnHeader({ className, ...props }: React.ComponentProps<\"header\">) {\n  const { headerRef } = useKanbanColumn()\n  return (\n    <header\n      ref={headerRef as React.RefObject<HTMLElement>}\n      data-slot=\"kanban-column-header\"\n      className={cn(\"flex items-center gap-2 px-3 py-2.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction KanbanColumnHandle({\n  className,\n  children,\n  onKeyDown,\n  onBlur,\n  asChild,\n  ...props\n}: React.ComponentProps<typeof ark.button>) {\n  const { handleRef, value } = useKanbanColumn()\n  const keyboard = useKanbanKeyboard({ type: \"column\", id: value })\n  return (\n    <ark.button\n      asChild={asChild}\n      ref={handleRef as React.RefObject<HTMLButtonElement>}\n      type=\"button\"\n      data-slot=\"kanban-column-handle\"\n      data-grabbed={keyboard.isGrabbed ? \"\" : undefined}\n      aria-label=\"Drag column\"\n      aria-pressed={keyboard.isGrabbed}\n      aria-describedby={undefined}\n      onKeyDown={(event) => {\n        onKeyDown?.(event)\n        if (!event.defaultPrevented) keyboard.onKeyDown(event)\n      }}\n      onBlur={(event) => {\n        onBlur?.(event)\n        keyboard.onBlur()\n      }}\n      className={cn(\n        \"-ms-1 flex size-6 cursor-grab items-center justify-center rounded-md text-muted-foreground outline-none hover:bg-accent hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 active:cursor-grabbing data-grabbed:bg-primary data-grabbed:text-primary-foreground [&_svg]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {asChild ? children : (children ?? <GripVerticalIcon />)}\n    </ark.button>\n  )\n}\n\nfunction KanbanColumnTitle({ className, ...props }: React.ComponentProps<\"h3\">) {\n  return <h3 data-slot=\"kanban-column-title\" className={cn(\"truncate text-sm font-semibold\", className)} {...props} />\n}\n\nfunction KanbanColumnCount({ className, ...props }: React.ComponentProps<typeof Badge>) {\n  return (\n    <Badge\n      data-slot=\"kanban-column-count\"\n      variant=\"secondary\"\n      className={cn(\"h-5 min-w-5 justify-center px-1.5 tabular-nums\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction KanbanColumnActions({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div data-slot=\"kanban-column-actions\" className={cn(\"ms-auto flex items-center gap-1\", className)} {...props} />\n  )\n}\n\n/** The scrolling list of cards. Renders the landing slot at the end when a card would be appended. */\nfunction KanbanColumnContent({ className, children, ...props }: React.ComponentProps<\"div\">) {\n  const { instanceId, dragging, preview } = useKanban()\n  const column = useKanbanColumn()\n  const ref = React.useRef<HTMLDivElement>(null)\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    return autoScrollForElements({\n      element: el,\n      canScroll: ({ source }) => isOwnData(instanceId, source.data),\n    })\n  }, [instanceId])\n  return (\n    <div\n      ref={ref}\n      data-slot=\"kanban-column-content\"\n      className={cn(\n        \"no-scrollbar flex min-h-16 flex-1 flex-col gap-(--kanban-gap) overflow-y-auto px-2 pb-2 [--kanban-gap:0.5rem]\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n      {dragging?.type === \"card\" && preview?.columnId === column.value && preview.beforeCardId === null && (\n        <KanbanDropSlot height={dragging.height} />\n      )}\n    </div>\n  )\n}\n\nfunction KanbanColumnFooter({ className, ...props }: React.ComponentProps<\"footer\">) {\n  return <footer data-slot=\"kanban-column-footer\" className={cn(\"flex items-center px-2 pb-2\", className)} {...props} />\n}\n\n/** A ghost-style full-width trigger for the footer, e.g. \"Add card\". Polymorphic via `asChild`. */\nfunction KanbanAddTrigger({\n  className,\n  variant = \"ghost\",\n  size = \"sm\",\n  ...props\n}: React.ComponentProps<typeof Button>) {\n  return (\n    <Button\n      data-slot=\"kanban-add-trigger\"\n      variant={variant}\n      size={size}\n      className={cn(\"w-full justify-start text-muted-foreground hover:text-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction KanbanEmpty({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"kanban-empty\"\n      className={cn(\n        \"flex flex-1 items-center justify-center rounded-lg border border-dashed px-3 py-6 text-center text-xs text-muted-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Card                                                                      */\n/* -------------------------------------------------------------------------- */\n\ntype CardContextValue = { handleRef: React.RefObject<HTMLElement | null>; value: string }\nconst CardContext = React.createContext<CardContextValue | null>(null)\n\nfunction KanbanCard({\n  value,\n  draggable: isDraggable = true,\n  className,\n  children,\n  onKeyDown,\n  onBlur,\n  ...props\n}: React.ComponentProps<\"article\"> & { value: string; draggable?: boolean }) {\n  const { instanceId, dragging, preview } = useKanban()\n  const column = useKanbanColumn()\n  const keyboard = useKanbanKeyboard({ type: \"card\", id: value })\n  const ref = React.useRef<HTMLElement>(null)\n  const handleRef = React.useRef<HTMLElement | null>(null)\n  const [isDragging, setIsDragging] = React.useState(false)\n  const isSlotBefore = dragging?.type === \"card\" && preview?.columnId === column.value && preview.beforeCardId === value\n  // The dragged card stays as an outlined placeholder until a landing spot exists, then collapses.\n  const isCollapsed = isDragging && preview !== null\n\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    const cleanups = [\n      dropTargetForElements({\n        element: el,\n        canDrop: ({ source }) => isOwnData(instanceId, source.data) && (source.data as DragData).type === \"card\",\n        getIsSticky: () => true,\n        getData: ({ input, element }) =>\n          attachClosestEdge(\n            { [CARD_TARGET]: true, cardId: value, columnId: column.value },\n            {\n              element,\n              input,\n              allowedEdges: [\"top\", \"bottom\"],\n            }\n          ),\n      }),\n    ]\n    if (isDraggable) {\n      cleanups.push(\n        draggable({\n          element: el,\n          dragHandle: handleRef.current ?? undefined,\n          getInitialData: (): DragData => ({ instanceId, type: \"card\", cardId: value, columnId: column.value }),\n          onGenerateDragPreview: (args) => cloneDragPreview(args),\n          onDragStart: () => setIsDragging(true),\n          onDrop: () => setIsDragging(false),\n        })\n      )\n    }\n    return combine(...cleanups)\n  }, [instanceId, value, column.value, isDraggable])\n\n  const ctx = React.useMemo(() => ({ handleRef, value }), [value])\n  return (\n    <CardContext.Provider value={ctx}>\n      {isSlotBefore && dragging && <KanbanDropSlot height={dragging.height} />}\n      <article\n        ref={ref}\n        data-slot=\"kanban-card\"\n        data-value={value}\n        data-dragging={isDragging ? \"\" : undefined}\n        data-collapsed={isCollapsed ? \"\" : undefined}\n        data-grabbed={keyboard.isGrabbed ? \"\" : undefined}\n        tabIndex={isDraggable ? 0 : undefined}\n        aria-roledescription={isDraggable ? \"draggable card\" : undefined}\n        onKeyDown={(event) => {\n          onKeyDown?.(event)\n          if (!event.defaultPrevented && event.target === event.currentTarget) keyboard.onKeyDown(event)\n        }}\n        onBlur={(event) => {\n          onBlur?.(event)\n          if (event.target === event.currentTarget) keyboard.onBlur()\n        }}\n        className={cn(\n          \"group/kanban-card relative flex cursor-grab flex-col gap-2 rounded-lg border bg-card p-3 text-sm text-card-foreground shadow-xs transition-shadow outline-none hover:shadow-sm focus-visible:ring-3 focus-visible:ring-ring/50 active:cursor-grabbing data-grabbed:border-primary data-grabbed:ring-3 data-grabbed:ring-primary/30\",\n          \"data-dragging:border-dashed data-dragging:border-primary/40 data-dragging:bg-primary/5 data-dragging:shadow-none data-dragging:*:invisible\",\n          // Collapse (not `display:none`): removing the dragged element from layout cancels a native drag in Chrome.\n          \"data-collapsed:pointer-events-none data-collapsed:-mb-(--kanban-gap) data-collapsed:h-0 data-collapsed:min-h-0 data-collapsed:overflow-hidden data-collapsed:border-0 data-collapsed:p-0 data-collapsed:opacity-0\",\n          className\n        )}\n        {...props}\n      >\n        {children}\n      </article>\n    </CardContext.Provider>\n  )\n}\n\n/** Optional explicit drag handle; without it the whole card is the handle. */\nfunction KanbanCardHandle({\n  className,\n  children,\n  onKeyDown,\n  onBlur,\n  asChild,\n  ...props\n}: React.ComponentProps<typeof ark.button>) {\n  const ctx = React.useContext(CardContext)\n  const keyboard = useKanbanKeyboard({ type: \"card\", id: ctx?.value ?? \"\" })\n  return (\n    <ark.button\n      asChild={asChild}\n      ref={(el: HTMLElement | null) => {\n        if (ctx) ctx.handleRef.current = el\n      }}\n      type=\"button\"\n      data-slot=\"kanban-card-handle\"\n      data-grabbed={keyboard.isGrabbed ? \"\" : undefined}\n      aria-label=\"Drag card\"\n      aria-pressed={keyboard.isGrabbed}\n      onKeyDown={(event) => {\n        onKeyDown?.(event)\n        if (!event.defaultPrevented) {\n          keyboard.onKeyDown(event)\n          event.stopPropagation()\n        }\n      }}\n      onBlur={(event) => {\n        onBlur?.(event)\n        keyboard.onBlur()\n      }}\n      className={cn(\n        \"flex size-6 cursor-grab items-center justify-center rounded-md text-muted-foreground outline-none hover:bg-accent hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 active:cursor-grabbing data-grabbed:bg-primary data-grabbed:text-primary-foreground [&_svg]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {asChild ? children : (children ?? <GripVerticalIcon />)}\n    </ark.button>\n  )\n}\n\nfunction KanbanCardHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"kanban-card-header\"\n      className={cn(\"flex items-start justify-between gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction KanbanCardTitle({ className, ...props }: React.ComponentProps<\"p\">) {\n  return <p data-slot=\"kanban-card-title\" className={cn(\"leading-snug font-medium\", className)} {...props} />\n}\n\nfunction KanbanCardDescription({ className, ...props }: React.ComponentProps<\"p\">) {\n  return (\n    <p\n      data-slot=\"kanban-card-description\"\n      className={cn(\"line-clamp-3 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction KanbanCardFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"kanban-card-footer\"\n      className={cn(\"flex items-center gap-2 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Drop slot + indicator                                                     */\n/* -------------------------------------------------------------------------- */\n\n/** An outlined placeholder the size of the dragged card, marking where it will land. */\nfunction KanbanDropSlot({ height, className, style, ...props }: React.ComponentProps<\"div\"> & { height?: number }) {\n  return (\n    <div\n      data-slot=\"kanban-drop-slot\"\n      aria-hidden\n      style={{ height, ...style }}\n      className={cn(\n        \"shrink-0 rounded-lg border-2 border-dashed border-primary/40 bg-primary/5\",\n        height === undefined && \"min-h-16\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** A line on the given edge of its (relative) parent, with a terminal dot. */\nfunction KanbanDropIndicator({\n  edge,\n  gap = \"0.5rem\",\n  className,\n  ...props\n}: React.ComponentProps<\"div\"> & { edge: Edge; gap?: string }) {\n  const horizontal = edge === \"top\" || edge === \"bottom\"\n  return (\n    <div\n      data-slot=\"kanban-drop-indicator\"\n      data-edge={edge}\n      aria-hidden\n      style={{ [\"--kanban-gap\" as string]: gap }}\n      className={cn(\n        \"pointer-events-none absolute z-10 bg-primary\",\n        \"before:absolute before:size-2 before:rounded-full before:border-2 before:border-primary before:bg-background\",\n        horizontal\n          ? \"inset-x-0 h-0.5 before:top-1/2 before:-left-1 before:-translate-y-1/2\"\n          : \"inset-y-0 w-0.5 before:-top-1 before:left-1/2 before:-translate-x-1/2\",\n        edge === \"top\" && \"top-[calc(-1*var(--kanban-gap)/2-1px)]\",\n        edge === \"bottom\" && \"bottom-[calc(-1*var(--kanban-gap)/2-1px)]\",\n        edge === \"left\" && \"left-[calc(-1*var(--kanban-gap)/2-1px)]\",\n        edge === \"right\" && \"right-[calc(-1*var(--kanban-gap)/2-1px)]\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Helpers                                                                   */\n/* -------------------------------------------------------------------------- */\n\ntype KanbanColumnLike<TCard extends { id: string }> = { id: string; cards: TCard[] }\n\n/** Apply an `onCardMove` intent to a `{ id, cards }[]` state shape. */\nfunction moveCard<TCard extends { id: string }, TColumn extends KanbanColumnLike<TCard>>(\n  columns: TColumn[],\n  { cardId, fromColumnId, toColumnId, toIndex }: KanbanCardMoveDetails\n): TColumn[] {\n  const from = columns.find((c) => c.id === fromColumnId)\n  const card = from?.cards.find((c) => c.id === cardId)\n  if (!from || !card) return columns\n  return columns.map((column) => {\n    if (column.id === fromColumnId && column.id === toColumnId) {\n      const startIndex = column.cards.indexOf(card)\n      return { ...column, cards: reorder({ list: column.cards, startIndex, finishIndex: toIndex }) }\n    }\n    if (column.id === fromColumnId) return { ...column, cards: column.cards.filter((c) => c !== card) }\n    if (column.id === toColumnId) {\n      const cards = [...column.cards]\n      cards.splice(toIndex, 0, card)\n      return { ...column, cards }\n    }\n    return column\n  })\n}\n\n/** Apply an `onColumnMove` intent to a column array. */\nfunction moveColumn<TColumn extends { id: string }>(\n  columns: TColumn[],\n  { fromIndex, toIndex }: KanbanColumnMoveDetails\n): TColumn[] {\n  return reorder({ list: columns, startIndex: fromIndex, finishIndex: toIndex })\n}\n\nexport {\n  Kanban,\n  KanbanAddTrigger,\n  KanbanBoard,\n  KanbanCard,\n  KanbanCardDescription,\n  KanbanCardFooter,\n  KanbanCardHandle,\n  KanbanCardHeader,\n  KanbanCardTitle,\n  KanbanColumn,\n  KanbanColumnActions,\n  KanbanColumnContent,\n  KanbanColumnCount,\n  KanbanColumnFooter,\n  KanbanColumnHandle,\n  KanbanColumnHeader,\n  KanbanColumnTitle,\n  KanbanDropIndicator,\n  KanbanDropSlot,\n  KanbanEmpty,\n  moveCard,\n  moveColumn,\n  useKanban,\n  useKanbanColumn,\n  type KanbanCardMoveDetails,\n  type KanbanColumnMoveDetails,\n}\n"
+      "content": "import * as React from \"react\"\nimport { combine } from \"@atlaskit/pragmatic-drag-and-drop/combine\"\nimport { draggable, dropTargetForElements, monitorForElements } from \"@atlaskit/pragmatic-drag-and-drop/element/adapter\"\nimport { reorder } from \"@atlaskit/pragmatic-drag-and-drop/reorder\"\nimport { autoScrollForElements } from \"@atlaskit/pragmatic-drag-and-drop-auto-scroll/element\"\nimport { attachClosestEdge, extractClosestEdge, type Edge } from \"@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge\"\nimport { getReorderDestinationIndex } from \"@atlaskit/pragmatic-drag-and-drop-hitbox/util/get-reorder-destination-index\"\nimport { ark } from \"@ark-ui/react\"\nimport { GripVerticalIcon } from \"lucide-react\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Button } from \"@/components/ui/button\"\nimport { cloneDragPreview } from \"@/lib/drag-preview\"\nimport { cn } from \"@/lib/utils\"\nimport { LiveRegion, useLiveRegion } from \"@/components/ui/live-region\"\n\n/**\n * Kanban — a compositional, data-agnostic board on Pragmatic drag and drop.\n * The consumer owns columns and cards and re-renders them from its own state;\n * the primitive wires dragging and reports intents through `onCardMove` and\n * `onColumnMove`. `moveCard`/`moveColumn` are optional helpers for the common\n * `{ id, cards: { id }[] }[]` shape.\n */\n\ntype KanbanCardMoveDetails = {\n  cardId: string\n  fromColumnId: string\n  toColumnId: string\n  fromIndex: number\n  toIndex: number\n}\n\ntype KanbanColumnMoveDetails = {\n  columnId: string\n  fromIndex: number\n  toIndex: number\n}\n\ntype DragData =\n  | { instanceId: symbol; type: \"card\"; cardId: string; columnId: string }\n  | { instanceId: symbol; type: \"column\"; columnId: string }\n\nconst CARD_TARGET = \"kanban-card-target\"\nconst COLUMN_TARGET = \"kanban-column-target\"\n\ntype KanbanDragging = { type: \"card\" | \"column\"; id: string; columnId?: string; height: number }\n/** Where a dragged card would land: before `beforeCardId`, or at the end when null. */\ntype KanbanPreview = { columnId: string; beforeCardId: string | null }\n\ntype KanbanGrabbed = { type: \"card\" | \"column\"; id: string }\n\ntype KanbanContextValue = {\n  instanceId: symbol\n  dragging: KanbanDragging | null\n  preview: KanbanPreview | null\n  /** Keyboard \"pick up\" state; arrows move the grabbed card/column. */\n  grabbed: KanbanGrabbed | null\n  grab: (item: KanbanGrabbed | null) => void\n  moveByKey: (item: KanbanGrabbed, direction: \"up\" | \"down\" | \"left\" | \"right\") => void\n}\n\nconst focusLater = (selector: string) =>\n  requestAnimationFrame(() => requestAnimationFrame(() => document.querySelector<HTMLElement>(selector)?.focus()))\n\nconst cssEscape = (value: string) => (typeof CSS !== \"undefined\" && CSS.escape ? CSS.escape(value) : value)\n\nconst KanbanContext = React.createContext<KanbanContextValue | null>(null)\n\nfunction useKanban() {\n  const ctx = React.useContext(KanbanContext)\n  if (!ctx) throw new Error(\"Kanban parts must be used within <Kanban>\")\n  return ctx\n}\n\nconst isOwnData = (instanceId: symbol, data: Record<string | symbol, unknown>): data is DragData =>\n  data.instanceId === instanceId && (data.type === \"card\" || data.type === \"column\")\n\nfunction cardsOf(columnEl: Element) {\n  return Array.from(columnEl.querySelectorAll<HTMLElement>(\":scope [data-slot=kanban-card]\"))\n}\n\ntype DropTargetLike = { data: Record<string | symbol, unknown> }\n\n/** Resolve a card drag against the current drop targets into a concrete destination. */\nfunction resolveCardDrop(root: HTMLElement, data: Extract<DragData, { type: \"card\" }>, targets: DropTargetLike[]) {\n  const columnTarget = targets.find((t) => t.data[COLUMN_TARGET] === true)\n  if (!columnTarget) return null\n  const toColumnId = String(columnTarget.data.columnId)\n  const columnEls = Array.from(root.querySelectorAll<HTMLElement>(\"[data-slot=kanban-column]\"))\n  const fromColumnEl = columnEls.find((el) => el.dataset.value === data.columnId)\n  const toColumnEl = columnEls.find((el) => el.dataset.value === toColumnId)\n  if (!fromColumnEl || !toColumnEl) return null\n  const fromIndex = cardsOf(fromColumnEl).findIndex((el) => el.dataset.value === data.cardId)\n  const toCards = cardsOf(toColumnEl)\n  const cardTarget = targets.find((t) => t.data[CARD_TARGET] === true)\n  const sameColumn = data.columnId === toColumnId\n\n  let toIndex: number\n  if (cardTarget && String(cardTarget.data.cardId) !== data.cardId) {\n    const indexOfTarget = toCards.findIndex((el) => el.dataset.value === String(cardTarget.data.cardId))\n    const edge = extractClosestEdge(cardTarget.data)\n    toIndex = sameColumn\n      ? getReorderDestinationIndex({\n          startIndex: fromIndex,\n          indexOfTarget,\n          closestEdgeOfTarget: edge,\n          axis: \"vertical\",\n        })\n      : edge === \"bottom\"\n        ? indexOfTarget + 1\n        : indexOfTarget\n  } else if (cardTarget) {\n    // Hovering the dragged card itself: no move.\n    toIndex = fromIndex\n  } else {\n    toIndex = sameColumn ? toCards.length - 1 : toCards.length\n  }\n  const noop = sameColumn && toIndex === fromIndex\n  const remaining = toCards.filter((el) => el.dataset.value !== data.cardId)\n  const beforeCardId = remaining[toIndex]?.dataset.value ?? null\n  return { toColumnId, toIndex, fromIndex, sameColumn, noop, beforeCardId }\n}\n\nfunction KanbanRoot({ onCardMove, onColumnMove, className, children, ...props }: KanbanRootProps) {\n  const [instanceId] = React.useState(() => Symbol(\"kanban\"))\n  const [dragging, setDragging] = React.useState<KanbanDragging | null>(null)\n  const [preview, setPreviewState] = React.useState<KanbanPreview | null>(null)\n  const [grabbed, setGrabbed] = React.useState<KanbanGrabbed | null>(null)\n  const { message: announcement, announce: setAnnouncement } = useLiveRegion()\n  const previewKey = React.useRef<string | null>(null)\n  const ref = React.useRef<HTMLDivElement>(null)\n  const callbacks = React.useRef({ onCardMove, onColumnMove })\n  callbacks.current = { onCardMove, onColumnMove }\n\n  const grab = React.useCallback(\n    (item: KanbanGrabbed | null) => {\n      setGrabbed(item)\n      setAnnouncement(\n        item\n          ? `Picked up ${item.type} ${item.id}. Use the arrow keys to move, Space or Enter to drop, Escape to cancel.`\n          : \"Dropped.\"\n      )\n    },\n    [setAnnouncement]\n  )\n\n  const moveByKey = React.useCallback(\n    (item: KanbanGrabbed, direction: \"up\" | \"down\" | \"left\" | \"right\") => {\n      const root = ref.current\n      if (!root) return\n      const columnEls = Array.from(root.querySelectorAll<HTMLElement>(\"[data-slot=kanban-column]\"))\n      const columnIds = columnEls.map((el) => el.dataset.value ?? \"\")\n      const columnName = (el: HTMLElement) =>\n        el.querySelector(\"[data-slot=kanban-column-title]\")?.textContent ?? el.dataset.value\n\n      if (item.type === \"column\") {\n        const fromIndex = columnIds.indexOf(item.id)\n        const toIndex = direction === \"left\" ? fromIndex - 1 : direction === \"right\" ? fromIndex + 1 : fromIndex\n        if (fromIndex < 0 || toIndex === fromIndex || toIndex < 0 || toIndex >= columnIds.length) return\n        callbacks.current.onColumnMove?.({ columnId: item.id, fromIndex, toIndex })\n        setAnnouncement(`Moved column to position ${toIndex + 1} of ${columnIds.length}.`)\n        focusLater(`[data-slot=kanban-column][data-value=\"${cssEscape(item.id)}\"] [data-slot=kanban-column-handle]`)\n        return\n      }\n\n      const fromColumnEl = columnEls.find((el) => cardsOf(el).some((c) => c.dataset.value === item.id))\n      if (!fromColumnEl) return\n      const fromColumnId = fromColumnEl.dataset.value ?? \"\"\n      const fromCards = cardsOf(fromColumnEl)\n      const fromIndex = fromCards.findIndex((c) => c.dataset.value === item.id)\n      let toColumnId = fromColumnId\n      let toIndex = fromIndex\n      if (direction === \"up\" || direction === \"down\") {\n        toIndex = direction === \"up\" ? fromIndex - 1 : fromIndex + 1\n        if (toIndex < 0 || toIndex >= fromCards.length) return\n      } else {\n        const ci = columnIds.indexOf(fromColumnId)\n        const targetEl = columnEls[direction === \"left\" ? ci - 1 : ci + 1]\n        if (!targetEl) return\n        toColumnId = targetEl.dataset.value ?? \"\"\n        toIndex = Math.min(fromIndex, cardsOf(targetEl).length)\n      }\n      callbacks.current.onCardMove?.({ cardId: item.id, fromColumnId, toColumnId, fromIndex, toIndex })\n      const targetEl = columnEls[columnIds.indexOf(toColumnId)]\n      const count = toColumnId === fromColumnId ? fromCards.length : cardsOf(targetEl).length + 1\n      setAnnouncement(`Moved to ${columnName(targetEl)}, position ${toIndex + 1} of ${count}.`)\n      focusLater(`[data-slot=kanban-card][data-value=\"${cssEscape(item.id)}\"]`)\n    },\n    [setAnnouncement]\n  )\n\n  React.useEffect(() => {\n    const root = ref.current\n    if (!root) return\n    const setPreview = (next: KanbanPreview | null) => {\n      const key = next ? `${next.columnId}::${next.beforeCardId ?? \"\"}` : null\n      if (key === previewKey.current) return\n      previewKey.current = key\n      setPreviewState(next)\n    }\n    const updatePreview = (data: DragData, targets: DropTargetLike[]) => {\n      if (data.type !== \"card\") return\n      const resolved = resolveCardDrop(root, data, targets)\n      setPreview(\n        resolved && !resolved.noop ? { columnId: resolved.toColumnId, beforeCardId: resolved.beforeCardId } : null\n      )\n    }\n    return monitorForElements({\n      canMonitor: ({ source }) => isOwnData(instanceId, source.data),\n      onDragStart: ({ source }) => {\n        const data = source.data as DragData\n        setDragging({\n          type: data.type,\n          id: data.type === \"card\" ? data.cardId : data.columnId,\n          columnId: data.type === \"card\" ? data.columnId : undefined,\n          /** Height of the drop slot, normally the dragged card's height. */\n          height: source.element.getBoundingClientRect().height,\n        })\n      },\n      onDrag: ({ source, location }) => updatePreview(source.data as DragData, location.current.dropTargets),\n      onDropTargetChange: ({ source, location }) =>\n        updatePreview(source.data as DragData, location.current.dropTargets),\n      onDrop: ({ source, location }) => {\n        setDragging(null)\n        setPreview(null)\n        const data = source.data as DragData\n        const targets = location.current.dropTargets\n        const columnEls = Array.from(root.querySelectorAll<HTMLElement>(\"[data-slot=kanban-column]\"))\n        const columnIds = columnEls.map((el) => el.dataset.value ?? \"\")\n\n        if (data.type === \"column\") {\n          const target = targets.find((t) => t.data[COLUMN_TARGET] === true)\n          if (!target) return\n          const targetId = String(target.data.columnId)\n          const fromIndex = columnIds.indexOf(data.columnId)\n          const indexOfTarget = columnIds.indexOf(targetId)\n          if (fromIndex < 0 || indexOfTarget < 0) return\n          const toIndex = getReorderDestinationIndex({\n            startIndex: fromIndex,\n            indexOfTarget,\n            closestEdgeOfTarget: extractClosestEdge(target.data),\n            axis: \"horizontal\",\n          })\n          if (toIndex === fromIndex) return\n          callbacks.current.onColumnMove?.({ columnId: data.columnId, fromIndex, toIndex })\n          return\n        }\n\n        const resolved = resolveCardDrop(root, data, targets)\n        if (!resolved || resolved.noop) return\n        callbacks.current.onCardMove?.({\n          cardId: data.cardId,\n          fromColumnId: data.columnId,\n          toColumnId: resolved.toColumnId,\n          fromIndex: resolved.fromIndex,\n          toIndex: resolved.toIndex,\n        })\n      },\n    })\n  }, [instanceId])\n\n  const ctx = React.useMemo(\n    () => ({ instanceId, dragging, preview, grabbed, grab, moveByKey }),\n    [instanceId, dragging, preview, grabbed, grab, moveByKey]\n  )\n  return (\n    <KanbanContext.Provider value={ctx}>\n      <ark.div\n        ref={ref}\n        data-slot=\"kanban\"\n        data-dragging={dragging ? dragging.type : undefined}\n        data-grabbed={grabbed ? grabbed.type : undefined}\n        className={cn(\"flex min-h-0 flex-1 flex-col\", className)}\n        {...props}\n      >\n        {props.asChild ? (\n          React.isValidElement(children) ? (\n            children\n          ) : null\n        ) : (\n          <>\n            {children}\n            <LiveRegion.Root data-slot=\"kanban-live-region\" message={announcement} />\n          </>\n        )}\n      </ark.div>\n    </KanbanContext.Provider>\n  )\n}\n\n/** Keyboard handling shared by cards and column handles. */\nfunction useKanbanKeyboard(item: KanbanGrabbed) {\n  const { grabbed, grab, moveByKey } = useKanban()\n  const isGrabbed = grabbed?.type === item.type && grabbed.id === item.id\n  const onKeyDown = (event: React.KeyboardEvent) => {\n    const key = event.key\n    if (key === \" \" || key === \"Enter\") {\n      event.preventDefault()\n      grab(isGrabbed ? null : item)\n      return\n    }\n    if (!isGrabbed) return\n    if (key === \"Escape\") {\n      event.preventDefault()\n      grab(null)\n      return\n    }\n    const direction = { ArrowUp: \"up\", ArrowDown: \"down\", ArrowLeft: \"left\", ArrowRight: \"right\" }[key] as\n      \"up\" | \"down\" | \"left\" | \"right\" | undefined\n    if (!direction) return\n    event.preventDefault()\n    moveByKey(item, direction)\n  }\n  return { isGrabbed, onKeyDown, onBlur: () => isGrabbed && grab(null) }\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Board                                                                     */\n/* -------------------------------------------------------------------------- */\n\nfunction KanbanBoard({ className, ...props }: KanbanBoardProps) {\n  const { instanceId } = useKanban()\n  const ref = React.useRef<HTMLDivElement>(null)\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    return autoScrollForElements({\n      element: el,\n      canScroll: ({ source }) => isOwnData(instanceId, source.data),\n    })\n  }, [instanceId])\n  return (\n    <ark.div\n      ref={ref}\n      data-slot=\"kanban-board\"\n      className={cn(\"flex min-h-0 flex-1 items-start gap-4 overflow-x-auto p-1 pb-4\", className)}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Column                                                                    */\n/* -------------------------------------------------------------------------- */\n\ntype ColumnContextValue = {\n  value: string\n  handleRef: React.RefObject<HTMLElement | null>\n  headerRef: React.RefObject<HTMLElement | null>\n  isOver: boolean\n  isDragging: boolean\n}\n\nconst ColumnContext = React.createContext<ColumnContextValue | null>(null)\n\nfunction useKanbanColumn() {\n  const ctx = React.useContext(ColumnContext)\n  if (!ctx) throw new Error(\"Kanban column parts must be used within <KanbanColumn>\")\n  return ctx\n}\n\nfunction KanbanColumn({ value, draggable: isDraggable = true, className, children, ...props }: KanbanColumnProps) {\n  const { instanceId, dragging, preview } = useKanban()\n  const ref = React.useRef<HTMLElement>(null)\n  const handleRef = React.useRef<HTMLElement | null>(null)\n  const headerRef = React.useRef<HTMLElement | null>(null)\n  const [isOver, setIsOver] = React.useState(false)\n  const [isDragging, setIsDragging] = React.useState(false)\n  const [closestEdge, setClosestEdge] = React.useState<Edge | null>(null)\n\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    const cleanups = [\n      dropTargetForElements({\n        element: el,\n        canDrop: ({ source }) => isOwnData(instanceId, source.data),\n        getIsSticky: () => true,\n        getData: ({ source, input, element }) => {\n          const base = { [COLUMN_TARGET]: true, columnId: value }\n          if ((source.data as DragData).type === \"column\") {\n            return attachClosestEdge(base, { element, input, allowedEdges: [\"left\", \"right\"] })\n          }\n          return base\n        },\n        onDragEnter: ({ source, self }) => {\n          const data = source.data as DragData\n          if (data.type === \"card\") setIsOver(true)\n          else if (data.columnId !== value) setClosestEdge(extractClosestEdge(self.data))\n        },\n        onDrag: ({ source, self }) => {\n          const data = source.data as DragData\n          if (data.type === \"column\" && data.columnId !== value) {\n            const edge = extractClosestEdge(self.data)\n            setClosestEdge((prev) => (prev === edge ? prev : edge))\n          }\n        },\n        onDragLeave: () => {\n          setIsOver(false)\n          setClosestEdge(null)\n        },\n        onDrop: () => {\n          setIsOver(false)\n          setClosestEdge(null)\n        },\n      }),\n    ]\n    if (isDraggable) {\n      cleanups.push(\n        draggable({\n          element: el,\n          dragHandle: handleRef.current ?? headerRef.current ?? undefined,\n          getInitialData: (): DragData => ({ instanceId, type: \"column\", columnId: value }),\n          onGenerateDragPreview: (args) => cloneDragPreview(args),\n          onDragStart: () => setIsDragging(true),\n          onDrop: () => setIsDragging(false),\n        })\n      )\n    }\n    return combine(...cleanups)\n  }, [instanceId, value, isDraggable])\n\n  const ctx = React.useMemo(() => ({ value, handleRef, headerRef, isOver, isDragging }), [value, isOver, isDragging])\n  return (\n    <ColumnContext.Provider value={ctx}>\n      <ark.section\n        ref={ref}\n        data-slot=\"kanban-column\"\n        data-value={value}\n        data-over={isOver && dragging?.type === \"card\" ? \"\" : undefined}\n        data-target={preview?.columnId === value ? \"\" : undefined}\n        data-dragging={isDragging ? \"\" : undefined}\n        data-edge={closestEdge ?? undefined}\n        className={cn(\n          \"group/kanban-column relative flex max-h-full w-72 shrink-0 flex-col rounded-xl border bg-muted/40 transition-colors data-dragging:opacity-40 data-target:border-primary/30\",\n          className\n        )}\n        {...props}\n      >\n        {props.asChild ? (\n          React.isValidElement(children) ? (\n            children\n          ) : null\n        ) : (\n          <>\n            {children}\n            {closestEdge && <KanbanDropIndicator edge={closestEdge} />}\n          </>\n        )}\n      </ark.section>\n    </ColumnContext.Provider>\n  )\n}\n\nfunction KanbanColumnHeader({ className, ...props }: KanbanColumnHeaderProps) {\n  const { headerRef } = useKanbanColumn()\n  return (\n    <ark.header\n      ref={headerRef as React.RefObject<HTMLElement>}\n      data-slot=\"kanban-column-header\"\n      className={cn(\"flex items-center gap-2 px-3 py-2.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction KanbanColumnHandle({ className, children, onKeyDown, onBlur, asChild, ...props }: KanbanColumnHandleProps) {\n  const { handleRef, value } = useKanbanColumn()\n  const keyboard = useKanbanKeyboard({ type: \"column\", id: value })\n  return (\n    <ark.button\n      asChild={asChild}\n      ref={handleRef as React.RefObject<HTMLButtonElement>}\n      type=\"button\"\n      data-slot=\"kanban-column-handle\"\n      data-grabbed={keyboard.isGrabbed ? \"\" : undefined}\n      aria-label=\"Drag column\"\n      aria-pressed={keyboard.isGrabbed}\n      aria-describedby={undefined}\n      onKeyDown={(event) => {\n        onKeyDown?.(event)\n        if (!event.defaultPrevented) keyboard.onKeyDown(event)\n      }}\n      onBlur={(event) => {\n        onBlur?.(event)\n        keyboard.onBlur()\n      }}\n      className={cn(\n        \"-ms-1 flex size-6 cursor-grab items-center justify-center rounded-md text-muted-foreground outline-none hover:bg-accent hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 active:cursor-grabbing data-grabbed:bg-primary data-grabbed:text-primary-foreground [&_svg]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {asChild ? children : (children ?? <GripVerticalIcon />)}\n    </ark.button>\n  )\n}\n\nfunction KanbanColumnTitle({ className, ...props }: KanbanColumnTitleProps) {\n  return (\n    <ark.h3 data-slot=\"kanban-column-title\" className={cn(\"truncate text-sm font-semibold\", className)} {...props} />\n  )\n}\n\nfunction KanbanColumnCount({ className, ...props }: KanbanColumnCountProps) {\n  return (\n    <Badge.Root\n      data-slot=\"kanban-column-count\"\n      variant=\"secondary\"\n      className={cn(\"h-5 min-w-5 justify-center px-1.5 tabular-nums\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction KanbanColumnActions({ className, ...props }: KanbanColumnActionsProps) {\n  return (\n    <ark.div\n      data-slot=\"kanban-column-actions\"\n      className={cn(\"ms-auto flex items-center gap-1\", className)}\n      {...props}\n    />\n  )\n}\n\n/** The scrolling list of cards. Renders the landing slot at the end when a card would be appended. */\nfunction KanbanColumnContent({ className, children, ...props }: KanbanColumnContentProps) {\n  const { instanceId, dragging, preview } = useKanban()\n  const column = useKanbanColumn()\n  const ref = React.useRef<HTMLDivElement>(null)\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    return autoScrollForElements({\n      element: el,\n      canScroll: ({ source }) => isOwnData(instanceId, source.data),\n    })\n  }, [instanceId])\n  return (\n    <ark.div\n      ref={ref}\n      data-slot=\"kanban-column-content\"\n      className={cn(\n        \"no-scrollbar flex min-h-16 flex-1 flex-col gap-(--kanban-gap) overflow-y-auto px-2 pb-2 [--kanban-gap:0.5rem]\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children}\n          {dragging?.type === \"card\" && preview?.columnId === column.value && preview.beforeCardId === null && (\n            <KanbanDropSlot height={dragging.height} />\n          )}\n        </>\n      )}\n    </ark.div>\n  )\n}\n\nfunction KanbanColumnFooter({ className, ...props }: KanbanColumnFooterProps) {\n  return (\n    <ark.footer data-slot=\"kanban-column-footer\" className={cn(\"flex items-center px-2 pb-2\", className)} {...props} />\n  )\n}\n\n/** A ghost-style full-width trigger for the footer, e.g. \"Add card\". Polymorphic via `asChild`. */\nfunction KanbanAddTrigger({ className, variant = \"ghost\", size = \"sm\", ...props }: KanbanAddTriggerProps) {\n  return (\n    <Button\n      data-slot=\"kanban-add-trigger\"\n      variant={variant}\n      size={size}\n      className={cn(\"w-full justify-start text-muted-foreground hover:text-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction KanbanEmpty({ className, ...props }: KanbanEmptyProps) {\n  return (\n    <ark.div\n      data-slot=\"kanban-empty\"\n      className={cn(\n        \"flex flex-1 items-center justify-center rounded-lg border border-dashed px-3 py-6 text-center text-xs text-muted-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Card                                                                      */\n/* -------------------------------------------------------------------------- */\n\ntype CardContextValue = { handleRef: React.RefObject<HTMLElement | null>; value: string }\nconst CardContext = React.createContext<CardContextValue | null>(null)\n\nfunction KanbanCard({\n  value,\n  draggable: isDraggable = true,\n  className,\n  children,\n  onKeyDown,\n  onBlur,\n  ...props\n}: KanbanCardProps) {\n  const { instanceId, dragging, preview } = useKanban()\n  const column = useKanbanColumn()\n  const keyboard = useKanbanKeyboard({ type: \"card\", id: value })\n  const ref = React.useRef<HTMLElement>(null)\n  const handleRef = React.useRef<HTMLElement | null>(null)\n  const [isDragging, setIsDragging] = React.useState(false)\n  const isSlotBefore = dragging?.type === \"card\" && preview?.columnId === column.value && preview.beforeCardId === value\n  // The dragged card stays as an outlined placeholder until a landing spot exists, then collapses.\n  const isCollapsed = isDragging && preview !== null\n\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    const cleanups = [\n      dropTargetForElements({\n        element: el,\n        canDrop: ({ source }) => isOwnData(instanceId, source.data) && (source.data as DragData).type === \"card\",\n        getIsSticky: () => true,\n        getData: ({ input, element }) =>\n          attachClosestEdge(\n            { [CARD_TARGET]: true, cardId: value, columnId: column.value },\n            {\n              element,\n              input,\n              allowedEdges: [\"top\", \"bottom\"],\n            }\n          ),\n      }),\n    ]\n    if (isDraggable) {\n      cleanups.push(\n        draggable({\n          element: el,\n          dragHandle: handleRef.current ?? undefined,\n          getInitialData: (): DragData => ({ instanceId, type: \"card\", cardId: value, columnId: column.value }),\n          onGenerateDragPreview: (args) => cloneDragPreview(args),\n          onDragStart: () => setIsDragging(true),\n          onDrop: () => setIsDragging(false),\n        })\n      )\n    }\n    return combine(...cleanups)\n  }, [instanceId, value, column.value, isDraggable])\n\n  const ctx = React.useMemo(() => ({ handleRef, value }), [value])\n  return (\n    <CardContext.Provider value={ctx}>\n      {isSlotBefore && dragging && <KanbanDropSlot height={dragging.height} />}\n      <ark.article\n        ref={ref}\n        data-slot=\"kanban-card\"\n        data-value={value}\n        data-dragging={isDragging ? \"\" : undefined}\n        data-collapsed={isCollapsed ? \"\" : undefined}\n        data-grabbed={keyboard.isGrabbed ? \"\" : undefined}\n        tabIndex={isDraggable ? 0 : undefined}\n        aria-roledescription={isDraggable ? \"draggable card\" : undefined}\n        onKeyDown={(event) => {\n          onKeyDown?.(event)\n          if (!event.defaultPrevented && event.target === event.currentTarget) keyboard.onKeyDown(event)\n        }}\n        onBlur={(event) => {\n          onBlur?.(event)\n          if (event.target === event.currentTarget) keyboard.onBlur()\n        }}\n        className={cn(\n          \"group/kanban-card relative flex cursor-grab flex-col gap-2 rounded-lg border bg-card p-3 text-sm text-card-foreground shadow-xs transition-shadow outline-none hover:shadow-sm focus-visible:ring-3 focus-visible:ring-ring/50 active:cursor-grabbing data-grabbed:border-primary data-grabbed:ring-3 data-grabbed:ring-primary/30\",\n          \"data-dragging:border-dashed data-dragging:border-primary/40 data-dragging:bg-primary/5 data-dragging:shadow-none data-dragging:*:invisible\",\n          // Collapse (not `display:none`): removing the dragged element from layout cancels a native drag in Chrome.\n          \"data-collapsed:pointer-events-none data-collapsed:-mb-(--kanban-gap) data-collapsed:h-0 data-collapsed:min-h-0 data-collapsed:overflow-hidden data-collapsed:border-0 data-collapsed:p-0 data-collapsed:opacity-0\",\n          className\n        )}\n        {...props}\n      >\n        {children}\n      </ark.article>\n    </CardContext.Provider>\n  )\n}\n\n/** Optional explicit drag handle; without it the whole card is the handle. */\nfunction KanbanCardHandle({ className, children, onKeyDown, onBlur, asChild, ...props }: KanbanCardHandleProps) {\n  const ctx = React.useContext(CardContext)\n  const keyboard = useKanbanKeyboard({ type: \"card\", id: ctx?.value ?? \"\" })\n  return (\n    <ark.button\n      asChild={asChild}\n      ref={(el: HTMLElement | null) => {\n        if (ctx) ctx.handleRef.current = el\n      }}\n      type=\"button\"\n      data-slot=\"kanban-card-handle\"\n      data-grabbed={keyboard.isGrabbed ? \"\" : undefined}\n      aria-label=\"Drag card\"\n      aria-pressed={keyboard.isGrabbed}\n      onKeyDown={(event) => {\n        onKeyDown?.(event)\n        if (!event.defaultPrevented) {\n          keyboard.onKeyDown(event)\n          event.stopPropagation()\n        }\n      }}\n      onBlur={(event) => {\n        onBlur?.(event)\n        keyboard.onBlur()\n      }}\n      className={cn(\n        \"flex size-6 cursor-grab items-center justify-center rounded-md text-muted-foreground outline-none hover:bg-accent hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 active:cursor-grabbing data-grabbed:bg-primary data-grabbed:text-primary-foreground [&_svg]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {asChild ? children : (children ?? <GripVerticalIcon />)}\n    </ark.button>\n  )\n}\n\nfunction KanbanCardHeader({ className, ...props }: KanbanCardHeaderProps) {\n  return (\n    <ark.div\n      data-slot=\"kanban-card-header\"\n      className={cn(\"flex items-start justify-between gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction KanbanCardTitle({ className, ...props }: KanbanCardTitleProps) {\n  return <ark.p data-slot=\"kanban-card-title\" className={cn(\"leading-snug font-medium\", className)} {...props} />\n}\n\nfunction KanbanCardDescription({ className, ...props }: KanbanCardDescriptionProps) {\n  return (\n    <ark.p\n      data-slot=\"kanban-card-description\"\n      className={cn(\"line-clamp-3 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction KanbanCardFooter({ className, ...props }: KanbanCardFooterProps) {\n  return (\n    <ark.div\n      data-slot=\"kanban-card-footer\"\n      className={cn(\"flex items-center gap-2 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Drop slot + indicator                                                     */\n/* -------------------------------------------------------------------------- */\n\n/** An outlined placeholder the size of the dragged card, marking where it will land. */\nfunction KanbanDropSlot({ height, className, style, ...props }: KanbanDropSlotProps) {\n  return (\n    <ark.div\n      data-slot=\"kanban-drop-slot\"\n      aria-hidden\n      style={{ height, ...style }}\n      className={cn(\n        \"shrink-0 rounded-lg border-2 border-dashed border-primary/40 bg-primary/5\",\n        height === undefined && \"min-h-16\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** A line on the given edge of its (relative) parent, with a terminal dot. */\nfunction KanbanDropIndicator({ edge, gap = \"0.5rem\", className, ...props }: KanbanDropIndicatorProps) {\n  const horizontal = edge === \"top\" || edge === \"bottom\"\n  return (\n    <ark.div\n      data-slot=\"kanban-drop-indicator\"\n      data-edge={edge}\n      aria-hidden\n      style={{ [\"--kanban-gap\" as string]: gap }}\n      className={cn(\n        \"pointer-events-none absolute z-10 bg-primary\",\n        \"before:absolute before:size-2 before:rounded-full before:border-2 before:border-primary before:bg-background\",\n        horizontal\n          ? \"inset-x-0 h-0.5 before:top-1/2 before:-left-1 before:-translate-y-1/2\"\n          : \"inset-y-0 w-0.5 before:-top-1 before:left-1/2 before:-translate-x-1/2\",\n        edge === \"top\" && \"top-[calc(-1*var(--kanban-gap)/2-1px)]\",\n        edge === \"bottom\" && \"bottom-[calc(-1*var(--kanban-gap)/2-1px)]\",\n        edge === \"left\" && \"left-[calc(-1*var(--kanban-gap)/2-1px)]\",\n        edge === \"right\" && \"right-[calc(-1*var(--kanban-gap)/2-1px)]\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Helpers                                                                   */\n/* -------------------------------------------------------------------------- */\n\ntype KanbanColumnLike<TCard extends { id: string }> = { id: string; cards: TCard[] }\n\n/** Apply an `onCardMove` intent to a `{ id, cards }[]` state shape. */\nfunction moveCard<TCard extends { id: string }, TColumn extends KanbanColumnLike<TCard>>(\n  columns: TColumn[],\n  { cardId, fromColumnId, toColumnId, toIndex }: KanbanCardMoveDetails\n): TColumn[] {\n  const from = columns.find((c) => c.id === fromColumnId)\n  const card = from?.cards.find((c) => c.id === cardId)\n  if (!from || !card) return columns\n  return columns.map((column) => {\n    if (column.id === fromColumnId && column.id === toColumnId) {\n      const startIndex = column.cards.indexOf(card)\n      return { ...column, cards: reorder({ list: column.cards, startIndex, finishIndex: toIndex }) }\n    }\n    if (column.id === fromColumnId) return { ...column, cards: column.cards.filter((c) => c !== card) }\n    if (column.id === toColumnId) {\n      const cards = [...column.cards]\n      cards.splice(toIndex, 0, card)\n      return { ...column, cards }\n    }\n    return column\n  })\n}\n\n/** Apply an `onColumnMove` intent to a column array. */\nfunction moveColumn<TColumn extends { id: string }>(\n  columns: TColumn[],\n  { fromIndex, toIndex }: KanbanColumnMoveDetails\n): TColumn[] {\n  return reorder({ list: columns, startIndex: fromIndex, finishIndex: toIndex })\n}\n\ntype KanbanRootProps = React.ComponentProps<typeof ark.div> & {\n  /** Called with `{ cardId, fromColumnId, toColumnId, fromIndex, toIndex }`; apply it with `moveCard`. */\n  onCardMove?: (details: KanbanCardMoveDetails) => void\n  /** Called with `{ columnId, fromIndex, toIndex }`; apply it with `moveColumn`. */\n  onColumnMove?: (details: KanbanColumnMoveDetails) => void\n}\n\ntype KanbanAddTriggerProps = React.ComponentProps<typeof Button>\n\ntype KanbanBoardProps = React.ComponentProps<typeof ark.div>\n\ntype KanbanCardProps = React.ComponentProps<typeof ark.article> & { value: string; draggable?: boolean }\n\ntype KanbanCardDescriptionProps = React.ComponentProps<typeof ark.p>\n\ntype KanbanCardFooterProps = React.ComponentProps<typeof ark.div>\n\ntype KanbanCardHandleProps = React.ComponentProps<typeof ark.button>\n\ntype KanbanCardHeaderProps = React.ComponentProps<typeof ark.div>\n\ntype KanbanCardTitleProps = React.ComponentProps<typeof ark.p>\n\ntype KanbanColumnProps = React.ComponentProps<typeof ark.section> & {\n  value: string\n  /** Allow the column itself to be reordered (drag by its handle or header). */\n  draggable?: boolean\n}\n\ntype KanbanColumnActionsProps = React.ComponentProps<typeof ark.div>\n\ntype KanbanColumnContentProps = React.ComponentProps<typeof ark.div>\n\ntype KanbanColumnCountProps = React.ComponentProps<typeof Badge.Root>\n\ntype KanbanColumnFooterProps = React.ComponentProps<typeof ark.footer>\n\ntype KanbanColumnHandleProps = React.ComponentProps<typeof ark.button>\n\ntype KanbanColumnHeaderProps = React.ComponentProps<typeof ark.header>\n\ntype KanbanColumnTitleProps = React.ComponentProps<typeof ark.h3>\n\ntype KanbanDropIndicatorProps = React.ComponentProps<typeof ark.div> & { edge: Edge; gap?: string }\n\ntype KanbanDropSlotProps = React.ComponentProps<typeof ark.div> & { height?: number }\n\ntype KanbanEmptyProps = React.ComponentProps<typeof ark.div>\n\nconst Kanban = {\n  Root: KanbanRoot,\n  AddTrigger: KanbanAddTrigger,\n  Board: KanbanBoard,\n  Card: KanbanCard,\n  CardDescription: KanbanCardDescription,\n  CardFooter: KanbanCardFooter,\n  CardHandle: KanbanCardHandle,\n  CardHeader: KanbanCardHeader,\n  CardTitle: KanbanCardTitle,\n  Column: KanbanColumn,\n  ColumnActions: KanbanColumnActions,\n  ColumnContent: KanbanColumnContent,\n  ColumnCount: KanbanColumnCount,\n  ColumnFooter: KanbanColumnFooter,\n  ColumnHandle: KanbanColumnHandle,\n  ColumnHeader: KanbanColumnHeader,\n  ColumnTitle: KanbanColumnTitle,\n  DropIndicator: KanbanDropIndicator,\n  DropSlot: KanbanDropSlot,\n  Empty: KanbanEmpty,\n}\n\nexport {\n  Kanban,\n  moveCard,\n  moveColumn,\n  useKanban,\n  useKanbanColumn,\n  type KanbanCardMoveDetails,\n  type KanbanColumnMoveDetails,\n  type KanbanRootProps,\n  type KanbanAddTriggerProps,\n  type KanbanBoardProps,\n  type KanbanCardProps,\n  type KanbanCardDescriptionProps,\n  type KanbanCardFooterProps,\n  type KanbanCardHandleProps,\n  type KanbanCardHeaderProps,\n  type KanbanCardTitleProps,\n  type KanbanColumnProps,\n  type KanbanColumnActionsProps,\n  type KanbanColumnContentProps,\n  type KanbanColumnCountProps,\n  type KanbanColumnFooterProps,\n  type KanbanColumnHandleProps,\n  type KanbanColumnHeaderProps,\n  type KanbanColumnTitleProps,\n  type KanbanDropIndicatorProps,\n  type KanbanDropSlotProps,\n  type KanbanEmptyProps,\n}\n"
     }
   ],
   "docs": "## Kanban\n`src/components/ui/kanban.tsx` is a compositional, data-agnostic board on\n`@atlaskit/pragmatic-drag-and-drop` (+ `-hitbox` closest-edge/reorder index, `-auto-scroll`).\nThe consumer owns columns/cards state; `Kanban` only wires dragging and reports intents via\n`onCardMove({ cardId, fromColumnId, toColumnId, fromIndex, toIndex })` and\n`onColumnMove({ columnId, fromIndex, toIndex })`. `moveCard`/`moveColumn` apply those to a\n`{ id, cards: { id }[] }[]` shape. Parts: `KanbanBoard` (horizontal scroller, auto-scroll),\n`KanbanColumn` (`value`, drop target for cards and columns, `draggable` by its\n`KanbanColumnHandle` or header), `KanbanColumnHeader/Title/Count/Actions/Content/Footer`,\n`KanbanAddTrigger`, `KanbanEmpty`, `KanbanCard` (`value`, draggable + drop target with\ntop/bottom edges, optional `KanbanCardHandle`), `KanbanCardHeader/Title/Description/Footer`,\n`KanbanDropSlot` (outlined placeholder sized like the dragged card; the root computes the\nlanding spot live via `preview` in context, cards render the slot before themselves and\n`KanbanColumnContent` renders it at the end) and `KanbanDropIndicator` (edge line, used for\ncolumn reordering). While a landing spot exists the source card collapses (`data-collapsed`,\nheight 0 rather than `display:none`, which would cancel Chrome's native drag); with no\nlanding spot it stays in place as a dashed outline. State via `data-dragging`, `data-over`,\n`data-target`, `data-edge` on the root/column/card. Indices are derived from DOM order at drop time, so cards need no index\nprop. Keyboard reordering is not provided (Pragmatic leaves it to the consumer).\nKeyboard: cards (and `KanbanCardHandle`/`KanbanColumnHandle`) are focusable; Space/Enter\npicks up (`data-grabbed`, `aria-pressed`), arrows move within/between columns via the same\n`onCardMove`/`onColumnMove` intents, Space/Enter drops, Escape cancels, focus follows the\nmoved item, and a visually hidden live region announces each step. Native drag previews are\ncrisp clones via `cloneDragPreview` in `src/lib/drag-preview.ts`.\n`src/demo/kanban/` is the reference (tasks data, route `/projects/board`, `AppShellMain fixed`)."

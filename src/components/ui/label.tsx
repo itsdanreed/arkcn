@@ -1,3 +1,4 @@
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
@@ -6,9 +7,9 @@ import { cn } from "@/lib/utils"
  * component's anatomy). This mirrors Radix's: a native `label` that ignores
  * double-click text selection.
  */
-function Label({ className, onMouseDown, ...props }: React.ComponentProps<"label">) {
+function LabelRoot({ className, onMouseDown, ...props }: LabelRootProps) {
   return (
-    <label
+    <ark.label
       data-slot="label"
       className={cn(
         "flex items-center gap-2 text-sm leading-none font-medium select-none group-data-[disabled=true]:pointer-events-none group-data-[disabled=true]:opacity-50 peer-disabled:cursor-not-allowed peer-disabled:opacity-50",
@@ -27,4 +28,10 @@ function Label({ className, onMouseDown, ...props }: React.ComponentProps<"label
   )
 }
 
-export { Label }
+type LabelRootProps = React.ComponentProps<typeof ark.label>
+
+const Label = {
+  Root: LabelRoot,
+}
+
+export { Label, type LabelRootProps }

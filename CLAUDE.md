@@ -72,12 +72,12 @@ multicomma.com/arkcn. The docs type-check (`docs/tsconfig.json`) and lint are pa
 check`. Add an example for a new component by dropping `docs/src/examples/<name>.tsx`.
 
 ## Porting rules
-- **Feature parity** with the shadcn original: same exported names, same props surface
-  where Ark supports it, same visual result, same variants.
+- **Visual parity** with the shadcn original: retain the visual result and variants.
+  Public names, parts, and behavior follow Ark's namespace contracts.
 - **Ark's tree wins** where the structure differs (e.g. `Positioner` wrappers,
   `Control`/`HiddenInput` splits, `ItemGroup`/`ItemGroupLabel`, `Backdrop` vs `Overlay`).
   Export the extra Ark parts as their own composable pieces; do not fold them away.
-- **Stay compositional.** Every part is its own exported component. No collapsing
+- **Stay compositional.** Every part is exposed on its component namespace. No collapsing
   parts into a single "smart" component, no dropping sub-parts to simplify.
 - **Styling:** `cn` from `@/lib/utils` and `cva` from `class-variance-authority`.
   Style state via Ark's data attributes (`data-state`, `data-open`, `data-disabled`,
@@ -572,3 +572,11 @@ live under `src/demo/<page>/`. `chat.tsx` stays in the toolkit as reusable parts
 the chat demo page. Do not mention shadcn, shadcn-admin, or its author in code comments or
 demo markup; the demo persona is "Alex Morgan" (alex.morgan@example.com, initials AM) and the
 demo brand is "arkcn".
+
+## Public API and Ark coverage
+
+Compound components export namespace objects such as `Card.Root` and `Accordion.ItemTrigger`. Button is a standalone component: use `<Button>`, with `ButtonProps` as its named prop type. Do not add compatibility aliases or callable namespace roots. Compose compound root children explicitly. Hooks, collection helpers, and types remain named exports. Internal consumers and documentation examples must follow these contracts.
+
+Use `ark.*` for replaceable HTML elements and `React.ComponentProps<typeof ark.div>` (the ref-preserving equivalent of `HTMLArkProps<"div">`) for props. Honor `asChild` without injecting default children. Providers and third-party renderers without a replaceable DOM element retain their own contracts.
+
+`scripts/ark-coverage.json` maps every installed Ark component family to a public namespace. `check-ark-parts.mjs` verifies the public namespace includes every Ark part, including contexts and root providers. Carousel intentionally remains Embla-backed. Splitter, Pin Input, Date Picker, Field, Fieldset, Pagination, Listbox, and Toast use Ark. `test:components` verifies server-rendered composition and form semantics; browser checks cover interaction and refs.

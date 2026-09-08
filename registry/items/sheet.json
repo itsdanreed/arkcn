@@ -4,22 +4,79 @@
   "description": "",
   "ark": "Dialog",
   "exports": [
-    "Sheet",
-    "SheetTrigger",
-    "SheetClose",
-    "SheetContent",
-    "SheetContext",
-    "SheetHeader",
-    "SheetFooter",
-    "SheetOverlay",
-    "SheetPortal",
-    "SheetPositioner",
-    "SheetTitle",
-    "SheetDescription"
+    "useDialog",
+    "useDialogContext",
+    "Sheet"
   ],
   "parts": [
     {
-      "name": "Sheet",
+      "name": "Sheet.Backdrop",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Sheet.CloseTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Sheet.Root",
       "props": [
         {
           "name": "aria-label",
@@ -266,7 +323,93 @@
       ]
     },
     {
-      "name": "SheetTrigger",
+      "name": "Sheet.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseDialogReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Sheet.Trigger",
       "props": [
         {
           "name": "asChild",
@@ -306,40 +449,7 @@
       ]
     },
     {
-      "name": "SheetClose",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "SheetContent",
+      "name": "Sheet.Content",
       "props": [
         {
           "name": "showCloseButton",
@@ -388,7 +498,7 @@
       ]
     },
     {
-      "name": "SheetContext",
+      "name": "Sheet.Context",
       "props": [
         {
           "name": "children",
@@ -400,59 +510,7 @@
       ]
     },
     {
-      "name": "SheetHeader",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "SheetFooter",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "SheetOverlay",
+      "name": "Sheet.Header",
       "props": [
         {
           "name": "asChild",
@@ -485,7 +543,40 @@
       ]
     },
     {
-      "name": "SheetPortal",
+      "name": "Sheet.Footer",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Sheet.Portal",
       "props": [
         {
           "name": "children",
@@ -510,7 +601,7 @@
       ]
     },
     {
-      "name": "SheetPositioner",
+      "name": "Sheet.Positioner",
       "props": [
         {
           "name": "asChild",
@@ -543,7 +634,7 @@
       ]
     },
     {
-      "name": "SheetTitle",
+      "name": "Sheet.Title",
       "props": [
         {
           "name": "asChild",
@@ -576,7 +667,7 @@
       ]
     },
     {
-      "name": "SheetDescription",
+      "name": "Sheet.Description",
       "props": [
         {
           "name": "asChild",
@@ -620,7 +711,7 @@
   "files": [
     {
       "path": "components/ui/sheet.tsx",
-      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Dialog as SheetPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { XIcon } from \"lucide-react\"\n\nfunction Sheet({ lazyMount = true, unmountOnExit = true, ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {\n  return <SheetPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n}\n\nfunction SheetTrigger({ ...props }: React.ComponentProps<typeof SheetPrimitive.Trigger>) {\n  return <SheetPrimitive.Trigger data-slot=\"sheet-trigger\" {...props} />\n}\n\nfunction SheetClose({ ...props }: React.ComponentProps<typeof SheetPrimitive.CloseTrigger>) {\n  return <SheetPrimitive.CloseTrigger data-slot=\"sheet-close\" {...props} />\n}\n\nfunction SheetPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction SheetContext({ ...props }: React.ComponentProps<typeof SheetPrimitive.Context>) {\n  return <SheetPrimitive.Context {...props} />\n}\n\nfunction SheetOverlay({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Backdrop>) {\n  return (\n    <SheetPrimitive.Backdrop\n      data-slot=\"sheet-overlay\"\n      className={cn(\n        \"fixed inset-0 z-50 bg-black/10 duration-100 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SheetPositioner({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Positioner>) {\n  return (\n    <SheetPrimitive.Positioner\n      data-slot=\"sheet-positioner\"\n      className={cn(\"fixed inset-0 z-50\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SheetContent({\n  className,\n  children,\n  side = \"right\",\n  showCloseButton = true,\n  ...props\n}: React.ComponentProps<typeof SheetPrimitive.Content> & {\n  side?: \"top\" | \"right\" | \"bottom\" | \"left\"\n  showCloseButton?: boolean\n}) {\n  return (\n    <SheetPortal>\n      <SheetOverlay />\n      <SheetPositioner data-side={side}>\n        <SheetPrimitive.Content\n          data-slot=\"sheet-content\"\n          data-side={side}\n          className={cn(\n            \"absolute flex flex-col gap-4 bg-popover bg-clip-padding text-sm text-popover-foreground shadow-lg transition duration-200 ease-in-out data-[side=bottom]:inset-x-0 data-[side=bottom]:bottom-0 data-[side=bottom]:h-auto data-[side=bottom]:border-t data-[side=left]:inset-y-0 data-[side=left]:left-0 data-[side=left]:h-full data-[side=left]:w-3/4 data-[side=left]:border-r data-[side=right]:inset-y-0 data-[side=right]:right-0 data-[side=right]:h-full data-[side=right]:w-3/4 data-[side=right]:border-l data-[side=top]:inset-x-0 data-[side=top]:top-0 data-[side=top]:h-auto data-[side=top]:border-b data-[side=left]:sm:max-w-sm data-[side=right]:sm:max-w-sm data-open:animate-in data-open:fade-in-0 data-[side=bottom]:data-open:slide-in-from-bottom-10 data-[side=left]:data-open:slide-in-from-left-10 data-[side=right]:data-open:slide-in-from-right-10 data-[side=top]:data-open:slide-in-from-top-10 data-closed:animate-out data-closed:fade-out-0 data-[side=bottom]:data-closed:slide-out-to-bottom-10 data-[side=left]:data-closed:slide-out-to-left-10 data-[side=right]:data-closed:slide-out-to-right-10 data-[side=top]:data-closed:slide-out-to-top-10\",\n            className\n          )}\n          {...props}\n        >\n          {children}\n          {showCloseButton && (\n            <SheetPrimitive.CloseTrigger data-slot=\"sheet-close\" asChild>\n              <Button variant=\"ghost\" className=\"absolute top-3 right-3\" size=\"icon-sm\">\n                <XIcon />\n                <span className=\"sr-only\">Close</span>\n              </Button>\n            </SheetPrimitive.CloseTrigger>\n          )}\n        </SheetPrimitive.Content>\n      </SheetPositioner>\n    </SheetPortal>\n  )\n}\n\nfunction SheetHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"sheet-header\" className={cn(\"flex flex-col gap-0.5 p-4\", className)} {...props} />\n}\n\nfunction SheetFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"sheet-footer\" className={cn(\"mt-auto flex flex-col gap-2 p-4\", className)} {...props} />\n}\n\nfunction SheetTitle({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Title>) {\n  return (\n    <SheetPrimitive.Title\n      data-slot=\"sheet-title\"\n      className={cn(\"font-heading text-base font-medium text-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SheetDescription({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Description>) {\n  return (\n    <SheetPrimitive.Description\n      data-slot=\"sheet-description\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nexport {\n  Sheet,\n  SheetTrigger,\n  SheetClose,\n  SheetContent,\n  SheetContext,\n  SheetHeader,\n  SheetFooter,\n  SheetOverlay,\n  SheetPortal,\n  SheetPositioner,\n  SheetTitle,\n  SheetDescription,\n}\n"
+      "content": "import { ark } from \"@ark-ui/react\"\nimport { useDialog, useDialogContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Dialog as SheetPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { XIcon } from \"lucide-react\"\n\nfunction SheetRoot({ lazyMount = true, unmountOnExit = true, ...props }: SheetRootProps) {\n  return <SheetPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n}\n\nfunction SheetTrigger({ ...props }: SheetTriggerProps) {\n  return <SheetPrimitive.Trigger data-slot=\"sheet-trigger\" {...props} />\n}\n\nfunction SheetCloseTrigger({ ...props }: SheetCloseTriggerProps) {\n  return <SheetPrimitive.CloseTrigger data-slot=\"sheet-close\" {...props} />\n}\n\nfunction SheetPortal({ ...props }: SheetPortalProps) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction SheetContext({ ...props }: SheetContextProps) {\n  return <SheetPrimitive.Context {...props} />\n}\n\nfunction SheetBackdrop({ className, ...props }: SheetBackdropProps) {\n  return (\n    <SheetPrimitive.Backdrop\n      data-slot=\"sheet-overlay\"\n      className={cn(\n        \"fixed inset-0 z-50 bg-black/10 duration-100 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SheetPositioner({ className, ...props }: SheetPositionerProps) {\n  return (\n    <SheetPrimitive.Positioner\n      data-slot=\"sheet-positioner\"\n      className={cn(\"fixed inset-0 z-50\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SheetContent({ className, children, side = \"right\", showCloseButton = true, ...props }: SheetContentProps) {\n  return (\n    <SheetPortal>\n      <SheetBackdrop />\n      <SheetPositioner data-side={side}>\n        <SheetPrimitive.Content\n          data-slot=\"sheet-content\"\n          data-side={side}\n          className={cn(\n            \"absolute flex flex-col gap-4 bg-popover bg-clip-padding text-sm text-popover-foreground shadow-lg transition duration-200 ease-in-out data-[side=bottom]:inset-x-0 data-[side=bottom]:bottom-0 data-[side=bottom]:h-auto data-[side=bottom]:border-t data-[side=left]:inset-y-0 data-[side=left]:left-0 data-[side=left]:h-full data-[side=left]:w-3/4 data-[side=left]:border-r data-[side=right]:inset-y-0 data-[side=right]:right-0 data-[side=right]:h-full data-[side=right]:w-3/4 data-[side=right]:border-l data-[side=top]:inset-x-0 data-[side=top]:top-0 data-[side=top]:h-auto data-[side=top]:border-b data-[side=left]:sm:max-w-sm data-[side=right]:sm:max-w-sm data-open:animate-in data-open:fade-in-0 data-[side=bottom]:data-open:slide-in-from-bottom-10 data-[side=left]:data-open:slide-in-from-left-10 data-[side=right]:data-open:slide-in-from-right-10 data-[side=top]:data-open:slide-in-from-top-10 data-closed:animate-out data-closed:fade-out-0 data-[side=bottom]:data-closed:slide-out-to-bottom-10 data-[side=left]:data-closed:slide-out-to-left-10 data-[side=right]:data-closed:slide-out-to-right-10 data-[side=top]:data-closed:slide-out-to-top-10\",\n            className\n          )}\n          {...props}\n        >\n          {children}\n          {showCloseButton && (\n            <SheetPrimitive.CloseTrigger data-slot=\"sheet-close\" asChild>\n              <Button variant=\"ghost\" className=\"absolute top-3 right-3\" size=\"icon-sm\">\n                <XIcon />\n                <span className=\"sr-only\">Close</span>\n              </Button>\n            </SheetPrimitive.CloseTrigger>\n          )}\n        </SheetPrimitive.Content>\n      </SheetPositioner>\n    </SheetPortal>\n  )\n}\n\nfunction SheetHeader({ className, ...props }: SheetHeaderProps) {\n  return <ark.div data-slot=\"sheet-header\" className={cn(\"flex flex-col gap-0.5 p-4\", className)} {...props} />\n}\n\nfunction SheetFooter({ className, ...props }: SheetFooterProps) {\n  return <ark.div data-slot=\"sheet-footer\" className={cn(\"mt-auto flex flex-col gap-2 p-4\", className)} {...props} />\n}\n\nfunction SheetTitle({ className, ...props }: SheetTitleProps) {\n  return (\n    <SheetPrimitive.Title\n      data-slot=\"sheet-title\"\n      className={cn(\"font-heading text-base font-medium text-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SheetDescription({ className, ...props }: SheetDescriptionProps) {\n  return (\n    <SheetPrimitive.Description\n      data-slot=\"sheet-description\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SheetRootProvider(props: SheetRootProviderProps) {\n  return <SheetPrimitive.RootProvider {...props} />\n}\n\ntype SheetBackdropProps = React.ComponentProps<typeof SheetPrimitive.Backdrop>\n\ntype SheetCloseTriggerProps = React.ComponentProps<typeof SheetPrimitive.CloseTrigger>\n\ntype SheetRootProps = React.ComponentProps<typeof SheetPrimitive.Root>\n\ntype SheetRootProviderProps = React.ComponentProps<typeof SheetPrimitive.RootProvider>\n\ntype SheetTriggerProps = React.ComponentProps<typeof SheetPrimitive.Trigger>\n\ntype SheetContentProps = React.ComponentProps<typeof SheetPrimitive.Content> & {\n  side?: \"top\" | \"right\" | \"bottom\" | \"left\"\n  showCloseButton?: boolean\n}\n\ntype SheetContextProps = React.ComponentProps<typeof SheetPrimitive.Context>\n\ntype SheetHeaderProps = React.ComponentProps<typeof ark.div>\n\ntype SheetFooterProps = React.ComponentProps<typeof ark.div>\n\ntype SheetPortalProps = React.ComponentProps<typeof PortalPrimitive>\n\ntype SheetPositionerProps = React.ComponentProps<typeof SheetPrimitive.Positioner>\n\ntype SheetTitleProps = React.ComponentProps<typeof SheetPrimitive.Title>\n\ntype SheetDescriptionProps = React.ComponentProps<typeof SheetPrimitive.Description>\n\nconst Sheet = {\n  Backdrop: SheetBackdrop,\n  CloseTrigger: SheetCloseTrigger,\n  Root: SheetRoot,\n  RootProvider: SheetRootProvider,\n  Trigger: SheetTrigger,\n  Content: SheetContent,\n  Context: SheetContext,\n  Header: SheetHeader,\n  Footer: SheetFooter,\n  Portal: SheetPortal,\n  Positioner: SheetPositioner,\n  Title: SheetTitle,\n  Description: SheetDescription,\n}\n\nexport {\n  useDialog,\n  useDialogContext,\n  Sheet,\n  type SheetBackdropProps,\n  type SheetCloseTriggerProps,\n  type SheetRootProps,\n  type SheetRootProviderProps,\n  type SheetTriggerProps,\n  type SheetContentProps,\n  type SheetContextProps,\n  type SheetHeaderProps,\n  type SheetFooterProps,\n  type SheetPortalProps,\n  type SheetPositionerProps,\n  type SheetTitleProps,\n  type SheetDescriptionProps,\n}\n"
     }
   ]
 }

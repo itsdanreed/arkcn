@@ -1,0 +1,70 @@
+{
+  "name": "frame",
+  "type": "ui",
+  "description": "",
+  "ark": "Frame",
+  "exports": [
+    "Frame"
+  ],
+  "parts": [
+    {
+      "name": "Frame.Root",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "head",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Additional content to be inserted into the frame's <head>",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onMount",
+          "type": "(() => void)",
+          "required": false,
+          "description": "Callback function to be executed when the frame is mounted",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onUnmount",
+          "type": "(() => void)",
+          "required": false,
+          "description": "Callback function to be executed when the frame is unmounted",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/frame.tsx",
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport { Frame as FramePrimitive } from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction FrameRoot({ className, ...props }: FrameRootProps) {\n  return <FramePrimitive data-slot=\"frame\" className={cn(\"w-full rounded-lg border\", className)} {...props} />\n}\n\ntype FrameRootProps = React.ComponentProps<typeof FramePrimitive>\n\nconst Frame = {\n  Root: FrameRoot,\n}\n\nexport { Frame, type FrameRootProps }\n"
+    }
+  ]
+}

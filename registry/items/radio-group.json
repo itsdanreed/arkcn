@@ -4,19 +4,14 @@
   "description": "",
   "ark": "RadioGroup",
   "exports": [
-    "RadioGroup",
-    "RadioGroupContext",
-    "RadioGroupIndicator",
-    "RadioGroupItem",
-    "RadioGroupItemContext",
-    "RadioGroupItemControl",
-    "RadioGroupItemHiddenInput",
-    "RadioGroupItemText",
-    "RadioGroupLabel"
+    "useRadioGroup",
+    "useRadioGroupContext",
+    "useRadioGroupItemContext",
+    "RadioGroup"
   ],
   "parts": [
     {
-      "name": "RadioGroup",
+      "name": "RadioGroup.Root",
       "props": [
         {
           "name": "asChild",
@@ -133,7 +128,47 @@
       ]
     },
     {
-      "name": "RadioGroupContext",
+      "name": "RadioGroup.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseRadioGroupReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup.Context",
       "props": [
         {
           "name": "children",
@@ -145,7 +180,7 @@
       ]
     },
     {
-      "name": "RadioGroupIndicator",
+      "name": "RadioGroup.Indicator",
       "props": [
         {
           "name": "asChild",
@@ -178,7 +213,7 @@
       ]
     },
     {
-      "name": "RadioGroupItem",
+      "name": "RadioGroup.Item",
       "props": [
         {
           "name": "value",
@@ -232,7 +267,7 @@
       ]
     },
     {
-      "name": "RadioGroupItemContext",
+      "name": "RadioGroup.ItemContext",
       "props": [
         {
           "name": "children",
@@ -244,7 +279,7 @@
       ]
     },
     {
-      "name": "RadioGroupItemControl",
+      "name": "RadioGroup.ItemControl",
       "props": [
         {
           "name": "asChild",
@@ -277,7 +312,7 @@
       ]
     },
     {
-      "name": "RadioGroupItemHiddenInput",
+      "name": "RadioGroup.ItemHiddenInput",
       "props": [
         {
           "name": "asChild",
@@ -310,7 +345,7 @@
       ]
     },
     {
-      "name": "RadioGroupItemText",
+      "name": "RadioGroup.ItemText",
       "props": [
         {
           "name": "asChild",
@@ -343,7 +378,7 @@
       ]
     },
     {
-      "name": "RadioGroupLabel",
+      "name": "RadioGroup.Label",
       "props": [
         {
           "name": "asChild",
@@ -385,7 +420,7 @@
   "files": [
     {
       "path": "components/ui/radio-group.tsx",
-      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { RadioGroup as RadioGroupPrimitive } from \"@ark-ui/react\"\n\nfunction RadioGroup({ className, ...props }: React.ComponentProps<typeof RadioGroupPrimitive.Root>) {\n  return <RadioGroupPrimitive.Root data-slot=\"radio-group\" className={cn(\"grid w-full gap-2\", className)} {...props} />\n}\n\nfunction RadioGroupContext({ ...props }: React.ComponentProps<typeof RadioGroupPrimitive.Context>) {\n  return <RadioGroupPrimitive.Context {...props} />\n}\n\nfunction RadioGroupLabel({ className, ...props }: React.ComponentProps<typeof RadioGroupPrimitive.Label>) {\n  return (\n    <RadioGroupPrimitive.Label\n      data-slot=\"radio-group-label\"\n      className={cn(\"text-sm font-medium\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction RadioGroupIndicator({ className, ...props }: React.ComponentProps<typeof RadioGroupPrimitive.Indicator>) {\n  return (\n    <RadioGroupPrimitive.Indicator\n      data-slot=\"radio-group-indicator\"\n      className={cn(\"rounded-md bg-background shadow-sm\", className)}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction RadioGroupItem({\n  className,\n  children,\n  ...props\n}: Omit<React.ComponentProps<typeof RadioGroupPrimitive.Item>, \"id\">) {\n  return (\n    <RadioGroupPrimitive.Item\n      data-slot=\"radio-group-item\"\n      className=\"group/radio-group-item peer inline-flex items-center gap-2\"\n      {...props}\n    >\n      <RadioGroupItemControl className={className} />\n      {children && <RadioGroupItemText>{children}</RadioGroupItemText>}\n      <RadioGroupItemHiddenInput />\n    </RadioGroupPrimitive.Item>\n  )\n}\n\nfunction RadioGroupItemContext({ ...props }: React.ComponentProps<typeof RadioGroupPrimitive.ItemContext>) {\n  return <RadioGroupPrimitive.ItemContext {...props} />\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction RadioGroupItemControl({\n  className,\n  children,\n  ...props\n}: Omit<React.ComponentProps<typeof RadioGroupPrimitive.ItemControl>, \"id\">) {\n  return (\n    <RadioGroupPrimitive.ItemControl\n      data-slot=\"radio-group-item-control\"\n      className={cn(\n        \"group/radio-group-item-control relative flex aspect-square size-4 shrink-0 rounded-full border border-input outline-none group-has-focus-visible/field-label:ring-0 group-has-focus-visible/field-label:not-data-checked:border-input after:absolute after:-inset-x-3 after:-inset-y-2 data-focus-visible:border-ring data-focus-visible:ring-3 data-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 dark:bg-input/30 dark:data-invalid:border-destructive/50 dark:data-invalid:ring-destructive/40 data-checked:border-primary data-checked:bg-primary data-checked:text-primary-foreground group-has-focus-visible/field-label:data-checked:border-primary data-invalid:data-checked:border-primary dark:data-checked:bg-primary data-disabled:cursor-not-allowed data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    >\n      {children ?? (\n        <span\n          data-slot=\"radio-group-indicator\"\n          className=\"absolute top-1/2 left-1/2 hidden size-2 -translate-1/2 rounded-full bg-primary-foreground group-data-checked/radio-group-item-control:block\"\n        />\n      )}\n    </RadioGroupPrimitive.ItemControl>\n  )\n}\n\nfunction RadioGroupItemText({ className, ...props }: React.ComponentProps<typeof RadioGroupPrimitive.ItemText>) {\n  return (\n    <RadioGroupPrimitive.ItemText\n      data-slot=\"radio-group-item-text\"\n      className={cn(\"text-sm leading-none select-none data-disabled:opacity-50\", className)}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction RadioGroupItemHiddenInput({\n  ...props\n}: Omit<React.ComponentProps<typeof RadioGroupPrimitive.ItemHiddenInput>, \"id\">) {\n  return <RadioGroupPrimitive.ItemHiddenInput {...props} />\n}\n\nexport {\n  RadioGroup,\n  RadioGroupContext,\n  RadioGroupIndicator,\n  RadioGroupItem,\n  RadioGroupItemContext,\n  RadioGroupItemControl,\n  RadioGroupItemHiddenInput,\n  RadioGroupItemText,\n  RadioGroupLabel,\n}\n"
+      "content": "import { useRadioGroup, useRadioGroupContext, useRadioGroupItemContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { RadioGroup as RadioGroupPrimitive } from \"@ark-ui/react\"\n\nfunction RadioGroupRoot({ className, ...props }: RadioGroupRootProps) {\n  return <RadioGroupPrimitive.Root data-slot=\"radio-group\" className={cn(\"grid w-full gap-2\", className)} {...props} />\n}\n\nfunction RadioGroupContext({ ...props }: RadioGroupContextProps) {\n  return <RadioGroupPrimitive.Context {...props} />\n}\n\nfunction RadioGroupLabel({ className, ...props }: RadioGroupLabelProps) {\n  return (\n    <RadioGroupPrimitive.Label\n      data-slot=\"radio-group-label\"\n      className={cn(\"text-sm font-medium\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction RadioGroupIndicator({ className, ...props }: RadioGroupIndicatorProps) {\n  return (\n    <RadioGroupPrimitive.Indicator\n      data-slot=\"radio-group-indicator\"\n      className={cn(\"rounded-md bg-background shadow-sm\", className)}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction RadioGroupItem({ className, children, ...props }: RadioGroupItemProps) {\n  return (\n    <RadioGroupPrimitive.Item\n      data-slot=\"radio-group-item\"\n      className=\"group/radio-group-item peer inline-flex items-center gap-2\"\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <RadioGroupItemControl className={className} />\n          {children && <RadioGroupItemText>{children}</RadioGroupItemText>}\n          <RadioGroupItemHiddenInput />\n        </>\n      )}\n    </RadioGroupPrimitive.Item>\n  )\n}\n\nfunction RadioGroupItemContext({ ...props }: RadioGroupItemContextProps) {\n  return <RadioGroupPrimitive.ItemContext {...props} />\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction RadioGroupItemControl({ className, children, ...props }: RadioGroupItemControlProps) {\n  return (\n    <RadioGroupPrimitive.ItemControl\n      data-slot=\"radio-group-item-control\"\n      className={cn(\n        \"group/radio-group-item-control relative flex aspect-square size-4 shrink-0 rounded-full border border-input outline-none group-has-focus-visible/field-label:ring-0 group-has-focus-visible/field-label:not-data-checked:border-input after:absolute after:-inset-x-3 after:-inset-y-2 data-focus-visible:border-ring data-focus-visible:ring-3 data-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 dark:bg-input/30 dark:data-invalid:border-destructive/50 dark:data-invalid:ring-destructive/40 data-checked:border-primary data-checked:bg-primary data-checked:text-primary-foreground group-has-focus-visible/field-label:data-checked:border-primary data-invalid:data-checked:border-primary dark:data-checked:bg-primary data-disabled:cursor-not-allowed data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <span\n              data-slot=\"radio-group-indicator\"\n              className=\"absolute top-1/2 left-1/2 hidden size-2 -translate-1/2 rounded-full bg-primary-foreground group-data-checked/radio-group-item-control:block\"\n            />\n          )}\n        </>\n      )}\n    </RadioGroupPrimitive.ItemControl>\n  )\n}\n\nfunction RadioGroupItemText({ className, ...props }: RadioGroupItemTextProps) {\n  return (\n    <RadioGroupPrimitive.ItemText\n      data-slot=\"radio-group-item-text\"\n      className={cn(\"text-sm leading-none select-none data-disabled:opacity-50\", className)}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction RadioGroupItemHiddenInput({ ...props }: RadioGroupItemHiddenInputProps) {\n  return <RadioGroupPrimitive.ItemHiddenInput {...props} />\n}\n\nfunction RadioGroupRootProvider({ className, ...props }: RadioGroupRootProviderProps) {\n  return (\n    <RadioGroupPrimitive.RootProvider\n      data-slot=\"radio-group\"\n      className={cn(\"grid w-full gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\ntype RadioGroupRootProps = React.ComponentProps<typeof RadioGroupPrimitive.Root>\n\ntype RadioGroupRootProviderProps = React.ComponentProps<typeof RadioGroupPrimitive.RootProvider>\n\ntype RadioGroupContextProps = React.ComponentProps<typeof RadioGroupPrimitive.Context>\n\ntype RadioGroupIndicatorProps = React.ComponentProps<typeof RadioGroupPrimitive.Indicator>\n\ntype RadioGroupItemProps = Omit<React.ComponentProps<typeof RadioGroupPrimitive.Item>, \"id\">\n\ntype RadioGroupItemContextProps = React.ComponentProps<typeof RadioGroupPrimitive.ItemContext>\n\ntype RadioGroupItemControlProps = Omit<React.ComponentProps<typeof RadioGroupPrimitive.ItemControl>, \"id\">\n\ntype RadioGroupItemHiddenInputProps = Omit<React.ComponentProps<typeof RadioGroupPrimitive.ItemHiddenInput>, \"id\">\n\ntype RadioGroupItemTextProps = React.ComponentProps<typeof RadioGroupPrimitive.ItemText>\n\ntype RadioGroupLabelProps = React.ComponentProps<typeof RadioGroupPrimitive.Label>\n\nconst RadioGroup = {\n  Root: RadioGroupRoot,\n  RootProvider: RadioGroupRootProvider,\n  Context: RadioGroupContext,\n  Indicator: RadioGroupIndicator,\n  Item: RadioGroupItem,\n  ItemContext: RadioGroupItemContext,\n  ItemControl: RadioGroupItemControl,\n  ItemHiddenInput: RadioGroupItemHiddenInput,\n  ItemText: RadioGroupItemText,\n  Label: RadioGroupLabel,\n}\n\nexport {\n  useRadioGroup,\n  useRadioGroupContext,\n  useRadioGroupItemContext,\n  RadioGroup,\n  type RadioGroupRootProps,\n  type RadioGroupRootProviderProps,\n  type RadioGroupContextProps,\n  type RadioGroupIndicatorProps,\n  type RadioGroupItemProps,\n  type RadioGroupItemContextProps,\n  type RadioGroupItemControlProps,\n  type RadioGroupItemHiddenInputProps,\n  type RadioGroupItemTextProps,\n  type RadioGroupLabelProps,\n}\n"
     }
   ]
 }

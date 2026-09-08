@@ -120,18 +120,7 @@ function resolveCardDrop(root: HTMLElement, data: Extract<DragData, { type: "car
   return { toColumnId, toIndex, fromIndex, sameColumn, noop, beforeCardId }
 }
 
-function Kanban({
-  onCardMove,
-  onColumnMove,
-  className,
-  children,
-  ...props
-}: React.ComponentProps<"div"> & {
-  /** Called with `{ cardId, fromColumnId, toColumnId, fromIndex, toIndex }`; apply it with `moveCard`. */
-  onCardMove?: (details: KanbanCardMoveDetails) => void
-  /** Called with `{ columnId, fromIndex, toIndex }`; apply it with `moveColumn`. */
-  onColumnMove?: (details: KanbanColumnMoveDetails) => void
-}) {
+function KanbanRoot({ onCardMove, onColumnMove, className, children, ...props }: KanbanRootProps) {
   const [instanceId] = React.useState(() => Symbol("kanban"))
   const [dragging, setDragging] = React.useState<KanbanDragging | null>(null)
   const [preview, setPreviewState] = React.useState<KanbanPreview | null>(null)
@@ -275,7 +264,7 @@ function Kanban({
   )
   return (
     <KanbanContext.Provider value={ctx}>
-      <div
+      <ark.div
         ref={ref}
         data-slot="kanban"
         data-dragging={dragging ? dragging.type : undefined}
@@ -283,9 +272,17 @@ function Kanban({
         className={cn("flex min-h-0 flex-1 flex-col", className)}
         {...props}
       >
-        {children}
-        <LiveRegion data-slot="kanban-live-region" message={announcement} />
-      </div>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            {children}
+            <LiveRegion.Root data-slot="kanban-live-region" message={announcement} />
+          </>
+        )}
+      </ark.div>
     </KanbanContext.Provider>
   )
 }
@@ -320,7 +317,7 @@ function useKanbanKeyboard(item: KanbanGrabbed) {
 /*  Board                                                                     */
 /* -------------------------------------------------------------------------- */
 
-function KanbanBoard({ className, ...props }: React.ComponentProps<"div">) {
+function KanbanBoard({ className, ...props }: KanbanBoardProps) {
   const { instanceId } = useKanban()
   const ref = React.useRef<HTMLDivElement>(null)
   React.useEffect(() => {
@@ -332,7 +329,7 @@ function KanbanBoard({ className, ...props }: React.ComponentProps<"div">) {
     })
   }, [instanceId])
   return (
-    <div
+    <ark.div
       ref={ref}
       data-slot="kanban-board"
       className={cn("flex min-h-0 flex-1 items-start gap-4 overflow-x-auto p-1 pb-4", className)}
@@ -361,17 +358,7 @@ function useKanbanColumn() {
   return ctx
 }
 
-function KanbanColumn({
-  value,
-  draggable: isDraggable = true,
-  className,
-  children,
-  ...props
-}: React.ComponentProps<"section"> & {
-  value: string
-  /** Allow the column itself to be reordered (drag by its handle or header). */
-  draggable?: boolean
-}) {
+function KanbanColumn({ value, draggable: isDraggable = true, className, children, ...props }: KanbanColumnProps) {
   const { instanceId, dragging, preview } = useKanban()
   const ref = React.useRef<HTMLElement>(null)
   const handleRef = React.useRef<HTMLElement | null>(null)
@@ -435,7 +422,7 @@ function KanbanColumn({
   const ctx = React.useMemo(() => ({ value, handleRef, headerRef, isOver, isDragging }), [value, isOver, isDragging])
   return (
     <ColumnContext.Provider value={ctx}>
-      <section
+      <ark.section
         ref={ref}
         data-slot="kanban-column"
         data-value={value}
@@ -449,17 +436,25 @@ function KanbanColumn({
         )}
         {...props}
       >
-        {children}
-        {closestEdge && <KanbanDropIndicator edge={closestEdge} />}
-      </section>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            {children}
+            {closestEdge && <KanbanDropIndicator edge={closestEdge} />}
+          </>
+        )}
+      </ark.section>
     </ColumnContext.Provider>
   )
 }
 
-function KanbanColumnHeader({ className, ...props }: React.ComponentProps<"header">) {
+function KanbanColumnHeader({ className, ...props }: KanbanColumnHeaderProps) {
   const { headerRef } = useKanbanColumn()
   return (
-    <header
+    <ark.header
       ref={headerRef as React.RefObject<HTMLElement>}
       data-slot="kanban-column-header"
       className={cn("flex items-center gap-2 px-3 py-2.5", className)}
@@ -468,14 +463,7 @@ function KanbanColumnHeader({ className, ...props }: React.ComponentProps<"heade
   )
 }
 
-function KanbanColumnHandle({
-  className,
-  children,
-  onKeyDown,
-  onBlur,
-  asChild,
-  ...props
-}: React.ComponentProps<typeof ark.button>) {
+function KanbanColumnHandle({ className, children, onKeyDown, onBlur, asChild, ...props }: KanbanColumnHandleProps) {
   const { handleRef, value } = useKanbanColumn()
   const keyboard = useKanbanKeyboard({ type: "column", id: value })
   return (
@@ -507,13 +495,15 @@ function KanbanColumnHandle({
   )
 }
 
-function KanbanColumnTitle({ className, ...props }: React.ComponentProps<"h3">) {
-  return <h3 data-slot="kanban-column-title" className={cn("truncate text-sm font-semibold", className)} {...props} />
+function KanbanColumnTitle({ className, ...props }: KanbanColumnTitleProps) {
+  return (
+    <ark.h3 data-slot="kanban-column-title" className={cn("truncate text-sm font-semibold", className)} {...props} />
+  )
 }
 
-function KanbanColumnCount({ className, ...props }: React.ComponentProps<typeof Badge>) {
+function KanbanColumnCount({ className, ...props }: KanbanColumnCountProps) {
   return (
-    <Badge
+    <Badge.Root
       data-slot="kanban-column-count"
       variant="secondary"
       className={cn("h-5 min-w-5 justify-center px-1.5 tabular-nums", className)}
@@ -522,14 +512,18 @@ function KanbanColumnCount({ className, ...props }: React.ComponentProps<typeof 
   )
 }
 
-function KanbanColumnActions({ className, ...props }: React.ComponentProps<"div">) {
+function KanbanColumnActions({ className, ...props }: KanbanColumnActionsProps) {
   return (
-    <div data-slot="kanban-column-actions" className={cn("ms-auto flex items-center gap-1", className)} {...props} />
+    <ark.div
+      data-slot="kanban-column-actions"
+      className={cn("ms-auto flex items-center gap-1", className)}
+      {...props}
+    />
   )
 }
 
 /** The scrolling list of cards. Renders the landing slot at the end when a card would be appended. */
-function KanbanColumnContent({ className, children, ...props }: React.ComponentProps<"div">) {
+function KanbanColumnContent({ className, children, ...props }: KanbanColumnContentProps) {
   const { instanceId, dragging, preview } = useKanban()
   const column = useKanbanColumn()
   const ref = React.useRef<HTMLDivElement>(null)
@@ -542,7 +536,7 @@ function KanbanColumnContent({ className, children, ...props }: React.ComponentP
     })
   }, [instanceId])
   return (
-    <div
+    <ark.div
       ref={ref}
       data-slot="kanban-column-content"
       className={cn(
@@ -551,25 +545,30 @@ function KanbanColumnContent({ className, children, ...props }: React.ComponentP
       )}
       {...props}
     >
-      {children}
-      {dragging?.type === "card" && preview?.columnId === column.value && preview.beforeCardId === null && (
-        <KanbanDropSlot height={dragging.height} />
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {children}
+          {dragging?.type === "card" && preview?.columnId === column.value && preview.beforeCardId === null && (
+            <KanbanDropSlot height={dragging.height} />
+          )}
+        </>
       )}
-    </div>
+    </ark.div>
   )
 }
 
-function KanbanColumnFooter({ className, ...props }: React.ComponentProps<"footer">) {
-  return <footer data-slot="kanban-column-footer" className={cn("flex items-center px-2 pb-2", className)} {...props} />
+function KanbanColumnFooter({ className, ...props }: KanbanColumnFooterProps) {
+  return (
+    <ark.footer data-slot="kanban-column-footer" className={cn("flex items-center px-2 pb-2", className)} {...props} />
+  )
 }
 
 /** A ghost-style full-width trigger for the footer, e.g. "Add card". Polymorphic via `asChild`. */
-function KanbanAddTrigger({
-  className,
-  variant = "ghost",
-  size = "sm",
-  ...props
-}: React.ComponentProps<typeof Button>) {
+function KanbanAddTrigger({ className, variant = "ghost", size = "sm", ...props }: KanbanAddTriggerProps) {
   return (
     <Button
       data-slot="kanban-add-trigger"
@@ -581,9 +580,9 @@ function KanbanAddTrigger({
   )
 }
 
-function KanbanEmpty({ className, ...props }: React.ComponentProps<"div">) {
+function KanbanEmpty({ className, ...props }: KanbanEmptyProps) {
   return (
-    <div
+    <ark.div
       data-slot="kanban-empty"
       className={cn(
         "flex flex-1 items-center justify-center rounded-lg border border-dashed px-3 py-6 text-center text-xs text-muted-foreground",
@@ -609,7 +608,7 @@ function KanbanCard({
   onKeyDown,
   onBlur,
   ...props
-}: React.ComponentProps<"article"> & { value: string; draggable?: boolean }) {
+}: KanbanCardProps) {
   const { instanceId, dragging, preview } = useKanban()
   const column = useKanbanColumn()
   const keyboard = useKanbanKeyboard({ type: "card", id: value })
@@ -658,7 +657,7 @@ function KanbanCard({
   return (
     <CardContext.Provider value={ctx}>
       {isSlotBefore && dragging && <KanbanDropSlot height={dragging.height} />}
-      <article
+      <ark.article
         ref={ref}
         data-slot="kanban-card"
         data-value={value}
@@ -685,20 +684,13 @@ function KanbanCard({
         {...props}
       >
         {children}
-      </article>
+      </ark.article>
     </CardContext.Provider>
   )
 }
 
 /** Optional explicit drag handle; without it the whole card is the handle. */
-function KanbanCardHandle({
-  className,
-  children,
-  onKeyDown,
-  onBlur,
-  asChild,
-  ...props
-}: React.ComponentProps<typeof ark.button>) {
+function KanbanCardHandle({ className, children, onKeyDown, onBlur, asChild, ...props }: KanbanCardHandleProps) {
   const ctx = React.useContext(CardContext)
   const keyboard = useKanbanKeyboard({ type: "card", id: ctx?.value ?? "" })
   return (
@@ -734,9 +726,9 @@ function KanbanCardHandle({
   )
 }
 
-function KanbanCardHeader({ className, ...props }: React.ComponentProps<"div">) {
+function KanbanCardHeader({ className, ...props }: KanbanCardHeaderProps) {
   return (
-    <div
+    <ark.div
       data-slot="kanban-card-header"
       className={cn("flex items-start justify-between gap-2", className)}
       {...props}
@@ -744,13 +736,13 @@ function KanbanCardHeader({ className, ...props }: React.ComponentProps<"div">) 
   )
 }
 
-function KanbanCardTitle({ className, ...props }: React.ComponentProps<"p">) {
-  return <p data-slot="kanban-card-title" className={cn("leading-snug font-medium", className)} {...props} />
+function KanbanCardTitle({ className, ...props }: KanbanCardTitleProps) {
+  return <ark.p data-slot="kanban-card-title" className={cn("leading-snug font-medium", className)} {...props} />
 }
 
-function KanbanCardDescription({ className, ...props }: React.ComponentProps<"p">) {
+function KanbanCardDescription({ className, ...props }: KanbanCardDescriptionProps) {
   return (
-    <p
+    <ark.p
       data-slot="kanban-card-description"
       className={cn("line-clamp-3 text-xs text-muted-foreground", className)}
       {...props}
@@ -758,9 +750,9 @@ function KanbanCardDescription({ className, ...props }: React.ComponentProps<"p"
   )
 }
 
-function KanbanCardFooter({ className, ...props }: React.ComponentProps<"div">) {
+function KanbanCardFooter({ className, ...props }: KanbanCardFooterProps) {
   return (
-    <div
+    <ark.div
       data-slot="kanban-card-footer"
       className={cn("flex items-center gap-2 text-xs text-muted-foreground", className)}
       {...props}
@@ -773,9 +765,9 @@ function KanbanCardFooter({ className, ...props }: React.ComponentProps<"div">) 
 /* -------------------------------------------------------------------------- */
 
 /** An outlined placeholder the size of the dragged card, marking where it will land. */
-function KanbanDropSlot({ height, className, style, ...props }: React.ComponentProps<"div"> & { height?: number }) {
+function KanbanDropSlot({ height, className, style, ...props }: KanbanDropSlotProps) {
   return (
-    <div
+    <ark.div
       data-slot="kanban-drop-slot"
       aria-hidden
       style={{ height, ...style }}
@@ -790,15 +782,10 @@ function KanbanDropSlot({ height, className, style, ...props }: React.ComponentP
 }
 
 /** A line on the given edge of its (relative) parent, with a terminal dot. */
-function KanbanDropIndicator({
-  edge,
-  gap = "0.5rem",
-  className,
-  ...props
-}: React.ComponentProps<"div"> & { edge: Edge; gap?: string }) {
+function KanbanDropIndicator({ edge, gap = "0.5rem", className, ...props }: KanbanDropIndicatorProps) {
   const horizontal = edge === "top" || edge === "bottom"
   return (
-    <div
+    <ark.div
       data-slot="kanban-drop-indicator"
       data-edge={edge}
       aria-hidden
@@ -857,31 +844,104 @@ function moveColumn<TColumn extends { id: string }>(
   return reorder({ list: columns, startIndex: fromIndex, finishIndex: toIndex })
 }
 
+type KanbanRootProps = React.ComponentProps<typeof ark.div> & {
+  /** Called with `{ cardId, fromColumnId, toColumnId, fromIndex, toIndex }`; apply it with `moveCard`. */
+  onCardMove?: (details: KanbanCardMoveDetails) => void
+  /** Called with `{ columnId, fromIndex, toIndex }`; apply it with `moveColumn`. */
+  onColumnMove?: (details: KanbanColumnMoveDetails) => void
+}
+
+type KanbanAddTriggerProps = React.ComponentProps<typeof Button>
+
+type KanbanBoardProps = React.ComponentProps<typeof ark.div>
+
+type KanbanCardProps = React.ComponentProps<typeof ark.article> & { value: string; draggable?: boolean }
+
+type KanbanCardDescriptionProps = React.ComponentProps<typeof ark.p>
+
+type KanbanCardFooterProps = React.ComponentProps<typeof ark.div>
+
+type KanbanCardHandleProps = React.ComponentProps<typeof ark.button>
+
+type KanbanCardHeaderProps = React.ComponentProps<typeof ark.div>
+
+type KanbanCardTitleProps = React.ComponentProps<typeof ark.p>
+
+type KanbanColumnProps = React.ComponentProps<typeof ark.section> & {
+  value: string
+  /** Allow the column itself to be reordered (drag by its handle or header). */
+  draggable?: boolean
+}
+
+type KanbanColumnActionsProps = React.ComponentProps<typeof ark.div>
+
+type KanbanColumnContentProps = React.ComponentProps<typeof ark.div>
+
+type KanbanColumnCountProps = React.ComponentProps<typeof Badge.Root>
+
+type KanbanColumnFooterProps = React.ComponentProps<typeof ark.footer>
+
+type KanbanColumnHandleProps = React.ComponentProps<typeof ark.button>
+
+type KanbanColumnHeaderProps = React.ComponentProps<typeof ark.header>
+
+type KanbanColumnTitleProps = React.ComponentProps<typeof ark.h3>
+
+type KanbanDropIndicatorProps = React.ComponentProps<typeof ark.div> & { edge: Edge; gap?: string }
+
+type KanbanDropSlotProps = React.ComponentProps<typeof ark.div> & { height?: number }
+
+type KanbanEmptyProps = React.ComponentProps<typeof ark.div>
+
+const Kanban = {
+  Root: KanbanRoot,
+  AddTrigger: KanbanAddTrigger,
+  Board: KanbanBoard,
+  Card: KanbanCard,
+  CardDescription: KanbanCardDescription,
+  CardFooter: KanbanCardFooter,
+  CardHandle: KanbanCardHandle,
+  CardHeader: KanbanCardHeader,
+  CardTitle: KanbanCardTitle,
+  Column: KanbanColumn,
+  ColumnActions: KanbanColumnActions,
+  ColumnContent: KanbanColumnContent,
+  ColumnCount: KanbanColumnCount,
+  ColumnFooter: KanbanColumnFooter,
+  ColumnHandle: KanbanColumnHandle,
+  ColumnHeader: KanbanColumnHeader,
+  ColumnTitle: KanbanColumnTitle,
+  DropIndicator: KanbanDropIndicator,
+  DropSlot: KanbanDropSlot,
+  Empty: KanbanEmpty,
+}
+
 export {
   Kanban,
-  KanbanAddTrigger,
-  KanbanBoard,
-  KanbanCard,
-  KanbanCardDescription,
-  KanbanCardFooter,
-  KanbanCardHandle,
-  KanbanCardHeader,
-  KanbanCardTitle,
-  KanbanColumn,
-  KanbanColumnActions,
-  KanbanColumnContent,
-  KanbanColumnCount,
-  KanbanColumnFooter,
-  KanbanColumnHandle,
-  KanbanColumnHeader,
-  KanbanColumnTitle,
-  KanbanDropIndicator,
-  KanbanDropSlot,
-  KanbanEmpty,
   moveCard,
   moveColumn,
   useKanban,
   useKanbanColumn,
   type KanbanCardMoveDetails,
   type KanbanColumnMoveDetails,
+  type KanbanRootProps,
+  type KanbanAddTriggerProps,
+  type KanbanBoardProps,
+  type KanbanCardProps,
+  type KanbanCardDescriptionProps,
+  type KanbanCardFooterProps,
+  type KanbanCardHandleProps,
+  type KanbanCardHeaderProps,
+  type KanbanCardTitleProps,
+  type KanbanColumnProps,
+  type KanbanColumnActionsProps,
+  type KanbanColumnContentProps,
+  type KanbanColumnCountProps,
+  type KanbanColumnFooterProps,
+  type KanbanColumnHandleProps,
+  type KanbanColumnHeaderProps,
+  type KanbanColumnTitleProps,
+  type KanbanDropIndicatorProps,
+  type KanbanDropSlotProps,
+  type KanbanEmptyProps,
 }

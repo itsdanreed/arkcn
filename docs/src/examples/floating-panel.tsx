@@ -1,37 +1,26 @@
 import { Button } from "@/components/ui/button"
-import {
-  FloatingPanel,
-  FloatingPanelBody,
-  FloatingPanelContent,
-  FloatingPanelControl,
-  FloatingPanelDragTrigger,
-  FloatingPanelHeader,
-  FloatingPanelPositioner,
-  FloatingPanelResizeTrigger,
-  FloatingPanelTitle,
-  FloatingPanelTrigger,
-} from "@/components/ui/floating-panel"
+import { FloatingPanel } from "@/components/ui/floating-panel"
 
 export default function FloatingPanelExample() {
   return (
-    <FloatingPanel>
-      <FloatingPanelTrigger asChild>
+    <FloatingPanel.Root>
+      <FloatingPanel.Trigger asChild>
         <Button variant="outline">Open panel</Button>
-      </FloatingPanelTrigger>
-      <FloatingPanelPositioner>
-        <FloatingPanelContent>
-          <FloatingPanelDragTrigger>
-            <FloatingPanelHeader>
-              <FloatingPanelTitle>Inspector</FloatingPanelTitle>
-              <FloatingPanelControl />
-            </FloatingPanelHeader>
-          </FloatingPanelDragTrigger>
-          <FloatingPanelBody className="text-sm text-muted-foreground">
+      </FloatingPanel.Trigger>
+      <FloatingPanel.Positioner>
+        <FloatingPanel.Content>
+          <FloatingPanel.DragTrigger>
+            <FloatingPanel.Header>
+              <FloatingPanel.Title>Inspector</FloatingPanel.Title>
+              <FloatingPanel.Control />
+            </FloatingPanel.Header>
+          </FloatingPanel.DragTrigger>
+          <FloatingPanel.Body className="text-sm text-muted-foreground">
             Drag the header, resize from the edges.
-          </FloatingPanelBody>
-          <FloatingPanelResizeTrigger axis="se" />
-        </FloatingPanelContent>
-      </FloatingPanelPositioner>
-    </FloatingPanel>
+          </FloatingPanel.Body>
+          <FloatingPanel.ResizeTrigger axis="se" />
+        </FloatingPanel.Content>
+      </FloatingPanel.Positioner>
+    </FloatingPanel.Root>
   )
 }

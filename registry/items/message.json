@@ -3,103 +3,27 @@
   "type": "ui",
   "description": "",
   "exports": [
-    "MessageGroup",
-    "Message",
-    "MessageAvatar",
-    "MessageContent",
-    "MessageFooter",
-    "MessageHeader"
+    "Message"
   ],
   "parts": [
     {
-      "name": "MessageGroup",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "Message",
+      "name": "Message.Root",
       "props": [
         {
           "name": "align",
-          "type": "\"end\" | \"start\"",
+          "type": "\"start\" | \"end\"",
           "required": false,
           "default": "\"start\"",
           "description": "Alignment along the side.",
           "from": "arkcn"
         },
         {
-          "name": "children",
-          "type": "ReactNode",
+          "name": "asChild",
+          "type": "boolean",
           "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "MessageAvatar",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "MessageContent",
-      "props": [
         {
           "name": "children",
           "type": "ReactNode",
@@ -124,8 +48,15 @@
       ]
     },
     {
-      "name": "MessageFooter",
+      "name": "Message.Group",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -150,8 +81,114 @@
       ]
     },
     {
-      "name": "MessageHeader",
+      "name": "Message.Avatar",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Message.Content",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Message.Footer",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Message.Header",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -176,14 +213,16 @@
       ]
     }
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
   "registryDependencies": [
     "lib/utils"
   ],
   "files": [
     {
       "path": "components/ui/message.tsx",
-      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction MessageGroup({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"message-group\" className={cn(\"flex min-w-0 flex-col gap-2\", className)} {...props} />\n}\n\nfunction Message({ className, align = \"start\", ...props }: React.ComponentProps<\"div\"> & { align?: \"start\" | \"end\" }) {\n  return (\n    <div\n      data-slot=\"message\"\n      data-align={align}\n      className={cn(\n        \"group/message relative flex w-full min-w-0 gap-2 text-sm data-[align=end]:flex-row-reverse\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MessageAvatar({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"message-avatar\"\n      className={cn(\n        \"flex w-fit min-w-8 shrink-0 items-center justify-center self-end overflow-hidden rounded-full bg-muted group-has-data-[slot=message-footer]/message:-translate-y-8\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MessageContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"message-content\"\n      className={cn(\n        \"flex w-full min-w-0 flex-col gap-2.5 wrap-break-word group-data-[align=end]/message:*:data-slot:self-end\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MessageHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"message-header\"\n      className={cn(\n        \"flex max-w-full min-w-0 items-center px-3 text-xs font-medium text-muted-foreground group-has-data-[variant=ghost]/message:px-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MessageFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"message-footer\"\n      className={cn(\n        \"flex max-w-full min-w-0 items-center px-3 text-xs font-medium text-muted-foreground group-has-data-[variant=ghost]/message:px-0 group-data-[align=end]/message:justify-end\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nexport { MessageGroup, Message, MessageAvatar, MessageContent, MessageFooter, MessageHeader }\n"
+      "content": "import { ark } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction MessageGroup({ className, ...props }: MessageGroupProps) {\n  return <ark.div data-slot=\"message-group\" className={cn(\"flex min-w-0 flex-col gap-2\", className)} {...props} />\n}\n\nfunction MessageRoot({ className, align = \"start\", ...props }: MessageRootProps) {\n  return (\n    <ark.div\n      data-slot=\"message\"\n      data-align={align}\n      className={cn(\n        \"group/message relative flex w-full min-w-0 gap-2 text-sm data-[align=end]:flex-row-reverse\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MessageAvatar({ className, ...props }: MessageAvatarProps) {\n  return (\n    <ark.div\n      data-slot=\"message-avatar\"\n      className={cn(\n        \"flex w-fit min-w-8 shrink-0 items-center justify-center self-end overflow-hidden rounded-full bg-muted group-has-data-[slot=message-footer]/message:-translate-y-8\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MessageContent({ className, ...props }: MessageContentProps) {\n  return (\n    <ark.div\n      data-slot=\"message-content\"\n      className={cn(\n        \"flex w-full min-w-0 flex-col gap-2.5 wrap-break-word group-data-[align=end]/message:*:data-slot:self-end\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MessageHeader({ className, ...props }: MessageHeaderProps) {\n  return (\n    <ark.div\n      data-slot=\"message-header\"\n      className={cn(\n        \"flex max-w-full min-w-0 items-center px-3 text-xs font-medium text-muted-foreground group-has-data-[variant=ghost]/message:px-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MessageFooter({ className, ...props }: MessageFooterProps) {\n  return (\n    <ark.div\n      data-slot=\"message-footer\"\n      className={cn(\n        \"flex max-w-full min-w-0 items-center px-3 text-xs font-medium text-muted-foreground group-has-data-[variant=ghost]/message:px-0 group-data-[align=end]/message:justify-end\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype MessageRootProps = React.ComponentProps<typeof ark.div> & { align?: \"start\" | \"end\" }\n\ntype MessageGroupProps = React.ComponentProps<typeof ark.div>\n\ntype MessageAvatarProps = React.ComponentProps<typeof ark.div>\n\ntype MessageContentProps = React.ComponentProps<typeof ark.div>\n\ntype MessageFooterProps = React.ComponentProps<typeof ark.div>\n\ntype MessageHeaderProps = React.ComponentProps<typeof ark.div>\n\nconst Message = {\n  Root: MessageRoot,\n  Group: MessageGroup,\n  Avatar: MessageAvatar,\n  Content: MessageContent,\n  Footer: MessageFooter,\n  Header: MessageHeader,\n}\n\nexport {\n  Message,\n  type MessageRootProps,\n  type MessageGroupProps,\n  type MessageAvatarProps,\n  type MessageContentProps,\n  type MessageFooterProps,\n  type MessageHeaderProps,\n}\n"
     }
   ]
 }

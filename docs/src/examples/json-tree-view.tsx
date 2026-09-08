@@ -1,8 +1,9 @@
-import { JsonTreeView, JsonTreeViewTree } from "@/components/ui/json-tree-view"
+import { JsonTreeView } from "@/components/ui/json-tree-view"
+import { version } from "../registry"
 
 const data = {
   name: "arkcn",
-  version: "0.1.4",
+  version,
   private: false,
   peers: ["react", "@ark-ui/react", "tailwindcss"],
   registry: { items: 113, css: 1 },
@@ -10,8 +11,8 @@ const data = {
 
 export default function JsonTreeViewExample() {
   return (
-    <JsonTreeView data={data} defaultExpandedDepth={2} className="w-80">
-      <JsonTreeViewTree />
-    </JsonTreeView>
+    <JsonTreeView.Root data={data} defaultExpandedDepth={2} className="w-80">
+      <JsonTreeView.Tree />
+    </JsonTreeView.Root>
   )
 }

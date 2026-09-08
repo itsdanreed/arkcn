@@ -4,37 +4,83 @@
   "description": "",
   "ark": "Combobox",
   "exports": [
+    "useCombobox",
+    "useComboboxItemContext",
     "Combobox",
-    "ComboboxChip",
-    "ComboboxChips",
-    "ComboboxChipsInput",
-    "ComboboxClear",
-    "ComboboxCollection",
-    "ComboboxContent",
-    "ComboboxContext",
-    "ComboboxControl",
-    "ComboboxEmpty",
-    "ComboboxGroup",
-    "ComboboxInput",
-    "ComboboxItem",
-    "ComboboxItemIndicator",
-    "ComboboxItemText",
-    "ComboboxLabel",
-    "ComboboxList",
-    "ComboboxPositioner",
-    "ComboboxRootLabel",
-    "ComboboxSeparator",
-    "ComboboxTrigger",
-    "ComboboxValue",
     "createListCollection",
     "useComboboxAnchor",
     "useFilter",
-    "useListCollection",
-    "ComboboxItemContext"
+    "useListCollection"
   ],
   "parts": [
     {
-      "name": "Combobox",
+      "name": "Combobox.ClearTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Combobox.ItemGroup",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Combobox.Root",
       "props": [
         {
           "name": "anchor",
@@ -400,7 +446,7 @@
         },
         {
           "name": "selectionBehavior",
-          "type": "\"clear\" | \"replace\" | \"preserve\"",
+          "type": "\"replace\" | \"clear\" | \"preserve\"",
           "required": false,
           "default": "\"replace\"",
           "description": "The behavior of the combobox input when an item is selected\n\n- `replace`: The selected item string is set as the input value\n- `clear`: The input value is cleared\n- `preserve`: The input value is preserved",
@@ -446,7 +492,107 @@
       ]
     },
     {
-      "name": "ComboboxChip",
+      "name": "Combobox.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseComboboxReturn<T>",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Combobox.Chip",
       "props": [
         {
           "name": "value",
@@ -464,6 +610,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -487,7 +640,7 @@
       ]
     },
     {
-      "name": "ComboboxChips",
+      "name": "Combobox.Chips",
       "props": [
         {
           "name": "asChild",
@@ -520,7 +673,7 @@
       ]
     },
     {
-      "name": "ComboboxChipsInput",
+      "name": "Combobox.ChipsInput",
       "props": [
         {
           "name": "asChild",
@@ -553,40 +706,7 @@
       ]
     },
     {
-      "name": "ComboboxClear",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ComboboxCollection",
+      "name": "Combobox.Collection",
       "props": [
         {
           "name": "children",
@@ -598,7 +718,7 @@
       ]
     },
     {
-      "name": "ComboboxContent",
+      "name": "Combobox.Content",
       "props": [
         {
           "name": "asChild",
@@ -631,7 +751,7 @@
       ]
     },
     {
-      "name": "ComboboxContext",
+      "name": "Combobox.Context",
       "props": [
         {
           "name": "children",
@@ -643,7 +763,7 @@
       ]
     },
     {
-      "name": "ComboboxControl",
+      "name": "Combobox.Control",
       "props": [
         {
           "name": "asChild",
@@ -676,7 +796,7 @@
       ]
     },
     {
-      "name": "ComboboxEmpty",
+      "name": "Combobox.Empty",
       "props": [
         {
           "name": "asChild",
@@ -709,40 +829,7 @@
       ]
     },
     {
-      "name": "ComboboxGroup",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ComboboxInput",
+      "name": "Combobox.Input",
       "props": [
         {
           "name": "showClear",
@@ -791,7 +878,7 @@
       ]
     },
     {
-      "name": "ComboboxItem",
+      "name": "Combobox.Item",
       "props": [
         {
           "name": "item",
@@ -845,7 +932,7 @@
       ]
     },
     {
-      "name": "ComboboxItemIndicator",
+      "name": "Combobox.ItemIndicator",
       "props": [
         {
           "name": "asChild",
@@ -878,7 +965,7 @@
       ]
     },
     {
-      "name": "ComboboxItemText",
+      "name": "Combobox.ItemText",
       "props": [
         {
           "name": "asChild",
@@ -911,7 +998,7 @@
       ]
     },
     {
-      "name": "ComboboxLabel",
+      "name": "Combobox.ItemGroupLabel",
       "props": [
         {
           "name": "asChild",
@@ -944,7 +1031,7 @@
       ]
     },
     {
-      "name": "ComboboxList",
+      "name": "Combobox.List",
       "props": [
         {
           "name": "asChild",
@@ -977,7 +1064,7 @@
       ]
     },
     {
-      "name": "ComboboxPositioner",
+      "name": "Combobox.Positioner",
       "props": [
         {
           "name": "asChild",
@@ -1010,7 +1097,7 @@
       ]
     },
     {
-      "name": "ComboboxRootLabel",
+      "name": "Combobox.Label",
       "props": [
         {
           "name": "asChild",
@@ -1043,8 +1130,15 @@
       ]
     },
     {
-      "name": "ComboboxSeparator",
+      "name": "Combobox.Separator",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -1069,7 +1163,7 @@
       ]
     },
     {
-      "name": "ComboboxTrigger",
+      "name": "Combobox.Trigger",
       "props": [
         {
           "name": "asChild",
@@ -1109,7 +1203,7 @@
       ]
     },
     {
-      "name": "ComboboxValue",
+      "name": "Combobox.Value",
       "props": [
         {
           "name": "placeholder",
@@ -1117,6 +1211,13 @@
           "required": false,
           "description": "Text shown while there is no value.",
           "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -1142,7 +1243,7 @@
       ]
     },
     {
-      "name": "ComboboxItemContext",
+      "name": "Combobox.ItemContext",
       "props": [
         {
           "name": "children",
@@ -1166,7 +1267,7 @@
   "files": [
     {
       "path": "components/ui/combobox.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport {\n  Combobox as ComboboxPrimitive,\n  Portal as PortalPrimitive,\n  createListCollection,\n  useComboboxContext,\n  useFilter,\n  useListCollection,\n  type CollectionItem,\n  type ListCollection,\n} from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { InputGroup, InputGroupAddon, InputGroupTrigger, InputGroupInput } from \"@/components/ui/input-group\"\nimport { ChevronDownIcon, XIcon, CheckIcon } from \"lucide-react\"\n\nfunction Combobox<T extends CollectionItem>({\n  positioning,\n  anchor,\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: React.ComponentProps<typeof ComboboxPrimitive.Root<T>> & {\n  /** Anchor the popup to another element, e.g. a `ComboboxChips` container. */\n  anchor?: React.RefObject<HTMLElement | null>\n}) {\n  return (\n    <ComboboxPrimitive.Root\n      data-slot=\"combobox\"\n      positioning={{\n        placement: \"bottom-start\",\n        gutter: 6,\n        sameWidth: true,\n        ...(anchor ? { getAnchorElement: () => anchor.current } : {}),\n        ...positioning,\n      }}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction ComboboxContext({ ...props }: React.ComponentProps<typeof ComboboxPrimitive.Context>) {\n  return <ComboboxPrimitive.Context {...props} />\n}\n\nfunction ComboboxRootLabel({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.Label>) {\n  return (\n    <ComboboxPrimitive.Label\n      data-slot=\"combobox-root-label\"\n      className={cn(\"text-sm font-medium\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ComboboxControl({ ...props }: React.ComponentProps<typeof ComboboxPrimitive.Control>) {\n  return <ComboboxPrimitive.Control data-slot=\"combobox-control\" {...props} />\n}\n\n/**\n * Ark has no value-text part for Combobox. Renders the selected items as\n * text, or `placeholder` when nothing is selected.\n */\nfunction ComboboxValue({\n  placeholder,\n  children,\n  ...props\n}: React.ComponentProps<\"span\"> & { placeholder?: React.ReactNode }) {\n  const combobox = useComboboxContext()\n  return (\n    <span data-slot=\"combobox-value\" data-placeholder-shown={combobox.hasSelectedItems ? undefined : \"\"} {...props}>\n      {children ?? (combobox.hasSelectedItems ? combobox.valueAsString : placeholder)}\n    </span>\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction ComboboxTrigger({\n  className,\n  children,\n  ...props\n}: Omit<React.ComponentProps<typeof ComboboxPrimitive.Trigger>, \"id\">) {\n  return (\n    <ComboboxPrimitive.Trigger\n      data-slot=\"combobox-trigger\"\n      className={cn(\"[&_svg:not([class*='size-'])]:size-4\", className)}\n      {...props}\n    >\n      {children}\n      <ChevronDownIcon className=\"pointer-events-none size-4 text-muted-foreground\" />\n    </ComboboxPrimitive.Trigger>\n  )\n}\n\nfunction ComboboxClear({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.ClearTrigger>) {\n  const combobox = useComboboxContext()\n  // Match Base UI: unmount when there is nothing to clear, so the trigger\n  // button (hidden via `has-data-[slot=combobox-clear]`) shows again.\n  if (!combobox.hasSelectedItems && !combobox.inputValue) return null\n  return (\n    <ComboboxPrimitive.ClearTrigger data-slot=\"combobox-clear\" className={cn(className)} asChild {...props}>\n      <InputGroupTrigger variant=\"ghost\" size=\"icon-xs\">\n        <XIcon className=\"pointer-events-none\" />\n      </InputGroupTrigger>\n    </ComboboxPrimitive.ClearTrigger>\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction ComboboxInput({\n  className,\n  children,\n  disabled = false,\n  showTrigger = true,\n  showClear = false,\n  ...props\n}: Omit<React.ComponentProps<typeof ComboboxPrimitive.Input>, \"id\"> & {\n  /** Render the open/close trigger in the control. */\n  showTrigger?: boolean\n  /** Render the clear button in the control. */\n  showClear?: boolean\n}) {\n  return (\n    <ComboboxPrimitive.Control asChild>\n      <InputGroup className={cn(\"w-auto\", className)}>\n        <ComboboxPrimitive.Input asChild disabled={disabled} {...props}>\n          <InputGroupInput />\n        </ComboboxPrimitive.Input>\n        <InputGroupAddon align=\"inline-end\">\n          {showTrigger && (\n            <InputGroupTrigger\n              size=\"icon-xs\"\n              variant=\"ghost\"\n              asChild\n              data-slot=\"input-group-trigger\"\n              className=\"group-has-data-[slot=combobox-clear]/input-group:hidden data-pressed:bg-transparent\"\n              disabled={disabled}\n            >\n              <ComboboxTrigger />\n            </InputGroupTrigger>\n          )}\n          {showClear && <ComboboxClear disabled={disabled} />}\n        </InputGroupAddon>\n        {children}\n      </InputGroup>\n    </ComboboxPrimitive.Control>\n  )\n}\n\nfunction ComboboxPositioner({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.Positioner>) {\n  return (\n    <ComboboxPrimitive.Positioner\n      data-slot=\"combobox-positioner\"\n      className={cn(\"isolate [--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction ComboboxContent({ className, ...props }: Omit<React.ComponentProps<typeof ComboboxPrimitive.Content>, \"id\">) {\n  return (\n    <PortalPrimitive>\n      <ComboboxPositioner>\n        <ComboboxPrimitive.Content\n          data-slot=\"combobox-content\"\n          className={cn(\n            \"group/combobox-content relative z-50 max-h-(--available-height) w-(--reference-width) max-w-(--available-width) origin-(--transform-origin) overflow-hidden rounded-lg bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 *:data-[slot=input-group]:m-1 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:border-input/30 *:data-[slot=input-group]:bg-input/30 *:data-[slot=input-group]:shadow-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </ComboboxPositioner>\n    </PortalPrimitive>\n  )\n}\n\nfunction ComboboxList({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.List>) {\n  return (\n    <ComboboxPrimitive.List\n      data-slot=\"combobox-list\"\n      className={cn(\n        \"no-scrollbar max-h-[min(calc(--spacing(72)-(--spacing(9))),calc(var(--available-height)-(--spacing(9))))] scroll-py-1 overflow-y-auto overscroll-contain p-1 data-empty:p-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ComboboxItem({\n  className,\n  children,\n  item,\n  value,\n  ...props\n}: Omit<React.ComponentProps<typeof ComboboxPrimitive.Item>, \"item\"> & {\n  /** The collection item. Falls back to `value` for string collections. */\n  item?: CollectionItem\n  value?: string\n}) {\n  return (\n    <ComboboxPrimitive.Item\n      data-slot=\"combobox-item\"\n      item={item ?? value}\n      className={cn(\n        \"relative flex w-full cursor-default items-center gap-2 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground not-data-[variant=destructive]:data-highlighted:**:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n      <ComboboxItemIndicator>\n        <CheckIcon className=\"pointer-events-none\" />\n      </ComboboxItemIndicator>\n    </ComboboxPrimitive.Item>\n  )\n}\n\nfunction ComboboxItemText({ ...props }: React.ComponentProps<typeof ComboboxPrimitive.ItemText>) {\n  return <ComboboxPrimitive.ItemText data-slot=\"combobox-item-text\" {...props} />\n}\n\nfunction ComboboxItemIndicator({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.ItemIndicator>) {\n  return (\n    <ComboboxPrimitive.ItemIndicator\n      data-slot=\"combobox-item-indicator\"\n      className={cn(\"pointer-events-none absolute right-2 flex size-4 items-center justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ComboboxGroup({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.ItemGroup>) {\n  return <ComboboxPrimitive.ItemGroup data-slot=\"combobox-group\" className={cn(className)} {...props} />\n}\n\nfunction ComboboxLabel({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.ItemGroupLabel>) {\n  return (\n    <ComboboxPrimitive.ItemGroupLabel\n      data-slot=\"combobox-label\"\n      className={cn(\"px-2 py-1.5 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\n/**\n * Renders every item in the root's collection through a render function.\n * Ark has no Collection part; this reads the collection from context.\n */\nfunction ComboboxCollection<T extends CollectionItem = CollectionItem>({\n  children,\n}: {\n  children: (item: T, index: number) => React.ReactNode\n}) {\n  const combobox = useComboboxContext()\n  const items = combobox.collection.items as T[]\n  return (\n    <React.Fragment>\n      {items.map((item, index) => (\n        <React.Fragment key={combobox.collection.getItemValue(item) ?? index}>{children(item, index)}</React.Fragment>\n      ))}\n    </React.Fragment>\n  )\n}\n\nfunction ComboboxEmpty({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.Empty>) {\n  return (\n    <ComboboxPrimitive.Empty\n      data-slot=\"combobox-empty\"\n      className={cn(\"flex w-full justify-center py-2 text-center text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ComboboxSeparator({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      role=\"separator\"\n      aria-orientation=\"horizontal\"\n      data-slot=\"combobox-separator\"\n      className={cn(\"-mx-1 my-1 h-px bg-border\", className)}\n      {...props}\n    />\n  )\n}\n\n/**\n * Chips for `multiple` comboboxes. Ark has no chip parts; these read the\n * selected values from context and remove them via `clearValue`.\n */\nfunction ComboboxChips({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.Control>) {\n  return (\n    <ComboboxPrimitive.Control\n      data-slot=\"combobox-chips\"\n      className={cn(\n        \"flex min-h-8 flex-wrap items-center gap-1 rounded-lg border border-input bg-transparent bg-clip-padding px-2.5 py-1 text-sm transition-colors has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 has-data-[slot=combobox-chip]:px-1 dark:bg-input/30 dark:has-aria-invalid:border-destructive/50 dark:has-aria-invalid:ring-destructive/40\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ComboboxChip({\n  className,\n  children,\n  value,\n  showRemove = true,\n  ...props\n}: React.ComponentProps<\"div\"> & {\n  /** The selected value this chip represents. */\n  value: string\n  /** Render the remove button on the chip. */\n  showRemove?: boolean\n}) {\n  const combobox = useComboboxContext()\n  return (\n    <div\n      data-slot=\"combobox-chip\"\n      data-value={value}\n      className={cn(\n        \"flex h-[calc(--spacing(5.25))] w-fit items-center justify-center gap-1 rounded-sm bg-muted px-1.5 text-xs font-medium whitespace-nowrap text-foreground has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n      {showRemove && (\n        <Button\n          type=\"button\"\n          variant=\"ghost\"\n          size=\"icon-xs\"\n          data-slot=\"combobox-chip-remove\"\n          aria-label={`Remove ${value}`}\n          disabled={combobox.disabled}\n          className=\"-ml-1 opacity-50 hover:opacity-100\"\n          onClick={() => combobox.clearValue(value)}\n        >\n          <XIcon className=\"pointer-events-none\" />\n        </Button>\n      )}\n    </div>\n  )\n}\n\nfunction ComboboxChipsInput({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.Input>) {\n  return (\n    <ComboboxPrimitive.Input\n      data-slot=\"combobox-chip-input\"\n      className={cn(\"min-w-16 flex-1 outline-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction useComboboxAnchor() {\n  return React.useRef<HTMLDivElement | null>(null)\n}\n\n/** Render-prop access to one item's state (`{ selected, highlighted, disabled, ... }`). */\nfunction ComboboxItemContext({ ...props }: React.ComponentProps<typeof ComboboxPrimitive.ItemContext>) {\n  return <ComboboxPrimitive.ItemContext {...props} />\n}\n\nexport {\n  Combobox,\n  ComboboxChip,\n  ComboboxChips,\n  ComboboxChipsInput,\n  ComboboxClear,\n  ComboboxCollection,\n  ComboboxContent,\n  ComboboxContext,\n  ComboboxControl,\n  ComboboxEmpty,\n  ComboboxGroup,\n  ComboboxInput,\n  ComboboxItem,\n  ComboboxItemIndicator,\n  ComboboxItemText,\n  ComboboxLabel,\n  ComboboxList,\n  ComboboxPositioner,\n  ComboboxRootLabel,\n  ComboboxSeparator,\n  ComboboxTrigger,\n  ComboboxValue,\n  createListCollection,\n  useComboboxAnchor,\n  useFilter,\n  useListCollection,\n  type CollectionItem,\n  type ListCollection,\n  ComboboxItemContext,\n}\n"
+      "content": "\"use client\"\n\nimport { ark } from \"@ark-ui/react\"\nimport { useCombobox, useComboboxItemContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport {\n  Combobox as ComboboxPrimitive,\n  Portal as PortalPrimitive,\n  createListCollection,\n  useComboboxContext,\n  useFilter,\n  useListCollection,\n  type CollectionItem,\n  type ListCollection,\n} from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { InputGroup } from \"@/components/ui/input-group\"\nimport { ChevronDownIcon, XIcon, CheckIcon } from \"lucide-react\"\n\nfunction ComboboxRoot<T extends CollectionItem>({\n  positioning,\n  anchor,\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: ComboboxRootProps<T>) {\n  return (\n    <ComboboxPrimitive.Root\n      data-slot=\"combobox\"\n      positioning={{\n        placement: \"bottom-start\",\n        gutter: 6,\n        sameWidth: true,\n        ...(anchor ? { getAnchorElement: () => anchor.current } : {}),\n        ...positioning,\n      }}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction ComboboxContext({ ...props }: ComboboxContextProps) {\n  return <ComboboxPrimitive.Context {...props} />\n}\n\nfunction ComboboxLabel({ className, ...props }: ComboboxLabelProps) {\n  return (\n    <ComboboxPrimitive.Label\n      data-slot=\"combobox-root-label\"\n      className={cn(\"text-sm font-medium\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ComboboxControl({ ...props }: ComboboxControlProps) {\n  return <ComboboxPrimitive.Control data-slot=\"combobox-control\" {...props} />\n}\n\n/**\n * Ark has no value-text part for Combobox. Renders the selected items as\n * text, or `placeholder` when nothing is selected.\n */\nfunction ComboboxValue({ placeholder, children, ...props }: ComboboxValueProps) {\n  const combobox = useComboboxContext()\n  return (\n    <ark.span data-slot=\"combobox-value\" data-placeholder-shown={combobox.hasSelectedItems ? undefined : \"\"} {...props}>\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>{children ?? (combobox.hasSelectedItems ? combobox.valueAsString : placeholder)}</>\n      )}\n    </ark.span>\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction ComboboxTrigger({ className, children, ...props }: ComboboxTriggerProps) {\n  return (\n    <ComboboxPrimitive.Trigger\n      data-slot=\"combobox-trigger\"\n      className={cn(\"[&_svg:not([class*='size-'])]:size-4\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children}\n          <ChevronDownIcon className=\"pointer-events-none size-4 text-muted-foreground\" />\n        </>\n      )}\n    </ComboboxPrimitive.Trigger>\n  )\n}\n\nfunction ComboboxClearTrigger({ className, ...props }: ComboboxClearTriggerProps) {\n  const combobox = useComboboxContext()\n  // Match Base UI: unmount when there is nothing to clear, so the trigger\n  // button (hidden via `has-data-[slot=combobox-clear]`) shows again.\n  if (!combobox.hasSelectedItems && !combobox.inputValue) return null\n  return (\n    <ComboboxPrimitive.ClearTrigger data-slot=\"combobox-clear\" className={cn(className)} asChild {...props}>\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <InputGroup.Trigger variant=\"ghost\" size=\"icon-xs\">\n            <XIcon className=\"pointer-events-none\" />\n          </InputGroup.Trigger>\n        </>\n      )}\n    </ComboboxPrimitive.ClearTrigger>\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction ComboboxInput({\n  className,\n  children,\n  disabled = false,\n  showTrigger = true,\n  showClear = false,\n  ...props\n}: ComboboxInputProps) {\n  return (\n    <ComboboxPrimitive.Control asChild>\n      <InputGroup.Root className={cn(\"w-auto\", className)}>\n        <ComboboxPrimitive.Input asChild disabled={disabled} {...props}>\n          {props.asChild ? (\n            React.isValidElement(children) ? (\n              children\n            ) : null\n          ) : (\n            <>\n              <InputGroup.Input />\n            </>\n          )}\n        </ComboboxPrimitive.Input>\n        <InputGroup.Addon align=\"inline-end\">\n          {showTrigger && (\n            <InputGroup.Trigger\n              size=\"icon-xs\"\n              variant=\"ghost\"\n              asChild\n              data-slot=\"input-group-trigger\"\n              className=\"group-has-data-[slot=combobox-clear]/input-group:hidden data-pressed:bg-transparent\"\n              disabled={disabled}\n            >\n              <ComboboxTrigger />\n            </InputGroup.Trigger>\n          )}\n          {showClear && <ComboboxClearTrigger disabled={disabled} />}\n        </InputGroup.Addon>\n        {children}\n      </InputGroup.Root>\n    </ComboboxPrimitive.Control>\n  )\n}\n\nfunction ComboboxPositioner({ className, ...props }: ComboboxPositionerProps) {\n  return (\n    <ComboboxPrimitive.Positioner\n      data-slot=\"combobox-positioner\"\n      className={cn(\"isolate [--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction ComboboxContent({ className, ...props }: ComboboxContentProps) {\n  return (\n    <PortalPrimitive>\n      <ComboboxPositioner>\n        <ComboboxPrimitive.Content\n          data-slot=\"combobox-content\"\n          className={cn(\n            \"group/combobox-content relative z-50 max-h-(--available-height) w-(--reference-width) max-w-(--available-width) origin-(--transform-origin) overflow-hidden rounded-lg bg-popover text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 *:data-[slot=input-group]:m-1 *:data-[slot=input-group]:mb-0 *:data-[slot=input-group]:h-8 *:data-[slot=input-group]:border-input/30 *:data-[slot=input-group]:bg-input/30 *:data-[slot=input-group]:shadow-none data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </ComboboxPositioner>\n    </PortalPrimitive>\n  )\n}\n\nfunction ComboboxList({ className, ...props }: ComboboxListProps) {\n  return (\n    <ComboboxPrimitive.List\n      data-slot=\"combobox-list\"\n      className={cn(\n        \"no-scrollbar max-h-[min(calc(--spacing(72)-(--spacing(9))),calc(var(--available-height)-(--spacing(9))))] scroll-py-1 overflow-y-auto overscroll-contain p-1 data-empty:p-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ComboboxItem({ className, children, item, value, ...props }: ComboboxItemProps) {\n  return (\n    <ComboboxPrimitive.Item\n      data-slot=\"combobox-item\"\n      item={item ?? value}\n      className={cn(\n        \"relative flex w-full cursor-default items-center gap-2 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground not-data-[variant=destructive]:data-highlighted:**:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children}\n          <ComboboxItemIndicator>\n            <CheckIcon className=\"pointer-events-none\" />\n          </ComboboxItemIndicator>\n        </>\n      )}\n    </ComboboxPrimitive.Item>\n  )\n}\n\nfunction ComboboxItemText({ ...props }: ComboboxItemTextProps) {\n  return <ComboboxPrimitive.ItemText data-slot=\"combobox-item-text\" {...props} />\n}\n\nfunction ComboboxItemIndicator({ className, ...props }: ComboboxItemIndicatorProps) {\n  return (\n    <ComboboxPrimitive.ItemIndicator\n      data-slot=\"combobox-item-indicator\"\n      className={cn(\"pointer-events-none absolute right-2 flex size-4 items-center justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ComboboxItemGroup({ className, ...props }: ComboboxItemGroupProps) {\n  return <ComboboxPrimitive.ItemGroup data-slot=\"combobox-group\" className={cn(className)} {...props} />\n}\n\nfunction ComboboxItemGroupLabel({ className, ...props }: ComboboxItemGroupLabelProps) {\n  return (\n    <ComboboxPrimitive.ItemGroupLabel\n      data-slot=\"combobox-label\"\n      className={cn(\"px-2 py-1.5 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\n/**\n * Renders every item in the root's collection through a render function.\n * Ark has no Collection part; this reads the collection from context.\n */\nfunction ComboboxCollection<T extends CollectionItem = CollectionItem>({ children }: ComboboxCollectionProps<T>) {\n  const combobox = useComboboxContext()\n  const items = combobox.collection.items as T[]\n  return (\n    <React.Fragment>\n      {items.map((item, index) => (\n        <React.Fragment key={combobox.collection.getItemValue(item) ?? index}>{children(item, index)}</React.Fragment>\n      ))}\n    </React.Fragment>\n  )\n}\n\nfunction ComboboxEmpty({ className, ...props }: ComboboxEmptyProps) {\n  return (\n    <ComboboxPrimitive.Empty\n      data-slot=\"combobox-empty\"\n      className={cn(\"flex w-full justify-center py-2 text-center text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ComboboxSeparator({ className, ...props }: ComboboxSeparatorProps) {\n  return (\n    <ark.div\n      role=\"separator\"\n      aria-orientation=\"horizontal\"\n      data-slot=\"combobox-separator\"\n      className={cn(\"-mx-1 my-1 h-px bg-border\", className)}\n      {...props}\n    />\n  )\n}\n\n/**\n * Chips for `multiple` comboboxes. Ark has no chip parts; these read the\n * selected values from context and remove them via `clearValue`.\n */\nfunction ComboboxChips({ className, ...props }: ComboboxChipsProps) {\n  return (\n    <ComboboxPrimitive.Control\n      data-slot=\"combobox-chips\"\n      className={cn(\n        \"flex min-h-8 flex-wrap items-center gap-1 rounded-lg border border-input bg-transparent bg-clip-padding px-2.5 py-1 text-sm transition-colors has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 has-data-[slot=combobox-chip]:px-1 dark:bg-input/30 dark:has-aria-invalid:border-destructive/50 dark:has-aria-invalid:ring-destructive/40\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ComboboxChip({ className, children, value, showRemove = true, ...props }: ComboboxChipProps) {\n  const combobox = useComboboxContext()\n  return (\n    <ark.div\n      data-slot=\"combobox-chip\"\n      data-value={value}\n      className={cn(\n        \"flex h-[calc(--spacing(5.25))] w-fit items-center justify-center gap-1 rounded-sm bg-muted px-1.5 text-xs font-medium whitespace-nowrap text-foreground has-disabled:pointer-events-none has-disabled:cursor-not-allowed has-disabled:opacity-50 has-data-[slot=combobox-chip-remove]:pr-0\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children}\n          {showRemove && (\n            <Button\n              type=\"button\"\n              variant=\"ghost\"\n              size=\"icon-xs\"\n              data-slot=\"combobox-chip-remove\"\n              aria-label={`Remove ${value}`}\n              disabled={combobox.disabled}\n              className=\"-ml-1 opacity-50 hover:opacity-100\"\n              onClick={() => combobox.clearValue(value)}\n            >\n              <XIcon className=\"pointer-events-none\" />\n            </Button>\n          )}\n        </>\n      )}\n    </ark.div>\n  )\n}\n\nfunction ComboboxChipsInput({ className, ...props }: ComboboxChipsInputProps) {\n  return (\n    <ComboboxPrimitive.Input\n      data-slot=\"combobox-chip-input\"\n      className={cn(\"min-w-16 flex-1 outline-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction useComboboxAnchor() {\n  return React.useRef<HTMLDivElement | null>(null)\n}\n\n/** Render-prop access to one item's state (`{ selected, highlighted, disabled, ... }`). */\nfunction ComboboxItemContext({ ...props }: ComboboxItemContextProps) {\n  return <ComboboxPrimitive.ItemContext {...props} />\n}\n\nfunction ComboboxRootProvider<T extends CollectionItem>({ className, ...props }: ComboboxRootProviderProps<T>) {\n  return <ComboboxPrimitive.RootProvider data-slot=\"combobox\" className={cn(className)} {...props} />\n}\n\ntype ComboboxClearTriggerProps = React.ComponentProps<typeof ComboboxPrimitive.ClearTrigger>\n\ntype ComboboxItemGroupProps = React.ComponentProps<typeof ComboboxPrimitive.ItemGroup>\n\ntype ComboboxRootProps<T extends CollectionItem = CollectionItem> = React.ComponentProps<\n  typeof ComboboxPrimitive.Root<T>\n> & {\n  /** Anchor the popup to another element, e.g. a `ComboboxChips` container. */\n  anchor?: React.RefObject<HTMLElement | null>\n}\n\ntype ComboboxRootProviderProps<T extends CollectionItem = CollectionItem> = React.ComponentProps<\n  typeof ComboboxPrimitive.RootProvider<T>\n>\n\ntype ComboboxChipProps = React.ComponentProps<typeof ark.div> & {\n  /** The selected value this chip represents. */\n  value: string\n  /** Render the remove button on the chip. */\n  showRemove?: boolean\n}\n\ntype ComboboxChipsProps = React.ComponentProps<typeof ComboboxPrimitive.Control>\n\ntype ComboboxChipsInputProps = React.ComponentProps<typeof ComboboxPrimitive.Input>\n\ntype ComboboxCollectionProps<T extends CollectionItem = CollectionItem> = {\n  children: (item: T, index: number) => React.ReactNode\n}\n\ntype ComboboxContentProps = Omit<React.ComponentProps<typeof ComboboxPrimitive.Content>, \"id\">\n\ntype ComboboxContextProps = React.ComponentProps<typeof ComboboxPrimitive.Context>\n\ntype ComboboxControlProps = React.ComponentProps<typeof ComboboxPrimitive.Control>\n\ntype ComboboxEmptyProps = React.ComponentProps<typeof ComboboxPrimitive.Empty>\n\ntype ComboboxInputProps = Omit<React.ComponentProps<typeof ComboboxPrimitive.Input>, \"id\"> & {\n  /** Render the open/close trigger in the control. */\n  showTrigger?: boolean\n  /** Render the clear button in the control. */\n  showClear?: boolean\n}\n\ntype ComboboxItemProps = Omit<React.ComponentProps<typeof ComboboxPrimitive.Item>, \"item\"> & {\n  /** The collection item. Falls back to `value` for string collections. */\n  item?: CollectionItem\n  value?: string\n}\n\ntype ComboboxItemIndicatorProps = React.ComponentProps<typeof ComboboxPrimitive.ItemIndicator>\n\ntype ComboboxItemTextProps = React.ComponentProps<typeof ComboboxPrimitive.ItemText>\n\ntype ComboboxItemGroupLabelProps = React.ComponentProps<typeof ComboboxPrimitive.ItemGroupLabel>\n\ntype ComboboxListProps = React.ComponentProps<typeof ComboboxPrimitive.List>\n\ntype ComboboxPositionerProps = React.ComponentProps<typeof ComboboxPrimitive.Positioner>\n\ntype ComboboxLabelProps = React.ComponentProps<typeof ComboboxPrimitive.Label>\n\ntype ComboboxSeparatorProps = React.ComponentProps<typeof ark.div>\n\ntype ComboboxTriggerProps = Omit<React.ComponentProps<typeof ComboboxPrimitive.Trigger>, \"id\">\n\ntype ComboboxValueProps = React.ComponentProps<typeof ark.span> & { placeholder?: React.ReactNode }\n\ntype ComboboxItemContextProps = React.ComponentProps<typeof ComboboxPrimitive.ItemContext>\n\nconst Combobox = {\n  ClearTrigger: ComboboxClearTrigger,\n  ItemGroup: ComboboxItemGroup,\n  Root: ComboboxRoot,\n  RootProvider: ComboboxRootProvider,\n  Chip: ComboboxChip,\n  Chips: ComboboxChips,\n  ChipsInput: ComboboxChipsInput,\n  Collection: ComboboxCollection,\n  Content: ComboboxContent,\n  Context: ComboboxContext,\n  Control: ComboboxControl,\n  Empty: ComboboxEmpty,\n  Input: ComboboxInput,\n  Item: ComboboxItem,\n  ItemIndicator: ComboboxItemIndicator,\n  ItemText: ComboboxItemText,\n  ItemGroupLabel: ComboboxItemGroupLabel,\n  List: ComboboxList,\n  Positioner: ComboboxPositioner,\n  Label: ComboboxLabel,\n  Separator: ComboboxSeparator,\n  Trigger: ComboboxTrigger,\n  Value: ComboboxValue,\n  ItemContext: ComboboxItemContext,\n}\n\nexport {\n  useCombobox,\n  useComboboxItemContext,\n  Combobox,\n  createListCollection,\n  useComboboxAnchor,\n  useFilter,\n  useListCollection,\n  type CollectionItem,\n  type ListCollection,\n  type ComboboxClearTriggerProps,\n  type ComboboxItemGroupProps,\n  type ComboboxRootProps,\n  type ComboboxRootProviderProps,\n  type ComboboxChipProps,\n  type ComboboxChipsProps,\n  type ComboboxChipsInputProps,\n  type ComboboxCollectionProps,\n  type ComboboxContentProps,\n  type ComboboxContextProps,\n  type ComboboxControlProps,\n  type ComboboxEmptyProps,\n  type ComboboxInputProps,\n  type ComboboxItemProps,\n  type ComboboxItemIndicatorProps,\n  type ComboboxItemTextProps,\n  type ComboboxItemGroupLabelProps,\n  type ComboboxListProps,\n  type ComboboxPositionerProps,\n  type ComboboxLabelProps,\n  type ComboboxSeparatorProps,\n  type ComboboxTriggerProps,\n  type ComboboxValueProps,\n  type ComboboxItemContextProps,\n}\n"
     }
   ]
 }

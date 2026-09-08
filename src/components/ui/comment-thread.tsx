@@ -1,10 +1,10 @@
 import * as React from "react"
 import { ark } from "@ark-ui/react"
 import { CornerDownRightIcon, PencilIcon, SendIcon } from "lucide-react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { Kbd } from "@/components/ui/kbd"
-import { Popover, PopoverContent } from "@/components/ui/popover"
+import { Popover } from "@/components/ui/popover"
 import { formatRelativeTime } from "@/lib/time"
 import { cn } from "@/lib/utils"
 import { useControllable } from "@/lib/controllable"
@@ -72,23 +72,14 @@ const initialsOf = (person?: Person) =>
  * Thread
  * ------------------------------------------------------------------------- */
 
-function CommentThread({
+function CommentThreadRoot({
   people = [],
   currentUserId,
   replyTo: replyToProp,
   onReplyToChange,
   className,
   ...props
-}: React.ComponentProps<"div"> & {
-  /** People who can be mentioned and whose names and initials are rendered. */
-  people?: Person[]
-  /** Id of the signed-in person; their comments get `data-own` and mentions of them `data-self`. */
-  currentUserId?: string
-  /** Id of the comment being replied to (controlled). */
-  replyTo?: string | null
-  /** Called when the reply target changes. */
-  onReplyToChange?: (id: string | null) => void
-}) {
+}: CommentThreadRootProps) {
   const [replyTo, setReplyTo] = useControllable<string | null>(replyToProp, null, onReplyToChange)
   const [editing, setEditing] = React.useState<string | null>(null)
   const ctx = React.useMemo(
@@ -97,28 +88,23 @@ function CommentThread({
   )
   return (
     <ThreadContext.Provider value={ctx}>
-      <div data-slot="comment-thread" className={cn("flex flex-col gap-4", className)} {...props} />
+      <ark.div data-slot="comment-thread" className={cn("flex flex-col gap-4", className)} {...props} />
     </ThreadContext.Provider>
   )
 }
 
-function CommentList({ className, ...props }: React.ComponentProps<"ol">) {
-  return <ol data-slot="comment-list" className={cn("flex flex-col gap-4", className)} {...props} />
+function CommentThreadList({ className, ...props }: CommentThreadListProps) {
+  return <ark.ol data-slot="comment-list" className={cn("flex flex-col gap-4", className)} {...props} />
 }
 
-function Comment({
-  value,
-  authorId,
-  className,
-  ...props
-}: React.ComponentProps<"li"> & { value: string; authorId?: string }) {
+function CommentThreadItem({ value, authorId, className, ...props }: CommentThreadItemProps) {
   const thread = useCommentThread()
   const parent = React.useContext(CommentContext)
   const depth = parent ? parent.depth + 1 : 0
   const ctx = React.useMemo(() => ({ value, authorId, depth }), [value, authorId, depth])
   return (
     <CommentContext.Provider value={ctx}>
-      <li
+      <ark.li
         data-slot="comment"
         data-value={value}
         data-depth={depth}
@@ -133,34 +119,44 @@ function Comment({
 }
 
 /** Avatar for the comment's author (from `people`), or pass your own children. */
-function CommentAvatar({ className, children, ...props }: React.ComponentProps<typeof Avatar>) {
+function CommentThreadAvatar({ className, children, ...props }: CommentThreadAvatarProps) {
   const { people } = useCommentThread()
   const { authorId, depth } = useComment()
   const person = people.find((p) => p.id === authorId)
   return (
-    <Avatar
+    <Avatar.Root
       data-slot="comment-avatar"
       size={depth > 0 ? "sm" : "default"}
       className={cn("shrink-0", className)}
       {...props}
     >
-      {children ?? (
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
         <>
-          {person?.avatar && <AvatarImage src={person.avatar} alt="" />}
-          <AvatarFallback>{initialsOf(person)}</AvatarFallback>
+          {children ?? (
+            <>
+              {person?.avatar && <Avatar.Image src={person.avatar} alt="" />}
+              <Avatar.Fallback>{initialsOf(person)}</Avatar.Fallback>
+            </>
+          )}
         </>
       )}
-    </Avatar>
+    </Avatar.Root>
   )
 }
 
-function CommentContent({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="comment-content" className={cn("flex min-w-0 flex-1 flex-col gap-1", className)} {...props} />
+function CommentThreadContent({ className, ...props }: CommentThreadContentProps) {
+  return (
+    <ark.div data-slot="comment-content" className={cn("flex min-w-0 flex-1 flex-col gap-1", className)} {...props} />
+  )
 }
 
-function CommentHeader({ className, ...props }: React.ComponentProps<"div">) {
+function CommentThreadHeader({ className, ...props }: CommentThreadHeaderProps) {
   return (
-    <div
+    <ark.div
       data-slot="comment-header"
       className={cn("flex flex-wrap items-baseline gap-x-2 gap-y-0.5 text-sm", className)}
       {...props}
@@ -169,39 +165,45 @@ function CommentHeader({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 /** Author name from `people` by default. */
-function CommentAuthor({ className, children, ...props }: React.ComponentProps<"span">) {
+function CommentThreadAuthor({ className, children, ...props }: CommentThreadAuthorProps) {
   const { people } = useCommentThread()
   const { authorId } = useComment()
   return (
-    <span data-slot="comment-author" className={cn("font-medium", className)} {...props}>
-      {children ?? people.find((p) => p.id === authorId)?.name ?? "Unknown"}
-    </span>
+    <ark.span data-slot="comment-author" className={cn("font-medium", className)} {...props}>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>{children ?? people.find((p) => p.id === authorId)?.name ?? "Unknown"}</>
+      )}
+    </ark.span>
   )
 }
 
-function CommentTime({
-  date,
-  now,
-  className,
-  children,
-  ...props
-}: Omit<React.ComponentProps<"time">, "dateTime"> & { date: Date; now?: Date }) {
+function CommentThreadTime({ date, now, className, children, ...props }: CommentThreadTimeProps) {
   return (
-    <time
+    <ark.time
       data-slot="comment-time"
       dateTime={date.toISOString()}
       title={date.toLocaleString()}
       className={cn("text-xs text-muted-foreground", className)}
       {...props}
     >
-      {children ?? formatRelativeTime(date, { now })}
-    </time>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>{children ?? formatRelativeTime(date, { now })}</>
+      )}
+    </ark.time>
   )
 }
 
 /** Small trailing note, e.g. "edited" or a role badge. */
-function CommentMeta({ className, ...props }: React.ComponentProps<"span">) {
-  return <span data-slot="comment-meta" className={cn("text-xs text-muted-foreground", className)} {...props} />
+function CommentThreadMeta({ className, ...props }: CommentThreadMetaProps) {
+  return <ark.span data-slot="comment-meta" className={cn("text-xs text-muted-foreground", className)} {...props} />
 }
 
 /** Split text into runs, turning `@Full Name` for known people into mention nodes. */
@@ -219,9 +221,9 @@ function renderMentions(text: string, people: Person[]) {
     if (index > last) nodes.push(text.slice(last, index))
     const person = people.find((p) => p.name === match[1])
     nodes.push(
-      <CommentMention key={`${index}-${match[1]}`} personId={person?.id}>
+      <CommentThreadMention key={`${index}-${match[1]}`} personId={person?.id}>
         @{match[1]}
-      </CommentMention>
+      </CommentThreadMention>
     )
     last = index + match[0].length
   }
@@ -229,10 +231,10 @@ function renderMentions(text: string, people: Person[]) {
   return nodes
 }
 
-function CommentMention({ personId, className, ...props }: React.ComponentProps<"span"> & { personId?: string }) {
+function CommentThreadMention({ personId, className, ...props }: CommentThreadMentionProps) {
   const { currentUserId } = useCommentThread()
   return (
-    <span
+    <ark.span
       data-slot="comment-mention"
       data-person={personId}
       data-self={personId && personId === currentUserId ? "" : undefined}
@@ -246,22 +248,28 @@ function CommentMention({ personId, className, ...props }: React.ComponentProps<
 }
 
 /** Plain text with mentions highlighted; pass `children` to render anything else. */
-function CommentBody({ text, className, children, ...props }: React.ComponentProps<"div"> & { text?: string }) {
+function CommentThreadBody({ text, className, children, ...props }: CommentThreadBodyProps) {
   const { people } = useCommentThread()
   return (
-    <div
+    <ark.div
       data-slot="comment-body"
       className={cn("text-sm/relaxed wrap-break-word whitespace-pre-wrap", className)}
       {...props}
     >
-      {children ?? (text !== undefined ? renderMentions(text, people) : null)}
-    </div>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>{children ?? (text !== undefined ? renderMentions(text, people) : null)}</>
+      )}
+    </ark.div>
   )
 }
 
-function CommentReactions({ className, ...props }: React.ComponentProps<"div">) {
+function CommentThreadReactions({ className, ...props }: CommentThreadReactionsProps) {
   return (
-    <div
+    <ark.div
       data-slot="comment-reactions"
       className={cn("flex flex-wrap items-center gap-1 pt-0.5", className)}
       {...props}
@@ -269,14 +277,14 @@ function CommentReactions({ className, ...props }: React.ComponentProps<"div">) 
   )
 }
 
-function CommentReaction({
+function CommentThreadReaction({
   emoji,
   count = 0,
   active = false,
   className,
   children,
   ...props
-}: React.ComponentProps<typeof ark.button> & { emoji: string; count?: number; active?: boolean }) {
+}: CommentThreadReactionProps) {
   return (
     <ark.button
       type="button"
@@ -290,16 +298,24 @@ function CommentReaction({
       )}
       {...props}
     >
-      <span aria-hidden>{emoji}</span>
-      {children ?? <span className="tabular-nums">{count}</span>}
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <span aria-hidden>{emoji}</span>
+          {children ?? <span className="tabular-nums">{count}</span>}
+        </>
+      )}
     </ark.button>
   )
 }
 
 /** Row of small text buttons; revealed on hover/focus, always visible when the comment is active. */
-function CommentActions({ className, ...props }: React.ComponentProps<"div">) {
+function CommentThreadActions({ className, ...props }: CommentThreadActionsProps) {
   return (
-    <div
+    <ark.div
       data-slot="comment-actions"
       className={cn(
         "flex items-center gap-1 text-xs text-muted-foreground opacity-0 transition-opacity group-focus-within/comment:opacity-100 group-hover/comment:opacity-100 group-data-editing/comment:opacity-100 group-data-replying/comment:opacity-100",
@@ -310,7 +326,13 @@ function CommentActions({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CommentReplyTrigger({ asChild, children, onClick, className, ...props }: React.ComponentProps<typeof Button>) {
+function CommentThreadReplyTrigger({
+  asChild,
+  children,
+  onClick,
+  className,
+  ...props
+}: CommentThreadReplyTriggerProps) {
   const { replyTo, setReplyTo } = useCommentThread()
   const { value } = useComment()
   return (
@@ -338,7 +360,7 @@ function CommentReplyTrigger({ asChild, children, onClick, className, ...props }
   )
 }
 
-function CommentEditTrigger({ asChild, children, onClick, className, ...props }: React.ComponentProps<typeof Button>) {
+function CommentThreadEditTrigger({ asChild, children, onClick, className, ...props }: CommentThreadEditTriggerProps) {
   const { editing, setEditing } = useCommentThread()
   const { value } = useComment()
   return (
@@ -367,15 +389,19 @@ function CommentEditTrigger({ asChild, children, onClick, className, ...props }:
 }
 
 /** Nested replies with a guide line; put `Comment`s inside. */
-function CommentReplies({ className, ...props }: React.ComponentProps<"ol">) {
+function CommentThreadReplies({ className, ...props }: CommentThreadRepliesProps) {
   return (
-    <ol data-slot="comment-replies" className={cn("mt-2 flex flex-col gap-3 border-s-2 ps-3", className)} {...props} />
+    <ark.ol
+      data-slot="comment-replies"
+      className={cn("mt-2 flex flex-col gap-3 border-s-2 ps-3", className)}
+      {...props}
+    />
   )
 }
 
-function CommentEmpty({ className, ...props }: React.ComponentProps<"div">) {
+function CommentThreadEmpty({ className, ...props }: CommentThreadEmptyProps) {
   return (
-    <div
+    <ark.div
       data-slot="comment-empty"
       className={cn("rounded-lg border border-dashed px-3 py-6 text-center text-sm text-muted-foreground", className)}
       {...props}
@@ -420,7 +446,7 @@ function extractMentions(text: string, people: Person[]) {
     .map((p) => p.id)
 }
 
-function CommentComposer({
+function CommentThreadComposer({
   people = [],
   value: valueProp,
   defaultValue = "",
@@ -431,19 +457,7 @@ function CommentComposer({
   className,
   children,
   ...props
-}: Omit<React.ComponentProps<"div">, "onSubmit" | "defaultValue"> & {
-  /** People who can be mentioned and whose names and initials are rendered. */
-  people?: Person[]
-  value?: string
-  defaultValue?: string
-  onValueChange?: (value: string) => void
-  /** Called with the trimmed text and the ids of mentioned people. */
-  onSubmit?: (comment: { text: string; mentions: string[] }) => void
-  /** Called when the composer is cancelled with Escape or the cancel trigger. */
-  onCancel?: () => void
-  /** Maximum number of mention suggestions shown. */
-  maxSuggestions?: number
-}) {
+}: CommentThreadComposerProps) {
   const [value, setValue] = useControllable(valueProp, defaultValue, onValueChange)
   const [mention, setMention] = React.useState<MentionState>(null)
   const inputRef = React.useRef<HTMLDivElement>(null)
@@ -505,7 +519,7 @@ function CommentComposer({
 
   return (
     <ComposerContext.Provider value={ctx}>
-      <div
+      <ark.div
         data-slot="comment-composer"
         data-mentioning={mention ? "" : undefined}
         className={cn(
@@ -515,31 +529,43 @@ function CommentComposer({
         {...props}
       >
         {children}
-      </div>
+      </ark.div>
     </ComposerContext.Provider>
   )
 }
 
 /** "Replying to …" strip; renders nothing when not replying. The render prop gets the comment id. */
-function CommentComposerReplyingTo({
-  className,
-  children,
-  ...props
-}: Omit<React.ComponentProps<"div">, "children"> & { children?: (details: { id: string }) => React.ReactNode }) {
+function CommentThreadComposerReplyingTo({ className, children, ...props }: CommentThreadComposerReplyingToProps) {
   const { replyTo, setReplyTo } = useCommentThread()
   if (!replyTo) return null
   return (
-    <div
+    <ark.div
       data-slot="comment-composer-replying-to"
       className={cn("flex items-center gap-2 px-1 text-xs text-muted-foreground", className)}
       {...props}
     >
-      <CornerDownRightIcon className="size-3.5" />
-      {children ? children({ id: replyTo }) : <span>Replying to a comment</span>}
-      <Button variant="ghost" size="xs" className="ms-auto h-5 px-1.5" onClick={() => setReplyTo(null)}>
-        Cancel
-      </Button>
-    </div>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <CornerDownRightIcon className="size-3.5" />
+          {children ? (
+            typeof children === "function" ? (
+              children({ id: replyTo })
+            ) : (
+              children
+            )
+          ) : (
+            <span>Replying to a comment</span>
+          )}
+          <Button variant="ghost" size="xs" className="ms-auto h-5 px-1.5" onClick={() => setReplyTo(null)}>
+            Cancel
+          </Button>
+        </>
+      )}
+    </ark.div>
   )
 }
 
@@ -639,7 +665,7 @@ function placeCaretAfter(node: Node) {
  * Backspace removes a whole chip); `value` stays plain `@Full Name` text.
  * Arrows/Enter/Tab pick from the list, Escape closes it, ⌘/Ctrl+Enter submits.
  */
-function CommentComposerInput({
+function CommentThreadComposerInput({
   className,
   placeholder = "Write a comment…",
   autoFocus,
@@ -648,7 +674,7 @@ function CommentComposerInput({
   onInput,
   onPaste,
   ...props
-}: Omit<React.ComponentProps<"div">, "onChange"> & { placeholder?: string; autoFocus?: boolean }) {
+}: CommentThreadComposerInputProps) {
   const c = useComposer()
   const lastSerialized = React.useRef<string | null>(null)
 
@@ -704,7 +730,7 @@ function CommentComposerInput({
   }
 
   return (
-    <div
+    <ark.div
       ref={c.inputRef}
       data-slot="comment-composer-input"
       role={c.mention ? "combobox" : "textbox"}
@@ -775,11 +801,11 @@ function CommentComposerInput({
 }
 
 /** Floating suggestion list anchored under the input while an `@query` is active. Focus stays in the textarea. */
-function CommentComposerMentionList({ className, ...props }: React.ComponentProps<typeof PopoverContent>) {
+function CommentThreadComposerMentionList({ className, ...props }: CommentThreadComposerMentionListProps) {
   const c = useComposer()
   const open = !!c.mention
   return (
-    <Popover
+    <Popover.Root
       open={open}
       onOpenChange={({ open }) => {
         if (!open) c.setMention(null)
@@ -796,7 +822,7 @@ function CommentComposerMentionList({ className, ...props }: React.ComponentProp
         },
       }}
     >
-      <PopoverContent
+      <Popover.Content
         id={c.listId}
         role="listbox"
         aria-label="People"
@@ -805,57 +831,78 @@ function CommentComposerMentionList({ className, ...props }: React.ComponentProp
         onPointerDown={(event) => event.preventDefault()}
         {...props}
       >
-        {c.suggestions.length === 0 ? (
-          <div className="px-2 py-1.5 text-sm text-muted-foreground">No one matches "{c.mention?.query}"</div>
+        {props.asChild ? (
+          React.isValidElement(props.children) ? (
+            props.children
+          ) : null
         ) : (
-          c.suggestions.map((person, index) => (
-            <div
-              key={person.id}
-              id={`${c.listId}-${person.id}`}
-              role="option"
-              aria-selected={index === c.mention?.index}
-              data-slot="comment-composer-mention-item"
-              data-highlighted={index === c.mention?.index ? "" : undefined}
-              className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm data-highlighted:bg-accent data-highlighted:text-accent-foreground"
-              onMouseEnter={() => c.mention && c.setMention({ ...c.mention, index })}
-              onClick={() => c.pick(person)}
-            >
-              <Avatar size="sm" className="size-6 text-[10px]">
-                {person.avatar && <AvatarImage src={person.avatar} alt="" />}
-                <AvatarFallback>{initialsOf(person)}</AvatarFallback>
-              </Avatar>
-              <span className="truncate">{person.name}</span>
-            </div>
-          ))
+          <>
+            {c.suggestions.length === 0 ? (
+              <div className="px-2 py-1.5 text-sm text-muted-foreground">No one matches "{c.mention?.query}"</div>
+            ) : (
+              c.suggestions.map((person, index) => (
+                <div
+                  key={person.id}
+                  id={`${c.listId}-${person.id}`}
+                  role="option"
+                  aria-selected={index === c.mention?.index}
+                  data-slot="comment-composer-mention-item"
+                  data-highlighted={index === c.mention?.index ? "" : undefined}
+                  className="flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm data-highlighted:bg-accent data-highlighted:text-accent-foreground"
+                  onMouseEnter={() => c.mention && c.setMention({ ...c.mention, index })}
+                  onClick={() => c.pick(person)}
+                >
+                  <Avatar.Root size="sm" className="size-6 text-[10px]">
+                    {person.avatar && <Avatar.Image src={person.avatar} alt="" />}
+                    <Avatar.Fallback>{initialsOf(person)}</Avatar.Fallback>
+                  </Avatar.Root>
+                  <span className="truncate">{person.name}</span>
+                </div>
+              ))
+            )}
+          </>
         )}
-      </PopoverContent>
-    </Popover>
+      </Popover.Content>
+    </Popover.Root>
   )
 }
 
-function CommentComposerFooter({ className, ...props }: React.ComponentProps<"div">) {
+function CommentThreadComposerFooter({ className, ...props }: CommentThreadComposerFooterProps) {
   return (
-    <div data-slot="comment-composer-footer" className={cn("flex items-center gap-2 px-1", className)} {...props} />
+    <ark.div data-slot="comment-composer-footer" className={cn("flex items-center gap-2 px-1", className)} {...props} />
   )
 }
 
-function CommentComposerHint({ className, children, ...props }: React.ComponentProps<"span">) {
+function CommentThreadComposerHint({ className, children, ...props }: CommentThreadComposerHintProps) {
   return (
-    <span
+    <ark.span
       data-slot="comment-composer-hint"
       className={cn("me-auto text-xs text-muted-foreground", className)}
       {...props}
     >
-      {children ?? (
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
         <>
-          <Kbd>@</Kbd> to mention · <Kbd>⌘↵</Kbd> to send
+          {children ?? (
+            <>
+              <Kbd.Root>@</Kbd.Root> to mention · <Kbd.Root>⌘↵</Kbd.Root> to send
+            </>
+          )}
         </>
       )}
-    </span>
+    </ark.span>
   )
 }
 
-function CommentComposerSubmitTrigger({ asChild, children, onClick, ...props }: React.ComponentProps<typeof Button>) {
+function CommentThreadComposerSubmitTrigger({
+  asChild,
+  children,
+  onClick,
+  ...props
+}: CommentThreadComposerSubmitTriggerProps) {
   const { submit, canSubmit } = useComposer()
   return (
     <Button
@@ -880,7 +927,12 @@ function CommentComposerSubmitTrigger({ asChild, children, onClick, ...props }: 
   )
 }
 
-function CommentComposerCancelTrigger({ asChild, children, onClick, ...props }: React.ComponentProps<typeof Button>) {
+function CommentThreadComposerCancelTrigger({
+  asChild,
+  children,
+  onClick,
+  ...props
+}: CommentThreadComposerCancelTriggerProps) {
   const { cancel } = useComposer()
   return (
     <Button
@@ -899,36 +951,151 @@ function CommentComposerCancelTrigger({ asChild, children, onClick, ...props }: 
   )
 }
 
+type CommentThreadListProps = React.ComponentProps<typeof ark.ol>
+
+type CommentThreadItemProps = React.ComponentProps<typeof ark.li> & { value: string; authorId?: string }
+
+type CommentThreadAvatarProps = React.ComponentProps<typeof Avatar.Root>
+
+type CommentThreadContentProps = React.ComponentProps<typeof ark.div>
+
+type CommentThreadHeaderProps = React.ComponentProps<typeof ark.div>
+
+type CommentThreadAuthorProps = React.ComponentProps<typeof ark.span>
+
+type CommentThreadTimeProps = Omit<React.ComponentProps<typeof ark.time>, "dateTime"> & {
+  date: Date
+  now?: Date
+}
+
+type CommentThreadMetaProps = React.ComponentProps<typeof ark.span>
+
+type CommentThreadMentionProps = React.ComponentProps<typeof ark.span> & { personId?: string }
+
+type CommentThreadBodyProps = React.ComponentProps<typeof ark.div> & { text?: string }
+
+type CommentThreadReactionsProps = React.ComponentProps<typeof ark.div>
+
+type CommentThreadReactionProps = React.ComponentProps<typeof ark.button> & {
+  emoji: string
+  count?: number
+  active?: boolean
+}
+
+type CommentThreadActionsProps = React.ComponentProps<typeof ark.div>
+
+type CommentThreadReplyTriggerProps = React.ComponentProps<typeof Button>
+
+type CommentThreadEditTriggerProps = React.ComponentProps<typeof Button>
+
+type CommentThreadRepliesProps = React.ComponentProps<typeof ark.ol>
+
+type CommentThreadEmptyProps = React.ComponentProps<typeof ark.div>
+
+type CommentThreadComposerProps = Omit<React.ComponentProps<typeof ark.div>, "onSubmit" | "defaultValue"> & {
+  /** People who can be mentioned and whose names and initials are rendered. */
+  people?: Person[]
+  value?: string
+  defaultValue?: string
+  onValueChange?: (value: string) => void
+  /** Called with the trimmed text and the ids of mentioned people. */
+  onSubmit?: (comment: { text: string; mentions: string[] }) => void
+  /** Called when the composer is cancelled with Escape or the cancel trigger. */
+  onCancel?: () => void
+  /** Maximum number of mention suggestions shown. */
+  maxSuggestions?: number
+}
+
+type CommentThreadComposerReplyingToProps = Omit<React.ComponentProps<typeof ark.div>, "children"> & {
+  children?: ((details: { id: string }) => React.ReactNode) | React.ReactElement
+}
+
+type CommentThreadComposerInputProps = Omit<React.ComponentProps<typeof ark.div>, "onChange"> & {
+  placeholder?: string
+  autoFocus?: boolean
+}
+
+type CommentThreadComposerMentionListProps = React.ComponentProps<typeof Popover.Content>
+
+type CommentThreadComposerFooterProps = React.ComponentProps<typeof ark.div>
+
+type CommentThreadComposerHintProps = React.ComponentProps<typeof ark.span>
+
+type CommentThreadComposerSubmitTriggerProps = React.ComponentProps<typeof Button>
+
+type CommentThreadComposerCancelTriggerProps = React.ComponentProps<typeof Button>
+
+type CommentThreadRootProps = React.ComponentProps<typeof ark.div> & {
+  /** People who can be mentioned and whose names and initials are rendered. */
+  people?: Person[]
+  /** Id of the signed-in person; their comments get `data-own` and mentions of them `data-self`. */
+  currentUserId?: string
+  /** Id of the comment being replied to (controlled). */
+  replyTo?: string | null
+  /** Called when the reply target changes. */
+  onReplyToChange?: (id: string | null) => void
+}
+
+const CommentThread = {
+  List: CommentThreadList,
+  Item: CommentThreadItem,
+  Avatar: CommentThreadAvatar,
+  Content: CommentThreadContent,
+  Header: CommentThreadHeader,
+  Author: CommentThreadAuthor,
+  Time: CommentThreadTime,
+  Meta: CommentThreadMeta,
+  Mention: CommentThreadMention,
+  Body: CommentThreadBody,
+  Reactions: CommentThreadReactions,
+  Reaction: CommentThreadReaction,
+  Actions: CommentThreadActions,
+  ReplyTrigger: CommentThreadReplyTrigger,
+  EditTrigger: CommentThreadEditTrigger,
+  Replies: CommentThreadReplies,
+  Empty: CommentThreadEmpty,
+  Composer: CommentThreadComposer,
+  ComposerReplyingTo: CommentThreadComposerReplyingTo,
+  ComposerInput: CommentThreadComposerInput,
+  ComposerMentionList: CommentThreadComposerMentionList,
+  ComposerFooter: CommentThreadComposerFooter,
+  ComposerHint: CommentThreadComposerHint,
+  ComposerSubmitTrigger: CommentThreadComposerSubmitTrigger,
+  ComposerCancelTrigger: CommentThreadComposerCancelTrigger,
+  Root: CommentThreadRoot,
+}
+
 export {
   CommentThread,
-  CommentList,
-  Comment,
-  CommentAvatar,
-  CommentContent,
-  CommentHeader,
-  CommentAuthor,
-  CommentTime,
-  CommentMeta,
-  CommentBody,
-  CommentMention,
-  CommentReactions,
-  CommentReaction,
-  CommentActions,
-  CommentReplyTrigger,
-  CommentEditTrigger,
-  CommentReplies,
-  CommentEmpty,
-  CommentComposer,
-  CommentComposerReplyingTo,
-  CommentComposerInput,
-  CommentComposerMentionList,
-  CommentComposerFooter,
-  CommentComposerHint,
-  CommentComposerSubmitTrigger,
-  CommentComposerCancelTrigger,
   useCommentThread,
   useComment,
   extractMentions,
   renderMentions,
   type Person as CommentPerson,
+  type CommentThreadListProps,
+  type CommentThreadItemProps,
+  type CommentThreadAvatarProps,
+  type CommentThreadContentProps,
+  type CommentThreadHeaderProps,
+  type CommentThreadAuthorProps,
+  type CommentThreadTimeProps,
+  type CommentThreadMetaProps,
+  type CommentThreadMentionProps,
+  type CommentThreadBodyProps,
+  type CommentThreadReactionsProps,
+  type CommentThreadReactionProps,
+  type CommentThreadActionsProps,
+  type CommentThreadReplyTriggerProps,
+  type CommentThreadEditTriggerProps,
+  type CommentThreadRepliesProps,
+  type CommentThreadEmptyProps,
+  type CommentThreadComposerProps,
+  type CommentThreadComposerReplyingToProps,
+  type CommentThreadComposerInputProps,
+  type CommentThreadComposerMentionListProps,
+  type CommentThreadComposerFooterProps,
+  type CommentThreadComposerHintProps,
+  type CommentThreadComposerSubmitTriggerProps,
+  type CommentThreadComposerCancelTriggerProps,
+  type CommentThreadRootProps,
 }

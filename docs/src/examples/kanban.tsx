@@ -1,17 +1,5 @@
 import * as React from "react"
-import {
-  Kanban,
-  KanbanBoard,
-  KanbanCard,
-  KanbanCardTitle,
-  KanbanColumn,
-  KanbanColumnContent,
-  KanbanColumnCount,
-  KanbanColumnHeader,
-  KanbanColumnTitle,
-  moveCard,
-  moveColumn,
-} from "@/components/ui/kanban"
+import { Kanban, moveCard, moveColumn } from "@/components/ui/kanban"
 
 export default function KanbanExample() {
   const [columns, setColumns] = React.useState([
@@ -27,28 +15,28 @@ export default function KanbanExample() {
     { id: "done", title: "Done", cards: [{ id: "4", title: "Ship the CLI" }] },
   ])
   return (
-    <Kanban
+    <Kanban.Root
       onCardMove={(d) => setColumns((prev) => moveCard(prev, d))}
       onColumnMove={(d) => setColumns((prev) => moveColumn(prev, d))}
       className="w-full"
     >
-      <KanbanBoard>
+      <Kanban.Board>
         {columns.map((column) => (
-          <KanbanColumn key={column.id} value={column.id} className="w-56">
-            <KanbanColumnHeader>
-              <KanbanColumnTitle>{column.title}</KanbanColumnTitle>
-              <KanbanColumnCount>{column.cards.length}</KanbanColumnCount>
-            </KanbanColumnHeader>
-            <KanbanColumnContent>
+          <Kanban.Column key={column.id} value={column.id} className="w-56">
+            <Kanban.ColumnHeader>
+              <Kanban.ColumnTitle>{column.title}</Kanban.ColumnTitle>
+              <Kanban.ColumnCount>{column.cards.length}</Kanban.ColumnCount>
+            </Kanban.ColumnHeader>
+            <Kanban.ColumnContent>
               {column.cards.map((card) => (
-                <KanbanCard key={card.id} value={card.id}>
-                  <KanbanCardTitle>{card.title}</KanbanCardTitle>
-                </KanbanCard>
+                <Kanban.Card key={card.id} value={card.id}>
+                  <Kanban.CardTitle>{card.title}</Kanban.CardTitle>
+                </Kanban.Card>
               ))}
-            </KanbanColumnContent>
-          </KanbanColumn>
+            </Kanban.ColumnContent>
+          </Kanban.Column>
         ))}
-      </KanbanBoard>
-    </Kanban>
+      </Kanban.Board>
+    </Kanban.Root>
   )
 }

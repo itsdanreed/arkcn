@@ -23,19 +23,15 @@ const attachmentVariants = cva(
   }
 )
 
-function Attachment({
+function AttachmentRoot({
   className,
   state = "done",
   size = "default",
   orientation = "horizontal",
   ...props
-}: React.ComponentProps<"div"> &
-  VariantProps<typeof attachmentVariants> & {
-    /** Upload state: `idle`, `uploading`, `processing`, `error`, or `done`; sets `data-state`. */
-    state?: "idle" | "uploading" | "processing" | "error" | "done"
-  }) {
+}: AttachmentRootProps) {
   return (
-    <div
+    <ark.div
       data-slot="attachment"
       data-state={state}
       data-size={size}
@@ -62,13 +58,9 @@ const attachmentMediaVariants = cva(
   }
 )
 
-function AttachmentMedia({
-  className,
-  variant = "icon",
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof attachmentMediaVariants>) {
+function AttachmentMedia({ className, variant = "icon", ...props }: AttachmentMediaProps) {
   return (
-    <div
+    <ark.div
       data-slot="attachment-media"
       data-variant={variant}
       className={cn(attachmentMediaVariants({ variant }), className)}
@@ -77,9 +69,9 @@ function AttachmentMedia({
   )
 }
 
-function AttachmentContent({ className, ...props }: React.ComponentProps<"div">) {
+function AttachmentContent({ className, ...props }: AttachmentContentProps) {
   return (
-    <div
+    <ark.div
       data-slot="attachment-content"
       className={cn(
         "max-w-full min-w-0 flex-1 leading-tight group-data-[orientation=vertical]/attachment:px-1",
@@ -90,9 +82,9 @@ function AttachmentContent({ className, ...props }: React.ComponentProps<"div">)
   )
 }
 
-function AttachmentTitle({ className, ...props }: React.ComponentProps<"span">) {
+function AttachmentTitle({ className, ...props }: AttachmentTitleProps) {
   return (
-    <span
+    <ark.span
       data-slot="attachment-title"
       className={cn(
         "block max-w-full min-w-0 truncate font-medium group-data-[state=processing]/attachment:shimmer group-data-[state=uploading]/attachment:shimmer",
@@ -103,9 +95,9 @@ function AttachmentTitle({ className, ...props }: React.ComponentProps<"span">) 
   )
 }
 
-function AttachmentDescription({ className, ...props }: React.ComponentProps<"span">) {
+function AttachmentDescription({ className, ...props }: AttachmentDescriptionProps) {
   return (
-    <span
+    <ark.span
       data-slot="attachment-description"
       className={cn(
         "mt-0.5 block min-w-0 truncate text-xs text-muted-foreground group-data-[state=error]/attachment:text-destructive/80",
@@ -117,9 +109,9 @@ function AttachmentDescription({ className, ...props }: React.ComponentProps<"sp
   )
 }
 
-function AttachmentActions({ className, ...props }: React.ComponentProps<"div">) {
+function AttachmentActions({ className, ...props }: AttachmentActionsProps) {
   return (
-    <div
+    <ark.div
       data-slot="attachment-actions"
       className={cn(
         "relative z-20 flex shrink-0 items-center group-data-[orientation=vertical]/attachment:absolute group-data-[orientation=vertical]/attachment:top-3 group-data-[orientation=vertical]/attachment:right-3 group-data-[orientation=vertical]/attachment:gap-1",
@@ -130,12 +122,7 @@ function AttachmentActions({ className, ...props }: React.ComponentProps<"div">)
   )
 }
 
-function AttachmentActionTrigger({
-  className,
-  variant,
-  size = "icon-xs",
-  ...props
-}: React.ComponentProps<typeof Button>) {
+function AttachmentActionTrigger({ className, variant, size = "icon-xs", ...props }: AttachmentActionTriggerProps) {
   return (
     <Button
       data-slot="attachment-action-trigger"
@@ -147,14 +134,7 @@ function AttachmentActionTrigger({
   )
 }
 
-function AttachmentTrigger({
-  className,
-  asChild = false,
-  type,
-  ...props
-}: React.ComponentProps<"button"> & {
-  asChild?: boolean
-}) {
+function AttachmentTrigger({ className, asChild = false, type, ...props }: AttachmentTriggerProps) {
   const Comp = ark.button
 
   return (
@@ -168,9 +148,9 @@ function AttachmentTrigger({
   )
 }
 
-function AttachmentGroup({ className, ...props }: React.ComponentProps<"div">) {
+function AttachmentGroup({ className, ...props }: AttachmentGroupProps) {
   return (
-    <div
+    <ark.div
       data-slot="attachment-group"
       className={cn(
         "flex min-w-0 scroll-fade-x snap-x snap-mandatory scroll-px-1 scrollbar-none gap-3 overflow-x-auto overscroll-x-contain py-1 *:data-[slot=attachment]:flex-none *:data-[slot=attachment]:snap-start",
@@ -181,14 +161,51 @@ function AttachmentGroup({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+type AttachmentRootProps = React.ComponentProps<typeof ark.div> &
+  VariantProps<typeof attachmentVariants> & {
+    /** Upload state: `idle`, `uploading`, `processing`, `error`, or `done`; sets `data-state`. */
+    state?: "idle" | "uploading" | "processing" | "error" | "done"
+  }
+
+type AttachmentGroupProps = React.ComponentProps<typeof ark.div>
+
+type AttachmentMediaProps = React.ComponentProps<typeof ark.div> & VariantProps<typeof attachmentMediaVariants>
+
+type AttachmentContentProps = React.ComponentProps<typeof ark.div>
+
+type AttachmentTitleProps = React.ComponentProps<typeof ark.span>
+
+type AttachmentDescriptionProps = React.ComponentProps<typeof ark.span>
+
+type AttachmentActionsProps = React.ComponentProps<typeof ark.div>
+
+type AttachmentActionTriggerProps = React.ComponentProps<typeof Button>
+
+type AttachmentTriggerProps = React.ComponentProps<typeof ark.button> & {
+  asChild?: boolean
+}
+
+const Attachment = {
+  Root: AttachmentRoot,
+  Group: AttachmentGroup,
+  Media: AttachmentMedia,
+  Content: AttachmentContent,
+  Title: AttachmentTitle,
+  Description: AttachmentDescription,
+  Actions: AttachmentActions,
+  ActionTrigger: AttachmentActionTrigger,
+  Trigger: AttachmentTrigger,
+}
+
 export {
   Attachment,
-  AttachmentGroup,
-  AttachmentMedia,
-  AttachmentContent,
-  AttachmentTitle,
-  AttachmentDescription,
-  AttachmentActions,
-  AttachmentActionTrigger,
-  AttachmentTrigger,
+  type AttachmentRootProps,
+  type AttachmentGroupProps,
+  type AttachmentMediaProps,
+  type AttachmentContentProps,
+  type AttachmentTitleProps,
+  type AttachmentDescriptionProps,
+  type AttachmentActionsProps,
+  type AttachmentActionTriggerProps,
+  type AttachmentTriggerProps,
 }

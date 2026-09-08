@@ -4,40 +4,6 @@
   "description": "`src/components/ui/chat.tsx` is a compositional, data-agnostic chat layout primitive (sidebar with search and conversation list, panel with header/messages/composer, empty state).",
   "exports": [
     "Chat",
-    "ChatBackTrigger",
-    "ChatBody",
-    "ChatComposer",
-    "ChatComposerActions",
-    "ChatComposerField",
-    "ChatComposerInput",
-    "ChatComposerSendTrigger",
-    "ChatContext",
-    "ChatConversationInfo",
-    "ChatConversationItem",
-    "ChatConversationList",
-    "ChatConversationName",
-    "ChatConversationPreview",
-    "ChatDateSeparator",
-    "ChatEmpty",
-    "ChatEmptyContent",
-    "ChatEmptyDescription",
-    "ChatEmptyIcon",
-    "ChatEmptyTitle",
-    "ChatHeader",
-    "ChatHeaderActions",
-    "ChatHeaderDescription",
-    "ChatHeaderInfo",
-    "ChatHeaderText",
-    "ChatHeaderTitle",
-    "ChatMessage",
-    "ChatMessageTime",
-    "ChatMessages",
-    "ChatPanel",
-    "ChatSearch",
-    "ChatSidebar",
-    "ChatSidebarHeader",
-    "ChatSidebarHeading",
-    "ChatSidebarTitle",
     "chatMessageVariants",
     "getInitials",
     "groupBy",
@@ -45,7 +11,19 @@
   ],
   "parts": [
     {
-      "name": "Chat",
+      "name": "Chat.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(ctx: ChatContextValue) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "Chat.Root",
       "props": [
         {
           "name": "defaultValue",
@@ -70,6 +48,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -93,15 +78,8 @@
       ]
     },
     {
-      "name": "ChatBackTrigger",
+      "name": "Chat.BackTrigger",
       "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
-        },
         {
           "name": "size",
           "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
@@ -117,183 +95,11 @@
           "from": "arkcn"
         },
         {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ChatBody",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ChatComposer",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ChatComposerActions",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ChatComposerField",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ChatComposerInput",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ChatComposerSendTrigger",
-      "props": [
-        {
           "name": "asChild",
           "type": "boolean",
           "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
-        },
-        {
-          "name": "size",
-          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
-          "required": false,
-          "default": "\"icon\"",
-          "description": "Size variant; sets a `data-size` attribute.",
-          "from": "arkcn"
-        },
-        {
-          "name": "variant",
-          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
-          "required": false,
-          "default": "\"ghost\"",
-          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
-          "from": "arkcn"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -319,45 +125,7 @@
       ]
     },
     {
-      "name": "ChatContext",
-      "props": [
-        {
-          "name": "children",
-          "type": "(ctx: ChatContextValue) => ReactNode",
-          "required": true,
-          "description": "Content rendered inside the part.",
-          "from": "arkcn"
-        }
-      ]
-    },
-    {
-      "name": "ChatConversationInfo",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ChatConversationItem",
+      "name": "Chat.Body",
       "props": [
         {
           "name": "asChild",
@@ -390,7 +158,254 @@
       ]
     },
     {
-      "name": "ChatConversationList",
+      "name": "Chat.Composer",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Chat.ComposerActions",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Chat.ComposerField",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Chat.ComposerInput",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Chat.ComposerSendTrigger",
+      "props": [
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
+          "required": false,
+          "default": "\"icon\"",
+          "description": "Size variant; sets a `data-size` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
+          "required": false,
+          "default": "\"ghost\"",
+          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Chat.ConversationInfo",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Chat.ConversationItem",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Chat.ConversationList",
       "props": [
         {
           "name": "asChild",
@@ -430,8 +445,15 @@
       ]
     },
     {
-      "name": "ChatConversationName",
+      "name": "Chat.ConversationName",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -456,8 +478,15 @@
       ]
     },
     {
-      "name": "ChatConversationPreview",
+      "name": "Chat.ConversationPreview",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -482,8 +511,15 @@
       ]
     },
     {
-      "name": "ChatDateSeparator",
+      "name": "Chat.DateSeparator",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -508,8 +544,15 @@
       ]
     },
     {
-      "name": "ChatEmpty",
+      "name": "Chat.Empty",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -534,8 +577,15 @@
       ]
     },
     {
-      "name": "ChatEmptyContent",
+      "name": "Chat.EmptyContent",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -560,8 +610,15 @@
       ]
     },
     {
-      "name": "ChatEmptyDescription",
+      "name": "Chat.EmptyDescription",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -586,8 +643,15 @@
       ]
     },
     {
-      "name": "ChatEmptyIcon",
+      "name": "Chat.EmptyIcon",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -612,8 +676,15 @@
       ]
     },
     {
-      "name": "ChatEmptyTitle",
+      "name": "Chat.EmptyTitle",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -638,8 +709,15 @@
       ]
     },
     {
-      "name": "ChatHeader",
+      "name": "Chat.Header",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -664,8 +742,15 @@
       ]
     },
     {
-      "name": "ChatHeaderActions",
+      "name": "Chat.HeaderActions",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -690,8 +775,15 @@
       ]
     },
     {
-      "name": "ChatHeaderDescription",
+      "name": "Chat.HeaderDescription",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -716,8 +808,15 @@
       ]
     },
     {
-      "name": "ChatHeaderInfo",
+      "name": "Chat.HeaderInfo",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -742,8 +841,15 @@
       ]
     },
     {
-      "name": "ChatHeaderText",
+      "name": "Chat.HeaderText",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -768,8 +874,15 @@
       ]
     },
     {
-      "name": "ChatHeaderTitle",
+      "name": "Chat.HeaderTitle",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -794,7 +907,7 @@
       ]
     },
     {
-      "name": "ChatMessage",
+      "name": "Chat.Message",
       "props": [
         {
           "name": "variant",
@@ -805,57 +918,12 @@
           "from": "arkcn"
         },
         {
-          "name": "children",
-          "type": "ReactNode",
+          "name": "asChild",
+          "type": "boolean",
           "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ChatMessageTime",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ChatMessages",
-      "props": [
         {
           "name": "children",
           "type": "ReactNode",
@@ -880,8 +948,15 @@
       ]
     },
     {
-      "name": "ChatPanel",
+      "name": "Chat.MessageTime",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -906,8 +981,15 @@
       ]
     },
     {
-      "name": "ChatSearch",
+      "name": "Chat.Messages",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -932,8 +1014,15 @@
       ]
     },
     {
-      "name": "ChatSidebar",
+      "name": "Chat.Panel",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -958,8 +1047,15 @@
       ]
     },
     {
-      "name": "ChatSidebarHeader",
+      "name": "Chat.Search",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -984,8 +1080,15 @@
       ]
     },
     {
-      "name": "ChatSidebarHeading",
+      "name": "Chat.Sidebar",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -1010,8 +1113,81 @@
       ]
     },
     {
-      "name": "ChatSidebarTitle",
+      "name": "Chat.SidebarHeader",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Chat.SidebarHeading",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Chat.SidebarTitle",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -1050,7 +1226,7 @@
   "files": [
     {
       "path": "components/ui/chat.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { ark } from \"@ark-ui/react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\nimport { ArrowLeftIcon, MessagesSquareIcon, SearchIcon, SendIcon } from \"lucide-react\"\nimport { cn } from \"@/lib/utils\"\nimport { useControllable } from \"@/lib/controllable\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { ScrollArea } from \"@/components/ui/scroll-area\"\n\n/* -------------------------------------------------------------------------- */\n/*  Root and context                                                          */\n/* -------------------------------------------------------------------------- */\n\ntype ChatContextValue = {\n  /** Id of the selected conversation. */\n  value: string | null\n  setValue: (value: string | null) => void\n  /** On small screens the panel overlays the list only while this is true. */\n  mobileOpen: boolean\n  setMobileOpen: (open: boolean) => void\n}\n\nconst ChatContext = React.createContext<ChatContextValue | null>(null)\n\nfunction useChat(component = \"Chat parts\") {\n  const ctx = React.useContext(ChatContext)\n  if (!ctx) throw new Error(`${component} must be used within <Chat>`)\n  return ctx\n}\n\nfunction Chat({\n  className,\n  value: valueProp,\n  defaultValue = null,\n  onValueChange,\n  ...props\n}: Omit<React.ComponentProps<\"div\">, \"defaultValue\"> & {\n  value?: string | null\n  defaultValue?: string | null\n  onValueChange?: (value: string | null) => void\n}) {\n  const [value, setValue] = useControllable(valueProp, defaultValue, onValueChange)\n  const [mobileOpen, setMobileOpen] = React.useState(value !== null)\n  const ctx = React.useMemo(() => ({ value, setValue, mobileOpen, setMobileOpen }), [value, setValue, mobileOpen])\n  return (\n    <ChatContext.Provider value={ctx}>\n      <div\n        data-slot=\"chat\"\n        data-selected={value !== null ? \"\" : undefined}\n        className={cn(\"relative flex h-full gap-6\", className)}\n        {...props}\n      />\n    </ChatContext.Provider>\n  )\n}\n\nfunction ChatContextConsumer({ children }: { children: (ctx: ChatContextValue) => React.ReactNode }) {\n  return children(useChat(\"ChatContext\"))\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Sidebar: header, search, conversation list                                */\n/* -------------------------------------------------------------------------- */\n\nfunction ChatSidebar({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"chat-sidebar\"\n      className={cn(\"flex w-full flex-col gap-2 sm:w-56 lg:w-72 2xl:w-80\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ChatSidebarHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"chat-sidebar-header\"\n      className={cn(\n        \"sticky top-0 z-10 -mx-4 flex flex-col gap-2 bg-background px-4 pb-3 shadow-md sm:static sm:z-auto sm:mx-0 sm:p-0 sm:shadow-none\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ChatSidebarTitle({ className, children, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div data-slot=\"chat-sidebar-title\" className={cn(\"flex items-center justify-between py-2\", className)} {...props}>\n      {children}\n    </div>\n  )\n}\n\nfunction ChatSidebarHeading({ className, children, ...props }: React.ComponentProps<\"h1\">) {\n  return (\n    <h1\n      data-slot=\"chat-sidebar-heading\"\n      className={cn(\"flex items-center gap-2 text-2xl font-bold\", className)}\n      {...props}\n    >\n      {children}\n      <MessagesSquareIcon className=\"size-5\" />\n    </h1>\n  )\n}\n\nfunction ChatSearch({ className, ...props }: React.ComponentProps<\"input\">) {\n  return (\n    <label\n      data-slot=\"chat-search\"\n      className={cn(\n        \"flex h-9 w-full items-center gap-2 rounded-lg border border-input bg-transparent px-2.5 text-sm transition-colors has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 dark:bg-input/30\",\n        className\n      )}\n    >\n      <SearchIcon className=\"size-4 shrink-0 text-muted-foreground\" />\n      <span className=\"sr-only\">Search</span>\n      <input\n        type=\"text\"\n        data-slot=\"chat-search-input\"\n        className=\"min-w-0 flex-1 bg-transparent outline-none placeholder:text-muted-foreground\"\n        {...props}\n      />\n    </label>\n  )\n}\n\nfunction ChatConversationList({ className, children, ...props }: React.ComponentProps<typeof ScrollArea>) {\n  return (\n    <ScrollArea data-slot=\"chat-conversation-list\" className={cn(\"-mx-3 h-full flex-1\", className)} {...props}>\n      <div role=\"list\" className=\"flex flex-col p-3 *:border-b *:border-border *:last:border-b-0\">\n        {children}\n      </div>\n    </ScrollArea>\n  )\n}\n\nfunction ChatConversationItem({\n  className,\n  value,\n  onClick,\n  asChild,\n  ...props\n}: React.ComponentProps<typeof ark.button> & { value: string }) {\n  const ctx = useChat(\"ChatConversationItem\")\n  const selected = ctx.value === value\n  return (\n    <div role=\"listitem\" className=\"py-1\">\n      <ark.button\n        asChild={asChild}\n        type=\"button\"\n        data-slot=\"chat-conversation-item\"\n        data-selected={selected ? \"\" : undefined}\n        aria-current={selected ? \"true\" : undefined}\n        className={cn(\n          \"group/chat-conversation-item flex w-full gap-2 rounded-md p-2 text-start text-sm outline-none hover:bg-accent hover:text-accent-foreground focus-visible:ring-3 focus-visible:ring-ring/50 data-selected:sm:bg-muted\",\n          className\n        )}\n        onClick={(event) => {\n          onClick?.(event)\n          if (event.defaultPrevented) return\n          ctx.setValue(value)\n          ctx.setMobileOpen(true)\n        }}\n        {...props}\n      />\n    </div>\n  )\n}\n\nfunction ChatConversationInfo({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"chat-conversation-info\" className={cn(\"flex min-w-0 flex-col\", className)} {...props} />\n}\n\nfunction ChatConversationName({ className, ...props }: React.ComponentProps<\"span\">) {\n  return <span data-slot=\"chat-conversation-name\" className={cn(\"font-medium\", className)} {...props} />\n}\n\nfunction ChatConversationPreview({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span\n      data-slot=\"chat-conversation-preview\"\n      className={cn(\n        \"line-clamp-2 text-muted-foreground group-hover/chat-conversation-item:text-accent-foreground/90\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Panel: header, messages, composer                                         */\n/* -------------------------------------------------------------------------- */\n\nfunction ChatPanel({ className, ...props }: React.ComponentProps<\"div\">) {\n  const ctx = useChat(\"ChatPanel\")\n  return (\n    <div\n      data-slot=\"chat-panel\"\n      data-mobile-open={ctx.mobileOpen ? \"\" : undefined}\n      className={cn(\n        \"absolute inset-0 inset-s-full z-50 hidden w-full flex-1 flex-col border bg-background shadow-xs data-mobile-open:inset-s-0 data-mobile-open:flex sm:static sm:z-auto sm:flex sm:rounded-md\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ChatHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"chat-header\"\n      className={cn(\n        \"mb-1 flex flex-none items-center justify-between gap-3 bg-card p-4 shadow-lg sm:rounded-t-md\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** Returns to the conversation list on small screens. Polymorphic via `asChild`. */\nfunction ChatBackTrigger({ className, onClick, children, asChild, ...props }: React.ComponentProps<typeof Button>) {\n  const ctx = useChat(\"ChatBackTrigger\")\n  return (\n    <Button\n      data-slot=\"chat-back-trigger\"\n      size=\"icon\"\n      variant=\"ghost\"\n      asChild={asChild}\n      className={cn(\"-ms-2 sm:hidden\", className)}\n      onClick={(event) => {\n        onClick?.(event)\n        if (!event.defaultPrevented) ctx.setMobileOpen(false)\n      }}\n      {...props}\n    >\n      {asChild\n        ? children\n        : (children ?? (\n            <>\n              <ArrowLeftIcon className=\"rtl:rotate-180\" />\n              <span className=\"sr-only\">Back</span>\n            </>\n          ))}\n    </Button>\n  )\n}\n\nfunction ChatHeaderInfo({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"chat-header-info\"\n      className={cn(\"flex min-w-0 items-center gap-2 lg:gap-4\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ChatHeaderText({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"chat-header-text\" className={cn(\"flex min-w-0 flex-col\", className)} {...props} />\n}\n\nfunction ChatHeaderTitle({ className, ...props }: React.ComponentProps<\"span\">) {\n  return <span data-slot=\"chat-header-title\" className={cn(\"text-sm font-medium lg:text-base\", className)} {...props} />\n}\n\nfunction ChatHeaderDescription({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span\n      data-slot=\"chat-header-description\"\n      className={cn(\"line-clamp-1 max-w-32 text-xs text-muted-foreground lg:max-w-none lg:text-sm\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ChatHeaderActions({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"chat-header-actions\"\n      className={cn(\"-me-1 flex items-center gap-1 lg:gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ChatBody({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"chat-body\" className={cn(\"flex flex-1 flex-col gap-2 px-4 pt-0 pb-4\", className)} {...props} />\n}\n\n/**\n * Bottom-anchored message stream. Render messages newest-first: the column is\n * reversed so the latest message sits at the bottom and the scroll position\n * stays pinned there as messages arrive.\n */\nfunction ChatMessages({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div data-slot=\"chat-messages\" className=\"relative -me-4 flex flex-1 flex-col overflow-y-hidden\">\n      <div\n        data-slot=\"chat-messages-viewport\"\n        className={cn(\n          \"flex h-40 w-full grow flex-col-reverse justify-start gap-4 overflow-y-auto py-2 pe-4 pb-4\",\n          className\n        )}\n        {...props}\n      />\n    </div>\n  )\n}\n\nfunction ChatDateSeparator({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"chat-date-separator\" className={cn(\"text-center text-xs\", className)} {...props} />\n}\n\nconst chatMessageVariants = cva(\"group/chat-message max-w-72 px-3 py-2 wrap-break-word shadow-lg\", {\n  variants: {\n    variant: {\n      sent: \"self-end rounded-[16px_16px_0_16px] bg-primary/90 text-primary-foreground/75\",\n      received: \"self-start rounded-[16px_16px_16px_0] bg-muted\",\n    },\n  },\n  defaultVariants: { variant: \"received\" },\n})\n\nfunction ChatMessage({\n  className,\n  variant = \"received\",\n  ...props\n}: React.ComponentProps<\"div\"> & VariantProps<typeof chatMessageVariants>) {\n  return (\n    <div\n      data-slot=\"chat-message\"\n      data-variant={variant}\n      className={cn(chatMessageVariants({ variant }), className)}\n      {...props}\n    />\n  )\n}\n\nfunction ChatMessageTime({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span\n      data-slot=\"chat-message-time\"\n      className={cn(\n        \"mt-1 block text-xs font-light text-foreground/75 italic group-data-[variant=sent]/chat-message:text-end group-data-[variant=sent]/chat-message:text-primary-foreground/85\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ChatComposer({ className, ...props }: React.ComponentProps<\"form\">) {\n  return <form data-slot=\"chat-composer\" className={cn(\"flex w-full flex-none gap-2\", className)} {...props} />\n}\n\nfunction ChatComposerField({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"chat-composer-field\"\n      className={cn(\n        \"flex flex-1 items-center gap-2 rounded-md border border-input bg-card px-2 py-1 transition-colors has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 lg:gap-4\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ChatComposerActions({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"chat-composer-actions\" className={cn(\"flex items-center gap-1\", className)} {...props} />\n}\n\nfunction ChatComposerInput({ className, ...props }: React.ComponentProps<\"input\">) {\n  return (\n    <label className=\"flex-1\">\n      <span className=\"sr-only\">Message</span>\n      <input\n        type=\"text\"\n        data-slot=\"chat-composer-input\"\n        className={cn(\n          \"h-8 w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-muted-foreground\",\n          className\n        )}\n        {...props}\n      />\n    </label>\n  )\n}\n\n/** Submits the composer form. Polymorphic via `asChild`. */\nfunction ChatComposerSendTrigger({\n  className,\n  children,\n  asChild,\n  variant = \"ghost\",\n  size = \"icon\",\n  ...props\n}: React.ComponentProps<typeof Button>) {\n  return (\n    <Button\n      data-slot=\"chat-composer-send-trigger\"\n      type=\"submit\"\n      variant={variant}\n      size={size}\n      asChild={asChild}\n      className={className}\n      {...props}\n    >\n      {asChild\n        ? children\n        : (children ?? (\n            <>\n              <SendIcon />\n              <span className=\"sr-only\">Send</span>\n            </>\n          ))}\n    </Button>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Empty state                                                               */\n/* -------------------------------------------------------------------------- */\n\nfunction ChatEmpty({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"chat-empty\"\n      className={cn(\n        \"absolute inset-0 inset-s-full z-50 hidden w-full flex-1 flex-col justify-center rounded-md border bg-card shadow-xs sm:static sm:z-auto sm:flex\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ChatEmptyContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"chat-empty-content\" className={cn(\"flex flex-col items-center gap-6\", className)} {...props} />\n}\n\nfunction ChatEmptyIcon({ className, children, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"chat-empty-icon\"\n      className={cn(\n        \"flex size-16 items-center justify-center rounded-full border-2 border-border [&_svg]:size-8\",\n        className\n      )}\n      {...props}\n    >\n      {children ?? <MessagesSquareIcon />}\n    </div>\n  )\n}\n\nfunction ChatEmptyTitle({ className, ...props }: React.ComponentProps<\"h2\">) {\n  return <h2 data-slot=\"chat-empty-title\" className={cn(\"text-center text-xl font-semibold\", className)} {...props} />\n}\n\nfunction ChatEmptyDescription({ className, ...props }: React.ComponentProps<\"p\">) {\n  return (\n    <p\n      data-slot=\"chat-empty-description\"\n      className={cn(\"text-center text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Helpers                                                                   */\n/* -------------------------------------------------------------------------- */\n\n/** Group items by a key while preserving first-seen order of the keys. */\nfunction groupBy<T>(items: T[], getKey: (item: T) => string): [string, T[]][] {\n  const groups = new Map<string, T[]>()\n  for (const item of items) {\n    const key = getKey(item)\n    const list = groups.get(key)\n    if (list) list.push(item)\n    else groups.set(key, [item])\n  }\n  return Array.from(groups.entries())\n}\n\n/** \"Jane Doe\" -> \"JD\"; single word -> first two letters; empty -> \"?\". */\nfunction getInitials(name: string) {\n  const parts = name.trim().split(/\\s+/).filter(Boolean)\n  if (parts.length === 0) return \"?\"\n  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase()\n  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()\n}\n\nexport {\n  Chat,\n  ChatBackTrigger,\n  ChatBody,\n  ChatComposer,\n  ChatComposerActions,\n  ChatComposerField,\n  ChatComposerInput,\n  ChatComposerSendTrigger,\n  ChatContextConsumer as ChatContext,\n  ChatConversationInfo,\n  ChatConversationItem,\n  ChatConversationList,\n  ChatConversationName,\n  ChatConversationPreview,\n  ChatDateSeparator,\n  ChatEmpty,\n  ChatEmptyContent,\n  ChatEmptyDescription,\n  ChatEmptyIcon,\n  ChatEmptyTitle,\n  ChatHeader,\n  ChatHeaderActions,\n  ChatHeaderDescription,\n  ChatHeaderInfo,\n  ChatHeaderText,\n  ChatHeaderTitle,\n  ChatMessage,\n  ChatMessageTime,\n  ChatMessages,\n  ChatPanel,\n  ChatSearch,\n  ChatSidebar,\n  ChatSidebarHeader,\n  ChatSidebarHeading,\n  ChatSidebarTitle,\n  chatMessageVariants,\n  getInitials,\n  groupBy,\n  useChat,\n}\n"
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { ark } from \"@ark-ui/react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\nimport { ArrowLeftIcon, MessagesSquareIcon, SearchIcon, SendIcon } from \"lucide-react\"\nimport { cn } from \"@/lib/utils\"\nimport { useControllable } from \"@/lib/controllable\"\n\nimport { Button } from \"@/components/ui/button\"\nimport { ScrollArea } from \"@/components/ui/scroll-area\"\n\n/* -------------------------------------------------------------------------- */\n/*  Root and context                                                          */\n/* -------------------------------------------------------------------------- */\n\ntype ChatContextValue = {\n  /** Id of the selected conversation. */\n  value: string | null\n  setValue: (value: string | null) => void\n  /** On small screens the panel overlays the list only while this is true. */\n  mobileOpen: boolean\n  setMobileOpen: (open: boolean) => void\n}\n\nconst ChatContextStore = React.createContext<ChatContextValue | null>(null)\n\nfunction useChat(component = \"Chat parts\") {\n  const ctx = React.useContext(ChatContextStore)\n  if (!ctx) throw new Error(`${component} must be used within <Chat>`)\n  return ctx\n}\n\nfunction ChatRoot({ className, value: valueProp, defaultValue = null, onValueChange, ...props }: ChatRootProps) {\n  const [value, setValue] = useControllable(valueProp, defaultValue, onValueChange)\n  const [mobileOpen, setMobileOpen] = React.useState(value !== null)\n  const ctx = React.useMemo(() => ({ value, setValue, mobileOpen, setMobileOpen }), [value, setValue, mobileOpen])\n  return (\n    <ChatContextStore.Provider value={ctx}>\n      <ark.div\n        data-slot=\"chat\"\n        data-selected={value !== null ? \"\" : undefined}\n        className={cn(\"relative flex h-full gap-6\", className)}\n        {...props}\n      />\n    </ChatContextStore.Provider>\n  )\n}\n\nfunction ChatContext({ children }: ChatContextProps) {\n  return children(useChat(\"ChatContext\"))\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Sidebar: header, search, conversation list                                */\n/* -------------------------------------------------------------------------- */\n\nfunction ChatSidebar({ className, ...props }: ChatSidebarProps) {\n  return (\n    <ark.div\n      data-slot=\"chat-sidebar\"\n      className={cn(\"flex w-full flex-col gap-2 sm:w-56 lg:w-72 2xl:w-80\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ChatSidebarHeader({ className, ...props }: ChatSidebarHeaderProps) {\n  return (\n    <ark.div\n      data-slot=\"chat-sidebar-header\"\n      className={cn(\n        \"sticky top-0 z-10 -mx-4 flex flex-col gap-2 bg-background px-4 pb-3 shadow-md sm:static sm:z-auto sm:mx-0 sm:p-0 sm:shadow-none\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ChatSidebarTitle({ className, children, ...props }: ChatSidebarTitleProps) {\n  return (\n    <ark.div\n      data-slot=\"chat-sidebar-title\"\n      className={cn(\"flex items-center justify-between py-2\", className)}\n      {...props}\n    >\n      {children}\n    </ark.div>\n  )\n}\n\nfunction ChatSidebarHeading({ className, children, ...props }: ChatSidebarHeadingProps) {\n  return (\n    <ark.h1\n      data-slot=\"chat-sidebar-heading\"\n      className={cn(\"flex items-center gap-2 text-2xl font-bold\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children}\n          <MessagesSquareIcon className=\"size-5\" />\n        </>\n      )}\n    </ark.h1>\n  )\n}\n\nfunction ChatSearch({ className, ...props }: ChatSearchProps) {\n  return (\n    <label\n      data-slot=\"chat-search\"\n      className={cn(\n        \"flex h-9 w-full items-center gap-2 rounded-lg border border-input bg-transparent px-2.5 text-sm transition-colors has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 dark:bg-input/30\",\n        className\n      )}\n    >\n      <SearchIcon className=\"size-4 shrink-0 text-muted-foreground\" />\n      <span className=\"sr-only\">Search</span>\n      <ark.input\n        type=\"text\"\n        data-slot=\"chat-search-input\"\n        className=\"min-w-0 flex-1 bg-transparent outline-none placeholder:text-muted-foreground\"\n        {...props}\n      />\n    </label>\n  )\n}\n\nfunction ChatConversationList({ className, children, ...props }: ChatConversationListProps) {\n  return (\n    <ScrollArea.Root data-slot=\"chat-conversation-list\" className={cn(\"-mx-3 h-full flex-1\", className)} {...props}>\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <div role=\"list\" className=\"flex flex-col p-3 *:border-b *:border-border *:last:border-b-0\">\n            {children}\n          </div>\n        </>\n      )}\n    </ScrollArea.Root>\n  )\n}\n\nfunction ChatConversationItem({ className, value, onClick, asChild, ...props }: ChatConversationItemProps) {\n  const ctx = useChat(\"ChatConversationItem\")\n  const selected = ctx.value === value\n  return (\n    <div role=\"listitem\" className=\"py-1\">\n      <ark.button\n        asChild={asChild}\n        type=\"button\"\n        data-slot=\"chat-conversation-item\"\n        data-selected={selected ? \"\" : undefined}\n        aria-current={selected ? \"true\" : undefined}\n        className={cn(\n          \"group/chat-conversation-item flex w-full gap-2 rounded-md p-2 text-start text-sm outline-none hover:bg-accent hover:text-accent-foreground focus-visible:ring-3 focus-visible:ring-ring/50 data-selected:sm:bg-muted\",\n          className\n        )}\n        onClick={(event) => {\n          onClick?.(event)\n          if (event.defaultPrevented) return\n          ctx.setValue(value)\n          ctx.setMobileOpen(true)\n        }}\n        {...props}\n      />\n    </div>\n  )\n}\n\nfunction ChatConversationInfo({ className, ...props }: ChatConversationInfoProps) {\n  return <ark.div data-slot=\"chat-conversation-info\" className={cn(\"flex min-w-0 flex-col\", className)} {...props} />\n}\n\nfunction ChatConversationName({ className, ...props }: ChatConversationNameProps) {\n  return <ark.span data-slot=\"chat-conversation-name\" className={cn(\"font-medium\", className)} {...props} />\n}\n\nfunction ChatConversationPreview({ className, ...props }: ChatConversationPreviewProps) {\n  return (\n    <ark.span\n      data-slot=\"chat-conversation-preview\"\n      className={cn(\n        \"line-clamp-2 text-muted-foreground group-hover/chat-conversation-item:text-accent-foreground/90\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Panel: header, messages, composer                                         */\n/* -------------------------------------------------------------------------- */\n\nfunction ChatPanel({ className, ...props }: ChatPanelProps) {\n  const ctx = useChat(\"ChatPanel\")\n  return (\n    <ark.div\n      data-slot=\"chat-panel\"\n      data-mobile-open={ctx.mobileOpen ? \"\" : undefined}\n      className={cn(\n        \"absolute inset-0 inset-s-full z-50 hidden w-full flex-1 flex-col border bg-background shadow-xs data-mobile-open:inset-s-0 data-mobile-open:flex sm:static sm:z-auto sm:flex sm:rounded-md\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ChatHeader({ className, ...props }: ChatHeaderProps) {\n  return (\n    <ark.div\n      data-slot=\"chat-header\"\n      className={cn(\n        \"mb-1 flex flex-none items-center justify-between gap-3 bg-card p-4 shadow-lg sm:rounded-t-md\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** Returns to the conversation list on small screens. Polymorphic via `asChild`. */\nfunction ChatBackTrigger({ className, onClick, children, asChild, ...props }: ChatBackTriggerProps) {\n  const ctx = useChat(\"ChatBackTrigger\")\n  return (\n    <Button\n      data-slot=\"chat-back-trigger\"\n      size=\"icon\"\n      variant=\"ghost\"\n      asChild={asChild}\n      className={cn(\"-ms-2 sm:hidden\", className)}\n      onClick={(event) => {\n        onClick?.(event)\n        if (!event.defaultPrevented) ctx.setMobileOpen(false)\n      }}\n      {...props}\n    >\n      {asChild\n        ? children\n        : (children ?? (\n            <>\n              <ArrowLeftIcon className=\"rtl:rotate-180\" />\n              <span className=\"sr-only\">Back</span>\n            </>\n          ))}\n    </Button>\n  )\n}\n\nfunction ChatHeaderInfo({ className, ...props }: ChatHeaderInfoProps) {\n  return (\n    <ark.div\n      data-slot=\"chat-header-info\"\n      className={cn(\"flex min-w-0 items-center gap-2 lg:gap-4\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ChatHeaderText({ className, ...props }: ChatHeaderTextProps) {\n  return <ark.div data-slot=\"chat-header-text\" className={cn(\"flex min-w-0 flex-col\", className)} {...props} />\n}\n\nfunction ChatHeaderTitle({ className, ...props }: ChatHeaderTitleProps) {\n  return (\n    <ark.span data-slot=\"chat-header-title\" className={cn(\"text-sm font-medium lg:text-base\", className)} {...props} />\n  )\n}\n\nfunction ChatHeaderDescription({ className, ...props }: ChatHeaderDescriptionProps) {\n  return (\n    <ark.span\n      data-slot=\"chat-header-description\"\n      className={cn(\"line-clamp-1 max-w-32 text-xs text-muted-foreground lg:max-w-none lg:text-sm\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ChatHeaderActions({ className, ...props }: ChatHeaderActionsProps) {\n  return (\n    <ark.div\n      data-slot=\"chat-header-actions\"\n      className={cn(\"-me-1 flex items-center gap-1 lg:gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ChatBody({ className, ...props }: ChatBodyProps) {\n  return (\n    <ark.div data-slot=\"chat-body\" className={cn(\"flex flex-1 flex-col gap-2 px-4 pt-0 pb-4\", className)} {...props} />\n  )\n}\n\n/**\n * Bottom-anchored message stream. Render messages newest-first: the column is\n * reversed so the latest message sits at the bottom and the scroll position\n * stays pinned there as messages arrive.\n */\nfunction ChatMessages({ className, ...props }: ChatMessagesProps) {\n  return (\n    <div data-slot=\"chat-messages\" className=\"relative -me-4 flex flex-1 flex-col overflow-y-hidden\">\n      <ark.div\n        data-slot=\"chat-messages-viewport\"\n        className={cn(\n          \"flex h-40 w-full grow flex-col-reverse justify-start gap-4 overflow-y-auto py-2 pe-4 pb-4\",\n          className\n        )}\n        {...props}\n      />\n    </div>\n  )\n}\n\nfunction ChatDateSeparator({ className, ...props }: ChatDateSeparatorProps) {\n  return <ark.div data-slot=\"chat-date-separator\" className={cn(\"text-center text-xs\", className)} {...props} />\n}\n\nconst chatMessageVariants = cva(\"group/chat-message max-w-72 px-3 py-2 wrap-break-word shadow-lg\", {\n  variants: {\n    variant: {\n      sent: \"self-end rounded-[16px_16px_0_16px] bg-primary/90 text-primary-foreground/75\",\n      received: \"self-start rounded-[16px_16px_16px_0] bg-muted\",\n    },\n  },\n  defaultVariants: { variant: \"received\" },\n})\n\nfunction ChatMessage({ className, variant = \"received\", ...props }: ChatMessageProps) {\n  return (\n    <ark.div\n      data-slot=\"chat-message\"\n      data-variant={variant}\n      className={cn(chatMessageVariants({ variant }), className)}\n      {...props}\n    />\n  )\n}\n\nfunction ChatMessageTime({ className, ...props }: ChatMessageTimeProps) {\n  return (\n    <ark.span\n      data-slot=\"chat-message-time\"\n      className={cn(\n        \"mt-1 block text-xs font-light text-foreground/75 italic group-data-[variant=sent]/chat-message:text-end group-data-[variant=sent]/chat-message:text-primary-foreground/85\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ChatComposer({ className, ...props }: ChatComposerProps) {\n  return <ark.form data-slot=\"chat-composer\" className={cn(\"flex w-full flex-none gap-2\", className)} {...props} />\n}\n\nfunction ChatComposerField({ className, ...props }: ChatComposerFieldProps) {\n  return (\n    <ark.div\n      data-slot=\"chat-composer-field\"\n      className={cn(\n        \"flex flex-1 items-center gap-2 rounded-md border border-input bg-card px-2 py-1 transition-colors has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 lg:gap-4\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ChatComposerActions({ className, ...props }: ChatComposerActionsProps) {\n  return <ark.div data-slot=\"chat-composer-actions\" className={cn(\"flex items-center gap-1\", className)} {...props} />\n}\n\nfunction ChatComposerInput({ className, ...props }: ChatComposerInputProps) {\n  return (\n    <label className=\"flex-1\">\n      <span className=\"sr-only\">Message</span>\n      <ark.input\n        type=\"text\"\n        data-slot=\"chat-composer-input\"\n        className={cn(\n          \"h-8 w-full min-w-0 bg-transparent text-sm outline-none placeholder:text-muted-foreground\",\n          className\n        )}\n        {...props}\n      />\n    </label>\n  )\n}\n\n/** Submits the composer form. Polymorphic via `asChild`. */\nfunction ChatComposerSendTrigger({\n  className,\n  children,\n  asChild,\n  variant = \"ghost\",\n  size = \"icon\",\n  ...props\n}: ChatComposerSendTriggerProps) {\n  return (\n    <Button\n      data-slot=\"chat-composer-send-trigger\"\n      type=\"submit\"\n      variant={variant}\n      size={size}\n      asChild={asChild}\n      className={className}\n      {...props}\n    >\n      {asChild\n        ? children\n        : (children ?? (\n            <>\n              <SendIcon />\n              <span className=\"sr-only\">Send</span>\n            </>\n          ))}\n    </Button>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Empty state                                                               */\n/* -------------------------------------------------------------------------- */\n\nfunction ChatEmpty({ className, ...props }: ChatEmptyProps) {\n  return (\n    <ark.div\n      data-slot=\"chat-empty\"\n      className={cn(\n        \"absolute inset-0 inset-s-full z-50 hidden w-full flex-1 flex-col justify-center rounded-md border bg-card shadow-xs sm:static sm:z-auto sm:flex\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ChatEmptyContent({ className, ...props }: ChatEmptyContentProps) {\n  return (\n    <ark.div data-slot=\"chat-empty-content\" className={cn(\"flex flex-col items-center gap-6\", className)} {...props} />\n  )\n}\n\nfunction ChatEmptyIcon({ className, children, ...props }: ChatEmptyIconProps) {\n  return (\n    <ark.div\n      data-slot=\"chat-empty-icon\"\n      className={cn(\n        \"flex size-16 items-center justify-center rounded-full border-2 border-border [&_svg]:size-8\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <MessagesSquareIcon />}</>}\n    </ark.div>\n  )\n}\n\nfunction ChatEmptyTitle({ className, ...props }: ChatEmptyTitleProps) {\n  return (\n    <ark.h2 data-slot=\"chat-empty-title\" className={cn(\"text-center text-xl font-semibold\", className)} {...props} />\n  )\n}\n\nfunction ChatEmptyDescription({ className, ...props }: ChatEmptyDescriptionProps) {\n  return (\n    <ark.p\n      data-slot=\"chat-empty-description\"\n      className={cn(\"text-center text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Helpers                                                                   */\n/* -------------------------------------------------------------------------- */\n\n/** Group items by a key while preserving first-seen order of the keys. */\nfunction groupBy<T>(items: T[], getKey: (item: T) => string): [string, T[]][] {\n  const groups = new Map<string, T[]>()\n  for (const item of items) {\n    const key = getKey(item)\n    const list = groups.get(key)\n    if (list) list.push(item)\n    else groups.set(key, [item])\n  }\n  return Array.from(groups.entries())\n}\n\n/** \"Jane Doe\" -> \"JD\"; single word -> first two letters; empty -> \"?\". */\nfunction getInitials(name: string) {\n  const parts = name.trim().split(/\\s+/).filter(Boolean)\n  if (parts.length === 0) return \"?\"\n  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase()\n  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()\n}\n\ntype ChatContextProps = { children: (ctx: ChatContextValue) => React.ReactNode }\n\ntype ChatRootProps = Omit<React.ComponentProps<typeof ark.div>, \"defaultValue\"> & {\n  value?: string | null\n  defaultValue?: string | null\n  onValueChange?: (value: string | null) => void\n}\n\ntype ChatBackTriggerProps = React.ComponentProps<typeof Button>\n\ntype ChatBodyProps = React.ComponentProps<typeof ark.div>\n\ntype ChatComposerProps = React.ComponentProps<typeof ark.form>\n\ntype ChatComposerActionsProps = React.ComponentProps<typeof ark.div>\n\ntype ChatComposerFieldProps = React.ComponentProps<typeof ark.div>\n\ntype ChatComposerInputProps = React.ComponentProps<typeof ark.input>\n\ntype ChatComposerSendTriggerProps = React.ComponentProps<typeof Button>\n\ntype ChatConversationInfoProps = React.ComponentProps<typeof ark.div>\n\ntype ChatConversationItemProps = React.ComponentProps<typeof ark.button> & { value: string }\n\ntype ChatConversationListProps = React.ComponentProps<typeof ScrollArea.Root>\n\ntype ChatConversationNameProps = React.ComponentProps<typeof ark.span>\n\ntype ChatConversationPreviewProps = React.ComponentProps<typeof ark.span>\n\ntype ChatDateSeparatorProps = React.ComponentProps<typeof ark.div>\n\ntype ChatEmptyProps = React.ComponentProps<typeof ark.div>\n\ntype ChatEmptyContentProps = React.ComponentProps<typeof ark.div>\n\ntype ChatEmptyDescriptionProps = React.ComponentProps<typeof ark.p>\n\ntype ChatEmptyIconProps = React.ComponentProps<typeof ark.div>\n\ntype ChatEmptyTitleProps = React.ComponentProps<typeof ark.h2>\n\ntype ChatHeaderProps = React.ComponentProps<typeof ark.div>\n\ntype ChatHeaderActionsProps = React.ComponentProps<typeof ark.div>\n\ntype ChatHeaderDescriptionProps = React.ComponentProps<typeof ark.span>\n\ntype ChatHeaderInfoProps = React.ComponentProps<typeof ark.div>\n\ntype ChatHeaderTextProps = React.ComponentProps<typeof ark.div>\n\ntype ChatHeaderTitleProps = React.ComponentProps<typeof ark.span>\n\ntype ChatMessageProps = React.ComponentProps<typeof ark.div> & VariantProps<typeof chatMessageVariants>\n\ntype ChatMessageTimeProps = React.ComponentProps<typeof ark.span>\n\ntype ChatMessagesProps = React.ComponentProps<typeof ark.div>\n\ntype ChatPanelProps = React.ComponentProps<typeof ark.div>\n\ntype ChatSearchProps = React.ComponentProps<typeof ark.input>\n\ntype ChatSidebarProps = React.ComponentProps<typeof ark.div>\n\ntype ChatSidebarHeaderProps = React.ComponentProps<typeof ark.div>\n\ntype ChatSidebarHeadingProps = React.ComponentProps<typeof ark.h1>\n\ntype ChatSidebarTitleProps = React.ComponentProps<typeof ark.div>\n\nconst Chat = {\n  Context: ChatContext,\n  Root: ChatRoot,\n  BackTrigger: ChatBackTrigger,\n  Body: ChatBody,\n  Composer: ChatComposer,\n  ComposerActions: ChatComposerActions,\n  ComposerField: ChatComposerField,\n  ComposerInput: ChatComposerInput,\n  ComposerSendTrigger: ChatComposerSendTrigger,\n  ConversationInfo: ChatConversationInfo,\n  ConversationItem: ChatConversationItem,\n  ConversationList: ChatConversationList,\n  ConversationName: ChatConversationName,\n  ConversationPreview: ChatConversationPreview,\n  DateSeparator: ChatDateSeparator,\n  Empty: ChatEmpty,\n  EmptyContent: ChatEmptyContent,\n  EmptyDescription: ChatEmptyDescription,\n  EmptyIcon: ChatEmptyIcon,\n  EmptyTitle: ChatEmptyTitle,\n  Header: ChatHeader,\n  HeaderActions: ChatHeaderActions,\n  HeaderDescription: ChatHeaderDescription,\n  HeaderInfo: ChatHeaderInfo,\n  HeaderText: ChatHeaderText,\n  HeaderTitle: ChatHeaderTitle,\n  Message: ChatMessage,\n  MessageTime: ChatMessageTime,\n  Messages: ChatMessages,\n  Panel: ChatPanel,\n  Search: ChatSearch,\n  Sidebar: ChatSidebar,\n  SidebarHeader: ChatSidebarHeader,\n  SidebarHeading: ChatSidebarHeading,\n  SidebarTitle: ChatSidebarTitle,\n}\n\nexport {\n  Chat,\n  chatMessageVariants,\n  getInitials,\n  groupBy,\n  useChat,\n  type ChatContextProps,\n  type ChatRootProps,\n  type ChatBackTriggerProps,\n  type ChatBodyProps,\n  type ChatComposerProps,\n  type ChatComposerActionsProps,\n  type ChatComposerFieldProps,\n  type ChatComposerInputProps,\n  type ChatComposerSendTriggerProps,\n  type ChatConversationInfoProps,\n  type ChatConversationItemProps,\n  type ChatConversationListProps,\n  type ChatConversationNameProps,\n  type ChatConversationPreviewProps,\n  type ChatDateSeparatorProps,\n  type ChatEmptyProps,\n  type ChatEmptyContentProps,\n  type ChatEmptyDescriptionProps,\n  type ChatEmptyIconProps,\n  type ChatEmptyTitleProps,\n  type ChatHeaderProps,\n  type ChatHeaderActionsProps,\n  type ChatHeaderDescriptionProps,\n  type ChatHeaderInfoProps,\n  type ChatHeaderTextProps,\n  type ChatHeaderTitleProps,\n  type ChatMessageProps,\n  type ChatMessageTimeProps,\n  type ChatMessagesProps,\n  type ChatPanelProps,\n  type ChatSearchProps,\n  type ChatSidebarProps,\n  type ChatSidebarHeaderProps,\n  type ChatSidebarHeadingProps,\n  type ChatSidebarTitleProps,\n}\n"
     }
   ],
   "docs": "## Chat\n`src/components/ui/chat.tsx` is a compositional, data-agnostic chat layout primitive\n(sidebar with search and conversation list, panel with header/messages/composer, empty\nstate). `Chat` owns only the selected conversation id (`value`/`onValueChange`) and the\nmobile list-vs-panel state; data, filtering, grouping, and sending are the consumer's.\nMessages render newest-first inside a reversed column so the stream stays pinned to the\nbottom. `src/demo/chat/` is the reference implementation (chats page from shadcn-admin).\n`src/app.tsx` mounts the chat demo at the `/inbox` hash route inside the app shell."

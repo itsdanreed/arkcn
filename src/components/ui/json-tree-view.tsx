@@ -1,10 +1,11 @@
 "use client"
 
+import { useJsonTreeView } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { JsonTreeView as JsonTreeViewPrimitive } from "@ark-ui/react"
 
-function JsonTreeView({ className, ...props }: React.ComponentProps<typeof JsonTreeViewPrimitive.Root>) {
+function JsonTreeViewRoot({ className, ...props }: JsonTreeViewRootProps) {
   return (
     <JsonTreeViewPrimitive.Root
       data-slot="json-tree-view"
@@ -14,7 +15,7 @@ function JsonTreeView({ className, ...props }: React.ComponentProps<typeof JsonT
   )
 }
 
-function JsonTreeViewTree({ className, ...props }: React.ComponentProps<typeof JsonTreeViewPrimitive.Tree>) {
+function JsonTreeViewTree({ className, ...props }: JsonTreeViewTreeProps) {
   return (
     <JsonTreeViewPrimitive.Tree
       data-slot="json-tree-view-tree"
@@ -34,4 +35,32 @@ function JsonTreeViewTree({ className, ...props }: React.ComponentProps<typeof J
   )
 }
 
-export { JsonTreeView, JsonTreeViewTree }
+function JsonTreeViewRootProvider({ className, ...props }: JsonTreeViewRootProviderProps) {
+  return (
+    <JsonTreeViewPrimitive.RootProvider
+      data-slot="json-tree-view"
+      className={cn("w-full font-mono text-xs", className)}
+      {...props}
+    />
+  )
+}
+
+type JsonTreeViewRootProps = React.ComponentProps<typeof JsonTreeViewPrimitive.Root>
+
+type JsonTreeViewRootProviderProps = React.ComponentProps<typeof JsonTreeViewPrimitive.RootProvider>
+
+type JsonTreeViewTreeProps = React.ComponentProps<typeof JsonTreeViewPrimitive.Tree>
+
+const JsonTreeView = {
+  Root: JsonTreeViewRoot,
+  RootProvider: JsonTreeViewRootProvider,
+  Tree: JsonTreeViewTree,
+}
+
+export {
+  useJsonTreeView,
+  JsonTreeView,
+  type JsonTreeViewRootProps,
+  type JsonTreeViewRootProviderProps,
+  type JsonTreeViewTreeProps,
+}

@@ -1,3 +1,4 @@
+import { useToggle, useToggleContext } from "@ark-ui/react"
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
@@ -24,23 +25,38 @@ const toggleVariants = cva(
   }
 )
 
-function Toggle({
-  className,
-  variant = "default",
-  size = "default",
-  ...props
-}: React.ComponentProps<typeof TogglePrimitive.Root> & VariantProps<typeof toggleVariants>) {
+function ToggleRoot({ className, variant = "default", size = "default", ...props }: ToggleRootProps) {
   return (
     <TogglePrimitive.Root data-slot="toggle" className={cn(toggleVariants({ variant, size, className }))} {...props} />
   )
 }
 
-function ToggleIndicator({ ...props }: React.ComponentProps<typeof TogglePrimitive.Indicator>) {
+function ToggleIndicator({ ...props }: ToggleIndicatorProps) {
   return <TogglePrimitive.Indicator data-slot="toggle-indicator" {...props} />
 }
 
-function ToggleContext({ ...props }: React.ComponentProps<typeof TogglePrimitive.Context>) {
+function ToggleContext({ ...props }: ToggleContextProps) {
   return <TogglePrimitive.Context {...props} />
 }
 
-export { Toggle, ToggleContext, ToggleIndicator, toggleVariants }
+type ToggleRootProps = React.ComponentProps<typeof TogglePrimitive.Root> & VariantProps<typeof toggleVariants>
+
+type ToggleContextProps = React.ComponentProps<typeof TogglePrimitive.Context>
+
+type ToggleIndicatorProps = React.ComponentProps<typeof TogglePrimitive.Indicator>
+
+const Toggle = {
+  Root: ToggleRoot,
+  Context: ToggleContext,
+  Indicator: ToggleIndicator,
+}
+
+export {
+  useToggle,
+  useToggleContext,
+  Toggle,
+  toggleVariants,
+  type ToggleRootProps,
+  type ToggleContextProps,
+  type ToggleIndicatorProps,
+}

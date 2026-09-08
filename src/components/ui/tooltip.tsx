@@ -1,5 +1,6 @@
 "use client"
 
+import { useTooltip, useTooltipContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Portal as PortalPrimitive, Tooltip as TooltipPrimitive } from "@ark-ui/react"
@@ -24,7 +25,7 @@ function TooltipProvider({ delayDuration = 0, closeDelay, disableHoverableConten
   return <TooltipProviderContext.Provider value={value}>{children}</TooltipProviderContext.Provider>
 }
 
-function Tooltip({
+function TooltipRoot({
   openDelay,
   closeDelay,
   interactive,
@@ -32,7 +33,7 @@ function Tooltip({
   lazyMount = true,
   unmountOnExit = true,
   ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Root>) {
+}: TooltipRootProps) {
   const provider = React.useContext(TooltipProviderContext)
   return (
     <TooltipPrimitive.Root
@@ -47,19 +48,19 @@ function Tooltip({
   )
 }
 
-function TooltipTrigger({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {
+function TooltipTrigger({ ...props }: TooltipTriggerProps) {
   return <TooltipPrimitive.Trigger data-slot="tooltip-trigger" {...props} />
 }
 
-function TooltipPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {
+function TooltipPortal({ ...props }: TooltipPortalProps) {
   return <PortalPrimitive {...props} />
 }
 
-function TooltipContext({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Context>) {
+function TooltipContext({ ...props }: TooltipContextProps) {
   return <TooltipPrimitive.Context {...props} />
 }
 
-function TooltipPositioner({ className, ...props }: React.ComponentProps<typeof TooltipPrimitive.Positioner>) {
+function TooltipPositioner({ className, ...props }: TooltipPositionerProps) {
   return (
     <TooltipPrimitive.Positioner
       data-slot="tooltip-positioner"
@@ -69,19 +70,27 @@ function TooltipPositioner({ className, ...props }: React.ComponentProps<typeof 
   )
 }
 
-function TooltipArrow({ className, ...props }: React.ComponentProps<typeof TooltipPrimitive.Arrow>) {
+function TooltipArrow({ className, ...props }: TooltipArrowProps) {
   return (
     <TooltipPrimitive.Arrow
       data-slot="tooltip-arrow"
       className={cn("z-50 [--arrow-background:var(--color-foreground)] [--arrow-size:0.625rem]", className)}
       {...props}
     >
-      <TooltipPrimitive.ArrowTip data-slot="tooltip-arrow-tip" className="rounded-xs" />
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <TooltipPrimitive.ArrowTip data-slot="tooltip-arrow-tip" className="rounded-xs" />
+        </>
+      )}
     </TooltipPrimitive.Arrow>
   )
 }
 
-function TooltipContent({ className, children, ...props }: React.ComponentProps<typeof TooltipPrimitive.Content>) {
+function TooltipContent({ className, children, ...props }: TooltipContentProps) {
   return (
     <TooltipPortal>
       <TooltipPositioner>
@@ -93,21 +102,73 @@ function TooltipContent({ className, children, ...props }: React.ComponentProps<
           )}
           {...props}
         >
-          {children}
-          <TooltipArrow />
+          {props.asChild ? (
+            React.isValidElement(children) ? (
+              children
+            ) : null
+          ) : (
+            <>
+              {children}
+              <TooltipArrow />
+            </>
+          )}
         </TooltipPrimitive.Content>
       </TooltipPositioner>
     </TooltipPortal>
   )
 }
 
+function TooltipRootProvider(props: TooltipRootProviderProps) {
+  return <TooltipPrimitive.RootProvider {...props} />
+}
+
+function TooltipArrowTip({ className, ...props }: TooltipArrowTipProps) {
+  return <TooltipPrimitive.ArrowTip data-slot="tooltip-arrow-tip" className={cn(className)} {...props} />
+}
+
+type TooltipArrowTipProps = React.ComponentProps<typeof TooltipPrimitive.ArrowTip>
+
+type TooltipRootProps = React.ComponentProps<typeof TooltipPrimitive.Root>
+
+type TooltipRootProviderProps = React.ComponentProps<typeof TooltipPrimitive.RootProvider>
+
+type TooltipArrowProps = React.ComponentProps<typeof TooltipPrimitive.Arrow>
+
+type TooltipContentProps = React.ComponentProps<typeof TooltipPrimitive.Content>
+
+type TooltipContextProps = React.ComponentProps<typeof TooltipPrimitive.Context>
+
+type TooltipPortalProps = React.ComponentProps<typeof PortalPrimitive>
+
+type TooltipPositionerProps = React.ComponentProps<typeof TooltipPrimitive.Positioner>
+
+type TooltipTriggerProps = React.ComponentProps<typeof TooltipPrimitive.Trigger>
+
+const Tooltip = {
+  ArrowTip: TooltipArrowTip,
+  Root: TooltipRoot,
+  RootProvider: TooltipRootProvider,
+  Arrow: TooltipArrow,
+  Content: TooltipContent,
+  Context: TooltipContext,
+  Portal: TooltipPortal,
+  Positioner: TooltipPositioner,
+  Provider: TooltipProvider,
+  Trigger: TooltipTrigger,
+}
+
 export {
+  useTooltip,
+  useTooltipContext,
   Tooltip,
-  TooltipArrow,
-  TooltipContent,
-  TooltipContext,
-  TooltipPortal,
-  TooltipPositioner,
-  TooltipProvider,
-  TooltipTrigger,
+  type TooltipArrowTipProps,
+  type TooltipRootProps,
+  type TooltipRootProviderProps,
+  type TooltipArrowProps,
+  type TooltipContentProps,
+  type TooltipContextProps,
+  type TooltipPortalProps,
+  type TooltipPositionerProps,
+  type TooltipProviderProps,
+  type TooltipTriggerProps,
 }

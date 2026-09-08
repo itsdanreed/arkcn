@@ -1,38 +1,16 @@
 "use client"
 
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { Popover as PopoverPrimitive, createTreeCollection, type TreeCollection, type TreeNode } from "@ark-ui/react"
 import { ChevronDownIcon, SearchIcon, XIcon } from "lucide-react"
 import { useControllable } from "@/lib/controllable"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group"
-import { PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import {
-  VirtualList,
-  VirtualListContent,
-  VirtualListItem,
-  VirtualListItems,
-  VirtualListViewport,
-  useVirtualList,
-} from "@/components/ui/virtual-list"
-import {
-  TreeView,
-  TreeViewBranch,
-  TreeViewBranchContent,
-  TreeViewBranchControl,
-  TreeViewBranchIndentGuide,
-  TreeViewBranchIndicator,
-  TreeViewBranchText,
-  TreeViewBranchTrigger,
-  TreeViewContext,
-  TreeViewItem,
-  TreeViewItemIndicator,
-  TreeViewItemText,
-  TreeViewNodeCheckbox,
-  TreeViewNodeProvider,
-  TreeViewTree,
-} from "@/components/ui/tree-view"
+import { InputGroup } from "@/components/ui/input-group"
+import { Popover } from "@/components/ui/popover"
+import { VirtualList, useVirtualList } from "@/components/ui/virtual-list"
+import { TreeView } from "@/components/ui/tree-view"
 
 /* -------------------------------- helpers -------------------------------- */
 
@@ -132,7 +110,7 @@ type TreeSelectProps<T extends TreeNode> = Omit<
   children: React.ReactNode
 }
 
-function TreeSelect<T extends TreeNode>({
+function TreeSelectRoot<T extends TreeNode>({
   collection,
   value: valueProp,
   defaultValue = [],
@@ -154,7 +132,7 @@ function TreeSelect<T extends TreeNode>({
   unmountOnExit = true,
   children,
   ...props
-}: TreeSelectProps<T>) {
+}: TreeSelectRootProps<T>) {
   const [value, setValueState] = useControllable<string[]>(valueProp, defaultValue, (next) =>
     onValueChange?.({ value: next, nodes: collection.findNodes(next) })
   )
@@ -274,11 +252,11 @@ function TreeSelectTrigger({
   children,
   onKeyDown,
   ...props
-}: React.ComponentProps<"div"> & { size?: "sm" | "default"; variant?: "default" | "unstyled" }) {
+}: TreeSelectTriggerProps) {
   const ctx = useTreeSelect()
   return (
-    <PopoverTrigger asChild>
-      <div
+    <Popover.Trigger asChild>
+      <ark.div
         data-slot="tree-select-trigger"
         role="combobox"
         aria-haspopup="tree"
@@ -313,22 +291,28 @@ function TreeSelectTrigger({
         {...props}
       >
         {children}
-      </div>
-    </PopoverTrigger>
+      </ark.div>
+    </Popover.Trigger>
   )
 }
 
-function TreeSelectIndicator({ className, children, ...props }: React.ComponentProps<"span">) {
+function TreeSelectIndicator({ className, children, ...props }: TreeSelectIndicatorProps) {
   const ctx = useTreeSelect()
   return (
-    <span
+    <ark.span
       data-slot="tree-select-indicator"
       data-state={ctx.open ? "open" : "closed"}
       className={cn("ml-auto flex shrink-0 items-center text-muted-foreground", className)}
       {...props}
     >
-      {children ?? <ChevronDownIcon className="size-4" />}
-    </span>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>{children ?? <ChevronDownIcon className="size-4" />}</>
+      )}
+    </ark.span>
   )
 }
 
@@ -339,59 +323,66 @@ function TreeSelectValue<T extends TreeNode>({
   children,
   className,
   ...props
-}: Omit<React.ComponentProps<"span">, "children"> & {
-  placeholder?: React.ReactNode
-  /** Rendered between the selected labels. */
-  separator?: string
-  children?: (nodes: T[]) => React.ReactNode
-}) {
+}: TreeSelectValueProps<T>) {
   const ctx = useTreeSelect<T>()
   const empty = ctx.displayNodes.length === 0
   return (
-    <span
+    <ark.span
       data-slot="tree-select-value"
       data-placeholder-shown={empty ? "" : undefined}
       className={cn("line-clamp-1 flex-1 text-left", className)}
       {...props}
     >
-      {empty
-        ? placeholder
-        : children
-          ? children(ctx.displayNodes)
-          : ctx.displayNodes.map((n) => ctx.collection.stringifyNode(n)).join(separator)}
-    </span>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {empty
+            ? placeholder
+            : children
+              ? typeof children === "function"
+                ? children(ctx.displayNodes)
+                : children
+              : ctx.displayNodes.map((n) => ctx.collection.stringifyNode(n)).join(separator)}
+        </>
+      )}
+    </ark.span>
   )
 }
 
 /** Selected nodes as removable chips (multiple mode). */
-function TreeSelectChips<T extends TreeNode>({
-  placeholder,
-  children,
-  className,
-  ...props
-}: Omit<React.ComponentProps<"div">, "children"> & {
-  placeholder?: React.ReactNode
-  children?: (node: T) => React.ReactNode
-}) {
+function TreeSelectChips<T extends TreeNode>({ placeholder, children, className, ...props }: TreeSelectChipsProps<T>) {
   const ctx = useTreeSelect<T>()
   const empty = ctx.displayNodes.length === 0
   return (
-    <div
+    <ark.div
       data-slot="tree-select-chips"
       data-placeholder-shown={empty ? "" : undefined}
       className={cn("flex min-w-0 flex-1 flex-wrap items-center gap-1 text-left", className)}
       {...props}
     >
-      {empty
-        ? placeholder
-        : ctx.displayNodes.map((node) =>
-            children ? (
-              <React.Fragment key={ctx.collection.getNodeValue(node)}>{children(node)}</React.Fragment>
-            ) : (
-              <TreeSelectChip key={ctx.collection.getNodeValue(node)} node={node} />
-            )
-          )}
-    </div>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {empty
+            ? placeholder
+            : ctx.displayNodes.map((node) =>
+                children ? (
+                  <React.Fragment key={ctx.collection.getNodeValue(node)}>
+                    {typeof children === "function" ? children(node) : children}
+                  </React.Fragment>
+                ) : (
+                  <TreeSelectChip key={ctx.collection.getNodeValue(node)} node={node} />
+                )
+              )}
+        </>
+      )}
+    </ark.div>
   )
 }
 
@@ -401,12 +392,12 @@ function TreeSelectChip<T extends TreeNode>({
   className,
   children,
   ...props
-}: React.ComponentProps<"span"> & { node: T; showRemove?: boolean }) {
+}: TreeSelectChipProps<T>) {
   const ctx = useTreeSelect<T>()
   const value = ctx.collection.getNodeValue(node)
   const label = ctx.collection.stringifyNode(node)
   return (
-    <span
+    <ark.span
       data-slot="tree-select-chip"
       data-value={value}
       data-branch={ctx.collection.isBranchNode(node) ? "" : undefined}
@@ -416,30 +407,38 @@ function TreeSelectChip<T extends TreeNode>({
       )}
       {...props}
     >
-      {children ?? label}
-      {showRemove && !ctx.readOnly && (
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon-xs"
-          data-slot="tree-select-chip-remove"
-          aria-label={`Remove ${label}`}
-          disabled={ctx.disabled}
-          className="-ml-1 opacity-50 hover:opacity-100"
-          onClick={(event) => {
-            event.stopPropagation()
-            ctx.remove(value)
-          }}
-          onKeyDown={(event) => event.stopPropagation()}
-        >
-          <XIcon className="pointer-events-none" />
-        </Button>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {children ?? label}
+          {showRemove && !ctx.readOnly && (
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-xs"
+              data-slot="tree-select-chip-remove"
+              aria-label={`Remove ${label}`}
+              disabled={ctx.disabled}
+              className="-ml-1 opacity-50 hover:opacity-100"
+              onClick={(event) => {
+                event.stopPropagation()
+                ctx.remove(value)
+              }}
+              onKeyDown={(event) => event.stopPropagation()}
+            >
+              <XIcon className="pointer-events-none" />
+            </Button>
+          )}
+        </>
       )}
-    </span>
+    </ark.span>
   )
 }
 
-function TreeSelectClearTrigger({ className, children, ...props }: React.ComponentProps<typeof Button>) {
+function TreeSelectClearTrigger({ className, children, ...props }: TreeSelectClearTriggerProps) {
   const ctx = useTreeSelect()
   if (ctx.value.length === 0 || ctx.readOnly) return null
   return (
@@ -458,21 +457,18 @@ function TreeSelectClearTrigger({ className, children, ...props }: React.Compone
       onKeyDown={(event) => event.stopPropagation()}
       {...props}
     >
-      {children ?? <XIcon />}
+      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <XIcon />}</>}
     </Button>
   )
 }
 
 /** Hidden inputs for native form submission. */
-function TreeSelectHiddenInput({
-  name,
-  ...props
-}: Omit<React.ComponentProps<"input">, "type" | "value"> & { name: string }) {
+function TreeSelectHiddenInput({ name, ...props }: TreeSelectHiddenInputProps) {
   const ctx = useTreeSelect()
   return (
     <>
       {ctx.value.map((v) => (
-        <input key={v} type="hidden" name={name} value={v} data-slot="tree-select-hidden-input" {...props} />
+        <ark.input key={v} type="hidden" name={name} value={v} data-slot="tree-select-hidden-input" {...props} />
       ))}
     </>
   )
@@ -480,10 +476,10 @@ function TreeSelectHiddenInput({
 
 /* -------------------------------- content -------------------------------- */
 
-function TreeSelectContent({ className, ...props }: React.ComponentProps<typeof PopoverContent>) {
+function TreeSelectContent({ className, ...props }: TreeSelectContentProps) {
   const ctx = useTreeSelect()
   return (
-    <PopoverContent
+    <Popover.Content
       ref={ctx.contentRef}
       data-slot="tree-select-content"
       className={cn("w-(--reference-width) min-w-48 gap-1 p-1", className)}
@@ -492,18 +488,14 @@ function TreeSelectContent({ className, ...props }: React.ComponentProps<typeof 
   )
 }
 
-function TreeSelectSearch({
-  className,
-  placeholder = "Search…",
-  ...props
-}: Omit<React.ComponentProps<typeof InputGroupInput>, "value" | "onChange">) {
+function TreeSelectSearch({ className, placeholder = "Search…", ...props }: TreeSelectSearchProps) {
   const ctx = useTreeSelect()
   return (
-    <InputGroup data-slot="tree-select-search" className={cn("h-8 shrink-0", className)}>
-      <InputGroupAddon>
+    <InputGroup.Root data-slot="tree-select-search" className={cn("h-8 shrink-0", className)}>
+      <InputGroup.Addon>
         <SearchIcon />
-      </InputGroupAddon>
-      <InputGroupInput
+      </InputGroup.Addon>
+      <InputGroup.Input
         role="searchbox"
         placeholder={placeholder}
         value={ctx.query}
@@ -521,21 +513,21 @@ function TreeSelectSearch({
         }}
         {...props}
       />
-    </InputGroup>
+    </InputGroup.Root>
   )
 }
 
-function TreeSelectEmpty({ className, children, ...props }: React.ComponentProps<"div">) {
+function TreeSelectEmpty({ className, children, ...props }: TreeSelectEmptyProps) {
   const ctx = useTreeSelect()
   if (ctx.filtered.getNodeChildren(ctx.filtered.rootNode).length > 0) return null
   return (
-    <div
+    <ark.div
       data-slot="tree-select-empty"
       className={cn("px-2 py-4 text-center text-sm text-muted-foreground", className)}
       {...props}
     >
-      {children ?? "No results"}
-    </div>
+      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? "No results"}</>}
+    </ark.div>
   )
 }
 
@@ -549,16 +541,7 @@ const TreeSelectRenderContext = React.createContext<TreeSelectRenderNode<TreeNod
  * The tree inside the popup, virtualized: only the visible (expanded) nodes in view are in
  * the DOM, so large trees stay fast. Pass a render-prop child to customise the row label.
  */
-function TreeSelectTree<T extends TreeNode>({
-  className,
-  children,
-  rowHeight = 28,
-  ...props
-}: Omit<React.ComponentProps<typeof TreeViewTree>, "children"> & {
-  children?: TreeSelectRenderNode<T>
-  /** Row height in px (rows are measured; this is the estimate). */
-  rowHeight?: number
-}) {
+function TreeSelectTree<T extends TreeNode>({ className, children, rowHeight = 28, ...props }: TreeSelectTreeProps<T>) {
   const ctx = useTreeSelect<T>()
   const searching = ctx.query.trim().length > 0
   const searchExpanded = React.useMemo(
@@ -569,8 +552,10 @@ function TreeSelectTree<T extends TreeNode>({
   const roots = ctx.filtered.getNodeChildren(ctx.filtered.rootNode)
   if (roots.length === 0) return null
   return (
-    <TreeSelectRenderContext.Provider value={children as TreeSelectRenderNode<TreeNode> | undefined}>
-      <TreeView
+    <TreeSelectRenderContext.Provider
+      value={typeof children === "function" ? (children as TreeSelectRenderNode<TreeNode>) : undefined}
+    >
+      <TreeView.Root
         collection={ctx.filtered}
         selectionMode={ctx.multiple ? "multiple" : "single"}
         selectedValue={ctx.multiple ? [] : ctx.value}
@@ -589,11 +574,11 @@ function TreeSelectTree<T extends TreeNode>({
         data-slot="tree-select-tree"
         className="w-full"
       >
-        <TreeViewContext>
+        <TreeView.Context>
           {(api) => {
             const visible = api.getVisibleNodes()
             return (
-              <VirtualList
+              <VirtualList.Root
                 count={visible.length}
                 estimateSize={rowHeight}
                 gap={1}
@@ -604,12 +589,14 @@ function TreeSelectTree<T extends TreeNode>({
                   scrollTo={scrollTo}
                   className={className}
                   {...props}
-                />
-              </VirtualList>
+                >
+                  {React.isValidElement(children) ? children : null}
+                </TreeSelectVirtualRows>
+              </VirtualList.Root>
             )
           }}
-        </TreeViewContext>
-      </TreeView>
+        </TreeView.Context>
+      </TreeView.Root>
     </TreeSelectRenderContext.Provider>
   )
 }
@@ -618,8 +605,9 @@ function TreeSelectVirtualRows<T extends TreeNode>({
   visible,
   scrollTo,
   className,
+  children,
   ...props
-}: Omit<React.ComponentProps<typeof TreeViewTree>, "children"> & {
+}: React.ComponentProps<typeof TreeView.Tree> & {
   visible: { node: T; indexPath: number[] }[]
   scrollTo: React.MutableRefObject<(index: number) => void>
 }) {
@@ -628,22 +616,28 @@ function TreeSelectVirtualRows<T extends TreeNode>({
     scrollTo.current = (index) => virtual.scrollToIndex(index)
   })
   return (
-    <TreeViewTree className={cn("block", className)} {...props}>
-      <VirtualListViewport className="max-h-72">
-        <VirtualListContent>
-          <VirtualListItems>
-            {(row) => {
-              const entry = visible[row.index]
-              return (
-                <VirtualListItem index={row.index}>
-                  <TreeSelectRow node={entry.node} indexPath={entry.indexPath} />
-                </VirtualListItem>
-              )
-            }}
-          </VirtualListItems>
-        </VirtualListContent>
-      </VirtualListViewport>
-    </TreeViewTree>
+    <TreeView.Tree className={cn("block", className)} {...props}>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <VirtualList.Viewport className="max-h-72">
+          <VirtualList.Content>
+            <VirtualList.Items>
+              {(row) => {
+                const entry = visible[row.index]
+                return (
+                  <VirtualList.Item index={row.index}>
+                    <TreeSelectRow node={entry.node} indexPath={entry.indexPath} />
+                  </VirtualList.Item>
+                )
+              }}
+            </VirtualList.Items>
+          </VirtualList.Content>
+        </VirtualList.Viewport>
+      )}
+    </TreeView.Tree>
   )
 }
 
@@ -655,30 +649,30 @@ function TreeSelectRow<T extends TreeNode>({ node, indexPath }: { node: T; index
   const label = render ? render(node) : ctx.filtered.stringifyNode(node)
   const isBranch = ctx.filtered.isBranchNode(node)
   return (
-    <TreeViewNodeProvider node={node} indexPath={indexPath}>
+    <TreeView.NodeProvider node={node} indexPath={indexPath}>
       {isBranch ? (
-        <TreeViewBranch data-slot="tree-select-branch">
-          <TreeViewBranchControl>
-            <TreeViewBranchTrigger>
-              <TreeViewBranchIndicator />
-            </TreeViewBranchTrigger>
-            {ctx.multiple && <TreeViewNodeCheckbox />}
-            <TreeViewBranchText>{label}</TreeViewBranchText>
-          </TreeViewBranchControl>
-        </TreeViewBranch>
+        <TreeView.Branch data-slot="tree-select-branch">
+          <TreeView.BranchControl>
+            <TreeView.BranchTrigger>
+              <TreeView.BranchIndicator />
+            </TreeView.BranchTrigger>
+            {ctx.multiple && <TreeView.NodeCheckbox />}
+            <TreeView.BranchText>{label}</TreeView.BranchText>
+          </TreeView.BranchControl>
+        </TreeView.Branch>
       ) : (
-        <TreeViewItem data-slot="tree-select-item" data-value={value}>
-          {ctx.multiple && <TreeViewNodeCheckbox />}
-          <TreeViewItemText>{label}</TreeViewItemText>
-          {!ctx.multiple && <TreeViewItemIndicator />}
-        </TreeViewItem>
+        <TreeView.Item data-slot="tree-select-item" data-value={value}>
+          {ctx.multiple && <TreeView.NodeCheckbox />}
+          <TreeView.ItemText>{label}</TreeView.ItemText>
+          {!ctx.multiple && <TreeView.ItemIndicator />}
+        </TreeView.Item>
       )}
-    </TreeViewNodeProvider>
+    </TreeView.NodeProvider>
   )
 }
 
 /** Nested (non-virtual) rendering of a node and its children; useful outside the popup. */
-function TreeSelectNode<T extends TreeNode>({ node, indexPath }: { node: T; indexPath: number[] }) {
+function TreeSelectNode<T extends TreeNode>({ node, indexPath }: TreeSelectNodeProps<T>) {
   const ctx = useTreeSelect<T>()
   const render = React.useContext(TreeSelectRenderContext)
   const value = ctx.filtered.getNodeValue(node)
@@ -686,53 +680,118 @@ function TreeSelectNode<T extends TreeNode>({ node, indexPath }: { node: T; inde
   const children = ctx.filtered.getNodeChildren(node)
   const isBranch = ctx.filtered.isBranchNode(node)
   return (
-    <TreeViewNodeProvider node={node} indexPath={indexPath}>
+    <TreeView.NodeProvider node={node} indexPath={indexPath}>
       {isBranch ? (
-        <TreeViewBranch data-slot="tree-select-branch">
-          <TreeViewBranchControl>
-            <TreeViewBranchTrigger>
-              <TreeViewBranchIndicator />
-            </TreeViewBranchTrigger>
-            {ctx.multiple && <TreeViewNodeCheckbox />}
-            <TreeViewBranchText>{label}</TreeViewBranchText>
-          </TreeViewBranchControl>
-          <TreeViewBranchContent>
-            <TreeViewBranchIndentGuide />
+        <TreeView.Branch data-slot="tree-select-branch">
+          <TreeView.BranchControl>
+            <TreeView.BranchTrigger>
+              <TreeView.BranchIndicator />
+            </TreeView.BranchTrigger>
+            {ctx.multiple && <TreeView.NodeCheckbox />}
+            <TreeView.BranchText>{label}</TreeView.BranchText>
+          </TreeView.BranchControl>
+          <TreeView.BranchContent>
+            <TreeView.BranchIndentGuide />
             {children.map((child, index) => (
               <TreeSelectNode key={ctx.filtered.getNodeValue(child)} node={child} indexPath={[...indexPath, index]} />
             ))}
-          </TreeViewBranchContent>
-        </TreeViewBranch>
+          </TreeView.BranchContent>
+        </TreeView.Branch>
       ) : (
-        <TreeViewItem data-slot="tree-select-item" data-value={value}>
-          {ctx.multiple && <TreeViewNodeCheckbox />}
-          <TreeViewItemText>{label}</TreeViewItemText>
-          {!ctx.multiple && <TreeViewItemIndicator />}
-        </TreeViewItem>
+        <TreeView.Item data-slot="tree-select-item" data-value={value}>
+          {ctx.multiple && <TreeView.NodeCheckbox />}
+          <TreeView.ItemText>{label}</TreeView.ItemText>
+          {!ctx.multiple && <TreeView.ItemIndicator />}
+        </TreeView.Item>
       )}
-    </TreeViewNodeProvider>
+    </TreeView.NodeProvider>
   )
+}
+
+type TreeSelectRootProps<T extends TreeNode = TreeNode> = TreeSelectProps<T>
+
+type TreeSelectChipProps<T extends TreeNode = TreeNode> = React.ComponentProps<typeof ark.span> & {
+  node: T
+  showRemove?: boolean
+}
+
+type TreeSelectChipsProps<T extends TreeNode = TreeNode> = Omit<React.ComponentProps<typeof ark.div>, "children"> & {
+  placeholder?: React.ReactNode
+  children?: ((node: T) => React.ReactNode) | React.ReactElement
+}
+
+type TreeSelectClearTriggerProps = React.ComponentProps<typeof Button>
+
+type TreeSelectContentProps = React.ComponentProps<typeof Popover.Content>
+
+type TreeSelectEmptyProps = React.ComponentProps<typeof ark.div>
+
+type TreeSelectHiddenInputProps = Omit<React.ComponentProps<typeof ark.input>, "type" | "value"> & {
+  name: string
+}
+
+type TreeSelectIndicatorProps = React.ComponentProps<typeof ark.span>
+
+type TreeSelectNodeProps<T extends TreeNode = TreeNode> = { node: T; indexPath: number[] }
+
+type TreeSelectSearchProps = Omit<React.ComponentProps<typeof InputGroup.Input>, "value" | "onChange">
+
+type TreeSelectTreeProps<T extends TreeNode = TreeNode> = Omit<
+  React.ComponentProps<typeof TreeView.Tree>,
+  "children"
+> & {
+  children?: TreeSelectRenderNode<T> | React.ReactElement
+  /** Row height in px (rows are measured; this is the estimate). */
+  rowHeight?: number
+}
+
+type TreeSelectTriggerProps = React.ComponentProps<typeof ark.div> & {
+  size?: "sm" | "default"
+  variant?: "default" | "unstyled"
+}
+
+type TreeSelectValueProps<T extends TreeNode = TreeNode> = Omit<React.ComponentProps<typeof ark.span>, "children"> & {
+  placeholder?: React.ReactNode
+  /** Rendered between the selected labels. */
+  separator?: string
+  children?: ((nodes: T[]) => React.ReactNode) | React.ReactElement
+}
+
+const TreeSelect = {
+  Root: TreeSelectRoot,
+  Chip: TreeSelectChip,
+  Chips: TreeSelectChips,
+  ClearTrigger: TreeSelectClearTrigger,
+  Content: TreeSelectContent,
+  Empty: TreeSelectEmpty,
+  HiddenInput: TreeSelectHiddenInput,
+  Indicator: TreeSelectIndicator,
+  Node: TreeSelectNode,
+  Search: TreeSelectSearch,
+  Tree: TreeSelectTree,
+  Trigger: TreeSelectTrigger,
+  Value: TreeSelectValue,
 }
 
 export {
   TreeSelect,
-  TreeSelectChip,
-  TreeSelectChips,
-  TreeSelectClearTrigger,
-  TreeSelectContent,
-  TreeSelectEmpty,
-  TreeSelectHiddenInput,
-  TreeSelectIndicator,
-  TreeSelectNode,
-  TreeSelectSearch,
-  TreeSelectTree,
-  TreeSelectTrigger,
-  TreeSelectValue,
   collapseValues,
   createTreeCollection,
   useTreeSelect,
   type TreeCollection,
   type TreeNode,
-  type TreeSelectProps,
   type TreeSelectValueChangeDetails,
+  type TreeSelectRootProps,
+  type TreeSelectChipProps,
+  type TreeSelectChipsProps,
+  type TreeSelectClearTriggerProps,
+  type TreeSelectContentProps,
+  type TreeSelectEmptyProps,
+  type TreeSelectHiddenInputProps,
+  type TreeSelectIndicatorProps,
+  type TreeSelectNodeProps,
+  type TreeSelectSearchProps,
+  type TreeSelectTreeProps,
+  type TreeSelectTriggerProps,
+  type TreeSelectValueProps,
 }

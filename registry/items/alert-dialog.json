@@ -4,24 +4,95 @@
   "description": "",
   "ark": "Dialog",
   "exports": [
-    "AlertDialog",
-    "AlertDialogAction",
-    "AlertDialogCancel",
-    "AlertDialogContent",
-    "AlertDialogContext",
-    "AlertDialogDescription",
-    "AlertDialogFooter",
-    "AlertDialogHeader",
-    "AlertDialogMedia",
-    "AlertDialogOverlay",
-    "AlertDialogPortal",
-    "AlertDialogPositioner",
-    "AlertDialogTitle",
-    "AlertDialogTrigger"
+    "useDialog",
+    "useDialogContext",
+    "AlertDialog"
   ],
   "parts": [
     {
-      "name": "AlertDialog",
+      "name": "AlertDialog.Backdrop",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "AlertDialog.CloseTrigger",
+      "props": [
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
+          "required": false,
+          "default": "\"default\"",
+          "description": "Size variant; sets a `data-size` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
+          "required": false,
+          "default": "\"default\"",
+          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "AlertDialog.Root",
       "props": [
         {
           "name": "aria-label",
@@ -269,23 +340,14 @@
       ]
     },
     {
-      "name": "AlertDialogAction",
+      "name": "AlertDialog.RootProvider",
       "props": [
         {
-          "name": "size",
-          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
-          "required": false,
-          "default": "\"default\"",
-          "description": "Size variant; sets a `data-size` attribute.",
-          "from": "arkcn"
-        },
-        {
-          "name": "variant",
-          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
-          "required": false,
-          "default": "\"default\"",
-          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
-          "from": "arkcn"
+          "name": "value",
+          "type": "UseDialogReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "asChild",
@@ -299,26 +361,72 @@
           "type": "ReactNode",
           "required": false,
           "description": "Content rendered inside the part.",
-          "from": "@types/react"
+          "from": "@ark-ui/react"
         },
         {
-          "name": "className",
-          "type": "string",
+          "name": "hideMode",
+          "type": "HideMode",
           "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
         },
         {
-          "name": "style",
-          "type": "CSSProperties",
+          "name": "immediate",
+          "type": "boolean",
           "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
         }
       ]
     },
     {
-      "name": "AlertDialogCancel",
+      "name": "AlertDialog.Cancel",
       "props": [
         {
           "name": "size",
@@ -367,7 +475,7 @@
       ]
     },
     {
-      "name": "AlertDialogContent",
+      "name": "AlertDialog.Content",
       "props": [
         {
           "name": "size",
@@ -408,7 +516,7 @@
       ]
     },
     {
-      "name": "AlertDialogContext",
+      "name": "AlertDialog.Context",
       "props": [
         {
           "name": "children",
@@ -420,7 +528,7 @@
       ]
     },
     {
-      "name": "AlertDialogDescription",
+      "name": "AlertDialog.Description",
       "props": [
         {
           "name": "asChild",
@@ -453,85 +561,7 @@
       ]
     },
     {
-      "name": "AlertDialogFooter",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "AlertDialogHeader",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "AlertDialogMedia",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "AlertDialogOverlay",
+      "name": "AlertDialog.Footer",
       "props": [
         {
           "name": "asChild",
@@ -564,7 +594,73 @@
       ]
     },
     {
-      "name": "AlertDialogPortal",
+      "name": "AlertDialog.Header",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "AlertDialog.Media",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "AlertDialog.Portal",
       "props": [
         {
           "name": "children",
@@ -589,7 +685,7 @@
       ]
     },
     {
-      "name": "AlertDialogPositioner",
+      "name": "AlertDialog.Positioner",
       "props": [
         {
           "name": "asChild",
@@ -622,7 +718,7 @@
       ]
     },
     {
-      "name": "AlertDialogTitle",
+      "name": "AlertDialog.Title",
       "props": [
         {
           "name": "asChild",
@@ -655,7 +751,7 @@
       ]
     },
     {
-      "name": "AlertDialogTrigger",
+      "name": "AlertDialog.Trigger",
       "props": [
         {
           "name": "asChild",
@@ -705,7 +801,7 @@
   "files": [
     {
       "path": "components/ui/alert-dialog.tsx",
-      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Dialog as AlertDialogPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\n\nimport { Button } from \"@/components/ui/button\"\n\nfunction getDefaultInitialFocusEl() {\n  return document.querySelector<HTMLElement>(\n    '[data-slot=\"alert-dialog-content\"][data-state=\"open\"] [data-slot=\"alert-dialog-cancel\"]'\n  )\n}\n\nfunction AlertDialog({\n  role = \"alertdialog\",\n  closeOnInteractOutside = false,\n  initialFocusEl = getDefaultInitialFocusEl,\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: React.ComponentProps<typeof AlertDialogPrimitive.Root>) {\n  return (\n    <AlertDialogPrimitive.Root\n      role={role}\n      closeOnInteractOutside={closeOnInteractOutside}\n      initialFocusEl={initialFocusEl}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogTrigger({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Trigger>) {\n  return <AlertDialogPrimitive.Trigger data-slot=\"alert-dialog-trigger\" {...props} />\n}\n\nfunction AlertDialogPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction AlertDialogContext({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Context>) {\n  return <AlertDialogPrimitive.Context {...props} />\n}\n\nfunction AlertDialogOverlay({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Backdrop>) {\n  return (\n    <AlertDialogPrimitive.Backdrop\n      data-slot=\"alert-dialog-overlay\"\n      className={cn(\n        \"fixed inset-0 z-50 bg-black/10 duration-100 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogPositioner({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Positioner>) {\n  return (\n    <AlertDialogPrimitive.Positioner\n      data-slot=\"alert-dialog-positioner\"\n      className={cn(\"fixed inset-0 z-50 flex items-center justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogContent({\n  className,\n  size = \"default\",\n  ...props\n}: React.ComponentProps<typeof AlertDialogPrimitive.Content> & {\n  size?: \"default\" | \"sm\"\n}) {\n  return (\n    <AlertDialogPortal>\n      <AlertDialogOverlay />\n      <AlertDialogPositioner>\n        <AlertDialogPrimitive.Content\n          data-slot=\"alert-dialog-content\"\n          data-size={size}\n          className={cn(\n            \"group/alert-dialog-content relative grid w-full gap-4 rounded-xl bg-popover p-4 text-popover-foreground ring-1 ring-foreground/10 duration-100 outline-none data-[size=default]:max-w-xs data-[size=sm]:max-w-xs data-[size=default]:sm:max-w-sm data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </AlertDialogPositioner>\n    </AlertDialogPortal>\n  )\n}\n\nfunction AlertDialogHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"alert-dialog-header\"\n      className={cn(\n        \"grid grid-rows-[auto_1fr] place-items-center gap-1.5 text-center has-data-[slot=alert-dialog-media]:grid-rows-[auto_auto_1fr] has-data-[slot=alert-dialog-media]:gap-x-4 sm:group-data-[size=default]/alert-dialog-content:place-items-start sm:group-data-[size=default]/alert-dialog-content:text-left sm:group-data-[size=default]/alert-dialog-content:has-data-[slot=alert-dialog-media]:grid-rows-[auto_1fr]\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"alert-dialog-footer\"\n      className={cn(\n        \"-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 p-4 group-data-[size=sm]/alert-dialog-content:grid group-data-[size=sm]/alert-dialog-content:grid-cols-2 sm:flex-row sm:justify-end\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogMedia({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"alert-dialog-media\"\n      className={cn(\n        \"mb-2 inline-flex size-10 items-center justify-center rounded-md bg-muted sm:group-data-[size=default]/alert-dialog-content:row-span-2 *:[svg:not([class*='size-'])]:size-6\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogTitle({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Title>) {\n  return (\n    <AlertDialogPrimitive.Title\n      data-slot=\"alert-dialog-title\"\n      className={cn(\n        \"font-heading text-base font-medium sm:group-data-[size=default]/alert-dialog-content:group-has-data-[slot=alert-dialog-media]/alert-dialog-content:col-start-2\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogDescription({\n  className,\n  ...props\n}: React.ComponentProps<typeof AlertDialogPrimitive.Description>) {\n  return (\n    <AlertDialogPrimitive.Description\n      data-slot=\"alert-dialog-description\"\n      className={cn(\n        \"text-sm text-balance text-muted-foreground md:text-pretty *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogAction({\n  className,\n  variant = \"default\",\n  size = \"default\",\n  ...props\n}: React.ComponentProps<typeof AlertDialogPrimitive.CloseTrigger> &\n  Pick<React.ComponentProps<typeof Button>, \"variant\" | \"size\">) {\n  return (\n    <Button variant={variant} size={size} asChild>\n      <AlertDialogPrimitive.CloseTrigger data-slot=\"alert-dialog-action\" className={cn(className)} {...props} />\n    </Button>\n  )\n}\n\nfunction AlertDialogCancel({\n  className,\n  variant = \"outline\",\n  size = \"default\",\n  ...props\n}: React.ComponentProps<typeof AlertDialogPrimitive.CloseTrigger> &\n  Pick<React.ComponentProps<typeof Button>, \"variant\" | \"size\">) {\n  return (\n    <Button variant={variant} size={size} asChild>\n      <AlertDialogPrimitive.CloseTrigger data-slot=\"alert-dialog-cancel\" className={cn(className)} {...props} />\n    </Button>\n  )\n}\n\nexport {\n  AlertDialog,\n  AlertDialogAction,\n  AlertDialogCancel,\n  AlertDialogContent,\n  AlertDialogContext,\n  AlertDialogDescription,\n  AlertDialogFooter,\n  AlertDialogHeader,\n  AlertDialogMedia,\n  AlertDialogOverlay,\n  AlertDialogPortal,\n  AlertDialogPositioner,\n  AlertDialogTitle,\n  AlertDialogTrigger,\n}\n"
+      "content": "import { ark } from \"@ark-ui/react\"\nimport { useDialog, useDialogContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Dialog as AlertDialogPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\n\nimport { Button } from \"@/components/ui/button\"\n\nfunction getDefaultInitialFocusEl() {\n  return document.querySelector<HTMLElement>(\n    '[data-slot=\"alert-dialog-content\"][data-state=\"open\"] [data-slot=\"alert-dialog-cancel\"]'\n  )\n}\n\nfunction AlertDialogRoot({\n  role = \"alertdialog\",\n  closeOnInteractOutside = false,\n  initialFocusEl = getDefaultInitialFocusEl,\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: AlertDialogRootProps) {\n  return (\n    <AlertDialogPrimitive.Root\n      role={role}\n      closeOnInteractOutside={closeOnInteractOutside}\n      initialFocusEl={initialFocusEl}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogTrigger({ ...props }: AlertDialogTriggerProps) {\n  return <AlertDialogPrimitive.Trigger data-slot=\"alert-dialog-trigger\" {...props} />\n}\n\nfunction AlertDialogPortal({ ...props }: AlertDialogPortalProps) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction AlertDialogContext({ ...props }: AlertDialogContextProps) {\n  return <AlertDialogPrimitive.Context {...props} />\n}\n\nfunction AlertDialogBackdrop({ className, ...props }: AlertDialogBackdropProps) {\n  return (\n    <AlertDialogPrimitive.Backdrop\n      data-slot=\"alert-dialog-overlay\"\n      className={cn(\n        \"fixed inset-0 z-50 bg-black/10 duration-100 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogPositioner({ className, ...props }: AlertDialogPositionerProps) {\n  return (\n    <AlertDialogPrimitive.Positioner\n      data-slot=\"alert-dialog-positioner\"\n      className={cn(\"fixed inset-0 z-50 flex items-center justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogContent({ className, size = \"default\", ...props }: AlertDialogContentProps) {\n  return (\n    <AlertDialogPortal>\n      <AlertDialogBackdrop />\n      <AlertDialogPositioner>\n        <AlertDialogPrimitive.Content\n          data-slot=\"alert-dialog-content\"\n          data-size={size}\n          className={cn(\n            \"group/alert-dialog-content relative grid w-full gap-4 rounded-xl bg-popover p-4 text-popover-foreground ring-1 ring-foreground/10 duration-100 outline-none data-[size=default]:max-w-xs data-[size=sm]:max-w-xs data-[size=default]:sm:max-w-sm data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </AlertDialogPositioner>\n    </AlertDialogPortal>\n  )\n}\n\nfunction AlertDialogHeader({ className, ...props }: AlertDialogHeaderProps) {\n  return (\n    <ark.div\n      data-slot=\"alert-dialog-header\"\n      className={cn(\n        \"grid grid-rows-[auto_1fr] place-items-center gap-1.5 text-center has-data-[slot=alert-dialog-media]:grid-rows-[auto_auto_1fr] has-data-[slot=alert-dialog-media]:gap-x-4 sm:group-data-[size=default]/alert-dialog-content:place-items-start sm:group-data-[size=default]/alert-dialog-content:text-left sm:group-data-[size=default]/alert-dialog-content:has-data-[slot=alert-dialog-media]:grid-rows-[auto_1fr]\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogFooter({ className, ...props }: AlertDialogFooterProps) {\n  return (\n    <ark.div\n      data-slot=\"alert-dialog-footer\"\n      className={cn(\n        \"-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 p-4 group-data-[size=sm]/alert-dialog-content:grid group-data-[size=sm]/alert-dialog-content:grid-cols-2 sm:flex-row sm:justify-end\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogMedia({ className, ...props }: AlertDialogMediaProps) {\n  return (\n    <ark.div\n      data-slot=\"alert-dialog-media\"\n      className={cn(\n        \"mb-2 inline-flex size-10 items-center justify-center rounded-md bg-muted sm:group-data-[size=default]/alert-dialog-content:row-span-2 *:[svg:not([class*='size-'])]:size-6\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogTitle({ className, ...props }: AlertDialogTitleProps) {\n  return (\n    <AlertDialogPrimitive.Title\n      data-slot=\"alert-dialog-title\"\n      className={cn(\n        \"font-heading text-base font-medium sm:group-data-[size=default]/alert-dialog-content:group-has-data-[slot=alert-dialog-media]/alert-dialog-content:col-start-2\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogDescription({ className, ...props }: AlertDialogDescriptionProps) {\n  return (\n    <AlertDialogPrimitive.Description\n      data-slot=\"alert-dialog-description\"\n      className={cn(\n        \"text-sm text-balance text-muted-foreground md:text-pretty *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AlertDialogCloseTrigger({\n  className,\n  variant = \"default\",\n  size = \"default\",\n  ...props\n}: AlertDialogCloseTriggerProps) {\n  return (\n    <Button variant={variant} size={size} asChild>\n      <AlertDialogPrimitive.CloseTrigger data-slot=\"alert-dialog-action\" className={cn(className)} {...props} />\n    </Button>\n  )\n}\n\nfunction AlertDialogCancel({ className, variant = \"outline\", size = \"default\", ...props }: AlertDialogCancelProps) {\n  return (\n    <Button variant={variant} size={size} asChild>\n      <AlertDialogPrimitive.CloseTrigger data-slot=\"alert-dialog-cancel\" className={cn(className)} {...props} />\n    </Button>\n  )\n}\n\nfunction AlertDialogRootProvider(props: AlertDialogRootProviderProps) {\n  return <AlertDialogPrimitive.RootProvider {...props} />\n}\n\ntype AlertDialogBackdropProps = React.ComponentProps<typeof AlertDialogPrimitive.Backdrop>\n\ntype AlertDialogCloseTriggerProps = React.ComponentProps<typeof AlertDialogPrimitive.CloseTrigger> &\n  Pick<React.ComponentProps<typeof Button>, \"variant\" | \"size\">\n\ntype AlertDialogRootProps = React.ComponentProps<typeof AlertDialogPrimitive.Root>\n\ntype AlertDialogRootProviderProps = React.ComponentProps<typeof AlertDialogPrimitive.RootProvider>\n\ntype AlertDialogCancelProps = React.ComponentProps<typeof AlertDialogPrimitive.CloseTrigger> &\n  Pick<React.ComponentProps<typeof Button>, \"variant\" | \"size\">\n\ntype AlertDialogContentProps = React.ComponentProps<typeof AlertDialogPrimitive.Content> & {\n  size?: \"default\" | \"sm\"\n}\n\ntype AlertDialogContextProps = React.ComponentProps<typeof AlertDialogPrimitive.Context>\n\ntype AlertDialogDescriptionProps = React.ComponentProps<typeof AlertDialogPrimitive.Description>\n\ntype AlertDialogFooterProps = React.ComponentProps<typeof ark.div>\n\ntype AlertDialogHeaderProps = React.ComponentProps<typeof ark.div>\n\ntype AlertDialogMediaProps = React.ComponentProps<typeof ark.div>\n\ntype AlertDialogPortalProps = React.ComponentProps<typeof PortalPrimitive>\n\ntype AlertDialogPositionerProps = React.ComponentProps<typeof AlertDialogPrimitive.Positioner>\n\ntype AlertDialogTitleProps = React.ComponentProps<typeof AlertDialogPrimitive.Title>\n\ntype AlertDialogTriggerProps = React.ComponentProps<typeof AlertDialogPrimitive.Trigger>\n\nconst AlertDialog = {\n  Backdrop: AlertDialogBackdrop,\n  CloseTrigger: AlertDialogCloseTrigger,\n  Root: AlertDialogRoot,\n  RootProvider: AlertDialogRootProvider,\n  Cancel: AlertDialogCancel,\n  Content: AlertDialogContent,\n  Context: AlertDialogContext,\n  Description: AlertDialogDescription,\n  Footer: AlertDialogFooter,\n  Header: AlertDialogHeader,\n  Media: AlertDialogMedia,\n  Portal: AlertDialogPortal,\n  Positioner: AlertDialogPositioner,\n  Title: AlertDialogTitle,\n  Trigger: AlertDialogTrigger,\n}\n\nexport {\n  useDialog,\n  useDialogContext,\n  AlertDialog,\n  type AlertDialogBackdropProps,\n  type AlertDialogCloseTriggerProps,\n  type AlertDialogRootProps,\n  type AlertDialogRootProviderProps,\n  type AlertDialogCancelProps,\n  type AlertDialogContentProps,\n  type AlertDialogContextProps,\n  type AlertDialogDescriptionProps,\n  type AlertDialogFooterProps,\n  type AlertDialogHeaderProps,\n  type AlertDialogMediaProps,\n  type AlertDialogPortalProps,\n  type AlertDialogPositionerProps,\n  type AlertDialogTitleProps,\n  type AlertDialogTriggerProps,\n}\n"
     }
   ]
 }

@@ -3,7 +3,7 @@
 import { cn } from "@/lib/utils"
 import * as ResizablePrimitive from "react-resizable-panels"
 
-function ResizablePanelGroup({ className, ...props }: ResizablePrimitive.GroupProps) {
+function ResizableRoot({ className, ...props }: ResizableRootProps) {
   return (
     <ResizablePrimitive.Group
       data-slot="resizable-panel-group"
@@ -13,18 +13,11 @@ function ResizablePanelGroup({ className, ...props }: ResizablePrimitive.GroupPr
   )
 }
 
-function ResizablePanel({ ...props }: ResizablePrimitive.PanelProps) {
+function ResizablePanel({ ...props }: ResizablePanelProps) {
   return <ResizablePrimitive.Panel data-slot="resizable-panel" {...props} />
 }
 
-function ResizableHandle({
-  withHandle,
-  className,
-  ...props
-}: ResizablePrimitive.SeparatorProps & {
-  /** Render a visible grip on the handle. */
-  withHandle?: boolean
-}) {
+function ResizableHandle({ withHandle, className, ...props }: ResizableHandleProps) {
   return (
     <ResizablePrimitive.Separator
       data-slot="resizable-handle"
@@ -39,4 +32,19 @@ function ResizableHandle({
   )
 }
 
-export { ResizableHandle, ResizablePanel, ResizablePanelGroup }
+type ResizableRootProps = ResizablePrimitive.GroupProps
+
+type ResizableHandleProps = ResizablePrimitive.SeparatorProps & {
+  /** Render a visible grip on the handle. */
+  withHandle?: boolean
+}
+
+type ResizablePanelProps = ResizablePrimitive.PanelProps
+
+const Resizable = {
+  Root: ResizableRoot,
+  Handle: ResizableHandle,
+  Panel: ResizablePanel,
+}
+
+export { Resizable, type ResizableRootProps, type ResizableHandleProps, type ResizablePanelProps }

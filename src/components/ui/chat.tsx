@@ -23,41 +23,31 @@ type ChatContextValue = {
   setMobileOpen: (open: boolean) => void
 }
 
-const ChatContext = React.createContext<ChatContextValue | null>(null)
+const ChatContextStore = React.createContext<ChatContextValue | null>(null)
 
 function useChat(component = "Chat parts") {
-  const ctx = React.useContext(ChatContext)
+  const ctx = React.useContext(ChatContextStore)
   if (!ctx) throw new Error(`${component} must be used within <Chat>`)
   return ctx
 }
 
-function Chat({
-  className,
-  value: valueProp,
-  defaultValue = null,
-  onValueChange,
-  ...props
-}: Omit<React.ComponentProps<"div">, "defaultValue"> & {
-  value?: string | null
-  defaultValue?: string | null
-  onValueChange?: (value: string | null) => void
-}) {
+function ChatRoot({ className, value: valueProp, defaultValue = null, onValueChange, ...props }: ChatRootProps) {
   const [value, setValue] = useControllable(valueProp, defaultValue, onValueChange)
   const [mobileOpen, setMobileOpen] = React.useState(value !== null)
   const ctx = React.useMemo(() => ({ value, setValue, mobileOpen, setMobileOpen }), [value, setValue, mobileOpen])
   return (
-    <ChatContext.Provider value={ctx}>
-      <div
+    <ChatContextStore.Provider value={ctx}>
+      <ark.div
         data-slot="chat"
         data-selected={value !== null ? "" : undefined}
         className={cn("relative flex h-full gap-6", className)}
         {...props}
       />
-    </ChatContext.Provider>
+    </ChatContextStore.Provider>
   )
 }
 
-function ChatContextConsumer({ children }: { children: (ctx: ChatContextValue) => React.ReactNode }) {
+function ChatContext({ children }: ChatContextProps) {
   return children(useChat("ChatContext"))
 }
 
@@ -65,9 +55,9 @@ function ChatContextConsumer({ children }: { children: (ctx: ChatContextValue) =
 /*  Sidebar: header, search, conversation list                                */
 /* -------------------------------------------------------------------------- */
 
-function ChatSidebar({ className, ...props }: React.ComponentProps<"div">) {
+function ChatSidebar({ className, ...props }: ChatSidebarProps) {
   return (
-    <div
+    <ark.div
       data-slot="chat-sidebar"
       className={cn("flex w-full flex-col gap-2 sm:w-56 lg:w-72 2xl:w-80", className)}
       {...props}
@@ -75,9 +65,9 @@ function ChatSidebar({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function ChatSidebarHeader({ className, ...props }: React.ComponentProps<"div">) {
+function ChatSidebarHeader({ className, ...props }: ChatSidebarHeaderProps) {
   return (
-    <div
+    <ark.div
       data-slot="chat-sidebar-header"
       className={cn(
         "sticky top-0 z-10 -mx-4 flex flex-col gap-2 bg-background px-4 pb-3 shadow-md sm:static sm:z-auto sm:mx-0 sm:p-0 sm:shadow-none",
@@ -88,28 +78,40 @@ function ChatSidebarHeader({ className, ...props }: React.ComponentProps<"div">)
   )
 }
 
-function ChatSidebarTitle({ className, children, ...props }: React.ComponentProps<"div">) {
+function ChatSidebarTitle({ className, children, ...props }: ChatSidebarTitleProps) {
   return (
-    <div data-slot="chat-sidebar-title" className={cn("flex items-center justify-between py-2", className)} {...props}>
+    <ark.div
+      data-slot="chat-sidebar-title"
+      className={cn("flex items-center justify-between py-2", className)}
+      {...props}
+    >
       {children}
-    </div>
+    </ark.div>
   )
 }
 
-function ChatSidebarHeading({ className, children, ...props }: React.ComponentProps<"h1">) {
+function ChatSidebarHeading({ className, children, ...props }: ChatSidebarHeadingProps) {
   return (
-    <h1
+    <ark.h1
       data-slot="chat-sidebar-heading"
       className={cn("flex items-center gap-2 text-2xl font-bold", className)}
       {...props}
     >
-      {children}
-      <MessagesSquareIcon className="size-5" />
-    </h1>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {children}
+          <MessagesSquareIcon className="size-5" />
+        </>
+      )}
+    </ark.h1>
   )
 }
 
-function ChatSearch({ className, ...props }: React.ComponentProps<"input">) {
+function ChatSearch({ className, ...props }: ChatSearchProps) {
   return (
     <label
       data-slot="chat-search"
@@ -120,7 +122,7 @@ function ChatSearch({ className, ...props }: React.ComponentProps<"input">) {
     >
       <SearchIcon className="size-4 shrink-0 text-muted-foreground" />
       <span className="sr-only">Search</span>
-      <input
+      <ark.input
         type="text"
         data-slot="chat-search-input"
         className="min-w-0 flex-1 bg-transparent outline-none placeholder:text-muted-foreground"
@@ -130,23 +132,25 @@ function ChatSearch({ className, ...props }: React.ComponentProps<"input">) {
   )
 }
 
-function ChatConversationList({ className, children, ...props }: React.ComponentProps<typeof ScrollArea>) {
+function ChatConversationList({ className, children, ...props }: ChatConversationListProps) {
   return (
-    <ScrollArea data-slot="chat-conversation-list" className={cn("-mx-3 h-full flex-1", className)} {...props}>
-      <div role="list" className="flex flex-col p-3 *:border-b *:border-border *:last:border-b-0">
-        {children}
-      </div>
-    </ScrollArea>
+    <ScrollArea.Root data-slot="chat-conversation-list" className={cn("-mx-3 h-full flex-1", className)} {...props}>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <div role="list" className="flex flex-col p-3 *:border-b *:border-border *:last:border-b-0">
+            {children}
+          </div>
+        </>
+      )}
+    </ScrollArea.Root>
   )
 }
 
-function ChatConversationItem({
-  className,
-  value,
-  onClick,
-  asChild,
-  ...props
-}: React.ComponentProps<typeof ark.button> & { value: string }) {
+function ChatConversationItem({ className, value, onClick, asChild, ...props }: ChatConversationItemProps) {
   const ctx = useChat("ChatConversationItem")
   const selected = ctx.value === value
   return (
@@ -173,17 +177,17 @@ function ChatConversationItem({
   )
 }
 
-function ChatConversationInfo({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="chat-conversation-info" className={cn("flex min-w-0 flex-col", className)} {...props} />
+function ChatConversationInfo({ className, ...props }: ChatConversationInfoProps) {
+  return <ark.div data-slot="chat-conversation-info" className={cn("flex min-w-0 flex-col", className)} {...props} />
 }
 
-function ChatConversationName({ className, ...props }: React.ComponentProps<"span">) {
-  return <span data-slot="chat-conversation-name" className={cn("font-medium", className)} {...props} />
+function ChatConversationName({ className, ...props }: ChatConversationNameProps) {
+  return <ark.span data-slot="chat-conversation-name" className={cn("font-medium", className)} {...props} />
 }
 
-function ChatConversationPreview({ className, ...props }: React.ComponentProps<"span">) {
+function ChatConversationPreview({ className, ...props }: ChatConversationPreviewProps) {
   return (
-    <span
+    <ark.span
       data-slot="chat-conversation-preview"
       className={cn(
         "line-clamp-2 text-muted-foreground group-hover/chat-conversation-item:text-accent-foreground/90",
@@ -198,10 +202,10 @@ function ChatConversationPreview({ className, ...props }: React.ComponentProps<"
 /*  Panel: header, messages, composer                                         */
 /* -------------------------------------------------------------------------- */
 
-function ChatPanel({ className, ...props }: React.ComponentProps<"div">) {
+function ChatPanel({ className, ...props }: ChatPanelProps) {
   const ctx = useChat("ChatPanel")
   return (
-    <div
+    <ark.div
       data-slot="chat-panel"
       data-mobile-open={ctx.mobileOpen ? "" : undefined}
       className={cn(
@@ -213,9 +217,9 @@ function ChatPanel({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function ChatHeader({ className, ...props }: React.ComponentProps<"div">) {
+function ChatHeader({ className, ...props }: ChatHeaderProps) {
   return (
-    <div
+    <ark.div
       data-slot="chat-header"
       className={cn(
         "mb-1 flex flex-none items-center justify-between gap-3 bg-card p-4 shadow-lg sm:rounded-t-md",
@@ -227,7 +231,7 @@ function ChatHeader({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 /** Returns to the conversation list on small screens. Polymorphic via `asChild`. */
-function ChatBackTrigger({ className, onClick, children, asChild, ...props }: React.ComponentProps<typeof Button>) {
+function ChatBackTrigger({ className, onClick, children, asChild, ...props }: ChatBackTriggerProps) {
   const ctx = useChat("ChatBackTrigger")
   return (
     <Button
@@ -254,9 +258,9 @@ function ChatBackTrigger({ className, onClick, children, asChild, ...props }: Re
   )
 }
 
-function ChatHeaderInfo({ className, ...props }: React.ComponentProps<"div">) {
+function ChatHeaderInfo({ className, ...props }: ChatHeaderInfoProps) {
   return (
-    <div
+    <ark.div
       data-slot="chat-header-info"
       className={cn("flex min-w-0 items-center gap-2 lg:gap-4", className)}
       {...props}
@@ -264,17 +268,19 @@ function ChatHeaderInfo({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function ChatHeaderText({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="chat-header-text" className={cn("flex min-w-0 flex-col", className)} {...props} />
+function ChatHeaderText({ className, ...props }: ChatHeaderTextProps) {
+  return <ark.div data-slot="chat-header-text" className={cn("flex min-w-0 flex-col", className)} {...props} />
 }
 
-function ChatHeaderTitle({ className, ...props }: React.ComponentProps<"span">) {
-  return <span data-slot="chat-header-title" className={cn("text-sm font-medium lg:text-base", className)} {...props} />
-}
-
-function ChatHeaderDescription({ className, ...props }: React.ComponentProps<"span">) {
+function ChatHeaderTitle({ className, ...props }: ChatHeaderTitleProps) {
   return (
-    <span
+    <ark.span data-slot="chat-header-title" className={cn("text-sm font-medium lg:text-base", className)} {...props} />
+  )
+}
+
+function ChatHeaderDescription({ className, ...props }: ChatHeaderDescriptionProps) {
+  return (
+    <ark.span
       data-slot="chat-header-description"
       className={cn("line-clamp-1 max-w-32 text-xs text-muted-foreground lg:max-w-none lg:text-sm", className)}
       {...props}
@@ -282,9 +288,9 @@ function ChatHeaderDescription({ className, ...props }: React.ComponentProps<"sp
   )
 }
 
-function ChatHeaderActions({ className, ...props }: React.ComponentProps<"div">) {
+function ChatHeaderActions({ className, ...props }: ChatHeaderActionsProps) {
   return (
-    <div
+    <ark.div
       data-slot="chat-header-actions"
       className={cn("-me-1 flex items-center gap-1 lg:gap-2", className)}
       {...props}
@@ -292,8 +298,10 @@ function ChatHeaderActions({ className, ...props }: React.ComponentProps<"div">)
   )
 }
 
-function ChatBody({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="chat-body" className={cn("flex flex-1 flex-col gap-2 px-4 pt-0 pb-4", className)} {...props} />
+function ChatBody({ className, ...props }: ChatBodyProps) {
+  return (
+    <ark.div data-slot="chat-body" className={cn("flex flex-1 flex-col gap-2 px-4 pt-0 pb-4", className)} {...props} />
+  )
 }
 
 /**
@@ -301,10 +309,10 @@ function ChatBody({ className, ...props }: React.ComponentProps<"div">) {
  * reversed so the latest message sits at the bottom and the scroll position
  * stays pinned there as messages arrive.
  */
-function ChatMessages({ className, ...props }: React.ComponentProps<"div">) {
+function ChatMessages({ className, ...props }: ChatMessagesProps) {
   return (
     <div data-slot="chat-messages" className="relative -me-4 flex flex-1 flex-col overflow-y-hidden">
-      <div
+      <ark.div
         data-slot="chat-messages-viewport"
         className={cn(
           "flex h-40 w-full grow flex-col-reverse justify-start gap-4 overflow-y-auto py-2 pe-4 pb-4",
@@ -316,8 +324,8 @@ function ChatMessages({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function ChatDateSeparator({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="chat-date-separator" className={cn("text-center text-xs", className)} {...props} />
+function ChatDateSeparator({ className, ...props }: ChatDateSeparatorProps) {
+  return <ark.div data-slot="chat-date-separator" className={cn("text-center text-xs", className)} {...props} />
 }
 
 const chatMessageVariants = cva("group/chat-message max-w-72 px-3 py-2 wrap-break-word shadow-lg", {
@@ -330,13 +338,9 @@ const chatMessageVariants = cva("group/chat-message max-w-72 px-3 py-2 wrap-brea
   defaultVariants: { variant: "received" },
 })
 
-function ChatMessage({
-  className,
-  variant = "received",
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof chatMessageVariants>) {
+function ChatMessage({ className, variant = "received", ...props }: ChatMessageProps) {
   return (
-    <div
+    <ark.div
       data-slot="chat-message"
       data-variant={variant}
       className={cn(chatMessageVariants({ variant }), className)}
@@ -345,9 +349,9 @@ function ChatMessage({
   )
 }
 
-function ChatMessageTime({ className, ...props }: React.ComponentProps<"span">) {
+function ChatMessageTime({ className, ...props }: ChatMessageTimeProps) {
   return (
-    <span
+    <ark.span
       data-slot="chat-message-time"
       className={cn(
         "mt-1 block text-xs font-light text-foreground/75 italic group-data-[variant=sent]/chat-message:text-end group-data-[variant=sent]/chat-message:text-primary-foreground/85",
@@ -358,13 +362,13 @@ function ChatMessageTime({ className, ...props }: React.ComponentProps<"span">) 
   )
 }
 
-function ChatComposer({ className, ...props }: React.ComponentProps<"form">) {
-  return <form data-slot="chat-composer" className={cn("flex w-full flex-none gap-2", className)} {...props} />
+function ChatComposer({ className, ...props }: ChatComposerProps) {
+  return <ark.form data-slot="chat-composer" className={cn("flex w-full flex-none gap-2", className)} {...props} />
 }
 
-function ChatComposerField({ className, ...props }: React.ComponentProps<"div">) {
+function ChatComposerField({ className, ...props }: ChatComposerFieldProps) {
   return (
-    <div
+    <ark.div
       data-slot="chat-composer-field"
       className={cn(
         "flex flex-1 items-center gap-2 rounded-md border border-input bg-card px-2 py-1 transition-colors has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 lg:gap-4",
@@ -375,15 +379,15 @@ function ChatComposerField({ className, ...props }: React.ComponentProps<"div">)
   )
 }
 
-function ChatComposerActions({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="chat-composer-actions" className={cn("flex items-center gap-1", className)} {...props} />
+function ChatComposerActions({ className, ...props }: ChatComposerActionsProps) {
+  return <ark.div data-slot="chat-composer-actions" className={cn("flex items-center gap-1", className)} {...props} />
 }
 
-function ChatComposerInput({ className, ...props }: React.ComponentProps<"input">) {
+function ChatComposerInput({ className, ...props }: ChatComposerInputProps) {
   return (
     <label className="flex-1">
       <span className="sr-only">Message</span>
-      <input
+      <ark.input
         type="text"
         data-slot="chat-composer-input"
         className={cn(
@@ -404,7 +408,7 @@ function ChatComposerSendTrigger({
   variant = "ghost",
   size = "icon",
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: ChatComposerSendTriggerProps) {
   return (
     <Button
       data-slot="chat-composer-send-trigger"
@@ -431,9 +435,9 @@ function ChatComposerSendTrigger({
 /*  Empty state                                                               */
 /* -------------------------------------------------------------------------- */
 
-function ChatEmpty({ className, ...props }: React.ComponentProps<"div">) {
+function ChatEmpty({ className, ...props }: ChatEmptyProps) {
   return (
-    <div
+    <ark.div
       data-slot="chat-empty"
       className={cn(
         "absolute inset-0 inset-s-full z-50 hidden w-full flex-1 flex-col justify-center rounded-md border bg-card shadow-xs sm:static sm:z-auto sm:flex",
@@ -444,13 +448,15 @@ function ChatEmpty({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function ChatEmptyContent({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="chat-empty-content" className={cn("flex flex-col items-center gap-6", className)} {...props} />
+function ChatEmptyContent({ className, ...props }: ChatEmptyContentProps) {
+  return (
+    <ark.div data-slot="chat-empty-content" className={cn("flex flex-col items-center gap-6", className)} {...props} />
+  )
 }
 
-function ChatEmptyIcon({ className, children, ...props }: React.ComponentProps<"div">) {
+function ChatEmptyIcon({ className, children, ...props }: ChatEmptyIconProps) {
   return (
-    <div
+    <ark.div
       data-slot="chat-empty-icon"
       className={cn(
         "flex size-16 items-center justify-center rounded-full border-2 border-border [&_svg]:size-8",
@@ -458,18 +464,20 @@ function ChatEmptyIcon({ className, children, ...props }: React.ComponentProps<"
       )}
       {...props}
     >
-      {children ?? <MessagesSquareIcon />}
-    </div>
+      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <MessagesSquareIcon />}</>}
+    </ark.div>
   )
 }
 
-function ChatEmptyTitle({ className, ...props }: React.ComponentProps<"h2">) {
-  return <h2 data-slot="chat-empty-title" className={cn("text-center text-xl font-semibold", className)} {...props} />
+function ChatEmptyTitle({ className, ...props }: ChatEmptyTitleProps) {
+  return (
+    <ark.h2 data-slot="chat-empty-title" className={cn("text-center text-xl font-semibold", className)} {...props} />
+  )
 }
 
-function ChatEmptyDescription({ className, ...props }: React.ComponentProps<"p">) {
+function ChatEmptyDescription({ className, ...props }: ChatEmptyDescriptionProps) {
   return (
-    <p
+    <ark.p
       data-slot="chat-empty-description"
       className={cn("text-center text-sm text-muted-foreground", className)}
       {...props}
@@ -501,44 +509,157 @@ function getInitials(name: string) {
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
 }
 
+type ChatContextProps = { children: (ctx: ChatContextValue) => React.ReactNode }
+
+type ChatRootProps = Omit<React.ComponentProps<typeof ark.div>, "defaultValue"> & {
+  value?: string | null
+  defaultValue?: string | null
+  onValueChange?: (value: string | null) => void
+}
+
+type ChatBackTriggerProps = React.ComponentProps<typeof Button>
+
+type ChatBodyProps = React.ComponentProps<typeof ark.div>
+
+type ChatComposerProps = React.ComponentProps<typeof ark.form>
+
+type ChatComposerActionsProps = React.ComponentProps<typeof ark.div>
+
+type ChatComposerFieldProps = React.ComponentProps<typeof ark.div>
+
+type ChatComposerInputProps = React.ComponentProps<typeof ark.input>
+
+type ChatComposerSendTriggerProps = React.ComponentProps<typeof Button>
+
+type ChatConversationInfoProps = React.ComponentProps<typeof ark.div>
+
+type ChatConversationItemProps = React.ComponentProps<typeof ark.button> & { value: string }
+
+type ChatConversationListProps = React.ComponentProps<typeof ScrollArea.Root>
+
+type ChatConversationNameProps = React.ComponentProps<typeof ark.span>
+
+type ChatConversationPreviewProps = React.ComponentProps<typeof ark.span>
+
+type ChatDateSeparatorProps = React.ComponentProps<typeof ark.div>
+
+type ChatEmptyProps = React.ComponentProps<typeof ark.div>
+
+type ChatEmptyContentProps = React.ComponentProps<typeof ark.div>
+
+type ChatEmptyDescriptionProps = React.ComponentProps<typeof ark.p>
+
+type ChatEmptyIconProps = React.ComponentProps<typeof ark.div>
+
+type ChatEmptyTitleProps = React.ComponentProps<typeof ark.h2>
+
+type ChatHeaderProps = React.ComponentProps<typeof ark.div>
+
+type ChatHeaderActionsProps = React.ComponentProps<typeof ark.div>
+
+type ChatHeaderDescriptionProps = React.ComponentProps<typeof ark.span>
+
+type ChatHeaderInfoProps = React.ComponentProps<typeof ark.div>
+
+type ChatHeaderTextProps = React.ComponentProps<typeof ark.div>
+
+type ChatHeaderTitleProps = React.ComponentProps<typeof ark.span>
+
+type ChatMessageProps = React.ComponentProps<typeof ark.div> & VariantProps<typeof chatMessageVariants>
+
+type ChatMessageTimeProps = React.ComponentProps<typeof ark.span>
+
+type ChatMessagesProps = React.ComponentProps<typeof ark.div>
+
+type ChatPanelProps = React.ComponentProps<typeof ark.div>
+
+type ChatSearchProps = React.ComponentProps<typeof ark.input>
+
+type ChatSidebarProps = React.ComponentProps<typeof ark.div>
+
+type ChatSidebarHeaderProps = React.ComponentProps<typeof ark.div>
+
+type ChatSidebarHeadingProps = React.ComponentProps<typeof ark.h1>
+
+type ChatSidebarTitleProps = React.ComponentProps<typeof ark.div>
+
+const Chat = {
+  Context: ChatContext,
+  Root: ChatRoot,
+  BackTrigger: ChatBackTrigger,
+  Body: ChatBody,
+  Composer: ChatComposer,
+  ComposerActions: ChatComposerActions,
+  ComposerField: ChatComposerField,
+  ComposerInput: ChatComposerInput,
+  ComposerSendTrigger: ChatComposerSendTrigger,
+  ConversationInfo: ChatConversationInfo,
+  ConversationItem: ChatConversationItem,
+  ConversationList: ChatConversationList,
+  ConversationName: ChatConversationName,
+  ConversationPreview: ChatConversationPreview,
+  DateSeparator: ChatDateSeparator,
+  Empty: ChatEmpty,
+  EmptyContent: ChatEmptyContent,
+  EmptyDescription: ChatEmptyDescription,
+  EmptyIcon: ChatEmptyIcon,
+  EmptyTitle: ChatEmptyTitle,
+  Header: ChatHeader,
+  HeaderActions: ChatHeaderActions,
+  HeaderDescription: ChatHeaderDescription,
+  HeaderInfo: ChatHeaderInfo,
+  HeaderText: ChatHeaderText,
+  HeaderTitle: ChatHeaderTitle,
+  Message: ChatMessage,
+  MessageTime: ChatMessageTime,
+  Messages: ChatMessages,
+  Panel: ChatPanel,
+  Search: ChatSearch,
+  Sidebar: ChatSidebar,
+  SidebarHeader: ChatSidebarHeader,
+  SidebarHeading: ChatSidebarHeading,
+  SidebarTitle: ChatSidebarTitle,
+}
+
 export {
   Chat,
-  ChatBackTrigger,
-  ChatBody,
-  ChatComposer,
-  ChatComposerActions,
-  ChatComposerField,
-  ChatComposerInput,
-  ChatComposerSendTrigger,
-  ChatContextConsumer as ChatContext,
-  ChatConversationInfo,
-  ChatConversationItem,
-  ChatConversationList,
-  ChatConversationName,
-  ChatConversationPreview,
-  ChatDateSeparator,
-  ChatEmpty,
-  ChatEmptyContent,
-  ChatEmptyDescription,
-  ChatEmptyIcon,
-  ChatEmptyTitle,
-  ChatHeader,
-  ChatHeaderActions,
-  ChatHeaderDescription,
-  ChatHeaderInfo,
-  ChatHeaderText,
-  ChatHeaderTitle,
-  ChatMessage,
-  ChatMessageTime,
-  ChatMessages,
-  ChatPanel,
-  ChatSearch,
-  ChatSidebar,
-  ChatSidebarHeader,
-  ChatSidebarHeading,
-  ChatSidebarTitle,
   chatMessageVariants,
   getInitials,
   groupBy,
   useChat,
+  type ChatContextProps,
+  type ChatRootProps,
+  type ChatBackTriggerProps,
+  type ChatBodyProps,
+  type ChatComposerProps,
+  type ChatComposerActionsProps,
+  type ChatComposerFieldProps,
+  type ChatComposerInputProps,
+  type ChatComposerSendTriggerProps,
+  type ChatConversationInfoProps,
+  type ChatConversationItemProps,
+  type ChatConversationListProps,
+  type ChatConversationNameProps,
+  type ChatConversationPreviewProps,
+  type ChatDateSeparatorProps,
+  type ChatEmptyProps,
+  type ChatEmptyContentProps,
+  type ChatEmptyDescriptionProps,
+  type ChatEmptyIconProps,
+  type ChatEmptyTitleProps,
+  type ChatHeaderProps,
+  type ChatHeaderActionsProps,
+  type ChatHeaderDescriptionProps,
+  type ChatHeaderInfoProps,
+  type ChatHeaderTextProps,
+  type ChatHeaderTitleProps,
+  type ChatMessageProps,
+  type ChatMessageTimeProps,
+  type ChatMessagesProps,
+  type ChatPanelProps,
+  type ChatSearchProps,
+  type ChatSidebarProps,
+  type ChatSidebarHeaderProps,
+  type ChatSidebarHeadingProps,
+  type ChatSidebarTitleProps,
 }

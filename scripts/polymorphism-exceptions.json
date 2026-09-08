@@ -1,0 +1,23 @@
+{
+  "app-shell.tsx:AppShell.CommandDialog": "Dialog composition: className styles its content; the root is a context provider. Compose Command and Dialog parts for custom elements.",
+  "app-shell.tsx:AppShell.TopNavMenu": "Menu provider composition with separate trigger and content elements.",
+  "calendar.tsx:Calendar.Root": "React Day Picker owns the calendar DOM; use its components API. Calendar.DayButton supports asChild.",
+  "command.tsx:Command.Dialog": "Dialog provider composition; className targets the content, not a root DOM element.",
+  "data-table.tsx:DataTable.PageSize": "Select provider composition with its own trigger and content; use Select parts for custom rendering.",
+  "data-table.tsx:DataTable.RowActions": "Menu provider composition; its trigger prop supplies a custom trigger element.",
+  "data-table.tsx:DataTable.ViewOptions": "Menu provider composition with separate trigger and content elements.",
+  "format.tsx:Format.Number": "Ark returns formatted text, with no root DOM element.",
+  "format.tsx:Format.RelativeTime": "Ark returns formatted text, with no root DOM element.",
+  "frame.tsx:Frame.Root": "The iframe is required for the isolated document and content portals.",
+  "highlight.tsx:Highlight.Root": "Ark renders multiple text and mark fragments; use useHighlight for a custom renderer.",
+  "hotkeys.tsx:Hotkeys.Dialog": "Dialog provider composition with no root element.",
+  "input-otp.tsx:InputOTP.Root": "input-otp owns its input and slot rendering; use the Ark PinInput parts for polymorphic inputs.",
+  "resizable.tsx:Resizable.Root": "react-resizable-panels owns the group DOM; use the Ark Splitter parts for polymorphism.",
+  "resizable.tsx:Resizable.Handle": "react-resizable-panels owns the separator element; Splitter.ResizeTrigger supports asChild.",
+  "resizable.tsx:Resizable.Panel": "react-resizable-panels owns the panel element; Splitter.Panel supports asChild.",
+  "rich-text-editor.tsx:RichTextEditor.Content": "Tiptap owns the editable document DOM.",
+  "rich-text-editor.tsx:RichTextEditor.BubbleMenu": "Tiptap owns the floating menu DOM and its editor plugin registration.",
+  "sonner.tsx:Sonner.Root": "Sonner owns the notification renderer; Ark Toast.Root supports polymorphism.",
+  "toast.tsx:Toast.Toaster": "Ark's group renderer receives a per-toast render callback, not a replacement group child. Compose polymorphic Toast.Root elements inside it.",
+  "tree-view.tsx:TreeView.NodeCheckboxIndicator": "Ark selects among children, indeterminate, and fallback fragments without rendering an element."
+}

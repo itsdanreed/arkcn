@@ -1,5 +1,6 @@
 "use client"
 
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import {
   type ColumnDef,
@@ -18,6 +19,7 @@ import {
   type DataTableRow as DataTableRowInstance,
 } from "@/lib/data-table-adapter"
 import {
+  MinusIcon,
   ArrowDownIcon,
   ArrowUpIcon,
   CheckIcon,
@@ -38,42 +40,15 @@ import { LiveRegion, useLiveRegion } from "@/components/ui/live-region"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-  useFilter,
-  useListCollection,
-} from "@/components/ui/command"
-import {
-  DropdownMenu,
-  DropdownMenuCheckboxItem,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import { Command, useFilter, useListCollection } from "@/components/ui/command"
+import { DropdownMenu } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import {
-  Select,
-  SelectContent,
-  SelectControl,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-  createListCollection,
-} from "@/components/ui/select"
+import { Popover } from "@/components/ui/popover"
+import { Select, createListCollection } from "@/components/ui/select"
 import { FloatingToolbar } from "@/components/ui/floating-toolbar"
 import { Separator } from "@/components/ui/separator"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Table } from "@/components/ui/table"
+import { Tooltip } from "@/components/ui/tooltip"
 
 /* -------------------------------------------------------------------------- */
 /*  Hook                                                                      */
@@ -104,14 +79,10 @@ function useDataTableContext<TData>(explicit?: DataTableInstance<TData>): DataTa
   return table
 }
 
-function DataTable<TData>({
-  table,
-  className,
-  ...props
-}: React.ComponentProps<"div"> & { table: DataTableInstance<TData> }) {
+function DataTableRoot<TData>({ table, className, ...props }: DataTableRootProps<TData>) {
   return (
     <DataTableContext.Provider value={table}>
-      <div data-slot="data-table" className={cn("flex flex-1 flex-col gap-4", className)} {...props} />
+      <ark.div data-slot="data-table" className={cn("flex flex-1 flex-col gap-4", className)} {...props} />
     </DataTableContext.Provider>
   )
 }
@@ -120,9 +91,9 @@ function DataTable<TData>({
 /*  Toolbar                                                                   */
 /* -------------------------------------------------------------------------- */
 
-function DataTableToolbar({ className, ...props }: React.ComponentProps<"div">) {
+function DataTableToolbar({ className, ...props }: DataTableToolbarProps) {
   return (
-    <div
+    <ark.div
       data-slot="data-table-toolbar"
       className={cn("flex items-center justify-between gap-2", className)}
       {...props}
@@ -130,9 +101,9 @@ function DataTableToolbar({ className, ...props }: React.ComponentProps<"div">) 
   )
 }
 
-function DataTableToolbarGroup({ className, ...props }: React.ComponentProps<"div">) {
+function DataTableToolbarGroup({ className, ...props }: DataTableToolbarGroupProps) {
   return (
-    <div
+    <ark.div
       data-slot="data-table-toolbar-group"
       className={cn("flex flex-1 flex-col-reverse items-start gap-2 sm:flex-row sm:items-center", className)}
       {...props}
@@ -140,23 +111,14 @@ function DataTableToolbarGroup({ className, ...props }: React.ComponentProps<"di
   )
 }
 
-function DataTableSearch<TData>({
-  table: tableProp,
-  columnId,
-  className,
-  ...props
-}: Omit<React.ComponentProps<typeof Input>, "value" | "onChange"> & {
-  table?: DataTableInstance<TData>
-  /** Filter a single column instead of the global filter. */
-  columnId?: string
-}) {
+function DataTableSearch<TData>({ table: tableProp, columnId, className, ...props }: DataTableSearchProps<TData>) {
   const table = useDataTableContext(tableProp)
   const column = columnId ? table.getColumn(columnId) : undefined
   const value = columnId
     ? ((column?.getFilterValue() as string) ?? "")
     : ((table.getState().globalFilter as string) ?? "")
   return (
-    <Input
+    <Input.Root
       data-slot="data-table-search"
       value={value}
       onChange={(event) =>
@@ -174,7 +136,7 @@ function DataTableResetFilters<TData>({
   children,
   asChild,
   ...props
-}: React.ComponentProps<typeof Button> & { table?: DataTableInstance<TData> }) {
+}: DataTableResetFiltersProps<TData>) {
   const table = useDataTableContext(tableProp)
   const isFiltered = table.getState().columnFilters.length > 0 || !!table.getState().globalFilter
   if (!isFiltered) return null
@@ -219,15 +181,7 @@ function DataTableFacetedFilter<TData, TValue>({
   column: columnProp,
   title,
   options,
-}: {
-  table?: DataTableInstance<TData>
-  /** Id of the column this filter applies to. */
-  columnId?: string
-  column?: DataTableColumn<TData, TValue>
-  title?: string
-  /** Facet options as `{ value, label, icon? }`. */
-  options: FacetOption[]
-}) {
+}: DataTableFacetedFilterProps<TData, TValue>) {
   const table = useDataTableContext(tableProp)
   const column = columnProp ?? (columnId ? table.getColumn(columnId) : undefined)
   const facets = column?.getFacetedUniqueValues()
@@ -250,46 +204,46 @@ function DataTableFacetedFilter<TData, TValue>({
   }
 
   return (
-    <Popover positioning={{ placement: "bottom-start" }}>
-      <PopoverTrigger asChild>
+    <Popover.Root positioning={{ placement: "bottom-start" }}>
+      <Popover.Trigger asChild>
         <Button data-slot="data-table-faceted-filter-trigger" variant="outline" size="sm" className="h-8 border-dashed">
           <PlusCircleIcon />
           {title}
           {selectedValues.size > 0 && (
             <>
-              <Separator orientation="vertical" className="mx-1 h-4" />
-              <Badge variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
+              <Separator.Root orientation="vertical" className="mx-1 h-4" />
+              <Badge.Root variant="secondary" className="rounded-sm px-1 font-normal lg:hidden">
                 {selectedValues.size}
-              </Badge>
+              </Badge.Root>
               <div className="hidden gap-1 lg:flex">
                 {selectedValues.size > 2 ? (
-                  <Badge variant="secondary" className="rounded-sm px-1 font-normal">
+                  <Badge.Root variant="secondary" className="rounded-sm px-1 font-normal">
                     {selectedValues.size} selected
-                  </Badge>
+                  </Badge.Root>
                 ) : (
                   options
                     .filter((option) => selectedValues.has(option.value))
                     .map((option) => (
-                      <Badge key={option.value} variant="secondary" className="rounded-sm px-1 font-normal">
+                      <Badge.Root key={option.value} variant="secondary" className="rounded-sm px-1 font-normal">
                         {option.label}
-                      </Badge>
+                      </Badge.Root>
                     ))
                 )}
               </div>
             </>
           )}
         </Button>
-      </PopoverTrigger>
-      <PopoverContent data-slot="data-table-faceted-filter-content" className="w-50 p-0">
-        <Command collection={collection} value={[]} onSelect={({ value }) => toggle(value)}>
-          <CommandInput placeholder={title} onValueChange={filter} />
-          <CommandList>
-            <CommandEmpty>No results found.</CommandEmpty>
-            <CommandGroup>
+      </Popover.Trigger>
+      <Popover.Content data-slot="data-table-faceted-filter-content" className="w-50 p-0">
+        <Command.Root collection={collection} value={[]} onSelect={({ value }) => toggle(value)}>
+          <Command.Input placeholder={title} onValueChange={filter} />
+          <Command.Content>
+            <Command.Empty>No results found.</Command.Empty>
+            <Command.ItemGroup>
               {collection.items.map((option) => {
                 const isSelected = selectedValues.has(option.value)
                 return (
-                  <CommandItem
+                  <Command.Item
                     key={option.value}
                     item={option}
                     className="**:data-[slot=command-item-indicator]:hidden"
@@ -309,28 +263,28 @@ function DataTableFacetedFilter<TData, TValue>({
                         {facets.get(option.value)}
                       </span>
                     ) : null}
-                  </CommandItem>
+                  </Command.Item>
                 )
               })}
-            </CommandGroup>
+            </Command.ItemGroup>
             {selectedValues.size > 0 && (
               <>
-                <CommandSeparator />
-                <CommandGroup>
-                  <CommandItem
+                <Command.Separator />
+                <Command.ItemGroup>
+                  <Command.Item
                     item={{ label: "Clear filters", value: "__clear__" }}
                     onSelect={() => column?.setFilterValue(undefined)}
                     className="justify-center text-center **:data-[slot=command-item-indicator]:hidden"
                   >
                     Clear filters
-                  </CommandItem>
-                </CommandGroup>
+                  </Command.Item>
+                </Command.ItemGroup>
               </>
             )}
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
+          </Command.Content>
+        </Command.Root>
+      </Popover.Content>
+    </Popover.Root>
   )
 }
 
@@ -338,19 +292,11 @@ function DataTableFacetedFilter<TData, TValue>({
 /*  View options                                                              */
 /* -------------------------------------------------------------------------- */
 
-function DataTableViewOptions<TData>({
-  table: tableProp,
-  className,
-  children,
-}: {
-  table?: DataTableInstance<TData>
-  className?: string
-  children?: React.ReactNode
-}) {
+function DataTableViewOptions<TData>({ table: tableProp, className, children }: DataTableViewOptionsProps<TData>) {
   const table = useDataTableContext(tableProp)
   return (
-    <DropdownMenu positioning={{ placement: "bottom-end" }}>
-      <DropdownMenuTrigger asChild>
+    <DropdownMenu.Root positioning={{ placement: "bottom-end" }}>
+      <DropdownMenu.Trigger asChild>
         <Button
           data-slot="data-table-view-options-trigger"
           variant="outline"
@@ -360,16 +306,16 @@ function DataTableViewOptions<TData>({
           <Settings2Icon />
           {children ?? "View"}
         </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent data-slot="data-table-view-options-content" className="w-37.5">
-        <DropdownMenuGroup>
-          <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
-          <DropdownMenuSeparator />
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content data-slot="data-table-view-options-content" className="w-37.5">
+        <DropdownMenu.ItemGroup>
+          <DropdownMenu.ItemGroupLabel>Toggle columns</DropdownMenu.ItemGroupLabel>
+          <DropdownMenu.Separator />
           {table
             .getAllColumns()
             .filter((column) => typeof column.accessorFn !== "undefined" && column.getCanHide())
             .map((column) => (
-              <DropdownMenuCheckboxItem
+              <DropdownMenu.CheckboxItem
                 key={column.id}
                 value={column.id}
                 className="capitalize"
@@ -378,11 +324,11 @@ function DataTableViewOptions<TData>({
                 closeOnSelect={false}
               >
                 {column.label ?? column.id}
-              </DropdownMenuCheckboxItem>
+              </DropdownMenu.CheckboxItem>
             ))}
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        </DropdownMenu.ItemGroup>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }
 
@@ -400,48 +346,48 @@ function DataTableHead<TData>({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof TableHead> & { column?: string; table?: DataTableInstance<TData> }) {
+}: DataTableHeadProps<TData>) {
   const table = useDataTableContext(tableProp)
   const column = columnId ? table.getColumn(columnId) : undefined
   if (column && !column.getIsVisible()) return null
   if (!column?.getCanSort()) {
     return (
-      <TableHead data-slot="data-table-head" data-column={columnId} className={className} {...props}>
+      <Table.Head data-slot="data-table-head" data-column={columnId} className={className} {...props}>
         {children}
-      </TableHead>
+      </Table.Head>
     )
   }
   const sorted = column.getIsSorted()
   return (
-    <TableHead data-slot="data-table-head" data-column={columnId} className={className} {...props}>
-      <DropdownMenu positioning={{ placement: "bottom-start" }}>
-        <DropdownMenuTrigger asChild>
+    <Table.Head data-slot="data-table-head" data-column={columnId} className={className} {...props}>
+      <DropdownMenu.Root positioning={{ placement: "bottom-start" }}>
+        <DropdownMenu.Trigger asChild>
           <Button variant="ghost" size="sm" className="-ml-2.5 h-8 data-open:bg-accent">
             <span>{children}</span>
             {sorted === "desc" ? <ArrowDownIcon /> : sorted === "asc" ? <ArrowUpIcon /> : <ChevronsUpDownIcon />}
           </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent>
-          <DropdownMenuItem value="asc" onSelect={() => column.toggleSorting(false)}>
+        </DropdownMenu.Trigger>
+        <DropdownMenu.Content>
+          <DropdownMenu.Item value="asc" onSelect={() => column.toggleSorting(false)}>
             <ArrowUpIcon className="text-muted-foreground/70" />
             Asc
-          </DropdownMenuItem>
-          <DropdownMenuItem value="desc" onSelect={() => column.toggleSorting(true)}>
+          </DropdownMenu.Item>
+          <DropdownMenu.Item value="desc" onSelect={() => column.toggleSorting(true)}>
             <ArrowDownIcon className="text-muted-foreground/70" />
             Desc
-          </DropdownMenuItem>
+          </DropdownMenu.Item>
           {column.getCanHide() && (
             <>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem value="hide" onSelect={() => column.toggleVisibility(false)}>
+              <DropdownMenu.Separator />
+              <DropdownMenu.Item value="hide" onSelect={() => column.toggleVisibility(false)}>
                 <EyeOffIcon className="text-muted-foreground/70" />
                 Hide
-              </DropdownMenuItem>
+              </DropdownMenu.Item>
             </>
           )}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </TableHead>
+        </DropdownMenu.Content>
+      </DropdownMenu.Root>
+    </Table.Head>
   )
 }
 
@@ -449,41 +395,65 @@ function DataTableHead<TData>({
 /*  Selection cells                                                           */
 /* -------------------------------------------------------------------------- */
 
-function DataTableSelectAll<TData>({
-  table,
-  className,
-  ...props
-}: Omit<React.ComponentProps<typeof Checkbox>, "checked" | "onCheckedChange"> & {
-  table: DataTableInstance<TData>
-}) {
+function DataTableSelectAll<TData>({ table, className, ...props }: DataTableSelectAllProps<TData>) {
   return (
-    <Checkbox
+    <Checkbox.Root
       data-slot="data-table-select-all"
       checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && "indeterminate")}
       onCheckedChange={({ checked }) => table.toggleAllPageRowsSelected(checked === true)}
       aria-label="Select all"
       className={cn("translate-y-0.5", className)}
       {...props}
-    />
+    >
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <Checkbox.Control>
+            <Checkbox.Indicator>
+              <CheckIcon />
+            </Checkbox.Indicator>
+            <Checkbox.Indicator indeterminate>
+              <MinusIcon />
+            </Checkbox.Indicator>
+          </Checkbox.Control>
+          <Checkbox.HiddenInput />
+        </>
+      )}
+    </Checkbox.Root>
   )
 }
 
-function DataTableSelectRow<TData>({
-  row,
-  className,
-  ...props
-}: Omit<React.ComponentProps<typeof Checkbox>, "checked" | "onCheckedChange"> & {
-  row: DataTableRowInstance<TData>
-}) {
+function DataTableSelectRow<TData>({ row, className, ...props }: DataTableSelectRowProps<TData>) {
   return (
-    <Checkbox
+    <Checkbox.Root
       data-slot="data-table-select-row"
       checked={row.getIsSelected()}
       onCheckedChange={({ checked }) => row.toggleSelected(checked === true)}
       aria-label="Select row"
       className={cn("translate-y-0.5", className)}
       {...props}
-    />
+    >
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <Checkbox.Control>
+            <Checkbox.Indicator>
+              <CheckIcon />
+            </Checkbox.Indicator>
+            <Checkbox.Indicator indeterminate>
+              <MinusIcon />
+            </Checkbox.Indicator>
+          </Checkbox.Control>
+          <Checkbox.HiddenInput />
+        </>
+      )}
+    </Checkbox.Root>
   )
 }
 
@@ -491,19 +461,10 @@ function DataTableSelectRow<TData>({
 /*  Row actions                                                               */
 /* -------------------------------------------------------------------------- */
 
-function DataTableRowActions({
-  children,
-  className,
-  trigger,
-  ...props
-}: React.ComponentProps<typeof DropdownMenu> & {
-  className?: string
-  /** Replace the default ellipsis button with your own element. */
-  trigger?: React.ReactElement
-}) {
+function DataTableRowActions({ children, className, trigger, ...props }: DataTableRowActionsProps) {
   return (
-    <DropdownMenu positioning={{ placement: "bottom-end" }} {...props}>
-      <DropdownMenuTrigger asChild>
+    <DropdownMenu.Root positioning={{ placement: "bottom-end" }} {...props}>
+      <DropdownMenu.Trigger asChild>
         {trigger ?? (
           <Button
             data-slot="data-table-row-actions-trigger"
@@ -515,11 +476,11 @@ function DataTableRowActions({
             <span className="sr-only">Open menu</span>
           </Button>
         )}
-      </DropdownMenuTrigger>
-      <DropdownMenuContent data-slot="data-table-row-actions-content" className="w-40">
+      </DropdownMenu.Trigger>
+      <DropdownMenu.Content data-slot="data-table-row-actions-content" className="w-40">
         {children}
-      </DropdownMenuContent>
-    </DropdownMenu>
+      </DropdownMenu.Content>
+    </DropdownMenu.Root>
   )
 }
 
@@ -527,29 +488,37 @@ function DataTableRowActions({
 /*  Table rendering                                                           */
 /* -------------------------------------------------------------------------- */
 
-function DataTableContainer({ className, ...props }: React.ComponentProps<"div">) {
+function DataTableContainer({ className, ...props }: DataTableContainerProps) {
   return (
-    <div data-slot="data-table-container" className={cn("overflow-hidden rounded-md border", className)} {...props} />
+    <ark.div
+      data-slot="data-table-container"
+      className={cn("overflow-hidden rounded-md border", className)}
+      {...props}
+    />
   )
 }
 
 /** The header row. Put `DataTableHead` cells inside, one per column, in display order. */
-function DataTableHeader({ className, children, ...props }: React.ComponentProps<typeof TableHeader>) {
+function DataTableHeader({ className, children, ...props }: DataTableHeaderProps) {
   return (
-    <TableHeader data-slot="data-table-header" className={className} {...props}>
-      <TableRow>{children}</TableRow>
-    </TableHeader>
+    <Table.Header data-slot="data-table-header" className={className} {...props}>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <Table.Row>{children}</Table.Row>
+        </>
+      )}
+    </Table.Header>
   )
 }
 
 /** A body row bound to a row instance; carries the selected state. */
-function DataTableRow<TData>({
-  row,
-  className,
-  ...props
-}: React.ComponentProps<typeof TableRow> & { row: DataTableRowInstance<TData> }) {
+function DataTableRow<TData>({ row, className, ...props }: DataTableRowProps<TData>) {
   return (
-    <TableRow
+    <Table.Row
       data-slot="data-table-row"
       data-state={row.getIsSelected() ? "selected" : undefined}
       className={cn("group/row", className)}
@@ -559,16 +528,11 @@ function DataTableRow<TData>({
 }
 
 /** A body cell bound to a column id; hidden columns render nothing. */
-function DataTableCell<TData>({
-  column: columnId,
-  table: tableProp,
-  className,
-  ...props
-}: React.ComponentProps<typeof TableCell> & { column?: string; table?: DataTableInstance<TData> }) {
+function DataTableCell<TData>({ column: columnId, table: tableProp, className, ...props }: DataTableCellProps<TData>) {
   const table = useDataTableContext(tableProp)
   const column = columnId ? table.getColumn(columnId) : undefined
   if (column && !column.getIsVisible()) return null
-  return <TableCell data-slot="data-table-cell" data-column={columnId} className={className} {...props} />
+  return <Table.Cell data-slot="data-table-cell" data-column={columnId} className={className} {...props} />
 }
 
 /**
@@ -581,55 +545,53 @@ function DataTableBody<TData>({
   empty = "No results.",
   children,
   ...props
-}: Omit<React.ComponentProps<typeof TableBody>, "children"> & {
-  table?: DataTableInstance<TData>
-  /** Content shown when there are no rows. */
-  empty?: React.ReactNode
-  children: (row: DataTableRowInstance<TData>) => React.ReactNode
-}) {
+}: DataTableBodyProps<TData>) {
   const table = useDataTableContext(tableProp)
   const rows = table.getRowModel().rows
   return (
-    <TableBody data-slot="data-table-body" {...props}>
-      {rows.length ? (
-        rows.map((row) => {
-          const content = children(row)
-          return React.isValidElement(content) && content.type === DataTableRow ? (
-            <React.Fragment key={row.id}>{content}</React.Fragment>
-          ) : (
-            <DataTableRow key={row.id} row={row}>
-              {content}
-            </DataTableRow>
-          )
-        })
+    <Table.Body data-slot="data-table-body" {...props}>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
       ) : (
-        <DataTableEmpty table={table}>{empty}</DataTableEmpty>
+        <>
+          {rows.length ? (
+            rows.map((row) => {
+              const content = typeof children === "function" ? children(row) : children
+              return React.isValidElement(content) && content.type === DataTableRow ? (
+                <React.Fragment key={row.id}>{content}</React.Fragment>
+              ) : (
+                <DataTableRow key={row.id} row={row}>
+                  {content}
+                </DataTableRow>
+              )
+            })
+          ) : (
+            <DataTableEmpty table={table}>{empty}</DataTableEmpty>
+          )}
+        </>
       )}
-    </TableBody>
+    </Table.Body>
   )
 }
 
 /** A single full-width row for the empty state; spans the visible columns. */
-function DataTableEmpty<TData>({
-  table: tableProp,
-  colSpan,
-  className,
-  ...props
-}: React.ComponentProps<typeof TableCell> & { table?: DataTableInstance<TData>; colSpan?: number }) {
+function DataTableEmpty<TData>({ table: tableProp, colSpan, className, ...props }: DataTableEmptyProps<TData>) {
   const table = useDataTableContext(tableProp)
   const span = colSpan ?? Math.max(1, table.getAllColumns().filter((c) => c.getIsVisible()).length)
   return (
-    <TableRow data-slot="data-table-empty">
-      <TableCell colSpan={span} className={cn("h-24 text-center", className)} {...props} />
-    </TableRow>
+    <Table.Row data-slot="data-table-empty">
+      <Table.Cell colSpan={span} className={cn("h-24 text-center", className)} {...props} />
+    </Table.Row>
   )
 }
 
 /** The scrolling, bordered table. Compose `DataTableHeader` and `DataTableBody` inside. */
-function DataTableTable({ className, ...props }: React.ComponentProps<typeof Table>) {
+function DataTableTable({ className, ...props }: DataTableTableProps) {
   return (
     <DataTableContainer>
-      <Table data-slot="data-table-table" className={cn("min-w-xl", className)} {...props} />
+      <Table.Root data-slot="data-table-table" className={cn("min-w-xl", className)} {...props} />
     </DataTableContainer>
   )
 }
@@ -660,9 +622,9 @@ function getPageNumbers(currentPage: number, totalPages: number) {
   return range
 }
 
-function DataTablePagination({ className, ...props }: React.ComponentProps<"div">) {
+function DataTablePagination({ className, ...props }: DataTablePaginationProps) {
   return (
-    <div
+    <ark.div
       data-slot="data-table-pagination"
       className={cn("flex flex-col-reverse items-center justify-between gap-4 px-2 md:flex-row", className)}
       {...props}
@@ -677,58 +639,56 @@ function DataTablePageSize<TData>({
   pageSizes = defaultPageSizes,
   className,
   children,
-}: {
-  table?: DataTableInstance<TData>
-  /** Choices offered in the page size select. */
-  pageSizes?: number[]
-  className?: string
-  children?: React.ReactNode
-}) {
+}: DataTablePageSizeProps<TData>) {
   const table = useDataTableContext(tableProp)
   const collection = React.useMemo(() => createListCollection({ items: pageSizes.map(String) }), [pageSizes])
   const pageSize = table.getState().pagination.pageSize
   return (
     <div data-slot="data-table-page-size" className={cn("flex items-center gap-2", className)}>
-      <Select
+      <Select.Root
         collection={collection}
         value={[String(pageSize)]}
         onValueChange={({ value }) => table.setPageSize(Number(value[0]))}
         positioning={{ placement: "top", sameWidth: true }}
       >
-        <SelectControl>
-          <SelectTrigger className="h-8 w-17.5">
-            <SelectValue placeholder={String(pageSize)} />
-          </SelectTrigger>
-        </SelectControl>
-        <SelectContent className="min-w-0">
+        <Select.Control>
+          <Select.Trigger className="h-8 w-17.5">
+            <Select.ValueText placeholder={String(pageSize)} />
+          </Select.Trigger>
+        </Select.Control>
+        <Select.Content className="min-w-0">
           {collection.items.map((size) => (
-            <SelectItem key={size} item={size}>
+            <Select.Item key={size} item={size}>
               {size}
-            </SelectItem>
+            </Select.Item>
           ))}
-        </SelectContent>
-      </Select>
+        </Select.Content>
+      </Select.Root>
       <p className="hidden text-sm font-medium sm:block">{children ?? "Rows per page"}</p>
     </div>
   )
 }
 
-function DataTablePageInfo<TData>({
-  table: tableProp,
-  className,
-  ...props
-}: React.ComponentProps<"div"> & { table?: DataTableInstance<TData> }) {
+function DataTablePageInfo<TData>({ table: tableProp, className, ...props }: DataTablePageInfoProps<TData>) {
   const table = useDataTableContext(tableProp)
   const currentPage = table.getState().pagination.pageIndex + 1
   const totalPages = Math.max(table.getPageCount(), 1)
   return (
-    <div
+    <ark.div
       data-slot="data-table-page-info"
       className={cn("flex w-25 items-center justify-center text-sm font-medium", className)}
       {...props}
     >
-      Page {currentPage} of {totalPages}
-    </div>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          Page {currentPage} of {totalPages}
+        </>
+      )}
+    </ark.div>
   )
 }
 
@@ -737,81 +697,85 @@ function DataTablePageNav<TData>({
   className,
   showEdges = true,
   ...props
-}: React.ComponentProps<"div"> & {
-  table?: DataTableInstance<TData>
-  /** Show the first and last page buttons. */
-  showEdges?: boolean
-}) {
+}: DataTablePageNavProps<TData>) {
   const table = useDataTableContext(tableProp)
   const currentPage = table.getState().pagination.pageIndex + 1
   const totalPages = table.getPageCount()
   const pageNumbers = getPageNumbers(currentPage, totalPages)
   return (
-    <div data-slot="data-table-page-nav" className={cn("flex items-center gap-2", className)} {...props}>
-      {showEdges && (
-        <Button
-          variant="outline"
-          size="icon"
-          className="hidden size-8 md:inline-flex"
-          onClick={() => table.setPageIndex(0)}
-          disabled={!table.getCanPreviousPage()}
-        >
-          <span className="sr-only">Go to first page</span>
-          <ChevronsLeftIcon />
-        </Button>
-      )}
-      <Button
-        variant="outline"
-        size="icon"
-        className="size-8"
-        onClick={() => table.previousPage()}
-        disabled={!table.getCanPreviousPage()}
-      >
-        <span className="sr-only">Go to previous page</span>
-        <ChevronLeftIcon />
-      </Button>
-      {pageNumbers.map((pageNumber, index) =>
-        pageNumber === "..." ? (
-          <span key={`ellipsis-${index}`} className="px-1 text-sm text-muted-foreground">
-            ...
-          </span>
-        ) : (
+    <ark.div data-slot="data-table-page-nav" className={cn("flex items-center gap-2", className)} {...props}>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          {showEdges && (
+            <Button
+              variant="outline"
+              size="icon"
+              className="hidden size-8 md:inline-flex"
+              onClick={() => table.setPageIndex(0)}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <span className="sr-only">Go to first page</span>
+              <ChevronsLeftIcon />
+            </Button>
+          )}
           <Button
-            key={pageNumber}
-            variant={currentPage === pageNumber ? "default" : "outline"}
-            size="sm"
-            className="h-8 min-w-8 px-2"
-            onClick={() => table.setPageIndex(pageNumber - 1)}
-            aria-current={currentPage === pageNumber ? "page" : undefined}
+            variant="outline"
+            size="icon"
+            className="size-8"
+            onClick={() => table.previousPage()}
+            disabled={!table.getCanPreviousPage()}
           >
-            <span className="sr-only">Go to page </span>
-            {pageNumber}
+            <span className="sr-only">Go to previous page</span>
+            <ChevronLeftIcon />
           </Button>
-        )
+          {pageNumbers.map((pageNumber, index) =>
+            pageNumber === "..." ? (
+              <span key={`ellipsis-${index}`} className="px-1 text-sm text-muted-foreground">
+                ...
+              </span>
+            ) : (
+              <Button
+                key={pageNumber}
+                variant={currentPage === pageNumber ? "default" : "outline"}
+                size="sm"
+                className="h-8 min-w-8 px-2"
+                onClick={() => table.setPageIndex(pageNumber - 1)}
+                aria-current={currentPage === pageNumber ? "page" : undefined}
+              >
+                <span className="sr-only">Go to page </span>
+                {pageNumber}
+              </Button>
+            )
+          )}
+          <Button
+            variant="outline"
+            size="icon"
+            className="size-8"
+            onClick={() => table.nextPage()}
+            disabled={!table.getCanNextPage()}
+          >
+            <span className="sr-only">Go to next page</span>
+            <ChevronRightIcon />
+          </Button>
+          {showEdges && (
+            <Button
+              variant="outline"
+              size="icon"
+              className="hidden size-8 md:inline-flex"
+              onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+              disabled={!table.getCanNextPage()}
+            >
+              <span className="sr-only">Go to last page</span>
+              <ChevronsRightIcon />
+            </Button>
+          )}
+        </>
       )}
-      <Button
-        variant="outline"
-        size="icon"
-        className="size-8"
-        onClick={() => table.nextPage()}
-        disabled={!table.getCanNextPage()}
-      >
-        <span className="sr-only">Go to next page</span>
-        <ChevronRightIcon />
-      </Button>
-      {showEdges && (
-        <Button
-          variant="outline"
-          size="icon"
-          className="hidden size-8 md:inline-flex"
-          onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-          disabled={!table.getCanNextPage()}
-        >
-          <span className="sr-only">Go to last page</span>
-          <ChevronsRightIcon />
-        </Button>
-      )}
-    </div>
+    </ark.div>
   )
 }
 
@@ -825,11 +789,7 @@ function DataTableBulkActions<TData>({
   className,
   children,
   ...props
-}: React.ComponentProps<"div"> & {
-  table?: DataTableInstance<TData>
-  /** Noun used in the selection announcement, e.g. `task`. */
-  entityName?: string
-}) {
+}: DataTableBulkActionsProps<TData>) {
   const table = useDataTableContext(tableProp)
   const selectedCount = table.getFilteredSelectedRowModel().rows.length
   const { message: announcement, announce } = useLiveRegion({ clearAfter: 3000 })
@@ -842,8 +802,8 @@ function DataTableBulkActions<TData>({
 
   return (
     <>
-      <LiveRegion data-slot="data-table-live-region" message={announcement} />
-      <FloatingToolbar
+      <LiveRegion.Root data-slot="data-table-live-region" message={announcement} />
+      <FloatingToolbar.Root
         open={selectedCount > 0}
         data-slot="data-table-bulk-actions"
         aria-label={`Bulk actions for ${selectedCount} selected ${entityName}${plural}`}
@@ -851,12 +811,20 @@ function DataTableBulkActions<TData>({
         className={className}
         {...props}
       >
-        <DataTableBulkActionsClear table={table} />
-        <Separator orientation="vertical" className="h-5" aria-hidden />
-        <DataTableBulkActionsCount table={table} entityName={entityName} />
-        <Separator orientation="vertical" className="h-5" aria-hidden />
-        {children}
-      </FloatingToolbar>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            <DataTableBulkActionsClear table={table} />
+            <Separator.Root orientation="vertical" className="h-5" aria-hidden />
+            <DataTableBulkActionsCount table={table} entityName={entityName} />
+            <Separator.Root orientation="vertical" className="h-5" aria-hidden />
+            {children}
+          </>
+        )}
+      </FloatingToolbar.Root>
     </>
   )
 }
@@ -867,11 +835,11 @@ function DataTableBulkActionsClear<TData>({
   asChild,
   children,
   ...props
-}: React.ComponentProps<typeof Button> & { table?: DataTableInstance<TData> }) {
+}: DataTableBulkActionsClearProps<TData>) {
   const table = useDataTableContext(tableProp)
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>
         <Button
           data-slot="data-table-bulk-actions-clear"
           variant="outline"
@@ -884,9 +852,9 @@ function DataTableBulkActionsClear<TData>({
         >
           {asChild ? children : (children ?? <XIcon />)}
         </Button>
-      </TooltipTrigger>
-      <TooltipContent>Clear selection (Escape)</TooltipContent>
-    </Tooltip>
+      </Tooltip.Trigger>
+      <Tooltip.Content>Clear selection (Escape)</Tooltip.Content>
+    </Tooltip.Root>
   )
 }
 
@@ -895,28 +863,32 @@ function DataTableBulkActionsCount<TData>({
   entityName = "row",
   className,
   ...props
-}: React.ComponentProps<"div"> & {
-  table?: DataTableInstance<TData>
-  /** Noun used in the selection announcement, e.g. `task`. */
-  entityName?: string
-}) {
+}: DataTableBulkActionsCountProps<TData>) {
   const table = useDataTableContext(tableProp)
   const count = table.getFilteredSelectedRowModel().rows.length
   return (
-    <div
+    <ark.div
       data-slot="data-table-bulk-actions-count"
       className={cn("flex items-center gap-1 text-sm", className)}
       {...props}
     >
-      <Badge className="min-w-8 justify-center rounded-lg" aria-label={`${count} selected`}>
-        {count}
-      </Badge>{" "}
-      <span className="hidden sm:inline">
-        {entityName}
-        {count > 1 ? "s" : ""}
-      </span>{" "}
-      selected
-    </div>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <Badge.Root className="min-w-8 justify-center rounded-lg" aria-label={`${count} selected`}>
+            {count}
+          </Badge.Root>{" "}
+          <span className="hidden sm:inline">
+            {entityName}
+            {count > 1 ? "s" : ""}
+          </span>{" "}
+          selected
+        </>
+      )}
+    </ark.div>
   )
 }
 
@@ -926,10 +898,10 @@ function DataTableBulkActionTrigger({
   children,
   asChild,
   ...props
-}: React.ComponentProps<typeof Button> & { label: string }) {
+}: DataTableBulkActionTriggerProps) {
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>
         <Button
           data-slot="data-table-bulk-action-trigger"
           variant="outline"
@@ -948,39 +920,167 @@ function DataTableBulkActionTrigger({
             </>
           )}
         </Button>
-      </TooltipTrigger>
-      <TooltipContent>{label}</TooltipContent>
-    </Tooltip>
+      </Tooltip.Trigger>
+      <Tooltip.Content>{label}</Tooltip.Content>
+    </Tooltip.Root>
   )
+}
+
+type DataTableRootProps<TData = unknown> = React.ComponentProps<typeof ark.div> & {
+  table: DataTableInstance<TData>
+}
+
+type DataTableBodyProps<TData = unknown> = Omit<React.ComponentProps<typeof Table.Body>, "children"> & {
+  table?: DataTableInstance<TData>
+  /** Content shown when there are no rows. */
+  empty?: React.ReactNode
+  children: ((row: DataTableRowInstance<TData>) => React.ReactNode) | React.ReactElement
+}
+
+type DataTableBulkActionTriggerProps = React.ComponentProps<typeof Button> & { label: string }
+
+type DataTableBulkActionsProps<TData = unknown> = React.ComponentProps<typeof ark.div> & {
+  table?: DataTableInstance<TData>
+  /** Noun used in the selection announcement, e.g. `task`. */
+  entityName?: string
+}
+
+type DataTableBulkActionsClearProps<TData = unknown> = React.ComponentProps<typeof Button> & {
+  table?: DataTableInstance<TData>
+}
+
+type DataTableBulkActionsCountProps<TData = unknown> = React.ComponentProps<typeof ark.div> & {
+  table?: DataTableInstance<TData>
+  /** Noun used in the selection announcement, e.g. `task`. */
+  entityName?: string
+}
+
+type DataTableCellProps<TData = unknown> = React.ComponentProps<typeof Table.Cell> & {
+  column?: string
+  table?: DataTableInstance<TData>
+}
+
+type DataTableHeadProps<TData = unknown> = React.ComponentProps<typeof Table.Head> & {
+  column?: string
+  table?: DataTableInstance<TData>
+}
+
+type DataTableContainerProps = React.ComponentProps<typeof ark.div>
+
+type DataTableEmptyProps<TData = unknown> = React.ComponentProps<typeof Table.Cell> & {
+  table?: DataTableInstance<TData>
+  colSpan?: number
+}
+
+type DataTableFacetedFilterProps<TData = unknown, TValue = unknown> = {
+  table?: DataTableInstance<TData>
+  /** Id of the column this filter applies to. */
+  columnId?: string
+  column?: DataTableColumn<TData, TValue>
+  title?: string
+  /** Facet options as `{ value, label, icon? }`. */
+  options: FacetOption[]
+}
+
+type DataTableHeaderProps = React.ComponentProps<typeof Table.Header>
+
+type DataTablePageInfoProps<TData = unknown> = React.ComponentProps<typeof ark.div> & {
+  table?: DataTableInstance<TData>
+}
+
+type DataTablePageNavProps<TData = unknown> = React.ComponentProps<typeof ark.div> & {
+  table?: DataTableInstance<TData>
+  /** Show the first and last page buttons. */
+  showEdges?: boolean
+}
+
+type DataTablePageSizeProps<TData = unknown> = {
+  table?: DataTableInstance<TData>
+  /** Choices offered in the page size select. */
+  pageSizes?: number[]
+  className?: string
+  children?: React.ReactNode
+}
+
+type DataTablePaginationProps = React.ComponentProps<typeof ark.div>
+
+type DataTableResetFiltersProps<TData = unknown> = React.ComponentProps<typeof Button> & {
+  table?: DataTableInstance<TData>
+}
+
+type DataTableRowProps<TData = unknown> = React.ComponentProps<typeof Table.Row> & {
+  row: DataTableRowInstance<TData>
+}
+
+type DataTableRowActionsProps = React.ComponentProps<typeof DropdownMenu.Root> & {
+  className?: string
+  /** Replace the default ellipsis button with your own element. */
+  trigger?: React.ReactElement
+}
+
+type DataTableSearchProps<TData = unknown> = Omit<React.ComponentProps<typeof Input.Root>, "value" | "onChange"> & {
+  table?: DataTableInstance<TData>
+  /** Filter a single column instead of the global filter. */
+  columnId?: string
+}
+
+type DataTableSelectAllProps<TData = unknown> = Omit<
+  React.ComponentProps<typeof Checkbox.Root>,
+  "checked" | "onCheckedChange"
+> & {
+  table: DataTableInstance<TData>
+}
+
+type DataTableSelectRowProps<TData = unknown> = Omit<
+  React.ComponentProps<typeof Checkbox.Root>,
+  "checked" | "onCheckedChange"
+> & {
+  row: DataTableRowInstance<TData>
+}
+
+type DataTableTableProps = React.ComponentProps<typeof Table.Root>
+
+type DataTableToolbarProps = React.ComponentProps<typeof ark.div>
+
+type DataTableToolbarGroupProps = React.ComponentProps<typeof ark.div>
+
+type DataTableViewOptionsProps<TData = unknown> = {
+  table?: DataTableInstance<TData>
+  className?: string
+  children?: React.ReactNode
+}
+
+const DataTable = {
+  Root: DataTableRoot,
+  Body: DataTableBody,
+  BulkActionTrigger: DataTableBulkActionTrigger,
+  BulkActions: DataTableBulkActions,
+  BulkActionsClear: DataTableBulkActionsClear,
+  BulkActionsCount: DataTableBulkActionsCount,
+  Cell: DataTableCell,
+  Head: DataTableHead,
+  Container: DataTableContainer,
+  Empty: DataTableEmpty,
+  FacetedFilter: DataTableFacetedFilter,
+  Header: DataTableHeader,
+  PageInfo: DataTablePageInfo,
+  PageNav: DataTablePageNav,
+  PageSize: DataTablePageSize,
+  Pagination: DataTablePagination,
+  ResetFilters: DataTableResetFilters,
+  Row: DataTableRow,
+  RowActions: DataTableRowActions,
+  Search: DataTableSearch,
+  SelectAll: DataTableSelectAll,
+  SelectRow: DataTableSelectRow,
+  Table: DataTableTable,
+  Toolbar: DataTableToolbar,
+  ToolbarGroup: DataTableToolbarGroup,
+  ViewOptions: DataTableViewOptions,
 }
 
 export {
   DataTable,
-  DataTableBody,
-  DataTableBulkActionTrigger,
-  DataTableBulkActions,
-  DataTableBulkActionsClear,
-  DataTableBulkActionsCount,
-  DataTableCell,
-  DataTableHead,
-  DataTableContainer,
-  DataTableEmpty,
-  DataTableFacetedFilter,
-  DataTableHeader,
-  DataTablePageInfo,
-  DataTablePageNav,
-  DataTablePageSize,
-  DataTablePagination,
-  DataTableResetFilters,
-  DataTableRow,
-  DataTableRowActions,
-  DataTableSearch,
-  DataTableSelectAll,
-  DataTableSelectRow,
-  DataTableTable,
-  DataTableToolbar,
-  DataTableToolbarGroup,
-  DataTableViewOptions,
   getPageNumbers,
   useDataTable,
   useDataTableContext,
@@ -996,4 +1096,30 @@ export {
   type DataTableRowInstance,
   type TableOptions,
   type VisibilityState,
+  type DataTableRootProps,
+  type DataTableBodyProps,
+  type DataTableBulkActionTriggerProps,
+  type DataTableBulkActionsProps,
+  type DataTableBulkActionsClearProps,
+  type DataTableBulkActionsCountProps,
+  type DataTableCellProps,
+  type DataTableHeadProps,
+  type DataTableContainerProps,
+  type DataTableEmptyProps,
+  type DataTableFacetedFilterProps,
+  type DataTableHeaderProps,
+  type DataTablePageInfoProps,
+  type DataTablePageNavProps,
+  type DataTablePageSizeProps,
+  type DataTablePaginationProps,
+  type DataTableResetFiltersProps,
+  type DataTableRowProps,
+  type DataTableRowActionsProps,
+  type DataTableSearchProps,
+  type DataTableSelectAllProps,
+  type DataTableSelectRowProps,
+  type DataTableTableProps,
+  type DataTableToolbarProps,
+  type DataTableToolbarGroupProps,
+  type DataTableViewOptionsProps,
 }

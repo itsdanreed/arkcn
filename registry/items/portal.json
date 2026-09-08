@@ -1,0 +1,46 @@
+{
+  "name": "portal",
+  "type": "ui",
+  "description": "",
+  "ark": "Portal",
+  "exports": [
+    "Portal"
+  ],
+  "parts": [
+    {
+      "name": "Portal.Root",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "container",
+          "type": "RefObject<HTMLElement | null>",
+          "required": false,
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/portal.tsx",
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport { Portal as PortalPrimitive } from \"@ark-ui/react\"\n\nfunction PortalRoot(props: PortalRootProps) {\n  return <PortalPrimitive {...props} />\n}\n\ntype PortalRootProps = React.ComponentProps<typeof PortalPrimitive>\n\nconst Portal = {\n  Root: PortalRoot,\n}\n\nexport { Portal, type PortalRootProps }\n"
+    }
+  ]
+}

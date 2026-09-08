@@ -1,12 +1,13 @@
 "use client"
 
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 
 /**
  * Ark UI has no AspectRatio primitive. This mirrors Radix's: a wrapper with a
  * percentage padding-bottom, and an absolutely positioned content box.
  */
-function AspectRatio({ ratio = 1 / 1, style, ...props }: React.ComponentProps<"div"> & { ratio?: number }) {
+function AspectRatioRoot({ ratio = 1 / 1, style, ...props }: AspectRatioRootProps) {
   return (
     <div
       data-slot="aspect-ratio-wrapper"
@@ -16,7 +17,7 @@ function AspectRatio({ ratio = 1 / 1, style, ...props }: React.ComponentProps<"d
         paddingBottom: `${100 / ratio}%`,
       }}
     >
-      <div
+      <ark.div
         data-slot="aspect-ratio"
         style={{
           position: "absolute",
@@ -32,4 +33,10 @@ function AspectRatio({ ratio = 1 / 1, style, ...props }: React.ComponentProps<"d
   )
 }
 
-export { AspectRatio }
+type AspectRatioRootProps = React.ComponentProps<typeof ark.div> & { ratio?: number }
+
+const AspectRatio = {
+  Root: AspectRatioRoot,
+}
+
+export { AspectRatio, type AspectRatioRootProps }

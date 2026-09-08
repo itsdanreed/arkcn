@@ -3,24 +3,11 @@
   "type": "ui",
   "description": "ActivityFeed — a compositional, data-agnostic timeline of events. The consumer maps its events to items; the feed adds the connector line, the marker column, relative times and the WAI-ARIA feed pattern (articles are focusable; PageUp/PageD",
   "exports": [
-    "ActivityFeed",
-    "ActivityFeedGroup",
-    "ActivityFeedGroupLabel",
-    "ActivityFeedItems",
-    "ActivityFeedItem",
-    "ActivityFeedItemMarker",
-    "ActivityFeedItemContent",
-    "ActivityFeedItemHeader",
-    "ActivityFeedItemActor",
-    "ActivityFeedItemTime",
-    "ActivityFeedItemBody",
-    "ActivityFeedItemActions",
-    "ActivityFeedLoadMoreTrigger",
-    "ActivityFeedEmpty"
+    "ActivityFeed"
   ],
   "parts": [
     {
-      "name": "ActivityFeed",
+      "name": "ActivityFeed.Root",
       "props": [
         {
           "name": "busy",
@@ -30,6 +17,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -53,9 +47,16 @@
       ]
     },
     {
-      "name": "ActivityFeedGroup",
+      "name": "ActivityFeed.Group",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -79,9 +80,16 @@
       ]
     },
     {
-      "name": "ActivityFeedGroupLabel",
+      "name": "ActivityFeed.GroupLabel",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -105,9 +113,16 @@
       ]
     },
     {
-      "name": "ActivityFeedItems",
+      "name": "ActivityFeed.Items",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -131,9 +146,16 @@
       ]
     },
     {
-      "name": "ActivityFeedItem",
+      "name": "ActivityFeed.Item",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -157,9 +179,16 @@
       ]
     },
     {
-      "name": "ActivityFeedItemMarker",
+      "name": "ActivityFeed.ItemMarker",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -183,9 +212,16 @@
       ]
     },
     {
-      "name": "ActivityFeedItemContent",
+      "name": "ActivityFeed.ItemContent",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -209,9 +245,16 @@
       ]
     },
     {
-      "name": "ActivityFeedItemHeader",
+      "name": "ActivityFeed.ItemHeader",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -235,9 +278,16 @@
       ]
     },
     {
-      "name": "ActivityFeedItemActor",
+      "name": "ActivityFeed.ItemActor",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -261,7 +311,7 @@
       ]
     },
     {
-      "name": "ActivityFeedItemTime",
+      "name": "ActivityFeed.ItemTime",
       "props": [
         {
           "name": "date",
@@ -278,57 +328,12 @@
           "from": "arkcn"
         },
         {
-          "name": "children",
-          "type": "ReactNode",
+          "name": "asChild",
+          "type": "boolean",
           "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ActivityFeedItemBody",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ActivityFeedItemActions",
-      "props": [
         {
           "name": "children",
           "type": "ReactNode",
@@ -353,15 +358,74 @@
       ]
     },
     {
-      "name": "ActivityFeedLoadMoreTrigger",
+      "name": "ActivityFeed.ItemBody",
       "props": [
         {
           "name": "asChild",
           "type": "boolean",
           "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "ActivityFeed.ItemActions",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "ActivityFeed.LoadMoreTrigger",
+      "props": [
         {
           "name": "size",
           "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
@@ -377,6 +441,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -400,8 +471,15 @@
       ]
     },
     {
-      "name": "ActivityFeedEmpty",
+      "name": "ActivityFeed.Empty",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -426,7 +504,9 @@
       ]
     }
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
   "registryDependencies": [
     "button",
     "lib/time",
@@ -435,7 +515,7 @@
   "files": [
     {
       "path": "components/ui/activity-feed.tsx",
-      "content": "import * as React from \"react\"\nimport { Button } from \"@/components/ui/button\"\nimport { formatRelativeTime } from \"@/lib/time\"\nimport { cn } from \"@/lib/utils\"\n\n/**\n * ActivityFeed — a compositional, data-agnostic timeline of events. The\n * consumer maps its events to items; the feed adds the connector line, the\n * marker column, relative times and the WAI-ARIA feed pattern (articles are\n * focusable; PageUp/PageDown move between them, Ctrl+Home/End jump).\n *\n * Anatomy:\n *   ActivityFeed\n *     ActivityFeedGroup > ActivityFeedGroupLabel + ActivityFeedItems\n *       ActivityFeedItem value=…\n *         ActivityFeedItemMarker        dot / icon / avatar on the line\n *         ActivityFeedItemContent\n *           ActivityFeedItemHeader > ActivityFeedItemActor … ActivityFeedItemTime date=…\n *           ActivityFeedItemBody\n *           ActivityFeedItemActions\n *     ActivityFeedLoadMoreTrigger / ActivityFeedEmpty\n */\n\nfunction ActivityFeed({ className, busy, onKeyDown, ...props }: React.ComponentProps<\"div\"> & { busy?: boolean }) {\n  const ref = React.useRef<HTMLDivElement>(null)\n  return (\n    <div\n      ref={ref}\n      data-slot=\"activity-feed\"\n      role=\"feed\"\n      aria-busy={busy || undefined}\n      className={cn(\"flex flex-col gap-6\", className)}\n      onKeyDown={(event) => {\n        onKeyDown?.(event)\n        if (event.defaultPrevented) return\n        const articles = Array.from(ref.current?.querySelectorAll<HTMLElement>(\"[data-slot=activity-feed-item]\") ?? [])\n        const current = (event.target as HTMLElement).closest<HTMLElement>(\"[data-slot=activity-feed-item]\")\n        const index = current ? articles.indexOf(current) : -1\n        const meta = event.metaKey || event.ctrlKey\n        let next: number | null = null\n        if (event.key === \"PageDown\") next = Math.min(articles.length - 1, index + 1)\n        else if (event.key === \"PageUp\") next = Math.max(0, index - 1)\n        else if (event.key === \"Home\" && meta) next = 0\n        else if (event.key === \"End\" && meta) next = articles.length - 1\n        if (next === null || !articles[next]) return\n        event.preventDefault()\n        articles[next].focus()\n      }}\n      {...props}\n    />\n  )\n}\n\nfunction ActivityFeedGroup({ className, ...props }: React.ComponentProps<\"section\">) {\n  return <section data-slot=\"activity-feed-group\" className={cn(\"flex flex-col gap-3\", className)} {...props} />\n}\n\nfunction ActivityFeedGroupLabel({ className, ...props }: React.ComponentProps<\"h3\">) {\n  return (\n    <h3\n      data-slot=\"activity-feed-group-label\"\n      className={cn(\"text-xs font-medium tracking-wide text-muted-foreground uppercase\", className)}\n      {...props}\n    />\n  )\n}\n\n/** The list; draws the vertical connector behind the markers. */\nfunction ActivityFeedItems({ className, ...props }: React.ComponentProps<\"ol\">) {\n  return (\n    <ol\n      data-slot=\"activity-feed-items\"\n      className={cn(\n        \"relative flex flex-col gap-5 before:absolute before:inset-y-2 before:inset-s-4 before:w-px before:-translate-x-1/2 before:bg-border\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ActivityFeedItem({ value, className, ...props }: React.ComponentProps<\"li\"> & { value: string }) {\n  return (\n    <li\n      data-slot=\"activity-feed-item\"\n      data-value={value}\n      role=\"article\"\n      tabIndex={0}\n      className={cn(\n        \"group/activity relative flex gap-3 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring/50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** Sits on the line: pass an icon, an Avatar, or nothing for a dot. */\nfunction ActivityFeedItemMarker({ className, children, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"activity-feed-item-marker\"\n      className={cn(\n        \"relative z-10 flex size-8 shrink-0 items-center justify-center rounded-full bg-background ring-4 ring-background\",\n        \"[&>svg]:size-4 [&>svg]:text-muted-foreground\",\n        !children && \"after:size-2 after:rounded-full after:bg-muted-foreground/60\",\n        children && \"border bg-muted\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n    </div>\n  )\n}\n\nfunction ActivityFeedItemContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"activity-feed-item-content\"\n      className={cn(\"flex min-w-0 flex-1 flex-col gap-1.5 pt-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ActivityFeedItemHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"activity-feed-item-header\"\n      className={cn(\"flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ActivityFeedItemActor({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span data-slot=\"activity-feed-item-actor\" className={cn(\"font-medium text-foreground\", className)} {...props} />\n  )\n}\n\n/** `<time>` with a relative label by default; the full date is in the title. */\nfunction ActivityFeedItemTime({\n  date,\n  now,\n  className,\n  children,\n  ...props\n}: Omit<React.ComponentProps<\"time\">, \"dateTime\"> & { date: Date; now?: Date }) {\n  return (\n    <time\n      data-slot=\"activity-feed-item-time\"\n      dateTime={date.toISOString()}\n      title={date.toLocaleString()}\n      className={cn(\"text-xs whitespace-nowrap text-muted-foreground/80\", className)}\n      {...props}\n    >\n      {children ?? formatRelativeTime(date, { now })}\n    </time>\n  )\n}\n\n/** Optional detail block: a quote, a diff, a preview card. */\nfunction ActivityFeedItemBody({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"activity-feed-item-body\"\n      className={cn(\"rounded-lg border bg-muted/40 px-3 py-2 text-sm\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ActivityFeedItemActions({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"activity-feed-item-actions\"\n      className={cn(\"flex items-center gap-1 text-xs\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ActivityFeedLoadMoreTrigger({ asChild, children, className, ...props }: React.ComponentProps<typeof Button>) {\n  return (\n    <Button\n      data-slot=\"activity-feed-load-more-trigger\"\n      variant=\"outline\"\n      size=\"sm\"\n      asChild={asChild}\n      className={cn(\"self-center\", className)}\n      {...props}\n    >\n      {asChild ? children : (children ?? \"Load older activity\")}\n    </Button>\n  )\n}\n\nfunction ActivityFeedEmpty({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"activity-feed-empty\"\n      className={cn(\n        \"flex h-32 flex-col items-center justify-center gap-1 rounded-lg border border-dashed text-sm text-muted-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nexport {\n  ActivityFeed,\n  ActivityFeedGroup,\n  ActivityFeedGroupLabel,\n  ActivityFeedItems,\n  ActivityFeedItem,\n  ActivityFeedItemMarker,\n  ActivityFeedItemContent,\n  ActivityFeedItemHeader,\n  ActivityFeedItemActor,\n  ActivityFeedItemTime,\n  ActivityFeedItemBody,\n  ActivityFeedItemActions,\n  ActivityFeedLoadMoreTrigger,\n  ActivityFeedEmpty,\n}\n"
+      "content": "import { ark } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { Button } from \"@/components/ui/button\"\nimport { formatRelativeTime } from \"@/lib/time\"\nimport { cn } from \"@/lib/utils\"\n\n/**\n * ActivityFeed — a compositional, data-agnostic timeline of events. The\n * consumer maps its events to items; the feed adds the connector line, the\n * marker column, relative times and the WAI-ARIA feed pattern (articles are\n * focusable; PageUp/PageDown move between them, Ctrl+Home/End jump).\n *\n * Anatomy:\n *   ActivityFeed\n *     ActivityFeedGroup > ActivityFeedGroupLabel + ActivityFeedItems\n *       ActivityFeedItem value=…\n *         ActivityFeedItemMarker        dot / icon / avatar on the line\n *         ActivityFeedItemContent\n *           ActivityFeedItemHeader > ActivityFeedItemActor … ActivityFeedItemTime date=…\n *           ActivityFeedItemBody\n *           ActivityFeedItemActions\n *     ActivityFeedLoadMoreTrigger / ActivityFeedEmpty\n */\n\nfunction ActivityFeedRoot({ className, busy, onKeyDown, ...props }: ActivityFeedRootProps) {\n  const ref = React.useRef<HTMLDivElement>(null)\n  return (\n    <ark.div\n      ref={ref}\n      data-slot=\"activity-feed\"\n      role=\"feed\"\n      aria-busy={busy || undefined}\n      className={cn(\"flex flex-col gap-6\", className)}\n      onKeyDown={(event) => {\n        onKeyDown?.(event)\n        if (event.defaultPrevented) return\n        const articles = Array.from(ref.current?.querySelectorAll<HTMLElement>(\"[data-slot=activity-feed-item]\") ?? [])\n        const current = (event.target as HTMLElement).closest<HTMLElement>(\"[data-slot=activity-feed-item]\")\n        const index = current ? articles.indexOf(current) : -1\n        const meta = event.metaKey || event.ctrlKey\n        let next: number | null = null\n        if (event.key === \"PageDown\") next = Math.min(articles.length - 1, index + 1)\n        else if (event.key === \"PageUp\") next = Math.max(0, index - 1)\n        else if (event.key === \"Home\" && meta) next = 0\n        else if (event.key === \"End\" && meta) next = articles.length - 1\n        if (next === null || !articles[next]) return\n        event.preventDefault()\n        articles[next].focus()\n      }}\n      {...props}\n    />\n  )\n}\n\nfunction ActivityFeedGroup({ className, ...props }: ActivityFeedGroupProps) {\n  return <ark.section data-slot=\"activity-feed-group\" className={cn(\"flex flex-col gap-3\", className)} {...props} />\n}\n\nfunction ActivityFeedGroupLabel({ className, ...props }: ActivityFeedGroupLabelProps) {\n  return (\n    <ark.h3\n      data-slot=\"activity-feed-group-label\"\n      className={cn(\"text-xs font-medium tracking-wide text-muted-foreground uppercase\", className)}\n      {...props}\n    />\n  )\n}\n\n/** The list; draws the vertical connector behind the markers. */\nfunction ActivityFeedItems({ className, ...props }: ActivityFeedItemsProps) {\n  return (\n    <ark.ol\n      data-slot=\"activity-feed-items\"\n      className={cn(\n        \"relative flex flex-col gap-5 before:absolute before:inset-y-2 before:inset-s-4 before:w-px before:-translate-x-1/2 before:bg-border\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ActivityFeedItem({ value, className, ...props }: ActivityFeedItemProps) {\n  return (\n    <ark.li\n      data-slot=\"activity-feed-item\"\n      data-value={value}\n      role=\"article\"\n      tabIndex={0}\n      className={cn(\n        \"group/activity relative flex gap-3 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-ring/50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** Sits on the line: pass an icon, an Avatar, or nothing for a dot. */\nfunction ActivityFeedItemMarker({ className, children, ...props }: ActivityFeedItemMarkerProps) {\n  return (\n    <ark.div\n      data-slot=\"activity-feed-item-marker\"\n      className={cn(\n        \"relative z-10 flex size-8 shrink-0 items-center justify-center rounded-full bg-background ring-4 ring-background\",\n        \"[&>svg]:size-4 [&>svg]:text-muted-foreground\",\n        !children && \"after:size-2 after:rounded-full after:bg-muted-foreground/60\",\n        children && \"border bg-muted\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n    </ark.div>\n  )\n}\n\nfunction ActivityFeedItemContent({ className, ...props }: ActivityFeedItemContentProps) {\n  return (\n    <ark.div\n      data-slot=\"activity-feed-item-content\"\n      className={cn(\"flex min-w-0 flex-1 flex-col gap-1.5 pt-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ActivityFeedItemHeader({ className, ...props }: ActivityFeedItemHeaderProps) {\n  return (\n    <ark.div\n      data-slot=\"activity-feed-item-header\"\n      className={cn(\"flex flex-wrap items-baseline gap-x-1.5 gap-y-0.5 text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ActivityFeedItemActor({ className, ...props }: ActivityFeedItemActorProps) {\n  return (\n    <ark.span\n      data-slot=\"activity-feed-item-actor\"\n      className={cn(\"font-medium text-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\n/** `<time>` with a relative label by default; the full date is in the title. */\nfunction ActivityFeedItemTime({ date, now, className, children, ...props }: ActivityFeedItemTimeProps) {\n  return (\n    <ark.time\n      data-slot=\"activity-feed-item-time\"\n      dateTime={date.toISOString()}\n      title={date.toLocaleString()}\n      className={cn(\"text-xs whitespace-nowrap text-muted-foreground/80\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>{children ?? formatRelativeTime(date, { now })}</>\n      )}\n    </ark.time>\n  )\n}\n\n/** Optional detail block: a quote, a diff, a preview card. */\nfunction ActivityFeedItemBody({ className, ...props }: ActivityFeedItemBodyProps) {\n  return (\n    <ark.div\n      data-slot=\"activity-feed-item-body\"\n      className={cn(\"rounded-lg border bg-muted/40 px-3 py-2 text-sm\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ActivityFeedItemActions({ className, ...props }: ActivityFeedItemActionsProps) {\n  return (\n    <ark.div\n      data-slot=\"activity-feed-item-actions\"\n      className={cn(\"flex items-center gap-1 text-xs\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ActivityFeedLoadMoreTrigger({ asChild, children, className, ...props }: ActivityFeedLoadMoreTriggerProps) {\n  return (\n    <Button\n      data-slot=\"activity-feed-load-more-trigger\"\n      variant=\"outline\"\n      size=\"sm\"\n      asChild={asChild}\n      className={cn(\"self-center\", className)}\n      {...props}\n    >\n      {asChild ? children : (children ?? \"Load older activity\")}\n    </Button>\n  )\n}\n\nfunction ActivityFeedEmpty({ className, ...props }: ActivityFeedEmptyProps) {\n  return (\n    <ark.div\n      data-slot=\"activity-feed-empty\"\n      className={cn(\n        \"flex h-32 flex-col items-center justify-center gap-1 rounded-lg border border-dashed text-sm text-muted-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype ActivityFeedRootProps = React.ComponentProps<typeof ark.div> & { busy?: boolean }\n\ntype ActivityFeedGroupProps = React.ComponentProps<typeof ark.section>\n\ntype ActivityFeedGroupLabelProps = React.ComponentProps<typeof ark.h3>\n\ntype ActivityFeedItemsProps = React.ComponentProps<typeof ark.ol>\n\ntype ActivityFeedItemProps = React.ComponentProps<typeof ark.li> & { value: string }\n\ntype ActivityFeedItemMarkerProps = React.ComponentProps<typeof ark.div>\n\ntype ActivityFeedItemContentProps = React.ComponentProps<typeof ark.div>\n\ntype ActivityFeedItemHeaderProps = React.ComponentProps<typeof ark.div>\n\ntype ActivityFeedItemActorProps = React.ComponentProps<typeof ark.span>\n\ntype ActivityFeedItemTimeProps = Omit<React.ComponentProps<typeof ark.time>, \"dateTime\"> & {\n  date: Date\n  now?: Date\n}\n\ntype ActivityFeedItemBodyProps = React.ComponentProps<typeof ark.div>\n\ntype ActivityFeedItemActionsProps = React.ComponentProps<typeof ark.div>\n\ntype ActivityFeedLoadMoreTriggerProps = React.ComponentProps<typeof Button>\n\ntype ActivityFeedEmptyProps = React.ComponentProps<typeof ark.div>\n\nconst ActivityFeed = {\n  Root: ActivityFeedRoot,\n  Group: ActivityFeedGroup,\n  GroupLabel: ActivityFeedGroupLabel,\n  Items: ActivityFeedItems,\n  Item: ActivityFeedItem,\n  ItemMarker: ActivityFeedItemMarker,\n  ItemContent: ActivityFeedItemContent,\n  ItemHeader: ActivityFeedItemHeader,\n  ItemActor: ActivityFeedItemActor,\n  ItemTime: ActivityFeedItemTime,\n  ItemBody: ActivityFeedItemBody,\n  ItemActions: ActivityFeedItemActions,\n  LoadMoreTrigger: ActivityFeedLoadMoreTrigger,\n  Empty: ActivityFeedEmpty,\n}\n\nexport {\n  ActivityFeed,\n  type ActivityFeedRootProps,\n  type ActivityFeedGroupProps,\n  type ActivityFeedGroupLabelProps,\n  type ActivityFeedItemsProps,\n  type ActivityFeedItemProps,\n  type ActivityFeedItemMarkerProps,\n  type ActivityFeedItemContentProps,\n  type ActivityFeedItemHeaderProps,\n  type ActivityFeedItemActorProps,\n  type ActivityFeedItemTimeProps,\n  type ActivityFeedItemBodyProps,\n  type ActivityFeedItemActionsProps,\n  type ActivityFeedLoadMoreTriggerProps,\n  type ActivityFeedEmptyProps,\n}\n"
     }
   ],
   "docs": "## Activity feed and comments\n`src/components/ui/activity-feed.tsx` is a compositional timeline of events on the WAI-ARIA feed\npattern (`role=\"feed\"`, focusable articles, PageUp/PageDown move, Ctrl+Home/End jump):\n`ActivityFeed` > `ActivityFeedGroup` > `ActivityFeedGroupLabel` + `ActivityFeedItems` (draws the\nconnector line) > `ActivityFeedItem value=` > `ActivityFeedItemMarker` (dot by default; pass an\nicon or an Avatar) + `ActivityFeedItemContent` > `ActivityFeedItemHeader` > `ActivityFeedItemActor`,\n`ActivityFeedItemTime date=` (`<time>` with a relative label from `src/lib/time.ts`\n`formatRelativeTime`; full date in the title), `ActivityFeedItemBody`, `ActivityFeedItemActions`;\nplus `ActivityFeedLoadMoreTrigger` and `ActivityFeedEmpty`. Data, grouping and read state are the\nconsumer's.\n`src/components/ui/comment-thread.tsx` is compositional comments with replies, reactions and a\nmentions composer. `CommentThread { people, currentUserId, replyTo/onReplyToChange }` owns only\nwhich comment is being replied to or edited (`useCommentThread()` → `replyTo`, `editing`, setters).\nParts: `CommentList` > `Comment value= authorId=` (`data-own/replying/editing/depth`) >\n`CommentAvatar` (initials from `people`) + `CommentContent` > `CommentHeader` > `CommentAuthor`,\n`CommentTime date=`, `CommentMeta`; `CommentBody text=` (plain text with `@Full Name` mentions\nhighlighted as `CommentMention`, `data-self` for the current user); `CommentReactions` >\n`CommentReaction emoji= count= active=`; `CommentActions` (hover-revealed) > `CommentReplyTrigger`,\n`CommentEditTrigger`; `CommentReplies` (nested list with a guide line); `CommentEmpty`.\n`CommentComposer { people, value/onValueChange, onSubmit({ text, mentions }), onCancel }` >\n`CommentComposerReplyingTo` (render prop gets the comment id), `CommentComposerInput` (a\ncontenteditable, not a textarea: picked mentions become atomic grey chips\n`[data-slot=comment-mention-chip]` that one Backspace removes, while `value` stays plain\n`@Full Name` text and `defaultValue`/`value` text is hydrated back into chips;\n`@query` at the caret opens `CommentComposerMentionList` (a portaled Popover anchored to the input, focus stays in the textarea, so no `overflow-hidden` ancestor clips it and nothing shifts), arrows/Enter/Tab pick, Escape closes,\n⌘/Ctrl+Enter submits, `aria-activedescendant` wired), `CommentComposerFooter` >\n`CommentComposerHint`, `CommentComposerCancelTrigger`, `CommentComposerSubmitTrigger`. Mentions are\nplain `@Full Name` text; `extractMentions(text, people)` returns ids. The same composer edits in\nplace (`defaultValue`, Save). `src/demo/activity/` is the reference (`/activity`): grouped feed\nwith All/Mentions/Comments filter, unread dots, load more, and a ticket thread with nested\nreplies, reactions, edit/delete of own comments (Popconfirm), and posting that also prepends a\nfeed item."

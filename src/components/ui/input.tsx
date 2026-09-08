@@ -1,9 +1,10 @@
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
-function Input({ className, type, ...props }: React.ComponentProps<"input">) {
+function InputRoot({ className, type, ...props }: InputRootProps) {
   return (
-    <input
+    <ark.input
       type={type}
       data-slot="input"
       className={cn(
@@ -15,4 +16,10 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
   )
 }
 
-export { Input }
+type InputRootProps = React.ComponentProps<typeof ark.input>
+
+const Input = {
+  Root: InputRoot,
+}
+
+export { Input, type InputRootProps }

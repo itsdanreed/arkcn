@@ -1,22 +1,23 @@
 "use client"
 
+import { useTimer, useTimerContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Timer as TimerPrimitive } from "@ark-ui/react"
 
 import { Button } from "@/components/ui/button"
 
-function Timer({ className, ...props }: React.ComponentProps<typeof TimerPrimitive.Root>) {
+function TimerRoot({ className, ...props }: TimerRootProps) {
   return (
     <TimerPrimitive.Root data-slot="timer" className={cn("flex flex-col items-center gap-3", className)} {...props} />
   )
 }
 
-function TimerContext({ ...props }: React.ComponentProps<typeof TimerPrimitive.Context>) {
+function TimerContext({ ...props }: TimerContextProps) {
   return <TimerPrimitive.Context {...props} />
 }
 
-function TimerArea({ className, ...props }: React.ComponentProps<typeof TimerPrimitive.Area>) {
+function TimerArea({ className, ...props }: TimerAreaProps) {
   return (
     <TimerPrimitive.Area
       data-slot="timer-area"
@@ -26,7 +27,7 @@ function TimerArea({ className, ...props }: React.ComponentProps<typeof TimerPri
   )
 }
 
-function TimerItem({ className, ...props }: React.ComponentProps<typeof TimerPrimitive.Item>) {
+function TimerItem({ className, ...props }: TimerItemProps) {
   return (
     <TimerPrimitive.Item
       data-slot="timer-item"
@@ -36,26 +37,21 @@ function TimerItem({ className, ...props }: React.ComponentProps<typeof TimerPri
   )
 }
 
-function TimerSeparator({ className, children, ...props }: React.ComponentProps<typeof TimerPrimitive.Separator>) {
+function TimerSeparator({ className, children, ...props }: TimerSeparatorProps) {
   return (
     <TimerPrimitive.Separator data-slot="timer-separator" className={cn("text-muted-foreground", className)} {...props}>
-      {children ?? ":"}
+      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? ":"}</>}
     </TimerPrimitive.Separator>
   )
 }
 
-function TimerControl({ className, ...props }: React.ComponentProps<typeof TimerPrimitive.Control>) {
+function TimerControl({ className, ...props }: TimerControlProps) {
   return (
     <TimerPrimitive.Control data-slot="timer-control" className={cn("flex items-center gap-2", className)} {...props} />
   )
 }
 
-function TimerActionTrigger({
-  className,
-  children,
-  asChild,
-  ...props
-}: React.ComponentProps<typeof TimerPrimitive.ActionTrigger>) {
+function TimerActionTrigger({ className, children, asChild, ...props }: TimerActionTriggerProps) {
   return (
     <TimerPrimitive.ActionTrigger data-slot="timer-action-trigger" className={cn(className)} asChild {...props}>
       {asChild ? (
@@ -69,4 +65,53 @@ function TimerActionTrigger({
   )
 }
 
-export { Timer, TimerActionTrigger, TimerArea, TimerContext, TimerControl, TimerItem, TimerSeparator }
+function TimerRootProvider({ className, ...props }: TimerRootProviderProps) {
+  return (
+    <TimerPrimitive.RootProvider
+      data-slot="timer"
+      className={cn("flex flex-col items-center gap-3", className)}
+      {...props}
+    />
+  )
+}
+
+type TimerRootProps = React.ComponentProps<typeof TimerPrimitive.Root>
+
+type TimerRootProviderProps = React.ComponentProps<typeof TimerPrimitive.RootProvider>
+
+type TimerActionTriggerProps = React.ComponentProps<typeof TimerPrimitive.ActionTrigger>
+
+type TimerAreaProps = React.ComponentProps<typeof TimerPrimitive.Area>
+
+type TimerContextProps = React.ComponentProps<typeof TimerPrimitive.Context>
+
+type TimerControlProps = React.ComponentProps<typeof TimerPrimitive.Control>
+
+type TimerItemProps = React.ComponentProps<typeof TimerPrimitive.Item>
+
+type TimerSeparatorProps = React.ComponentProps<typeof TimerPrimitive.Separator>
+
+const Timer = {
+  Root: TimerRoot,
+  RootProvider: TimerRootProvider,
+  ActionTrigger: TimerActionTrigger,
+  Area: TimerArea,
+  Context: TimerContext,
+  Control: TimerControl,
+  Item: TimerItem,
+  Separator: TimerSeparator,
+}
+
+export {
+  useTimer,
+  useTimerContext,
+  Timer,
+  type TimerRootProps,
+  type TimerRootProviderProps,
+  type TimerActionTriggerProps,
+  type TimerAreaProps,
+  type TimerContextProps,
+  type TimerControlProps,
+  type TimerItemProps,
+  type TimerSeparatorProps,
+}

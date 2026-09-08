@@ -1,0 +1,112 @@
+{
+  "name": "focus-trap",
+  "type": "ui",
+  "description": "",
+  "ark": "FocusTrap",
+  "exports": [
+    "FocusTrap"
+  ],
+  "parts": [
+    {
+      "name": "FocusTrap.Root",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the focus trap is disabled.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "fallbackFocus",
+          "type": "FocusTarget",
+          "required": false,
+          "description": "By default, an error will be thrown if the focus trap contains no\nelements in its tab order. With this option you can specify a\nfallback element to programmatically receive focus if no other\ntabbable elements are found. For example, you may want a popover's\n`<div>` to receive focus if the popover's content includes no\ntabbable elements. *Make sure the fallback element has a negative\n`tabindex` so it can be programmatically focused.\n\nNOTE: If `initialFocus` is `false` (or a function that returns `false`),\nthis function will not be called when the trap is activated, and no element\nwill be initially focused. This function may still be called while the trap\nis active if things change such that there are no longer any tabbable nodes\nin the trap.",
+          "from": "@zag-js/focus-trap"
+        },
+        {
+          "name": "initialFocus",
+          "type": "VoidFunction | FocusTargetOrFalse",
+          "required": false,
+          "description": "By default, when a focus trap is activated the first element in the\nfocus trap's tab order will receive focus. With this option you can\nspecify a different element to receive that initial focus, or use `false`\nfor no initially focused element at all.\n\nNOTE: Setting this option to `false` (or a function that returns `false`)\nwill prevent the `fallbackFocus` option from being used.\n\nSetting this option to `undefined` (or a function that returns `undefined`)\nwill result in the default behavior.",
+          "from": "@zag-js/focus-trap"
+        },
+        {
+          "name": "onActivate",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "A function that will be called **before** sending focus to the\ntarget element upon activation.",
+          "from": "@zag-js/focus-trap"
+        },
+        {
+          "name": "onDeactivate",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "A function that will be called **before** sending focus to the\ntrigger element upon deactivation.",
+          "from": "@zag-js/focus-trap"
+        },
+        {
+          "name": "persistentElements",
+          "type": "(() => Element | null)[]",
+          "required": false,
+          "description": "Additional elements to treat as part of the trap, for portalled content\nnot discoverable via `aria-controls`/`aria-expanded` (see `followControlledElements`).",
+          "from": "@zag-js/focus-trap"
+        },
+        {
+          "name": "returnFocusOnDeactivate",
+          "type": "boolean",
+          "required": false,
+          "description": "Default: `true`. If `false`, when the trap is deactivated,\nfocus will *not* return to the element that had focus before activation.",
+          "from": "@zag-js/focus-trap"
+        },
+        {
+          "name": "setReturnFocus",
+          "type": "FocusTargetValueOrFalse | ((nodeFocusedBeforeActivation: HTMLElement | SVGElement) => FocusTargetValueOrFalse)",
+          "required": false,
+          "description": "By default, focus trap on deactivation will return to the element\nthat was focused before activation.",
+          "from": "@zag-js/focus-trap"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/focus-trap.tsx",
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport { FocusTrap as FocusTrapPrimitive } from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction FocusTrapRoot({ className, ...props }: FocusTrapRootProps) {\n  return <FocusTrapPrimitive data-slot=\"focus-trap\" className={cn(\"\", className)} {...props} />\n}\n\ntype FocusTrapRootProps = React.ComponentProps<typeof FocusTrapPrimitive>\n\nconst FocusTrap = {\n  Root: FocusTrapRoot,\n}\n\nexport { FocusTrap, type FocusTrapRootProps }\n"
+    }
+  ]
+}

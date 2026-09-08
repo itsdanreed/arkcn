@@ -1,0 +1,630 @@
+{
+  "name": "listbox",
+  "type": "ui",
+  "description": "",
+  "ark": "Listbox",
+  "exports": [
+    "Listbox",
+    "useListbox",
+    "useListboxContext",
+    "useListboxItemContext",
+    "createListCollection",
+    "useListCollection",
+    "useFilter"
+  ],
+  "parts": [
+    {
+      "name": "Listbox.Root",
+      "props": [
+        {
+          "name": "collection",
+          "type": "ListCollection<T>",
+          "required": true,
+          "description": "The collection of items",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultHighlightedValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The initial value of the highlighted item when opened.\nUse when you don't need to control the highlighted value of the listbox.",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string[]",
+          "required": false,
+          "default": "[]",
+          "description": "The initial default value of the listbox when rendered.\nUse when you don't need to control the value of the listbox.",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "deselectable",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to disallow empty selection",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the listbox is disabled",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "disallowSelectAll",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to disallow selecting all items when `meta+a` is pressed",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "highlightedValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The controlled key of the highlighted item",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the listbox. Useful for composition.",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "loopFocus",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to loop the keyboard navigation through the options",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "onHighlightChange",
+          "type": "((details: HighlightChangeDetails<T>) => void)",
+          "required": false,
+          "description": "The callback fired when the highlighted item changes.",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "onSelect",
+          "type": "((details: SelectionDetails) => void)",
+          "required": false,
+          "description": "Function called when an item is selected",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: ValueChangeDetails<T>) => void)",
+          "required": false,
+          "description": "The callback fired when the selected item changes.",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "required": false,
+          "default": "\"vertical\"",
+          "description": "The orientation of the listbox.",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "scrollToIndexFn",
+          "type": "((details: ScrollToIndexDetails) => void)",
+          "required": false,
+          "description": "Function to scroll to a specific index",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "selectionMode",
+          "type": "SelectionMode",
+          "required": false,
+          "default": "\"single\"",
+          "description": "How multiple selection should behave in the listbox.\n\n- `single`: The user can select a single item.\n- `multiple`: The user can select multiple items without using modifier keys.\n- `extended`: The user can select multiple items by using modifier keys.",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "selectOnHighlight",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to select the item when it is highlighted",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "typeahead",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to enable typeahead on the listbox",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "value",
+          "type": "string[]",
+          "required": false,
+          "description": "The controlled keys of the selected items",
+          "from": "@zag-js/listbox"
+        }
+      ]
+    },
+    {
+      "name": "Listbox.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseListboxContext<unknown>) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Listbox.Content",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Listbox.Empty",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Listbox.Input",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "autoHighlight",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to automatically highlight the item when typing",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "keyboardPriority",
+          "type": "\"navigate\" | \"caret\"",
+          "required": false,
+          "default": "\"caret\"",
+          "description": "Determines how keyboard conflicts in the input are resolved.\n- \"caret\": keep native text-editing behavior\n- \"navigate\": forward supported keys to listbox navigation",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Listbox.Item",
+      "props": [
+        {
+          "name": "item",
+          "type": "any",
+          "required": true,
+          "description": "The item to render",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "highlightOnHover",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to highlight the item on hover",
+          "from": "@zag-js/listbox"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Listbox.ItemContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseListboxItemContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Listbox.ItemGroup",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Listbox.ItemGroupLabel",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Listbox.ItemIndicator",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Listbox.ItemText",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Listbox.Label",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Listbox.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseListboxReturn<T>",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Listbox.ValueText",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "Text to display when no value is listboxed.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/listbox.tsx",
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport type { CollectionItem } from \"@ark-ui/react\"\nimport {\n  Listbox as ListboxPrimitive,\n  useListbox,\n  useListboxContext,\n  useListboxItemContext,\n  createListCollection,\n  useListCollection,\n  useFilter,\n} from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction ListboxContext(props: ListboxContextProps) {\n  return <ListboxPrimitive.Context {...props} />\n}\n\nfunction ListboxContent({ className, ...props }: ListboxContentProps) {\n  return (\n    <ListboxPrimitive.Content\n      data-slot=\"listbox-content\"\n      className={cn(\n        \"max-h-72 overflow-auto rounded-lg border bg-popover p-1 text-popover-foreground outline-none\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ListboxEmpty({ className, ...props }: ListboxEmptyProps) {\n  return (\n    <ListboxPrimitive.Empty\n      data-slot=\"listbox-empty\"\n      className={cn(\"p-4 text-center text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ListboxInput({ className, ...props }: ListboxInputProps) {\n  return (\n    <ListboxPrimitive.Input\n      data-slot=\"listbox-input\"\n      className={cn(\n        \"h-8 min-w-0 rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ListboxItem({ className, ...props }: ListboxItemProps) {\n  return (\n    <ListboxPrimitive.Item\n      data-slot=\"listbox-item\"\n      className={cn(\n        \"flex cursor-default items-center gap-2 rounded-md px-2 py-1.5 text-sm outline-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ListboxItemContext(props: ListboxItemContextProps) {\n  return <ListboxPrimitive.ItemContext {...props} />\n}\n\nfunction ListboxItemGroup({ className, ...props }: ListboxItemGroupProps) {\n  return <ListboxPrimitive.ItemGroup data-slot=\"listbox-item-group\" className={cn(\"py-1\", className)} {...props} />\n}\n\nfunction ListboxItemGroupLabel({ className, ...props }: ListboxItemGroupLabelProps) {\n  return (\n    <ListboxPrimitive.ItemGroupLabel\n      data-slot=\"listbox-item-group-label\"\n      className={cn(\"px-2 py-1.5 text-xs font-medium text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ListboxItemIndicator({ className, ...props }: ListboxItemIndicatorProps) {\n  return (\n    <ListboxPrimitive.ItemIndicator\n      data-slot=\"listbox-item-indicator\"\n      className={cn(\"ml-auto text-primary\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ListboxItemText({ className, ...props }: ListboxItemTextProps) {\n  return <ListboxPrimitive.ItemText data-slot=\"listbox-item-text\" className={cn(\"flex-1\", className)} {...props} />\n}\n\nfunction ListboxLabel({ className, ...props }: ListboxLabelProps) {\n  return (\n    <ListboxPrimitive.Label\n      data-slot=\"listbox-label\"\n      className={cn(\"text-sm font-medium data-disabled:opacity-50\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ListboxRoot<T extends CollectionItem>({ className, ...props }: ListboxRootProps<T>) {\n  return <ListboxPrimitive.Root data-slot=\"listbox\" className={cn(\"flex flex-col gap-2\", className)} {...props} />\n}\n\nfunction ListboxRootProvider<T extends CollectionItem>({ className, ...props }: ListboxRootProviderProps<T>) {\n  return (\n    <ListboxPrimitive.RootProvider\n      data-slot=\"listbox-root-provider\"\n      className={cn(\"flex flex-col gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ListboxValueText({ className, ...props }: ListboxValueTextProps) {\n  return <ListboxPrimitive.ValueText data-slot=\"listbox-value-text\" className={cn(\"text-sm\", className)} {...props} />\n}\n\ntype ListboxRootProps<T extends CollectionItem = CollectionItem> = ListboxPrimitive.RootComponentProps<T>\n\ntype ListboxContextProps = React.ComponentProps<typeof ListboxPrimitive.Context>\n\ntype ListboxContentProps = React.ComponentProps<typeof ListboxPrimitive.Content>\n\ntype ListboxEmptyProps = React.ComponentProps<typeof ListboxPrimitive.Empty>\n\ntype ListboxInputProps = React.ComponentProps<typeof ListboxPrimitive.Input>\n\ntype ListboxItemProps = React.ComponentProps<typeof ListboxPrimitive.Item>\n\ntype ListboxItemContextProps = React.ComponentProps<typeof ListboxPrimitive.ItemContext>\n\ntype ListboxItemGroupProps = React.ComponentProps<typeof ListboxPrimitive.ItemGroup>\n\ntype ListboxItemGroupLabelProps = React.ComponentProps<typeof ListboxPrimitive.ItemGroupLabel>\n\ntype ListboxItemIndicatorProps = React.ComponentProps<typeof ListboxPrimitive.ItemIndicator>\n\ntype ListboxItemTextProps = React.ComponentProps<typeof ListboxPrimitive.ItemText>\n\ntype ListboxLabelProps = React.ComponentProps<typeof ListboxPrimitive.Label>\n\ntype ListboxRootProviderProps<T extends CollectionItem = CollectionItem> = ListboxPrimitive.RootProviderProps<T> &\n  React.RefAttributes<HTMLDivElement>\n\ntype ListboxValueTextProps = React.ComponentProps<typeof ListboxPrimitive.ValueText>\n\nconst Listbox = {\n  Root: ListboxRoot,\n  Context: ListboxContext,\n  Content: ListboxContent,\n  Empty: ListboxEmpty,\n  Input: ListboxInput,\n  Item: ListboxItem,\n  ItemContext: ListboxItemContext,\n  ItemGroup: ListboxItemGroup,\n  ItemGroupLabel: ListboxItemGroupLabel,\n  ItemIndicator: ListboxItemIndicator,\n  ItemText: ListboxItemText,\n  Label: ListboxLabel,\n  RootProvider: ListboxRootProvider,\n  ValueText: ListboxValueText,\n}\n\nexport {\n  Listbox,\n  useListbox,\n  useListboxContext,\n  useListboxItemContext,\n  createListCollection,\n  useListCollection,\n  useFilter,\n  type ListboxRootProps,\n  type ListboxContextProps,\n  type ListboxContentProps,\n  type ListboxEmptyProps,\n  type ListboxInputProps,\n  type ListboxItemProps,\n  type ListboxItemContextProps,\n  type ListboxItemGroupProps,\n  type ListboxItemGroupLabelProps,\n  type ListboxItemIndicatorProps,\n  type ListboxItemTextProps,\n  type ListboxLabelProps,\n  type ListboxRootProviderProps,\n  type ListboxValueTextProps,\n}\n"
+    }
+  ]
+}

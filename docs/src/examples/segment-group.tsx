@@ -1,12 +1,12 @@
-import { SegmentGroup, SegmentGroupIndicator, SegmentGroupItem } from "@/components/ui/segment-group"
+import { SegmentGroup } from "@/components/ui/segment-group"
 
 export default function SegmentGroupExample() {
   return (
-    <SegmentGroup defaultValue="week">
-      <SegmentGroupIndicator />
-      <SegmentGroupItem value="day">Day</SegmentGroupItem>
-      <SegmentGroupItem value="week">Week</SegmentGroupItem>
-      <SegmentGroupItem value="month">Month</SegmentGroupItem>
-    </SegmentGroup>
+    <SegmentGroup.Root defaultValue="week">
+      <SegmentGroup.Indicator />
+      <SegmentGroup.Item value="day">Day</SegmentGroup.Item>
+      <SegmentGroup.Item value="week">Week</SegmentGroup.Item>
+      <SegmentGroup.Item value="month">Month</SegmentGroup.Item>
+    </SegmentGroup.Root>
   )
 }

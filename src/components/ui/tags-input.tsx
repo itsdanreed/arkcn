@@ -1,11 +1,12 @@
 "use client"
 
+import { useTagsInput, useTagsInputContext, useTagsInputItemContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { TagsInput as TagsInputPrimitive } from "@ark-ui/react"
 import { XIcon } from "lucide-react"
 
-function TagsInput({ className, ...props }: React.ComponentProps<typeof TagsInputPrimitive.Root>) {
+function TagsInputRoot({ className, ...props }: TagsInputRootProps) {
   return (
     <TagsInputPrimitive.Root
       data-slot="tags-input"
@@ -15,11 +16,11 @@ function TagsInput({ className, ...props }: React.ComponentProps<typeof TagsInpu
   )
 }
 
-function TagsInputContext({ ...props }: React.ComponentProps<typeof TagsInputPrimitive.Context>) {
+function TagsInputContext({ ...props }: TagsInputContextProps) {
   return <TagsInputPrimitive.Context {...props} />
 }
 
-function TagsInputLabel({ className, ...props }: React.ComponentProps<typeof TagsInputPrimitive.Label>) {
+function TagsInputLabel({ className, ...props }: TagsInputLabelProps) {
   return (
     <TagsInputPrimitive.Label
       data-slot="tags-input-label"
@@ -29,7 +30,7 @@ function TagsInputLabel({ className, ...props }: React.ComponentProps<typeof Tag
   )
 }
 
-function TagsInputControl({ className, ...props }: React.ComponentProps<typeof TagsInputPrimitive.Control>) {
+function TagsInputControl({ className, ...props }: TagsInputControlProps) {
   return (
     <TagsInputPrimitive.Control
       data-slot="tags-input-control"
@@ -43,7 +44,7 @@ function TagsInputControl({ className, ...props }: React.ComponentProps<typeof T
 }
 
 /** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */
-function TagsInputInput({ className, ...props }: Omit<React.ComponentProps<typeof TagsInputPrimitive.Input>, "id">) {
+function TagsInputInput({ className, ...props }: TagsInputInputProps) {
   return (
     <TagsInputPrimitive.Input
       data-slot="tags-input-input"
@@ -56,15 +57,15 @@ function TagsInputInput({ className, ...props }: Omit<React.ComponentProps<typeo
   )
 }
 
-function TagsInputItem({ className, ...props }: React.ComponentProps<typeof TagsInputPrimitive.Item>) {
+function TagsInputItem({ className, ...props }: TagsInputItemProps) {
   return <TagsInputPrimitive.Item data-slot="tags-input-item" className={cn("inline-flex", className)} {...props} />
 }
 
-function TagsInputItemContext({ ...props }: React.ComponentProps<typeof TagsInputPrimitive.ItemContext>) {
+function TagsInputItemContext({ ...props }: TagsInputItemContextProps) {
   return <TagsInputPrimitive.ItemContext {...props} />
 }
 
-function TagsInputItemPreview({ className, ...props }: React.ComponentProps<typeof TagsInputPrimitive.ItemPreview>) {
+function TagsInputItemPreview({ className, ...props }: TagsInputItemPreviewProps) {
   return (
     <TagsInputPrimitive.ItemPreview
       data-slot="tags-input-item-preview"
@@ -77,15 +78,11 @@ function TagsInputItemPreview({ className, ...props }: React.ComponentProps<type
   )
 }
 
-function TagsInputItemText({ ...props }: React.ComponentProps<typeof TagsInputPrimitive.ItemText>) {
+function TagsInputItemText({ ...props }: TagsInputItemTextProps) {
   return <TagsInputPrimitive.ItemText data-slot="tags-input-item-text" {...props} />
 }
 
-function TagsInputItemDeleteTrigger({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof TagsInputPrimitive.ItemDeleteTrigger>) {
+function TagsInputItemDeleteTrigger({ className, children, ...props }: TagsInputItemDeleteTriggerProps) {
   return (
     <TagsInputPrimitive.ItemDeleteTrigger
       data-slot="tags-input-item-delete-trigger"
@@ -95,12 +92,12 @@ function TagsInputItemDeleteTrigger({
       )}
       {...props}
     >
-      {children ?? <XIcon />}
+      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <XIcon />}</>}
     </TagsInputPrimitive.ItemDeleteTrigger>
   )
 }
 
-function TagsInputItemInput({ className, ...props }: React.ComponentProps<typeof TagsInputPrimitive.ItemInput>) {
+function TagsInputItemInput({ className, ...props }: TagsInputItemInputProps) {
   return (
     <TagsInputPrimitive.ItemInput
       data-slot="tags-input-item-input"
@@ -113,11 +110,7 @@ function TagsInputItemInput({ className, ...props }: React.ComponentProps<typeof
   )
 }
 
-function TagsInputClearTrigger({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof TagsInputPrimitive.ClearTrigger>) {
+function TagsInputClearTrigger({ className, children, ...props }: TagsInputClearTriggerProps) {
   return (
     <TagsInputPrimitive.ClearTrigger
       data-slot="tags-input-clear-trigger"
@@ -127,27 +120,87 @@ function TagsInputClearTrigger({
       )}
       {...props}
     >
-      {children ?? <XIcon />}
+      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <XIcon />}</>}
     </TagsInputPrimitive.ClearTrigger>
   )
 }
 
-function TagsInputHiddenInput({ ...props }: React.ComponentProps<typeof TagsInputPrimitive.HiddenInput>) {
+function TagsInputHiddenInput({ ...props }: TagsInputHiddenInputProps) {
   return <TagsInputPrimitive.HiddenInput {...props} />
 }
 
+function TagsInputRootProvider({ className, ...props }: TagsInputRootProviderProps) {
+  return (
+    <TagsInputPrimitive.RootProvider
+      data-slot="tags-input"
+      className={cn("flex w-full flex-col gap-1.5", className)}
+      {...props}
+    />
+  )
+}
+
+type TagsInputRootProps = React.ComponentProps<typeof TagsInputPrimitive.Root>
+
+type TagsInputRootProviderProps = React.ComponentProps<typeof TagsInputPrimitive.RootProvider>
+
+type TagsInputClearTriggerProps = React.ComponentProps<typeof TagsInputPrimitive.ClearTrigger>
+
+type TagsInputContextProps = React.ComponentProps<typeof TagsInputPrimitive.Context>
+
+type TagsInputControlProps = React.ComponentProps<typeof TagsInputPrimitive.Control>
+
+type TagsInputHiddenInputProps = React.ComponentProps<typeof TagsInputPrimitive.HiddenInput>
+
+type TagsInputInputProps = Omit<React.ComponentProps<typeof TagsInputPrimitive.Input>, "id">
+
+type TagsInputItemProps = React.ComponentProps<typeof TagsInputPrimitive.Item>
+
+type TagsInputItemContextProps = React.ComponentProps<typeof TagsInputPrimitive.ItemContext>
+
+type TagsInputItemDeleteTriggerProps = React.ComponentProps<typeof TagsInputPrimitive.ItemDeleteTrigger>
+
+type TagsInputItemInputProps = React.ComponentProps<typeof TagsInputPrimitive.ItemInput>
+
+type TagsInputItemPreviewProps = React.ComponentProps<typeof TagsInputPrimitive.ItemPreview>
+
+type TagsInputItemTextProps = React.ComponentProps<typeof TagsInputPrimitive.ItemText>
+
+type TagsInputLabelProps = React.ComponentProps<typeof TagsInputPrimitive.Label>
+
+const TagsInput = {
+  Root: TagsInputRoot,
+  RootProvider: TagsInputRootProvider,
+  ClearTrigger: TagsInputClearTrigger,
+  Context: TagsInputContext,
+  Control: TagsInputControl,
+  HiddenInput: TagsInputHiddenInput,
+  Input: TagsInputInput,
+  Item: TagsInputItem,
+  ItemContext: TagsInputItemContext,
+  ItemDeleteTrigger: TagsInputItemDeleteTrigger,
+  ItemInput: TagsInputItemInput,
+  ItemPreview: TagsInputItemPreview,
+  ItemText: TagsInputItemText,
+  Label: TagsInputLabel,
+}
+
 export {
+  useTagsInput,
+  useTagsInputContext,
+  useTagsInputItemContext,
   TagsInput,
-  TagsInputClearTrigger,
-  TagsInputContext,
-  TagsInputControl,
-  TagsInputHiddenInput,
-  TagsInputInput,
-  TagsInputItem,
-  TagsInputItemContext,
-  TagsInputItemDeleteTrigger,
-  TagsInputItemInput,
-  TagsInputItemPreview,
-  TagsInputItemText,
-  TagsInputLabel,
+  type TagsInputRootProps,
+  type TagsInputRootProviderProps,
+  type TagsInputClearTriggerProps,
+  type TagsInputContextProps,
+  type TagsInputControlProps,
+  type TagsInputHiddenInputProps,
+  type TagsInputInputProps,
+  type TagsInputItemProps,
+  type TagsInputItemContextProps,
+  type TagsInputItemDeleteTriggerProps,
+  type TagsInputItemInputProps,
+  type TagsInputItemPreviewProps,
+  type TagsInputItemTextProps,
+  type TagsInputLabelProps,
 }

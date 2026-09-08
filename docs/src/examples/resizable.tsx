@@ -1,13 +1,13 @@
-import { ResizableHandle, ResizablePanel, ResizablePanelGroup } from "@/components/ui/resizable"
+import { Resizable } from "@/components/ui/resizable"
 
 export default function ResizableExample() {
   return (
-    <ResizablePanelGroup orientation="horizontal" className="h-48 w-full max-w-lg rounded-lg border">
-      <ResizablePanel defaultSize={40} className="flex items-center justify-center text-sm">
+    <Resizable.Root orientation="horizontal" className="h-48 w-full max-w-lg rounded-lg border">
+      <Resizable.Panel defaultSize={40} className="flex items-center justify-center text-sm">
         Sidebar
-      </ResizablePanel>
-      <ResizableHandle withHandle />
-      <ResizablePanel className="flex items-center justify-center text-sm">Content</ResizablePanel>
-    </ResizablePanelGroup>
+      </Resizable.Panel>
+      <Resizable.Handle withHandle />
+      <Resizable.Panel className="flex items-center justify-center text-sm">Content</Resizable.Panel>
+    </Resizable.Root>
   )
 }

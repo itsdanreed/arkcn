@@ -1,29 +1,17 @@
 {
   "name": "switch",
   "type": "ui",
-  "description": "`id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working.",
+  "description": "",
   "ark": "Switch",
   "exports": [
-    "Switch",
-    "SwitchContext",
-    "SwitchControl",
-    "SwitchHiddenInput",
-    "SwitchLabel",
-    "SwitchRoot",
-    "SwitchThumb"
+    "useSwitch",
+    "useSwitchContext",
+    "Switch"
   ],
   "parts": [
     {
-      "name": "Switch",
+      "name": "Switch.Root",
       "props": [
-        {
-          "name": "size",
-          "type": "\"default\" | \"sm\"",
-          "required": false,
-          "default": "\"default\"",
-          "description": "Size variant; sets a `data-size` attribute.",
-          "from": "arkcn"
-        },
         {
           "name": "asChild",
           "type": "boolean",
@@ -126,7 +114,47 @@
       ]
     },
     {
-      "name": "SwitchContext",
+      "name": "Switch.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseSwitchReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Switch.Context",
       "props": [
         {
           "name": "children",
@@ -138,7 +166,7 @@
       ]
     },
     {
-      "name": "SwitchControl",
+      "name": "Switch.Control",
       "props": [
         {
           "name": "asChild",
@@ -171,7 +199,7 @@
       ]
     },
     {
-      "name": "SwitchHiddenInput",
+      "name": "Switch.HiddenInput",
       "props": [
         {
           "name": "asChild",
@@ -204,7 +232,7 @@
       ]
     },
     {
-      "name": "SwitchLabel",
+      "name": "Switch.Label",
       "props": [
         {
           "name": "asChild",
@@ -237,111 +265,7 @@
       ]
     },
     {
-      "name": "SwitchRoot",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "checked",
-          "type": "boolean",
-          "required": false,
-          "description": "The controlled checked state of the switch",
-          "from": "@zag-js/switch"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "disabled",
-          "type": "boolean",
-          "required": false,
-          "description": "Whether the switch is disabled.",
-          "from": "@zag-js/switch"
-        },
-        {
-          "name": "ids",
-          "type": "ElementIds",
-          "required": false,
-          "description": "The ids of the elements in the switch. Useful for composition.",
-          "from": "@zag-js/switch"
-        },
-        {
-          "name": "invalid",
-          "type": "boolean",
-          "required": false,
-          "description": "If `true`, the switch is marked as invalid.",
-          "from": "@zag-js/switch"
-        },
-        {
-          "name": "label",
-          "type": "string",
-          "required": false,
-          "description": "Specifies the localized strings that identifies the accessibility elements and their states",
-          "from": "@zag-js/switch"
-        },
-        {
-          "name": "name",
-          "type": "string",
-          "required": false,
-          "description": "The name of the input field in a switch\n(Useful for form submission).",
-          "from": "@zag-js/switch"
-        },
-        {
-          "name": "onCheckedChange",
-          "type": "((details: CheckedChangeDetails) => void)",
-          "required": false,
-          "description": "Function to call when the switch is clicked.",
-          "from": "@zag-js/switch"
-        },
-        {
-          "name": "readOnly",
-          "type": "boolean",
-          "required": false,
-          "description": "Whether the switch is read-only",
-          "from": "@zag-js/switch"
-        },
-        {
-          "name": "required",
-          "type": "boolean",
-          "required": false,
-          "description": "If `true`, the switch input is marked as required,",
-          "from": "@zag-js/switch"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        },
-        {
-          "name": "value",
-          "type": "string | number",
-          "required": false,
-          "default": "\"on\"",
-          "description": "The value of switch input. Useful for form submission.",
-          "from": "@zag-js/switch"
-        }
-      ]
-    },
-    {
-      "name": "SwitchThumb",
+      "name": "Switch.Thumb",
       "props": [
         {
           "name": "asChild",
@@ -383,7 +307,7 @@
   "files": [
     {
       "path": "components/ui/switch.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Switch as SwitchPrimitive } from \"@ark-ui/react\"\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction Switch({\n  className,\n  size = \"default\",\n  children,\n  ...props\n}: Omit<React.ComponentProps<typeof SwitchPrimitive.Root>, \"id\"> & {\n  size?: \"sm\" | \"default\"\n}) {\n  return (\n    <SwitchPrimitive.Root\n      data-slot=\"switch\"\n      data-size={size}\n      className=\"group/switch peer inline-flex items-center gap-2\"\n      {...props}\n    >\n      <SwitchControl className={className}>\n        <SwitchThumb />\n      </SwitchControl>\n      {children && <SwitchLabel>{children}</SwitchLabel>}\n      <SwitchHiddenInput />\n    </SwitchPrimitive.Root>\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction SwitchRoot({ ...props }: Omit<React.ComponentProps<typeof SwitchPrimitive.Root>, \"id\">) {\n  return <SwitchPrimitive.Root data-slot=\"switch\" {...props} />\n}\n\nfunction SwitchContext({ ...props }: React.ComponentProps<typeof SwitchPrimitive.Context>) {\n  return <SwitchPrimitive.Context {...props} />\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction SwitchControl({ className, ...props }: Omit<React.ComponentProps<typeof SwitchPrimitive.Control>, \"id\">) {\n  return (\n    <SwitchPrimitive.Control\n      data-slot=\"switch-control\"\n      className={cn(\n        \"relative inline-flex shrink-0 items-center rounded-full border border-transparent transition-all outline-none group-has-focus-visible/field-label:border-transparent group-has-focus-visible/field-label:ring-0 group-data-[size=default]/switch:h-[18.4px] group-data-[size=default]/switch:w-8 group-data-[size=sm]/switch:h-3.5 group-data-[size=sm]/switch:w-6 after:absolute after:-inset-x-3 after:-inset-y-2 data-focus-visible:border-ring data-focus-visible:ring-3 data-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 dark:data-invalid:border-destructive/50 dark:data-invalid:ring-destructive/40 data-checked:bg-primary data-unchecked:bg-input dark:data-unchecked:bg-input/80 data-disabled:cursor-not-allowed data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SwitchThumb({ className, ...props }: React.ComponentProps<typeof SwitchPrimitive.Thumb>) {\n  return (\n    <SwitchPrimitive.Thumb\n      data-slot=\"switch-thumb\"\n      className={cn(\n        \"pointer-events-none block rounded-full bg-background ring-0 transition-transform group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 group-data-[size=default]/switch:data-checked:translate-x-[calc(100%-2px)] group-data-[size=sm]/switch:data-checked:translate-x-[calc(100%-2px)] dark:data-checked:bg-primary-foreground group-data-[size=default]/switch:data-unchecked:translate-x-0 group-data-[size=sm]/switch:data-unchecked:translate-x-0 dark:data-unchecked:bg-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SwitchLabel({ className, ...props }: React.ComponentProps<typeof SwitchPrimitive.Label>) {\n  return (\n    <SwitchPrimitive.Label\n      data-slot=\"switch-label\"\n      className={cn(\"text-sm leading-none select-none data-disabled:opacity-50\", className)}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction SwitchHiddenInput({ ...props }: Omit<React.ComponentProps<typeof SwitchPrimitive.HiddenInput>, \"id\">) {\n  return <SwitchPrimitive.HiddenInput {...props} />\n}\n\nexport { Switch, SwitchContext, SwitchControl, SwitchHiddenInput, SwitchLabel, SwitchRoot, SwitchThumb }\n"
+      "content": "\"use client\"\n\nimport { useSwitch, useSwitchContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Switch as SwitchPrimitive } from \"@ark-ui/react\"\n\nfunction SwitchRoot({ className, ...props }: SwitchRootProps) {\n  return (\n    <SwitchPrimitive.Root\n      data-slot=\"switch\"\n      data-size=\"default\"\n      className={cn(\"group/switch peer inline-flex items-center gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SwitchContext({ ...props }: SwitchContextProps) {\n  return <SwitchPrimitive.Context {...props} />\n}\n\nfunction SwitchControl({ className, ...props }: SwitchControlProps) {\n  return (\n    <SwitchPrimitive.Control\n      data-slot=\"switch-control\"\n      className={cn(\n        \"relative inline-flex shrink-0 items-center rounded-full border border-transparent transition-all outline-none group-has-focus-visible/field-label:border-transparent group-has-focus-visible/field-label:ring-0 group-data-[size=default]/switch:h-[18.4px] group-data-[size=default]/switch:w-8 group-data-[size=sm]/switch:h-3.5 group-data-[size=sm]/switch:w-6 after:absolute after:-inset-x-3 after:-inset-y-2 data-focus-visible:border-ring data-focus-visible:ring-3 data-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 dark:data-invalid:border-destructive/50 dark:data-invalid:ring-destructive/40 data-checked:bg-primary data-unchecked:bg-input dark:data-unchecked:bg-input/80 data-disabled:cursor-not-allowed data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SwitchThumb({ className, ...props }: SwitchThumbProps) {\n  return (\n    <SwitchPrimitive.Thumb\n      data-slot=\"switch-thumb\"\n      className={cn(\n        \"pointer-events-none block rounded-full bg-background ring-0 transition-transform group-data-[size=default]/switch:size-4 group-data-[size=sm]/switch:size-3 group-data-[size=default]/switch:data-checked:translate-x-[calc(100%-2px)] group-data-[size=sm]/switch:data-checked:translate-x-[calc(100%-2px)] dark:data-checked:bg-primary-foreground group-data-[size=default]/switch:data-unchecked:translate-x-0 group-data-[size=sm]/switch:data-unchecked:translate-x-0 dark:data-unchecked:bg-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SwitchLabel({ className, ...props }: SwitchLabelProps) {\n  return (\n    <SwitchPrimitive.Label\n      data-slot=\"switch-label\"\n      className={cn(\"text-sm leading-none select-none data-disabled:opacity-50\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SwitchHiddenInput({ ...props }: SwitchHiddenInputProps) {\n  return <SwitchPrimitive.HiddenInput {...props} />\n}\n\nfunction SwitchRootProvider({ className, ...props }: SwitchRootProviderProps) {\n  return (\n    <SwitchPrimitive.RootProvider\n      data-slot=\"switch\"\n      data-size=\"default\"\n      className={cn(\"group/switch peer inline-flex items-center gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\ntype SwitchRootProps = React.ComponentProps<typeof SwitchPrimitive.Root>\n\ntype SwitchRootProviderProps = React.ComponentProps<typeof SwitchPrimitive.RootProvider>\n\ntype SwitchContextProps = React.ComponentProps<typeof SwitchPrimitive.Context>\n\ntype SwitchControlProps = React.ComponentProps<typeof SwitchPrimitive.Control>\n\ntype SwitchHiddenInputProps = React.ComponentProps<typeof SwitchPrimitive.HiddenInput>\n\ntype SwitchLabelProps = React.ComponentProps<typeof SwitchPrimitive.Label>\n\ntype SwitchThumbProps = React.ComponentProps<typeof SwitchPrimitive.Thumb>\n\nconst Switch = {\n  Root: SwitchRoot,\n  RootProvider: SwitchRootProvider,\n  Context: SwitchContext,\n  Control: SwitchControl,\n  HiddenInput: SwitchHiddenInput,\n  Label: SwitchLabel,\n  Thumb: SwitchThumb,\n}\n\nexport {\n  useSwitch,\n  useSwitchContext,\n  Switch,\n  type SwitchRootProps,\n  type SwitchRootProviderProps,\n  type SwitchContextProps,\n  type SwitchControlProps,\n  type SwitchHiddenInputProps,\n  type SwitchLabelProps,\n  type SwitchThumbProps,\n}\n"
     }
   ]
 }

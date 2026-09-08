@@ -4,21 +4,13 @@
   "description": "",
   "ark": "Progress",
   "exports": [
-    "Progress",
-    "ProgressCircle",
-    "ProgressCircleRange",
-    "ProgressCircleTrack",
-    "ProgressContext",
-    "ProgressLabel",
-    "ProgressRange",
-    "ProgressRoot",
-    "ProgressTrack",
-    "ProgressValueText",
-    "ProgressView"
+    "useProgress",
+    "useProgressContext",
+    "Progress"
   ],
   "parts": [
     {
-      "name": "Progress",
+      "name": "Progress.Root",
       "props": [
         {
           "name": "asChild",
@@ -134,7 +126,47 @@
       ]
     },
     {
-      "name": "ProgressCircle",
+      "name": "Progress.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseProgressReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Progress.Circle",
       "props": [
         {
           "name": "asChild",
@@ -167,7 +199,7 @@
       ]
     },
     {
-      "name": "ProgressCircleRange",
+      "name": "Progress.CircleRange",
       "props": [
         {
           "name": "asChild",
@@ -200,7 +232,7 @@
       ]
     },
     {
-      "name": "ProgressCircleTrack",
+      "name": "Progress.CircleTrack",
       "props": [
         {
           "name": "asChild",
@@ -233,7 +265,7 @@
       ]
     },
     {
-      "name": "ProgressContext",
+      "name": "Progress.Context",
       "props": [
         {
           "name": "children",
@@ -245,7 +277,7 @@
       ]
     },
     {
-      "name": "ProgressLabel",
+      "name": "Progress.Label",
       "props": [
         {
           "name": "asChild",
@@ -278,7 +310,7 @@
       ]
     },
     {
-      "name": "ProgressRange",
+      "name": "Progress.Range",
       "props": [
         {
           "name": "asChild",
@@ -311,123 +343,7 @@
       ]
     },
     {
-      "name": "ProgressRoot",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "defaultValue",
-          "type": "number | null",
-          "required": false,
-          "default": "50",
-          "description": "The initial value of the progress bar when rendered.\nUse when you don't need to control the value of the progress bar.",
-          "from": "@zag-js/progress"
-        },
-        {
-          "name": "formatOptions",
-          "type": "NumberFormatOptions",
-          "required": false,
-          "default": "{ style: \"percent\" }",
-          "description": "The options to use for formatting the value.",
-          "from": "@zag-js/progress"
-        },
-        {
-          "name": "id",
-          "type": "string",
-          "required": false,
-          "description": "The unique identifier of the machine.",
-          "from": "@zag-js/types"
-        },
-        {
-          "name": "ids",
-          "type": "ElementIds",
-          "required": false,
-          "description": "The ids of the elements in the progress bar. Useful for composition.",
-          "from": "@zag-js/progress"
-        },
-        {
-          "name": "locale",
-          "type": "string",
-          "required": false,
-          "default": "\"en-US\"",
-          "description": "The locale to use for formatting the value.",
-          "from": "@zag-js/progress"
-        },
-        {
-          "name": "max",
-          "type": "number",
-          "required": false,
-          "default": "100",
-          "description": "The maximum allowed value of the progress bar.",
-          "from": "@zag-js/progress"
-        },
-        {
-          "name": "min",
-          "type": "number",
-          "required": false,
-          "default": "0",
-          "description": "The minimum allowed value of the progress bar.",
-          "from": "@zag-js/progress"
-        },
-        {
-          "name": "onValueChange",
-          "type": "((details: ValueChangeDetails) => void)",
-          "required": false,
-          "description": "Callback fired when the value changes.",
-          "from": "@zag-js/progress"
-        },
-        {
-          "name": "orientation",
-          "type": "\"horizontal\" | \"vertical\"",
-          "required": false,
-          "default": "\"horizontal\"",
-          "description": "The orientation of the element.",
-          "from": "@zag-js/types"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        },
-        {
-          "name": "translations",
-          "type": "IntlTranslations",
-          "required": false,
-          "description": "The localized messages to use.",
-          "from": "@zag-js/progress"
-        },
-        {
-          "name": "value",
-          "type": "number | null",
-          "required": false,
-          "description": "The controlled value of the progress bar.",
-          "from": "@zag-js/progress"
-        }
-      ]
-    },
-    {
-      "name": "ProgressTrack",
+      "name": "Progress.Track",
       "props": [
         {
           "name": "asChild",
@@ -460,7 +376,7 @@
       ]
     },
     {
-      "name": "ProgressValueText",
+      "name": "Progress.ValueText",
       "props": [
         {
           "name": "asChild",
@@ -493,7 +409,7 @@
       ]
     },
     {
-      "name": "ProgressView",
+      "name": "Progress.View",
       "props": [
         {
           "name": "state",
@@ -541,7 +457,7 @@
   "files": [
     {
       "path": "components/ui/progress.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Progress as ProgressPrimitive } from \"@ark-ui/react\"\n\nfunction Progress({ className, children, ...props }: React.ComponentProps<typeof ProgressPrimitive.Root>) {\n  return (\n    <ProgressPrimitive.Root data-slot=\"progress\" className={cn(\"flex w-full flex-col gap-1\", className)} {...props}>\n      {children}\n      <ProgressTrack>\n        <ProgressRange />\n      </ProgressTrack>\n    </ProgressPrimitive.Root>\n  )\n}\n\nfunction ProgressRoot({ className, ...props }: React.ComponentProps<typeof ProgressPrimitive.Root>) {\n  return (\n    <ProgressPrimitive.Root data-slot=\"progress\" className={cn(\"flex w-full flex-col gap-1\", className)} {...props} />\n  )\n}\n\nfunction ProgressContext({ ...props }: React.ComponentProps<typeof ProgressPrimitive.Context>) {\n  return <ProgressPrimitive.Context {...props} />\n}\n\nfunction ProgressLabel({ className, ...props }: React.ComponentProps<typeof ProgressPrimitive.Label>) {\n  return (\n    <ProgressPrimitive.Label data-slot=\"progress-label\" className={cn(\"text-sm font-medium\", className)} {...props} />\n  )\n}\n\nfunction ProgressValueText({ className, ...props }: React.ComponentProps<typeof ProgressPrimitive.ValueText>) {\n  return (\n    <ProgressPrimitive.ValueText\n      data-slot=\"progress-value-text\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ProgressTrack({ className, ...props }: React.ComponentProps<typeof ProgressPrimitive.Track>) {\n  return (\n    <ProgressPrimitive.Track\n      data-slot=\"progress-track\"\n      className={cn(\"relative flex h-1 w-full items-center overflow-x-hidden rounded-full bg-muted\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ProgressRange({ className, ...props }: React.ComponentProps<typeof ProgressPrimitive.Range>) {\n  return (\n    <ProgressPrimitive.Range\n      data-slot=\"progress-indicator\"\n      className={cn(\n        \"h-full bg-primary transition-all data-[state=indeterminate]:w-1/3 data-[state=indeterminate]:animate-pulse\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ProgressCircle({ className, ...props }: React.ComponentProps<typeof ProgressPrimitive.Circle>) {\n  return (\n    <ProgressPrimitive.Circle\n      data-slot=\"progress-circle\"\n      className={cn(\"[--size:2.5rem] [--thickness:3px]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ProgressCircleTrack({ className, ...props }: React.ComponentProps<typeof ProgressPrimitive.CircleTrack>) {\n  return (\n    <ProgressPrimitive.CircleTrack\n      data-slot=\"progress-circle-track\"\n      className={cn(\"stroke-muted\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ProgressCircleRange({ className, ...props }: React.ComponentProps<typeof ProgressPrimitive.CircleRange>) {\n  return (\n    <ProgressPrimitive.CircleRange\n      data-slot=\"progress-circle-range\"\n      className={cn(\"stroke-primary transition-all\", className)}\n      {...props}\n    />\n  )\n}\n\n/** Renders only while the progress is in the given `state` (`loading`, `complete`, `indeterminate`). */\nfunction ProgressView({ ...props }: React.ComponentProps<typeof ProgressPrimitive.View>) {\n  return <ProgressPrimitive.View data-slot=\"progress-view\" {...props} />\n}\n\nexport {\n  Progress,\n  ProgressCircle,\n  ProgressCircleRange,\n  ProgressCircleTrack,\n  ProgressContext,\n  ProgressLabel,\n  ProgressRange,\n  ProgressRoot,\n  ProgressTrack,\n  ProgressValueText,\n  ProgressView,\n}\n"
+      "content": "\"use client\"\n\nimport { useProgress, useProgressContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Progress as ProgressPrimitive } from \"@ark-ui/react\"\n\nfunction ProgressRoot({ className, ...props }: ProgressRootProps) {\n  return (\n    <ProgressPrimitive.Root data-slot=\"progress\" className={cn(\"flex w-full flex-col gap-1\", className)} {...props} />\n  )\n}\n\nfunction ProgressContext({ ...props }: ProgressContextProps) {\n  return <ProgressPrimitive.Context {...props} />\n}\n\nfunction ProgressLabel({ className, ...props }: ProgressLabelProps) {\n  return (\n    <ProgressPrimitive.Label data-slot=\"progress-label\" className={cn(\"text-sm font-medium\", className)} {...props} />\n  )\n}\n\nfunction ProgressValueText({ className, ...props }: ProgressValueTextProps) {\n  return (\n    <ProgressPrimitive.ValueText\n      data-slot=\"progress-value-text\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ProgressTrack({ className, ...props }: ProgressTrackProps) {\n  return (\n    <ProgressPrimitive.Track\n      data-slot=\"progress-track\"\n      className={cn(\"relative flex h-1 w-full items-center overflow-x-hidden rounded-full bg-muted\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ProgressRange({ className, ...props }: ProgressRangeProps) {\n  return (\n    <ProgressPrimitive.Range\n      data-slot=\"progress-indicator\"\n      className={cn(\n        \"h-full bg-primary transition-all data-[state=indeterminate]:w-1/3 data-[state=indeterminate]:animate-pulse\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ProgressCircle({ className, ...props }: ProgressCircleProps) {\n  return (\n    <ProgressPrimitive.Circle\n      data-slot=\"progress-circle\"\n      className={cn(\"[--size:2.5rem] [--thickness:3px]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ProgressCircleTrack({ className, ...props }: ProgressCircleTrackProps) {\n  return (\n    <ProgressPrimitive.CircleTrack\n      data-slot=\"progress-circle-track\"\n      className={cn(\"stroke-muted\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ProgressCircleRange({ className, ...props }: ProgressCircleRangeProps) {\n  return (\n    <ProgressPrimitive.CircleRange\n      data-slot=\"progress-circle-range\"\n      className={cn(\"stroke-primary transition-all\", className)}\n      {...props}\n    />\n  )\n}\n\n/** Renders only while the progress is in the given `state` (`loading`, `complete`, `indeterminate`). */\nfunction ProgressView({ ...props }: ProgressViewProps) {\n  return <ProgressPrimitive.View data-slot=\"progress-view\" {...props} />\n}\n\nfunction ProgressRootProvider({ className, ...props }: ProgressRootProviderProps) {\n  return (\n    <ProgressPrimitive.RootProvider\n      data-slot=\"progress\"\n      className={cn(\"flex w-full flex-col gap-1\", className)}\n      {...props}\n    />\n  )\n}\n\ntype ProgressRootProps = React.ComponentProps<typeof ProgressPrimitive.Root>\n\ntype ProgressRootProviderProps = React.ComponentProps<typeof ProgressPrimitive.RootProvider>\n\ntype ProgressCircleProps = React.ComponentProps<typeof ProgressPrimitive.Circle>\n\ntype ProgressCircleRangeProps = React.ComponentProps<typeof ProgressPrimitive.CircleRange>\n\ntype ProgressCircleTrackProps = React.ComponentProps<typeof ProgressPrimitive.CircleTrack>\n\ntype ProgressContextProps = React.ComponentProps<typeof ProgressPrimitive.Context>\n\ntype ProgressLabelProps = React.ComponentProps<typeof ProgressPrimitive.Label>\n\ntype ProgressRangeProps = React.ComponentProps<typeof ProgressPrimitive.Range>\n\ntype ProgressTrackProps = React.ComponentProps<typeof ProgressPrimitive.Track>\n\ntype ProgressValueTextProps = React.ComponentProps<typeof ProgressPrimitive.ValueText>\n\ntype ProgressViewProps = React.ComponentProps<typeof ProgressPrimitive.View>\n\nconst Progress = {\n  Root: ProgressRoot,\n  RootProvider: ProgressRootProvider,\n  Circle: ProgressCircle,\n  CircleRange: ProgressCircleRange,\n  CircleTrack: ProgressCircleTrack,\n  Context: ProgressContext,\n  Label: ProgressLabel,\n  Range: ProgressRange,\n  Track: ProgressTrack,\n  ValueText: ProgressValueText,\n  View: ProgressView,\n}\n\nexport {\n  useProgress,\n  useProgressContext,\n  Progress,\n  type ProgressRootProps,\n  type ProgressRootProviderProps,\n  type ProgressCircleProps,\n  type ProgressCircleRangeProps,\n  type ProgressCircleTrackProps,\n  type ProgressContextProps,\n  type ProgressLabelProps,\n  type ProgressRangeProps,\n  type ProgressTrackProps,\n  type ProgressValueTextProps,\n  type ProgressViewProps,\n}\n"
     }
   ]
 }

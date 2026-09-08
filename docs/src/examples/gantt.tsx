@@ -1,25 +1,5 @@
 import * as React from "react"
-import {
-  Gantt,
-  GanttBar,
-  GanttBarLabel,
-  GanttBarResizeHandle,
-  GanttBody,
-  GanttControls,
-  GanttDependencies,
-  GanttGridLines,
-  GanttHeader,
-  GanttMilestone,
-  GanttRow,
-  GanttRowLabel,
-  GanttRowTrack,
-  GanttRows,
-  GanttToday,
-  GanttTodayTrigger,
-  GanttViewport,
-  GanttZoomInTrigger,
-  GanttZoomOutTrigger,
-} from "@/components/ui/gantt"
+import { Gantt } from "@/components/ui/gantt"
 
 const day = 86_400_000
 const at = (offset: number) => new Date(Date.now() + offset * day)
@@ -32,7 +12,7 @@ export default function GanttExample() {
     { id: "launch", title: "Launch", start: at(14), end: at(14), progress: 0, milestone: true },
   ])
   return (
-    <Gantt
+    <Gantt.Root
       start={at(-14)}
       end={at(21)}
       editable
@@ -41,45 +21,45 @@ export default function GanttExample() {
       }
       className="h-80 w-full"
     >
-      <GanttControls className="mb-2">
-        <GanttZoomOutTrigger />
-        <GanttZoomInTrigger />
-        <GanttTodayTrigger />
-      </GanttControls>
-      <GanttViewport>
-        <GanttHeader />
-        <GanttBody>
-          <GanttGridLines />
-          <GanttToday />
-          <GanttRows>
+      <Gantt.Controls className="mb-2">
+        <Gantt.ZoomOutTrigger />
+        <Gantt.ZoomInTrigger />
+        <Gantt.TodayTrigger />
+      </Gantt.Controls>
+      <Gantt.Viewport>
+        <Gantt.Header />
+        <Gantt.Body>
+          <Gantt.GridLines />
+          <Gantt.Today />
+          <Gantt.Rows>
             {tasks.map((task) => (
-              <GanttRow key={task.id} value={task.id}>
-                <GanttRowLabel>{task.title}</GanttRowLabel>
-                <GanttRowTrack>
+              <Gantt.Row key={task.id} value={task.id}>
+                <Gantt.RowLabel>{task.title}</Gantt.RowLabel>
+                <Gantt.RowTrack>
                   {task.milestone ? (
-                    <GanttMilestone value={task.id} date={task.start}>
+                    <Gantt.Milestone value={task.id} date={task.start}>
                       {task.title}
-                    </GanttMilestone>
+                    </Gantt.Milestone>
                   ) : (
-                    <GanttBar value={task.id} start={task.start} end={task.end} progress={task.progress}>
-                      <GanttBarResizeHandle side="start" />
-                      <GanttBarLabel>{task.title}</GanttBarLabel>
-                      <GanttBarResizeHandle side="end" />
-                    </GanttBar>
+                    <Gantt.Bar value={task.id} start={task.start} end={task.end} progress={task.progress}>
+                      <Gantt.BarResizeHandle side="start" />
+                      <Gantt.BarLabel>{task.title}</Gantt.BarLabel>
+                      <Gantt.BarResizeHandle side="end" />
+                    </Gantt.Bar>
                   )}
-                </GanttRowTrack>
-              </GanttRow>
+                </Gantt.RowTrack>
+              </Gantt.Row>
             ))}
-          </GanttRows>
-          <GanttDependencies
+          </Gantt.Rows>
+          <Gantt.Dependencies
             links={[
               { from: "research", to: "design" },
               { from: "design", to: "build" },
               { from: "build", to: "launch" },
             ]}
           />
-        </GanttBody>
-      </GanttViewport>
-    </Gantt>
+        </Gantt.Body>
+      </Gantt.Viewport>
+    </Gantt.Root>
   )
 }

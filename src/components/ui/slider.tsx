@@ -1,52 +1,11 @@
 "use client"
 
+import { useSlider, useSliderContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Slider as SliderPrimitive } from "@ark-ui/react"
 
-function Slider({
-  className,
-  children,
-  defaultValue,
-  value,
-  min = 0,
-  max = 100,
-  ...props
-}: React.ComponentProps<typeof SliderPrimitive.Root>) {
-  const _values = React.useMemo(
-    () => (Array.isArray(value) ? value : Array.isArray(defaultValue) ? defaultValue : [min, max]),
-    [value, defaultValue, min, max]
-  )
-
-  return (
-    <SliderPrimitive.Root
-      data-slot="slider"
-      defaultValue={defaultValue}
-      value={value}
-      min={min}
-      max={max}
-      className={cn(
-        "relative flex w-full touch-none flex-col gap-2 select-none data-disabled:opacity-50 data-vertical:h-full data-vertical:min-h-40 data-vertical:w-auto",
-        className
-      )}
-      {...props}
-    >
-      {children}
-      <SliderControl>
-        <SliderTrack>
-          <SliderRange />
-        </SliderTrack>
-        {Array.from({ length: _values.length }, (_, index) => (
-          <SliderThumb key={index} index={index}>
-            <SliderHiddenInput />
-          </SliderThumb>
-        ))}
-      </SliderControl>
-    </SliderPrimitive.Root>
-  )
-}
-
-function SliderRoot({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Root>) {
+function SliderRoot({ className, ...props }: SliderRootProps) {
   return (
     <SliderPrimitive.Root
       data-slot="slider"
@@ -59,15 +18,15 @@ function SliderRoot({ className, ...props }: React.ComponentProps<typeof SliderP
   )
 }
 
-function SliderContext({ ...props }: React.ComponentProps<typeof SliderPrimitive.Context>) {
+function SliderContext({ ...props }: SliderContextProps) {
   return <SliderPrimitive.Context {...props} />
 }
 
-function SliderLabel({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Label>) {
+function SliderLabel({ className, ...props }: SliderLabelProps) {
   return <SliderPrimitive.Label data-slot="slider-label" className={cn("text-sm font-medium", className)} {...props} />
 }
 
-function SliderValueText({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.ValueText>) {
+function SliderValueText({ className, ...props }: SliderValueTextProps) {
   return (
     <SliderPrimitive.ValueText
       data-slot="slider-value-text"
@@ -77,7 +36,7 @@ function SliderValueText({ className, ...props }: React.ComponentProps<typeof Sl
   )
 }
 
-function SliderControl({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Control>) {
+function SliderControl({ className, ...props }: SliderControlProps) {
   return (
     <SliderPrimitive.Control
       data-slot="slider-control"
@@ -87,7 +46,7 @@ function SliderControl({ className, ...props }: React.ComponentProps<typeof Slid
   )
 }
 
-function SliderTrack({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Track>) {
+function SliderTrack({ className, ...props }: SliderTrackProps) {
   return (
     <SliderPrimitive.Track
       data-slot="slider-track"
@@ -100,7 +59,7 @@ function SliderTrack({ className, ...props }: React.ComponentProps<typeof Slider
   )
 }
 
-function SliderRange({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Range>) {
+function SliderRange({ className, ...props }: SliderRangeProps) {
   return (
     <SliderPrimitive.Range
       data-slot="slider-range"
@@ -111,7 +70,7 @@ function SliderRange({ className, ...props }: React.ComponentProps<typeof Slider
 }
 
 /** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */
-function SliderThumb({ className, ...props }: Omit<React.ComponentProps<typeof SliderPrimitive.Thumb>, "id">) {
+function SliderThumb({ className, ...props }: SliderThumbProps) {
   return (
     <SliderPrimitive.Thumb
       data-slot="slider-thumb"
@@ -125,11 +84,11 @@ function SliderThumb({ className, ...props }: Omit<React.ComponentProps<typeof S
 }
 
 /** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */
-function SliderHiddenInput({ ...props }: Omit<React.ComponentProps<typeof SliderPrimitive.HiddenInput>, "id">) {
+function SliderHiddenInput({ ...props }: SliderHiddenInputProps) {
   return <SliderPrimitive.HiddenInput {...props} />
 }
 
-function SliderMarkerGroup({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.MarkerGroup>) {
+function SliderMarkerGroup({ className, ...props }: SliderMarkerGroupProps) {
   return (
     <SliderPrimitive.MarkerGroup
       data-slot="slider-marker-group"
@@ -139,7 +98,7 @@ function SliderMarkerGroup({ className, ...props }: React.ComponentProps<typeof 
   )
 }
 
-function SliderMarker({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Marker>) {
+function SliderMarker({ className, ...props }: SliderMarkerProps) {
   return (
     <SliderPrimitive.Marker
       data-slot="slider-marker"
@@ -150,10 +109,7 @@ function SliderMarker({ className, ...props }: React.ComponentProps<typeof Slide
 }
 
 /** Value bubble shown above a thumb while it is dragged. Place it inside `SliderThumb`. */
-function SliderDraggingIndicator({
-  className,
-  ...props
-}: React.ComponentProps<typeof SliderPrimitive.DraggingIndicator>) {
+function SliderDraggingIndicator({ className, ...props }: SliderDraggingIndicatorProps) {
   return (
     <SliderPrimitive.DraggingIndicator
       data-slot="slider-dragging-indicator"
@@ -166,18 +122,76 @@ function SliderDraggingIndicator({
   )
 }
 
+function SliderRootProvider({ className, ...props }: SliderRootProviderProps) {
+  return (
+    <SliderPrimitive.RootProvider
+      data-slot="slider"
+      className={cn(
+        "relative flex w-full touch-none flex-col gap-2 select-none data-disabled:opacity-50 data-vertical:h-full data-vertical:min-h-40 data-vertical:w-auto",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+type SliderRootProps = React.ComponentProps<typeof SliderPrimitive.Root>
+
+type SliderRootProviderProps = React.ComponentProps<typeof SliderPrimitive.RootProvider>
+
+type SliderContextProps = React.ComponentProps<typeof SliderPrimitive.Context>
+
+type SliderControlProps = React.ComponentProps<typeof SliderPrimitive.Control>
+
+type SliderHiddenInputProps = Omit<React.ComponentProps<typeof SliderPrimitive.HiddenInput>, "id">
+
+type SliderLabelProps = React.ComponentProps<typeof SliderPrimitive.Label>
+
+type SliderMarkerProps = React.ComponentProps<typeof SliderPrimitive.Marker>
+
+type SliderMarkerGroupProps = React.ComponentProps<typeof SliderPrimitive.MarkerGroup>
+
+type SliderRangeProps = React.ComponentProps<typeof SliderPrimitive.Range>
+
+type SliderThumbProps = Omit<React.ComponentProps<typeof SliderPrimitive.Thumb>, "id">
+
+type SliderTrackProps = React.ComponentProps<typeof SliderPrimitive.Track>
+
+type SliderValueTextProps = React.ComponentProps<typeof SliderPrimitive.ValueText>
+
+type SliderDraggingIndicatorProps = React.ComponentProps<typeof SliderPrimitive.DraggingIndicator>
+
+const Slider = {
+  Root: SliderRoot,
+  RootProvider: SliderRootProvider,
+  Context: SliderContext,
+  Control: SliderControl,
+  HiddenInput: SliderHiddenInput,
+  Label: SliderLabel,
+  Marker: SliderMarker,
+  MarkerGroup: SliderMarkerGroup,
+  Range: SliderRange,
+  Thumb: SliderThumb,
+  Track: SliderTrack,
+  ValueText: SliderValueText,
+  DraggingIndicator: SliderDraggingIndicator,
+}
+
 export {
+  useSlider,
+  useSliderContext,
   Slider,
-  SliderContext,
-  SliderControl,
-  SliderHiddenInput,
-  SliderLabel,
-  SliderMarker,
-  SliderMarkerGroup,
-  SliderRange,
-  SliderRoot,
-  SliderThumb,
-  SliderTrack,
-  SliderValueText,
-  SliderDraggingIndicator,
+  type SliderRootProps,
+  type SliderRootProviderProps,
+  type SliderContextProps,
+  type SliderControlProps,
+  type SliderHiddenInputProps,
+  type SliderLabelProps,
+  type SliderMarkerProps,
+  type SliderMarkerGroupProps,
+  type SliderRangeProps,
+  type SliderThumbProps,
+  type SliderTrackProps,
+  type SliderValueTextProps,
+  type SliderDraggingIndicatorProps,
 }

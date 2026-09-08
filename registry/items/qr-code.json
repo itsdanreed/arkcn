@@ -4,16 +4,13 @@
   "description": "",
   "ark": "QrCode",
   "exports": [
-    "QrCode",
-    "QrCodeContext",
-    "QrCodeDownloadTrigger",
-    "QrCodeFrame",
-    "QrCodeOverlay",
-    "QrCodePattern"
+    "useQrCode",
+    "useQrCodeContext",
+    "QrCode"
   ],
   "parts": [
     {
-      "name": "QrCode",
+      "name": "QrCode.Root",
       "props": [
         {
           "name": "asChild",
@@ -95,7 +92,47 @@
       ]
     },
     {
-      "name": "QrCodeContext",
+      "name": "QrCode.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseQrCodeReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "QrCode.Context",
       "props": [
         {
           "name": "children",
@@ -107,7 +144,7 @@
       ]
     },
     {
-      "name": "QrCodeDownloadTrigger",
+      "name": "QrCode.DownloadTrigger",
       "props": [
         {
           "name": "fileName",
@@ -161,7 +198,7 @@
       ]
     },
     {
-      "name": "QrCodeFrame",
+      "name": "QrCode.Frame",
       "props": [
         {
           "name": "asChild",
@@ -194,7 +231,7 @@
       ]
     },
     {
-      "name": "QrCodeOverlay",
+      "name": "QrCode.Overlay",
       "props": [
         {
           "name": "asChild",
@@ -227,7 +264,7 @@
       ]
     },
     {
-      "name": "QrCodePattern",
+      "name": "QrCode.Pattern",
       "props": [
         {
           "name": "asChild",
@@ -269,7 +306,7 @@
   "files": [
     {
       "path": "components/ui/qr-code.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { QrCode as QrCodePrimitive } from \"@ark-ui/react\"\n\nfunction QrCode({ className, children, ...props }: React.ComponentProps<typeof QrCodePrimitive.Root>) {\n  return (\n    <QrCodePrimitive.Root data-slot=\"qr-code\" className={cn(\"inline-flex\", className)} {...props}>\n      {children ?? (\n        <QrCodeFrame>\n          <QrCodePattern />\n        </QrCodeFrame>\n      )}\n    </QrCodePrimitive.Root>\n  )\n}\n\nfunction QrCodeContext({ ...props }: React.ComponentProps<typeof QrCodePrimitive.Context>) {\n  return <QrCodePrimitive.Context {...props} />\n}\n\nfunction QrCodeFrame({ className, ...props }: React.ComponentProps<typeof QrCodePrimitive.Frame>) {\n  return (\n    <QrCodePrimitive.Frame\n      data-slot=\"qr-code-frame\"\n      className={cn(\"size-40 rounded-lg border bg-background fill-foreground p-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction QrCodePattern({ ...props }: React.ComponentProps<typeof QrCodePrimitive.Pattern>) {\n  return <QrCodePrimitive.Pattern data-slot=\"qr-code-pattern\" {...props} />\n}\n\nfunction QrCodeOverlay({ className, ...props }: React.ComponentProps<typeof QrCodePrimitive.Overlay>) {\n  return (\n    <QrCodePrimitive.Overlay\n      data-slot=\"qr-code-overlay\"\n      className={cn(\"flex items-center justify-center rounded-md bg-background p-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction QrCodeDownloadTrigger({ ...props }: React.ComponentProps<typeof QrCodePrimitive.DownloadTrigger>) {\n  return <QrCodePrimitive.DownloadTrigger data-slot=\"qr-code-download-trigger\" {...props} />\n}\n\nexport { QrCode, QrCodeContext, QrCodeDownloadTrigger, QrCodeFrame, QrCodeOverlay, QrCodePattern }\n"
+      "content": "\"use client\"\n\nimport { useQrCode, useQrCodeContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { QrCode as QrCodePrimitive } from \"@ark-ui/react\"\n\nfunction QrCodeRoot({ className, children, ...props }: QrCodeRootProps) {\n  return (\n    <QrCodePrimitive.Root data-slot=\"qr-code\" className={cn(\"inline-flex\", className)} {...props}>\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <QrCodeFrame>\n              <QrCodePattern />\n            </QrCodeFrame>\n          )}\n        </>\n      )}\n    </QrCodePrimitive.Root>\n  )\n}\n\nfunction QrCodeContext({ ...props }: QrCodeContextProps) {\n  return <QrCodePrimitive.Context {...props} />\n}\n\nfunction QrCodeFrame({ className, ...props }: QrCodeFrameProps) {\n  return (\n    <QrCodePrimitive.Frame\n      data-slot=\"qr-code-frame\"\n      className={cn(\"size-40 rounded-lg border bg-background fill-foreground p-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction QrCodePattern({ ...props }: QrCodePatternProps) {\n  return <QrCodePrimitive.Pattern data-slot=\"qr-code-pattern\" {...props} />\n}\n\nfunction QrCodeOverlay({ className, ...props }: QrCodeOverlayProps) {\n  return (\n    <QrCodePrimitive.Overlay\n      data-slot=\"qr-code-overlay\"\n      className={cn(\"flex items-center justify-center rounded-md bg-background p-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction QrCodeDownloadTrigger({ ...props }: QrCodeDownloadTriggerProps) {\n  return <QrCodePrimitive.DownloadTrigger data-slot=\"qr-code-download-trigger\" {...props} />\n}\n\nfunction QrCodeRootProvider({ className, ...props }: QrCodeRootProviderProps) {\n  return <QrCodePrimitive.RootProvider data-slot=\"qr-code\" className={cn(\"inline-flex\", className)} {...props} />\n}\n\ntype QrCodeRootProps = React.ComponentProps<typeof QrCodePrimitive.Root>\n\ntype QrCodeRootProviderProps = React.ComponentProps<typeof QrCodePrimitive.RootProvider>\n\ntype QrCodeContextProps = React.ComponentProps<typeof QrCodePrimitive.Context>\n\ntype QrCodeDownloadTriggerProps = React.ComponentProps<typeof QrCodePrimitive.DownloadTrigger>\n\ntype QrCodeFrameProps = React.ComponentProps<typeof QrCodePrimitive.Frame>\n\ntype QrCodeOverlayProps = React.ComponentProps<typeof QrCodePrimitive.Overlay>\n\ntype QrCodePatternProps = React.ComponentProps<typeof QrCodePrimitive.Pattern>\n\nconst QrCode = {\n  Root: QrCodeRoot,\n  RootProvider: QrCodeRootProvider,\n  Context: QrCodeContext,\n  DownloadTrigger: QrCodeDownloadTrigger,\n  Frame: QrCodeFrame,\n  Overlay: QrCodeOverlay,\n  Pattern: QrCodePattern,\n}\n\nexport {\n  useQrCode,\n  useQrCodeContext,\n  QrCode,\n  type QrCodeRootProps,\n  type QrCodeRootProviderProps,\n  type QrCodeContextProps,\n  type QrCodeDownloadTriggerProps,\n  type QrCodeFrameProps,\n  type QrCodeOverlayProps,\n  type QrCodePatternProps,\n}\n"
     }
   ]
 }

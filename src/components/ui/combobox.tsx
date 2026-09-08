@@ -1,5 +1,7 @@
 "use client"
 
+import { ark } from "@ark-ui/react"
+import { useCombobox, useComboboxItemContext } from "@ark-ui/react"
 import * as React from "react"
 import {
   Combobox as ComboboxPrimitive,
@@ -14,19 +16,16 @@ import {
 import { cn } from "@/lib/utils"
 
 import { Button } from "@/components/ui/button"
-import { InputGroup, InputGroupAddon, InputGroupTrigger, InputGroupInput } from "@/components/ui/input-group"
+import { InputGroup } from "@/components/ui/input-group"
 import { ChevronDownIcon, XIcon, CheckIcon } from "lucide-react"
 
-function Combobox<T extends CollectionItem>({
+function ComboboxRoot<T extends CollectionItem>({
   positioning,
   anchor,
   lazyMount = true,
   unmountOnExit = true,
   ...props
-}: React.ComponentProps<typeof ComboboxPrimitive.Root<T>> & {
-  /** Anchor the popup to another element, e.g. a `ComboboxChips` container. */
-  anchor?: React.RefObject<HTMLElement | null>
-}) {
+}: ComboboxRootProps<T>) {
   return (
     <ComboboxPrimitive.Root
       data-slot="combobox"
@@ -44,11 +43,11 @@ function Combobox<T extends CollectionItem>({
   )
 }
 
-function ComboboxContext({ ...props }: React.ComponentProps<typeof ComboboxPrimitive.Context>) {
+function ComboboxContext({ ...props }: ComboboxContextProps) {
   return <ComboboxPrimitive.Context {...props} />
 }
 
-function ComboboxRootLabel({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.Label>) {
+function ComboboxLabel({ className, ...props }: ComboboxLabelProps) {
   return (
     <ComboboxPrimitive.Label
       data-slot="combobox-root-label"
@@ -58,7 +57,7 @@ function ComboboxRootLabel({ className, ...props }: React.ComponentProps<typeof 
   )
 }
 
-function ComboboxControl({ ...props }: React.ComponentProps<typeof ComboboxPrimitive.Control>) {
+function ComboboxControl({ ...props }: ComboboxControlProps) {
   return <ComboboxPrimitive.Control data-slot="combobox-control" {...props} />
 }
 
@@ -66,47 +65,61 @@ function ComboboxControl({ ...props }: React.ComponentProps<typeof ComboboxPrimi
  * Ark has no value-text part for Combobox. Renders the selected items as
  * text, or `placeholder` when nothing is selected.
  */
-function ComboboxValue({
-  placeholder,
-  children,
-  ...props
-}: React.ComponentProps<"span"> & { placeholder?: React.ReactNode }) {
+function ComboboxValue({ placeholder, children, ...props }: ComboboxValueProps) {
   const combobox = useComboboxContext()
   return (
-    <span data-slot="combobox-value" data-placeholder-shown={combobox.hasSelectedItems ? undefined : ""} {...props}>
-      {children ?? (combobox.hasSelectedItems ? combobox.valueAsString : placeholder)}
-    </span>
+    <ark.span data-slot="combobox-value" data-placeholder-shown={combobox.hasSelectedItems ? undefined : ""} {...props}>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>{children ?? (combobox.hasSelectedItems ? combobox.valueAsString : placeholder)}</>
+      )}
+    </ark.span>
   )
 }
 
 /** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */
-function ComboboxTrigger({
-  className,
-  children,
-  ...props
-}: Omit<React.ComponentProps<typeof ComboboxPrimitive.Trigger>, "id">) {
+function ComboboxTrigger({ className, children, ...props }: ComboboxTriggerProps) {
   return (
     <ComboboxPrimitive.Trigger
       data-slot="combobox-trigger"
       className={cn("[&_svg:not([class*='size-'])]:size-4", className)}
       {...props}
     >
-      {children}
-      <ChevronDownIcon className="pointer-events-none size-4 text-muted-foreground" />
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {children}
+          <ChevronDownIcon className="pointer-events-none size-4 text-muted-foreground" />
+        </>
+      )}
     </ComboboxPrimitive.Trigger>
   )
 }
 
-function ComboboxClear({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.ClearTrigger>) {
+function ComboboxClearTrigger({ className, ...props }: ComboboxClearTriggerProps) {
   const combobox = useComboboxContext()
   // Match Base UI: unmount when there is nothing to clear, so the trigger
   // button (hidden via `has-data-[slot=combobox-clear]`) shows again.
   if (!combobox.hasSelectedItems && !combobox.inputValue) return null
   return (
     <ComboboxPrimitive.ClearTrigger data-slot="combobox-clear" className={cn(className)} asChild {...props}>
-      <InputGroupTrigger variant="ghost" size="icon-xs">
-        <XIcon className="pointer-events-none" />
-      </InputGroupTrigger>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <InputGroup.Trigger variant="ghost" size="icon-xs">
+            <XIcon className="pointer-events-none" />
+          </InputGroup.Trigger>
+        </>
+      )}
     </ComboboxPrimitive.ClearTrigger>
   )
 }
@@ -119,21 +132,24 @@ function ComboboxInput({
   showTrigger = true,
   showClear = false,
   ...props
-}: Omit<React.ComponentProps<typeof ComboboxPrimitive.Input>, "id"> & {
-  /** Render the open/close trigger in the control. */
-  showTrigger?: boolean
-  /** Render the clear button in the control. */
-  showClear?: boolean
-}) {
+}: ComboboxInputProps) {
   return (
     <ComboboxPrimitive.Control asChild>
-      <InputGroup className={cn("w-auto", className)}>
+      <InputGroup.Root className={cn("w-auto", className)}>
         <ComboboxPrimitive.Input asChild disabled={disabled} {...props}>
-          <InputGroupInput />
+          {props.asChild ? (
+            React.isValidElement(children) ? (
+              children
+            ) : null
+          ) : (
+            <>
+              <InputGroup.Input />
+            </>
+          )}
         </ComboboxPrimitive.Input>
-        <InputGroupAddon align="inline-end">
+        <InputGroup.Addon align="inline-end">
           {showTrigger && (
-            <InputGroupTrigger
+            <InputGroup.Trigger
               size="icon-xs"
               variant="ghost"
               asChild
@@ -142,17 +158,17 @@ function ComboboxInput({
               disabled={disabled}
             >
               <ComboboxTrigger />
-            </InputGroupTrigger>
+            </InputGroup.Trigger>
           )}
-          {showClear && <ComboboxClear disabled={disabled} />}
-        </InputGroupAddon>
+          {showClear && <ComboboxClearTrigger disabled={disabled} />}
+        </InputGroup.Addon>
         {children}
-      </InputGroup>
+      </InputGroup.Root>
     </ComboboxPrimitive.Control>
   )
 }
 
-function ComboboxPositioner({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.Positioner>) {
+function ComboboxPositioner({ className, ...props }: ComboboxPositionerProps) {
   return (
     <ComboboxPrimitive.Positioner
       data-slot="combobox-positioner"
@@ -163,7 +179,7 @@ function ComboboxPositioner({ className, ...props }: React.ComponentProps<typeof
 }
 
 /** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */
-function ComboboxContent({ className, ...props }: Omit<React.ComponentProps<typeof ComboboxPrimitive.Content>, "id">) {
+function ComboboxContent({ className, ...props }: ComboboxContentProps) {
   return (
     <PortalPrimitive>
       <ComboboxPositioner>
@@ -180,7 +196,7 @@ function ComboboxContent({ className, ...props }: Omit<React.ComponentProps<type
   )
 }
 
-function ComboboxList({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.List>) {
+function ComboboxList({ className, ...props }: ComboboxListProps) {
   return (
     <ComboboxPrimitive.List
       data-slot="combobox-list"
@@ -193,17 +209,7 @@ function ComboboxList({ className, ...props }: React.ComponentProps<typeof Combo
   )
 }
 
-function ComboboxItem({
-  className,
-  children,
-  item,
-  value,
-  ...props
-}: Omit<React.ComponentProps<typeof ComboboxPrimitive.Item>, "item"> & {
-  /** The collection item. Falls back to `value` for string collections. */
-  item?: CollectionItem
-  value?: string
-}) {
+function ComboboxItem({ className, children, item, value, ...props }: ComboboxItemProps) {
   return (
     <ComboboxPrimitive.Item
       data-slot="combobox-item"
@@ -214,19 +220,27 @@ function ComboboxItem({
       )}
       {...props}
     >
-      {children}
-      <ComboboxItemIndicator>
-        <CheckIcon className="pointer-events-none" />
-      </ComboboxItemIndicator>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {children}
+          <ComboboxItemIndicator>
+            <CheckIcon className="pointer-events-none" />
+          </ComboboxItemIndicator>
+        </>
+      )}
     </ComboboxPrimitive.Item>
   )
 }
 
-function ComboboxItemText({ ...props }: React.ComponentProps<typeof ComboboxPrimitive.ItemText>) {
+function ComboboxItemText({ ...props }: ComboboxItemTextProps) {
   return <ComboboxPrimitive.ItemText data-slot="combobox-item-text" {...props} />
 }
 
-function ComboboxItemIndicator({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.ItemIndicator>) {
+function ComboboxItemIndicator({ className, ...props }: ComboboxItemIndicatorProps) {
   return (
     <ComboboxPrimitive.ItemIndicator
       data-slot="combobox-item-indicator"
@@ -236,11 +250,11 @@ function ComboboxItemIndicator({ className, ...props }: React.ComponentProps<typ
   )
 }
 
-function ComboboxGroup({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.ItemGroup>) {
+function ComboboxItemGroup({ className, ...props }: ComboboxItemGroupProps) {
   return <ComboboxPrimitive.ItemGroup data-slot="combobox-group" className={cn(className)} {...props} />
 }
 
-function ComboboxLabel({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.ItemGroupLabel>) {
+function ComboboxItemGroupLabel({ className, ...props }: ComboboxItemGroupLabelProps) {
   return (
     <ComboboxPrimitive.ItemGroupLabel
       data-slot="combobox-label"
@@ -254,11 +268,7 @@ function ComboboxLabel({ className, ...props }: React.ComponentProps<typeof Comb
  * Renders every item in the root's collection through a render function.
  * Ark has no Collection part; this reads the collection from context.
  */
-function ComboboxCollection<T extends CollectionItem = CollectionItem>({
-  children,
-}: {
-  children: (item: T, index: number) => React.ReactNode
-}) {
+function ComboboxCollection<T extends CollectionItem = CollectionItem>({ children }: ComboboxCollectionProps<T>) {
   const combobox = useComboboxContext()
   const items = combobox.collection.items as T[]
   return (
@@ -270,7 +280,7 @@ function ComboboxCollection<T extends CollectionItem = CollectionItem>({
   )
 }
 
-function ComboboxEmpty({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.Empty>) {
+function ComboboxEmpty({ className, ...props }: ComboboxEmptyProps) {
   return (
     <ComboboxPrimitive.Empty
       data-slot="combobox-empty"
@@ -280,9 +290,9 @@ function ComboboxEmpty({ className, ...props }: React.ComponentProps<typeof Comb
   )
 }
 
-function ComboboxSeparator({ className, ...props }: React.ComponentProps<"div">) {
+function ComboboxSeparator({ className, ...props }: ComboboxSeparatorProps) {
   return (
-    <div
+    <ark.div
       role="separator"
       aria-orientation="horizontal"
       data-slot="combobox-separator"
@@ -296,7 +306,7 @@ function ComboboxSeparator({ className, ...props }: React.ComponentProps<"div">)
  * Chips for `multiple` comboboxes. Ark has no chip parts; these read the
  * selected values from context and remove them via `clearValue`.
  */
-function ComboboxChips({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.Control>) {
+function ComboboxChips({ className, ...props }: ComboboxChipsProps) {
   return (
     <ComboboxPrimitive.Control
       data-slot="combobox-chips"
@@ -309,21 +319,10 @@ function ComboboxChips({ className, ...props }: React.ComponentProps<typeof Comb
   )
 }
 
-function ComboboxChip({
-  className,
-  children,
-  value,
-  showRemove = true,
-  ...props
-}: React.ComponentProps<"div"> & {
-  /** The selected value this chip represents. */
-  value: string
-  /** Render the remove button on the chip. */
-  showRemove?: boolean
-}) {
+function ComboboxChip({ className, children, value, showRemove = true, ...props }: ComboboxChipProps) {
   const combobox = useComboboxContext()
   return (
-    <div
+    <ark.div
       data-slot="combobox-chip"
       data-value={value}
       className={cn(
@@ -332,26 +331,34 @@ function ComboboxChip({
       )}
       {...props}
     >
-      {children}
-      {showRemove && (
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon-xs"
-          data-slot="combobox-chip-remove"
-          aria-label={`Remove ${value}`}
-          disabled={combobox.disabled}
-          className="-ml-1 opacity-50 hover:opacity-100"
-          onClick={() => combobox.clearValue(value)}
-        >
-          <XIcon className="pointer-events-none" />
-        </Button>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {children}
+          {showRemove && (
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-xs"
+              data-slot="combobox-chip-remove"
+              aria-label={`Remove ${value}`}
+              disabled={combobox.disabled}
+              className="-ml-1 opacity-50 hover:opacity-100"
+              onClick={() => combobox.clearValue(value)}
+            >
+              <XIcon className="pointer-events-none" />
+            </Button>
+          )}
+        </>
       )}
-    </div>
+    </ark.div>
   )
 }
 
-function ComboboxChipsInput({ className, ...props }: React.ComponentProps<typeof ComboboxPrimitive.Input>) {
+function ComboboxChipsInput({ className, ...props }: ComboboxChipsInputProps) {
   return (
     <ComboboxPrimitive.Input
       data-slot="combobox-chip-input"
@@ -366,38 +373,144 @@ function useComboboxAnchor() {
 }
 
 /** Render-prop access to one item's state (`{ selected, highlighted, disabled, ... }`). */
-function ComboboxItemContext({ ...props }: React.ComponentProps<typeof ComboboxPrimitive.ItemContext>) {
+function ComboboxItemContext({ ...props }: ComboboxItemContextProps) {
   return <ComboboxPrimitive.ItemContext {...props} />
 }
 
+function ComboboxRootProvider<T extends CollectionItem>({ className, ...props }: ComboboxRootProviderProps<T>) {
+  return <ComboboxPrimitive.RootProvider data-slot="combobox" className={cn(className)} {...props} />
+}
+
+type ComboboxClearTriggerProps = React.ComponentProps<typeof ComboboxPrimitive.ClearTrigger>
+
+type ComboboxItemGroupProps = React.ComponentProps<typeof ComboboxPrimitive.ItemGroup>
+
+type ComboboxRootProps<T extends CollectionItem = CollectionItem> = React.ComponentProps<
+  typeof ComboboxPrimitive.Root<T>
+> & {
+  /** Anchor the popup to another element, e.g. a `ComboboxChips` container. */
+  anchor?: React.RefObject<HTMLElement | null>
+}
+
+type ComboboxRootProviderProps<T extends CollectionItem = CollectionItem> = React.ComponentProps<
+  typeof ComboboxPrimitive.RootProvider<T>
+>
+
+type ComboboxChipProps = React.ComponentProps<typeof ark.div> & {
+  /** The selected value this chip represents. */
+  value: string
+  /** Render the remove button on the chip. */
+  showRemove?: boolean
+}
+
+type ComboboxChipsProps = React.ComponentProps<typeof ComboboxPrimitive.Control>
+
+type ComboboxChipsInputProps = React.ComponentProps<typeof ComboboxPrimitive.Input>
+
+type ComboboxCollectionProps<T extends CollectionItem = CollectionItem> = {
+  children: (item: T, index: number) => React.ReactNode
+}
+
+type ComboboxContentProps = Omit<React.ComponentProps<typeof ComboboxPrimitive.Content>, "id">
+
+type ComboboxContextProps = React.ComponentProps<typeof ComboboxPrimitive.Context>
+
+type ComboboxControlProps = React.ComponentProps<typeof ComboboxPrimitive.Control>
+
+type ComboboxEmptyProps = React.ComponentProps<typeof ComboboxPrimitive.Empty>
+
+type ComboboxInputProps = Omit<React.ComponentProps<typeof ComboboxPrimitive.Input>, "id"> & {
+  /** Render the open/close trigger in the control. */
+  showTrigger?: boolean
+  /** Render the clear button in the control. */
+  showClear?: boolean
+}
+
+type ComboboxItemProps = Omit<React.ComponentProps<typeof ComboboxPrimitive.Item>, "item"> & {
+  /** The collection item. Falls back to `value` for string collections. */
+  item?: CollectionItem
+  value?: string
+}
+
+type ComboboxItemIndicatorProps = React.ComponentProps<typeof ComboboxPrimitive.ItemIndicator>
+
+type ComboboxItemTextProps = React.ComponentProps<typeof ComboboxPrimitive.ItemText>
+
+type ComboboxItemGroupLabelProps = React.ComponentProps<typeof ComboboxPrimitive.ItemGroupLabel>
+
+type ComboboxListProps = React.ComponentProps<typeof ComboboxPrimitive.List>
+
+type ComboboxPositionerProps = React.ComponentProps<typeof ComboboxPrimitive.Positioner>
+
+type ComboboxLabelProps = React.ComponentProps<typeof ComboboxPrimitive.Label>
+
+type ComboboxSeparatorProps = React.ComponentProps<typeof ark.div>
+
+type ComboboxTriggerProps = Omit<React.ComponentProps<typeof ComboboxPrimitive.Trigger>, "id">
+
+type ComboboxValueProps = React.ComponentProps<typeof ark.span> & { placeholder?: React.ReactNode }
+
+type ComboboxItemContextProps = React.ComponentProps<typeof ComboboxPrimitive.ItemContext>
+
+const Combobox = {
+  ClearTrigger: ComboboxClearTrigger,
+  ItemGroup: ComboboxItemGroup,
+  Root: ComboboxRoot,
+  RootProvider: ComboboxRootProvider,
+  Chip: ComboboxChip,
+  Chips: ComboboxChips,
+  ChipsInput: ComboboxChipsInput,
+  Collection: ComboboxCollection,
+  Content: ComboboxContent,
+  Context: ComboboxContext,
+  Control: ComboboxControl,
+  Empty: ComboboxEmpty,
+  Input: ComboboxInput,
+  Item: ComboboxItem,
+  ItemIndicator: ComboboxItemIndicator,
+  ItemText: ComboboxItemText,
+  ItemGroupLabel: ComboboxItemGroupLabel,
+  List: ComboboxList,
+  Positioner: ComboboxPositioner,
+  Label: ComboboxLabel,
+  Separator: ComboboxSeparator,
+  Trigger: ComboboxTrigger,
+  Value: ComboboxValue,
+  ItemContext: ComboboxItemContext,
+}
+
 export {
+  useCombobox,
+  useComboboxItemContext,
   Combobox,
-  ComboboxChip,
-  ComboboxChips,
-  ComboboxChipsInput,
-  ComboboxClear,
-  ComboboxCollection,
-  ComboboxContent,
-  ComboboxContext,
-  ComboboxControl,
-  ComboboxEmpty,
-  ComboboxGroup,
-  ComboboxInput,
-  ComboboxItem,
-  ComboboxItemIndicator,
-  ComboboxItemText,
-  ComboboxLabel,
-  ComboboxList,
-  ComboboxPositioner,
-  ComboboxRootLabel,
-  ComboboxSeparator,
-  ComboboxTrigger,
-  ComboboxValue,
   createListCollection,
   useComboboxAnchor,
   useFilter,
   useListCollection,
   type CollectionItem,
   type ListCollection,
-  ComboboxItemContext,
+  type ComboboxClearTriggerProps,
+  type ComboboxItemGroupProps,
+  type ComboboxRootProps,
+  type ComboboxRootProviderProps,
+  type ComboboxChipProps,
+  type ComboboxChipsProps,
+  type ComboboxChipsInputProps,
+  type ComboboxCollectionProps,
+  type ComboboxContentProps,
+  type ComboboxContextProps,
+  type ComboboxControlProps,
+  type ComboboxEmptyProps,
+  type ComboboxInputProps,
+  type ComboboxItemProps,
+  type ComboboxItemIndicatorProps,
+  type ComboboxItemTextProps,
+  type ComboboxItemGroupLabelProps,
+  type ComboboxListProps,
+  type ComboboxPositionerProps,
+  type ComboboxLabelProps,
+  type ComboboxSeparatorProps,
+  type ComboboxTriggerProps,
+  type ComboboxValueProps,
+  type ComboboxItemContextProps,
 }

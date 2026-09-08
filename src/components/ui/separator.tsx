@@ -1,3 +1,4 @@
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
@@ -5,18 +6,9 @@ import { cn } from "@/lib/utils"
  * Ark UI has no Separator primitive. This mirrors Radix's: a `div` with
  * `role="separator"` (or `role="none"` when decorative) and `data-orientation`.
  */
-function Separator({
-  className,
-  orientation = "horizontal",
-  decorative = true,
-  ...props
-}: React.ComponentProps<"div"> & {
-  orientation?: "horizontal" | "vertical"
-  /** Hide the separator from assistive technology. */
-  decorative?: boolean
-}) {
+function SeparatorRoot({ className, orientation = "horizontal", decorative = true, ...props }: SeparatorRootProps) {
   return (
-    <div
+    <ark.div
       data-slot="separator"
       data-orientation={orientation}
       role={decorative ? "none" : "separator"}
@@ -30,4 +22,14 @@ function Separator({
   )
 }
 
-export { Separator }
+type SeparatorRootProps = React.ComponentProps<typeof ark.div> & {
+  orientation?: "horizontal" | "vertical"
+  /** Hide the separator from assistive technology. */
+  decorative?: boolean
+}
+
+const Separator = {
+  Root: SeparatorRoot,
+}
+
+export { Separator, type SeparatorRootProps }

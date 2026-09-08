@@ -4,20 +4,13 @@
   "description": "",
   "ark": "Editable",
   "exports": [
-    "Editable",
-    "EditableArea",
-    "EditableCancelTrigger",
-    "EditableContext",
-    "EditableControl",
-    "EditableEditTrigger",
-    "EditableInput",
-    "EditableLabel",
-    "EditablePreview",
-    "EditableSubmitTrigger"
+    "useEditable",
+    "useEditableContext",
+    "Editable"
   ],
   "parts": [
     {
-      "name": "Editable",
+      "name": "Editable.Root",
       "props": [
         {
           "name": "activationMode",
@@ -242,7 +235,47 @@
       ]
     },
     {
-      "name": "EditableArea",
+      "name": "Editable.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseEditableReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Editable.Area",
       "props": [
         {
           "name": "asChild",
@@ -275,7 +308,7 @@
       ]
     },
     {
-      "name": "EditableCancelTrigger",
+      "name": "Editable.CancelTrigger",
       "props": [
         {
           "name": "asChild",
@@ -308,7 +341,7 @@
       ]
     },
     {
-      "name": "EditableContext",
+      "name": "Editable.Context",
       "props": [
         {
           "name": "children",
@@ -320,7 +353,7 @@
       ]
     },
     {
-      "name": "EditableControl",
+      "name": "Editable.Control",
       "props": [
         {
           "name": "asChild",
@@ -353,7 +386,7 @@
       ]
     },
     {
-      "name": "EditableEditTrigger",
+      "name": "Editable.EditTrigger",
       "props": [
         {
           "name": "asChild",
@@ -386,7 +419,7 @@
       ]
     },
     {
-      "name": "EditableInput",
+      "name": "Editable.Input",
       "props": [
         {
           "name": "asChild",
@@ -419,7 +452,7 @@
       ]
     },
     {
-      "name": "EditableLabel",
+      "name": "Editable.Label",
       "props": [
         {
           "name": "asChild",
@@ -452,7 +485,7 @@
       ]
     },
     {
-      "name": "EditablePreview",
+      "name": "Editable.Preview",
       "props": [
         {
           "name": "asChild",
@@ -485,7 +518,7 @@
       ]
     },
     {
-      "name": "EditableSubmitTrigger",
+      "name": "Editable.SubmitTrigger",
       "props": [
         {
           "name": "asChild",
@@ -527,7 +560,7 @@
   "files": [
     {
       "path": "components/ui/editable.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Editable as EditablePrimitive } from \"@ark-ui/react\"\n\nfunction Editable({ className, ...props }: React.ComponentProps<typeof EditablePrimitive.Root>) {\n  return (\n    <EditablePrimitive.Root data-slot=\"editable\" className={cn(\"flex w-full flex-col gap-1.5\", className)} {...props} />\n  )\n}\n\nfunction EditableContext({ ...props }: React.ComponentProps<typeof EditablePrimitive.Context>) {\n  return <EditablePrimitive.Context {...props} />\n}\n\nfunction EditableLabel({ className, ...props }: React.ComponentProps<typeof EditablePrimitive.Label>) {\n  return (\n    <EditablePrimitive.Label\n      data-slot=\"editable-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction EditableArea({ className, ...props }: React.ComponentProps<typeof EditablePrimitive.Area>) {\n  return <EditablePrimitive.Area data-slot=\"editable-area\" className={cn(\"relative w-full\", className)} {...props} />\n}\n\nfunction EditablePreview({ className, ...props }: React.ComponentProps<typeof EditablePrimitive.Preview>) {\n  return (\n    <EditablePrimitive.Preview\n      data-slot=\"editable-preview\"\n      className={cn(\n        \"inline-flex h-8 w-full items-center rounded-lg px-2.5 text-sm transition-colors hover:bg-muted data-placeholder-shown:text-muted-foreground data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction EditableInput({ className, ...props }: React.ComponentProps<typeof EditablePrimitive.Input>) {\n  return (\n    <EditablePrimitive.Input\n      data-slot=\"editable-input\"\n      className={cn(\n        \"h-8 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive dark:bg-input/30\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction EditableControl({ className, ...props }: React.ComponentProps<typeof EditablePrimitive.Control>) {\n  return (\n    <EditablePrimitive.Control\n      data-slot=\"editable-control\"\n      className={cn(\"flex items-center gap-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction EditableEditTrigger({ ...props }: React.ComponentProps<typeof EditablePrimitive.EditTrigger>) {\n  return <EditablePrimitive.EditTrigger data-slot=\"editable-edit-trigger\" {...props} />\n}\n\nfunction EditableSubmitTrigger({ ...props }: React.ComponentProps<typeof EditablePrimitive.SubmitTrigger>) {\n  return <EditablePrimitive.SubmitTrigger data-slot=\"editable-submit-trigger\" {...props} />\n}\n\nfunction EditableCancelTrigger({ ...props }: React.ComponentProps<typeof EditablePrimitive.CancelTrigger>) {\n  return <EditablePrimitive.CancelTrigger data-slot=\"editable-cancel-trigger\" {...props} />\n}\n\nexport {\n  Editable,\n  EditableArea,\n  EditableCancelTrigger,\n  EditableContext,\n  EditableControl,\n  EditableEditTrigger,\n  EditableInput,\n  EditableLabel,\n  EditablePreview,\n  EditableSubmitTrigger,\n}\n"
+      "content": "\"use client\"\n\nimport { useEditable, useEditableContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Editable as EditablePrimitive } from \"@ark-ui/react\"\n\nfunction EditableRoot({ className, ...props }: EditableRootProps) {\n  return (\n    <EditablePrimitive.Root data-slot=\"editable\" className={cn(\"flex w-full flex-col gap-1.5\", className)} {...props} />\n  )\n}\n\nfunction EditableContext({ ...props }: EditableContextProps) {\n  return <EditablePrimitive.Context {...props} />\n}\n\nfunction EditableLabel({ className, ...props }: EditableLabelProps) {\n  return (\n    <EditablePrimitive.Label\n      data-slot=\"editable-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction EditableArea({ className, ...props }: EditableAreaProps) {\n  return <EditablePrimitive.Area data-slot=\"editable-area\" className={cn(\"relative w-full\", className)} {...props} />\n}\n\nfunction EditablePreview({ className, ...props }: EditablePreviewProps) {\n  return (\n    <EditablePrimitive.Preview\n      data-slot=\"editable-preview\"\n      className={cn(\n        \"inline-flex h-8 w-full items-center rounded-lg px-2.5 text-sm transition-colors hover:bg-muted data-placeholder-shown:text-muted-foreground data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction EditableInput({ className, ...props }: EditableInputProps) {\n  return (\n    <EditablePrimitive.Input\n      data-slot=\"editable-input\"\n      className={cn(\n        \"h-8 w-full rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive dark:bg-input/30\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction EditableControl({ className, ...props }: EditableControlProps) {\n  return (\n    <EditablePrimitive.Control\n      data-slot=\"editable-control\"\n      className={cn(\"flex items-center gap-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction EditableEditTrigger({ ...props }: EditableEditTriggerProps) {\n  return <EditablePrimitive.EditTrigger data-slot=\"editable-edit-trigger\" {...props} />\n}\n\nfunction EditableSubmitTrigger({ ...props }: EditableSubmitTriggerProps) {\n  return <EditablePrimitive.SubmitTrigger data-slot=\"editable-submit-trigger\" {...props} />\n}\n\nfunction EditableCancelTrigger({ ...props }: EditableCancelTriggerProps) {\n  return <EditablePrimitive.CancelTrigger data-slot=\"editable-cancel-trigger\" {...props} />\n}\n\nfunction EditableRootProvider({ className, ...props }: EditableRootProviderProps) {\n  return (\n    <EditablePrimitive.RootProvider\n      data-slot=\"editable\"\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\ntype EditableRootProps = React.ComponentProps<typeof EditablePrimitive.Root>\n\ntype EditableRootProviderProps = React.ComponentProps<typeof EditablePrimitive.RootProvider>\n\ntype EditableAreaProps = React.ComponentProps<typeof EditablePrimitive.Area>\n\ntype EditableCancelTriggerProps = React.ComponentProps<typeof EditablePrimitive.CancelTrigger>\n\ntype EditableContextProps = React.ComponentProps<typeof EditablePrimitive.Context>\n\ntype EditableControlProps = React.ComponentProps<typeof EditablePrimitive.Control>\n\ntype EditableEditTriggerProps = React.ComponentProps<typeof EditablePrimitive.EditTrigger>\n\ntype EditableInputProps = React.ComponentProps<typeof EditablePrimitive.Input>\n\ntype EditableLabelProps = React.ComponentProps<typeof EditablePrimitive.Label>\n\ntype EditablePreviewProps = React.ComponentProps<typeof EditablePrimitive.Preview>\n\ntype EditableSubmitTriggerProps = React.ComponentProps<typeof EditablePrimitive.SubmitTrigger>\n\nconst Editable = {\n  Root: EditableRoot,\n  RootProvider: EditableRootProvider,\n  Area: EditableArea,\n  CancelTrigger: EditableCancelTrigger,\n  Context: EditableContext,\n  Control: EditableControl,\n  EditTrigger: EditableEditTrigger,\n  Input: EditableInput,\n  Label: EditableLabel,\n  Preview: EditablePreview,\n  SubmitTrigger: EditableSubmitTrigger,\n}\n\nexport {\n  useEditable,\n  useEditableContext,\n  Editable,\n  type EditableRootProps,\n  type EditableRootProviderProps,\n  type EditableAreaProps,\n  type EditableCancelTriggerProps,\n  type EditableContextProps,\n  type EditableControlProps,\n  type EditableEditTriggerProps,\n  type EditableInputProps,\n  type EditableLabelProps,\n  type EditablePreviewProps,\n  type EditableSubmitTriggerProps,\n}\n"
     }
   ]
 }

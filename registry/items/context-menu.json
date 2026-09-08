@@ -4,34 +4,207 @@
   "description": "",
   "ark": "Menu",
   "exports": [
-    "ContextMenu",
-    "ContextMenuCheckboxItem",
-    "ContextMenuContent",
-    "ContextMenuContext",
-    "ContextMenuGroup",
-    "ContextMenuItem",
-    "ContextMenuItemIndicator",
-    "ContextMenuItemText",
-    "ContextMenuLabel",
-    "ContextMenuPortal",
-    "ContextMenuPositioner",
-    "ContextMenuRadioGroup",
-    "ContextMenuRadioItem",
-    "ContextMenuSeparator",
-    "ContextMenuShortcut",
-    "ContextMenuSub",
-    "ContextMenuSubContent",
-    "ContextMenuSubTrigger",
-    "ContextMenuTrigger",
-    "ContextMenuItemContext",
-    "ContextMenuArrow",
-    "ContextMenuArrowTip",
-    "ContextMenuClickTrigger",
-    "ContextMenuIndicator"
+    "useMenu",
+    "useMenuContext",
+    "useMenuItemContext",
+    "ContextMenu"
   ],
   "parts": [
     {
-      "name": "ContextMenu",
+      "name": "ContextMenu.ContextTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "ContextMenu.ItemGroup",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "ContextMenu.ItemGroupLabel",
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false,
+          "description": "Indent the item to align with items that have an indicator.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "ContextMenu.RadioItemGroup",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((e: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Called with the new value whenever it changes.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "ContextMenu.TriggerItem",
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false,
+          "description": "Indent the item to align with items that have an indicator.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "ContextMenu.Root",
       "props": [
         {
           "name": "anchorPoint",
@@ -282,7 +455,86 @@
       ]
     },
     {
-      "name": "ContextMenuCheckboxItem",
+      "name": "ContextMenu.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseMenuReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "ContextMenu.CheckboxItem",
       "props": [
         {
           "name": "checked",
@@ -365,7 +617,7 @@
       ]
     },
     {
-      "name": "ContextMenuContent",
+      "name": "ContextMenu.Content",
       "props": [
         {
           "name": "asChild",
@@ -398,7 +650,7 @@
       ]
     },
     {
-      "name": "ContextMenuContext",
+      "name": "ContextMenu.Context",
       "props": [
         {
           "name": "children",
@@ -410,40 +662,7 @@
       ]
     },
     {
-      "name": "ContextMenuGroup",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ContextMenuItem",
+      "name": "ContextMenu.Item",
       "props": [
         {
           "name": "inset",
@@ -526,7 +745,7 @@
       ]
     },
     {
-      "name": "ContextMenuItemIndicator",
+      "name": "ContextMenu.ItemIndicator",
       "props": [
         {
           "name": "asChild",
@@ -559,7 +778,7 @@
       ]
     },
     {
-      "name": "ContextMenuItemText",
+      "name": "ContextMenu.ItemText",
       "props": [
         {
           "name": "asChild",
@@ -592,47 +811,7 @@
       ]
     },
     {
-      "name": "ContextMenuLabel",
-      "props": [
-        {
-          "name": "inset",
-          "type": "boolean",
-          "required": false,
-          "description": "Indent the item to align with items that have an indicator.",
-          "from": "arkcn"
-        },
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ContextMenuPortal",
+      "name": "ContextMenu.Portal",
       "props": [
         {
           "name": "children",
@@ -657,7 +836,7 @@
       ]
     },
     {
-      "name": "ContextMenuPositioner",
+      "name": "ContextMenu.Positioner",
       "props": [
         {
           "name": "asChild",
@@ -690,54 +869,7 @@
       ]
     },
     {
-      "name": "ContextMenuRadioGroup",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "onValueChange",
-          "type": "((e: ValueChangeDetails) => void)",
-          "required": false,
-          "description": "Called with the new value whenever it changes.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        },
-        {
-          "name": "value",
-          "type": "string",
-          "required": false,
-          "description": "The controlled value.",
-          "from": "@ark-ui/react"
-        }
-      ]
-    },
-    {
-      "name": "ContextMenuRadioItem",
+      "name": "ContextMenu.RadioItem",
       "props": [
         {
           "name": "inset",
@@ -805,7 +937,7 @@
       ]
     },
     {
-      "name": "ContextMenuSeparator",
+      "name": "ContextMenu.Separator",
       "props": [
         {
           "name": "asChild",
@@ -838,8 +970,15 @@
       ]
     },
     {
-      "name": "ContextMenuShortcut",
+      "name": "ContextMenu.Shortcut",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -864,7 +1003,7 @@
       ]
     },
     {
-      "name": "ContextMenuSub",
+      "name": "ContextMenu.Sub",
       "props": [
         {
           "name": "anchorPoint",
@@ -1115,7 +1254,7 @@
       ]
     },
     {
-      "name": "ContextMenuSubContent",
+      "name": "ContextMenu.SubContent",
       "props": [
         {
           "name": "asChild",
@@ -1148,158 +1287,7 @@
       ]
     },
     {
-      "name": "ContextMenuSubTrigger",
-      "props": [
-        {
-          "name": "inset",
-          "type": "boolean",
-          "required": false,
-          "description": "Indent the item to align with items that have an indicator.",
-          "from": "arkcn"
-        },
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ContextMenuTrigger",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ContextMenuItemContext",
-      "props": [
-        {
-          "name": "children",
-          "type": "(context: UseMenuItemContext) => ReactNode",
-          "required": true,
-          "description": "Content rendered inside the part.",
-          "from": "@ark-ui/react"
-        }
-      ]
-    },
-    {
-      "name": "ContextMenuArrow",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ContextMenuArrowTip",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ContextMenuClickTrigger",
+      "name": "ContextMenu.Trigger",
       "props": [
         {
           "name": "asChild",
@@ -1339,7 +1327,125 @@
       ]
     },
     {
-      "name": "ContextMenuIndicator",
+      "name": "ContextMenu.ItemContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseMenuItemContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "ContextMenu.Arrow",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "ContextMenu.ArrowTip",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "ContextMenu.ClickTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value that identifies this specific trigger",
+          "from": "@zag-js/menu"
+        }
+      ]
+    },
+    {
+      "name": "ContextMenu.Indicator",
       "props": [
         {
           "name": "asChild",
@@ -1382,7 +1488,7 @@
   "files": [
     {
       "path": "components/ui/context-menu.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Menu as ContextMenuPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\nimport { CheckIcon, ChevronRightIcon, ChevronDownIcon } from \"lucide-react\"\n\nfunction ContextMenu({\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: React.ComponentProps<typeof ContextMenuPrimitive.Root>) {\n  return <ContextMenuPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n}\n\nfunction ContextMenuTrigger({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.ContextTrigger>) {\n  return (\n    <ContextMenuPrimitive.ContextTrigger\n      data-slot=\"context-menu-trigger\"\n      className={cn(\"select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ContextMenuPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction ContextMenuContext({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Context>) {\n  return <ContextMenuPrimitive.Context {...props} />\n}\n\nfunction ContextMenuPositioner({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Positioner>) {\n  return (\n    <ContextMenuPrimitive.Positioner\n      data-slot=\"context-menu-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ContextMenuContent({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Content>) {\n  return (\n    <ContextMenuPortal>\n      <ContextMenuPositioner>\n        <ContextMenuPrimitive.Content\n          data-slot=\"context-menu-content\"\n          className={cn(\n            \"z-50 max-h-(--available-height) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </ContextMenuPositioner>\n    </ContextMenuPortal>\n  )\n}\n\nfunction ContextMenuGroup({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.ItemGroup>) {\n  return <ContextMenuPrimitive.ItemGroup data-slot=\"context-menu-group\" {...props} />\n}\n\nfunction ContextMenuItem({\n  className,\n  inset,\n  variant = \"default\",\n  value,\n  ...props\n}: Omit<React.ComponentProps<typeof ContextMenuPrimitive.Item>, \"value\"> & {\n  value?: string\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n  variant?: \"default\" | \"destructive\"\n}) {\n  const id = React.useId()\n  return (\n    <ContextMenuPrimitive.Item\n      data-slot=\"context-menu-item\"\n      data-inset={inset}\n      data-variant={variant}\n      value={value ?? id}\n      className={cn(\n        \"group/context-menu-item relative flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:data-highlighted:bg-destructive/10 data-[variant=destructive]:data-highlighted:text-destructive dark:data-[variant=destructive]:data-highlighted:bg-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-highlighted:*:[svg]:text-accent-foreground data-[variant=destructive]:*:[svg]:text-destructive\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ContextMenuItemText({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.ItemText>) {\n  return <ContextMenuPrimitive.ItemText data-slot=\"context-menu-item-text\" {...props} />\n}\n\nfunction ContextMenuItemIndicator({\n  className,\n  ...props\n}: React.ComponentProps<typeof ContextMenuPrimitive.ItemIndicator>) {\n  return (\n    <ContextMenuPrimitive.ItemIndicator\n      data-slot=\"context-menu-item-indicator\"\n      className={cn(\"pointer-events-none absolute right-2 flex items-center justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\nconst optionItemClassName =\n  \"relative flex cursor-default items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\"\n\nfunction ContextMenuCheckboxItem({\n  className,\n  children,\n  checked = false,\n  inset,\n  value,\n  ...props\n}: Omit<React.ComponentProps<typeof ContextMenuPrimitive.CheckboxItem>, \"checked\" | \"value\"> & {\n  /** Checked state of the item. */\n  checked?: boolean\n  value?: string\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}) {\n  const id = React.useId()\n  return (\n    <ContextMenuPrimitive.CheckboxItem\n      data-slot=\"context-menu-checkbox-item\"\n      data-inset={inset}\n      className={cn(optionItemClassName, className)}\n      checked={checked}\n      value={value ?? id}\n      {...props}\n    >\n      <ContextMenuItemIndicator data-slot=\"context-menu-checkbox-item-indicator\">\n        <CheckIcon />\n      </ContextMenuItemIndicator>\n      {children}\n    </ContextMenuPrimitive.CheckboxItem>\n  )\n}\n\nfunction ContextMenuRadioGroup({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.RadioItemGroup>) {\n  return <ContextMenuPrimitive.RadioItemGroup data-slot=\"context-menu-radio-group\" {...props} />\n}\n\nfunction ContextMenuRadioItem({\n  className,\n  children,\n  inset,\n  ...props\n}: React.ComponentProps<typeof ContextMenuPrimitive.RadioItem> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}) {\n  return (\n    <ContextMenuPrimitive.RadioItem\n      data-slot=\"context-menu-radio-item\"\n      data-inset={inset}\n      className={cn(optionItemClassName, className)}\n      {...props}\n    >\n      <ContextMenuItemIndicator data-slot=\"context-menu-radio-item-indicator\">\n        <CheckIcon />\n      </ContextMenuItemIndicator>\n      {children}\n    </ContextMenuPrimitive.RadioItem>\n  )\n}\n\nfunction ContextMenuLabel({\n  className,\n  inset,\n  ...props\n}: React.ComponentProps<typeof ContextMenuPrimitive.ItemGroupLabel> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}) {\n  return (\n    <ContextMenuPrimitive.ItemGroupLabel\n      data-slot=\"context-menu-label\"\n      data-inset={inset}\n      className={cn(\"px-1.5 py-1 text-xs font-medium text-muted-foreground data-inset:pl-7\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ContextMenuSeparator({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Separator>) {\n  return (\n    <ContextMenuPrimitive.Separator\n      data-slot=\"context-menu-separator\"\n      className={cn(\"-mx-1 my-1 h-px bg-border\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ContextMenuShortcut({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span\n      data-slot=\"context-menu-shortcut\"\n      className={cn(\n        \"ml-auto text-xs tracking-widest text-muted-foreground group-data-highlighted/context-menu-item:text-accent-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ContextMenuSub({\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: React.ComponentProps<typeof ContextMenuPrimitive.Root>) {\n  return <ContextMenuPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n}\n\nfunction ContextMenuSubTrigger({\n  className,\n  inset,\n  children,\n  ...props\n}: React.ComponentProps<typeof ContextMenuPrimitive.TriggerItem> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}) {\n  return (\n    <ContextMenuPrimitive.TriggerItem\n      data-slot=\"context-menu-sub-trigger\"\n      data-inset={inset}\n      className={cn(\n        \"flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-inset:pl-7 data-open:bg-accent data-open:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n      <ChevronRightIcon className=\"ml-auto\" />\n    </ContextMenuPrimitive.TriggerItem>\n  )\n}\n\nfunction ContextMenuSubContent({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Content>) {\n  return (\n    <ContextMenuPortal>\n      <ContextMenuPositioner>\n        <ContextMenuPrimitive.Content\n          data-slot=\"context-menu-sub-content\"\n          className={cn(\n            \"z-50 min-w-32 origin-(--transform-origin) overflow-hidden rounded-lg border bg-popover p-1 text-popover-foreground shadow-lg outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </ContextMenuPositioner>\n    </ContextMenuPortal>\n  )\n}\n\n/** Render-prop access to one item's state (`{ selected, highlighted, disabled, ... }`). */\nfunction ContextMenuItemContext({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.ItemContext>) {\n  return <ContextMenuPrimitive.ItemContext {...props} />\n}\n\n/** A click trigger for the same menu, alongside the right-click `ContextMenuTrigger`. */\nfunction ContextMenuClickTrigger({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Trigger>) {\n  return <ContextMenuPrimitive.Trigger data-slot=\"context-menu-click-trigger\" {...props} />\n}\n\nfunction ContextMenuIndicator({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof ContextMenuPrimitive.Indicator>) {\n  return (\n    <ContextMenuPrimitive.Indicator\n      data-slot=\"context-menu-indicator\"\n      className={cn(\"inline-flex transition-transform data-[state=open]:rotate-180 [&_svg]:size-4\", className)}\n      {...props}\n    >\n      {children ?? <ChevronDownIcon />}\n    </ContextMenuPrimitive.Indicator>\n  )\n}\n\nfunction ContextMenuArrow({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Arrow>) {\n  return (\n    <ContextMenuPrimitive.Arrow\n      data-slot=\"context-menu-arrow\"\n      className={cn(\"[--arrow-background:var(--color-popover)] [--arrow-size:0.625rem]\", className)}\n      {...props}\n    >\n      <ContextMenuArrowTip />\n    </ContextMenuPrimitive.Arrow>\n  )\n}\n\nfunction ContextMenuArrowTip({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.ArrowTip>) {\n  return (\n    <ContextMenuPrimitive.ArrowTip\n      data-slot=\"context-menu-arrow-tip\"\n      className={cn(\"border-t border-l border-foreground/10\", className)}\n      {...props}\n    />\n  )\n}\n\nexport {\n  ContextMenu,\n  ContextMenuCheckboxItem,\n  ContextMenuContent,\n  ContextMenuContext,\n  ContextMenuGroup,\n  ContextMenuItem,\n  ContextMenuItemIndicator,\n  ContextMenuItemText,\n  ContextMenuLabel,\n  ContextMenuPortal,\n  ContextMenuPositioner,\n  ContextMenuRadioGroup,\n  ContextMenuRadioItem,\n  ContextMenuSeparator,\n  ContextMenuShortcut,\n  ContextMenuSub,\n  ContextMenuSubContent,\n  ContextMenuSubTrigger,\n  ContextMenuTrigger,\n  ContextMenuItemContext,\n  ContextMenuArrow,\n  ContextMenuArrowTip,\n  ContextMenuClickTrigger,\n  ContextMenuIndicator,\n}\n"
+      "content": "\"use client\"\n\nimport { ark } from \"@ark-ui/react\"\nimport { useMenu, useMenuContext, useMenuItemContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Menu as ContextMenuPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\nimport { CheckIcon, ChevronRightIcon, ChevronDownIcon } from \"lucide-react\"\n\nfunction ContextMenuRoot({ lazyMount = true, unmountOnExit = true, ...props }: ContextMenuRootProps) {\n  return <ContextMenuPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n}\n\nfunction ContextMenuContextTrigger({ className, ...props }: ContextMenuContextTriggerProps) {\n  return (\n    <ContextMenuPrimitive.ContextTrigger\n      data-slot=\"context-menu-trigger\"\n      className={cn(\"select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ContextMenuPortal({ ...props }: ContextMenuPortalProps) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction ContextMenuContext({ ...props }: ContextMenuContextProps) {\n  return <ContextMenuPrimitive.Context {...props} />\n}\n\nfunction ContextMenuPositioner({ className, ...props }: ContextMenuPositionerProps) {\n  return (\n    <ContextMenuPrimitive.Positioner\n      data-slot=\"context-menu-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ContextMenuContent({ className, ...props }: ContextMenuContentProps) {\n  return (\n    <ContextMenuPortal>\n      <ContextMenuPositioner>\n        <ContextMenuPrimitive.Content\n          data-slot=\"context-menu-content\"\n          className={cn(\n            \"z-50 max-h-(--available-height) min-w-36 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </ContextMenuPositioner>\n    </ContextMenuPortal>\n  )\n}\n\nfunction ContextMenuItemGroup({ ...props }: ContextMenuItemGroupProps) {\n  return <ContextMenuPrimitive.ItemGroup data-slot=\"context-menu-group\" {...props} />\n}\n\nfunction ContextMenuItem({ className, inset, variant = \"default\", value, ...props }: ContextMenuItemProps) {\n  const id = React.useId()\n  return (\n    <ContextMenuPrimitive.Item\n      data-slot=\"context-menu-item\"\n      data-inset={inset}\n      data-variant={variant}\n      value={value ?? id}\n      className={cn(\n        \"group/context-menu-item relative flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:data-highlighted:bg-destructive/10 data-[variant=destructive]:data-highlighted:text-destructive dark:data-[variant=destructive]:data-highlighted:bg-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-highlighted:*:[svg]:text-accent-foreground data-[variant=destructive]:*:[svg]:text-destructive\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ContextMenuItemText({ ...props }: ContextMenuItemTextProps) {\n  return <ContextMenuPrimitive.ItemText data-slot=\"context-menu-item-text\" {...props} />\n}\n\nfunction ContextMenuItemIndicator({ className, ...props }: ContextMenuItemIndicatorProps) {\n  return (\n    <ContextMenuPrimitive.ItemIndicator\n      data-slot=\"context-menu-item-indicator\"\n      className={cn(\"pointer-events-none absolute right-2 flex items-center justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\nconst optionItemClassName =\n  \"relative flex cursor-default items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\"\n\nfunction ContextMenuCheckboxItem({\n  className,\n  children,\n  checked = false,\n  inset,\n  value,\n  ...props\n}: ContextMenuCheckboxItemProps) {\n  const id = React.useId()\n  return (\n    <ContextMenuPrimitive.CheckboxItem\n      data-slot=\"context-menu-checkbox-item\"\n      data-inset={inset}\n      className={cn(optionItemClassName, className)}\n      checked={checked}\n      value={value ?? id}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <ContextMenuItemIndicator data-slot=\"context-menu-checkbox-item-indicator\">\n            <CheckIcon />\n          </ContextMenuItemIndicator>\n          {children}\n        </>\n      )}\n    </ContextMenuPrimitive.CheckboxItem>\n  )\n}\n\nfunction ContextMenuRadioItemGroup({ ...props }: ContextMenuRadioItemGroupProps) {\n  return <ContextMenuPrimitive.RadioItemGroup data-slot=\"context-menu-radio-group\" {...props} />\n}\n\nfunction ContextMenuRadioItem({ className, children, inset, ...props }: ContextMenuRadioItemProps) {\n  return (\n    <ContextMenuPrimitive.RadioItem\n      data-slot=\"context-menu-radio-item\"\n      data-inset={inset}\n      className={cn(optionItemClassName, className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <ContextMenuItemIndicator data-slot=\"context-menu-radio-item-indicator\">\n            <CheckIcon />\n          </ContextMenuItemIndicator>\n          {children}\n        </>\n      )}\n    </ContextMenuPrimitive.RadioItem>\n  )\n}\n\nfunction ContextMenuItemGroupLabel({ className, inset, ...props }: ContextMenuItemGroupLabelProps) {\n  return (\n    <ContextMenuPrimitive.ItemGroupLabel\n      data-slot=\"context-menu-label\"\n      data-inset={inset}\n      className={cn(\"px-1.5 py-1 text-xs font-medium text-muted-foreground data-inset:pl-7\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ContextMenuSeparator({ className, ...props }: ContextMenuSeparatorProps) {\n  return (\n    <ContextMenuPrimitive.Separator\n      data-slot=\"context-menu-separator\"\n      className={cn(\"-mx-1 my-1 h-px bg-border\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ContextMenuShortcut({ className, ...props }: ContextMenuShortcutProps) {\n  return (\n    <ark.span\n      data-slot=\"context-menu-shortcut\"\n      className={cn(\n        \"ml-auto text-xs tracking-widest text-muted-foreground group-data-highlighted/context-menu-item:text-accent-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ContextMenuSub({ lazyMount = true, unmountOnExit = true, ...props }: ContextMenuSubProps) {\n  return <ContextMenuPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n}\n\nfunction ContextMenuTriggerItem({ className, inset, children, ...props }: ContextMenuTriggerItemProps) {\n  return (\n    <ContextMenuPrimitive.TriggerItem\n      data-slot=\"context-menu-sub-trigger\"\n      data-inset={inset}\n      className={cn(\n        \"flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-inset:pl-7 data-open:bg-accent data-open:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children}\n          <ChevronRightIcon className=\"ml-auto\" />\n        </>\n      )}\n    </ContextMenuPrimitive.TriggerItem>\n  )\n}\n\nfunction ContextMenuSubContent({ className, ...props }: ContextMenuSubContentProps) {\n  return (\n    <ContextMenuPortal>\n      <ContextMenuPositioner>\n        <ContextMenuPrimitive.Content\n          data-slot=\"context-menu-sub-content\"\n          className={cn(\n            \"z-50 min-w-32 origin-(--transform-origin) overflow-hidden rounded-lg border bg-popover p-1 text-popover-foreground shadow-lg outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </ContextMenuPositioner>\n    </ContextMenuPortal>\n  )\n}\n\n/** Render-prop access to one item's state (`{ selected, highlighted, disabled, ... }`). */\nfunction ContextMenuItemContext({ ...props }: ContextMenuItemContextProps) {\n  return <ContextMenuPrimitive.ItemContext {...props} />\n}\n\n/** A click trigger for the same menu, alongside the right-click `ContextMenuTrigger`. */\nfunction ContextMenuClickTrigger({ ...props }: ContextMenuClickTriggerProps) {\n  return <ContextMenuPrimitive.Trigger data-slot=\"context-menu-click-trigger\" {...props} />\n}\n\nfunction ContextMenuIndicator({ className, children, ...props }: ContextMenuIndicatorProps) {\n  return (\n    <ContextMenuPrimitive.Indicator\n      data-slot=\"context-menu-indicator\"\n      className={cn(\"inline-flex transition-transform data-[state=open]:rotate-180 [&_svg]:size-4\", className)}\n      {...props}\n    >\n      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <ChevronDownIcon />}</>}\n    </ContextMenuPrimitive.Indicator>\n  )\n}\n\nfunction ContextMenuArrow({ className, ...props }: ContextMenuArrowProps) {\n  return (\n    <ContextMenuPrimitive.Arrow\n      data-slot=\"context-menu-arrow\"\n      className={cn(\"[--arrow-background:var(--color-popover)] [--arrow-size:0.625rem]\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <ContextMenuArrowTip />\n        </>\n      )}\n    </ContextMenuPrimitive.Arrow>\n  )\n}\n\nfunction ContextMenuArrowTip({ className, ...props }: ContextMenuArrowTipProps) {\n  return (\n    <ContextMenuPrimitive.ArrowTip\n      data-slot=\"context-menu-arrow-tip\"\n      className={cn(\"border-t border-l border-foreground/10\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ContextMenuRootProvider(props: ContextMenuRootProviderProps) {\n  return <ContextMenuPrimitive.RootProvider {...props} />\n}\n\nfunction ContextMenuTrigger({ className, ...props }: ContextMenuTriggerProps) {\n  return <ContextMenuPrimitive.Trigger data-slot=\"context-menu-button-trigger\" className={cn(className)} {...props} />\n}\n\ntype ContextMenuContextTriggerProps = React.ComponentProps<typeof ContextMenuPrimitive.ContextTrigger>\n\ntype ContextMenuItemGroupProps = React.ComponentProps<typeof ContextMenuPrimitive.ItemGroup>\n\ntype ContextMenuItemGroupLabelProps = React.ComponentProps<typeof ContextMenuPrimitive.ItemGroupLabel> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}\n\ntype ContextMenuRadioItemGroupProps = React.ComponentProps<typeof ContextMenuPrimitive.RadioItemGroup>\n\ntype ContextMenuTriggerItemProps = React.ComponentProps<typeof ContextMenuPrimitive.TriggerItem> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}\n\ntype ContextMenuRootProps = React.ComponentProps<typeof ContextMenuPrimitive.Root>\n\ntype ContextMenuRootProviderProps = React.ComponentProps<typeof ContextMenuPrimitive.RootProvider>\n\ntype ContextMenuCheckboxItemProps = Omit<\n  React.ComponentProps<typeof ContextMenuPrimitive.CheckboxItem>,\n  \"checked\" | \"value\"\n> & {\n  /** Checked state of the item. */\n  checked?: boolean\n  value?: string\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}\n\ntype ContextMenuContentProps = React.ComponentProps<typeof ContextMenuPrimitive.Content>\n\ntype ContextMenuContextProps = React.ComponentProps<typeof ContextMenuPrimitive.Context>\n\ntype ContextMenuItemProps = Omit<React.ComponentProps<typeof ContextMenuPrimitive.Item>, \"value\"> & {\n  value?: string\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n  variant?: \"default\" | \"destructive\"\n}\n\ntype ContextMenuItemIndicatorProps = React.ComponentProps<typeof ContextMenuPrimitive.ItemIndicator>\n\ntype ContextMenuItemTextProps = React.ComponentProps<typeof ContextMenuPrimitive.ItemText>\n\ntype ContextMenuPortalProps = React.ComponentProps<typeof PortalPrimitive>\n\ntype ContextMenuPositionerProps = React.ComponentProps<typeof ContextMenuPrimitive.Positioner>\n\ntype ContextMenuRadioItemProps = React.ComponentProps<typeof ContextMenuPrimitive.RadioItem> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}\n\ntype ContextMenuSeparatorProps = React.ComponentProps<typeof ContextMenuPrimitive.Separator>\n\ntype ContextMenuShortcutProps = React.ComponentProps<typeof ark.span>\n\ntype ContextMenuSubProps = React.ComponentProps<typeof ContextMenuPrimitive.Root>\n\ntype ContextMenuSubContentProps = React.ComponentProps<typeof ContextMenuPrimitive.Content>\n\ntype ContextMenuTriggerProps = React.ComponentProps<typeof ContextMenuPrimitive.Trigger>\n\ntype ContextMenuItemContextProps = React.ComponentProps<typeof ContextMenuPrimitive.ItemContext>\n\ntype ContextMenuArrowProps = React.ComponentProps<typeof ContextMenuPrimitive.Arrow>\n\ntype ContextMenuArrowTipProps = React.ComponentProps<typeof ContextMenuPrimitive.ArrowTip>\n\ntype ContextMenuClickTriggerProps = React.ComponentProps<typeof ContextMenuPrimitive.Trigger>\n\ntype ContextMenuIndicatorProps = React.ComponentProps<typeof ContextMenuPrimitive.Indicator>\n\nconst ContextMenu = {\n  ContextTrigger: ContextMenuContextTrigger,\n  ItemGroup: ContextMenuItemGroup,\n  ItemGroupLabel: ContextMenuItemGroupLabel,\n  RadioItemGroup: ContextMenuRadioItemGroup,\n  TriggerItem: ContextMenuTriggerItem,\n  Root: ContextMenuRoot,\n  RootProvider: ContextMenuRootProvider,\n  CheckboxItem: ContextMenuCheckboxItem,\n  Content: ContextMenuContent,\n  Context: ContextMenuContext,\n  Item: ContextMenuItem,\n  ItemIndicator: ContextMenuItemIndicator,\n  ItemText: ContextMenuItemText,\n  Portal: ContextMenuPortal,\n  Positioner: ContextMenuPositioner,\n  RadioItem: ContextMenuRadioItem,\n  Separator: ContextMenuSeparator,\n  Shortcut: ContextMenuShortcut,\n  Sub: ContextMenuSub,\n  SubContent: ContextMenuSubContent,\n  Trigger: ContextMenuTrigger,\n  ItemContext: ContextMenuItemContext,\n  Arrow: ContextMenuArrow,\n  ArrowTip: ContextMenuArrowTip,\n  ClickTrigger: ContextMenuClickTrigger,\n  Indicator: ContextMenuIndicator,\n}\n\nexport {\n  useMenu,\n  useMenuContext,\n  useMenuItemContext,\n  ContextMenu,\n  type ContextMenuContextTriggerProps,\n  type ContextMenuItemGroupProps,\n  type ContextMenuItemGroupLabelProps,\n  type ContextMenuRadioItemGroupProps,\n  type ContextMenuTriggerItemProps,\n  type ContextMenuRootProps,\n  type ContextMenuRootProviderProps,\n  type ContextMenuCheckboxItemProps,\n  type ContextMenuContentProps,\n  type ContextMenuContextProps,\n  type ContextMenuItemProps,\n  type ContextMenuItemIndicatorProps,\n  type ContextMenuItemTextProps,\n  type ContextMenuPortalProps,\n  type ContextMenuPositionerProps,\n  type ContextMenuRadioItemProps,\n  type ContextMenuSeparatorProps,\n  type ContextMenuShortcutProps,\n  type ContextMenuSubProps,\n  type ContextMenuSubContentProps,\n  type ContextMenuTriggerProps,\n  type ContextMenuItemContextProps,\n  type ContextMenuArrowProps,\n  type ContextMenuArrowTipProps,\n  type ContextMenuClickTriggerProps,\n  type ContextMenuIndicatorProps,\n}\n"
     }
   ]
 }

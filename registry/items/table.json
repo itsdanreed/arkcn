@@ -3,19 +3,19 @@
   "type": "ui",
   "description": "`src/lib/table.ts` is a dependency-free headless table engine (columns, sorting, global + column filters with faceted counts, pagination, row selection, visibility).",
   "exports": [
-    "Table",
-    "TableHeader",
-    "TableBody",
-    "TableFooter",
-    "TableHead",
-    "TableRow",
-    "TableCell",
-    "TableCaption"
+    "Table"
   ],
   "parts": [
     {
-      "name": "Table",
+      "name": "Table.Root",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -40,8 +40,15 @@
       ]
     },
     {
-      "name": "TableHeader",
+      "name": "Table.Header",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -66,8 +73,15 @@
       ]
     },
     {
-      "name": "TableBody",
+      "name": "Table.Body",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -92,8 +106,15 @@
       ]
     },
     {
-      "name": "TableFooter",
+      "name": "Table.Footer",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -118,8 +139,15 @@
       ]
     },
     {
-      "name": "TableHead",
+      "name": "Table.Head",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -144,8 +172,15 @@
       ]
     },
     {
-      "name": "TableRow",
+      "name": "Table.Row",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -170,8 +205,15 @@
       ]
     },
     {
-      "name": "TableCell",
+      "name": "Table.Cell",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -196,8 +238,15 @@
       ]
     },
     {
-      "name": "TableCaption",
+      "name": "Table.Caption",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -222,14 +271,16 @@
       ]
     }
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
   "registryDependencies": [
     "lib/utils"
   ],
   "files": [
     {
       "path": "components/ui/table.tsx",
-      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Table({ className, ...props }: React.ComponentProps<\"table\">) {\n  return (\n    <div data-slot=\"table-container\" className=\"relative w-full overflow-x-auto\">\n      <table data-slot=\"table\" className={cn(\"w-full caption-bottom text-sm\", className)} {...props} />\n    </div>\n  )\n}\n\nfunction TableHeader({ className, ...props }: React.ComponentProps<\"thead\">) {\n  return <thead data-slot=\"table-header\" className={cn(\"[&_tr]:border-b\", className)} {...props} />\n}\n\nfunction TableBody({ className, ...props }: React.ComponentProps<\"tbody\">) {\n  return <tbody data-slot=\"table-body\" className={cn(\"[&_tr:last-child]:border-0\", className)} {...props} />\n}\n\nfunction TableFooter({ className, ...props }: React.ComponentProps<\"tfoot\">) {\n  return (\n    <tfoot\n      data-slot=\"table-footer\"\n      className={cn(\"border-t bg-muted/50 font-medium [&>tr]:last:border-b-0\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TableRow({ className, ...props }: React.ComponentProps<\"tr\">) {\n  return (\n    <tr\n      data-slot=\"table-row\"\n      className={cn(\n        \"border-b transition-colors hover:bg-muted/50 has-aria-expanded:bg-muted/50 data-[state=selected]:bg-muted\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TableHead({ className, ...props }: React.ComponentProps<\"th\">) {\n  return (\n    <th\n      data-slot=\"table-head\"\n      className={cn(\n        \"h-10 px-2 text-left align-middle font-medium whitespace-nowrap text-foreground has-[[role=checkbox]]:pr-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TableCell({ className, ...props }: React.ComponentProps<\"td\">) {\n  return (\n    <td\n      data-slot=\"table-cell\"\n      className={cn(\"p-2 align-middle whitespace-nowrap has-[[role=checkbox]]:pr-0\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TableCaption({ className, ...props }: React.ComponentProps<\"caption\">) {\n  return (\n    <caption data-slot=\"table-caption\" className={cn(\"mt-4 text-sm text-muted-foreground\", className)} {...props} />\n  )\n}\n\nexport { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption }\n"
+      "content": "import { ark } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction TableRoot({ className, ...props }: TableRootProps) {\n  return (\n    <div data-slot=\"table-container\" className=\"relative w-full overflow-x-auto\">\n      <ark.table data-slot=\"table\" className={cn(\"w-full caption-bottom text-sm\", className)} {...props} />\n    </div>\n  )\n}\n\nfunction TableHeader({ className, ...props }: TableHeaderProps) {\n  return <ark.thead data-slot=\"table-header\" className={cn(\"[&_tr]:border-b\", className)} {...props} />\n}\n\nfunction TableBody({ className, ...props }: TableBodyProps) {\n  return <ark.tbody data-slot=\"table-body\" className={cn(\"[&_tr:last-child]:border-0\", className)} {...props} />\n}\n\nfunction TableFooter({ className, ...props }: TableFooterProps) {\n  return (\n    <ark.tfoot\n      data-slot=\"table-footer\"\n      className={cn(\"border-t bg-muted/50 font-medium [&>tr]:last:border-b-0\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TableRow({ className, ...props }: TableRowProps) {\n  return (\n    <ark.tr\n      data-slot=\"table-row\"\n      className={cn(\n        \"border-b transition-colors hover:bg-muted/50 has-aria-expanded:bg-muted/50 data-[state=selected]:bg-muted\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TableHead({ className, ...props }: TableHeadProps) {\n  return (\n    <ark.th\n      data-slot=\"table-head\"\n      className={cn(\n        \"h-10 px-2 text-left align-middle font-medium whitespace-nowrap text-foreground has-[[role=checkbox]]:pr-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TableCell({ className, ...props }: TableCellProps) {\n  return (\n    <ark.td\n      data-slot=\"table-cell\"\n      className={cn(\"p-2 align-middle whitespace-nowrap has-[[role=checkbox]]:pr-0\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TableCaption({ className, ...props }: TableCaptionProps) {\n  return (\n    <ark.caption data-slot=\"table-caption\" className={cn(\"mt-4 text-sm text-muted-foreground\", className)} {...props} />\n  )\n}\n\ntype TableRootProps = React.ComponentProps<typeof ark.table>\n\ntype TableHeaderProps = React.ComponentProps<typeof ark.thead>\n\ntype TableBodyProps = React.ComponentProps<typeof ark.tbody>\n\ntype TableFooterProps = React.ComponentProps<typeof ark.tfoot>\n\ntype TableHeadProps = React.ComponentProps<typeof ark.th>\n\ntype TableRowProps = React.ComponentProps<typeof ark.tr>\n\ntype TableCellProps = React.ComponentProps<typeof ark.td>\n\ntype TableCaptionProps = React.ComponentProps<typeof ark.caption>\n\nconst Table = {\n  Root: TableRoot,\n  Header: TableHeader,\n  Body: TableBody,\n  Footer: TableFooter,\n  Head: TableHead,\n  Row: TableRow,\n  Cell: TableCell,\n  Caption: TableCaption,\n}\n\nexport {\n  Table,\n  type TableRootProps,\n  type TableHeaderProps,\n  type TableBodyProps,\n  type TableFooterProps,\n  type TableHeadProps,\n  type TableRowProps,\n  type TableCellProps,\n  type TableCaptionProps,\n}\n"
     }
   ],
   "docs": "## Data table\n`src/lib/table.ts` is a dependency-free headless table engine (columns, sorting, global +\ncolumn filters with faceted counts, pagination, row selection, visibility). Column config is\ndata only: `{ id | accessorKey | accessorFn, label, enableSorting, enableHiding, filterFn,\nsortingFn }`. No render functions and no markup in column definitions.\n`src/components/ui/data-table.tsx` builds compositional parts on the source-agnostic\n`DataTableInstance` contract in `src/lib/data-table-adapter.ts`: toolbar, search, faceted\nfilter, reset, view options, `DataTableTable` > `DataTableHeader` (one `DataTableHead\ncolumn=\"id\"` per column; sortable columns get the sort/hide menu with `children` as the title)\n+ `DataTableBody` (`children` is `(row) => cells`; wrap in `DataTableRow` or return a fragment\nof `DataTableCell column=\"id\"` cells), `DataTableEmpty`, select-all/select-row cells, row\nactions, pagination pieces, bulk actions. Heads and cells keyed by a hidden column render\nnothing, so visibility toggles need no extra wiring. The toolkit must not know about specific\ntable libraries (no TanStack). `src/demo/tasks/` and `src/demo/users/` are the reference\nconsumers: `columns.tsx` is pure config, `*-table.tsx` composes the markup."

@@ -1,13 +1,14 @@
 "use client"
 
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { Popover as PopoverPrimitive, createTreeCollection, type TreeCollection, type TreeNode } from "@ark-ui/react"
 import { CheckIcon, ChevronDownIcon, ChevronRightIcon, SearchIcon, XIcon } from "lucide-react"
 import { useControllable } from "@/lib/controllable"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group"
-import { PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { InputGroup } from "@/components/ui/input-group"
+import { Popover } from "@/components/ui/popover"
 
 /* -------------------------------- helpers -------------------------------- */
 
@@ -98,7 +99,7 @@ type CascaderProps<T extends TreeNode> = Omit<
   children: React.ReactNode
 }
 
-function Cascader<T extends TreeNode>({
+function CascaderRoot<T extends TreeNode>({
   collection,
   value: valueProp,
   defaultValue = [],
@@ -117,7 +118,7 @@ function Cascader<T extends TreeNode>({
   ids: idsProp,
   children,
   ...props
-}: CascaderProps<T>) {
+}: CascaderRootProps<T>) {
   const [value, setValueState] = useControllable<string[]>(valueProp, defaultValue, (next) =>
     onValueChange?.({ value: next, path: next[0] != null ? pathNodes(collection, next[0]) : [] })
   )
@@ -343,11 +344,11 @@ function CascaderTrigger({
   children,
   onKeyDown,
   ...props
-}: React.ComponentProps<"div"> & { size?: "sm" | "default"; variant?: "default" | "unstyled" }) {
+}: CascaderTriggerProps) {
   const ctx = useCascader()
   return (
-    <PopoverTrigger asChild>
-      <div
+    <Popover.Trigger asChild>
+      <ark.div
         data-slot="cascader-trigger"
         role="combobox"
         aria-haspopup="tree"
@@ -382,22 +383,28 @@ function CascaderTrigger({
         {...props}
       >
         {children}
-      </div>
-    </PopoverTrigger>
+      </ark.div>
+    </Popover.Trigger>
   )
 }
 
-function CascaderIndicator({ className, children, ...props }: React.ComponentProps<"span">) {
+function CascaderIndicator({ className, children, ...props }: CascaderIndicatorProps) {
   const ctx = useCascader()
   return (
-    <span
+    <ark.span
       data-slot="cascader-indicator"
       data-state={ctx.open ? "open" : "closed"}
       className={cn("ml-auto flex shrink-0 items-center text-muted-foreground", className)}
       {...props}
     >
-      {children ?? <ChevronDownIcon className="size-4" />}
-    </span>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>{children ?? <ChevronDownIcon className="size-4" />}</>
+      )}
+    </ark.span>
   )
 }
 
@@ -408,42 +415,47 @@ function CascaderValue<T extends TreeNode>({
   children,
   className,
   ...props
-}: Omit<React.ComponentProps<"span">, "children"> & {
-  placeholder?: React.ReactNode
-  /** Rendered between path segments. */
-  separator?: React.ReactNode
-  children?: (path: T[]) => React.ReactNode
-}) {
+}: CascaderValueProps<T>) {
   const ctx = useCascader<T>()
   const empty = ctx.valuePath.length === 0
   return (
-    <span
+    <ark.span
       data-slot="cascader-value"
       data-placeholder-shown={empty ? "" : undefined}
       className={cn("flex min-w-0 flex-1 items-center gap-1 truncate text-left", className)}
       {...props}
     >
-      {empty
-        ? placeholder
-        : children
-          ? children(ctx.valuePath)
-          : ctx.valuePath.map((node, index) => (
-              <React.Fragment key={ctx.collection.getNodeValue(node)}>
-                {index > 0 && (
-                  <span data-slot="cascader-value-separator" className="text-muted-foreground">
-                    {separator}
-                  </span>
-                )}
-                <span className={cn(index < ctx.valuePath.length - 1 && "text-muted-foreground")}>
-                  {ctx.collection.stringifyNode(node)}
-                </span>
-              </React.Fragment>
-            ))}
-    </span>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {empty
+            ? placeholder
+            : children
+              ? typeof children === "function"
+                ? children(ctx.valuePath)
+                : children
+              : ctx.valuePath.map((node, index) => (
+                  <React.Fragment key={ctx.collection.getNodeValue(node)}>
+                    {index > 0 && (
+                      <span data-slot="cascader-value-separator" className="text-muted-foreground">
+                        {separator}
+                      </span>
+                    )}
+                    <span className={cn(index < ctx.valuePath.length - 1 && "text-muted-foreground")}>
+                      {ctx.collection.stringifyNode(node)}
+                    </span>
+                  </React.Fragment>
+                ))}
+        </>
+      )}
+    </ark.span>
   )
 }
 
-function CascaderClearTrigger({ className, children, ...props }: React.ComponentProps<typeof Button>) {
+function CascaderClearTrigger({ className, children, ...props }: CascaderClearTriggerProps) {
   const ctx = useCascader()
   if (ctx.value.length === 0 || ctx.readOnly) return null
   return (
@@ -462,22 +474,19 @@ function CascaderClearTrigger({ className, children, ...props }: React.Component
       onKeyDown={(event) => event.stopPropagation()}
       {...props}
     >
-      {children ?? <XIcon />}
+      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <XIcon />}</>}
     </Button>
   )
 }
 
-function CascaderHiddenInput({
-  name,
-  ...props
-}: Omit<React.ComponentProps<"input">, "type" | "value"> & { name: string }) {
+function CascaderHiddenInput({ name, ...props }: CascaderHiddenInputProps) {
   const ctx = useCascader()
-  return <input type="hidden" name={name} value={ctx.value[0] ?? ""} data-slot="cascader-hidden-input" {...props} />
+  return <ark.input type="hidden" name={name} value={ctx.value[0] ?? ""} data-slot="cascader-hidden-input" {...props} />
 }
 
 /* -------------------------------- content -------------------------------- */
 
-function CascaderContent({ className, onKeyDown, ...props }: React.ComponentProps<typeof PopoverContent>) {
+function CascaderContent({ className, onKeyDown, ...props }: CascaderContentProps) {
   const ctx = useCascader()
   // Keep the highlighted item in view.
   React.useEffect(() => {
@@ -486,7 +495,7 @@ function CascaderContent({ className, onKeyDown, ...props }: React.ComponentProp
     el?.scrollIntoView({ block: "nearest", inline: "nearest" })
   }, [ctx.highlighted, ctx.ids, ctx.contentRef, ctx.columns.length])
   return (
-    <PopoverContent
+    <Popover.Content
       ref={ctx.contentRef}
       data-slot="cascader-content"
       className={cn("w-auto min-w-(--reference-width) gap-1 p-1", className)}
@@ -506,18 +515,14 @@ function CascaderContent({ className, onKeyDown, ...props }: React.ComponentProp
   )
 }
 
-function CascaderSearch({
-  className,
-  placeholder = "Search…",
-  ...props
-}: Omit<React.ComponentProps<typeof InputGroupInput>, "value" | "onChange">) {
+function CascaderSearch({ className, placeholder = "Search…", ...props }: CascaderSearchProps) {
   const ctx = useCascader()
   return (
-    <InputGroup data-slot="cascader-search" className={cn("h-8 shrink-0", className)}>
-      <InputGroupAddon>
+    <InputGroup.Root data-slot="cascader-search" className={cn("h-8 shrink-0", className)}>
+      <InputGroup.Addon>
         <SearchIcon />
-      </InputGroupAddon>
-      <InputGroupInput
+      </InputGroup.Addon>
+      <InputGroup.Input
         role="searchbox"
         placeholder={placeholder}
         value={ctx.query}
@@ -525,20 +530,16 @@ function CascaderSearch({
         aria-activedescendant={ctx.highlighted ? ctx.ids.item(ctx.highlighted) : undefined}
         {...props}
       />
-    </InputGroup>
+    </InputGroup.Root>
   )
 }
 
 /** The column view. Hidden while a search query has matches to show. */
-function CascaderColumns<T extends TreeNode>({
-  className,
-  children,
-  ...props
-}: Omit<React.ComponentProps<"div">, "children"> & { children?: (node: T) => React.ReactNode }) {
+function CascaderColumns<T extends TreeNode>({ className, children, ...props }: CascaderColumnsProps<T>) {
   const ctx = useCascader<T>()
   if (ctx.query.trim()) return null
   return (
-    <div
+    <ark.div
       data-slot="cascader-columns"
       role="tree"
       tabIndex={0}
@@ -546,24 +547,34 @@ function CascaderColumns<T extends TreeNode>({
       className={cn("flex max-h-72 overflow-x-auto outline-none", className)}
       {...props}
     >
-      {ctx.columns.map((nodes, depth) => (
-        <CascaderColumn key={depth} depth={depth}>
-          {nodes.map((node) =>
-            children ? (
-              <React.Fragment key={ctx.collection.getNodeValue(node)}>{children(node)}</React.Fragment>
-            ) : (
-              <CascaderItem key={ctx.collection.getNodeValue(node)} node={node} />
-            )
-          )}
-        </CascaderColumn>
-      ))}
-    </div>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {ctx.columns.map((nodes, depth) => (
+            <CascaderColumn key={depth} depth={depth}>
+              {nodes.map((node) =>
+                children ? (
+                  <React.Fragment key={ctx.collection.getNodeValue(node)}>
+                    {typeof children === "function" ? children(node) : children}
+                  </React.Fragment>
+                ) : (
+                  <CascaderItem key={ctx.collection.getNodeValue(node)} node={node} />
+                )
+              )}
+            </CascaderColumn>
+          ))}
+        </>
+      )}
+    </ark.div>
   )
 }
 
-function CascaderColumn({ className, depth, ...props }: React.ComponentProps<"div"> & { depth: number }) {
+function CascaderColumn({ className, depth, ...props }: CascaderColumnProps) {
   return (
-    <div
+    <ark.div
       data-slot="cascader-column"
       role="group"
       data-depth={depth}
@@ -576,12 +587,7 @@ function CascaderColumn({ className, depth, ...props }: React.ComponentProps<"di
   )
 }
 
-function CascaderItem<T extends TreeNode>({
-  node,
-  className,
-  children,
-  ...props
-}: Omit<React.ComponentProps<"div">, "children"> & { node: T; children?: React.ReactNode }) {
+function CascaderItem<T extends TreeNode>({ node, className, children, ...props }: CascaderItemProps<T>) {
   const ctx = useCascader<T>()
   const value = ctx.collection.getNodeValue(node)
   const isBranch = ctx.collection.isBranchNode(node)
@@ -589,7 +595,7 @@ function CascaderItem<T extends TreeNode>({
   const expanded = ctx.expandedPath.includes(value)
   const selected = ctx.value[0] === value || ctx.valuePath.some((n) => ctx.collection.getNodeValue(n) === value)
   return (
-    <div
+    <ark.div
       id={ctx.ids.item(value)}
       data-slot="cascader-item"
       role="treeitem"
@@ -615,24 +621,32 @@ function CascaderItem<T extends TreeNode>({
       onClick={() => ctx.activate(node)}
       {...props}
     >
-      {children ?? (
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
         <>
-          <CascaderItemText>{ctx.collection.stringifyNode(node)}</CascaderItemText>
-          <CascaderItemIndicator />
+          {children ?? (
+            <>
+              <CascaderItemText>{ctx.collection.stringifyNode(node)}</CascaderItemText>
+              <CascaderItemIndicator />
+            </>
+          )}
         </>
       )}
-    </div>
+    </ark.div>
   )
 }
 
-function CascaderItemText({ className, ...props }: React.ComponentProps<"span">) {
-  return <span data-slot="cascader-item-text" className={cn("flex-1 truncate", className)} {...props} />
+function CascaderItemText({ className, ...props }: CascaderItemTextProps) {
+  return <ark.span data-slot="cascader-item-text" className={cn("flex-1 truncate", className)} {...props} />
 }
 
 /** Chevron on branches, check on the selected leaf. Reads the nearest item's state from the DOM attributes. */
-function CascaderItemIndicator({ className, ...props }: React.ComponentProps<"span">) {
+function CascaderItemIndicator({ className, ...props }: CascaderItemIndicatorProps) {
   return (
-    <span
+    <ark.span
       data-slot="cascader-item-indicator"
       className={cn(
         "ml-auto text-muted-foreground not-in-data-selected:**:data-check:hidden in-data-branch:**:data-check:hidden not-in-data-branch:**:data-chevron:hidden",
@@ -640,37 +654,49 @@ function CascaderItemIndicator({ className, ...props }: React.ComponentProps<"sp
       )}
       {...props}
     >
-      <ChevronRightIcon data-chevron="" />
-      <CheckIcon data-check="" />
-    </span>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <ChevronRightIcon data-chevron="" />
+          <CheckIcon data-check="" />
+        </>
+      )}
+    </ark.span>
   )
 }
 
 /** Flat list of matching paths while searching. */
-function CascaderSearchResults<T extends TreeNode>({
-  className,
-  children,
-  ...props
-}: Omit<React.ComponentProps<"div">, "children"> & { children?: (path: T[]) => React.ReactNode }) {
+function CascaderSearchResults<T extends TreeNode>({ className, children, ...props }: CascaderSearchResultsProps<T>) {
   const ctx = useCascader<T>()
   if (!ctx.query.trim()) return null
   return (
-    <div
+    <ark.div
       data-slot="cascader-search-results"
       role="listbox"
       className={cn("flex max-h-72 flex-col gap-px overflow-y-auto", className)}
       {...props}
     >
-      {ctx.matches.map((path) => {
-        const last = path[path.length - 1]
-        const value = ctx.collection.getNodeValue(last)
-        return children ? (
-          <React.Fragment key={value}>{children(path)}</React.Fragment>
-        ) : (
-          <CascaderSearchResult key={value} path={path} />
-        )
-      })}
-    </div>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {ctx.matches.map((path) => {
+            const last = path[path.length - 1]
+            const value = ctx.collection.getNodeValue(last)
+            return children ? (
+              <React.Fragment key={value}>{typeof children === "function" ? children(path) : children}</React.Fragment>
+            ) : (
+              <CascaderSearchResult key={value} path={path} />
+            )
+          })}
+        </>
+      )}
+    </ark.div>
   )
 }
 
@@ -680,12 +706,12 @@ function CascaderSearchResult<T extends TreeNode>({
   className,
   children,
   ...props
-}: React.ComponentProps<"div"> & { path: T[]; separator?: React.ReactNode }) {
+}: CascaderSearchResultProps<T>) {
   const ctx = useCascader<T>()
   const last = path[path.length - 1]
   const value = ctx.collection.getNodeValue(last)
   return (
-    <div
+    <ark.div
       id={ctx.ids.item(value)}
       data-slot="cascader-search-result"
       role="option"
@@ -701,55 +727,135 @@ function CascaderSearchResult<T extends TreeNode>({
       onClick={() => ctx.activate(last)}
       {...props}
     >
-      {children ??
-        path.map((node, index) => (
-          <React.Fragment key={ctx.collection.getNodeValue(node)}>
-            {index > 0 && <span className="text-muted-foreground">{separator}</span>}
-            <span className={cn("truncate", index < path.length - 1 && "text-muted-foreground")}>
-              {ctx.collection.stringifyNode(node)}
-            </span>
-          </React.Fragment>
-        ))}
-    </div>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {children ??
+            path.map((node, index) => (
+              <React.Fragment key={ctx.collection.getNodeValue(node)}>
+                {index > 0 && <span className="text-muted-foreground">{separator}</span>}
+                <span className={cn("truncate", index < path.length - 1 && "text-muted-foreground")}>
+                  {ctx.collection.stringifyNode(node)}
+                </span>
+              </React.Fragment>
+            ))}
+        </>
+      )}
+    </ark.div>
   )
 }
 
-function CascaderEmpty({ className, children, ...props }: React.ComponentProps<"div">) {
+function CascaderEmpty({ className, children, ...props }: CascaderEmptyProps) {
   const ctx = useCascader()
   const searching = ctx.query.trim().length > 0
   if (searching ? ctx.matches.length > 0 : ctx.columns[0].length > 0) return null
   return (
-    <div
+    <ark.div
       data-slot="cascader-empty"
       className={cn("px-2 py-4 text-center text-sm text-muted-foreground", className)}
       {...props}
     >
-      {children ?? "No results"}
-    </div>
+      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? "No results"}</>}
+    </ark.div>
   )
+}
+
+type CascaderRootProps<T extends TreeNode = TreeNode> = CascaderProps<T>
+
+type CascaderClearTriggerProps = React.ComponentProps<typeof Button>
+
+type CascaderColumnProps = React.ComponentProps<typeof ark.div> & { depth: number }
+
+type CascaderColumnsProps<T extends TreeNode = TreeNode> = Omit<React.ComponentProps<typeof ark.div>, "children"> & {
+  children?: ((node: T) => React.ReactNode) | React.ReactElement
+}
+
+type CascaderContentProps = React.ComponentProps<typeof Popover.Content>
+
+type CascaderEmptyProps = React.ComponentProps<typeof ark.div>
+
+type CascaderHiddenInputProps = Omit<React.ComponentProps<typeof ark.input>, "type" | "value"> & { name: string }
+
+type CascaderIndicatorProps = React.ComponentProps<typeof ark.span>
+
+type CascaderItemProps<T extends TreeNode = TreeNode> = Omit<React.ComponentProps<typeof ark.div>, "children"> & {
+  node: T
+  children?: React.ReactNode
+}
+
+type CascaderItemIndicatorProps = React.ComponentProps<typeof ark.span>
+
+type CascaderItemTextProps = React.ComponentProps<typeof ark.span>
+
+type CascaderSearchProps = Omit<React.ComponentProps<typeof InputGroup.Input>, "value" | "onChange">
+
+type CascaderSearchResultProps<T extends TreeNode = TreeNode> = React.ComponentProps<typeof ark.div> & {
+  path: T[]
+  separator?: React.ReactNode
+}
+
+type CascaderSearchResultsProps<T extends TreeNode = TreeNode> = Omit<
+  React.ComponentProps<typeof ark.div>,
+  "children"
+> & {
+  children?: ((path: T[]) => React.ReactNode) | React.ReactElement
+}
+
+type CascaderTriggerProps = React.ComponentProps<typeof ark.div> & {
+  size?: "sm" | "default"
+  variant?: "default" | "unstyled"
+}
+
+type CascaderValueProps<T extends TreeNode = TreeNode> = Omit<React.ComponentProps<typeof ark.span>, "children"> & {
+  placeholder?: React.ReactNode
+  /** Rendered between path segments. */
+  separator?: React.ReactNode
+  children?: ((path: T[]) => React.ReactNode) | React.ReactElement
+}
+
+const Cascader = {
+  Root: CascaderRoot,
+  ClearTrigger: CascaderClearTrigger,
+  Column: CascaderColumn,
+  Columns: CascaderColumns,
+  Content: CascaderContent,
+  Empty: CascaderEmpty,
+  HiddenInput: CascaderHiddenInput,
+  Indicator: CascaderIndicator,
+  Item: CascaderItem,
+  ItemIndicator: CascaderItemIndicator,
+  ItemText: CascaderItemText,
+  Search: CascaderSearch,
+  SearchResult: CascaderSearchResult,
+  SearchResults: CascaderSearchResults,
+  Trigger: CascaderTrigger,
+  Value: CascaderValue,
 }
 
 export {
   Cascader,
-  CascaderClearTrigger,
-  CascaderColumn,
-  CascaderColumns,
-  CascaderContent,
-  CascaderEmpty,
-  CascaderHiddenInput,
-  CascaderIndicator,
-  CascaderItem,
-  CascaderItemIndicator,
-  CascaderItemText,
-  CascaderSearch,
-  CascaderSearchResult,
-  CascaderSearchResults,
-  CascaderTrigger,
-  CascaderValue,
   createTreeCollection,
   useCascader,
-  type CascaderProps,
   type CascaderValueChangeDetails,
   type TreeCollection,
   type TreeNode,
+  type CascaderRootProps,
+  type CascaderClearTriggerProps,
+  type CascaderColumnProps,
+  type CascaderColumnsProps,
+  type CascaderContentProps,
+  type CascaderEmptyProps,
+  type CascaderHiddenInputProps,
+  type CascaderIndicatorProps,
+  type CascaderItemProps,
+  type CascaderItemIndicatorProps,
+  type CascaderItemTextProps,
+  type CascaderSearchProps,
+  type CascaderSearchResultProps,
+  type CascaderSearchResultsProps,
+  type CascaderTriggerProps,
+  type CascaderValueProps,
 }

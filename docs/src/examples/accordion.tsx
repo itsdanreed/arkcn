@@ -1,16 +1,16 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
+import { Accordion } from "@/components/ui/accordion"
 
 export default function AccordionExample() {
   return (
-    <Accordion collapsible defaultValue={["item-1"]} className="w-96">
-      <AccordionItem value="item-1">
-        <AccordionTrigger>Is it accessible?</AccordionTrigger>
-        <AccordionContent>Yes. It follows the WAI-ARIA design pattern.</AccordionContent>
-      </AccordionItem>
-      <AccordionItem value="item-2">
-        <AccordionTrigger>Is it styled?</AccordionTrigger>
-        <AccordionContent>Yes, with sensible defaults you can override.</AccordionContent>
-      </AccordionItem>
-    </Accordion>
+    <Accordion.Root collapsible defaultValue={["item-1"]} className="w-96">
+      <Accordion.Item value="item-1">
+        <Accordion.ItemTrigger>Is it accessible?</Accordion.ItemTrigger>
+        <Accordion.ItemContent>Yes. It follows the WAI-ARIA design pattern.</Accordion.ItemContent>
+      </Accordion.Item>
+      <Accordion.Item value="item-2">
+        <Accordion.ItemTrigger>Is it styled?</Accordion.ItemTrigger>
+        <Accordion.ItemContent>Yes, with sensible defaults you can override.</Accordion.ItemContent>
+      </Accordion.Item>
+    </Accordion.Root>
   )
 }

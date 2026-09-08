@@ -51,20 +51,11 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Kbd } from "@/components/ui/kbd"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import {
-  Select,
-  SelectContent,
-  SelectControl,
-  SelectItem,
-  SelectItemIndicator,
-  SelectItemText,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { Popover } from "@/components/ui/popover"
+import { Select } from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { Toggle } from "@/components/ui/toggle"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip } from "@/components/ui/tooltip"
 import { cn } from "@/lib/utils"
 
 /**
@@ -98,7 +89,7 @@ function useRichTextEditor() {
  * Root
  * ------------------------------------------------------------------------- */
 
-function RichTextEditor({
+function RichTextEditorRoot({
   content,
   defaultContent = "",
   onChange,
@@ -111,23 +102,7 @@ function RichTextEditor({
   className,
   children,
   ...props
-}: Omit<React.ComponentProps<"div">, "content" | "onChange"> & {
-  /** Controlled HTML. Prefer `defaultContent` + `onChange` unless you need to replace the document. */
-  content?: string
-  /** Initial HTML when uncontrolled. */
-  defaultContent?: string
-  onChange?: (change: RichTextChange) => void
-  placeholder?: string
-  editable?: boolean
-  /** Focus the editor on mount. */
-  autofocus?: boolean
-  /** Extra tiptap extensions appended to the built-in set. */
-  extensions?: Extensions
-  /** Maximum characters; the count shows `data-over` past it. */
-  characterLimit?: number
-  /** Escape hatch for any other `useEditor` option. */
-  editorOptions?: Partial<UseEditorOptions>
-}) {
+}: RichTextEditorRootProps) {
   const onChangeRef = React.useRef(onChange)
   React.useEffect(() => {
     onChangeRef.current = onChange
@@ -177,7 +152,7 @@ function RichTextEditor({
 
   return (
     <RichTextEditorContext.Provider value={ctx}>
-      <div
+      <ark.div
         data-slot="rich-text-editor"
         data-editable={editable ? "" : undefined}
         className={cn(
@@ -187,7 +162,7 @@ function RichTextEditor({
         {...props}
       >
         {children}
-      </div>
+      </ark.div>
     </RichTextEditorContext.Provider>
   )
 }
@@ -441,10 +416,10 @@ function useActionState(isActive?: (e: Editor) => boolean, canRun?: (e: Editor) 
  * Toolbar
  * ------------------------------------------------------------------------- */
 
-function RichTextEditorToolbar({ className, onKeyDown, ...props }: React.ComponentProps<"div">) {
+function RichTextEditorToolbar({ className, onKeyDown, ...props }: RichTextEditorToolbarProps) {
   const ref = React.useRef<HTMLDivElement>(null)
   return (
-    <div
+    <ark.div
       ref={ref}
       data-slot="rich-text-editor-toolbar"
       role="toolbar"
@@ -467,15 +442,19 @@ function RichTextEditorToolbar({ className, onKeyDown, ...props }: React.Compone
   )
 }
 
-function RichTextEditorToolbarGroup({ className, ...props }: React.ComponentProps<"div">) {
+function RichTextEditorToolbarGroup({ className, ...props }: RichTextEditorToolbarGroupProps) {
   return (
-    <div data-slot="rich-text-editor-toolbar-group" className={cn("flex items-center gap-0.5", className)} {...props} />
+    <ark.div
+      data-slot="rich-text-editor-toolbar-group"
+      className={cn("flex items-center gap-0.5", className)}
+      {...props}
+    />
   )
 }
 
-function RichTextEditorToolbarSeparator({ className, ...props }: React.ComponentProps<typeof Separator>) {
+function RichTextEditorToolbarSeparator({ className, ...props }: RichTextEditorToolbarSeparatorProps) {
   return (
-    <Separator
+    <Separator.Root
       data-slot="rich-text-editor-toolbar-separator"
       orientation="vertical"
       className={cn("mx-1 h-5!", className)}
@@ -495,13 +474,13 @@ function ControlTooltip({
   children: React.ReactElement
 }) {
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>{children}</TooltipTrigger>
-      <TooltipContent>
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>{children}</Tooltip.Trigger>
+      <Tooltip.Content>
         {label}
-        {shortcut && <Kbd className="ms-1.5">{shortcut}</Kbd>}
-      </TooltipContent>
-    </Tooltip>
+        {shortcut && <Kbd.Root className="ms-1.5">{shortcut}</Kbd.Root>}
+      </Tooltip.Content>
+    </Tooltip.Root>
   )
 }
 
@@ -532,7 +511,7 @@ function RichTextEditorToggle({
   children,
   asChild,
   ...props
-}: Omit<React.ComponentProps<typeof Toggle>, "pressed" | "onPressedChange"> & ControlProps) {
+}: RichTextEditorToggleProps) {
   const { editor } = useRichTextEditor()
   const def: ActionDef | undefined = name ? actions[name] : undefined
   const activeFn = isActive ?? def?.isActive
@@ -541,7 +520,7 @@ function RichTextEditorToggle({
   const text = label ?? def?.label ?? name ?? ""
   const Icon = def?.icon
   const control = (
-    <Toggle
+    <Toggle.Root
       data-slot="rich-text-editor-toggle"
       data-action={name}
       size="sm"
@@ -558,7 +537,7 @@ function RichTextEditorToggle({
       {...props}
     >
       {asChild ? children : (children ?? (Icon ? <Icon /> : text))}
-    </Toggle>
+    </Toggle.Root>
   )
   return tooltip ? (
     <ControlTooltip label={text} shortcut={shortcut ?? def?.shortcut}>
@@ -582,7 +561,7 @@ function RichTextEditorTrigger({
   asChild,
   onClick,
   ...props
-}: React.ComponentProps<typeof Button> & Omit<ControlProps, "isActive">) {
+}: RichTextEditorTriggerProps) {
   const { editor } = useRichTextEditor()
   const def: ActionDef | undefined = name ? actions[name] : undefined
   const { enabled } = useActionState(undefined, canRun ?? def?.canRun)
@@ -632,10 +611,7 @@ const blockOptions: { value: ActionName; label: string }[] = [
 ]
 const blockCollection = createListCollection({ items: blockOptions, itemToValue: (o) => o.value })
 
-function RichTextEditorBlockSelect({
-  className,
-  ...props
-}: Omit<React.ComponentProps<typeof Select>, "collection" | "value" | "onValueChange">) {
+function RichTextEditorBlockSelect({ className, ...props }: RichTextEditorBlockSelectProps) {
   const { editor, editable } = useRichTextEditor()
   const current = useEditorState({
     editor,
@@ -646,7 +622,7 @@ function RichTextEditorBlockSelect({
   })
   const label = blockOptions.find((o) => o.value === current)?.label
   return (
-    <Select
+    <Select.Root
       collection={blockCollection}
       value={[current ?? "paragraph"]}
       onValueChange={({ value }) => {
@@ -657,34 +633,42 @@ function RichTextEditorBlockSelect({
       positioning={{ sameWidth: false }}
       {...props}
     >
-      <SelectControl>
-        <SelectTrigger
-          size="sm"
-          className={cn("w-32", className)}
-          data-slot="rich-text-editor-block-select"
-          aria-label="Block type"
-        >
-          <SelectValue>{label}</SelectValue>
-        </SelectTrigger>
-      </SelectControl>
-      <SelectContent>
-        {blockOptions.map((o) => {
-          const Icon = actions[o.value].icon
-          return (
-            <SelectItem key={o.value} item={o}>
-              <Icon className="size-4 text-muted-foreground" />
-              <SelectItemText>{o.label}</SelectItemText>
-              <SelectItemIndicator />
-            </SelectItem>
-          )
-        })}
-      </SelectContent>
-    </Select>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <Select.Control>
+            <Select.Trigger
+              size="sm"
+              className={cn("w-32", className)}
+              data-slot="rich-text-editor-block-select"
+              aria-label="Block type"
+            >
+              <Select.ValueText>{label}</Select.ValueText>
+            </Select.Trigger>
+          </Select.Control>
+          <Select.Content>
+            {blockOptions.map((o) => {
+              const Icon = actions[o.value].icon
+              return (
+                <Select.Item key={o.value} item={o}>
+                  <Icon className="size-4 text-muted-foreground" />
+                  <Select.ItemText>{o.label}</Select.ItemText>
+                  <Select.ItemIndicator />
+                </Select.Item>
+              )
+            })}
+          </Select.Content>
+        </>
+      )}
+    </Select.Root>
   )
 }
 
 /** Set or edit a link on the selection through a small popover form. */
-function RichTextEditorLinkTrigger({ className, ...props }: React.ComponentProps<typeof Toggle>) {
+function RichTextEditorLinkTrigger({ className, ...props }: RichTextEditorLinkTriggerProps) {
   const { editor, editable } = useRichTextEditor()
   const { active } = useActionState((e) => e.isActive("link"))
   const [open, setOpen] = React.useState(false)
@@ -697,7 +681,7 @@ function RichTextEditorLinkTrigger({ className, ...props }: React.ComponentProps
     setOpen(false)
   }
   return (
-    <Popover
+    <Popover.Root
       open={open}
       onOpenChange={({ open }) => {
         if (open) setHref((editor?.getAttributes("link").href as string | undefined) ?? "")
@@ -706,8 +690,8 @@ function RichTextEditorLinkTrigger({ className, ...props }: React.ComponentProps
       positioning={{ placement: "bottom-start" }}
     >
       <ControlTooltip label="Link" shortcut="⌘K">
-        <PopoverTrigger asChild>
-          <Toggle
+        <Popover.Trigger asChild>
+          <Toggle.Root
             data-slot="rich-text-editor-link-trigger"
             size="sm"
             aria-label="Link"
@@ -716,11 +700,19 @@ function RichTextEditorLinkTrigger({ className, ...props }: React.ComponentProps
             className={cn("size-7 px-0", className)}
             {...props}
           >
-            <LinkIcon />
-          </Toggle>
-        </PopoverTrigger>
+            {props.asChild ? (
+              React.isValidElement(props.children) ? (
+                props.children
+              ) : null
+            ) : (
+              <>
+                <LinkIcon />
+              </>
+            )}
+          </Toggle.Root>
+        </Popover.Trigger>
       </ControlTooltip>
-      <PopoverContent className="w-72">
+      <Popover.Content className="w-72">
         <form
           className="flex items-center gap-2"
           onSubmit={(event) => {
@@ -728,7 +720,7 @@ function RichTextEditorLinkTrigger({ className, ...props }: React.ComponentProps
             apply()
           }}
         >
-          <Input
+          <Input.Root
             value={href}
             onChange={(e) => setHref(e.target.value)}
             placeholder="https://example.com"
@@ -740,20 +732,20 @@ function RichTextEditorLinkTrigger({ className, ...props }: React.ComponentProps
             {href.trim() ? "Apply" : "Remove"}
           </Button>
         </form>
-      </PopoverContent>
-    </Popover>
+      </Popover.Content>
+    </Popover.Root>
   )
 }
 
 /** Insert an image by URL. */
-function RichTextEditorImageTrigger({ className, ...props }: React.ComponentProps<typeof Button>) {
+function RichTextEditorImageTrigger({ className, ...props }: RichTextEditorImageTriggerProps) {
   const { editor, editable } = useRichTextEditor()
   const [open, setOpen] = React.useState(false)
   const [src, setSrc] = React.useState("")
   return (
-    <Popover open={open} onOpenChange={({ open }) => setOpen(open)} positioning={{ placement: "bottom-start" }}>
+    <Popover.Root open={open} onOpenChange={({ open }) => setOpen(open)} positioning={{ placement: "bottom-start" }}>
       <ControlTooltip label="Image">
-        <PopoverTrigger asChild>
+        <Popover.Trigger asChild>
           <Button
             data-slot="rich-text-editor-image-trigger"
             variant="ghost"
@@ -763,11 +755,19 @@ function RichTextEditorImageTrigger({ className, ...props }: React.ComponentProp
             className={className}
             {...props}
           >
-            <ImageIcon />
+            {props.asChild ? (
+              React.isValidElement(props.children) ? (
+                props.children
+              ) : null
+            ) : (
+              <>
+                <ImageIcon />
+              </>
+            )}
           </Button>
-        </PopoverTrigger>
+        </Popover.Trigger>
       </ControlTooltip>
-      <PopoverContent className="w-72">
+      <Popover.Content className="w-72">
         <form
           className="flex items-center gap-2"
           onSubmit={(event) => {
@@ -777,7 +777,7 @@ function RichTextEditorImageTrigger({ className, ...props }: React.ComponentProp
             setOpen(false)
           }}
         >
-          <Input
+          <Input.Root
             value={src}
             onChange={(e) => setSrc(e.target.value)}
             placeholder="https://…/image.png"
@@ -789,8 +789,8 @@ function RichTextEditorImageTrigger({ className, ...props }: React.ComponentProp
             Insert
           </Button>
         </form>
-      </PopoverContent>
-    </Popover>
+      </Popover.Content>
+    </Popover.Root>
   )
 }
 
@@ -798,7 +798,7 @@ function RichTextEditorImageTrigger({ className, ...props }: React.ComponentProp
  * Content, bubble menu, footer
  * ------------------------------------------------------------------------- */
 
-function RichTextEditorContent({ className, ...props }: Omit<React.ComponentProps<typeof EditorContent>, "editor">) {
+function RichTextEditorContent({ className, ...props }: RichTextEditorContentProps) {
   const { editor } = useRichTextEditor()
   return (
     <EditorContent
@@ -815,7 +815,7 @@ function RichTextEditorContent({ className, ...props }: Omit<React.ComponentProp
 }
 
 /** A floating toolbar over the current text selection. Compose it from the same toggles. */
-function RichTextEditorBubbleMenu({ className, children, ...props }: Omit<BubbleMenuProps, "editor">) {
+function RichTextEditorBubbleMenu({ className, children, ...props }: RichTextEditorBubbleMenuProps) {
   const { editor, editable } = useRichTextEditor()
   if (!editor || !editable) return null
   return (
@@ -843,9 +843,9 @@ function RichTextEditorBubbleMenu({ className, children, ...props }: Omit<Bubble
   )
 }
 
-function RichTextEditorFooter({ className, ...props }: React.ComponentProps<"div">) {
+function RichTextEditorFooter({ className, ...props }: RichTextEditorFooterProps) {
   return (
-    <div
+    <ark.div
       data-slot="rich-text-editor-footer"
       className={cn("flex items-center gap-3 border-t px-3 py-1.5 text-xs text-muted-foreground", className)}
       {...props}
@@ -853,7 +853,7 @@ function RichTextEditorFooter({ className, ...props }: React.ComponentProps<"div
   )
 }
 
-function RichTextEditorCharacterCount({ className, ...props }: React.ComponentProps<typeof ark.span>) {
+function RichTextEditorCharacterCount({ className, ...props }: RichTextEditorCharacterCountProps) {
   const { editor } = useRichTextEditor()
   const stats = useEditorState({
     editor,
@@ -872,28 +872,99 @@ function RichTextEditorCharacterCount({ className, ...props }: React.ComponentPr
       className={cn("tabular-nums data-over:text-destructive", className)}
       {...props}
     >
-      {stats?.words ?? 0} words · {stats?.characters ?? 0}
-      {limit ? ` / ${limit}` : ""} characters
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          {stats?.words ?? 0} words · {stats?.characters ?? 0}
+          {limit ? ` / ${limit}` : ""} characters
+        </>
+      )}
     </ark.span>
   )
 }
 
+type RichTextEditorRootProps = Omit<React.ComponentProps<typeof ark.div>, "content" | "onChange"> & {
+  /** Controlled HTML. Prefer `defaultContent` + `onChange` unless you need to replace the document. */
+  content?: string
+  /** Initial HTML when uncontrolled. */
+  defaultContent?: string
+  onChange?: (change: RichTextChange) => void
+  placeholder?: string
+  editable?: boolean
+  /** Focus the editor on mount. */
+  autofocus?: boolean
+  /** Extra tiptap extensions appended to the built-in set. */
+  extensions?: Extensions
+  /** Maximum characters; the count shows `data-over` past it. */
+  characterLimit?: number
+  /** Escape hatch for any other `useEditor` option. */
+  editorOptions?: Partial<UseEditorOptions>
+}
+
+type RichTextEditorToolbarProps = React.ComponentProps<typeof ark.div>
+
+type RichTextEditorToolbarGroupProps = React.ComponentProps<typeof ark.div>
+
+type RichTextEditorToolbarSeparatorProps = React.ComponentProps<typeof Separator.Root>
+
+type RichTextEditorToggleProps = Omit<React.ComponentProps<typeof Toggle.Root>, "pressed" | "onPressedChange"> &
+  ControlProps
+
+type RichTextEditorTriggerProps = React.ComponentProps<typeof Button> & Omit<ControlProps, "isActive">
+
+type RichTextEditorBlockSelectProps = Omit<
+  React.ComponentProps<typeof Select.Root>,
+  "collection" | "value" | "onValueChange"
+>
+
+type RichTextEditorLinkTriggerProps = React.ComponentProps<typeof Toggle.Root>
+
+type RichTextEditorImageTriggerProps = React.ComponentProps<typeof Button>
+
+type RichTextEditorContentProps = Omit<React.ComponentProps<typeof EditorContent>, "editor">
+
+type RichTextEditorBubbleMenuProps = Omit<BubbleMenuProps, "editor">
+
+type RichTextEditorFooterProps = React.ComponentProps<typeof ark.div>
+
+type RichTextEditorCharacterCountProps = React.ComponentProps<typeof ark.span>
+
+const RichTextEditor = {
+  Root: RichTextEditorRoot,
+  Toolbar: RichTextEditorToolbar,
+  ToolbarGroup: RichTextEditorToolbarGroup,
+  ToolbarSeparator: RichTextEditorToolbarSeparator,
+  Toggle: RichTextEditorToggle,
+  Trigger: RichTextEditorTrigger,
+  BlockSelect: RichTextEditorBlockSelect,
+  LinkTrigger: RichTextEditorLinkTrigger,
+  ImageTrigger: RichTextEditorImageTrigger,
+  Content: RichTextEditorContent,
+  BubbleMenu: RichTextEditorBubbleMenu,
+  Footer: RichTextEditorFooter,
+  CharacterCount: RichTextEditorCharacterCount,
+}
+
 export {
   RichTextEditor,
-  RichTextEditorToolbar,
-  RichTextEditorToolbarGroup,
-  RichTextEditorToolbarSeparator,
-  RichTextEditorToggle,
-  RichTextEditorTrigger,
-  RichTextEditorBlockSelect,
-  RichTextEditorLinkTrigger,
-  RichTextEditorImageTrigger,
-  RichTextEditorContent,
-  RichTextEditorBubbleMenu,
-  RichTextEditorFooter,
-  RichTextEditorCharacterCount,
   useRichTextEditor,
   actions as richTextActions,
   type RichTextChange,
   type ActionName as RichTextActionName,
+  type RichTextEditorRootProps,
+  type RichTextEditorToolbarProps,
+  type RichTextEditorToolbarGroupProps,
+  type RichTextEditorToolbarSeparatorProps,
+  type RichTextEditorToggleProps,
+  type RichTextEditorTriggerProps,
+  type RichTextEditorBlockSelectProps,
+  type RichTextEditorLinkTriggerProps,
+  type RichTextEditorImageTriggerProps,
+  type RichTextEditorContentProps,
+  type RichTextEditorBubbleMenuProps,
+  type RichTextEditorFooterProps,
+  type RichTextEditorCharacterCountProps,
 }

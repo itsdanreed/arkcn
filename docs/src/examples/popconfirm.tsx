@@ -1,35 +1,24 @@
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
-import {
-  Popconfirm,
-  PopconfirmCancelTrigger,
-  PopconfirmConfirmTrigger,
-  PopconfirmContent,
-  PopconfirmDescription,
-  PopconfirmFooter,
-  PopconfirmHeader,
-  PopconfirmIcon,
-  PopconfirmTitle,
-  PopconfirmTrigger,
-} from "@/components/ui/popconfirm"
+import { Popconfirm } from "@/components/ui/popconfirm"
 
 export default function PopconfirmExample() {
   return (
-    <Popconfirm>
-      <PopconfirmTrigger asChild>
+    <Popconfirm.Root>
+      <Popconfirm.Trigger asChild>
         <Button variant="outline">Delete file</Button>
-      </PopconfirmTrigger>
-      <PopconfirmContent>
-        <PopconfirmHeader>
-          <PopconfirmIcon />
-          <PopconfirmTitle>Delete this file?</PopconfirmTitle>
-          <PopconfirmDescription>It cannot be recovered.</PopconfirmDescription>
-        </PopconfirmHeader>
-        <PopconfirmFooter>
-          <PopconfirmCancelTrigger />
-          <PopconfirmConfirmTrigger onConfirm={() => toast("Deleted")}>Delete</PopconfirmConfirmTrigger>
-        </PopconfirmFooter>
-      </PopconfirmContent>
-    </Popconfirm>
+      </Popconfirm.Trigger>
+      <Popconfirm.Content>
+        <Popconfirm.Header>
+          <Popconfirm.Icon />
+          <Popconfirm.Title>Delete this file?</Popconfirm.Title>
+          <Popconfirm.Description>It cannot be recovered.</Popconfirm.Description>
+        </Popconfirm.Header>
+        <Popconfirm.Footer>
+          <Popconfirm.CancelTrigger />
+          <Popconfirm.ConfirmTrigger onConfirm={() => toast("Deleted")}>Delete</Popconfirm.ConfirmTrigger>
+        </Popconfirm.Footer>
+      </Popconfirm.Content>
+    </Popconfirm.Root>
   )
 }

@@ -1,5 +1,18 @@
 /** One-line page descriptions. Components not listed fall back to the registry description. */
 export const descriptions: Record<string, string> = {
+  "date-picker": "Choose a date with calendar navigation, month and year views, and keyboard input.",
+  fieldset: "Group related form controls and share disabled and validation state.",
+  "pin-input": "Enter a verification code with automatic focus movement and paste support.",
+  splitter: "Resize adjacent panels with pointer or keyboard controls.",
+  listbox: "Choose one or more options from an accessible, filterable list.",
+  toast: "Ark UI notifications with actions, dismissal, and a programmable toast store.",
+  "client-only": "Render browser-dependent content after the client mounts.",
+  "download-trigger": "Download text, blobs, or files from a button.",
+  "focus-trap": "Keep keyboard focus within a region until it is released.",
+  frame: "Render content inside an isolated iframe document.",
+  highlight: "Highlight matching words within text.",
+  portal: "Render content outside its parent DOM container.",
+  presence: "Mount and unmount content with enter and exit transitions.",
   accordion: "A vertically stacked set of interactive headings that each reveal a section of content.",
   "alert-dialog": "A modal dialog that interrupts the user with important content and expects a response.",
   alert: "Displays a callout for user attention.",

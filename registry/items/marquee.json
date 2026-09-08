@@ -4,16 +4,13 @@
   "description": "",
   "ark": "Marquee",
   "exports": [
-    "Marquee",
-    "MarqueeContent",
-    "MarqueeContext",
-    "MarqueeEdge",
-    "MarqueeItem",
-    "MarqueeViewport"
+    "useMarquee",
+    "useMarqueeContext",
+    "Marquee"
   ],
   "parts": [
     {
-      "name": "Marquee",
+      "name": "Marquee.Root",
       "props": [
         {
           "name": "asChild",
@@ -160,7 +157,47 @@
       ]
     },
     {
-      "name": "MarqueeContent",
+      "name": "Marquee.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseMarqueeReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Marquee.Content",
       "props": [
         {
           "name": "children",
@@ -193,7 +230,7 @@
       ]
     },
     {
-      "name": "MarqueeContext",
+      "name": "Marquee.Context",
       "props": [
         {
           "name": "children",
@@ -205,7 +242,7 @@
       ]
     },
     {
-      "name": "MarqueeEdge",
+      "name": "Marquee.Edge",
       "props": [
         {
           "name": "side",
@@ -245,7 +282,7 @@
       ]
     },
     {
-      "name": "MarqueeItem",
+      "name": "Marquee.Item",
       "props": [
         {
           "name": "asChild",
@@ -278,7 +315,7 @@
       ]
     },
     {
-      "name": "MarqueeViewport",
+      "name": "Marquee.Viewport",
       "props": [
         {
           "name": "asChild",
@@ -320,7 +357,7 @@
   "files": [
     {
       "path": "components/ui/marquee.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Marquee as MarqueePrimitive } from \"@ark-ui/react\"\n\nfunction Marquee({ className, ...props }: React.ComponentProps<typeof MarqueePrimitive.Root>) {\n  return (\n    <MarqueePrimitive.Root\n      data-slot=\"marquee\"\n      className={cn(\"group/marquee relative w-full overflow-hidden\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction MarqueeContext({ ...props }: React.ComponentProps<typeof MarqueePrimitive.Context>) {\n  return <MarqueePrimitive.Context {...props} />\n}\n\nfunction MarqueeViewport({ className, ...props }: React.ComponentProps<typeof MarqueePrimitive.Viewport>) {\n  return (\n    <MarqueePrimitive.Viewport\n      data-slot=\"marquee-viewport\"\n      className={cn(\"flex w-full overflow-hidden\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction MarqueeContent({ className, ...props }: React.ComponentProps<typeof MarqueePrimitive.Content>) {\n  return (\n    <MarqueePrimitive.Content\n      data-slot=\"marquee-content\"\n      className={cn(\n        \"flex shrink-0 items-center group-data-paused/marquee:paused data-reverse:shimmer-reverse data-horizontal:animate-marquee-x data-vertical:animate-marquee-y\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MarqueeItem({ className, ...props }: React.ComponentProps<typeof MarqueePrimitive.Item>) {\n  return <MarqueePrimitive.Item data-slot=\"marquee-item\" className={cn(\"shrink-0\", className)} {...props} />\n}\n\nfunction MarqueeEdge({ className, ...props }: React.ComponentProps<typeof MarqueePrimitive.Edge>) {\n  return (\n    <MarqueePrimitive.Edge\n      data-slot=\"marquee-edge\"\n      className={cn(\n        \"pointer-events-none absolute inset-y-0 z-10 w-12 from-background to-transparent data-[side=end]:right-0 data-[side=end]:bg-linear-to-l data-[side=start]:left-0 data-[side=start]:bg-linear-to-r\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nexport { Marquee, MarqueeContent, MarqueeContext, MarqueeEdge, MarqueeItem, MarqueeViewport }\n"
+      "content": "\"use client\"\n\nimport { useMarquee, useMarqueeContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Marquee as MarqueePrimitive } from \"@ark-ui/react\"\n\nfunction MarqueeRoot({ className, ...props }: MarqueeRootProps) {\n  return (\n    <MarqueePrimitive.Root\n      data-slot=\"marquee\"\n      className={cn(\"group/marquee relative w-full overflow-hidden\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction MarqueeContext({ ...props }: MarqueeContextProps) {\n  return <MarqueePrimitive.Context {...props} />\n}\n\nfunction MarqueeViewport({ className, ...props }: MarqueeViewportProps) {\n  return (\n    <MarqueePrimitive.Viewport\n      data-slot=\"marquee-viewport\"\n      className={cn(\"flex w-full overflow-hidden\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction MarqueeContent({ className, ...props }: MarqueeContentProps) {\n  return (\n    <MarqueePrimitive.Content\n      data-slot=\"marquee-content\"\n      className={cn(\n        \"flex shrink-0 items-center group-data-paused/marquee:paused data-reverse:shimmer-reverse data-horizontal:animate-marquee-x data-vertical:animate-marquee-y\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MarqueeItem({ className, ...props }: MarqueeItemProps) {\n  return <MarqueePrimitive.Item data-slot=\"marquee-item\" className={cn(\"shrink-0\", className)} {...props} />\n}\n\nfunction MarqueeEdge({ className, ...props }: MarqueeEdgeProps) {\n  return (\n    <MarqueePrimitive.Edge\n      data-slot=\"marquee-edge\"\n      className={cn(\n        \"pointer-events-none absolute inset-y-0 z-10 w-12 from-background to-transparent data-[side=end]:right-0 data-[side=end]:bg-linear-to-l data-[side=start]:left-0 data-[side=start]:bg-linear-to-r\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MarqueeRootProvider({ className, ...props }: MarqueeRootProviderProps) {\n  return (\n    <MarqueePrimitive.RootProvider\n      data-slot=\"marquee\"\n      className={cn(\"group/marquee relative w-full overflow-hidden\", className)}\n      {...props}\n    />\n  )\n}\n\ntype MarqueeRootProps = React.ComponentProps<typeof MarqueePrimitive.Root>\n\ntype MarqueeRootProviderProps = React.ComponentProps<typeof MarqueePrimitive.RootProvider>\n\ntype MarqueeContentProps = React.ComponentProps<typeof MarqueePrimitive.Content>\n\ntype MarqueeContextProps = React.ComponentProps<typeof MarqueePrimitive.Context>\n\ntype MarqueeEdgeProps = React.ComponentProps<typeof MarqueePrimitive.Edge>\n\ntype MarqueeItemProps = React.ComponentProps<typeof MarqueePrimitive.Item>\n\ntype MarqueeViewportProps = React.ComponentProps<typeof MarqueePrimitive.Viewport>\n\nconst Marquee = {\n  Root: MarqueeRoot,\n  RootProvider: MarqueeRootProvider,\n  Content: MarqueeContent,\n  Context: MarqueeContext,\n  Edge: MarqueeEdge,\n  Item: MarqueeItem,\n  Viewport: MarqueeViewport,\n}\n\nexport {\n  useMarquee,\n  useMarqueeContext,\n  Marquee,\n  type MarqueeRootProps,\n  type MarqueeRootProviderProps,\n  type MarqueeContentProps,\n  type MarqueeContextProps,\n  type MarqueeEdgeProps,\n  type MarqueeItemProps,\n  type MarqueeViewportProps,\n}\n"
     }
   ]
 }

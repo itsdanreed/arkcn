@@ -4,17 +4,13 @@
   "description": "",
   "ark": "Avatar",
   "exports": [
-    "Avatar",
-    "AvatarBadge",
-    "AvatarContext",
-    "AvatarFallback",
-    "AvatarGroup",
-    "AvatarGroupCount",
-    "AvatarImage"
+    "useAvatar",
+    "useAvatarContext",
+    "Avatar"
   ],
   "parts": [
     {
-      "name": "Avatar",
+      "name": "Avatar.Root",
       "props": [
         {
           "name": "size",
@@ -69,8 +65,22 @@
       ]
     },
     {
-      "name": "AvatarBadge",
+      "name": "Avatar.RootProvider",
       "props": [
+        {
+          "name": "value",
+          "type": "UseAvatarReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -95,19 +105,7 @@
       ]
     },
     {
-      "name": "AvatarContext",
-      "props": [
-        {
-          "name": "children",
-          "type": "(context: UseAvatarContext) => ReactNode",
-          "required": true,
-          "description": "Content rendered inside the part.",
-          "from": "@ark-ui/react"
-        }
-      ]
-    },
-    {
-      "name": "AvatarFallback",
+      "name": "Avatar.Badge",
       "props": [
         {
           "name": "asChild",
@@ -140,8 +138,27 @@
       ]
     },
     {
-      "name": "AvatarGroup",
+      "name": "Avatar.Context",
       "props": [
+        {
+          "name": "children",
+          "type": "(context: UseAvatarContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Avatar.Fallback",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -166,8 +183,15 @@
       ]
     },
     {
-      "name": "AvatarGroupCount",
+      "name": "Avatar.Group",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -192,7 +216,40 @@
       ]
     },
     {
-      "name": "AvatarImage",
+      "name": "Avatar.GroupCount",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Avatar.Image",
       "props": [
         {
           "name": "asChild",
@@ -234,7 +291,7 @@
   "files": [
     {
       "path": "components/ui/avatar.tsx",
-      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Avatar as AvatarPrimitive } from \"@ark-ui/react\"\n\nfunction Avatar({\n  className,\n  size = \"default\",\n  ...props\n}: React.ComponentProps<typeof AvatarPrimitive.Root> & {\n  size?: \"default\" | \"sm\" | \"lg\"\n}) {\n  return (\n    <AvatarPrimitive.Root\n      data-slot=\"avatar\"\n      data-size={size}\n      className={cn(\n        \"group/avatar relative flex size-8 shrink-0 rounded-full select-none after:absolute after:inset-0 after:rounded-full after:border after:border-border after:mix-blend-darken data-[size=lg]:size-10 data-[size=sm]:size-6 dark:after:mix-blend-lighten\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AvatarContext({ ...props }: React.ComponentProps<typeof AvatarPrimitive.Context>) {\n  return <AvatarPrimitive.Context {...props} />\n}\n\nfunction AvatarImage({ className, ...props }: React.ComponentProps<typeof AvatarPrimitive.Image>) {\n  return (\n    <AvatarPrimitive.Image\n      data-slot=\"avatar-image\"\n      className={cn(\"aspect-square size-full rounded-full object-cover\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AvatarFallback({ className, ...props }: React.ComponentProps<typeof AvatarPrimitive.Fallback>) {\n  return (\n    <AvatarPrimitive.Fallback\n      data-slot=\"avatar-fallback\"\n      className={cn(\n        \"flex size-full items-center justify-center rounded-full bg-muted text-sm text-muted-foreground group-data-[size=sm]/avatar:text-xs\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AvatarBadge({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span\n      data-slot=\"avatar-badge\"\n      className={cn(\n        \"absolute right-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground bg-blend-color ring-2 ring-background select-none\",\n        \"group-data-[size=sm]/avatar:size-2 group-data-[size=sm]/avatar:[&>svg]:hidden\",\n        \"group-data-[size=default]/avatar:size-2.5 group-data-[size=default]/avatar:[&>svg]:size-2\",\n        \"group-data-[size=lg]/avatar:size-3 group-data-[size=lg]/avatar:[&>svg]:size-2\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AvatarGroup({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"avatar-group\"\n      className={cn(\n        \"group/avatar-group flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AvatarGroupCount({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"avatar-group-count\"\n      className={cn(\n        \"relative flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-sm text-muted-foreground ring-2 ring-background group-has-data-[size=lg]/avatar-group:size-10 group-has-data-[size=sm]/avatar-group:size-6 [&>svg]:size-4 group-has-data-[size=lg]/avatar-group:[&>svg]:size-5 group-has-data-[size=sm]/avatar-group:[&>svg]:size-3\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nexport { Avatar, AvatarBadge, AvatarContext, AvatarFallback, AvatarGroup, AvatarGroupCount, AvatarImage }\n"
+      "content": "import { ark } from \"@ark-ui/react\"\nimport { useAvatar, useAvatarContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Avatar as AvatarPrimitive } from \"@ark-ui/react\"\n\nfunction AvatarRoot({ className, size = \"default\", ...props }: AvatarRootProps) {\n  return (\n    <AvatarPrimitive.Root\n      data-slot=\"avatar\"\n      data-size={size}\n      className={cn(\n        \"group/avatar relative flex size-8 shrink-0 rounded-full select-none after:absolute after:inset-0 after:rounded-full after:border after:border-border after:mix-blend-darken data-[size=lg]:size-10 data-[size=sm]:size-6 dark:after:mix-blend-lighten\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AvatarContext({ ...props }: AvatarContextProps) {\n  return <AvatarPrimitive.Context {...props} />\n}\n\nfunction AvatarImage({ className, ...props }: AvatarImageProps) {\n  return (\n    <AvatarPrimitive.Image\n      data-slot=\"avatar-image\"\n      className={cn(\"aspect-square size-full rounded-full object-cover\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AvatarFallback({ className, ...props }: AvatarFallbackProps) {\n  return (\n    <AvatarPrimitive.Fallback\n      data-slot=\"avatar-fallback\"\n      className={cn(\n        \"flex size-full items-center justify-center rounded-full bg-muted text-sm text-muted-foreground group-data-[size=sm]/avatar:text-xs\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AvatarBadge({ className, ...props }: AvatarBadgeProps) {\n  return (\n    <ark.span\n      data-slot=\"avatar-badge\"\n      className={cn(\n        \"absolute right-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-primary text-primary-foreground bg-blend-color ring-2 ring-background select-none\",\n        \"group-data-[size=sm]/avatar:size-2 group-data-[size=sm]/avatar:[&>svg]:hidden\",\n        \"group-data-[size=default]/avatar:size-2.5 group-data-[size=default]/avatar:[&>svg]:size-2\",\n        \"group-data-[size=lg]/avatar:size-3 group-data-[size=lg]/avatar:[&>svg]:size-2\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AvatarGroup({ className, ...props }: AvatarGroupProps) {\n  return (\n    <ark.div\n      data-slot=\"avatar-group\"\n      className={cn(\n        \"group/avatar-group flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:ring-background\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AvatarGroupCount({ className, ...props }: AvatarGroupCountProps) {\n  return (\n    <ark.div\n      data-slot=\"avatar-group-count\"\n      className={cn(\n        \"relative flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-sm text-muted-foreground ring-2 ring-background group-has-data-[size=lg]/avatar-group:size-10 group-has-data-[size=sm]/avatar-group:size-6 [&>svg]:size-4 group-has-data-[size=lg]/avatar-group:[&>svg]:size-5 group-has-data-[size=sm]/avatar-group:[&>svg]:size-3\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AvatarRootProvider({ className, ...props }: AvatarRootProviderProps) {\n  return (\n    <AvatarPrimitive.RootProvider\n      data-slot=\"avatar\"\n      className={cn(\n        \"group/avatar relative flex size-8 shrink-0 rounded-full select-none after:absolute after:inset-0 after:rounded-full after:border after:border-border after:mix-blend-darken data-[size=lg]:size-10 data-[size=sm]:size-6 dark:after:mix-blend-lighten\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype AvatarRootProps = React.ComponentProps<typeof AvatarPrimitive.Root> & {\n  size?: \"default\" | \"sm\" | \"lg\"\n}\n\ntype AvatarRootProviderProps = React.ComponentProps<typeof AvatarPrimitive.RootProvider>\n\ntype AvatarBadgeProps = React.ComponentProps<typeof ark.span>\n\ntype AvatarContextProps = React.ComponentProps<typeof AvatarPrimitive.Context>\n\ntype AvatarFallbackProps = React.ComponentProps<typeof AvatarPrimitive.Fallback>\n\ntype AvatarGroupProps = React.ComponentProps<typeof ark.div>\n\ntype AvatarGroupCountProps = React.ComponentProps<typeof ark.div>\n\ntype AvatarImageProps = React.ComponentProps<typeof AvatarPrimitive.Image>\n\nconst Avatar = {\n  Root: AvatarRoot,\n  RootProvider: AvatarRootProvider,\n  Badge: AvatarBadge,\n  Context: AvatarContext,\n  Fallback: AvatarFallback,\n  Group: AvatarGroup,\n  GroupCount: AvatarGroupCount,\n  Image: AvatarImage,\n}\n\nexport {\n  useAvatar,\n  useAvatarContext,\n  Avatar,\n  type AvatarRootProps,\n  type AvatarRootProviderProps,\n  type AvatarBadgeProps,\n  type AvatarContextProps,\n  type AvatarFallbackProps,\n  type AvatarGroupProps,\n  type AvatarGroupCountProps,\n  type AvatarImageProps,\n}\n"
     }
   ]
 }

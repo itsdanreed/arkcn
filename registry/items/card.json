@@ -3,17 +3,11 @@
   "type": "ui",
   "description": "",
   "exports": [
-    "Card",
-    "CardHeader",
-    "CardFooter",
-    "CardTitle",
-    "CardAction",
-    "CardDescription",
-    "CardContent"
+    "Card"
   ],
   "parts": [
     {
-      "name": "Card",
+      "name": "Card.Root",
       "props": [
         {
           "name": "size",
@@ -24,57 +18,12 @@
           "from": "arkcn"
         },
         {
-          "name": "children",
-          "type": "ReactNode",
+          "name": "asChild",
+          "type": "boolean",
           "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "CardHeader",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "CardFooter",
-      "props": [
         {
           "name": "children",
           "type": "ReactNode",
@@ -99,8 +48,15 @@
       ]
     },
     {
-      "name": "CardTitle",
+      "name": "Card.Header",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -125,8 +81,15 @@
       ]
     },
     {
-      "name": "CardAction",
+      "name": "Card.Footer",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -151,8 +114,15 @@
       ]
     },
     {
-      "name": "CardDescription",
+      "name": "Card.Title",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -177,8 +147,81 @@
       ]
     },
     {
-      "name": "CardContent",
+      "name": "Card.Action",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Card.Description",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Card.Content",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -203,14 +246,16 @@
       ]
     }
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
   "registryDependencies": [
     "lib/utils"
   ],
   "files": [
     {
       "path": "components/ui/card.tsx",
-      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Card({ className, size = \"default\", ...props }: React.ComponentProps<\"div\"> & { size?: \"default\" | \"sm\" }) {\n  return (\n    <div\n      data-slot=\"card\"\n      data-size={size}\n      className={cn(\n        \"group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction CardHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"card-header\"\n      className={cn(\n        \"group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-xl px-(--card-spacing) has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-(--card-spacing)\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction CardTitle({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"card-title\"\n      className={cn(\"font-heading text-base/snug font-medium group-data-[size=sm]/card:text-sm\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction CardDescription({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"card-description\" className={cn(\"text-sm text-muted-foreground\", className)} {...props} />\n}\n\nfunction CardAction({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"card-action\"\n      className={cn(\"col-start-2 row-span-2 row-start-1 self-start justify-self-end\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction CardContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"card-content\" className={cn(\"px-(--card-spacing)\", className)} {...props} />\n}\n\nfunction CardFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"card-footer\"\n      className={cn(\"flex items-center rounded-b-xl border-t bg-muted/50 p-(--card-spacing)\", className)}\n      {...props}\n    />\n  )\n}\n\nexport { Card, CardHeader, CardFooter, CardTitle, CardAction, CardDescription, CardContent }\n"
+      "content": "import { ark } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction CardRoot({ className, size = \"default\", ...props }: CardRootProps) {\n  return (\n    <ark.div\n      data-slot=\"card\"\n      data-size={size}\n      className={cn(\n        \"group/card flex flex-col gap-(--card-spacing) overflow-hidden rounded-xl bg-card py-(--card-spacing) text-sm text-card-foreground ring-1 ring-foreground/10 [--card-spacing:--spacing(4)] has-data-[slot=card-footer]:pb-0 has-[>img:first-child]:pt-0 data-[size=sm]:[--card-spacing:--spacing(3)] data-[size=sm]:has-data-[slot=card-footer]:pb-0 *:[img:first-child]:rounded-t-xl *:[img:last-child]:rounded-b-xl\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction CardHeader({ className, ...props }: CardHeaderProps) {\n  return (\n    <ark.div\n      data-slot=\"card-header\"\n      className={cn(\n        \"group/card-header @container/card-header grid auto-rows-min items-start gap-1 rounded-t-xl px-(--card-spacing) has-data-[slot=card-action]:grid-cols-[1fr_auto] has-data-[slot=card-description]:grid-rows-[auto_auto] [.border-b]:pb-(--card-spacing)\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction CardTitle({ className, ...props }: CardTitleProps) {\n  return (\n    <ark.div\n      data-slot=\"card-title\"\n      className={cn(\"font-heading text-base/snug font-medium group-data-[size=sm]/card:text-sm\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction CardDescription({ className, ...props }: CardDescriptionProps) {\n  return <ark.div data-slot=\"card-description\" className={cn(\"text-sm text-muted-foreground\", className)} {...props} />\n}\n\nfunction CardAction({ className, ...props }: CardActionProps) {\n  return (\n    <ark.div\n      data-slot=\"card-action\"\n      className={cn(\"col-start-2 row-span-2 row-start-1 self-start justify-self-end\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction CardContent({ className, ...props }: CardContentProps) {\n  return <ark.div data-slot=\"card-content\" className={cn(\"px-(--card-spacing)\", className)} {...props} />\n}\n\nfunction CardFooter({ className, ...props }: CardFooterProps) {\n  return (\n    <ark.div\n      data-slot=\"card-footer\"\n      className={cn(\"flex items-center rounded-b-xl border-t bg-muted/50 p-(--card-spacing)\", className)}\n      {...props}\n    />\n  )\n}\n\ntype CardRootProps = React.ComponentProps<typeof ark.div> & { size?: \"default\" | \"sm\" }\n\ntype CardHeaderProps = React.ComponentProps<typeof ark.div>\n\ntype CardFooterProps = React.ComponentProps<typeof ark.div>\n\ntype CardTitleProps = React.ComponentProps<typeof ark.div>\n\ntype CardActionProps = React.ComponentProps<typeof ark.div>\n\ntype CardDescriptionProps = React.ComponentProps<typeof ark.div>\n\ntype CardContentProps = React.ComponentProps<typeof ark.div>\n\nconst Card = {\n  Root: CardRoot,\n  Header: CardHeader,\n  Footer: CardFooter,\n  Title: CardTitle,\n  Action: CardAction,\n  Description: CardDescription,\n  Content: CardContent,\n}\n\nexport {\n  Card,\n  type CardRootProps,\n  type CardHeaderProps,\n  type CardFooterProps,\n  type CardTitleProps,\n  type CardActionProps,\n  type CardDescriptionProps,\n  type CardContentProps,\n}\n"
     }
   ]
 }

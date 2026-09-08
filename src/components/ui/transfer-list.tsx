@@ -3,6 +3,7 @@
 import * as React from "react"
 import { ark } from "@ark-ui/react"
 import {
+  MinusIcon,
   CheckIcon,
   ChevronLeftIcon,
   ChevronRightIcon,
@@ -15,15 +16,8 @@ import { cn } from "@/lib/utils"
 import { LiveRegion, useLiveRegion } from "@/components/ui/live-region"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group"
-import {
-  VirtualList,
-  VirtualListContent,
-  VirtualListItem,
-  VirtualListItems,
-  VirtualListViewport,
-  useVirtualList,
-} from "@/components/ui/virtual-list"
+import { InputGroup } from "@/components/ui/input-group"
+import { VirtualList, useVirtualList } from "@/components/ui/virtual-list"
 
 /* -------------------------------- context -------------------------------- */
 
@@ -91,7 +85,7 @@ const sideOf = (direction: TransferListDirection): TransferListSide => (directio
 
 /* ---------------------------------- root --------------------------------- */
 
-type TransferListProps<T> = Omit<React.ComponentProps<"div">, "defaultValue" | "onChange"> & {
+type TransferListProps<T> = Omit<React.ComponentProps<typeof ark.div>, "defaultValue" | "onChange"> & {
   /** Every item, in catalog order. */
   items: T[]
   /** Unique value for an item. */
@@ -111,7 +105,7 @@ type TransferListProps<T> = Omit<React.ComponentProps<"div">, "defaultValue" | "
   titles?: Partial<Record<TransferListSide, string>>
 }
 
-function TransferList<T = TransferListItemBase>({
+function TransferListRoot<T = TransferListItemBase>({
   items,
   itemToValue = (item) => (item as TransferListItemBase).value,
   itemToString = (item) => (item as TransferListItemBase).label,
@@ -125,7 +119,7 @@ function TransferList<T = TransferListItemBase>({
   className,
   children,
   ...props
-}: TransferListProps<T>) {
+}: TransferListRootProps<T>) {
   const order = React.useMemo(() => new Map(items.map((item, i) => [itemToValue(item), i])), [items, itemToValue])
   const sortValues = React.useCallback(
     (values: string[]) =>
@@ -278,26 +272,34 @@ function TransferList<T = TransferListItemBase>({
 
   return (
     <TransferListContext.Provider value={ctx as unknown as TransferListContextValue}>
-      <div
+      <ark.div
         data-slot="transfer-list"
         data-disabled={disabled ? "" : undefined}
         className={cn("grid grid-cols-1 gap-2 sm:grid-cols-[1fr_auto_1fr] sm:items-stretch", className)}
         {...props}
       >
-        {children}
-        <LiveRegion data-slot="transfer-list-live-region" message={announcement} />
-      </div>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            {children}
+            <LiveRegion.Root data-slot="transfer-list-live-region" message={announcement} />
+          </>
+        )}
+      </ark.div>
     </TransferListContext.Provider>
   )
 }
 
 /* ---------------------------------- panel -------------------------------- */
 
-function TransferListPanel({ side, className, ...props }: React.ComponentProps<"div"> & { side: TransferListSide }) {
+function TransferListPanel({ side, className, ...props }: TransferListPanelProps) {
   const ctx = useTransferList()
   return (
     <TransferListSideContext.Provider value={side}>
-      <div
+      <ark.div
         data-slot="transfer-list-panel"
         data-side={side}
         data-disabled={ctx.disabled ? "" : undefined}
@@ -311,9 +313,9 @@ function TransferListPanel({ side, className, ...props }: React.ComponentProps<"
   )
 }
 
-function TransferListPanelHeader({ className, ...props }: React.ComponentProps<"div">) {
+function TransferListPanelHeader({ className, ...props }: TransferListPanelHeaderProps) {
   return (
-    <div
+    <ark.div
       data-slot="transfer-list-panel-header"
       className={cn("flex h-9 shrink-0 items-center gap-2 border-b px-2.5", className)}
       {...props}
@@ -321,47 +323,56 @@ function TransferListPanelHeader({ className, ...props }: React.ComponentProps<"
   )
 }
 
-function TransferListPanelTitle({ className, ...props }: React.ComponentProps<"span">) {
+function TransferListPanelTitle({ className, ...props }: TransferListPanelTitleProps) {
   return (
-    <span data-slot="transfer-list-panel-title" className={cn("flex-1 truncate font-medium", className)} {...props} />
+    <ark.span
+      data-slot="transfer-list-panel-title"
+      className={cn("flex-1 truncate font-medium", className)}
+      {...props}
+    />
   )
 }
 
 /** "selected / total" for the side; `children` overrides with `(selected, total) => ReactNode`. */
-function TransferListPanelCount({
-  className,
-  children,
-  ...props
-}: Omit<React.ComponentProps<"span">, "children"> & {
-  children?: (selected: number, total: number) => React.ReactNode
-}) {
+function TransferListPanelCount({ className, children, ...props }: TransferListPanelCountProps) {
   const ctx = useTransferList()
   const side = useTransferListSide()
   const total = ctx.sides[side].length
   const count = ctx.selected[side].length
   return (
-    <span
+    <ark.span
       data-slot="transfer-list-panel-count"
       className={cn("text-xs text-muted-foreground tabular-nums", className)}
       {...props}
     >
-      {children ? children(count, total) : count > 0 ? `${count} / ${total}` : total}
-    </span>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {children
+            ? typeof children === "function"
+              ? children(count, total)
+              : children
+            : count > 0
+              ? `${count} / ${total}`
+              : total}
+        </>
+      )}
+    </ark.span>
   )
 }
 
 /** Header checkbox that selects every visible enabled item on this side. */
-function TransferListSelectAll({
-  className,
-  ...props
-}: Omit<React.ComponentProps<typeof Checkbox>, "checked" | "onCheckedChange">) {
+function TransferListSelectAll({ className, ...props }: TransferListSelectAllProps) {
   const ctx = useTransferList()
   const side = useTransferListSide()
   const enabled = ctx.visible[side].filter((i) => !ctx.itemDisabled(i)).map(ctx.itemToValue)
   const count = enabled.filter((v) => ctx.selected[side].includes(v)).length
   const checked = enabled.length > 0 && count === enabled.length ? true : count > 0 ? "indeterminate" : false
   return (
-    <Checkbox
+    <Checkbox.Root
       data-slot="transfer-list-select-all"
       aria-label={`Select all ${side === "source" ? "available" : "selected"} items`}
       checked={checked}
@@ -369,26 +380,40 @@ function TransferListSelectAll({
       onCheckedChange={({ checked: next }) => ctx.selectAll(side, next === true)}
       className={className}
       {...props}
-    />
+    >
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <Checkbox.Control>
+            <Checkbox.Indicator>
+              <CheckIcon />
+            </Checkbox.Indicator>
+            <Checkbox.Indicator indeterminate>
+              <MinusIcon />
+            </Checkbox.Indicator>
+          </Checkbox.Control>
+          <Checkbox.HiddenInput />
+        </>
+      )}
+    </Checkbox.Root>
   )
 }
 
-function TransferListSearch({
-  className,
-  placeholder = "Search…",
-  ...props
-}: Omit<React.ComponentProps<typeof InputGroupInput>, "value" | "onChange">) {
+function TransferListSearch({ className, placeholder = "Search…", ...props }: TransferListSearchProps) {
   const ctx = useTransferList()
   const side = useTransferListSide()
   return (
-    <InputGroup
+    <InputGroup.Root
       data-slot="transfer-list-search"
       className={cn("h-8 shrink-0 rounded-none border-0 border-b shadow-none has-focus-visible:ring-0", className)}
     >
-      <InputGroupAddon>
+      <InputGroup.Addon>
         <SearchIcon />
-      </InputGroupAddon>
-      <InputGroupInput
+      </InputGroup.Addon>
+      <InputGroup.Input
         role="searchbox"
         placeholder={placeholder}
         value={ctx.query[side]}
@@ -396,7 +421,7 @@ function TransferListSearch({
         onChange={(event) => ctx.setQuery(side, event.target.value)}
         {...props}
       />
-    </InputGroup>
+    </InputGroup.Root>
   )
 }
 
@@ -414,26 +439,26 @@ function TransferListItems<T = TransferListItemBase>({
   children,
   rowHeight = 28,
   ...props
-}: Omit<React.ComponentProps<"div">, "children"> & {
-  children?: (item: T) => React.ReactNode
-  /** Row height in px (rows are measured; this is the estimate). */
-  rowHeight?: number
-}) {
+}: TransferListItemsProps<T>) {
   const ctx = useTransferList<T>()
   const side = useTransferListSide()
   const list = ctx.visible[side]
   const values = React.useMemo(() => list.map(ctx.itemToValue), [list, ctx.itemToValue])
   return (
-    <TransferListRenderContext.Provider value={children as ((item: unknown) => React.ReactNode) | undefined}>
-      <VirtualList
+    <TransferListRenderContext.Provider
+      value={typeof children === "function" ? (children as (item: unknown) => React.ReactNode) : undefined}
+    >
+      <VirtualList.Root
         count={list.length}
         estimateSize={rowHeight}
         gap={1}
         getItemKey={(i) => values[i]}
         className={cn("min-h-0 flex-1", list.length === 0 && "hidden")}
       >
-        <TransferListListbox list={list} values={values} className={className} {...props} />
-      </VirtualList>
+        <TransferListListbox list={list} values={values} className={className} {...props}>
+          {React.isValidElement(children) ? children : null}
+        </TransferListListbox>
+      </VirtualList.Root>
     </TransferListRenderContext.Provider>
   )
 }
@@ -442,9 +467,10 @@ function TransferListListbox<T>({
   list,
   values,
   className,
+  children,
   onKeyDown,
   ...props
-}: Omit<React.ComponentProps<"div">, "children"> & { list: T[]; values: string[] }) {
+}: React.ComponentProps<typeof ark.div> & { list: T[]; values: string[] }) {
   const ctx = useTransferList<T>()
   const side = useTransferListSide()
   const virtual = useVirtualList()
@@ -460,7 +486,7 @@ function TransferListListbox<T>({
   }
 
   return (
-    <VirtualListViewport
+    <VirtualList.Viewport
       ref={ref}
       data-slot="transfer-list-items"
       role="listbox"
@@ -528,29 +554,30 @@ function TransferListListbox<T>({
       }}
       {...props}
     >
-      <VirtualListContent>
-        <VirtualListItems>
-          {(row) => {
-            const item = list[row.index]
-            const v = values[row.index]
-            return (
-              <VirtualListItem index={row.index} className="px-0">
-                <TransferListItem item={item} tabIndex={v === active ? 0 : -1} />
-              </VirtualListItem>
-            )
-          }}
-        </VirtualListItems>
-      </VirtualListContent>
-    </VirtualListViewport>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <VirtualList.Content>
+          <VirtualList.Items>
+            {(row) => {
+              const item = list[row.index]
+              const v = values[row.index]
+              return (
+                <VirtualList.Item index={row.index} className="px-0">
+                  <TransferListItem item={item} tabIndex={v === active ? 0 : -1} />
+                </VirtualList.Item>
+              )
+            }}
+          </VirtualList.Items>
+        </VirtualList.Content>
+      )}
+    </VirtualList.Viewport>
   )
 }
 
-function TransferListItem<T = TransferListItemBase>({
-  item,
-  className,
-  children,
-  ...props
-}: Omit<React.ComponentProps<"div">, "children"> & { item: T; children?: React.ReactNode }) {
+function TransferListItem<T = TransferListItemBase>({ item, className, children, ...props }: TransferListItemProps<T>) {
   const ctx = useTransferList<T>()
   const side = useTransferListSide()
   const render = React.useContext(TransferListRenderContext)
@@ -558,7 +585,7 @@ function TransferListItem<T = TransferListItemBase>({
   const disabled = ctx.disabled || ctx.itemDisabled(item)
   const selected = ctx.selected[side].includes(value)
   return (
-    <div
+    <ark.div
       data-slot="transfer-list-item"
       role="option"
       aria-selected={selected}
@@ -583,20 +610,28 @@ function TransferListItem<T = TransferListItemBase>({
       }}
       {...props}
     >
-      {children ?? (
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
         <>
-          <TransferListItemIndicator />
-          <TransferListItemText>{render ? render(item) : ctx.itemToString(item)}</TransferListItemText>
+          {children ?? (
+            <>
+              <TransferListItemIndicator />
+              <TransferListItemText>{render ? render(item) : ctx.itemToString(item)}</TransferListItemText>
+            </>
+          )}
         </>
       )}
-    </div>
+    </ark.div>
   )
 }
 
 /** Checkbox-styled indicator that follows the item's `data-selected`. */
-function TransferListItemIndicator({ className, children, ...props }: React.ComponentProps<"span">) {
+function TransferListItemIndicator({ className, children, ...props }: TransferListItemIndicatorProps) {
   return (
-    <span
+    <ark.span
       aria-hidden
       data-slot="transfer-list-item-indicator"
       className={cn(
@@ -605,22 +640,28 @@ function TransferListItemIndicator({ className, children, ...props }: React.Comp
       )}
       {...props}
     >
-      {children ?? <CheckIcon data-check="" />}
-    </span>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>{children ?? <CheckIcon data-check="" />}</>
+      )}
+    </ark.span>
   )
 }
 
-function TransferListItemText({ className, ...props }: React.ComponentProps<"span">) {
-  return <span data-slot="transfer-list-item-text" className={cn("flex-1 truncate", className)} {...props} />
+function TransferListItemText({ className, ...props }: TransferListItemTextProps) {
+  return <ark.span data-slot="transfer-list-item-text" className={cn("flex-1 truncate", className)} {...props} />
 }
 
-function TransferListEmpty({ className, children, ...props }: React.ComponentProps<"div">) {
+function TransferListEmpty({ className, children, ...props }: TransferListEmptyProps) {
   const ctx = useTransferList()
   const side = useTransferListSide()
   if (ctx.visible[side].length > 0) return null
   const searching = ctx.query[side].trim().length > 0
   return (
-    <div
+    <ark.div
       data-slot="transfer-list-empty"
       className={cn(
         "flex flex-1 items-center justify-center px-4 py-6 text-center text-sm text-muted-foreground",
@@ -628,16 +669,22 @@ function TransferListEmpty({ className, children, ...props }: React.ComponentPro
       )}
       {...props}
     >
-      {children ?? (searching ? "No matches" : "Nothing here")}
-    </div>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>{children ?? (searching ? "No matches" : "Nothing here")}</>
+      )}
+    </ark.div>
   )
 }
 
 /* -------------------------------- controls ------------------------------- */
 
-function TransferListControls({ className, ...props }: React.ComponentProps<"div">) {
+function TransferListControls({ className, ...props }: TransferListControlsProps) {
   return (
-    <div
+    <ark.div
       data-slot="transfer-list-controls"
       className={cn("flex items-center justify-center gap-1 sm:flex-col", className)}
       {...props}
@@ -655,13 +702,7 @@ const directionAllIcon = {
 }
 
 /** Moves the selected items in `direction` ("right" = source → target). Polymorphic via `asChild`. */
-function TransferListMoveTrigger({
-  direction,
-  asChild,
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof Button> & { direction: TransferListDirection; asChild?: boolean }) {
+function TransferListMoveTrigger({ direction, asChild, className, children, ...props }: TransferListMoveTriggerProps) {
   const ctx = useTransferList()
   const from = sideOf(direction)
   const count = ctx.selected[from].filter((v) => ctx.sides[from].some((i) => ctx.itemToValue(i) === v)).length
@@ -693,7 +734,7 @@ function TransferListMoveTrigger({
       className={cn("rotate-90 sm:rotate-0", className)}
       {...props}
     >
-      {children ?? directionIcon[direction]}
+      {asChild ? React.isValidElement(children) ? children : null : <>{children ?? directionIcon[direction]}</>}
     </Button>
   )
 }
@@ -705,7 +746,7 @@ function TransferListMoveAllTrigger({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof Button> & { direction: TransferListDirection; asChild?: boolean }) {
+}: TransferListMoveAllTriggerProps) {
   const ctx = useTransferList()
   const from = sideOf(direction)
   const disabled = ctx.disabled || ctx.visible[from].every((i) => ctx.itemDisabled(i))
@@ -736,31 +777,94 @@ function TransferListMoveAllTrigger({
       className={cn("rotate-90 sm:rotate-0", className)}
       {...props}
     >
-      {children ?? directionAllIcon[direction]}
+      {asChild ? React.isValidElement(children) ? children : null : <>{children ?? directionAllIcon[direction]}</>}
     </Button>
   )
 }
 
+type TransferListRootProps<T = TransferListItemBase> = TransferListProps<T>
+
+type TransferListControlsProps = React.ComponentProps<typeof ark.div>
+
+type TransferListEmptyProps = React.ComponentProps<typeof ark.div>
+
+type TransferListItemProps<T = TransferListItemBase> = Omit<React.ComponentProps<typeof ark.div>, "children"> & {
+  item: T
+  children?: React.ReactNode
+}
+
+type TransferListItemIndicatorProps = React.ComponentProps<typeof ark.span>
+
+type TransferListItemTextProps = React.ComponentProps<typeof ark.span>
+
+type TransferListItemsProps<T = TransferListItemBase> = Omit<React.ComponentProps<typeof ark.div>, "children"> & {
+  children?: ((item: T) => React.ReactNode) | React.ReactElement
+  /** Row height in px (rows are measured; this is the estimate). */
+  rowHeight?: number
+}
+
+type TransferListMoveAllTriggerProps = React.ComponentProps<typeof Button> & {
+  direction: TransferListDirection
+  asChild?: boolean
+}
+
+type TransferListMoveTriggerProps = React.ComponentProps<typeof Button> & {
+  direction: TransferListDirection
+  asChild?: boolean
+}
+
+type TransferListPanelProps = React.ComponentProps<typeof ark.div> & { side: TransferListSide }
+
+type TransferListPanelCountProps = Omit<React.ComponentProps<typeof ark.span>, "children"> & {
+  children?: ((selected: number, total: number) => React.ReactNode) | React.ReactElement
+}
+
+type TransferListPanelHeaderProps = React.ComponentProps<typeof ark.div>
+
+type TransferListPanelTitleProps = React.ComponentProps<typeof ark.span>
+
+type TransferListSearchProps = Omit<React.ComponentProps<typeof InputGroup.Input>, "value" | "onChange">
+
+type TransferListSelectAllProps = Omit<React.ComponentProps<typeof Checkbox.Root>, "checked" | "onCheckedChange">
+
+const TransferList = {
+  Root: TransferListRoot,
+  Controls: TransferListControls,
+  Empty: TransferListEmpty,
+  Item: TransferListItem,
+  ItemIndicator: TransferListItemIndicator,
+  ItemText: TransferListItemText,
+  Items: TransferListItems,
+  MoveAllTrigger: TransferListMoveAllTrigger,
+  MoveTrigger: TransferListMoveTrigger,
+  Panel: TransferListPanel,
+  PanelCount: TransferListPanelCount,
+  PanelHeader: TransferListPanelHeader,
+  PanelTitle: TransferListPanelTitle,
+  Search: TransferListSearch,
+  SelectAll: TransferListSelectAll,
+}
+
 export {
   TransferList,
-  TransferListControls,
-  TransferListEmpty,
-  TransferListItem,
-  TransferListItemIndicator,
-  TransferListItemText,
-  TransferListItems,
-  TransferListMoveAllTrigger,
-  TransferListMoveTrigger,
-  TransferListPanel,
-  TransferListPanelCount,
-  TransferListPanelHeader,
-  TransferListPanelTitle,
-  TransferListSearch,
-  TransferListSelectAll,
   useTransferList,
   type TransferListDirection,
   type TransferListItemBase,
-  type TransferListProps,
   type TransferListSide,
   type TransferListValueChangeDetails,
+  type TransferListRootProps,
+  type TransferListControlsProps,
+  type TransferListEmptyProps,
+  type TransferListItemProps,
+  type TransferListItemIndicatorProps,
+  type TransferListItemTextProps,
+  type TransferListItemsProps,
+  type TransferListMoveAllTriggerProps,
+  type TransferListMoveTriggerProps,
+  type TransferListPanelProps,
+  type TransferListPanelCountProps,
+  type TransferListPanelHeaderProps,
+  type TransferListPanelTitleProps,
+  type TransferListSearchProps,
+  type TransferListSelectAllProps,
 }

@@ -1,17 +1,5 @@
 import * as React from "react"
-import {
-  Cascader,
-  CascaderClearTrigger,
-  CascaderColumns,
-  CascaderContent,
-  CascaderEmpty,
-  CascaderIndicator,
-  CascaderSearch,
-  CascaderSearchResults,
-  CascaderTrigger,
-  CascaderValue,
-  createTreeCollection,
-} from "@/components/ui/cascader"
+import { Cascader, createTreeCollection } from "@/components/ui/cascader"
 
 const places = createTreeCollection({
   rootNode: {
@@ -45,18 +33,23 @@ const places = createTreeCollection({
 export default function CascaderExample() {
   const [value, setValue] = React.useState<string[]>(["sf"])
   return (
-    <Cascader collection={places} value={value} onValueChange={({ value }) => setValue(value)} expandTrigger="hover">
-      <CascaderTrigger className="w-80" aria-label="Location">
-        <CascaderValue placeholder="Country / State / City" />
-        <CascaderClearTrigger />
-        <CascaderIndicator />
-      </CascaderTrigger>
-      <CascaderContent>
-        <CascaderSearch placeholder="Search cities" />
-        <CascaderColumns />
-        <CascaderSearchResults />
-        <CascaderEmpty />
-      </CascaderContent>
-    </Cascader>
+    <Cascader.Root
+      collection={places}
+      value={value}
+      onValueChange={({ value }) => setValue(value)}
+      expandTrigger="hover"
+    >
+      <Cascader.Trigger className="w-80" aria-label="Location">
+        <Cascader.Value placeholder="Country / State / City" />
+        <Cascader.ClearTrigger />
+        <Cascader.Indicator />
+      </Cascader.Trigger>
+      <Cascader.Content>
+        <Cascader.Search placeholder="Search cities" />
+        <Cascader.Columns />
+        <Cascader.SearchResults />
+        <Cascader.Empty />
+      </Cascader.Content>
+    </Cascader.Root>
   )
 }

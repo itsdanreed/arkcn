@@ -3,8 +3,8 @@ import { Toggle } from "@/components/ui/toggle"
 
 export default function ToggleExample() {
   return (
-    <Toggle aria-label="Toggle bold">
+    <Toggle.Root aria-label="Toggle bold">
       <BoldIcon /> Bold
-    </Toggle>
+    </Toggle.Root>
   )
 }

@@ -1,7 +1,8 @@
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { AlertTriangleIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Popover, PopoverArrow, PopoverClose, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
+import { Popover } from "@/components/ui/popover"
 import { cn } from "@/lib/utils"
 
 /**
@@ -13,36 +14,41 @@ import { cn } from "@/lib/utils"
  * unless the handler calls `event.preventDefault()`.
  */
 
-function Popconfirm({ positioning, ...props }: React.ComponentProps<typeof Popover>) {
-  return <Popover data-slot="popconfirm" positioning={{ placement: "top", gutter: 8, ...positioning }} {...props} />
-}
-
-function PopconfirmTrigger({ ...props }: React.ComponentProps<typeof PopoverTrigger>) {
-  return <PopoverTrigger data-slot="popconfirm-trigger" {...props} />
-}
-
-function PopconfirmContent({
-  className,
-  children,
-  showArrow = true,
-  ...props
-}: React.ComponentProps<typeof PopoverContent> & { showArrow?: boolean }) {
+function PopconfirmRoot({ positioning, ...props }: PopconfirmRootProps) {
   return (
-    <PopoverContent
+    <Popover.Root data-slot="popconfirm" positioning={{ placement: "top", gutter: 8, ...positioning }} {...props} />
+  )
+}
+
+function PopconfirmTrigger({ ...props }: PopconfirmTriggerProps) {
+  return <Popover.Trigger data-slot="popconfirm-trigger" {...props} />
+}
+
+function PopconfirmContent({ className, children, showArrow = true, ...props }: PopconfirmContentProps) {
+  return (
+    <Popover.Content
       data-slot="popconfirm-content"
       role="alertdialog"
       className={cn("w-72 gap-3 p-3", className)}
       {...props}
     >
-      {showArrow && <PopoverArrow />}
-      {children}
-    </PopoverContent>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {showArrow && <Popover.Arrow />}
+          {children}
+        </>
+      )}
+    </Popover.Content>
   )
 }
 
-function PopconfirmHeader({ className, ...props }: React.ComponentProps<"div">) {
+function PopconfirmHeader({ className, ...props }: PopconfirmHeaderProps) {
   return (
-    <div
+    <ark.div
       data-slot="popconfirm-header"
       className={cn(
         "grid grid-cols-[auto_1fr] gap-x-0 gap-y-0.5 has-[>[data-slot=popconfirm-icon]]:gap-x-2",
@@ -53,9 +59,9 @@ function PopconfirmHeader({ className, ...props }: React.ComponentProps<"div">) 
   )
 }
 
-function PopconfirmIcon({ className, children, ...props }: React.ComponentProps<"span">) {
+function PopconfirmIcon({ className, children, ...props }: PopconfirmIconProps) {
   return (
-    <span
+    <ark.span
       data-slot="popconfirm-icon"
       className={cn(
         "row-span-2 mt-0.5 flex size-5 items-center justify-center text-destructive [&_svg]:size-4",
@@ -63,20 +69,24 @@ function PopconfirmIcon({ className, children, ...props }: React.ComponentProps<
       )}
       {...props}
     >
-      {children ?? <AlertTriangleIcon />}
-    </span>
+      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <AlertTriangleIcon />}</>}
+    </ark.span>
   )
 }
 
-function PopconfirmTitle({ className, ...props }: React.ComponentProps<"p">) {
+function PopconfirmTitle({ className, ...props }: PopconfirmTitleProps) {
   return (
-    <p data-slot="popconfirm-title" className={cn("col-start-2 text-sm/tight font-semibold", className)} {...props} />
+    <ark.p
+      data-slot="popconfirm-title"
+      className={cn("col-start-2 text-sm/tight font-semibold", className)}
+      {...props}
+    />
   )
 }
 
-function PopconfirmDescription({ className, ...props }: React.ComponentProps<"p">) {
+function PopconfirmDescription({ className, ...props }: PopconfirmDescriptionProps) {
   return (
-    <p
+    <ark.p
       data-slot="popconfirm-description"
       className={cn("col-start-2 text-xs text-muted-foreground", className)}
       {...props}
@@ -84,9 +94,13 @@ function PopconfirmDescription({ className, ...props }: React.ComponentProps<"p"
   )
 }
 
-function PopconfirmFooter({ className, ...props }: React.ComponentProps<"div">) {
+function PopconfirmFooter({ className, ...props }: PopconfirmFooterProps) {
   return (
-    <div data-slot="popconfirm-footer" className={cn("flex items-center justify-end gap-2", className)} {...props} />
+    <ark.div
+      data-slot="popconfirm-footer"
+      className={cn("flex items-center justify-end gap-2", className)}
+      {...props}
+    />
   )
 }
 
@@ -95,13 +109,13 @@ function PopconfirmCancelTrigger({
   size = "sm",
   children = "Cancel",
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: PopconfirmCancelTriggerProps) {
   return (
-    <PopoverClose asChild>
+    <Popover.CloseTrigger asChild>
       <Button data-slot="popconfirm-cancel-trigger" variant={variant} size={size} {...props}>
         {children}
       </Button>
-    </PopoverClose>
+    </Popover.CloseTrigger>
   )
 }
 
@@ -112,10 +126,7 @@ function PopconfirmConfirmTrigger({
   onClick,
   children = "Confirm",
   ...props
-}: React.ComponentProps<typeof Button> & {
-  /** Runs on click; call `event.preventDefault()` to keep the popconfirm open. */
-  onConfirm?: (event: React.MouseEvent<HTMLButtonElement>) => void
-}) {
+}: PopconfirmConfirmTriggerProps) {
   const [stayOpen, setStayOpen] = React.useState(false)
   const button = (
     <Button
@@ -132,18 +143,55 @@ function PopconfirmConfirmTrigger({
       {children}
     </Button>
   )
-  return stayOpen ? button : <PopoverClose asChild>{button}</PopoverClose>
+  return stayOpen ? button : <Popover.CloseTrigger asChild>{button}</Popover.CloseTrigger>
+}
+
+type PopconfirmRootProps = React.ComponentProps<typeof Popover.Root>
+
+type PopconfirmCancelTriggerProps = React.ComponentProps<typeof Button>
+
+type PopconfirmConfirmTriggerProps = React.ComponentProps<typeof Button> & {
+  /** Runs on click; call `event.preventDefault()` to keep the popconfirm open. */
+  onConfirm?: (event: React.MouseEvent<HTMLButtonElement>) => void
+}
+
+type PopconfirmContentProps = React.ComponentProps<typeof Popover.Content> & { showArrow?: boolean }
+
+type PopconfirmDescriptionProps = React.ComponentProps<typeof ark.p>
+
+type PopconfirmFooterProps = React.ComponentProps<typeof ark.div>
+
+type PopconfirmHeaderProps = React.ComponentProps<typeof ark.div>
+
+type PopconfirmIconProps = React.ComponentProps<typeof ark.span>
+
+type PopconfirmTitleProps = React.ComponentProps<typeof ark.p>
+
+type PopconfirmTriggerProps = React.ComponentProps<typeof Popover.Trigger>
+
+const Popconfirm = {
+  Root: PopconfirmRoot,
+  CancelTrigger: PopconfirmCancelTrigger,
+  ConfirmTrigger: PopconfirmConfirmTrigger,
+  Content: PopconfirmContent,
+  Description: PopconfirmDescription,
+  Footer: PopconfirmFooter,
+  Header: PopconfirmHeader,
+  Icon: PopconfirmIcon,
+  Title: PopconfirmTitle,
+  Trigger: PopconfirmTrigger,
 }
 
 export {
   Popconfirm,
-  PopconfirmCancelTrigger,
-  PopconfirmConfirmTrigger,
-  PopconfirmContent,
-  PopconfirmDescription,
-  PopconfirmFooter,
-  PopconfirmHeader,
-  PopconfirmIcon,
-  PopconfirmTitle,
-  PopconfirmTrigger,
+  type PopconfirmRootProps,
+  type PopconfirmCancelTriggerProps,
+  type PopconfirmConfirmTriggerProps,
+  type PopconfirmContentProps,
+  type PopconfirmDescriptionProps,
+  type PopconfirmFooterProps,
+  type PopconfirmHeaderProps,
+  type PopconfirmIconProps,
+  type PopconfirmTitleProps,
+  type PopconfirmTriggerProps,
 }

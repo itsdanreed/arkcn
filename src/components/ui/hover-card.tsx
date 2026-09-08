@@ -1,13 +1,9 @@
+import { useHoverCard, useHoverCardContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { HoverCard as HoverCardPrimitive, Portal as PortalPrimitive } from "@ark-ui/react"
 
-function HoverCard({
-  positioning,
-  lazyMount = true,
-  unmountOnExit = true,
-  ...props
-}: React.ComponentProps<typeof HoverCardPrimitive.Root>) {
+function HoverCardRoot({ positioning, lazyMount = true, unmountOnExit = true, ...props }: HoverCardRootProps) {
   return (
     <HoverCardPrimitive.Root
       positioning={{ placement: "bottom", gutter: 4, ...positioning }}
@@ -18,19 +14,19 @@ function HoverCard({
   )
 }
 
-function HoverCardTrigger({ ...props }: React.ComponentProps<typeof HoverCardPrimitive.Trigger>) {
+function HoverCardTrigger({ ...props }: HoverCardTriggerProps) {
   return <HoverCardPrimitive.Trigger data-slot="hover-card-trigger" {...props} />
 }
 
-function HoverCardPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {
+function HoverCardPortal({ ...props }: HoverCardPortalProps) {
   return <PortalPrimitive {...props} />
 }
 
-function HoverCardContext({ ...props }: React.ComponentProps<typeof HoverCardPrimitive.Context>) {
+function HoverCardContext({ ...props }: HoverCardContextProps) {
   return <HoverCardPrimitive.Context {...props} />
 }
 
-function HoverCardPositioner({ className, ...props }: React.ComponentProps<typeof HoverCardPrimitive.Positioner>) {
+function HoverCardPositioner({ className, ...props }: HoverCardPositionerProps) {
   return (
     <HoverCardPrimitive.Positioner
       data-slot="hover-card-positioner"
@@ -40,22 +36,30 @@ function HoverCardPositioner({ className, ...props }: React.ComponentProps<typeo
   )
 }
 
-function HoverCardArrow({ className, ...props }: React.ComponentProps<typeof HoverCardPrimitive.Arrow>) {
+function HoverCardArrow({ className, ...props }: HoverCardArrowProps) {
   return (
     <HoverCardPrimitive.Arrow
       data-slot="hover-card-arrow"
       className={cn("[--arrow-background:var(--color-popover)] [--arrow-size:0.625rem]", className)}
       {...props}
     >
-      <HoverCardPrimitive.ArrowTip
-        data-slot="hover-card-arrow-tip"
-        className="border-t border-l border-foreground/10"
-      />
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <HoverCardPrimitive.ArrowTip
+            data-slot="hover-card-arrow-tip"
+            className="border-t border-l border-foreground/10"
+          />
+        </>
+      )}
     </HoverCardPrimitive.Arrow>
   )
 }
 
-function HoverCardContent({ className, ...props }: React.ComponentProps<typeof HoverCardPrimitive.Content>) {
+function HoverCardContent({ className, ...props }: HoverCardContentProps) {
   return (
     <HoverCardPortal>
       <HoverCardPositioner>
@@ -72,12 +76,55 @@ function HoverCardContent({ className, ...props }: React.ComponentProps<typeof H
   )
 }
 
+function HoverCardRootProvider(props: HoverCardRootProviderProps) {
+  return <HoverCardPrimitive.RootProvider {...props} />
+}
+
+function HoverCardArrowTip({ className, ...props }: HoverCardArrowTipProps) {
+  return <HoverCardPrimitive.ArrowTip data-slot="hover-card-arrow-tip" className={cn(className)} {...props} />
+}
+
+type HoverCardArrowTipProps = React.ComponentProps<typeof HoverCardPrimitive.ArrowTip>
+
+type HoverCardRootProps = React.ComponentProps<typeof HoverCardPrimitive.Root>
+
+type HoverCardRootProviderProps = React.ComponentProps<typeof HoverCardPrimitive.RootProvider>
+
+type HoverCardArrowProps = React.ComponentProps<typeof HoverCardPrimitive.Arrow>
+
+type HoverCardContentProps = React.ComponentProps<typeof HoverCardPrimitive.Content>
+
+type HoverCardContextProps = React.ComponentProps<typeof HoverCardPrimitive.Context>
+
+type HoverCardPortalProps = React.ComponentProps<typeof PortalPrimitive>
+
+type HoverCardPositionerProps = React.ComponentProps<typeof HoverCardPrimitive.Positioner>
+
+type HoverCardTriggerProps = React.ComponentProps<typeof HoverCardPrimitive.Trigger>
+
+const HoverCard = {
+  ArrowTip: HoverCardArrowTip,
+  Root: HoverCardRoot,
+  RootProvider: HoverCardRootProvider,
+  Arrow: HoverCardArrow,
+  Content: HoverCardContent,
+  Context: HoverCardContext,
+  Portal: HoverCardPortal,
+  Positioner: HoverCardPositioner,
+  Trigger: HoverCardTrigger,
+}
+
 export {
+  useHoverCard,
+  useHoverCardContext,
   HoverCard,
-  HoverCardArrow,
-  HoverCardContent,
-  HoverCardContext,
-  HoverCardPortal,
-  HoverCardPositioner,
-  HoverCardTrigger,
+  type HoverCardArrowTipProps,
+  type HoverCardRootProps,
+  type HoverCardRootProviderProps,
+  type HoverCardArrowProps,
+  type HoverCardContentProps,
+  type HoverCardContextProps,
+  type HoverCardPortalProps,
+  type HoverCardPositionerProps,
+  type HoverCardTriggerProps,
 }

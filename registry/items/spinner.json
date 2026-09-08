@@ -7,8 +7,15 @@
   ],
   "parts": [
     {
-      "name": "Spinner",
+      "name": "Spinner.Root",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -34,6 +41,7 @@
     }
   ],
   "dependencies": {
+    "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"
   },
   "registryDependencies": [
@@ -42,7 +50,7 @@
   "files": [
     {
       "path": "components/ui/spinner.tsx",
-      "content": "import { cn } from \"@/lib/utils\"\nimport { Loader2Icon } from \"lucide-react\"\n\nfunction Spinner({ className, ...props }: React.ComponentProps<\"svg\">) {\n  return (\n    <Loader2Icon\n      data-slot=\"spinner\"\n      role=\"status\"\n      aria-label=\"Loading\"\n      className={cn(\"size-4 animate-spin\", className)}\n      {...props}\n    />\n  )\n}\n\nexport { Spinner }\n"
+      "content": "import { ark } from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\nimport { Loader2Icon } from \"lucide-react\"\n\nfunction SpinnerRoot({ className, ...props }: SpinnerRootProps) {\n  return (\n    <Loader2Icon\n      data-slot=\"spinner\"\n      role=\"status\"\n      aria-label=\"Loading\"\n      className={cn(\"size-4 animate-spin\", className)}\n      {...props}\n    />\n  )\n}\n\ntype SpinnerRootProps = React.ComponentProps<typeof ark.svg>\n\nconst Spinner = {\n  Root: SpinnerRoot,\n}\n\nexport { Spinner, type SpinnerRootProps }\n"
     }
   ]
 }

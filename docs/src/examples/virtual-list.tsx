@@ -1,25 +1,19 @@
-import {
-  VirtualList,
-  VirtualListContent,
-  VirtualListItem,
-  VirtualListItems,
-  VirtualListViewport,
-} from "@/components/ui/virtual-list"
+import { VirtualList } from "@/components/ui/virtual-list"
 
 export default function VirtualListExample() {
   return (
-    <VirtualList count={100_000} estimateSize={32} className="w-80">
-      <VirtualListViewport className="h-64 rounded-lg border">
-        <VirtualListContent>
-          <VirtualListItems>
+    <VirtualList.Root count={100_000} estimateSize={32} className="w-80">
+      <VirtualList.Viewport className="h-64 rounded-lg border">
+        <VirtualList.Content>
+          <VirtualList.Items>
             {(item) => (
-              <VirtualListItem index={item.index} className="flex h-8 items-center border-b px-3 text-sm">
+              <VirtualList.Item index={item.index} className="flex h-8 items-center border-b px-3 text-sm">
                 Row {item.index + 1}
-              </VirtualListItem>
+              </VirtualList.Item>
             )}
-          </VirtualListItems>
-        </VirtualListContent>
-      </VirtualListViewport>
-    </VirtualList>
+          </VirtualList.Items>
+        </VirtualList.Content>
+      </VirtualList.Viewport>
+    </VirtualList.Root>
   )
 }

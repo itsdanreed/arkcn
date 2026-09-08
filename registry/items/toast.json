@@ -1,0 +1,249 @@
+{
+  "name": "toast",
+  "type": "ui",
+  "description": "",
+  "ark": "Toast",
+  "exports": [
+    "Toast",
+    "useToastContext",
+    "createToaster"
+  ],
+  "parts": [
+    {
+      "name": "Toast.Root",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Toast.ActionTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Toast.CloseTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Toast.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseToastContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Toast.Description",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Toast.Title",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Toast.Toaster",
+      "props": [
+        {
+          "name": "children",
+          "type": "(toast: ToastOptions) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "toaster",
+          "type": "CreateToasterReturn<any>",
+          "required": true,
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "dir",
+          "type": "\"ltr\" | \"rtl\"",
+          "required": false,
+          "default": "\"ltr\"",
+          "description": "The document's text/writing direction.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "getRootNode",
+          "type": "(() => Node | ShadowRoot | Document)",
+          "required": false,
+          "description": "A root node to correctly resolve document in custom environments. E.x.: Iframes, Electron.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/toast.tsx",
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport { Toast as ToastPrimitive, useToastContext, createToaster } from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\nimport { ark, mergeProps, Toaster as ToasterPrimitive, Portal } from \"@ark-ui/react\"\n\nfunction ToastActionTrigger({ className, ...props }: ToastActionTriggerProps) {\n  return (\n    <ToastPrimitive.ActionTrigger\n      data-slot=\"toast-action-trigger\"\n      className={cn(\n        \"mt-2 inline-flex h-8 w-fit items-center justify-center gap-1.5 rounded-lg border border-input px-2.5 text-sm font-medium outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ToastCloseTrigger({ className, ...props }: ToastCloseTriggerProps) {\n  return (\n    <ToastPrimitive.CloseTrigger\n      data-slot=\"toast-close-trigger\"\n      className={cn(\n        \"absolute top-2 right-2 inline-flex size-6 items-center justify-center rounded-md text-muted-foreground outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ToastContext(props: ToastContextProps) {\n  return <ToastPrimitive.Context {...props} />\n}\n\nfunction ToastDescription({ className, ...props }: ToastDescriptionProps) {\n  return (\n    <ToastPrimitive.Description\n      data-slot=\"toast-description\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ToastRoot({ className, asChild, children, ...props }: ToastRootProps) {\n  const api = useToastContext()\n  const rootProps = {\n    \"data-slot\": \"toast\",\n    className: cn(\n      \"relative flex w-80 max-w-[calc(100vw-2rem)] flex-col gap-1 rounded-lg border bg-popover p-4 pr-10 text-popover-foreground shadow-lg\",\n      className\n    ),\n    ...props,\n  }\n  if (!asChild) return <ToastPrimitive.Root {...rootProps}>{children}</ToastPrimitive.Root>\n  // Ark 5.39.1 renders a fixed div here despite declaring asChild. Preserve its\n  // hover bridges when replacing the root through the factory.\n  const child = React.Children.only(children) as React.ReactElement<{ children?: React.ReactNode }>\n  return (\n    <ark.div {...mergeProps(api.getRootProps(), rootProps)} asChild>\n      {React.cloneElement(\n        child,\n        {},\n        <>\n          <div {...api.getGhostBeforeProps()} />\n          {child.props.children}\n          <div {...api.getGhostAfterProps()} />\n        </>\n      )}\n    </ark.div>\n  )\n}\n\nfunction ToastToaster(props: ToastToasterProps) {\n  return (\n    <Portal>\n      <ToasterPrimitive data-slot=\"toaster\" {...props} />\n    </Portal>\n  )\n}\n\nfunction ToastTitle({ className, ...props }: ToastTitleProps) {\n  return <ToastPrimitive.Title data-slot=\"toast-title\" className={cn(\"text-sm font-semibold\", className)} {...props} />\n}\n\ntype ToastRootProps = React.ComponentProps<typeof ToastPrimitive.Root>\n\ntype ToastActionTriggerProps = React.ComponentProps<typeof ToastPrimitive.ActionTrigger>\n\ntype ToastCloseTriggerProps = React.ComponentProps<typeof ToastPrimitive.CloseTrigger>\n\ntype ToastContextProps = React.ComponentProps<typeof ToastPrimitive.Context>\n\ntype ToastDescriptionProps = React.ComponentProps<typeof ToastPrimitive.Description>\n\ntype ToastTitleProps = React.ComponentProps<typeof ToastPrimitive.Title>\n\ntype ToastToasterProps = Omit<React.ComponentProps<typeof ToasterPrimitive>, \"asChild\">\n\nconst Toast = {\n  Root: ToastRoot,\n  ActionTrigger: ToastActionTrigger,\n  CloseTrigger: ToastCloseTrigger,\n  Context: ToastContext,\n  Description: ToastDescription,\n  Title: ToastTitle,\n  Toaster: ToastToaster,\n}\n\nexport {\n  Toast,\n  useToastContext,\n  createToaster,\n  type ToastRootProps,\n  type ToastActionTriggerProps,\n  type ToastCloseTriggerProps,\n  type ToastContextProps,\n  type ToastDescriptionProps,\n  type ToastTitleProps,\n  type ToastToasterProps,\n}\n"
+    }
+  ]
+}

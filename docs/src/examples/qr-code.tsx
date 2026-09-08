@@ -1,11 +1,11 @@
-import { QrCode, QrCodeFrame, QrCodePattern } from "@/components/ui/qr-code"
+import { QrCode } from "@/components/ui/qr-code"
 
 export default function QrCodeExample() {
   return (
-    <QrCode value="https://multicomma.com/arkcn" className="size-40">
-      <QrCodeFrame>
-        <QrCodePattern />
-      </QrCodeFrame>
-    </QrCode>
+    <QrCode.Root value="https://multicomma.com/arkcn" className="size-40">
+      <QrCode.Frame>
+        <QrCode.Pattern />
+      </QrCode.Frame>
+    </QrCode.Root>
   )
 }

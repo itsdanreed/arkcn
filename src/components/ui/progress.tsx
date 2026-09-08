@@ -1,37 +1,27 @@
 "use client"
 
+import { useProgress, useProgressContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Progress as ProgressPrimitive } from "@ark-ui/react"
 
-function Progress({ className, children, ...props }: React.ComponentProps<typeof ProgressPrimitive.Root>) {
-  return (
-    <ProgressPrimitive.Root data-slot="progress" className={cn("flex w-full flex-col gap-1", className)} {...props}>
-      {children}
-      <ProgressTrack>
-        <ProgressRange />
-      </ProgressTrack>
-    </ProgressPrimitive.Root>
-  )
-}
-
-function ProgressRoot({ className, ...props }: React.ComponentProps<typeof ProgressPrimitive.Root>) {
+function ProgressRoot({ className, ...props }: ProgressRootProps) {
   return (
     <ProgressPrimitive.Root data-slot="progress" className={cn("flex w-full flex-col gap-1", className)} {...props} />
   )
 }
 
-function ProgressContext({ ...props }: React.ComponentProps<typeof ProgressPrimitive.Context>) {
+function ProgressContext({ ...props }: ProgressContextProps) {
   return <ProgressPrimitive.Context {...props} />
 }
 
-function ProgressLabel({ className, ...props }: React.ComponentProps<typeof ProgressPrimitive.Label>) {
+function ProgressLabel({ className, ...props }: ProgressLabelProps) {
   return (
     <ProgressPrimitive.Label data-slot="progress-label" className={cn("text-sm font-medium", className)} {...props} />
   )
 }
 
-function ProgressValueText({ className, ...props }: React.ComponentProps<typeof ProgressPrimitive.ValueText>) {
+function ProgressValueText({ className, ...props }: ProgressValueTextProps) {
   return (
     <ProgressPrimitive.ValueText
       data-slot="progress-value-text"
@@ -41,7 +31,7 @@ function ProgressValueText({ className, ...props }: React.ComponentProps<typeof 
   )
 }
 
-function ProgressTrack({ className, ...props }: React.ComponentProps<typeof ProgressPrimitive.Track>) {
+function ProgressTrack({ className, ...props }: ProgressTrackProps) {
   return (
     <ProgressPrimitive.Track
       data-slot="progress-track"
@@ -51,7 +41,7 @@ function ProgressTrack({ className, ...props }: React.ComponentProps<typeof Prog
   )
 }
 
-function ProgressRange({ className, ...props }: React.ComponentProps<typeof ProgressPrimitive.Range>) {
+function ProgressRange({ className, ...props }: ProgressRangeProps) {
   return (
     <ProgressPrimitive.Range
       data-slot="progress-indicator"
@@ -64,7 +54,7 @@ function ProgressRange({ className, ...props }: React.ComponentProps<typeof Prog
   )
 }
 
-function ProgressCircle({ className, ...props }: React.ComponentProps<typeof ProgressPrimitive.Circle>) {
+function ProgressCircle({ className, ...props }: ProgressCircleProps) {
   return (
     <ProgressPrimitive.Circle
       data-slot="progress-circle"
@@ -74,7 +64,7 @@ function ProgressCircle({ className, ...props }: React.ComponentProps<typeof Pro
   )
 }
 
-function ProgressCircleTrack({ className, ...props }: React.ComponentProps<typeof ProgressPrimitive.CircleTrack>) {
+function ProgressCircleTrack({ className, ...props }: ProgressCircleTrackProps) {
   return (
     <ProgressPrimitive.CircleTrack
       data-slot="progress-circle-track"
@@ -84,7 +74,7 @@ function ProgressCircleTrack({ className, ...props }: React.ComponentProps<typeo
   )
 }
 
-function ProgressCircleRange({ className, ...props }: React.ComponentProps<typeof ProgressPrimitive.CircleRange>) {
+function ProgressCircleRange({ className, ...props }: ProgressCircleRangeProps) {
   return (
     <ProgressPrimitive.CircleRange
       data-slot="progress-circle-range"
@@ -95,20 +85,69 @@ function ProgressCircleRange({ className, ...props }: React.ComponentProps<typeo
 }
 
 /** Renders only while the progress is in the given `state` (`loading`, `complete`, `indeterminate`). */
-function ProgressView({ ...props }: React.ComponentProps<typeof ProgressPrimitive.View>) {
+function ProgressView({ ...props }: ProgressViewProps) {
   return <ProgressPrimitive.View data-slot="progress-view" {...props} />
 }
 
+function ProgressRootProvider({ className, ...props }: ProgressRootProviderProps) {
+  return (
+    <ProgressPrimitive.RootProvider
+      data-slot="progress"
+      className={cn("flex w-full flex-col gap-1", className)}
+      {...props}
+    />
+  )
+}
+
+type ProgressRootProps = React.ComponentProps<typeof ProgressPrimitive.Root>
+
+type ProgressRootProviderProps = React.ComponentProps<typeof ProgressPrimitive.RootProvider>
+
+type ProgressCircleProps = React.ComponentProps<typeof ProgressPrimitive.Circle>
+
+type ProgressCircleRangeProps = React.ComponentProps<typeof ProgressPrimitive.CircleRange>
+
+type ProgressCircleTrackProps = React.ComponentProps<typeof ProgressPrimitive.CircleTrack>
+
+type ProgressContextProps = React.ComponentProps<typeof ProgressPrimitive.Context>
+
+type ProgressLabelProps = React.ComponentProps<typeof ProgressPrimitive.Label>
+
+type ProgressRangeProps = React.ComponentProps<typeof ProgressPrimitive.Range>
+
+type ProgressTrackProps = React.ComponentProps<typeof ProgressPrimitive.Track>
+
+type ProgressValueTextProps = React.ComponentProps<typeof ProgressPrimitive.ValueText>
+
+type ProgressViewProps = React.ComponentProps<typeof ProgressPrimitive.View>
+
+const Progress = {
+  Root: ProgressRoot,
+  RootProvider: ProgressRootProvider,
+  Circle: ProgressCircle,
+  CircleRange: ProgressCircleRange,
+  CircleTrack: ProgressCircleTrack,
+  Context: ProgressContext,
+  Label: ProgressLabel,
+  Range: ProgressRange,
+  Track: ProgressTrack,
+  ValueText: ProgressValueText,
+  View: ProgressView,
+}
+
 export {
+  useProgress,
+  useProgressContext,
   Progress,
-  ProgressCircle,
-  ProgressCircleRange,
-  ProgressCircleTrack,
-  ProgressContext,
-  ProgressLabel,
-  ProgressRange,
-  ProgressRoot,
-  ProgressTrack,
-  ProgressValueText,
-  ProgressView,
+  type ProgressRootProps,
+  type ProgressRootProviderProps,
+  type ProgressCircleProps,
+  type ProgressCircleRangeProps,
+  type ProgressCircleTrackProps,
+  type ProgressContextProps,
+  type ProgressLabelProps,
+  type ProgressRangeProps,
+  type ProgressTrackProps,
+  type ProgressValueTextProps,
+  type ProgressViewProps,
 }

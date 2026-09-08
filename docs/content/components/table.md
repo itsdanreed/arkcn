@@ -1,3 +1,3 @@
 ## How it works
 
-Plain, responsive table markup with sensible styles: `Table` wraps a scrolling container, and `TableHeader`, `TableBody`, `TableFooter`, `TableRow`, `TableHead`, `TableCell`, and `TableCaption` map to their HTML elements. Use it for static data. For sorting, filtering, pagination, and selection, use the data table, which renders through these same parts.
+Plain, responsive table markup with sensible styles: `Table.Root` wraps a scrolling container, and `Table.Header`, `Table.Body`, `Table.Footer`, `Table.Row`, `Table.Head`, `Table.Cell`, and `Table.Caption` map to their HTML elements. Use it for static data. For sorting, filtering, pagination, and selection, use the data table, which renders through these same parts.

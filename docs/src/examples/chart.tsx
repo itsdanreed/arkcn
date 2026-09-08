@@ -1,5 +1,5 @@
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent, type ChartConfig } from "@/components/ui/chart"
+import { Chart, type ChartConfig } from "@/components/ui/chart"
 
 const data = [
   { month: "Jan", desktop: 186, mobile: 80 },
@@ -15,14 +15,14 @@ const config = {
 
 export default function ChartExample() {
   return (
-    <ChartContainer config={config} className="h-64 w-full">
+    <Chart.Root config={config} className="h-64 w-full">
       <BarChart data={data}>
         <CartesianGrid vertical={false} />
         <XAxis dataKey="month" tickLine={false} axisLine={false} />
-        <ChartTooltip content={<ChartTooltipContent />} />
+        <Chart.Tooltip content={<Chart.TooltipContent />} />
         <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
         <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
       </BarChart>
-    </ChartContainer>
+    </Chart.Root>
   )
 }

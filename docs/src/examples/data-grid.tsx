@@ -1,15 +1,5 @@
 import * as React from "react"
-import {
-  DataGrid,
-  DataGridBody,
-  DataGridCell,
-  DataGridContainer,
-  DataGridHead,
-  DataGridHeader,
-  DataGridHeaderRow,
-  type DataGridCellChange,
-  type DataGridColumnConfig,
-} from "@/components/ui/data-grid"
+import { DataGrid, type DataGridCellChange, type DataGridColumnConfig } from "@/components/ui/data-grid"
 import { useDataTable } from "@/components/ui/data-table"
 import type { ColumnDef } from "@/lib/table"
 
@@ -60,27 +50,27 @@ export default function DataGridExample() {
   const onCellChange = ({ row, columnId, value }: DataGridCellChange<Person>) =>
     setData((prev) => prev.map((p) => (p.id === row.id ? { ...p, [columnId]: value } : p)))
   return (
-    <DataGrid table={table} columns={gridColumns} onCellChange={onCellChange} className="h-80 w-full">
-      <DataGridContainer aria-label="People">
-        <DataGridHeader>
-          <DataGridHeaderRow>
-            <DataGridHead column="name">Name</DataGridHead>
-            <DataGridHead column="email">Email</DataGridHead>
-            <DataGridHead column="role">Role</DataGridHead>
-            <DataGridHead column="active">Active</DataGridHead>
-          </DataGridHeaderRow>
-        </DataGridHeader>
-        <DataGridBody<Person>>
+    <DataGrid.Root table={table} columns={gridColumns} onCellChange={onCellChange} className="h-80 w-full">
+      <DataGrid.Container aria-label="People">
+        <DataGrid.Header>
+          <DataGrid.HeaderRow>
+            <DataGrid.Head column="name">Name</DataGrid.Head>
+            <DataGrid.Head column="email">Email</DataGrid.Head>
+            <DataGrid.Head column="role">Role</DataGrid.Head>
+            <DataGrid.Head column="active">Active</DataGrid.Head>
+          </DataGrid.HeaderRow>
+        </DataGrid.Header>
+        <DataGrid.Body<Person>>
           {() => (
             <>
-              <DataGridCell column="name" className="font-medium" />
-              <DataGridCell column="email" className="text-muted-foreground" />
-              <DataGridCell column="role" className="capitalize" />
-              <DataGridCell column="active" />
+              <DataGrid.Cell column="name" className="font-medium" />
+              <DataGrid.Cell column="email" className="text-muted-foreground" />
+              <DataGrid.Cell column="role" className="capitalize" />
+              <DataGrid.Cell column="active" />
             </>
           )}
-        </DataGridBody>
-      </DataGridContainer>
-    </DataGrid>
+        </DataGrid.Body>
+      </DataGrid.Container>
+    </DataGrid.Root>
   )
 }

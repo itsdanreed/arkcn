@@ -4,26 +4,46 @@
   "description": "",
   "ark": "Tour",
   "exports": [
+    "useTourContext",
     "Tour",
-    "TourActionTrigger",
-    "TourActions",
-    "TourArrow",
-    "TourBackdrop",
-    "TourCloseTrigger",
-    "TourContent",
-    "TourContext",
-    "TourControl",
-    "TourDescription",
-    "TourPortal",
-    "TourPositioner",
-    "TourProgressText",
-    "TourSpotlight",
-    "TourTitle",
     "useTour"
   ],
   "parts": [
     {
-      "name": "Tour",
+      "name": "Tour.ArrowTip",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Tour.Root",
       "props": [
         {
           "name": "tour",
@@ -101,7 +121,7 @@
       ]
     },
     {
-      "name": "TourActionTrigger",
+      "name": "Tour.ActionTrigger",
       "props": [
         {
           "name": "action",
@@ -140,7 +160,7 @@
       ]
     },
     {
-      "name": "TourActions",
+      "name": "Tour.Actions",
       "props": [
         {
           "name": "children",
@@ -152,7 +172,7 @@
       ]
     },
     {
-      "name": "TourArrow",
+      "name": "Tour.Arrow",
       "props": [
         {
           "name": "asChild",
@@ -185,7 +205,7 @@
       ]
     },
     {
-      "name": "TourBackdrop",
+      "name": "Tour.Backdrop",
       "props": [
         {
           "name": "asChild",
@@ -218,7 +238,7 @@
       ]
     },
     {
-      "name": "TourCloseTrigger",
+      "name": "Tour.CloseTrigger",
       "props": [
         {
           "name": "asChild",
@@ -251,7 +271,7 @@
       ]
     },
     {
-      "name": "TourContent",
+      "name": "Tour.Content",
       "props": [
         {
           "name": "asChild",
@@ -284,7 +304,7 @@
       ]
     },
     {
-      "name": "TourContext",
+      "name": "Tour.Context",
       "props": [
         {
           "name": "children",
@@ -296,7 +316,7 @@
       ]
     },
     {
-      "name": "TourControl",
+      "name": "Tour.Control",
       "props": [
         {
           "name": "asChild",
@@ -329,7 +349,7 @@
       ]
     },
     {
-      "name": "TourDescription",
+      "name": "Tour.Description",
       "props": [
         {
           "name": "asChild",
@@ -362,7 +382,7 @@
       ]
     },
     {
-      "name": "TourPortal",
+      "name": "Tour.Portal",
       "props": [
         {
           "name": "children",
@@ -387,7 +407,7 @@
       ]
     },
     {
-      "name": "TourPositioner",
+      "name": "Tour.Positioner",
       "props": [
         {
           "name": "asChild",
@@ -420,7 +440,7 @@
       ]
     },
     {
-      "name": "TourProgressText",
+      "name": "Tour.ProgressText",
       "props": [
         {
           "name": "asChild",
@@ -453,7 +473,7 @@
       ]
     },
     {
-      "name": "TourSpotlight",
+      "name": "Tour.Spotlight",
       "props": [
         {
           "name": "asChild",
@@ -486,7 +506,7 @@
       ]
     },
     {
-      "name": "TourTitle",
+      "name": "Tour.Title",
       "props": [
         {
           "name": "asChild",
@@ -530,7 +550,7 @@
   "files": [
     {
       "path": "components/ui/tour.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Tour as TourPrimitive, Portal as PortalPrimitive, useTour } from \"@ark-ui/react\"\nimport { XIcon } from \"lucide-react\"\n\nimport { Button } from \"@/components/ui/button\"\n\nfunction Tour({ lazyMount = true, unmountOnExit = true, ...props }: React.ComponentProps<typeof TourPrimitive.Root>) {\n  return <TourPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n}\n\nfunction TourContext({ ...props }: React.ComponentProps<typeof TourPrimitive.Context>) {\n  return <TourPrimitive.Context {...props} />\n}\n\nfunction TourPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction TourBackdrop({ className, ...props }: React.ComponentProps<typeof TourPrimitive.Backdrop>) {\n  return (\n    <TourPrimitive.Backdrop\n      data-slot=\"tour-backdrop\"\n      className={cn(\n        \"fixed inset-0 z-50 bg-black/40 data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TourSpotlight({ className, ...props }: React.ComponentProps<typeof TourPrimitive.Spotlight>) {\n  return (\n    <TourPrimitive.Spotlight\n      data-slot=\"tour-spotlight\"\n      className={cn(\n        \"z-50 rounded-md ring-4 ring-background/60 transition-[left,top,width,height] duration-300\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TourPositioner({ className, ...props }: React.ComponentProps<typeof TourPrimitive.Positioner>) {\n  return <TourPrimitive.Positioner data-slot=\"tour-positioner\" className={cn(\"z-50\", className)} {...props} />\n}\n\nfunction TourContent({ className, ...props }: React.ComponentProps<typeof TourPrimitive.Content>) {\n  return (\n    <TourPrimitive.Content\n      data-slot=\"tour-content\"\n      className={cn(\n        \"z-50 flex w-80 flex-col gap-3 rounded-xl bg-popover p-4 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden data-[type=dialog]:fixed data-[type=dialog]:top-1/2 data-[type=dialog]:left-1/2 data-[type=dialog]:-translate-1/2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TourArrow({ className, ...props }: React.ComponentProps<typeof TourPrimitive.Arrow>) {\n  return (\n    <TourPrimitive.Arrow\n      data-slot=\"tour-arrow\"\n      className={cn(\"[--arrow-background:var(--color-popover)] [--arrow-size:0.625rem]\", className)}\n      {...props}\n    >\n      <TourPrimitive.ArrowTip data-slot=\"tour-arrow-tip\" className=\"border-t border-l border-foreground/10\" />\n    </TourPrimitive.Arrow>\n  )\n}\n\nfunction TourTitle({ className, ...props }: React.ComponentProps<typeof TourPrimitive.Title>) {\n  return (\n    <TourPrimitive.Title\n      data-slot=\"tour-title\"\n      className={cn(\"font-heading text-base font-medium\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TourDescription({ className, ...props }: React.ComponentProps<typeof TourPrimitive.Description>) {\n  return (\n    <TourPrimitive.Description\n      data-slot=\"tour-description\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TourControl({ className, ...props }: React.ComponentProps<typeof TourPrimitive.Control>) {\n  return (\n    <TourPrimitive.Control\n      data-slot=\"tour-control\"\n      className={cn(\"flex items-center justify-between gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TourProgressText({ className, ...props }: React.ComponentProps<typeof TourPrimitive.ProgressText>) {\n  return (\n    <TourPrimitive.ProgressText\n      data-slot=\"tour-progress-text\"\n      className={cn(\"text-xs text-muted-foreground tabular-nums\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TourActions({ ...props }: React.ComponentProps<typeof TourPrimitive.Actions>) {\n  return <TourPrimitive.Actions {...props} />\n}\n\nfunction TourActionTrigger({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof TourPrimitive.ActionTrigger>) {\n  return (\n    <TourPrimitive.ActionTrigger data-slot=\"tour-action-trigger\" className={cn(className)} asChild {...props}>\n      <Button variant=\"outline\" size=\"sm\">\n        {children}\n      </Button>\n    </TourPrimitive.ActionTrigger>\n  )\n}\n\nfunction TourCloseTrigger({ className, children, ...props }: React.ComponentProps<typeof TourPrimitive.CloseTrigger>) {\n  return (\n    <TourPrimitive.CloseTrigger\n      data-slot=\"tour-close-trigger\"\n      className={cn(\"absolute top-2 right-2\", className)}\n      asChild\n      {...props}\n    >\n      <Button variant=\"ghost\" size=\"icon-sm\">\n        {children ?? <XIcon />}\n        <span className=\"sr-only\">Close</span>\n      </Button>\n    </TourPrimitive.CloseTrigger>\n  )\n}\n\nexport {\n  Tour,\n  TourActionTrigger,\n  TourActions,\n  TourArrow,\n  TourBackdrop,\n  TourCloseTrigger,\n  TourContent,\n  TourContext,\n  TourControl,\n  TourDescription,\n  TourPortal,\n  TourPositioner,\n  TourProgressText,\n  TourSpotlight,\n  TourTitle,\n  useTour,\n}\n"
+      "content": "\"use client\"\n\nimport { useTourContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Tour as TourPrimitive, Portal as PortalPrimitive, useTour } from \"@ark-ui/react\"\nimport { XIcon } from \"lucide-react\"\n\nimport { Button } from \"@/components/ui/button\"\n\nfunction TourRoot({ lazyMount = true, unmountOnExit = true, ...props }: TourRootProps) {\n  return <TourPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n}\n\nfunction TourContext({ ...props }: TourContextProps) {\n  return <TourPrimitive.Context {...props} />\n}\n\nfunction TourPortal({ ...props }: TourPortalProps) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction TourBackdrop({ className, ...props }: TourBackdropProps) {\n  return (\n    <TourPrimitive.Backdrop\n      data-slot=\"tour-backdrop\"\n      className={cn(\n        \"fixed inset-0 z-50 bg-black/40 data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TourSpotlight({ className, ...props }: TourSpotlightProps) {\n  return (\n    <TourPrimitive.Spotlight\n      data-slot=\"tour-spotlight\"\n      className={cn(\n        \"z-50 rounded-md ring-4 ring-background/60 transition-[left,top,width,height] duration-300\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TourPositioner({ className, ...props }: TourPositionerProps) {\n  return <TourPrimitive.Positioner data-slot=\"tour-positioner\" className={cn(\"z-50\", className)} {...props} />\n}\n\nfunction TourContent({ className, ...props }: TourContentProps) {\n  return (\n    <TourPrimitive.Content\n      data-slot=\"tour-content\"\n      className={cn(\n        \"z-50 flex w-80 flex-col gap-3 rounded-xl bg-popover p-4 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden data-[type=dialog]:fixed data-[type=dialog]:top-1/2 data-[type=dialog]:left-1/2 data-[type=dialog]:-translate-1/2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TourArrow({ className, ...props }: TourArrowProps) {\n  return (\n    <TourPrimitive.Arrow\n      data-slot=\"tour-arrow\"\n      className={cn(\"[--arrow-background:var(--color-popover)] [--arrow-size:0.625rem]\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <TourPrimitive.ArrowTip data-slot=\"tour-arrow-tip\" className=\"border-t border-l border-foreground/10\" />\n        </>\n      )}\n    </TourPrimitive.Arrow>\n  )\n}\n\nfunction TourTitle({ className, ...props }: TourTitleProps) {\n  return (\n    <TourPrimitive.Title\n      data-slot=\"tour-title\"\n      className={cn(\"font-heading text-base font-medium\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TourDescription({ className, ...props }: TourDescriptionProps) {\n  return (\n    <TourPrimitive.Description\n      data-slot=\"tour-description\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TourControl({ className, ...props }: TourControlProps) {\n  return (\n    <TourPrimitive.Control\n      data-slot=\"tour-control\"\n      className={cn(\"flex items-center justify-between gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TourProgressText({ className, ...props }: TourProgressTextProps) {\n  return (\n    <TourPrimitive.ProgressText\n      data-slot=\"tour-progress-text\"\n      className={cn(\"text-xs text-muted-foreground tabular-nums\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TourActions({ ...props }: TourActionsProps) {\n  return <TourPrimitive.Actions {...props} />\n}\n\nfunction TourActionTrigger({ className, children, ...props }: TourActionTriggerProps) {\n  return (\n    <TourPrimitive.ActionTrigger data-slot=\"tour-action-trigger\" className={cn(className)} asChild {...props}>\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <Button variant=\"outline\" size=\"sm\">\n            {children}\n          </Button>\n        </>\n      )}\n    </TourPrimitive.ActionTrigger>\n  )\n}\n\nfunction TourCloseTrigger({ className, children, ...props }: TourCloseTriggerProps) {\n  return (\n    <TourPrimitive.CloseTrigger\n      data-slot=\"tour-close-trigger\"\n      className={cn(\"absolute top-2 right-2\", className)}\n      asChild\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <Button variant=\"ghost\" size=\"icon-sm\">\n            {children ?? <XIcon />}\n            <span className=\"sr-only\">Close</span>\n          </Button>\n        </>\n      )}\n    </TourPrimitive.CloseTrigger>\n  )\n}\n\nfunction TourArrowTip({ className, ...props }: TourArrowTipProps) {\n  return <TourPrimitive.ArrowTip data-slot=\"tour-arrow-tip\" className={cn(className)} {...props} />\n}\n\ntype TourArrowTipProps = React.ComponentProps<typeof TourPrimitive.ArrowTip>\n\ntype TourRootProps = React.ComponentProps<typeof TourPrimitive.Root>\n\ntype TourActionTriggerProps = React.ComponentProps<typeof TourPrimitive.ActionTrigger>\n\ntype TourActionsProps = React.ComponentProps<typeof TourPrimitive.Actions>\n\ntype TourArrowProps = React.ComponentProps<typeof TourPrimitive.Arrow>\n\ntype TourBackdropProps = React.ComponentProps<typeof TourPrimitive.Backdrop>\n\ntype TourCloseTriggerProps = React.ComponentProps<typeof TourPrimitive.CloseTrigger>\n\ntype TourContentProps = React.ComponentProps<typeof TourPrimitive.Content>\n\ntype TourContextProps = React.ComponentProps<typeof TourPrimitive.Context>\n\ntype TourControlProps = React.ComponentProps<typeof TourPrimitive.Control>\n\ntype TourDescriptionProps = React.ComponentProps<typeof TourPrimitive.Description>\n\ntype TourPortalProps = React.ComponentProps<typeof PortalPrimitive>\n\ntype TourPositionerProps = React.ComponentProps<typeof TourPrimitive.Positioner>\n\ntype TourProgressTextProps = React.ComponentProps<typeof TourPrimitive.ProgressText>\n\ntype TourSpotlightProps = React.ComponentProps<typeof TourPrimitive.Spotlight>\n\ntype TourTitleProps = React.ComponentProps<typeof TourPrimitive.Title>\n\nconst Tour = {\n  ArrowTip: TourArrowTip,\n  Root: TourRoot,\n  ActionTrigger: TourActionTrigger,\n  Actions: TourActions,\n  Arrow: TourArrow,\n  Backdrop: TourBackdrop,\n  CloseTrigger: TourCloseTrigger,\n  Content: TourContent,\n  Context: TourContext,\n  Control: TourControl,\n  Description: TourDescription,\n  Portal: TourPortal,\n  Positioner: TourPositioner,\n  ProgressText: TourProgressText,\n  Spotlight: TourSpotlight,\n  Title: TourTitle,\n}\n\nexport {\n  useTourContext,\n  Tour,\n  useTour,\n  type TourArrowTipProps,\n  type TourRootProps,\n  type TourActionTriggerProps,\n  type TourActionsProps,\n  type TourArrowProps,\n  type TourBackdropProps,\n  type TourCloseTriggerProps,\n  type TourContentProps,\n  type TourContextProps,\n  type TourControlProps,\n  type TourDescriptionProps,\n  type TourPortalProps,\n  type TourPositionerProps,\n  type TourProgressTextProps,\n  type TourSpotlightProps,\n  type TourTitleProps,\n}\n"
     }
   ]
 }

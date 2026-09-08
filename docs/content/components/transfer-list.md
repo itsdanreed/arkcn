@@ -4,7 +4,7 @@ Two lists and a set of move triggers. The value is the target side, always kept 
 
 ## Parts
 
-`TransferListPanel side=` is one list: a `TransferListPanelHeader` with `TransferListSelectAll` (ticks every visible enabled row, indeterminate when some are ticked), `TransferListPanelTitle`, and `TransferListPanelCount` ("selected / total"); `TransferListSearch`, which narrows what select-all and move-all touch; `TransferListItems`, the listbox, with an optional render-prop child for the row label; and `TransferListEmpty`. `TransferListControls` sits between the panels with `TransferListMoveTrigger direction=` (the ticked items; disabled when none) and `TransferListMoveAllTrigger direction=` (every visible item), both polymorphic via `asChild`.
+`TransferListPanel side=` is one list: a `TransferList.PanelHeader` with `TransferList.SelectAll` (ticks every visible enabled row, indeterminate when some are ticked), `TransferList.PanelTitle`, and `TransferList.PanelCount` ("selected / total"); `TransferList.Search`, which narrows what select-all and move-all touch; `TransferList.Items`, the listbox, with an optional render-prop child for the row label; and `TransferList.Empty`. `TransferList.Controls` sits between the panels with `TransferListMoveTrigger direction=` (the ticked items; disabled when none) and `TransferListMoveAllTrigger direction=` (every visible item), both polymorphic via `asChild`.
 
 ## Keyboard
 

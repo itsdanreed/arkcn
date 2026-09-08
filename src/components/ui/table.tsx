@@ -1,25 +1,26 @@
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
-function Table({ className, ...props }: React.ComponentProps<"table">) {
+function TableRoot({ className, ...props }: TableRootProps) {
   return (
     <div data-slot="table-container" className="relative w-full overflow-x-auto">
-      <table data-slot="table" className={cn("w-full caption-bottom text-sm", className)} {...props} />
+      <ark.table data-slot="table" className={cn("w-full caption-bottom text-sm", className)} {...props} />
     </div>
   )
 }
 
-function TableHeader({ className, ...props }: React.ComponentProps<"thead">) {
-  return <thead data-slot="table-header" className={cn("[&_tr]:border-b", className)} {...props} />
+function TableHeader({ className, ...props }: TableHeaderProps) {
+  return <ark.thead data-slot="table-header" className={cn("[&_tr]:border-b", className)} {...props} />
 }
 
-function TableBody({ className, ...props }: React.ComponentProps<"tbody">) {
-  return <tbody data-slot="table-body" className={cn("[&_tr:last-child]:border-0", className)} {...props} />
+function TableBody({ className, ...props }: TableBodyProps) {
+  return <ark.tbody data-slot="table-body" className={cn("[&_tr:last-child]:border-0", className)} {...props} />
 }
 
-function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
+function TableFooter({ className, ...props }: TableFooterProps) {
   return (
-    <tfoot
+    <ark.tfoot
       data-slot="table-footer"
       className={cn("border-t bg-muted/50 font-medium [&>tr]:last:border-b-0", className)}
       {...props}
@@ -27,9 +28,9 @@ function TableFooter({ className, ...props }: React.ComponentProps<"tfoot">) {
   )
 }
 
-function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
+function TableRow({ className, ...props }: TableRowProps) {
   return (
-    <tr
+    <ark.tr
       data-slot="table-row"
       className={cn(
         "border-b transition-colors hover:bg-muted/50 has-aria-expanded:bg-muted/50 data-[state=selected]:bg-muted",
@@ -40,9 +41,9 @@ function TableRow({ className, ...props }: React.ComponentProps<"tr">) {
   )
 }
 
-function TableHead({ className, ...props }: React.ComponentProps<"th">) {
+function TableHead({ className, ...props }: TableHeadProps) {
   return (
-    <th
+    <ark.th
       data-slot="table-head"
       className={cn(
         "h-10 px-2 text-left align-middle font-medium whitespace-nowrap text-foreground has-[[role=checkbox]]:pr-0",
@@ -53,9 +54,9 @@ function TableHead({ className, ...props }: React.ComponentProps<"th">) {
   )
 }
 
-function TableCell({ className, ...props }: React.ComponentProps<"td">) {
+function TableCell({ className, ...props }: TableCellProps) {
   return (
-    <td
+    <ark.td
       data-slot="table-cell"
       className={cn("p-2 align-middle whitespace-nowrap has-[[role=checkbox]]:pr-0", className)}
       {...props}
@@ -63,10 +64,47 @@ function TableCell({ className, ...props }: React.ComponentProps<"td">) {
   )
 }
 
-function TableCaption({ className, ...props }: React.ComponentProps<"caption">) {
+function TableCaption({ className, ...props }: TableCaptionProps) {
   return (
-    <caption data-slot="table-caption" className={cn("mt-4 text-sm text-muted-foreground", className)} {...props} />
+    <ark.caption data-slot="table-caption" className={cn("mt-4 text-sm text-muted-foreground", className)} {...props} />
   )
 }
 
-export { Table, TableHeader, TableBody, TableFooter, TableHead, TableRow, TableCell, TableCaption }
+type TableRootProps = React.ComponentProps<typeof ark.table>
+
+type TableHeaderProps = React.ComponentProps<typeof ark.thead>
+
+type TableBodyProps = React.ComponentProps<typeof ark.tbody>
+
+type TableFooterProps = React.ComponentProps<typeof ark.tfoot>
+
+type TableHeadProps = React.ComponentProps<typeof ark.th>
+
+type TableRowProps = React.ComponentProps<typeof ark.tr>
+
+type TableCellProps = React.ComponentProps<typeof ark.td>
+
+type TableCaptionProps = React.ComponentProps<typeof ark.caption>
+
+const Table = {
+  Root: TableRoot,
+  Header: TableHeader,
+  Body: TableBody,
+  Footer: TableFooter,
+  Head: TableHead,
+  Row: TableRow,
+  Cell: TableCell,
+  Caption: TableCaption,
+}
+
+export {
+  Table,
+  type TableRootProps,
+  type TableHeaderProps,
+  type TableBodyProps,
+  type TableFooterProps,
+  type TableHeadProps,
+  type TableRowProps,
+  type TableCellProps,
+  type TableCaptionProps,
+}

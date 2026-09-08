@@ -1,39 +1,30 @@
-import {
-  Menubar,
-  MenubarContent,
-  MenubarGroup,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarTrigger,
-} from "@/components/ui/menubar"
+import { Menubar } from "@/components/ui/menubar"
 
 export default function MenubarExample() {
   return (
-    <Menubar>
-      <MenubarMenu value="file">
-        <MenubarTrigger>File</MenubarTrigger>
-        <MenubarContent>
-          <MenubarGroup>
-            <MenubarItem value="new">
-              New tab <MenubarShortcut>⌘T</MenubarShortcut>
-            </MenubarItem>
-            <MenubarItem value="open">Open…</MenubarItem>
-            <MenubarSeparator />
-            <MenubarItem value="print">Print</MenubarItem>
-          </MenubarGroup>
-        </MenubarContent>
-      </MenubarMenu>
-      <MenubarMenu value="edit">
-        <MenubarTrigger>Edit</MenubarTrigger>
-        <MenubarContent>
-          <MenubarGroup>
-            <MenubarItem value="undo">Undo</MenubarItem>
-            <MenubarItem value="redo">Redo</MenubarItem>
-          </MenubarGroup>
-        </MenubarContent>
-      </MenubarMenu>
-    </Menubar>
+    <Menubar.Root>
+      <Menubar.Menu value="file">
+        <Menubar.Trigger>File</Menubar.Trigger>
+        <Menubar.Content>
+          <Menubar.ItemGroup>
+            <Menubar.Item value="new">
+              New tab <Menubar.Shortcut>⌘T</Menubar.Shortcut>
+            </Menubar.Item>
+            <Menubar.Item value="open">Open…</Menubar.Item>
+            <Menubar.Separator />
+            <Menubar.Item value="print">Print</Menubar.Item>
+          </Menubar.ItemGroup>
+        </Menubar.Content>
+      </Menubar.Menu>
+      <Menubar.Menu value="edit">
+        <Menubar.Trigger>Edit</Menubar.Trigger>
+        <Menubar.Content>
+          <Menubar.ItemGroup>
+            <Menubar.Item value="undo">Undo</Menubar.Item>
+            <Menubar.Item value="redo">Redo</Menubar.Item>
+          </Menubar.ItemGroup>
+        </Menubar.Content>
+      </Menubar.Menu>
+    </Menubar.Root>
   )
 }

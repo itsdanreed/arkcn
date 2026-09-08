@@ -4,30 +4,15 @@
   "description": "",
   "ark": "TreeView",
   "exports": [
+    "useTreeView",
+    "useTreeViewContext",
+    "useTreeViewNodeContext",
     "TreeView",
-    "TreeViewBranch",
-    "TreeViewBranchContent",
-    "TreeViewBranchControl",
-    "TreeViewBranchIndentGuide",
-    "TreeViewBranchIndicator",
-    "TreeViewBranchText",
-    "TreeViewBranchTrigger",
-    "TreeViewContext",
-    "TreeViewItem",
-    "TreeViewItemIndicator",
-    "TreeViewItemText",
-    "TreeViewLabel",
-    "TreeViewNodeCheckbox",
-    "TreeViewNodeCheckboxIndicator",
-    "TreeViewNodeContext",
-    "TreeViewNodeProvider",
-    "TreeViewNodeRenameInput",
-    "TreeViewTree",
     "createTreeCollection"
   ],
   "parts": [
     {
-      "name": "TreeView",
+      "name": "TreeView.Root",
       "props": [
         {
           "name": "collection",
@@ -269,7 +254,71 @@
       ]
     },
     {
-      "name": "TreeViewBranch",
+      "name": "TreeView.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseTreeViewReturn<T>",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "TreeView.Branch",
       "props": [
         {
           "name": "asChild",
@@ -302,7 +351,7 @@
       ]
     },
     {
-      "name": "TreeViewBranchContent",
+      "name": "TreeView.BranchContent",
       "props": [
         {
           "name": "asChild",
@@ -335,7 +384,7 @@
       ]
     },
     {
-      "name": "TreeViewBranchControl",
+      "name": "TreeView.BranchControl",
       "props": [
         {
           "name": "asChild",
@@ -368,7 +417,7 @@
       ]
     },
     {
-      "name": "TreeViewBranchIndentGuide",
+      "name": "TreeView.BranchIndentGuide",
       "props": [
         {
           "name": "asChild",
@@ -401,7 +450,7 @@
       ]
     },
     {
-      "name": "TreeViewBranchIndicator",
+      "name": "TreeView.BranchIndicator",
       "props": [
         {
           "name": "asChild",
@@ -434,7 +483,7 @@
       ]
     },
     {
-      "name": "TreeViewBranchText",
+      "name": "TreeView.BranchText",
       "props": [
         {
           "name": "asChild",
@@ -467,7 +516,7 @@
       ]
     },
     {
-      "name": "TreeViewBranchTrigger",
+      "name": "TreeView.BranchTrigger",
       "props": [
         {
           "name": "asChild",
@@ -500,7 +549,7 @@
       ]
     },
     {
-      "name": "TreeViewContext",
+      "name": "TreeView.Context",
       "props": [
         {
           "name": "children",
@@ -512,7 +561,7 @@
       ]
     },
     {
-      "name": "TreeViewItem",
+      "name": "TreeView.Item",
       "props": [
         {
           "name": "asChild",
@@ -545,7 +594,7 @@
       ]
     },
     {
-      "name": "TreeViewItemIndicator",
+      "name": "TreeView.ItemIndicator",
       "props": [
         {
           "name": "asChild",
@@ -578,7 +627,7 @@
       ]
     },
     {
-      "name": "TreeViewItemText",
+      "name": "TreeView.ItemText",
       "props": [
         {
           "name": "asChild",
@@ -611,7 +660,7 @@
       ]
     },
     {
-      "name": "TreeViewLabel",
+      "name": "TreeView.Label",
       "props": [
         {
           "name": "asChild",
@@ -644,7 +693,7 @@
       ]
     },
     {
-      "name": "TreeViewNodeCheckbox",
+      "name": "TreeView.NodeCheckbox",
       "props": [
         {
           "name": "asChild",
@@ -677,7 +726,7 @@
       ]
     },
     {
-      "name": "TreeViewNodeCheckboxIndicator",
+      "name": "TreeView.NodeCheckboxIndicator",
       "props": [
         {
           "name": "children",
@@ -715,7 +764,7 @@
       ]
     },
     {
-      "name": "TreeViewNodeContext",
+      "name": "TreeView.NodeContext",
       "props": [
         {
           "name": "children",
@@ -727,7 +776,7 @@
       ]
     },
     {
-      "name": "TreeViewNodeProvider",
+      "name": "TreeView.NodeProvider",
       "props": [
         {
           "name": "indexPath",
@@ -753,7 +802,7 @@
       ]
     },
     {
-      "name": "TreeViewNodeRenameInput",
+      "name": "TreeView.NodeRenameInput",
       "props": [
         {
           "name": "asChild",
@@ -786,7 +835,7 @@
       ]
     },
     {
-      "name": "TreeViewTree",
+      "name": "TreeView.Tree",
       "props": [
         {
           "name": "asChild",
@@ -829,7 +878,7 @@
   "files": [
     {
       "path": "components/ui/tree-view.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { TreeView as TreeViewPrimitive, createTreeCollection, type TreeCollection, type TreeNode } from \"@ark-ui/react\"\nimport { CheckIcon, ChevronRightIcon, MinusIcon } from \"lucide-react\"\n\nfunction TreeView<T extends TreeNode>({ className, ...props }: React.ComponentProps<typeof TreeViewPrimitive.Root<T>>) {\n  return <TreeViewPrimitive.Root data-slot=\"tree-view\" className={cn(\"w-full text-sm\", className)} {...props} />\n}\n\nfunction TreeViewContext({ ...props }: React.ComponentProps<typeof TreeViewPrimitive.Context>) {\n  return <TreeViewPrimitive.Context {...props} />\n}\n\nfunction TreeViewLabel({ className, ...props }: React.ComponentProps<typeof TreeViewPrimitive.Label>) {\n  return (\n    <TreeViewPrimitive.Label\n      data-slot=\"tree-view-label\"\n      className={cn(\"mb-1 text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TreeViewTree({ className, ...props }: React.ComponentProps<typeof TreeViewPrimitive.Tree>) {\n  return (\n    <TreeViewPrimitive.Tree\n      data-slot=\"tree-view-tree\"\n      className={cn(\"flex flex-col gap-px outline-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TreeViewNodeProvider<T>({ ...props }: React.ComponentProps<typeof TreeViewPrimitive.NodeProvider<T>>) {\n  return <TreeViewPrimitive.NodeProvider {...props} />\n}\n\nfunction TreeViewNodeContext({ ...props }: React.ComponentProps<typeof TreeViewPrimitive.NodeContext>) {\n  return <TreeViewPrimitive.NodeContext {...props} />\n}\n\nconst rowClassName =\n  \"group/tree-row relative flex h-7 cursor-default items-center gap-1.5 rounded-md py-1 pr-2 pl-[calc(var(--depth)*--spacing(4)+--spacing(1.5))] outline-none select-none hover:bg-muted data-selected:bg-muted data-selected:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-inset data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\"\n\nfunction TreeViewBranch({ className, ...props }: React.ComponentProps<typeof TreeViewPrimitive.Branch>) {\n  return (\n    <TreeViewPrimitive.Branch\n      data-slot=\"tree-view-branch\"\n      className={cn(\"flex flex-col gap-px\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TreeViewBranchControl({ className, ...props }: React.ComponentProps<typeof TreeViewPrimitive.BranchControl>) {\n  return (\n    <TreeViewPrimitive.BranchControl\n      data-slot=\"tree-view-branch-control\"\n      className={cn(rowClassName, className)}\n      {...props}\n    />\n  )\n}\n\nfunction TreeViewBranchTrigger({ className, ...props }: React.ComponentProps<typeof TreeViewPrimitive.BranchTrigger>) {\n  return (\n    <TreeViewPrimitive.BranchTrigger\n      data-slot=\"tree-view-branch-trigger\"\n      className={cn(\"inline-flex\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TreeViewBranchIndicator({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof TreeViewPrimitive.BranchIndicator>) {\n  return (\n    <TreeViewPrimitive.BranchIndicator\n      data-slot=\"tree-view-branch-indicator\"\n      className={cn(\"text-muted-foreground transition-transform data-[state=open]:rotate-90\", className)}\n      {...props}\n    >\n      {children ?? <ChevronRightIcon />}\n    </TreeViewPrimitive.BranchIndicator>\n  )\n}\n\nfunction TreeViewBranchText({ className, ...props }: React.ComponentProps<typeof TreeViewPrimitive.BranchText>) {\n  return (\n    <TreeViewPrimitive.BranchText data-slot=\"tree-view-branch-text\" className={cn(\"truncate\", className)} {...props} />\n  )\n}\n\nfunction TreeViewBranchContent({ className, ...props }: React.ComponentProps<typeof TreeViewPrimitive.BranchContent>) {\n  return (\n    <TreeViewPrimitive.BranchContent\n      data-slot=\"tree-view-branch-content\"\n      className={cn(\"relative flex flex-col gap-px\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TreeViewBranchIndentGuide({\n  className,\n  ...props\n}: React.ComponentProps<typeof TreeViewPrimitive.BranchIndentGuide>) {\n  return (\n    <TreeViewPrimitive.BranchIndentGuide\n      data-slot=\"tree-view-branch-indent-guide\"\n      className={cn(\n        \"absolute inset-y-0 left-[calc(var(--depth)*(--spacing(4))+(--spacing(3)))] w-px bg-border\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TreeViewItem({ className, ...props }: React.ComponentProps<typeof TreeViewPrimitive.Item>) {\n  return <TreeViewPrimitive.Item data-slot=\"tree-view-item\" className={cn(rowClassName, className)} {...props} />\n}\n\nfunction TreeViewItemIndicator({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof TreeViewPrimitive.ItemIndicator>) {\n  return (\n    <TreeViewPrimitive.ItemIndicator\n      data-slot=\"tree-view-item-indicator\"\n      className={cn(\"ml-auto text-muted-foreground\", className)}\n      {...props}\n    >\n      {children ?? <CheckIcon />}\n    </TreeViewPrimitive.ItemIndicator>\n  )\n}\n\nfunction TreeViewItemText({ className, ...props }: React.ComponentProps<typeof TreeViewPrimitive.ItemText>) {\n  return <TreeViewPrimitive.ItemText data-slot=\"tree-view-item-text\" className={cn(\"truncate\", className)} {...props} />\n}\n\nfunction TreeViewNodeCheckbox({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof TreeViewPrimitive.NodeCheckbox>) {\n  return (\n    <TreeViewPrimitive.NodeCheckbox\n      data-slot=\"tree-view-node-checkbox\"\n      className={cn(\n        \"flex size-4 shrink-0 items-center justify-center rounded-lg border border-input text-primary-foreground data-indeterminate:border-primary data-indeterminate:bg-primary data-checked:border-primary data-checked:bg-primary [&_svg]:size-3\",\n        className\n      )}\n      {...props}\n    >\n      {children ?? (\n        <TreeViewNodeCheckboxIndicator indeterminate={<MinusIcon />}>\n          <CheckIcon />\n        </TreeViewNodeCheckboxIndicator>\n      )}\n    </TreeViewPrimitive.NodeCheckbox>\n  )\n}\n\nfunction TreeViewNodeCheckboxIndicator({\n  ...props\n}: React.ComponentProps<typeof TreeViewPrimitive.NodeCheckboxIndicator>) {\n  return <TreeViewPrimitive.NodeCheckboxIndicator data-slot=\"tree-view-node-checkbox-indicator\" {...props} />\n}\n\nfunction TreeViewNodeRenameInput({\n  className,\n  ...props\n}: React.ComponentProps<typeof TreeViewPrimitive.NodeRenameInput>) {\n  return (\n    <TreeViewPrimitive.NodeRenameInput\n      data-slot=\"tree-view-node-rename-input\"\n      className={cn(\n        \"h-6 min-w-0 flex-1 rounded-sm border border-input bg-background px-1 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring/50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nexport {\n  TreeView,\n  TreeViewBranch,\n  TreeViewBranchContent,\n  TreeViewBranchControl,\n  TreeViewBranchIndentGuide,\n  TreeViewBranchIndicator,\n  TreeViewBranchText,\n  TreeViewBranchTrigger,\n  TreeViewContext,\n  TreeViewItem,\n  TreeViewItemIndicator,\n  TreeViewItemText,\n  TreeViewLabel,\n  TreeViewNodeCheckbox,\n  TreeViewNodeCheckboxIndicator,\n  TreeViewNodeContext,\n  TreeViewNodeProvider,\n  TreeViewNodeRenameInput,\n  TreeViewTree,\n  createTreeCollection,\n  type TreeCollection,\n  type TreeNode,\n}\n"
+      "content": "\"use client\"\n\nimport { useTreeView, useTreeViewContext, useTreeViewNodeContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { TreeView as TreeViewPrimitive, createTreeCollection, type TreeCollection, type TreeNode } from \"@ark-ui/react\"\nimport { CheckIcon, ChevronRightIcon, MinusIcon } from \"lucide-react\"\n\nfunction TreeViewRoot<T extends TreeNode>({ className, ...props }: TreeViewRootProps<T>) {\n  return <TreeViewPrimitive.Root data-slot=\"tree-view\" className={cn(\"w-full text-sm\", className)} {...props} />\n}\n\nfunction TreeViewContext({ ...props }: TreeViewContextProps) {\n  return <TreeViewPrimitive.Context {...props} />\n}\n\nfunction TreeViewLabel({ className, ...props }: TreeViewLabelProps) {\n  return (\n    <TreeViewPrimitive.Label\n      data-slot=\"tree-view-label\"\n      className={cn(\"mb-1 text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TreeViewTree({ className, ...props }: TreeViewTreeProps) {\n  return (\n    <TreeViewPrimitive.Tree\n      data-slot=\"tree-view-tree\"\n      className={cn(\"flex flex-col gap-px outline-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TreeViewNodeProvider<T>({ ...props }: TreeViewNodeProviderProps<T>) {\n  return <TreeViewPrimitive.NodeProvider {...props} />\n}\n\nfunction TreeViewNodeContext({ ...props }: TreeViewNodeContextProps) {\n  return <TreeViewPrimitive.NodeContext {...props} />\n}\n\nconst rowClassName =\n  \"group/tree-row relative flex h-7 cursor-default items-center gap-1.5 rounded-md py-1 pr-2 pl-[calc(var(--depth)*--spacing(4)+--spacing(1.5))] outline-none select-none hover:bg-muted data-selected:bg-muted data-selected:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-inset data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\"\n\nfunction TreeViewBranch({ className, ...props }: TreeViewBranchProps) {\n  return (\n    <TreeViewPrimitive.Branch\n      data-slot=\"tree-view-branch\"\n      className={cn(\"flex flex-col gap-px\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TreeViewBranchControl({ className, ...props }: TreeViewBranchControlProps) {\n  return (\n    <TreeViewPrimitive.BranchControl\n      data-slot=\"tree-view-branch-control\"\n      className={cn(rowClassName, className)}\n      {...props}\n    />\n  )\n}\n\nfunction TreeViewBranchTrigger({ className, ...props }: TreeViewBranchTriggerProps) {\n  return (\n    <TreeViewPrimitive.BranchTrigger\n      data-slot=\"tree-view-branch-trigger\"\n      className={cn(\"inline-flex\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TreeViewBranchIndicator({ className, children, ...props }: TreeViewBranchIndicatorProps) {\n  return (\n    <TreeViewPrimitive.BranchIndicator\n      data-slot=\"tree-view-branch-indicator\"\n      className={cn(\"text-muted-foreground transition-transform data-[state=open]:rotate-90\", className)}\n      {...props}\n    >\n      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <ChevronRightIcon />}</>}\n    </TreeViewPrimitive.BranchIndicator>\n  )\n}\n\nfunction TreeViewBranchText({ className, ...props }: TreeViewBranchTextProps) {\n  return (\n    <TreeViewPrimitive.BranchText data-slot=\"tree-view-branch-text\" className={cn(\"truncate\", className)} {...props} />\n  )\n}\n\nfunction TreeViewBranchContent({ className, ...props }: TreeViewBranchContentProps) {\n  return (\n    <TreeViewPrimitive.BranchContent\n      data-slot=\"tree-view-branch-content\"\n      className={cn(\"relative flex flex-col gap-px\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TreeViewBranchIndentGuide({ className, ...props }: TreeViewBranchIndentGuideProps) {\n  return (\n    <TreeViewPrimitive.BranchIndentGuide\n      data-slot=\"tree-view-branch-indent-guide\"\n      className={cn(\n        \"absolute inset-y-0 left-[calc(var(--depth)*(--spacing(4))+(--spacing(3)))] w-px bg-border\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TreeViewItem({ className, ...props }: TreeViewItemProps) {\n  return <TreeViewPrimitive.Item data-slot=\"tree-view-item\" className={cn(rowClassName, className)} {...props} />\n}\n\nfunction TreeViewItemIndicator({ className, children, ...props }: TreeViewItemIndicatorProps) {\n  return (\n    <TreeViewPrimitive.ItemIndicator\n      data-slot=\"tree-view-item-indicator\"\n      className={cn(\"ml-auto text-muted-foreground\", className)}\n      {...props}\n    >\n      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <CheckIcon />}</>}\n    </TreeViewPrimitive.ItemIndicator>\n  )\n}\n\nfunction TreeViewItemText({ className, ...props }: TreeViewItemTextProps) {\n  return <TreeViewPrimitive.ItemText data-slot=\"tree-view-item-text\" className={cn(\"truncate\", className)} {...props} />\n}\n\nfunction TreeViewNodeCheckbox({ className, children, ...props }: TreeViewNodeCheckboxProps) {\n  return (\n    <TreeViewPrimitive.NodeCheckbox\n      data-slot=\"tree-view-node-checkbox\"\n      className={cn(\n        \"flex size-4 shrink-0 items-center justify-center rounded-lg border border-input text-primary-foreground data-indeterminate:border-primary data-indeterminate:bg-primary data-checked:border-primary data-checked:bg-primary [&_svg]:size-3\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <TreeViewNodeCheckboxIndicator indeterminate={<MinusIcon />}>\n              <CheckIcon />\n            </TreeViewNodeCheckboxIndicator>\n          )}\n        </>\n      )}\n    </TreeViewPrimitive.NodeCheckbox>\n  )\n}\n\nfunction TreeViewNodeCheckboxIndicator({ ...props }: TreeViewNodeCheckboxIndicatorProps) {\n  return <TreeViewPrimitive.NodeCheckboxIndicator data-slot=\"tree-view-node-checkbox-indicator\" {...props} />\n}\n\nfunction TreeViewNodeRenameInput({ className, ...props }: TreeViewNodeRenameInputProps) {\n  return (\n    <TreeViewPrimitive.NodeRenameInput\n      data-slot=\"tree-view-node-rename-input\"\n      className={cn(\n        \"h-6 min-w-0 flex-1 rounded-sm border border-input bg-background px-1 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring/50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TreeViewRootProvider<T extends TreeNode>({ className, ...props }: TreeViewRootProviderProps<T>) {\n  return <TreeViewPrimitive.RootProvider data-slot=\"tree-view\" className={cn(\"w-full text-sm\", className)} {...props} />\n}\n\ntype TreeViewRootProps<T extends TreeNode = TreeNode> = React.ComponentProps<typeof TreeViewPrimitive.Root<T>>\n\ntype TreeViewRootProviderProps<T extends TreeNode = TreeNode> = React.ComponentProps<\n  typeof TreeViewPrimitive.RootProvider<T>\n>\n\ntype TreeViewBranchProps = React.ComponentProps<typeof TreeViewPrimitive.Branch>\n\ntype TreeViewBranchContentProps = React.ComponentProps<typeof TreeViewPrimitive.BranchContent>\n\ntype TreeViewBranchControlProps = React.ComponentProps<typeof TreeViewPrimitive.BranchControl>\n\ntype TreeViewBranchIndentGuideProps = React.ComponentProps<typeof TreeViewPrimitive.BranchIndentGuide>\n\ntype TreeViewBranchIndicatorProps = React.ComponentProps<typeof TreeViewPrimitive.BranchIndicator>\n\ntype TreeViewBranchTextProps = React.ComponentProps<typeof TreeViewPrimitive.BranchText>\n\ntype TreeViewBranchTriggerProps = React.ComponentProps<typeof TreeViewPrimitive.BranchTrigger>\n\ntype TreeViewContextProps = React.ComponentProps<typeof TreeViewPrimitive.Context>\n\ntype TreeViewItemProps = React.ComponentProps<typeof TreeViewPrimitive.Item>\n\ntype TreeViewItemIndicatorProps = React.ComponentProps<typeof TreeViewPrimitive.ItemIndicator>\n\ntype TreeViewItemTextProps = React.ComponentProps<typeof TreeViewPrimitive.ItemText>\n\ntype TreeViewLabelProps = React.ComponentProps<typeof TreeViewPrimitive.Label>\n\ntype TreeViewNodeCheckboxProps = React.ComponentProps<typeof TreeViewPrimitive.NodeCheckbox>\n\ntype TreeViewNodeCheckboxIndicatorProps = React.ComponentProps<typeof TreeViewPrimitive.NodeCheckboxIndicator>\n\ntype TreeViewNodeContextProps = React.ComponentProps<typeof TreeViewPrimitive.NodeContext>\n\ntype TreeViewNodeProviderProps<T = unknown> = React.ComponentProps<typeof TreeViewPrimitive.NodeProvider<T>>\n\ntype TreeViewNodeRenameInputProps = React.ComponentProps<typeof TreeViewPrimitive.NodeRenameInput>\n\ntype TreeViewTreeProps = React.ComponentProps<typeof TreeViewPrimitive.Tree>\n\nconst TreeView = {\n  Root: TreeViewRoot,\n  RootProvider: TreeViewRootProvider,\n  Branch: TreeViewBranch,\n  BranchContent: TreeViewBranchContent,\n  BranchControl: TreeViewBranchControl,\n  BranchIndentGuide: TreeViewBranchIndentGuide,\n  BranchIndicator: TreeViewBranchIndicator,\n  BranchText: TreeViewBranchText,\n  BranchTrigger: TreeViewBranchTrigger,\n  Context: TreeViewContext,\n  Item: TreeViewItem,\n  ItemIndicator: TreeViewItemIndicator,\n  ItemText: TreeViewItemText,\n  Label: TreeViewLabel,\n  NodeCheckbox: TreeViewNodeCheckbox,\n  NodeCheckboxIndicator: TreeViewNodeCheckboxIndicator,\n  NodeContext: TreeViewNodeContext,\n  NodeProvider: TreeViewNodeProvider,\n  NodeRenameInput: TreeViewNodeRenameInput,\n  Tree: TreeViewTree,\n}\n\nexport {\n  useTreeView,\n  useTreeViewContext,\n  useTreeViewNodeContext,\n  TreeView,\n  createTreeCollection,\n  type TreeCollection,\n  type TreeNode,\n  type TreeViewRootProps,\n  type TreeViewRootProviderProps,\n  type TreeViewBranchProps,\n  type TreeViewBranchContentProps,\n  type TreeViewBranchControlProps,\n  type TreeViewBranchIndentGuideProps,\n  type TreeViewBranchIndicatorProps,\n  type TreeViewBranchTextProps,\n  type TreeViewBranchTriggerProps,\n  type TreeViewContextProps,\n  type TreeViewItemProps,\n  type TreeViewItemIndicatorProps,\n  type TreeViewItemTextProps,\n  type TreeViewLabelProps,\n  type TreeViewNodeCheckboxProps,\n  type TreeViewNodeCheckboxIndicatorProps,\n  type TreeViewNodeContextProps,\n  type TreeViewNodeProviderProps,\n  type TreeViewNodeRenameInputProps,\n  type TreeViewTreeProps,\n}\n"
     }
   ]
 }

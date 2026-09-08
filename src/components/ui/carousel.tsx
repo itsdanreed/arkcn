@@ -1,3 +1,4 @@
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import useEmblaCarousel, { type UseEmblaCarouselType } from "embla-carousel-react"
@@ -41,7 +42,7 @@ function useCarousel() {
   return context
 }
 
-function Carousel({
+function CarouselRoot({
   orientation = "horizontal",
   opts,
   setApi,
@@ -49,7 +50,7 @@ function Carousel({
   className,
   children,
   ...props
-}: React.ComponentProps<"div"> & CarouselProps) {
+}: CarouselRootProps) {
   const [carouselRef, api] = useEmblaCarousel(
     {
       ...opts,
@@ -116,7 +117,7 @@ function Carousel({
         canScrollNext,
       }}
     >
-      <div
+      <ark.div
         onKeyDownCapture={handleKeyDown}
         className={cn("relative", className)}
         role="region"
@@ -125,26 +126,29 @@ function Carousel({
         {...props}
       >
         {children}
-      </div>
+      </ark.div>
     </CarouselContext.Provider>
   )
 }
 
-function CarouselContent({ className, ...props }: React.ComponentProps<"div">) {
+function CarouselItemGroup({ className, ...props }: CarouselItemGroupProps) {
   const { carouselRef, orientation } = useCarousel()
 
   return (
     <div ref={carouselRef} className="overflow-hidden" data-slot="carousel-content">
-      <div className={cn("flex", orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col", className)} {...props} />
+      <ark.div
+        className={cn("flex", orientation === "horizontal" ? "-ml-4" : "-mt-4 flex-col", className)}
+        {...props}
+      />
     </div>
   )
 }
 
-function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
+function CarouselItem({ className, ...props }: CarouselItemProps) {
   const { orientation } = useCarousel()
 
   return (
-    <div
+    <ark.div
       role="group"
       aria-roledescription="slide"
       data-slot="carousel-item"
@@ -154,14 +158,14 @@ function CarouselItem({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CarouselPrevious({
+function CarouselPrevTrigger({
   className,
   variant = "outline",
   size = "icon-sm",
   asChild,
   children,
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: CarouselPrevTriggerProps) {
   const { orientation, scrollPrev, canScrollPrev } = useCarousel()
 
   return (
@@ -191,14 +195,14 @@ function CarouselPrevious({
   )
 }
 
-function CarouselNext({
+function CarouselNextTrigger({
   className,
   variant = "outline",
   size = "icon-sm",
   asChild,
   children,
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: CarouselNextTriggerProps) {
   const { orientation, scrollNext, canScrollNext } = useCarousel()
 
   return (
@@ -228,4 +232,31 @@ function CarouselNext({
   )
 }
 
-export { type CarouselApi, Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext, useCarousel }
+type CarouselRootProps = React.ComponentProps<typeof ark.div> & CarouselProps
+
+type CarouselItemGroupProps = React.ComponentProps<typeof ark.div>
+
+type CarouselItemProps = React.ComponentProps<typeof ark.div>
+
+type CarouselPrevTriggerProps = React.ComponentProps<typeof Button>
+
+type CarouselNextTriggerProps = React.ComponentProps<typeof Button>
+
+const Carousel = {
+  Root: CarouselRoot,
+  ItemGroup: CarouselItemGroup,
+  Item: CarouselItem,
+  PrevTrigger: CarouselPrevTrigger,
+  NextTrigger: CarouselNextTrigger,
+}
+
+export {
+  type CarouselApi,
+  Carousel,
+  useCarousel,
+  type CarouselRootProps,
+  type CarouselItemGroupProps,
+  type CarouselItemProps,
+  type CarouselPrevTriggerProps,
+  type CarouselNextTriggerProps,
+}

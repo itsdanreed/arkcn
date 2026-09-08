@@ -1,41 +1,37 @@
-import * as React from "react"
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
-
+import { Pagination } from "@/components/ui/pagination"
 export default function PaginationExample() {
-  const [page, setPage] = React.useState(2)
-  const go = (next: number) => (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault()
-    setPage(Math.max(1, Math.min(5, next)))
-  }
   return (
-    <div className="flex flex-col items-center gap-4">
-      <Pagination>
-        <PaginationContent>
-          <PaginationItem>
-            <PaginationPrevious href="#" onClick={go(page - 1)} aria-disabled={page === 1} />
-          </PaginationItem>
-          {[1, 2, 3, 4, 5].map((number) => (
-            <PaginationItem key={number}>
-              <PaginationLink href="#" onClick={go(number)} isActive={page === number}>
-                {number}
-              </PaginationLink>
-            </PaginationItem>
-          ))}
-          <PaginationItem>
-            <PaginationNext href="#" onClick={go(page + 1)} aria-disabled={page === 5} />
-          </PaginationItem>
-        </PaginationContent>
-      </Pagination>
-      <p aria-live="polite" className="text-sm text-muted-foreground">
-        Page {page} of 5
-      </p>
+    <div className="flex flex-col gap-4">
+      <Pagination.Root count={100} pageSize={10} defaultPage={2}>
+        <Pagination.FirstTrigger aria-label="First page">«</Pagination.FirstTrigger>
+        <Pagination.PrevTrigger aria-label="Previous page">‹</Pagination.PrevTrigger>
+        <Pagination.Context>
+          {(api) => (
+            <>
+              {api.pages.map((page, index) =>
+                page.type === "page" ? (
+                  <Pagination.Item key={page.value} {...page}>
+                    {page.value}
+                  </Pagination.Item>
+                ) : (
+                  <Pagination.Ellipsis key={index} index={index}>
+                    …
+                  </Pagination.Ellipsis>
+                )
+              )}
+            </>
+          )}
+        </Pagination.Context>
+        <Pagination.NextTrigger aria-label="Next page">›</Pagination.NextTrigger>
+        <Pagination.LastTrigger aria-label="Last page">»</Pagination.LastTrigger>
+        <Pagination.Context>
+          {(api) => (
+            <span className="ml-3 text-sm text-muted-foreground" aria-live="polite">
+              Page {api.page} of {api.totalPages}
+            </span>
+          )}
+        </Pagination.Context>
+      </Pagination.Root>
     </div>
   )
 }

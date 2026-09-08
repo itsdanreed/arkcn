@@ -1,11 +1,11 @@
 import * as React from "react"
 import { Button } from "@/components/ui/button"
-import { ButtonGroup, ButtonGroupSeparator } from "@/components/ui/button-group"
+import { ButtonGroup } from "@/components/ui/button-group"
 
 export default function ButtonGroupExample() {
   const [view, setView] = React.useState("Week")
   return (
-    <ButtonGroup>
+    <ButtonGroup.Root>
       <Button
         variant={view === "Day" ? "secondary" : "outline"}
         aria-pressed={view === "Day"}
@@ -22,7 +22,7 @@ export default function ButtonGroupExample() {
         {" "}
         Week{" "}
       </Button>
-      <ButtonGroupSeparator />
+      <ButtonGroup.Separator />
       <Button
         variant={view === "Month" ? "secondary" : "outline"}
         aria-pressed={view === "Month"}
@@ -31,6 +31,6 @@ export default function ButtonGroupExample() {
         {" "}
         Month{" "}
       </Button>
-    </ButtonGroup>
+    </ButtonGroup.Root>
   )
 }

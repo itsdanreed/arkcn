@@ -1,18 +1,18 @@
 import { TerminalIcon } from "lucide-react"
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Alert } from "@/components/ui/alert"
 
 export default function AlertExample() {
   return (
     <div className="flex w-96 flex-col gap-3">
-      <Alert>
+      <Alert.Root>
         <TerminalIcon />
-        <AlertTitle>Heads up!</AlertTitle>
-        <AlertDescription>You can add components to your app using the CLI.</AlertDescription>
-      </Alert>
-      <Alert variant="destructive">
-        <AlertTitle>Something went wrong</AlertTitle>
-        <AlertDescription>Your session has expired. Please sign in again.</AlertDescription>
-      </Alert>
+        <Alert.Title>Heads up!</Alert.Title>
+        <Alert.Description>You can add components to your app using the CLI.</Alert.Description>
+      </Alert.Root>
+      <Alert.Root variant="destructive">
+        <Alert.Title>Something went wrong</Alert.Title>
+        <Alert.Description>Your session has expired. Please sign in again.</Alert.Description>
+      </Alert.Root>
     </div>
   )
 }

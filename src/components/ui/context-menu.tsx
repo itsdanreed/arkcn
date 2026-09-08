@@ -1,19 +1,17 @@
 "use client"
 
+import { ark } from "@ark-ui/react"
+import { useMenu, useMenuContext, useMenuItemContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Menu as ContextMenuPrimitive, Portal as PortalPrimitive } from "@ark-ui/react"
 import { CheckIcon, ChevronRightIcon, ChevronDownIcon } from "lucide-react"
 
-function ContextMenu({
-  lazyMount = true,
-  unmountOnExit = true,
-  ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.Root>) {
+function ContextMenuRoot({ lazyMount = true, unmountOnExit = true, ...props }: ContextMenuRootProps) {
   return <ContextMenuPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />
 }
 
-function ContextMenuTrigger({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.ContextTrigger>) {
+function ContextMenuContextTrigger({ className, ...props }: ContextMenuContextTriggerProps) {
   return (
     <ContextMenuPrimitive.ContextTrigger
       data-slot="context-menu-trigger"
@@ -23,15 +21,15 @@ function ContextMenuTrigger({ className, ...props }: React.ComponentProps<typeof
   )
 }
 
-function ContextMenuPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {
+function ContextMenuPortal({ ...props }: ContextMenuPortalProps) {
   return <PortalPrimitive {...props} />
 }
 
-function ContextMenuContext({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Context>) {
+function ContextMenuContext({ ...props }: ContextMenuContextProps) {
   return <ContextMenuPrimitive.Context {...props} />
 }
 
-function ContextMenuPositioner({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Positioner>) {
+function ContextMenuPositioner({ className, ...props }: ContextMenuPositionerProps) {
   return (
     <ContextMenuPrimitive.Positioner
       data-slot="context-menu-positioner"
@@ -41,7 +39,7 @@ function ContextMenuPositioner({ className, ...props }: React.ComponentProps<typ
   )
 }
 
-function ContextMenuContent({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Content>) {
+function ContextMenuContent({ className, ...props }: ContextMenuContentProps) {
   return (
     <ContextMenuPortal>
       <ContextMenuPositioner>
@@ -58,22 +56,11 @@ function ContextMenuContent({ className, ...props }: React.ComponentProps<typeof
   )
 }
 
-function ContextMenuGroup({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.ItemGroup>) {
+function ContextMenuItemGroup({ ...props }: ContextMenuItemGroupProps) {
   return <ContextMenuPrimitive.ItemGroup data-slot="context-menu-group" {...props} />
 }
 
-function ContextMenuItem({
-  className,
-  inset,
-  variant = "default",
-  value,
-  ...props
-}: Omit<React.ComponentProps<typeof ContextMenuPrimitive.Item>, "value"> & {
-  value?: string
-  /** Indent the item to align with items that have an indicator. */
-  inset?: boolean
-  variant?: "default" | "destructive"
-}) {
+function ContextMenuItem({ className, inset, variant = "default", value, ...props }: ContextMenuItemProps) {
   const id = React.useId()
   return (
     <ContextMenuPrimitive.Item
@@ -90,14 +77,11 @@ function ContextMenuItem({
   )
 }
 
-function ContextMenuItemText({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.ItemText>) {
+function ContextMenuItemText({ ...props }: ContextMenuItemTextProps) {
   return <ContextMenuPrimitive.ItemText data-slot="context-menu-item-text" {...props} />
 }
 
-function ContextMenuItemIndicator({
-  className,
-  ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.ItemIndicator>) {
+function ContextMenuItemIndicator({ className, ...props }: ContextMenuItemIndicatorProps) {
   return (
     <ContextMenuPrimitive.ItemIndicator
       data-slot="context-menu-item-indicator"
@@ -117,13 +101,7 @@ function ContextMenuCheckboxItem({
   inset,
   value,
   ...props
-}: Omit<React.ComponentProps<typeof ContextMenuPrimitive.CheckboxItem>, "checked" | "value"> & {
-  /** Checked state of the item. */
-  checked?: boolean
-  value?: string
-  /** Indent the item to align with items that have an indicator. */
-  inset?: boolean
-}) {
+}: ContextMenuCheckboxItemProps) {
   const id = React.useId()
   return (
     <ContextMenuPrimitive.CheckboxItem
@@ -134,27 +112,27 @@ function ContextMenuCheckboxItem({
       value={value ?? id}
       {...props}
     >
-      <ContextMenuItemIndicator data-slot="context-menu-checkbox-item-indicator">
-        <CheckIcon />
-      </ContextMenuItemIndicator>
-      {children}
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <ContextMenuItemIndicator data-slot="context-menu-checkbox-item-indicator">
+            <CheckIcon />
+          </ContextMenuItemIndicator>
+          {children}
+        </>
+      )}
     </ContextMenuPrimitive.CheckboxItem>
   )
 }
 
-function ContextMenuRadioGroup({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.RadioItemGroup>) {
+function ContextMenuRadioItemGroup({ ...props }: ContextMenuRadioItemGroupProps) {
   return <ContextMenuPrimitive.RadioItemGroup data-slot="context-menu-radio-group" {...props} />
 }
 
-function ContextMenuRadioItem({
-  className,
-  children,
-  inset,
-  ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.RadioItem> & {
-  /** Indent the item to align with items that have an indicator. */
-  inset?: boolean
-}) {
+function ContextMenuRadioItem({ className, children, inset, ...props }: ContextMenuRadioItemProps) {
   return (
     <ContextMenuPrimitive.RadioItem
       data-slot="context-menu-radio-item"
@@ -162,22 +140,23 @@ function ContextMenuRadioItem({
       className={cn(optionItemClassName, className)}
       {...props}
     >
-      <ContextMenuItemIndicator data-slot="context-menu-radio-item-indicator">
-        <CheckIcon />
-      </ContextMenuItemIndicator>
-      {children}
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <ContextMenuItemIndicator data-slot="context-menu-radio-item-indicator">
+            <CheckIcon />
+          </ContextMenuItemIndicator>
+          {children}
+        </>
+      )}
     </ContextMenuPrimitive.RadioItem>
   )
 }
 
-function ContextMenuLabel({
-  className,
-  inset,
-  ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.ItemGroupLabel> & {
-  /** Indent the item to align with items that have an indicator. */
-  inset?: boolean
-}) {
+function ContextMenuItemGroupLabel({ className, inset, ...props }: ContextMenuItemGroupLabelProps) {
   return (
     <ContextMenuPrimitive.ItemGroupLabel
       data-slot="context-menu-label"
@@ -188,7 +167,7 @@ function ContextMenuLabel({
   )
 }
 
-function ContextMenuSeparator({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Separator>) {
+function ContextMenuSeparator({ className, ...props }: ContextMenuSeparatorProps) {
   return (
     <ContextMenuPrimitive.Separator
       data-slot="context-menu-separator"
@@ -198,9 +177,9 @@ function ContextMenuSeparator({ className, ...props }: React.ComponentProps<type
   )
 }
 
-function ContextMenuShortcut({ className, ...props }: React.ComponentProps<"span">) {
+function ContextMenuShortcut({ className, ...props }: ContextMenuShortcutProps) {
   return (
-    <span
+    <ark.span
       data-slot="context-menu-shortcut"
       className={cn(
         "ml-auto text-xs tracking-widest text-muted-foreground group-data-highlighted/context-menu-item:text-accent-foreground",
@@ -211,23 +190,11 @@ function ContextMenuShortcut({ className, ...props }: React.ComponentProps<"span
   )
 }
 
-function ContextMenuSub({
-  lazyMount = true,
-  unmountOnExit = true,
-  ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.Root>) {
+function ContextMenuSub({ lazyMount = true, unmountOnExit = true, ...props }: ContextMenuSubProps) {
   return <ContextMenuPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />
 }
 
-function ContextMenuSubTrigger({
-  className,
-  inset,
-  children,
-  ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.TriggerItem> & {
-  /** Indent the item to align with items that have an indicator. */
-  inset?: boolean
-}) {
+function ContextMenuTriggerItem({ className, inset, children, ...props }: ContextMenuTriggerItemProps) {
   return (
     <ContextMenuPrimitive.TriggerItem
       data-slot="context-menu-sub-trigger"
@@ -238,13 +205,21 @@ function ContextMenuSubTrigger({
       )}
       {...props}
     >
-      {children}
-      <ChevronRightIcon className="ml-auto" />
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {children}
+          <ChevronRightIcon className="ml-auto" />
+        </>
+      )}
     </ContextMenuPrimitive.TriggerItem>
   )
 }
 
-function ContextMenuSubContent({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Content>) {
+function ContextMenuSubContent({ className, ...props }: ContextMenuSubContentProps) {
   return (
     <ContextMenuPortal>
       <ContextMenuPositioner>
@@ -262,44 +237,48 @@ function ContextMenuSubContent({ className, ...props }: React.ComponentProps<typ
 }
 
 /** Render-prop access to one item's state (`{ selected, highlighted, disabled, ... }`). */
-function ContextMenuItemContext({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.ItemContext>) {
+function ContextMenuItemContext({ ...props }: ContextMenuItemContextProps) {
   return <ContextMenuPrimitive.ItemContext {...props} />
 }
 
 /** A click trigger for the same menu, alongside the right-click `ContextMenuTrigger`. */
-function ContextMenuClickTrigger({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Trigger>) {
+function ContextMenuClickTrigger({ ...props }: ContextMenuClickTriggerProps) {
   return <ContextMenuPrimitive.Trigger data-slot="context-menu-click-trigger" {...props} />
 }
 
-function ContextMenuIndicator({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.Indicator>) {
+function ContextMenuIndicator({ className, children, ...props }: ContextMenuIndicatorProps) {
   return (
     <ContextMenuPrimitive.Indicator
       data-slot="context-menu-indicator"
       className={cn("inline-flex transition-transform data-[state=open]:rotate-180 [&_svg]:size-4", className)}
       {...props}
     >
-      {children ?? <ChevronDownIcon />}
+      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <ChevronDownIcon />}</>}
     </ContextMenuPrimitive.Indicator>
   )
 }
 
-function ContextMenuArrow({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Arrow>) {
+function ContextMenuArrow({ className, ...props }: ContextMenuArrowProps) {
   return (
     <ContextMenuPrimitive.Arrow
       data-slot="context-menu-arrow"
       className={cn("[--arrow-background:var(--color-popover)] [--arrow-size:0.625rem]", className)}
       {...props}
     >
-      <ContextMenuArrowTip />
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <ContextMenuArrowTip />
+        </>
+      )}
     </ContextMenuPrimitive.Arrow>
   )
 }
 
-function ContextMenuArrowTip({ className, ...props }: React.ComponentProps<typeof ContextMenuPrimitive.ArrowTip>) {
+function ContextMenuArrowTip({ className, ...props }: ContextMenuArrowTipProps) {
   return (
     <ContextMenuPrimitive.ArrowTip
       data-slot="context-menu-arrow-tip"
@@ -309,29 +288,147 @@ function ContextMenuArrowTip({ className, ...props }: React.ComponentProps<typeo
   )
 }
 
+function ContextMenuRootProvider(props: ContextMenuRootProviderProps) {
+  return <ContextMenuPrimitive.RootProvider {...props} />
+}
+
+function ContextMenuTrigger({ className, ...props }: ContextMenuTriggerProps) {
+  return <ContextMenuPrimitive.Trigger data-slot="context-menu-button-trigger" className={cn(className)} {...props} />
+}
+
+type ContextMenuContextTriggerProps = React.ComponentProps<typeof ContextMenuPrimitive.ContextTrigger>
+
+type ContextMenuItemGroupProps = React.ComponentProps<typeof ContextMenuPrimitive.ItemGroup>
+
+type ContextMenuItemGroupLabelProps = React.ComponentProps<typeof ContextMenuPrimitive.ItemGroupLabel> & {
+  /** Indent the item to align with items that have an indicator. */
+  inset?: boolean
+}
+
+type ContextMenuRadioItemGroupProps = React.ComponentProps<typeof ContextMenuPrimitive.RadioItemGroup>
+
+type ContextMenuTriggerItemProps = React.ComponentProps<typeof ContextMenuPrimitive.TriggerItem> & {
+  /** Indent the item to align with items that have an indicator. */
+  inset?: boolean
+}
+
+type ContextMenuRootProps = React.ComponentProps<typeof ContextMenuPrimitive.Root>
+
+type ContextMenuRootProviderProps = React.ComponentProps<typeof ContextMenuPrimitive.RootProvider>
+
+type ContextMenuCheckboxItemProps = Omit<
+  React.ComponentProps<typeof ContextMenuPrimitive.CheckboxItem>,
+  "checked" | "value"
+> & {
+  /** Checked state of the item. */
+  checked?: boolean
+  value?: string
+  /** Indent the item to align with items that have an indicator. */
+  inset?: boolean
+}
+
+type ContextMenuContentProps = React.ComponentProps<typeof ContextMenuPrimitive.Content>
+
+type ContextMenuContextProps = React.ComponentProps<typeof ContextMenuPrimitive.Context>
+
+type ContextMenuItemProps = Omit<React.ComponentProps<typeof ContextMenuPrimitive.Item>, "value"> & {
+  value?: string
+  /** Indent the item to align with items that have an indicator. */
+  inset?: boolean
+  variant?: "default" | "destructive"
+}
+
+type ContextMenuItemIndicatorProps = React.ComponentProps<typeof ContextMenuPrimitive.ItemIndicator>
+
+type ContextMenuItemTextProps = React.ComponentProps<typeof ContextMenuPrimitive.ItemText>
+
+type ContextMenuPortalProps = React.ComponentProps<typeof PortalPrimitive>
+
+type ContextMenuPositionerProps = React.ComponentProps<typeof ContextMenuPrimitive.Positioner>
+
+type ContextMenuRadioItemProps = React.ComponentProps<typeof ContextMenuPrimitive.RadioItem> & {
+  /** Indent the item to align with items that have an indicator. */
+  inset?: boolean
+}
+
+type ContextMenuSeparatorProps = React.ComponentProps<typeof ContextMenuPrimitive.Separator>
+
+type ContextMenuShortcutProps = React.ComponentProps<typeof ark.span>
+
+type ContextMenuSubProps = React.ComponentProps<typeof ContextMenuPrimitive.Root>
+
+type ContextMenuSubContentProps = React.ComponentProps<typeof ContextMenuPrimitive.Content>
+
+type ContextMenuTriggerProps = React.ComponentProps<typeof ContextMenuPrimitive.Trigger>
+
+type ContextMenuItemContextProps = React.ComponentProps<typeof ContextMenuPrimitive.ItemContext>
+
+type ContextMenuArrowProps = React.ComponentProps<typeof ContextMenuPrimitive.Arrow>
+
+type ContextMenuArrowTipProps = React.ComponentProps<typeof ContextMenuPrimitive.ArrowTip>
+
+type ContextMenuClickTriggerProps = React.ComponentProps<typeof ContextMenuPrimitive.Trigger>
+
+type ContextMenuIndicatorProps = React.ComponentProps<typeof ContextMenuPrimitive.Indicator>
+
+const ContextMenu = {
+  ContextTrigger: ContextMenuContextTrigger,
+  ItemGroup: ContextMenuItemGroup,
+  ItemGroupLabel: ContextMenuItemGroupLabel,
+  RadioItemGroup: ContextMenuRadioItemGroup,
+  TriggerItem: ContextMenuTriggerItem,
+  Root: ContextMenuRoot,
+  RootProvider: ContextMenuRootProvider,
+  CheckboxItem: ContextMenuCheckboxItem,
+  Content: ContextMenuContent,
+  Context: ContextMenuContext,
+  Item: ContextMenuItem,
+  ItemIndicator: ContextMenuItemIndicator,
+  ItemText: ContextMenuItemText,
+  Portal: ContextMenuPortal,
+  Positioner: ContextMenuPositioner,
+  RadioItem: ContextMenuRadioItem,
+  Separator: ContextMenuSeparator,
+  Shortcut: ContextMenuShortcut,
+  Sub: ContextMenuSub,
+  SubContent: ContextMenuSubContent,
+  Trigger: ContextMenuTrigger,
+  ItemContext: ContextMenuItemContext,
+  Arrow: ContextMenuArrow,
+  ArrowTip: ContextMenuArrowTip,
+  ClickTrigger: ContextMenuClickTrigger,
+  Indicator: ContextMenuIndicator,
+}
+
 export {
+  useMenu,
+  useMenuContext,
+  useMenuItemContext,
   ContextMenu,
-  ContextMenuCheckboxItem,
-  ContextMenuContent,
-  ContextMenuContext,
-  ContextMenuGroup,
-  ContextMenuItem,
-  ContextMenuItemIndicator,
-  ContextMenuItemText,
-  ContextMenuLabel,
-  ContextMenuPortal,
-  ContextMenuPositioner,
-  ContextMenuRadioGroup,
-  ContextMenuRadioItem,
-  ContextMenuSeparator,
-  ContextMenuShortcut,
-  ContextMenuSub,
-  ContextMenuSubContent,
-  ContextMenuSubTrigger,
-  ContextMenuTrigger,
-  ContextMenuItemContext,
-  ContextMenuArrow,
-  ContextMenuArrowTip,
-  ContextMenuClickTrigger,
-  ContextMenuIndicator,
+  type ContextMenuContextTriggerProps,
+  type ContextMenuItemGroupProps,
+  type ContextMenuItemGroupLabelProps,
+  type ContextMenuRadioItemGroupProps,
+  type ContextMenuTriggerItemProps,
+  type ContextMenuRootProps,
+  type ContextMenuRootProviderProps,
+  type ContextMenuCheckboxItemProps,
+  type ContextMenuContentProps,
+  type ContextMenuContextProps,
+  type ContextMenuItemProps,
+  type ContextMenuItemIndicatorProps,
+  type ContextMenuItemTextProps,
+  type ContextMenuPortalProps,
+  type ContextMenuPositionerProps,
+  type ContextMenuRadioItemProps,
+  type ContextMenuSeparatorProps,
+  type ContextMenuShortcutProps,
+  type ContextMenuSubProps,
+  type ContextMenuSubContentProps,
+  type ContextMenuTriggerProps,
+  type ContextMenuItemContextProps,
+  type ContextMenuArrowProps,
+  type ContextMenuArrowTipProps,
+  type ContextMenuClickTriggerProps,
+  type ContextMenuIndicatorProps,
 }

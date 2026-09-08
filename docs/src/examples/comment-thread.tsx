@@ -1,26 +1,5 @@
 import * as React from "react"
-import {
-  Comment,
-  CommentActions,
-  CommentAuthor,
-  CommentAvatar,
-  CommentBody,
-  CommentComposer,
-  CommentComposerFooter,
-  CommentComposerHint,
-  CommentComposerInput,
-  CommentComposerMentionList,
-  CommentComposerReplyingTo,
-  CommentComposerSubmitTrigger,
-  CommentContent,
-  CommentHeader,
-  CommentList,
-  CommentReaction,
-  CommentReactions,
-  CommentReplyTrigger,
-  CommentThread,
-  CommentTime,
-} from "@/components/ui/comment-thread"
+import { CommentThread } from "@/components/ui/comment-thread"
 
 const people = [
   { id: "me", name: "Alex Morgan", initials: "AM" },
@@ -49,40 +28,40 @@ export default function CommentThreadExample() {
   ])
   const [replyTo, setReplyTo] = React.useState<string | null>(null)
   return (
-    <CommentThread
+    <CommentThread.Root
       people={people}
       currentUserId="me"
       replyTo={replyTo}
       onReplyToChange={setReplyTo}
       className="w-full max-w-lg"
     >
-      <CommentList>
+      <CommentThread.List>
         {comments.map((c) => (
-          <Comment key={c.id} value={c.id} authorId={c.authorId}>
-            <CommentAvatar />
-            <CommentContent>
-              <CommentHeader>
-                <CommentAuthor />
-                <CommentTime date={c.at} />
-              </CommentHeader>
-              <CommentBody text={c.text} />
-              <CommentReactions>
-                <CommentReaction
+          <CommentThread.Item key={c.id} value={c.id} authorId={c.authorId}>
+            <CommentThread.Avatar />
+            <CommentThread.Content>
+              <CommentThread.Header>
+                <CommentThread.Author />
+                <CommentThread.Time date={c.at} />
+              </CommentThread.Header>
+              <CommentThread.Body text={c.text} />
+              <CommentThread.Reactions>
+                <CommentThread.Reaction
                   emoji="👍"
                   count={c.likes}
                   onClick={() =>
                     setComments((prev) => prev.map((x) => (x.id === c.id ? { ...x, likes: x.likes + 1 } : x)))
                   }
                 />
-              </CommentReactions>
-              <CommentActions>
-                <CommentReplyTrigger />
-              </CommentActions>
-            </CommentContent>
-          </Comment>
+              </CommentThread.Reactions>
+              <CommentThread.Actions>
+                <CommentThread.ReplyTrigger />
+              </CommentThread.Actions>
+            </CommentThread.Content>
+          </CommentThread.Item>
         ))}
-      </CommentList>
-      <CommentComposer
+      </CommentThread.List>
+      <CommentThread.Composer
         people={people}
         onSubmit={({ text }) => {
           setComments((prev) => [
@@ -94,14 +73,14 @@ export default function CommentThreadExample() {
         onCancel={() => setReplyTo(null)}
         className="mt-2"
       >
-        <CommentComposerReplyingTo />
-        <CommentComposerInput placeholder="Write a comment… type @ to mention" />
-        <CommentComposerMentionList />
-        <CommentComposerFooter>
-          <CommentComposerHint />
-          <CommentComposerSubmitTrigger />
-        </CommentComposerFooter>
-      </CommentComposer>
-    </CommentThread>
+        <CommentThread.ComposerReplyingTo />
+        <CommentThread.ComposerInput placeholder="Write a comment… type @ to mention" />
+        <CommentThread.ComposerMentionList />
+        <CommentThread.ComposerFooter>
+          <CommentThread.ComposerHint />
+          <CommentThread.ComposerSubmitTrigger />
+        </CommentThread.ComposerFooter>
+      </CommentThread.Composer>
+    </CommentThread.Root>
   )
 }

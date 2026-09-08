@@ -1,45 +1,26 @@
 "use client"
 
+import { useSwitch, useSwitchContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Switch as SwitchPrimitive } from "@ark-ui/react"
 
-/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */
-function Switch({
-  className,
-  size = "default",
-  children,
-  ...props
-}: Omit<React.ComponentProps<typeof SwitchPrimitive.Root>, "id"> & {
-  size?: "sm" | "default"
-}) {
+function SwitchRoot({ className, ...props }: SwitchRootProps) {
   return (
     <SwitchPrimitive.Root
       data-slot="switch"
-      data-size={size}
-      className="group/switch peer inline-flex items-center gap-2"
+      data-size="default"
+      className={cn("group/switch peer inline-flex items-center gap-2", className)}
       {...props}
-    >
-      <SwitchControl className={className}>
-        <SwitchThumb />
-      </SwitchControl>
-      {children && <SwitchLabel>{children}</SwitchLabel>}
-      <SwitchHiddenInput />
-    </SwitchPrimitive.Root>
+    />
   )
 }
 
-/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */
-function SwitchRoot({ ...props }: Omit<React.ComponentProps<typeof SwitchPrimitive.Root>, "id">) {
-  return <SwitchPrimitive.Root data-slot="switch" {...props} />
-}
-
-function SwitchContext({ ...props }: React.ComponentProps<typeof SwitchPrimitive.Context>) {
+function SwitchContext({ ...props }: SwitchContextProps) {
   return <SwitchPrimitive.Context {...props} />
 }
 
-/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */
-function SwitchControl({ className, ...props }: Omit<React.ComponentProps<typeof SwitchPrimitive.Control>, "id">) {
+function SwitchControl({ className, ...props }: SwitchControlProps) {
   return (
     <SwitchPrimitive.Control
       data-slot="switch-control"
@@ -52,7 +33,7 @@ function SwitchControl({ className, ...props }: Omit<React.ComponentProps<typeof
   )
 }
 
-function SwitchThumb({ className, ...props }: React.ComponentProps<typeof SwitchPrimitive.Thumb>) {
+function SwitchThumb({ className, ...props }: SwitchThumbProps) {
   return (
     <SwitchPrimitive.Thumb
       data-slot="switch-thumb"
@@ -65,7 +46,7 @@ function SwitchThumb({ className, ...props }: React.ComponentProps<typeof Switch
   )
 }
 
-function SwitchLabel({ className, ...props }: React.ComponentProps<typeof SwitchPrimitive.Label>) {
+function SwitchLabel({ className, ...props }: SwitchLabelProps) {
   return (
     <SwitchPrimitive.Label
       data-slot="switch-label"
@@ -75,9 +56,54 @@ function SwitchLabel({ className, ...props }: React.ComponentProps<typeof Switch
   )
 }
 
-/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */
-function SwitchHiddenInput({ ...props }: Omit<React.ComponentProps<typeof SwitchPrimitive.HiddenInput>, "id">) {
+function SwitchHiddenInput({ ...props }: SwitchHiddenInputProps) {
   return <SwitchPrimitive.HiddenInput {...props} />
 }
 
-export { Switch, SwitchContext, SwitchControl, SwitchHiddenInput, SwitchLabel, SwitchRoot, SwitchThumb }
+function SwitchRootProvider({ className, ...props }: SwitchRootProviderProps) {
+  return (
+    <SwitchPrimitive.RootProvider
+      data-slot="switch"
+      data-size="default"
+      className={cn("group/switch peer inline-flex items-center gap-2", className)}
+      {...props}
+    />
+  )
+}
+
+type SwitchRootProps = React.ComponentProps<typeof SwitchPrimitive.Root>
+
+type SwitchRootProviderProps = React.ComponentProps<typeof SwitchPrimitive.RootProvider>
+
+type SwitchContextProps = React.ComponentProps<typeof SwitchPrimitive.Context>
+
+type SwitchControlProps = React.ComponentProps<typeof SwitchPrimitive.Control>
+
+type SwitchHiddenInputProps = React.ComponentProps<typeof SwitchPrimitive.HiddenInput>
+
+type SwitchLabelProps = React.ComponentProps<typeof SwitchPrimitive.Label>
+
+type SwitchThumbProps = React.ComponentProps<typeof SwitchPrimitive.Thumb>
+
+const Switch = {
+  Root: SwitchRoot,
+  RootProvider: SwitchRootProvider,
+  Context: SwitchContext,
+  Control: SwitchControl,
+  HiddenInput: SwitchHiddenInput,
+  Label: SwitchLabel,
+  Thumb: SwitchThumb,
+}
+
+export {
+  useSwitch,
+  useSwitchContext,
+  Switch,
+  type SwitchRootProps,
+  type SwitchRootProviderProps,
+  type SwitchContextProps,
+  type SwitchControlProps,
+  type SwitchHiddenInputProps,
+  type SwitchLabelProps,
+  type SwitchThumbProps,
+}

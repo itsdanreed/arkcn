@@ -1,27 +1,5 @@
 import * as React from "react"
-import {
-  NodeGraph,
-  NodeGraphBackground,
-  NodeGraphConnectionLine,
-  NodeGraphControls,
-  NodeGraphEdge,
-  NodeGraphEdges,
-  NodeGraphFitViewTrigger,
-  NodeGraphNode,
-  NodeGraphNodeBody,
-  NodeGraphNodeHeader,
-  NodeGraphNodeInputs,
-  NodeGraphNodeOutputs,
-  NodeGraphNodeTitle,
-  NodeGraphPort,
-  NodeGraphPortLabel,
-  NodeGraphPortPin,
-  NodeGraphSurface,
-  NodeGraphViewport,
-  NodeGraphZoomInTrigger,
-  NodeGraphZoomOutTrigger,
-  NodeGraphZoomValue,
-} from "@/components/ui/node-graph"
+import { NodeGraph } from "@/components/ui/node-graph"
 
 type Port = { id: string; label: string; type: "number" | "string" }
 type Node = { id: string; title: string; position: { x: number; y: number }; inputs: Port[]; outputs: Port[] }
@@ -68,7 +46,7 @@ export default function NodeGraphExample() {
         (e.target.nodeId === nodeId && e.target.portId === portId)
     )
   return (
-    <NodeGraph
+    <NodeGraph.Root
       onNodesMove={(moves) =>
         setNodes((prev) =>
           prev.map((n) => ({ ...n, position: moves.find((m) => m.id === n.id)?.position ?? n.position }))
@@ -88,12 +66,12 @@ export default function NodeGraphExample() {
       }}
       className="h-96 w-full"
     >
-      <NodeGraphViewport>
-        <NodeGraphBackground />
-        <NodeGraphSurface>
-          <NodeGraphEdges>
+      <NodeGraph.Viewport>
+        <NodeGraph.Background />
+        <NodeGraph.Surface>
+          <NodeGraph.Edges>
             {edges.map((edge) => (
-              <NodeGraphEdge
+              <NodeGraph.Edge
                 key={edge.id}
                 value={edge.id}
                 source={edge.source}
@@ -101,53 +79,53 @@ export default function NodeGraphExample() {
                 className="text-emerald-500"
               />
             ))}
-          </NodeGraphEdges>
-          <NodeGraphConnectionLine />
+          </NodeGraph.Edges>
+          <NodeGraph.ConnectionLine />
           {nodes.map((node) => (
-            <NodeGraphNode key={node.id} value={node.id} position={node.position}>
-              <NodeGraphNodeHeader>
-                <NodeGraphNodeTitle>{node.title}</NodeGraphNodeTitle>
-              </NodeGraphNodeHeader>
-              <NodeGraphNodeBody>
-                <NodeGraphNodeInputs>
+            <NodeGraph.Node key={node.id} value={node.id} position={node.position}>
+              <NodeGraph.NodeHeader>
+                <NodeGraph.NodeTitle>{node.title}</NodeGraph.NodeTitle>
+              </NodeGraph.NodeHeader>
+              <NodeGraph.NodeBody>
+                <NodeGraph.NodeInputs>
                   {node.inputs.map((pin) => (
-                    <NodeGraphPort
+                    <NodeGraph.Port
                       key={pin.id}
                       value={pin.id}
                       side="input"
                       type={pin.type}
                       connected={connected(node.id, pin.id)}
                     >
-                      <NodeGraphPortPin className={pinColor[pin.type]} />
-                      <NodeGraphPortLabel>{pin.label}</NodeGraphPortLabel>
-                    </NodeGraphPort>
+                      <NodeGraph.PortPin className={pinColor[pin.type]} />
+                      <NodeGraph.PortLabel>{pin.label}</NodeGraph.PortLabel>
+                    </NodeGraph.Port>
                   ))}
-                </NodeGraphNodeInputs>
-                <NodeGraphNodeOutputs>
+                </NodeGraph.NodeInputs>
+                <NodeGraph.NodeOutputs>
                   {node.outputs.map((pin) => (
-                    <NodeGraphPort
+                    <NodeGraph.Port
                       key={pin.id}
                       value={pin.id}
                       side="output"
                       type={pin.type}
                       connected={connected(node.id, pin.id)}
                     >
-                      <NodeGraphPortLabel>{pin.label}</NodeGraphPortLabel>
-                      <NodeGraphPortPin className={pinColor[pin.type]} />
-                    </NodeGraphPort>
+                      <NodeGraph.PortLabel>{pin.label}</NodeGraph.PortLabel>
+                      <NodeGraph.PortPin className={pinColor[pin.type]} />
+                    </NodeGraph.Port>
                   ))}
-                </NodeGraphNodeOutputs>
-              </NodeGraphNodeBody>
-            </NodeGraphNode>
+                </NodeGraph.NodeOutputs>
+              </NodeGraph.NodeBody>
+            </NodeGraph.Node>
           ))}
-        </NodeGraphSurface>
-        <NodeGraphControls>
-          <NodeGraphZoomOutTrigger />
-          <NodeGraphZoomValue />
-          <NodeGraphZoomInTrigger />
-          <NodeGraphFitViewTrigger />
-        </NodeGraphControls>
-      </NodeGraphViewport>
-    </NodeGraph>
+        </NodeGraph.Surface>
+        <NodeGraph.Controls>
+          <NodeGraph.ZoomOutTrigger />
+          <NodeGraph.ZoomValue />
+          <NodeGraph.ZoomInTrigger />
+          <NodeGraph.FitViewTrigger />
+        </NodeGraph.Controls>
+      </NodeGraph.Viewport>
+    </NodeGraph.Root>
   )
 }

@@ -1,9 +1,10 @@
 "use client"
 
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Kbd, KbdGroup } from "@/components/ui/kbd"
+import { Dialog } from "@/components/ui/dialog"
+import { Kbd } from "@/components/ui/kbd"
 
 /* -------------------------------- parsing -------------------------------- */
 
@@ -145,17 +146,7 @@ const isEditable = (target: EventTarget | null) => {
  * ("mod+k"), sequences ("g d", one second between keys), and a built-in "?" that opens
  * `HotkeysDialog` when one is rendered.
  */
-function HotkeysProvider({
-  children,
-  dialogHotkey = "?",
-  sequenceTimeout = 1000,
-}: {
-  children: React.ReactNode
-  /** Opens the shortcuts dialog; `null` disables it. */
-  dialogHotkey?: string | null
-  /** Milliseconds allowed between keys of a sequence. */
-  sequenceTimeout?: number
-}) {
+function HotkeysRoot({ children, dialogHotkey = "?", sequenceTimeout = 1000 }: HotkeysRootProps) {
   const [entries, setEntries] = React.useState<HotkeyEntry[]>([])
   const [dialogOpen, setDialogOpen] = React.useState(false)
   const entriesRef = React.useRef(entries)
@@ -267,21 +258,29 @@ function useHotkeys() {
 /* ---------------------------------- parts -------------------------------- */
 
 /** Renders a hotkey as Kbd caps ("mod+k" → ⌘ K; "g d" → G then D). */
-function HotkeyKbd({ hotkey, className, ...props }: React.ComponentProps<"span"> & { hotkey: string }) {
+function HotkeysKbd({ hotkey, className, ...props }: HotkeysKbdProps) {
   const chords = formatHotkey(hotkey)
   return (
-    <span data-slot="hotkey-kbd" className={cn("inline-flex items-center gap-1", className)} {...props}>
-      {chords.map((keys, i) => (
-        <React.Fragment key={i}>
-          {i > 0 && <span className="text-xs text-muted-foreground">then</span>}
-          <KbdGroup>
-            {keys.map((k, j) => (
-              <Kbd key={j}>{k}</Kbd>
-            ))}
-          </KbdGroup>
-        </React.Fragment>
-      ))}
-    </span>
+    <ark.span data-slot="hotkey-kbd" className={cn("inline-flex items-center gap-1", className)} {...props}>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          {chords.map((keys, i) => (
+            <React.Fragment key={i}>
+              {i > 0 && <span className="text-xs text-muted-foreground">then</span>}
+              <Kbd.Group>
+                {keys.map((k, j) => (
+                  <Kbd.Root key={j}>{k}</Kbd.Root>
+                ))}
+              </Kbd.Group>
+            </React.Fragment>
+          ))}
+        </>
+      )}
+    </ark.span>
   )
 }
 
@@ -291,12 +290,7 @@ function HotkeysDialog({
   description = "Shortcuts work anywhere on the page except while typing.",
   children,
   className,
-}: {
-  title?: React.ReactNode
-  description?: React.ReactNode
-  children?: React.ReactNode
-  className?: string
-}) {
+}: HotkeysDialogProps) {
   const { dialogOpen, setDialogOpen } = useHotkeysContext()
   const registered = useHotkeys()
   const groups = React.useMemo(() => {
@@ -306,12 +300,12 @@ function HotkeysDialog({
     return [...registered, { group: "General", hotkeys: [self] }]
   }, [registered])
   return (
-    <Dialog open={dialogOpen} onOpenChange={({ open }) => setDialogOpen(open)}>
-      <DialogContent data-slot="hotkeys-dialog" className={cn("sm:max-w-lg", className)}>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
-        </DialogHeader>
+    <Dialog.Root open={dialogOpen} onOpenChange={({ open }) => setDialogOpen(open)}>
+      <Dialog.Content data-slot="hotkeys-dialog" className={cn("sm:max-w-lg", className)}>
+        <Dialog.Header>
+          <Dialog.Title>{title}</Dialog.Title>
+          <Dialog.Description>{description}</Dialog.Description>
+        </Dialog.Header>
         <div className="grid gap-5 sm:grid-cols-2">
           {groups.map(({ group, hotkeys }) => (
             <div key={group} data-slot="hotkeys-dialog-group" className="flex flex-col gap-1.5">
@@ -323,15 +317,15 @@ function HotkeysDialog({
                   className="flex items-center justify-between gap-3 text-sm"
                 >
                   <span className="truncate">{h.label}</span>
-                  <HotkeyKbd hotkey={h.hotkey} />
+                  <HotkeysKbd hotkey={h.hotkey} />
                 </div>
               ))}
             </div>
           ))}
         </div>
         {children}
-      </DialogContent>
-    </Dialog>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }
 
@@ -340,4 +334,37 @@ function useHotkeysDialog() {
   return { open: dialogOpen, setOpen: setDialogOpen }
 }
 
-export { HotkeyKbd, HotkeysDialog, HotkeysProvider, formatHotkey, parseHotkey, useHotkey, useHotkeys, useHotkeysDialog }
+type HotkeysKbdProps = React.ComponentProps<typeof ark.span> & { hotkey: string }
+
+type HotkeysRootProps = {
+  children: React.ReactNode
+  /** Opens the shortcuts dialog; `null` disables it. */
+  dialogHotkey?: string | null
+  /** Milliseconds allowed between keys of a sequence. */
+  sequenceTimeout?: number
+}
+
+type HotkeysDialogProps = {
+  title?: React.ReactNode
+  description?: React.ReactNode
+  children?: React.ReactNode
+  className?: string
+}
+
+const Hotkeys = {
+  Kbd: HotkeysKbd,
+  Root: HotkeysRoot,
+  Dialog: HotkeysDialog,
+}
+
+export {
+  formatHotkey,
+  parseHotkey,
+  useHotkey,
+  useHotkeys,
+  useHotkeysDialog,
+  Hotkeys,
+  type HotkeysKbdProps,
+  type HotkeysRootProps,
+  type HotkeysDialogProps,
+}

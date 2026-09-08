@@ -4,18 +4,13 @@
   "description": "",
   "ark": "Clipboard",
   "exports": [
-    "Clipboard",
-    "ClipboardContext",
-    "ClipboardControl",
-    "ClipboardIndicator",
-    "ClipboardInput",
-    "ClipboardLabel",
-    "ClipboardTrigger",
-    "ClipboardValueText"
+    "useClipboard",
+    "useClipboardContext",
+    "Clipboard"
   ],
   "parts": [
     {
-      "name": "Clipboard",
+      "name": "Clipboard.Root",
       "props": [
         {
           "name": "asChild",
@@ -105,7 +100,47 @@
       ]
     },
     {
-      "name": "ClipboardContext",
+      "name": "Clipboard.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseClipboardReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Clipboard.Context",
       "props": [
         {
           "name": "children",
@@ -117,7 +152,7 @@
       ]
     },
     {
-      "name": "ClipboardControl",
+      "name": "Clipboard.Control",
       "props": [
         {
           "name": "asChild",
@@ -150,7 +185,7 @@
       ]
     },
     {
-      "name": "ClipboardIndicator",
+      "name": "Clipboard.Indicator",
       "props": [
         {
           "name": "asChild",
@@ -189,7 +224,7 @@
       ]
     },
     {
-      "name": "ClipboardInput",
+      "name": "Clipboard.Input",
       "props": [
         {
           "name": "asChild",
@@ -222,7 +257,7 @@
       ]
     },
     {
-      "name": "ClipboardLabel",
+      "name": "Clipboard.Label",
       "props": [
         {
           "name": "asChild",
@@ -255,7 +290,7 @@
       ]
     },
     {
-      "name": "ClipboardTrigger",
+      "name": "Clipboard.Trigger",
       "props": [
         {
           "name": "asChild",
@@ -288,7 +323,7 @@
       ]
     },
     {
-      "name": "ClipboardValueText",
+      "name": "Clipboard.ValueText",
       "props": [
         {
           "name": "asChild",
@@ -332,7 +367,7 @@
   "files": [
     {
       "path": "components/ui/clipboard.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Clipboard as ClipboardPrimitive } from \"@ark-ui/react\"\nimport { CheckIcon, CopyIcon } from \"lucide-react\"\n\nimport { Button } from \"@/components/ui/button\"\n\nfunction Clipboard({ className, ...props }: React.ComponentProps<typeof ClipboardPrimitive.Root>) {\n  return (\n    <ClipboardPrimitive.Root\n      data-slot=\"clipboard\"\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ClipboardContext({ ...props }: React.ComponentProps<typeof ClipboardPrimitive.Context>) {\n  return <ClipboardPrimitive.Context {...props} />\n}\n\nfunction ClipboardLabel({ className, ...props }: React.ComponentProps<typeof ClipboardPrimitive.Label>) {\n  return (\n    <ClipboardPrimitive.Label\n      data-slot=\"clipboard-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ClipboardControl({ className, ...props }: React.ComponentProps<typeof ClipboardPrimitive.Control>) {\n  return (\n    <ClipboardPrimitive.Control\n      data-slot=\"clipboard-control\"\n      className={cn(\"flex items-center gap-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ClipboardInput({ className, ...props }: React.ComponentProps<typeof ClipboardPrimitive.Input>) {\n  return (\n    <ClipboardPrimitive.Input\n      data-slot=\"clipboard-input\"\n      className={cn(\n        \"h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none read-only:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ClipboardTrigger({ className, children, ...props }: React.ComponentProps<typeof ClipboardPrimitive.Trigger>) {\n  return (\n    <ClipboardPrimitive.Trigger data-slot=\"clipboard-trigger\" className={cn(className)} asChild {...props}>\n      <Button variant=\"outline\" size=\"icon\">\n        {children ?? (\n          <ClipboardIndicator copied={<CheckIcon />}>\n            <CopyIcon />\n          </ClipboardIndicator>\n        )}\n      </Button>\n    </ClipboardPrimitive.Trigger>\n  )\n}\n\nfunction ClipboardIndicator({ ...props }: React.ComponentProps<typeof ClipboardPrimitive.Indicator>) {\n  return <ClipboardPrimitive.Indicator data-slot=\"clipboard-indicator\" {...props} />\n}\n\nfunction ClipboardValueText({ className, ...props }: React.ComponentProps<typeof ClipboardPrimitive.ValueText>) {\n  return (\n    <ClipboardPrimitive.ValueText\n      data-slot=\"clipboard-value-text\"\n      className={cn(\"font-mono text-sm\", className)}\n      {...props}\n    />\n  )\n}\n\nexport {\n  Clipboard,\n  ClipboardContext,\n  ClipboardControl,\n  ClipboardIndicator,\n  ClipboardInput,\n  ClipboardLabel,\n  ClipboardTrigger,\n  ClipboardValueText,\n}\n"
+      "content": "\"use client\"\n\nimport { useClipboard, useClipboardContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Clipboard as ClipboardPrimitive } from \"@ark-ui/react\"\nimport { CheckIcon, CopyIcon } from \"lucide-react\"\n\nimport { Button } from \"@/components/ui/button\"\n\nfunction ClipboardRoot({ className, ...props }: ClipboardRootProps) {\n  return (\n    <ClipboardPrimitive.Root\n      data-slot=\"clipboard\"\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ClipboardContext({ ...props }: ClipboardContextProps) {\n  return <ClipboardPrimitive.Context {...props} />\n}\n\nfunction ClipboardLabel({ className, ...props }: ClipboardLabelProps) {\n  return (\n    <ClipboardPrimitive.Label\n      data-slot=\"clipboard-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ClipboardControl({ className, ...props }: ClipboardControlProps) {\n  return (\n    <ClipboardPrimitive.Control\n      data-slot=\"clipboard-control\"\n      className={cn(\"flex items-center gap-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ClipboardInput({ className, ...props }: ClipboardInputProps) {\n  return (\n    <ClipboardPrimitive.Input\n      data-slot=\"clipboard-input\"\n      className={cn(\n        \"h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none read-only:text-muted-foreground focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ClipboardTrigger({ className, children, ...props }: ClipboardTriggerProps) {\n  return (\n    <ClipboardPrimitive.Trigger data-slot=\"clipboard-trigger\" className={cn(className)} asChild {...props}>\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <Button variant=\"outline\" size=\"icon\">\n            {children ?? (\n              <ClipboardIndicator copied={<CheckIcon />}>\n                <CopyIcon />\n              </ClipboardIndicator>\n            )}\n          </Button>\n        </>\n      )}\n    </ClipboardPrimitive.Trigger>\n  )\n}\n\nfunction ClipboardIndicator({ ...props }: ClipboardIndicatorProps) {\n  return <ClipboardPrimitive.Indicator data-slot=\"clipboard-indicator\" {...props} />\n}\n\nfunction ClipboardValueText({ className, ...props }: ClipboardValueTextProps) {\n  return (\n    <ClipboardPrimitive.ValueText\n      data-slot=\"clipboard-value-text\"\n      className={cn(\"font-mono text-sm\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ClipboardRootProvider({ className, ...props }: ClipboardRootProviderProps) {\n  return (\n    <ClipboardPrimitive.RootProvider\n      data-slot=\"clipboard\"\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\ntype ClipboardRootProps = React.ComponentProps<typeof ClipboardPrimitive.Root>\n\ntype ClipboardRootProviderProps = React.ComponentProps<typeof ClipboardPrimitive.RootProvider>\n\ntype ClipboardContextProps = React.ComponentProps<typeof ClipboardPrimitive.Context>\n\ntype ClipboardControlProps = React.ComponentProps<typeof ClipboardPrimitive.Control>\n\ntype ClipboardIndicatorProps = React.ComponentProps<typeof ClipboardPrimitive.Indicator>\n\ntype ClipboardInputProps = React.ComponentProps<typeof ClipboardPrimitive.Input>\n\ntype ClipboardLabelProps = React.ComponentProps<typeof ClipboardPrimitive.Label>\n\ntype ClipboardTriggerProps = React.ComponentProps<typeof ClipboardPrimitive.Trigger>\n\ntype ClipboardValueTextProps = React.ComponentProps<typeof ClipboardPrimitive.ValueText>\n\nconst Clipboard = {\n  Root: ClipboardRoot,\n  RootProvider: ClipboardRootProvider,\n  Context: ClipboardContext,\n  Control: ClipboardControl,\n  Indicator: ClipboardIndicator,\n  Input: ClipboardInput,\n  Label: ClipboardLabel,\n  Trigger: ClipboardTrigger,\n  ValueText: ClipboardValueText,\n}\n\nexport {\n  useClipboard,\n  useClipboardContext,\n  Clipboard,\n  type ClipboardRootProps,\n  type ClipboardRootProviderProps,\n  type ClipboardContextProps,\n  type ClipboardControlProps,\n  type ClipboardIndicatorProps,\n  type ClipboardInputProps,\n  type ClipboardLabelProps,\n  type ClipboardTriggerProps,\n  type ClipboardValueTextProps,\n}\n"
     }
   ]
 }

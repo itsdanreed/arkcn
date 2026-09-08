@@ -4,16 +4,7 @@ import { createListCollection } from "@ark-ui/react/collection"
 import { PlusIcon, XIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import {
-  Select,
-  SelectContent,
-  SelectControl,
-  SelectItem,
-  SelectItemIndicator,
-  SelectItemText,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { Select } from "@/components/ui/select"
 import { cn } from "@/lib/utils"
 import { useControllable } from "@/lib/controllable"
 
@@ -254,7 +245,7 @@ function useQueryBuilderRule() {
  * Root
  * ------------------------------------------------------------------------- */
 
-function QueryBuilder({
+function QueryBuilderRoot({
   fields,
   operators = defaultOperators,
   value: valueProp,
@@ -265,18 +256,7 @@ function QueryBuilder({
   className,
   children,
   ...props
-}: Omit<React.ComponentProps<"div">, "defaultValue" | "onChange"> & {
-  /** Fields the user can filter on: `{ name, label, type, options, operators, placeholder }`. */
-  fields: QueryField[]
-  /** Operator definitions; defaults to `defaultOperators`. */
-  operators?: QueryOperator[]
-  value?: QueryGroup
-  defaultValue?: QueryGroup
-  onValueChange?: (value: QueryGroup) => void
-  disabled?: boolean
-  /** Nesting limit for "Add group"; the trigger hides past it. */
-  maxDepth?: number
-}) {
+}: QueryBuilderRootProps) {
   const [initial] = React.useState<QueryGroup>(
     () => defaultValue ?? createGroup("all", [createRule(fields, operators)])
   )
@@ -326,14 +306,14 @@ function QueryBuilder({
 
   return (
     <QueryBuilderContext.Provider value={ctx}>
-      <div
+      <ark.div
         data-slot="query-builder"
         data-disabled={disabled ? "" : undefined}
         className={cn("flex flex-col gap-3 text-sm", className)}
         {...props}
       >
         {children}
-      </div>
+      </ark.div>
     </QueryBuilderContext.Provider>
   )
 }
@@ -363,18 +343,13 @@ function findRule(root: QueryGroup, id: string): QueryRule | null {
  * Group parts
  * ------------------------------------------------------------------------- */
 
-function QueryBuilderGroup({
-  group,
-  className,
-  children,
-  ...props
-}: React.ComponentProps<"div"> & { group: QueryGroup }) {
+function QueryBuilderGroup({ group, className, children, ...props }: QueryBuilderGroupProps) {
   const parent = React.useContext(GroupContext)
   const depth = parent ? parent.depth + 1 : 0
   const ctx = React.useMemo(() => ({ group, depth }), [group, depth])
   return (
     <GroupContext.Provider value={ctx}>
-      <div
+      <ark.div
         data-slot="query-builder-group"
         data-match={group.match}
         data-depth={depth}
@@ -387,14 +362,14 @@ function QueryBuilderGroup({
         {...props}
       >
         {children}
-      </div>
+      </ark.div>
     </GroupContext.Provider>
   )
 }
 
-function QueryBuilderGroupHeader({ className, ...props }: React.ComponentProps<"div">) {
+function QueryBuilderGroupHeader({ className, ...props }: QueryBuilderGroupHeaderProps) {
   return (
-    <div
+    <ark.div
       data-slot="query-builder-group-header"
       className={cn("flex flex-wrap items-center gap-2", className)}
       {...props}
@@ -409,23 +384,13 @@ const matchOptions: QueryOption[] = [
 const matchCollection = createListCollection({ items: matchOptions, itemToValue: (o) => o.value })
 
 /** "Match [all ▾] of the following" — the only combinator control, once per group. */
-function QueryBuilderMatch({
-  className,
-  before,
-  after = "of the following",
-  ...props
-}: Omit<React.ComponentProps<typeof Select>, "collection" | "value" | "onValueChange"> & {
-  /** Text before the select. Defaults to "Match" at the top level and "Where" in nested groups. */
-  before?: React.ReactNode
-  /** Text rendered after the match select. */
-  after?: React.ReactNode
-}) {
+function QueryBuilderMatch({ className, before, after = "of the following", ...props }: QueryBuilderMatchProps) {
   const { setMatch, disabled } = useQueryBuilder()
   const { group, depth } = useQueryBuilderGroup()
   return (
     <span data-slot="query-builder-match" className="inline-flex flex-wrap items-center gap-1.5">
       <span className="text-muted-foreground">{before ?? (depth === 0 ? "Match" : "Where")}</span>
-      <Select
+      <Select.Root
         collection={matchCollection}
         value={[group.match]}
         onValueChange={({ value }) => value[0] && setMatch(group.id, value[0] as QueryGroup["match"])}
@@ -433,30 +398,38 @@ function QueryBuilderMatch({
         positioning={{ sameWidth: false }}
         {...props}
       >
-        <SelectControl>
-          <SelectTrigger size="sm" className={cn("font-medium", className)} aria-label="Match all or any">
-            <SelectValue>{group.match}</SelectValue>
-          </SelectTrigger>
-        </SelectControl>
-        <SelectContent className="min-w-24">
-          {matchOptions.map((o) => (
-            <SelectItem key={o.value} item={o}>
-              <SelectItemText>{o.label}</SelectItemText>
-              <SelectItemIndicator />
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+        {props.asChild ? (
+          React.isValidElement(props.children) ? (
+            props.children
+          ) : null
+        ) : (
+          <>
+            <Select.Control>
+              <Select.Trigger size="sm" className={cn("font-medium", className)} aria-label="Match all or any">
+                <Select.ValueText>{group.match}</Select.ValueText>
+              </Select.Trigger>
+            </Select.Control>
+            <Select.Content className="min-w-24">
+              {matchOptions.map((o) => (
+                <Select.Item key={o.value} item={o}>
+                  <Select.ItemText>{o.label}</Select.ItemText>
+                  <Select.ItemIndicator />
+                </Select.Item>
+              ))}
+            </Select.Content>
+          </>
+        )}
+      </Select.Root>
       <span className="text-muted-foreground">{after}</span>
     </span>
   )
 }
 
 /** Indented list of conditions with a guide line. */
-function QueryBuilderGroupBody({ className, ...props }: React.ComponentProps<"div">) {
+function QueryBuilderGroupBody({ className, ...props }: QueryBuilderGroupBodyProps) {
   const { group } = useQueryBuilderGroup()
   return (
-    <div
+    <ark.div
       data-slot="query-builder-group-body"
       data-empty={group.rules.length === 0 ? "" : undefined}
       className={cn(
@@ -468,9 +441,9 @@ function QueryBuilderGroupBody({ className, ...props }: React.ComponentProps<"di
   )
 }
 
-function QueryBuilderGroupFooter({ className, ...props }: React.ComponentProps<"div">) {
+function QueryBuilderGroupFooter({ className, ...props }: QueryBuilderGroupFooterProps) {
   return (
-    <div
+    <ark.div
       data-slot="query-builder-group-footer"
       className={cn("flex flex-wrap items-center gap-1 ps-4", className)}
       {...props}
@@ -482,13 +455,13 @@ function QueryBuilderGroupFooter({ className, ...props }: React.ComponentProps<"
  * Rule parts
  * ------------------------------------------------------------------------- */
 
-function QueryBuilderRule({ rule, className, children, ...props }: React.ComponentProps<"div"> & { rule: QueryRule }) {
+function QueryBuilderRule({ rule, className, children, ...props }: QueryBuilderRuleProps) {
   const { operators } = useQueryBuilder()
   const complete = isComplete(rule, operators)
   const ctx = React.useMemo(() => ({ rule }), [rule])
   return (
     <RuleContext.Provider value={ctx}>
-      <div
+      <ark.div
         data-slot="query-builder-rule"
         data-incomplete={complete ? undefined : ""}
         className={cn(
@@ -498,14 +471,14 @@ function QueryBuilderRule({ rule, className, children, ...props }: React.Compone
         {...props}
       >
         {children}
-      </div>
+      </ark.div>
     </RuleContext.Provider>
   )
 }
 
-type PickerProps = Omit<React.ComponentProps<typeof Select>, "collection" | "value" | "onValueChange">
+type PickerProps = Omit<React.ComponentProps<typeof Select.Root>, "collection" | "value" | "onValueChange">
 
-function QueryBuilderFieldSelect({ className, ...props }: PickerProps & { className?: string }) {
+function QueryBuilderFieldSelect({ className, ...props }: QueryBuilderFieldSelectProps) {
   const { fields, updateRule, disabled } = useQueryBuilder()
   const { rule } = useQueryBuilderRule()
   const collection = React.useMemo(
@@ -514,7 +487,7 @@ function QueryBuilderFieldSelect({ className, ...props }: PickerProps & { classN
   )
   const field = fields.find((f) => f.name === rule.field)
   return (
-    <Select
+    <Select.Root
       collection={collection}
       value={[rule.field]}
       onValueChange={({ value }) => value[0] && updateRule(rule.id, { field: value[0] })}
@@ -522,29 +495,37 @@ function QueryBuilderFieldSelect({ className, ...props }: PickerProps & { classN
       positioning={{ sameWidth: false }}
       {...props}
     >
-      <SelectControl>
-        <SelectTrigger
-          size="sm"
-          className={cn("font-medium", className)}
-          data-slot="query-builder-field-select"
-          aria-label="Field"
-        >
-          <SelectValue placeholder="Field">{field?.label}</SelectValue>
-        </SelectTrigger>
-      </SelectControl>
-      <SelectContent>
-        {fields.map((f) => (
-          <SelectItem key={f.name} item={f}>
-            <SelectItemText>{f.label}</SelectItemText>
-            <SelectItemIndicator />
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <Select.Control>
+            <Select.Trigger
+              size="sm"
+              className={cn("font-medium", className)}
+              data-slot="query-builder-field-select"
+              aria-label="Field"
+            >
+              <Select.ValueText placeholder="Field">{field?.label}</Select.ValueText>
+            </Select.Trigger>
+          </Select.Control>
+          <Select.Content>
+            {fields.map((f) => (
+              <Select.Item key={f.name} item={f}>
+                <Select.ItemText>{f.label}</Select.ItemText>
+                <Select.ItemIndicator />
+              </Select.Item>
+            ))}
+          </Select.Content>
+        </>
+      )}
+    </Select.Root>
   )
 }
 
-function QueryBuilderOperatorSelect({ className, ...props }: PickerProps & { className?: string }) {
+function QueryBuilderOperatorSelect({ className, ...props }: QueryBuilderOperatorSelectProps) {
   const { fields, operators, updateRule, disabled } = useQueryBuilder()
   const { rule } = useQueryBuilderRule()
   const field = fields.find((f) => f.name === rule.field)
@@ -555,7 +536,7 @@ function QueryBuilderOperatorSelect({ className, ...props }: PickerProps & { cla
   )
   const current = options.find((o) => o.name === rule.operator)
   return (
-    <Select
+    <Select.Root
       collection={collection}
       value={[rule.operator]}
       onValueChange={({ value }) => value[0] && updateRule(rule.id, { operator: value[0] })}
@@ -563,25 +544,33 @@ function QueryBuilderOperatorSelect({ className, ...props }: PickerProps & { cla
       positioning={{ sameWidth: false }}
       {...props}
     >
-      <SelectControl>
-        <SelectTrigger
-          size="sm"
-          className={cn("text-muted-foreground", className)}
-          data-slot="query-builder-operator-select"
-          aria-label="Operator"
-        >
-          <SelectValue placeholder="Operator">{current?.label}</SelectValue>
-        </SelectTrigger>
-      </SelectControl>
-      <SelectContent>
-        {options.map((o) => (
-          <SelectItem key={o.name} item={o}>
-            <SelectItemText>{o.label}</SelectItemText>
-            <SelectItemIndicator />
-          </SelectItem>
-        ))}
-      </SelectContent>
-    </Select>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <Select.Control>
+            <Select.Trigger
+              size="sm"
+              className={cn("text-muted-foreground", className)}
+              data-slot="query-builder-operator-select"
+              aria-label="Operator"
+            >
+              <Select.ValueText placeholder="Operator">{current?.label}</Select.ValueText>
+            </Select.Trigger>
+          </Select.Control>
+          <Select.Content>
+            {options.map((o) => (
+              <Select.Item key={o.name} item={o}>
+                <Select.ItemText>{o.label}</Select.ItemText>
+                <Select.ItemIndicator />
+              </Select.Item>
+            ))}
+          </Select.Content>
+        </>
+      )}
+    </Select.Root>
   )
 }
 
@@ -600,19 +589,16 @@ type ValueEditorRenderProps = {
  * arity. Pass a render-prop child to take over for specific cases and fall back
  * to the default by returning `undefined`.
  */
-function QueryBuilderValueEditor({
-  className,
-  children,
-  ...props
-}: Omit<React.ComponentProps<"div">, "children"> & {
-  children?: (props: ValueEditorRenderProps) => React.ReactNode | undefined
-}) {
+function QueryBuilderValueEditor({ className, children, ...props }: QueryBuilderValueEditorProps) {
   const { fields, operators, updateRule, disabled } = useQueryBuilder()
   const { rule } = useQueryBuilderRule()
   const field = fields.find((f) => f.name === rule.field)
   const operator = operators.find((o) => o.name === rule.operator)
   const setValue = React.useCallback((value: unknown) => updateRule(rule.id, { value }), [updateRule, rule.id])
-  const custom = children?.({ rule, field, operator, value: rule.value, setValue, disabled })
+  const custom =
+    typeof children === "function"
+      ? children?.({ rule, field, operator, value: rule.value, setValue, disabled })
+      : children
   if (custom !== undefined) return <>{custom}</>
   if (!operator || operator.arity === "none") return null
   const type = field?.type ?? "text"
@@ -627,29 +613,37 @@ function QueryBuilderValueEditor({
       setValue(next)
     }
     return (
-      <div
+      <ark.div
         data-slot="query-builder-value-editor"
         className={cn("inline-flex items-center gap-1.5", className)}
         {...props}
       >
-        <Input
-          type={inputType}
-          value={String(pair[0] ?? "")}
-          onChange={(e) => set(0, e.target.value)}
-          disabled={disabled}
-          aria-label="From"
-          className={inputClass}
-        />
-        <span className="text-muted-foreground">and</span>
-        <Input
-          type={inputType}
-          value={String(pair[1] ?? "")}
-          onChange={(e) => set(1, e.target.value)}
-          disabled={disabled}
-          aria-label="To"
-          className={inputClass}
-        />
-      </div>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            <Input.Root
+              type={inputType}
+              value={String(pair[0] ?? "")}
+              onChange={(e) => set(0, e.target.value)}
+              disabled={disabled}
+              aria-label="From"
+              className={inputClass}
+            />
+            <span className="text-muted-foreground">and</span>
+            <Input.Root
+              type={inputType}
+              value={String(pair[1] ?? "")}
+              onChange={(e) => set(1, e.target.value)}
+              disabled={disabled}
+              aria-label="To"
+              className={inputClass}
+            />
+          </>
+        )}
+      </ark.div>
     )
   }
 
@@ -657,16 +651,24 @@ function QueryBuilderValueEditor({
     const many = operator.arity === "many"
     const selected = many ? ((rule.value as string[] | undefined) ?? []) : rule.value ? [String(rule.value)] : []
     return (
-      <div data-slot="query-builder-value-editor" className={cn("inline-flex", className)} {...props}>
-        <OptionPicker
-          options={field.options}
-          value={selected}
-          multiple={many}
-          disabled={disabled}
-          placeholder="Choose…"
-          onChange={(values) => setValue(many ? values : values[0])}
-        />
-      </div>
+      <ark.div data-slot="query-builder-value-editor" className={cn("inline-flex", className)} {...props}>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            <OptionPicker
+              options={field.options}
+              value={selected}
+              multiple={many}
+              disabled={disabled}
+              placeholder="Choose…"
+              onChange={(values) => setValue(many ? values : values[0])}
+            />
+          </>
+        )}
+      </ark.div>
     )
   }
 
@@ -674,38 +676,54 @@ function QueryBuilderValueEditor({
     // Free-text lists: comma separated, shown as-is.
     const list = Array.isArray(rule.value) ? (rule.value as string[]) : []
     return (
-      <div data-slot="query-builder-value-editor" className={cn("inline-flex", className)} {...props}>
-        <Input
-          value={list.join(", ")}
-          onChange={(e) =>
-            setValue(
-              e.target.value
-                .split(",")
-                .map((s) => s.trim())
-                .filter(Boolean)
-            )
-          }
-          placeholder={field?.placeholder ?? "Comma separated"}
-          disabled={disabled}
-          aria-label="Values"
-          className={cn(inputClass, "w-56")}
-        />
-      </div>
+      <ark.div data-slot="query-builder-value-editor" className={cn("inline-flex", className)} {...props}>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            <Input.Root
+              value={list.join(", ")}
+              onChange={(e) =>
+                setValue(
+                  e.target.value
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean)
+                )
+              }
+              placeholder={field?.placeholder ?? "Comma separated"}
+              disabled={disabled}
+              aria-label="Values"
+              className={cn(inputClass, "w-56")}
+            />
+          </>
+        )}
+      </ark.div>
     )
   }
 
   return (
-    <div data-slot="query-builder-value-editor" className={cn("inline-flex", className)} {...props}>
-      <Input
-        type={inputType}
-        value={String(rule.value ?? "")}
-        onChange={(e) => setValue(e.target.value)}
-        placeholder={field?.placeholder ?? (type === "text" ? "Value" : undefined)}
-        disabled={disabled}
-        aria-label="Value"
-        className={inputClass}
-      />
-    </div>
+    <ark.div data-slot="query-builder-value-editor" className={cn("inline-flex", className)} {...props}>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <Input.Root
+            type={inputType}
+            value={String(rule.value ?? "")}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder={field?.placeholder ?? (type === "text" ? "Value" : undefined)}
+            disabled={disabled}
+            aria-label="Value"
+            className={inputClass}
+          />
+        </>
+      )}
+    </ark.div>
   )
 }
 
@@ -730,7 +748,7 @@ function OptionPicker({
   )
   const labels = value.map((v) => options.find((o) => o.value === v)?.label ?? v)
   return (
-    <Select
+    <Select.Root
       collection={collection}
       value={value}
       multiple={multiple}
@@ -739,33 +757,33 @@ function OptionPicker({
       disabled={disabled}
       positioning={{ sameWidth: false }}
     >
-      <SelectControl>
-        <SelectTrigger size="sm" className="max-w-64" aria-label="Value">
-          <SelectValue placeholder={placeholder}>
+      <Select.Control>
+        <Select.Trigger size="sm" className="max-w-64" aria-label="Value">
+          <Select.ValueText placeholder={placeholder}>
             {labels.length
               ? labels.length > 3
                 ? `${labels.slice(0, 3).join(", ")} +${labels.length - 3}`
                 : labels.join(", ")
               : undefined}
-          </SelectValue>
-        </SelectTrigger>
-      </SelectControl>
-      <SelectContent>
+          </Select.ValueText>
+        </Select.Trigger>
+      </Select.Control>
+      <Select.Content>
         {options.map((o) => (
-          <SelectItem key={o.value} item={o}>
-            <SelectItemText>{o.label}</SelectItemText>
-            <SelectItemIndicator />
-          </SelectItem>
+          <Select.Item key={o.value} item={o}>
+            <Select.ItemText>{o.label}</Select.ItemText>
+            <Select.ItemIndicator />
+          </Select.Item>
         ))}
-      </SelectContent>
-    </Select>
+      </Select.Content>
+    </Select.Root>
   )
 }
 
 /** Hover-revealed slot at the end of a rule row (remove trigger, extras). */
-function QueryBuilderRuleActions({ className, ...props }: React.ComponentProps<"div">) {
+function QueryBuilderRuleActions({ className, ...props }: QueryBuilderRuleActionsProps) {
   return (
-    <div
+    <ark.div
       data-slot="query-builder-rule-actions"
       className={cn(
         "ms-auto inline-flex items-center gap-0.5 opacity-0 transition-opacity group-focus-within/query-rule:opacity-100 group-hover/query-rule:opacity-100",
@@ -780,7 +798,7 @@ function QueryBuilderRuleActions({ className, ...props }: React.ComponentProps<"
  * Triggers (polymorphic via asChild)
  * ------------------------------------------------------------------------- */
 
-function QueryBuilderAddRuleTrigger({ asChild, children, onClick, ...props }: React.ComponentProps<typeof Button>) {
+function QueryBuilderAddRuleTrigger({ asChild, children, onClick, ...props }: QueryBuilderAddRuleTriggerProps) {
   const { addRule, disabled } = useQueryBuilder()
   const { group } = useQueryBuilderGroup()
   return (
@@ -807,7 +825,7 @@ function QueryBuilderAddRuleTrigger({ asChild, children, onClick, ...props }: Re
   )
 }
 
-function QueryBuilderAddGroupTrigger({ asChild, children, onClick, ...props }: React.ComponentProps<typeof Button>) {
+function QueryBuilderAddGroupTrigger({ asChild, children, onClick, ...props }: QueryBuilderAddGroupTriggerProps) {
   const { addGroup, disabled, maxDepth } = useQueryBuilder()
   const { group, depth } = useQueryBuilderGroup()
   if (depth >= maxDepth) return null
@@ -837,7 +855,7 @@ function QueryBuilderRemoveTrigger({
   onClick,
   className,
   ...props
-}: React.ComponentProps<typeof Button>) {
+}: QueryBuilderRemoveTriggerProps) {
   const { remove, disabled } = useQueryBuilder()
   const rule = React.useContext(RuleContext)
   const group = React.useContext(GroupContext)
@@ -873,31 +891,39 @@ function QueryBuilderSummary({
   children,
   prefix = "Showing results where ",
   ...props
-}: React.ComponentProps<"p"> & { prefix?: React.ReactNode }) {
+}: QueryBuilderSummaryProps) {
   const { value, fields, operators } = useQueryBuilder()
   const text = describeQuery(value, { fields, operators })
   return (
-    <p
+    <ark.p
       data-slot="query-builder-summary"
       data-empty={text ? undefined : ""}
       className={cn("text-sm", className)}
       {...props}
     >
-      {text ? (
-        <>
-          <span className="text-muted-foreground">{prefix}</span>
-          <span className="font-medium">{text}</span>
-        </>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
       ) : (
-        (children ?? (
-          <span className="text-muted-foreground">Showing everything. Add a condition to narrow it down.</span>
-        ))
+        <>
+          {text ? (
+            <>
+              <span className="text-muted-foreground">{prefix}</span>
+              <span className="font-medium">{text}</span>
+            </>
+          ) : (
+            (children ?? (
+              <span className="text-muted-foreground">Showing everything. Add a condition to narrow it down.</span>
+            ))
+          )}
+        </>
       )}
-    </p>
+    </ark.p>
   )
 }
 
-function QueryBuilderEmpty({ className, ...props }: React.ComponentProps<typeof ark.div>) {
+function QueryBuilderEmpty({ className, ...props }: QueryBuilderEmptyProps) {
   return (
     <ark.div
       data-slot="query-builder-empty"
@@ -907,23 +933,80 @@ function QueryBuilderEmpty({ className, ...props }: React.ComponentProps<typeof 
   )
 }
 
+type QueryBuilderRootProps = Omit<React.ComponentProps<typeof ark.div>, "defaultValue" | "onChange"> & {
+  /** Fields the user can filter on: `{ name, label, type, options, operators, placeholder }`. */
+  fields: QueryField[]
+  /** Operator definitions; defaults to `defaultOperators`. */
+  operators?: QueryOperator[]
+  value?: QueryGroup
+  defaultValue?: QueryGroup
+  onValueChange?: (value: QueryGroup) => void
+  disabled?: boolean
+  /** Nesting limit for "Add group"; the trigger hides past it. */
+  maxDepth?: number
+}
+
+type QueryBuilderGroupProps = React.ComponentProps<typeof ark.div> & { group: QueryGroup }
+
+type QueryBuilderGroupHeaderProps = React.ComponentProps<typeof ark.div>
+
+type QueryBuilderMatchProps = Omit<
+  React.ComponentProps<typeof Select.Root>,
+  "collection" | "value" | "onValueChange"
+> & {
+  /** Text before the select. Defaults to "Match" at the top level and "Where" in nested groups. */
+  before?: React.ReactNode
+  /** Text rendered after the match select. */
+  after?: React.ReactNode
+}
+
+type QueryBuilderGroupBodyProps = React.ComponentProps<typeof ark.div>
+
+type QueryBuilderGroupFooterProps = React.ComponentProps<typeof ark.div>
+
+type QueryBuilderRuleProps = React.ComponentProps<typeof ark.div> & { rule: QueryRule }
+
+type QueryBuilderFieldSelectProps = PickerProps & { className?: string }
+
+type QueryBuilderOperatorSelectProps = PickerProps & { className?: string }
+
+type QueryBuilderValueEditorProps = Omit<React.ComponentProps<typeof ark.div>, "children"> & {
+  children?: ((props: ValueEditorRenderProps) => React.ReactNode | undefined) | React.ReactElement
+}
+
+type QueryBuilderRuleActionsProps = React.ComponentProps<typeof ark.div>
+
+type QueryBuilderAddRuleTriggerProps = React.ComponentProps<typeof Button>
+
+type QueryBuilderAddGroupTriggerProps = React.ComponentProps<typeof Button>
+
+type QueryBuilderRemoveTriggerProps = React.ComponentProps<typeof Button>
+
+type QueryBuilderSummaryProps = React.ComponentProps<typeof ark.p> & { prefix?: React.ReactNode }
+
+type QueryBuilderEmptyProps = React.ComponentProps<typeof ark.div>
+
+const QueryBuilder = {
+  Root: QueryBuilderRoot,
+  Group: QueryBuilderGroup,
+  GroupHeader: QueryBuilderGroupHeader,
+  Match: QueryBuilderMatch,
+  GroupBody: QueryBuilderGroupBody,
+  GroupFooter: QueryBuilderGroupFooter,
+  Rule: QueryBuilderRule,
+  FieldSelect: QueryBuilderFieldSelect,
+  OperatorSelect: QueryBuilderOperatorSelect,
+  ValueEditor: QueryBuilderValueEditor,
+  RuleActions: QueryBuilderRuleActions,
+  AddRuleTrigger: QueryBuilderAddRuleTrigger,
+  AddGroupTrigger: QueryBuilderAddGroupTrigger,
+  RemoveTrigger: QueryBuilderRemoveTrigger,
+  Summary: QueryBuilderSummary,
+  Empty: QueryBuilderEmpty,
+}
+
 export {
   QueryBuilder,
-  QueryBuilderGroup,
-  QueryBuilderGroupHeader,
-  QueryBuilderMatch,
-  QueryBuilderGroupBody,
-  QueryBuilderGroupFooter,
-  QueryBuilderRule,
-  QueryBuilderFieldSelect,
-  QueryBuilderOperatorSelect,
-  QueryBuilderValueEditor,
-  QueryBuilderRuleActions,
-  QueryBuilderAddRuleTrigger,
-  QueryBuilderAddGroupTrigger,
-  QueryBuilderRemoveTrigger,
-  QueryBuilderSummary,
-  QueryBuilderEmpty,
   useQueryBuilder,
   useQueryBuilderGroup,
   useQueryBuilderRule,
@@ -942,4 +1025,20 @@ export {
   type QueryRule,
   type QueryGroup,
   type QueryNode,
+  type QueryBuilderRootProps,
+  type QueryBuilderGroupProps,
+  type QueryBuilderGroupHeaderProps,
+  type QueryBuilderMatchProps,
+  type QueryBuilderGroupBodyProps,
+  type QueryBuilderGroupFooterProps,
+  type QueryBuilderRuleProps,
+  type QueryBuilderFieldSelectProps,
+  type QueryBuilderOperatorSelectProps,
+  type QueryBuilderValueEditorProps,
+  type QueryBuilderRuleActionsProps,
+  type QueryBuilderAddRuleTriggerProps,
+  type QueryBuilderAddGroupTriggerProps,
+  type QueryBuilderRemoveTriggerProps,
+  type QueryBuilderSummaryProps,
+  type QueryBuilderEmptyProps,
 }

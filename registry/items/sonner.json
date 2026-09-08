@@ -2,12 +2,13 @@
   "name": "sonner",
   "type": "ui",
   "description": "",
+  "ark": "Toaster",
   "exports": [
-    "Toaster"
+    "Sonner"
   ],
   "parts": [
     {
-      "name": "Toaster",
+      "name": "Sonner.Root",
       "props": [
         {
           "name": "className",
@@ -149,7 +150,7 @@
   "files": [
     {
       "path": "components/ui/sonner.tsx",
-      "content": "import { useTheme } from \"next-themes\"\nimport { Toaster as Sonner, type ToasterProps } from \"sonner\"\nimport { CircleCheckIcon, InfoIcon, TriangleAlertIcon, OctagonXIcon, Loader2Icon } from \"lucide-react\"\n\nconst Toaster = ({ ...props }: ToasterProps) => {\n  const { theme = \"system\" } = useTheme()\n\n  return (\n    <Sonner\n      theme={theme as ToasterProps[\"theme\"]}\n      className=\"group\"\n      icons={{\n        success: <CircleCheckIcon className=\"size-4\" />,\n        info: <InfoIcon className=\"size-4\" />,\n        warning: <TriangleAlertIcon className=\"size-4\" />,\n        error: <OctagonXIcon className=\"size-4\" />,\n        loading: <Loader2Icon className=\"size-4 animate-spin\" />,\n      }}\n      style={\n        {\n          \"--normal-bg\": \"var(--popover)\",\n          \"--normal-text\": \"var(--popover-foreground)\",\n          \"--normal-border\": \"var(--border)\",\n          \"--border-radius\": \"var(--radius)\",\n        } as React.CSSProperties\n      }\n      toastOptions={{\n        classNames: {\n          toast: \"cn-toast\",\n        },\n      }}\n      {...props}\n    />\n  )\n}\n\nexport { Toaster }\n"
+      "content": "import { useTheme } from \"next-themes\"\nimport { Toaster as SonnerPrimitive, type ToasterProps } from \"sonner\"\nimport { CircleCheckIcon, InfoIcon, TriangleAlertIcon, OctagonXIcon, Loader2Icon } from \"lucide-react\"\n\nconst SonnerRoot = ({ ...props }: SonnerRootProps) => {\n  const { theme = \"system\" } = useTheme()\n\n  return (\n    <SonnerPrimitive\n      theme={theme as ToasterProps[\"theme\"]}\n      className=\"group\"\n      icons={{\n        success: <CircleCheckIcon className=\"size-4\" />,\n        info: <InfoIcon className=\"size-4\" />,\n        warning: <TriangleAlertIcon className=\"size-4\" />,\n        error: <OctagonXIcon className=\"size-4\" />,\n        loading: <Loader2Icon className=\"size-4 animate-spin\" />,\n      }}\n      style={\n        {\n          \"--normal-bg\": \"var(--popover)\",\n          \"--normal-text\": \"var(--popover-foreground)\",\n          \"--normal-border\": \"var(--border)\",\n          \"--border-radius\": \"var(--radius)\",\n        } as React.CSSProperties\n      }\n      toastOptions={{\n        classNames: {\n          toast: \"cn-toast\",\n        },\n      }}\n      {...props}\n    />\n  )\n}\n\ntype SonnerRootProps = ToasterProps\n\nconst Sonner = {\n  Root: SonnerRoot,\n}\n\nexport { Sonner, type SonnerRootProps }\n"
     }
   ]
 }

@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.0
+
+- Replace flat component exports with namespace APIs such as `Card.Root` and `Accordion.ItemTrigger`. This is a breaking change; compatibility exports are not provided.
+- Keep the standalone Button component as `<Button>`, with a `ButtonProps` type.
+- Expose Ark parts, contexts, and root providers, and add polymorphism to replaceable DOM parts.
+- Add DatePicker, PinInput, Splitter, Fieldset, Listbox, and Toast; move Field and Pagination onto Ark primitives. Retain Embla for Carousel.
+- Add ClientOnly, DownloadTrigger, FocusTrap, Frame, Highlight, Portal, and Presence.
+- Update documentation and registry metadata, audit all 124 documentation routes, and add API coverage and composition checks.
+
 ## 0.1.4
 
 - Fix Steps and Timer trigger composition with `asChild`, and keep Tour controls above the backdrop.

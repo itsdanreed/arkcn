@@ -4,12 +4,12 @@
   "description": "",
   "ark": "JsonTreeView",
   "exports": [
-    "JsonTreeView",
-    "JsonTreeViewTree"
+    "useJsonTreeView",
+    "JsonTreeView"
   ],
   "parts": [
     {
-      "name": "JsonTreeView",
+      "name": "JsonTreeView.Root",
       "props": [
         {
           "name": "data",
@@ -289,7 +289,71 @@
       ]
     },
     {
-      "name": "JsonTreeViewTree",
+      "name": "JsonTreeView.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseJsonTreeViewReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "JsonTreeView.Tree",
       "props": [
         {
           "name": "arrow",
@@ -352,7 +416,7 @@
   "files": [
     {
       "path": "components/ui/json-tree-view.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { JsonTreeView as JsonTreeViewPrimitive } from \"@ark-ui/react\"\n\nfunction JsonTreeView({ className, ...props }: React.ComponentProps<typeof JsonTreeViewPrimitive.Root>) {\n  return (\n    <JsonTreeViewPrimitive.Root\n      data-slot=\"json-tree-view\"\n      className={cn(\"w-full font-mono text-xs\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction JsonTreeViewTree({ className, ...props }: React.ComponentProps<typeof JsonTreeViewPrimitive.Tree>) {\n  return (\n    <JsonTreeViewPrimitive.Tree\n      data-slot=\"json-tree-view-tree\"\n      className={cn(\n        \"flex flex-col gap-px outline-none\",\n        \"**:data-[part=branch-control]:flex **:data-[part=branch-control]:h-6 **:data-[part=branch-control]:cursor-default **:data-[part=branch-control]:items-center **:data-[part=branch-control]:gap-1 **:data-[part=branch-control]:rounded-md **:data-[part=branch-control]:pl-[calc(var(--depth)*(--spacing(4)))] **:data-[part=branch-control]:outline-none **:data-[part=branch-control]:hover:bg-muted **:data-[part=branch-control]:focus-visible:ring-2 **:data-[part=branch-control]:focus-visible:ring-ring/50 **:data-[part=branch-control]:focus-visible:ring-inset **:data-[part=branch-control]:data-selected:bg-muted\",\n        \"**:data-[part=item]:flex **:data-[part=item]:h-6 **:data-[part=item]:cursor-default **:data-[part=item]:items-center **:data-[part=item]:gap-1 **:data-[part=item]:rounded-md **:data-[part=item]:pl-[calc(var(--depth)*(--spacing(4))+(--spacing(4)))] **:data-[part=item]:outline-none **:data-[part=item]:hover:bg-muted **:data-[part=item]:focus-visible:ring-2 **:data-[part=item]:focus-visible:ring-ring/50 **:data-[part=item]:focus-visible:ring-inset **:data-[part=item]:data-selected:bg-muted\",\n        \"**:data-[part=branch-indicator]:text-muted-foreground **:data-[part=branch-indicator]:transition-transform **:data-[part=branch-indicator]:data-[state=open]:rotate-90 **:data-[part=branch-indicator]:[&_svg]:size-3.5\",\n        \"**:data-[part=branch-indent-guide]:absolute **:data-[part=branch-indent-guide]:inset-y-0 **:data-[part=branch-indent-guide]:left-[calc(var(--depth)*(--spacing(4))+(--spacing(1.5)))] **:data-[part=branch-indent-guide]:w-px **:data-[part=branch-indent-guide]:bg-border\",\n        \"**:data-[part=branch-content]:relative **:data-[part=branch-content]:flex **:data-[part=branch-content]:flex-col **:data-[part=branch-content]:gap-px\",\n        \"**:data-[part=key]:text-foreground **:data-[part=key]:after:text-muted-foreground **:data-[part=key]:after:content-[':']\",\n        \"**:data-[part=value]:data-[kind=boolean]:text-amber-600 **:data-[part=value]:data-[kind=null]:text-muted-foreground **:data-[part=value]:data-[kind=number]:text-sky-600 **:data-[part=value]:data-[kind=string]:text-emerald-600 **:data-[part=value]:data-[kind=undefined]:text-muted-foreground dark:**:data-[part=value]:data-[kind=boolean]:text-amber-400 dark:**:data-[part=value]:data-[kind=number]:text-sky-400 dark:**:data-[part=value]:data-[kind=string]:text-emerald-400\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nexport { JsonTreeView, JsonTreeViewTree }\n"
+      "content": "\"use client\"\n\nimport { useJsonTreeView } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { JsonTreeView as JsonTreeViewPrimitive } from \"@ark-ui/react\"\n\nfunction JsonTreeViewRoot({ className, ...props }: JsonTreeViewRootProps) {\n  return (\n    <JsonTreeViewPrimitive.Root\n      data-slot=\"json-tree-view\"\n      className={cn(\"w-full font-mono text-xs\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction JsonTreeViewTree({ className, ...props }: JsonTreeViewTreeProps) {\n  return (\n    <JsonTreeViewPrimitive.Tree\n      data-slot=\"json-tree-view-tree\"\n      className={cn(\n        \"flex flex-col gap-px outline-none\",\n        \"**:data-[part=branch-control]:flex **:data-[part=branch-control]:h-6 **:data-[part=branch-control]:cursor-default **:data-[part=branch-control]:items-center **:data-[part=branch-control]:gap-1 **:data-[part=branch-control]:rounded-md **:data-[part=branch-control]:pl-[calc(var(--depth)*(--spacing(4)))] **:data-[part=branch-control]:outline-none **:data-[part=branch-control]:hover:bg-muted **:data-[part=branch-control]:focus-visible:ring-2 **:data-[part=branch-control]:focus-visible:ring-ring/50 **:data-[part=branch-control]:focus-visible:ring-inset **:data-[part=branch-control]:data-selected:bg-muted\",\n        \"**:data-[part=item]:flex **:data-[part=item]:h-6 **:data-[part=item]:cursor-default **:data-[part=item]:items-center **:data-[part=item]:gap-1 **:data-[part=item]:rounded-md **:data-[part=item]:pl-[calc(var(--depth)*(--spacing(4))+(--spacing(4)))] **:data-[part=item]:outline-none **:data-[part=item]:hover:bg-muted **:data-[part=item]:focus-visible:ring-2 **:data-[part=item]:focus-visible:ring-ring/50 **:data-[part=item]:focus-visible:ring-inset **:data-[part=item]:data-selected:bg-muted\",\n        \"**:data-[part=branch-indicator]:text-muted-foreground **:data-[part=branch-indicator]:transition-transform **:data-[part=branch-indicator]:data-[state=open]:rotate-90 **:data-[part=branch-indicator]:[&_svg]:size-3.5\",\n        \"**:data-[part=branch-indent-guide]:absolute **:data-[part=branch-indent-guide]:inset-y-0 **:data-[part=branch-indent-guide]:left-[calc(var(--depth)*(--spacing(4))+(--spacing(1.5)))] **:data-[part=branch-indent-guide]:w-px **:data-[part=branch-indent-guide]:bg-border\",\n        \"**:data-[part=branch-content]:relative **:data-[part=branch-content]:flex **:data-[part=branch-content]:flex-col **:data-[part=branch-content]:gap-px\",\n        \"**:data-[part=key]:text-foreground **:data-[part=key]:after:text-muted-foreground **:data-[part=key]:after:content-[':']\",\n        \"**:data-[part=value]:data-[kind=boolean]:text-amber-600 **:data-[part=value]:data-[kind=null]:text-muted-foreground **:data-[part=value]:data-[kind=number]:text-sky-600 **:data-[part=value]:data-[kind=string]:text-emerald-600 **:data-[part=value]:data-[kind=undefined]:text-muted-foreground dark:**:data-[part=value]:data-[kind=boolean]:text-amber-400 dark:**:data-[part=value]:data-[kind=number]:text-sky-400 dark:**:data-[part=value]:data-[kind=string]:text-emerald-400\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction JsonTreeViewRootProvider({ className, ...props }: JsonTreeViewRootProviderProps) {\n  return (\n    <JsonTreeViewPrimitive.RootProvider\n      data-slot=\"json-tree-view\"\n      className={cn(\"w-full font-mono text-xs\", className)}\n      {...props}\n    />\n  )\n}\n\ntype JsonTreeViewRootProps = React.ComponentProps<typeof JsonTreeViewPrimitive.Root>\n\ntype JsonTreeViewRootProviderProps = React.ComponentProps<typeof JsonTreeViewPrimitive.RootProvider>\n\ntype JsonTreeViewTreeProps = React.ComponentProps<typeof JsonTreeViewPrimitive.Tree>\n\nconst JsonTreeView = {\n  Root: JsonTreeViewRoot,\n  RootProvider: JsonTreeViewRootProvider,\n  Tree: JsonTreeViewTree,\n}\n\nexport {\n  useJsonTreeView,\n  JsonTreeView,\n  type JsonTreeViewRootProps,\n  type JsonTreeViewRootProviderProps,\n  type JsonTreeViewTreeProps,\n}\n"
     }
   ]
 }

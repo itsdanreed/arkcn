@@ -1,17 +1,12 @@
 "use client"
 
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { OTPInput, OTPInputContext } from "input-otp"
 import { MinusIcon } from "lucide-react"
 
-function InputOTP({
-  className,
-  containerClassName,
-  ...props
-}: React.ComponentProps<typeof OTPInput> & {
-  containerClassName?: string
-}) {
+function InputOTPRoot({ className, containerClassName, ...props }: InputOTPRootProps) {
   return (
     <OTPInput
       data-slot="input-otp"
@@ -23,9 +18,9 @@ function InputOTP({
   )
 }
 
-function InputOTPGroup({ className, ...props }: React.ComponentProps<"div">) {
+function InputOTPGroup({ className, ...props }: InputOTPGroupProps) {
   return (
-    <div
+    <ark.div
       data-slot="input-otp-group"
       className={cn(
         "flex items-center rounded-lg has-aria-invalid:border-destructive has-aria-invalid:ring-3 has-aria-invalid:ring-destructive/20 dark:has-aria-invalid:ring-destructive/40",
@@ -36,18 +31,12 @@ function InputOTPGroup({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function InputOTPSlot({
-  index,
-  className,
-  ...props
-}: React.ComponentProps<"div"> & {
-  index: number
-}) {
+function InputOTPSlot({ index, className, ...props }: InputOTPSlotProps) {
   const inputOTPContext = React.useContext(OTPInputContext)
   const { char, hasFakeCaret, isActive } = inputOTPContext?.slots[index] ?? {}
 
   return (
-    <div
+    <ark.div
       data-slot="input-otp-slot"
       data-active={isActive}
       className={cn(
@@ -56,27 +45,68 @@ function InputOTPSlot({
       )}
       {...props}
     >
-      {char}
-      {hasFakeCaret && (
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
-        </div>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          {char}
+          {hasFakeCaret && (
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+              <div className="h-4 w-px animate-caret-blink bg-foreground duration-1000" />
+            </div>
+          )}
+        </>
       )}
-    </div>
+    </ark.div>
   )
 }
 
-function InputOTPSeparator({ ...props }: React.ComponentProps<"div">) {
+function InputOTPSeparator({ ...props }: InputOTPSeparatorProps) {
   return (
-    <div
+    <ark.div
       data-slot="input-otp-separator"
       className="flex items-center [&_svg:not([class*='size-'])]:size-4"
       role="separator"
       {...props}
     >
-      <MinusIcon />
-    </div>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <MinusIcon />
+        </>
+      )}
+    </ark.div>
   )
 }
 
-export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator }
+type InputOTPRootProps = React.ComponentProps<typeof OTPInput> & {
+  containerClassName?: string
+}
+
+type InputOTPGroupProps = React.ComponentProps<typeof ark.div>
+
+type InputOTPSlotProps = React.ComponentProps<typeof ark.div> & {
+  index: number
+}
+
+type InputOTPSeparatorProps = React.ComponentProps<typeof ark.div>
+
+const InputOTP = {
+  Root: InputOTPRoot,
+  Group: InputOTPGroup,
+  Slot: InputOTPSlot,
+  Separator: InputOTPSeparator,
+}
+
+export {
+  InputOTP,
+  type InputOTPRootProps,
+  type InputOTPGroupProps,
+  type InputOTPSlotProps,
+  type InputOTPSeparatorProps,
+}

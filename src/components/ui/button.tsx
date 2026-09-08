@@ -38,16 +38,7 @@ const buttonVariants = cva(
   }
 )
 
-function Button({
-  className,
-  variant = "default",
-  size = "default",
-  asChild = false,
-  ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
+function Button({ className, variant = "default", size = "default", asChild = false, ...props }: ButtonProps) {
   const Comp = ark.button
 
   return (
@@ -62,4 +53,9 @@ function Button({
   )
 }
 
-export { Button, buttonVariants }
+type ButtonProps = React.ComponentProps<typeof ark.button> &
+  VariantProps<typeof buttonVariants> & {
+    asChild?: boolean
+  }
+
+export { Button, buttonVariants, type ButtonProps }

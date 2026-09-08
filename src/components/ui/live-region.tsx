@@ -1,5 +1,6 @@
 "use client"
 
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
@@ -31,14 +32,9 @@ function useLiveRegion(options: { clearAfter?: number } = {}) {
 }
 
 /** Visually hidden `role="status"` region. Pair with `useLiveRegion`. */
-function LiveRegion({
-  message,
-  assertive = false,
-  className,
-  ...props
-}: React.ComponentProps<"div"> & { message: string; assertive?: boolean }) {
+function LiveRegionRoot({ message, assertive = false, className, ...props }: LiveRegionRootProps) {
   return (
-    <div
+    <ark.div
       data-slot="live-region"
       role={assertive ? "alert" : "status"}
       aria-live={assertive ? "assertive" : "polite"}
@@ -46,9 +42,15 @@ function LiveRegion({
       className={cn("sr-only", className)}
       {...props}
     >
-      {message}
-    </div>
+      {props.asChild ? React.isValidElement(props.children) ? props.children : null : <>{message}</>}
+    </ark.div>
   )
 }
 
-export { LiveRegion, useLiveRegion }
+type LiveRegionRootProps = React.ComponentProps<typeof ark.div> & { message: string; assertive?: boolean }
+
+const LiveRegion = {
+  Root: LiveRegionRoot,
+}
+
+export { LiveRegion, useLiveRegion, type LiveRegionRootProps }

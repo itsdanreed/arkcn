@@ -1,34 +1,24 @@
-import {
-  TagsInput,
-  TagsInputContext,
-  TagsInputControl,
-  TagsInputInput,
-  TagsInputItem,
-  TagsInputItemDeleteTrigger,
-  TagsInputItemPreview,
-  TagsInputItemText,
-  TagsInputLabel,
-} from "@/components/ui/tags-input"
+import { TagsInput } from "@/components/ui/tags-input"
 
 export default function TagsInputExample() {
   return (
-    <TagsInput defaultValue={["react", "ark-ui"]} className="w-80">
-      <TagsInputLabel>Topics</TagsInputLabel>
-      <TagsInputControl>
-        <TagsInputContext>
+    <TagsInput.Root defaultValue={["react", "ark-ui"]} className="w-80">
+      <TagsInput.Label>Topics</TagsInput.Label>
+      <TagsInput.Control>
+        <TagsInput.Context>
           {(api) =>
             api.value.map((value, index) => (
-              <TagsInputItem key={index} index={index} value={value}>
-                <TagsInputItemPreview>
-                  <TagsInputItemText>{value}</TagsInputItemText>
-                  <TagsInputItemDeleteTrigger />
-                </TagsInputItemPreview>
-              </TagsInputItem>
+              <TagsInput.Item key={index} index={index} value={value}>
+                <TagsInput.ItemPreview>
+                  <TagsInput.ItemText>{value}</TagsInput.ItemText>
+                  <TagsInput.ItemDeleteTrigger />
+                </TagsInput.ItemPreview>
+              </TagsInput.Item>
             ))
           }
-        </TagsInputContext>
-        <TagsInputInput placeholder="Add a topic…" />
-      </TagsInputControl>
-    </TagsInput>
+        </TagsInput.Context>
+        <TagsInput.Input placeholder="Add a topic…" />
+      </TagsInput.Control>
+    </TagsInput.Root>
   )
 }

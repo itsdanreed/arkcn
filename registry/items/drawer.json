@@ -1,30 +1,116 @@
 {
   "name": "drawer",
   "type": "ui",
-  "description": "- **Feature parity** with the shadcn original: same exported names, same props surface where Ark supports it, same visual result, same variants. - **Ark's tree wins** where the structure differs (e.g.",
+  "description": "- **Visual parity** with the shadcn original: retain the visual result and variants. Public names, parts, and behavior follow Ark's namespace contracts. - **Ark's tree wins** where the structure differs (e.g.",
   "ark": "Drawer",
   "exports": [
-    "Drawer",
-    "DrawerClose",
-    "DrawerContent",
-    "DrawerContext",
-    "DrawerDescription",
-    "DrawerFooter",
-    "DrawerGrabber",
-    "DrawerHeader",
-    "DrawerOverlay",
-    "DrawerPortal",
-    "DrawerPositioner",
-    "DrawerSwipeArea",
-    "DrawerTitle",
-    "DrawerTrigger",
-    "DrawerIndent",
-    "DrawerIndentBackground",
-    "DrawerStack"
+    "useDrawer",
+    "useDrawerContext",
+    "useDrawerStackContext",
+    "Drawer"
   ],
   "parts": [
     {
-      "name": "Drawer",
+      "name": "Drawer.Backdrop",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Drawer.CloseTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Drawer.GrabberIndicator",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Drawer.Root",
       "props": [
         {
           "name": "direction",
@@ -340,8 +426,15 @@
       ]
     },
     {
-      "name": "DrawerClose",
+      "name": "Drawer.RootProvider",
       "props": [
+        {
+          "name": "value",
+          "type": "UseDrawerReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "asChild",
           "type": "boolean",
@@ -354,26 +447,72 @@
           "type": "ReactNode",
           "required": false,
           "description": "Content rendered inside the part.",
-          "from": "@types/react"
+          "from": "@ark-ui/react"
         },
         {
-          "name": "className",
-          "type": "string",
+          "name": "hideMode",
+          "type": "HideMode",
           "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
         },
         {
-          "name": "style",
-          "type": "CSSProperties",
+          "name": "immediate",
+          "type": "boolean",
           "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
         }
       ]
     },
     {
-      "name": "DrawerContent",
+      "name": "Drawer.Content",
       "props": [
         {
           "name": "asChild",
@@ -414,7 +553,7 @@
       ]
     },
     {
-      "name": "DrawerContext",
+      "name": "Drawer.Context",
       "props": [
         {
           "name": "children",
@@ -426,7 +565,7 @@
       ]
     },
     {
-      "name": "DrawerDescription",
+      "name": "Drawer.Description",
       "props": [
         {
           "name": "asChild",
@@ -459,33 +598,7 @@
       ]
     },
     {
-      "name": "DrawerFooter",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "DrawerGrabber",
+      "name": "Drawer.Footer",
       "props": [
         {
           "name": "asChild",
@@ -518,33 +631,7 @@
       ]
     },
     {
-      "name": "DrawerHeader",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "DrawerOverlay",
+      "name": "Drawer.Grabber",
       "props": [
         {
           "name": "asChild",
@@ -577,7 +664,40 @@
       ]
     },
     {
-      "name": "DrawerPortal",
+      "name": "Drawer.Header",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Drawer.Portal",
       "props": [
         {
           "name": "children",
@@ -602,7 +722,7 @@
       ]
     },
     {
-      "name": "DrawerPositioner",
+      "name": "Drawer.Positioner",
       "props": [
         {
           "name": "asChild",
@@ -635,7 +755,7 @@
       ]
     },
     {
-      "name": "DrawerSwipeArea",
+      "name": "Drawer.SwipeArea",
       "props": [
         {
           "name": "asChild",
@@ -668,7 +788,7 @@
       ]
     },
     {
-      "name": "DrawerTitle",
+      "name": "Drawer.Title",
       "props": [
         {
           "name": "asChild",
@@ -701,7 +821,7 @@
       ]
     },
     {
-      "name": "DrawerTrigger",
+      "name": "Drawer.Trigger",
       "props": [
         {
           "name": "asChild",
@@ -741,7 +861,7 @@
       ]
     },
     {
-      "name": "DrawerIndent",
+      "name": "Drawer.Indent",
       "props": [
         {
           "name": "asChild",
@@ -774,7 +894,7 @@
       ]
     },
     {
-      "name": "DrawerIndentBackground",
+      "name": "Drawer.IndentBackground",
       "props": [
         {
           "name": "asChild",
@@ -807,7 +927,7 @@
       ]
     },
     {
-      "name": "DrawerStack",
+      "name": "Drawer.Stack",
       "props": [
         {
           "name": "children",
@@ -828,8 +948,8 @@
   "files": [
     {
       "path": "components/ui/drawer.tsx",
-      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Drawer as DrawerPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\n\ntype DrawerDirection = \"top\" | \"bottom\" | \"left\" | \"right\"\n\nconst swipeDirectionByDirection = {\n  bottom: \"down\",\n  top: \"up\",\n  left: \"start\",\n  right: \"end\",\n} as const\n\nfunction Drawer({\n  direction = \"bottom\",\n  swipeDirection,\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: React.ComponentProps<typeof DrawerPrimitive.Root> & {\n  /** Edge the drawer slides in from. Maps to Ark's `swipeDirection`. */\n  direction?: DrawerDirection\n}) {\n  return (\n    <DrawerPrimitive.Root\n      swipeDirection={swipeDirection ?? swipeDirectionByDirection[direction]}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerTrigger({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Trigger>) {\n  return <DrawerPrimitive.Trigger data-slot=\"drawer-trigger\" {...props} />\n}\n\nfunction DrawerPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction DrawerContext({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Context>) {\n  return <DrawerPrimitive.Context {...props} />\n}\n\nfunction DrawerClose({ ...props }: React.ComponentProps<typeof DrawerPrimitive.CloseTrigger>) {\n  return <DrawerPrimitive.CloseTrigger data-slot=\"drawer-close\" {...props} />\n}\n\nfunction DrawerOverlay({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Backdrop>) {\n  return (\n    <DrawerPrimitive.Backdrop\n      data-slot=\"drawer-overlay\"\n      className={cn(\n        \"fixed inset-0 z-50 bg-black/10 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerPositioner({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Positioner>) {\n  return (\n    <DrawerPrimitive.Positioner\n      data-slot=\"drawer-positioner\"\n      className={cn(\"fixed inset-0 z-50\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerGrabber({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Grabber>) {\n  return (\n    <DrawerPrimitive.Grabber\n      data-slot=\"drawer-grabber\"\n      className={cn(\n        \"mx-auto mt-4 hidden shrink-0 cursor-grab touch-none group-data-[swipe-direction=down]/drawer-content:block\",\n        className\n      )}\n      {...props}\n    >\n      <DrawerPrimitive.GrabberIndicator\n        data-slot=\"drawer-grabber-indicator\"\n        className=\"block h-1 w-25 rounded-full bg-muted\"\n      />\n    </DrawerPrimitive.Grabber>\n  )\n}\n\nfunction DrawerContent({ className, children, ...props }: React.ComponentProps<typeof DrawerPrimitive.Content>) {\n  return (\n    <DrawerPortal>\n      <DrawerOverlay />\n      <DrawerPositioner>\n        <DrawerPrimitive.Content\n          data-slot=\"drawer-content\"\n          className={cn(\n            \"group/drawer-content absolute flex h-auto flex-col bg-popover text-sm text-popover-foreground outline-hidden transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-[swipe-direction=down]:inset-x-0 data-[swipe-direction=down]:bottom-0 data-[swipe-direction=down]:mt-24 data-[swipe-direction=down]:max-h-[80vh] data-[swipe-direction=down]:rounded-t-xl data-[swipe-direction=down]:border-t data-[swipe-direction=left]:inset-y-0 data-[swipe-direction=left]:left-0 data-[swipe-direction=left]:w-3/4 data-[swipe-direction=left]:rounded-r-xl data-[swipe-direction=left]:border-r data-[swipe-direction=right]:inset-y-0 data-[swipe-direction=right]:right-0 data-[swipe-direction=right]:w-3/4 data-[swipe-direction=right]:rounded-l-xl data-[swipe-direction=right]:border-l data-[swipe-direction=up]:inset-x-0 data-[swipe-direction=up]:top-0 data-[swipe-direction=up]:mb-24 data-[swipe-direction=up]:max-h-[80vh] data-[swipe-direction=up]:rounded-b-xl data-[swipe-direction=up]:border-b data-[swipe-direction=left]:sm:max-w-sm data-[swipe-direction=right]:sm:max-w-sm data-open:animate-in data-[swipe-direction=down]:data-open:slide-in-from-bottom-full data-[swipe-direction=left]:data-open:slide-in-from-left-full data-[swipe-direction=right]:data-open:slide-in-from-right-full data-[swipe-direction=up]:data-open:slide-in-from-top-full data-closed:animate-out data-[swipe-direction=down]:data-closed:slide-out-to-bottom-full data-[swipe-direction=left]:data-closed:slide-out-to-left-full data-[swipe-direction=right]:data-closed:slide-out-to-right-full data-[swipe-direction=up]:data-closed:slide-out-to-top-full\",\n            className\n          )}\n          {...props}\n        >\n          <DrawerGrabber />\n          {children}\n        </DrawerPrimitive.Content>\n      </DrawerPositioner>\n    </DrawerPortal>\n  )\n}\n\nfunction DrawerHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"drawer-header\"\n      className={cn(\n        \"flex flex-col gap-0.5 p-4 group-data-[swipe-direction=down]/drawer-content:text-center group-data-[swipe-direction=up]/drawer-content:text-center md:gap-0.5 md:text-left\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"drawer-footer\" className={cn(\"mt-auto flex flex-col gap-2 p-4\", className)} {...props} />\n}\n\nfunction DrawerTitle({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Title>) {\n  return (\n    <DrawerPrimitive.Title\n      data-slot=\"drawer-title\"\n      className={cn(\"font-heading text-base font-medium text-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerDescription({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Description>) {\n  return (\n    <DrawerPrimitive.Description\n      data-slot=\"drawer-description\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerSwipeArea({ ...props }: React.ComponentProps<typeof DrawerPrimitive.SwipeArea>) {\n  return <DrawerPrimitive.SwipeArea data-slot=\"drawer-swipe-area\" {...props} />\n}\n\n/** Wrap page content in a stack so nested drawers push it back (`Drawer` parts inside read the stack). */\nfunction DrawerStack({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Stack>) {\n  return <DrawerPrimitive.Stack data-slot=\"drawer-stack\" {...props} />\n}\n\n/** The layer that scales and shifts back when a drawer opens over it. */\nfunction DrawerIndent({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Indent>) {\n  return (\n    <DrawerPrimitive.Indent\n      data-slot=\"drawer-indent\"\n      className={cn(\"origin-center transition-transform duration-300 ease-out\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerIndentBackground({\n  className,\n  ...props\n}: React.ComponentProps<typeof DrawerPrimitive.IndentBackground>) {\n  return (\n    <DrawerPrimitive.IndentBackground\n      data-slot=\"drawer-indent-background\"\n      className={cn(\"fixed inset-0 bg-black\", className)}\n      {...props}\n    />\n  )\n}\n\nexport {\n  Drawer,\n  DrawerClose,\n  DrawerContent,\n  DrawerContext,\n  DrawerDescription,\n  DrawerFooter,\n  DrawerGrabber,\n  DrawerHeader,\n  DrawerOverlay,\n  DrawerPortal,\n  DrawerPositioner,\n  DrawerSwipeArea,\n  DrawerTitle,\n  DrawerTrigger,\n  DrawerIndent,\n  DrawerIndentBackground,\n  DrawerStack,\n}\n"
+      "content": "import { ark } from \"@ark-ui/react\"\nimport { useDrawer, useDrawerContext, useDrawerStackContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Drawer as DrawerPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\n\ntype DrawerDirection = \"top\" | \"bottom\" | \"left\" | \"right\"\n\nconst swipeDirectionByDirection = {\n  bottom: \"down\",\n  top: \"up\",\n  left: \"start\",\n  right: \"end\",\n} as const\n\nfunction DrawerRoot({\n  direction = \"bottom\",\n  swipeDirection,\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: DrawerRootProps) {\n  return (\n    <DrawerPrimitive.Root\n      swipeDirection={swipeDirection ?? swipeDirectionByDirection[direction]}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerTrigger({ ...props }: DrawerTriggerProps) {\n  return <DrawerPrimitive.Trigger data-slot=\"drawer-trigger\" {...props} />\n}\n\nfunction DrawerPortal({ ...props }: DrawerPortalProps) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction DrawerContext({ ...props }: DrawerContextProps) {\n  return <DrawerPrimitive.Context {...props} />\n}\n\nfunction DrawerCloseTrigger({ ...props }: DrawerCloseTriggerProps) {\n  return <DrawerPrimitive.CloseTrigger data-slot=\"drawer-close\" {...props} />\n}\n\nfunction DrawerBackdrop({ className, ...props }: DrawerBackdropProps) {\n  return (\n    <DrawerPrimitive.Backdrop\n      data-slot=\"drawer-overlay\"\n      className={cn(\n        \"fixed inset-0 z-50 bg-black/10 supports-backdrop-filter:backdrop-blur-xs data-open:animate-in data-open:fade-in-0 data-closed:animate-out data-closed:fade-out-0\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerPositioner({ className, ...props }: DrawerPositionerProps) {\n  return (\n    <DrawerPrimitive.Positioner\n      data-slot=\"drawer-positioner\"\n      className={cn(\"fixed inset-0 z-50\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerGrabber({ className, ...props }: DrawerGrabberProps) {\n  return (\n    <DrawerPrimitive.Grabber\n      data-slot=\"drawer-grabber\"\n      className={cn(\n        \"mx-auto mt-4 hidden shrink-0 cursor-grab touch-none group-data-[swipe-direction=down]/drawer-content:block\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <DrawerPrimitive.GrabberIndicator\n            data-slot=\"drawer-grabber-indicator\"\n            className=\"block h-1 w-25 rounded-full bg-muted\"\n          />\n        </>\n      )}\n    </DrawerPrimitive.Grabber>\n  )\n}\n\nfunction DrawerContent({ className, children, ...props }: DrawerContentProps) {\n  return (\n    <DrawerPortal>\n      <DrawerBackdrop />\n      <DrawerPositioner>\n        <DrawerPrimitive.Content\n          data-slot=\"drawer-content\"\n          className={cn(\n            \"group/drawer-content absolute flex h-auto flex-col bg-popover text-sm text-popover-foreground outline-hidden transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-[swipe-direction=down]:inset-x-0 data-[swipe-direction=down]:bottom-0 data-[swipe-direction=down]:mt-24 data-[swipe-direction=down]:max-h-[80vh] data-[swipe-direction=down]:rounded-t-xl data-[swipe-direction=down]:border-t data-[swipe-direction=left]:inset-y-0 data-[swipe-direction=left]:left-0 data-[swipe-direction=left]:w-3/4 data-[swipe-direction=left]:rounded-r-xl data-[swipe-direction=left]:border-r data-[swipe-direction=right]:inset-y-0 data-[swipe-direction=right]:right-0 data-[swipe-direction=right]:w-3/4 data-[swipe-direction=right]:rounded-l-xl data-[swipe-direction=right]:border-l data-[swipe-direction=up]:inset-x-0 data-[swipe-direction=up]:top-0 data-[swipe-direction=up]:mb-24 data-[swipe-direction=up]:max-h-[80vh] data-[swipe-direction=up]:rounded-b-xl data-[swipe-direction=up]:border-b data-[swipe-direction=left]:sm:max-w-sm data-[swipe-direction=right]:sm:max-w-sm data-open:animate-in data-[swipe-direction=down]:data-open:slide-in-from-bottom-full data-[swipe-direction=left]:data-open:slide-in-from-left-full data-[swipe-direction=right]:data-open:slide-in-from-right-full data-[swipe-direction=up]:data-open:slide-in-from-top-full data-closed:animate-out data-[swipe-direction=down]:data-closed:slide-out-to-bottom-full data-[swipe-direction=left]:data-closed:slide-out-to-left-full data-[swipe-direction=right]:data-closed:slide-out-to-right-full data-[swipe-direction=up]:data-closed:slide-out-to-top-full\",\n            className\n          )}\n          {...props}\n        >\n          {props.asChild ? (\n            React.isValidElement(children) ? (\n              children\n            ) : null\n          ) : (\n            <>\n              <DrawerGrabber />\n              {children}\n            </>\n          )}\n        </DrawerPrimitive.Content>\n      </DrawerPositioner>\n    </DrawerPortal>\n  )\n}\n\nfunction DrawerHeader({ className, ...props }: DrawerHeaderProps) {\n  return (\n    <ark.div\n      data-slot=\"drawer-header\"\n      className={cn(\n        \"flex flex-col gap-0.5 p-4 group-data-[swipe-direction=down]/drawer-content:text-center group-data-[swipe-direction=up]/drawer-content:text-center md:gap-0.5 md:text-left\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerFooter({ className, ...props }: DrawerFooterProps) {\n  return <ark.div data-slot=\"drawer-footer\" className={cn(\"mt-auto flex flex-col gap-2 p-4\", className)} {...props} />\n}\n\nfunction DrawerTitle({ className, ...props }: DrawerTitleProps) {\n  return (\n    <DrawerPrimitive.Title\n      data-slot=\"drawer-title\"\n      className={cn(\"font-heading text-base font-medium text-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerDescription({ className, ...props }: DrawerDescriptionProps) {\n  return (\n    <DrawerPrimitive.Description\n      data-slot=\"drawer-description\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerSwipeArea({ ...props }: DrawerSwipeAreaProps) {\n  return <DrawerPrimitive.SwipeArea data-slot=\"drawer-swipe-area\" {...props} />\n}\n\n/** Wrap page content in a stack so nested drawers push it back (`Drawer` parts inside read the stack). */\nfunction DrawerStack({ ...props }: DrawerStackProps) {\n  return <DrawerPrimitive.Stack data-slot=\"drawer-stack\" {...props} />\n}\n\n/** The layer that scales and shifts back when a drawer opens over it. */\nfunction DrawerIndent({ className, ...props }: DrawerIndentProps) {\n  return (\n    <DrawerPrimitive.Indent\n      data-slot=\"drawer-indent\"\n      className={cn(\"origin-center transition-transform duration-300 ease-out\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerIndentBackground({ className, ...props }: DrawerIndentBackgroundProps) {\n  return (\n    <DrawerPrimitive.IndentBackground\n      data-slot=\"drawer-indent-background\"\n      className={cn(\"fixed inset-0 bg-black\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DrawerRootProvider(props: DrawerRootProviderProps) {\n  return <DrawerPrimitive.RootProvider {...props} />\n}\n\nfunction DrawerGrabberIndicator({ className, ...props }: DrawerGrabberIndicatorProps) {\n  return <DrawerPrimitive.GrabberIndicator data-slot=\"drawer-grabber-indicator\" className={cn(className)} {...props} />\n}\n\ntype DrawerBackdropProps = React.ComponentProps<typeof DrawerPrimitive.Backdrop>\n\ntype DrawerCloseTriggerProps = React.ComponentProps<typeof DrawerPrimitive.CloseTrigger>\n\ntype DrawerGrabberIndicatorProps = React.ComponentProps<typeof DrawerPrimitive.GrabberIndicator>\n\ntype DrawerRootProps = React.ComponentProps<typeof DrawerPrimitive.Root> & {\n  /** Edge the drawer slides in from. Maps to Ark's `swipeDirection`. */\n  direction?: DrawerDirection\n}\n\ntype DrawerRootProviderProps = React.ComponentProps<typeof DrawerPrimitive.RootProvider>\n\ntype DrawerContentProps = React.ComponentProps<typeof DrawerPrimitive.Content>\n\ntype DrawerContextProps = React.ComponentProps<typeof DrawerPrimitive.Context>\n\ntype DrawerDescriptionProps = React.ComponentProps<typeof DrawerPrimitive.Description>\n\ntype DrawerFooterProps = React.ComponentProps<typeof ark.div>\n\ntype DrawerGrabberProps = React.ComponentProps<typeof DrawerPrimitive.Grabber>\n\ntype DrawerHeaderProps = React.ComponentProps<typeof ark.div>\n\ntype DrawerPortalProps = React.ComponentProps<typeof PortalPrimitive>\n\ntype DrawerPositionerProps = React.ComponentProps<typeof DrawerPrimitive.Positioner>\n\ntype DrawerSwipeAreaProps = React.ComponentProps<typeof DrawerPrimitive.SwipeArea>\n\ntype DrawerTitleProps = React.ComponentProps<typeof DrawerPrimitive.Title>\n\ntype DrawerTriggerProps = React.ComponentProps<typeof DrawerPrimitive.Trigger>\n\ntype DrawerIndentProps = React.ComponentProps<typeof DrawerPrimitive.Indent>\n\ntype DrawerIndentBackgroundProps = React.ComponentProps<typeof DrawerPrimitive.IndentBackground>\n\ntype DrawerStackProps = React.ComponentProps<typeof DrawerPrimitive.Stack>\n\nconst Drawer = {\n  Backdrop: DrawerBackdrop,\n  CloseTrigger: DrawerCloseTrigger,\n  GrabberIndicator: DrawerGrabberIndicator,\n  Root: DrawerRoot,\n  RootProvider: DrawerRootProvider,\n  Content: DrawerContent,\n  Context: DrawerContext,\n  Description: DrawerDescription,\n  Footer: DrawerFooter,\n  Grabber: DrawerGrabber,\n  Header: DrawerHeader,\n  Portal: DrawerPortal,\n  Positioner: DrawerPositioner,\n  SwipeArea: DrawerSwipeArea,\n  Title: DrawerTitle,\n  Trigger: DrawerTrigger,\n  Indent: DrawerIndent,\n  IndentBackground: DrawerIndentBackground,\n  Stack: DrawerStack,\n}\n\nexport {\n  useDrawer,\n  useDrawerContext,\n  useDrawerStackContext,\n  Drawer,\n  type DrawerBackdropProps,\n  type DrawerCloseTriggerProps,\n  type DrawerGrabberIndicatorProps,\n  type DrawerRootProps,\n  type DrawerRootProviderProps,\n  type DrawerContentProps,\n  type DrawerContextProps,\n  type DrawerDescriptionProps,\n  type DrawerFooterProps,\n  type DrawerGrabberProps,\n  type DrawerHeaderProps,\n  type DrawerPortalProps,\n  type DrawerPositionerProps,\n  type DrawerSwipeAreaProps,\n  type DrawerTitleProps,\n  type DrawerTriggerProps,\n  type DrawerIndentProps,\n  type DrawerIndentBackgroundProps,\n  type DrawerStackProps,\n}\n"
     }
   ],
-  "docs": "## Porting rules\n- **Feature parity** with the shadcn original: same exported names, same props surface\n  where Ark supports it, same visual result, same variants.\n- **Ark's tree wins** where the structure differs (e.g. `Positioner` wrappers,\n  `Control`/`HiddenInput` splits, `ItemGroup`/`ItemGroupLabel`, `Backdrop` vs `Overlay`).\n  Export the extra Ark parts as their own composable pieces; do not fold them away.\n- **Stay compositional.** Every part is its own exported component. No collapsing\n  parts into a single \"smart\" component, no dropping sub-parts to simplify.\n- **Styling:** `cn` from `@/lib/utils` and `cva` from `class-variance-authority`.\n  Style state via Ark's data attributes (`data-state`, `data-open`, `data-disabled`,\n  `data-highlighted`, `data-placement`, `data-orientation`, ...). Keep `data-slot`\n  attributes on every part, as shadcn does.\n- `command.tsx` runs on Ark's Listbox and `drawer.tsx` on Ark's Drawer; `cmdk`, `vaul`,\n  `radix-ui`, `@base-ui/react`, and every shadcn package (`shadcn` CLI, `@shadcn/react`,\n  `cn`) are removed. Do not reintroduce them. `cn` is clsx + tailwind-merge in\n  `src/lib/utils.ts`. Base variants, keyframes, and utilities live in `src/index.css`\n  (keyframes at the end of the `@theme inline` block); there is no `components.json`.\n- `questionnaire.tsx` and `message-scroller.tsx` were removed because they depended on\n  the `@shadcn/react` runtime. Rebuild from scratch if they are wanted.\n- Components with no Ark equivalent (calendar, carousel, chart, resizable, input-otp,\n  sonner/toast) keep their current libraries. Separator, Label, AspectRatio, Direction\n  are plain React."
+  "docs": "## Porting rules\n- **Visual parity** with the shadcn original: retain the visual result and variants.\n  Public names, parts, and behavior follow Ark's namespace contracts.\n- **Ark's tree wins** where the structure differs (e.g. `Positioner` wrappers,\n  `Control`/`HiddenInput` splits, `ItemGroup`/`ItemGroupLabel`, `Backdrop` vs `Overlay`).\n  Export the extra Ark parts as their own composable pieces; do not fold them away.\n- **Stay compositional.** Every part is exposed on its component namespace. No collapsing\n  parts into a single \"smart\" component, no dropping sub-parts to simplify.\n- **Styling:** `cn` from `@/lib/utils` and `cva` from `class-variance-authority`.\n  Style state via Ark's data attributes (`data-state`, `data-open`, `data-disabled`,\n  `data-highlighted`, `data-placement`, `data-orientation`, ...). Keep `data-slot`\n  attributes on every part, as shadcn does.\n- `command.tsx` runs on Ark's Listbox and `drawer.tsx` on Ark's Drawer; `cmdk`, `vaul`,\n  `radix-ui`, `@base-ui/react`, and every shadcn package (`shadcn` CLI, `@shadcn/react`,\n  `cn`) are removed. Do not reintroduce them. `cn` is clsx + tailwind-merge in\n  `src/lib/utils.ts`. Base variants, keyframes, and utilities live in `src/index.css`\n  (keyframes at the end of the `@theme inline` block); there is no `components.json`.\n- `questionnaire.tsx` and `message-scroller.tsx` were removed because they depended on\n  the `@shadcn/react` runtime. Rebuild from scratch if they are wanted.\n- Components with no Ark equivalent (calendar, carousel, chart, resizable, input-otp,\n  sonner/toast) keep their current libraries. Separator, Label, AspectRatio, Direction\n  are plain React."
 }

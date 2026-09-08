@@ -4,7 +4,7 @@ A timeline of events on the WAI-ARIA feed pattern: the root is `role="feed"`, ea
 
 ## Parts
 
-`ActivityFeedGroup` with an `ActivityFeedGroupLabel` ("Today", "Yesterday") holds `ActivityFeedItems`, which draws the connector line. Each `ActivityFeedItem value=` has an `ActivityFeedItemMarker` (a dot by default, or pass an icon or an avatar) and `ActivityFeedItemContent` with an `ActivityFeedItemHeader` (`ActivityFeedItemActor`, your summary, `ActivityFeedItemTime date=` with a relative label and the full date in its title), an optional `ActivityFeedItemBody`, and `ActivityFeedItemActions`. `ActivityFeedLoadMoreTrigger` and `ActivityFeedEmpty` complete the set.
+`ActivityFeed.Group` with an `ActivityFeed.GroupLabel` ("Today", "Yesterday") holds `ActivityFeed.Items`, which draws the connector line. Each `ActivityFeedItem value=` has an `ActivityFeed.ItemMarker` (a dot by default, or pass an icon or an avatar) and `ActivityFeed.ItemContent` with an `ActivityFeed.ItemHeader` (`ActivityFeed.ItemActor`, your summary, `ActivityFeedItemTime date=` with a relative label and the full date in its title), an optional `ActivityFeed.ItemBody`, and `ActivityFeed.ItemActions`. `ActivityFeed.LoadMoreTrigger` and `ActivityFeed.Empty` complete the set.
 
 ## Notes
 

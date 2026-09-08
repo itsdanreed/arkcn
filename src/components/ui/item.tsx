@@ -5,9 +5,9 @@ import { ark } from "@ark-ui/react"
 
 import { Separator } from "@/components/ui/separator"
 
-function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
+function ItemGroup({ className, ...props }: ItemGroupProps) {
   return (
-    <div
+    <ark.div
       role="list"
       data-slot="item-group"
       className={cn(
@@ -19,8 +19,10 @@ function ItemGroup({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function ItemSeparator({ className, ...props }: React.ComponentProps<typeof Separator>) {
-  return <Separator data-slot="item-separator" orientation="horizontal" className={cn("my-2", className)} {...props} />
+function ItemSeparator({ className, ...props }: ItemSeparatorProps) {
+  return (
+    <Separator.Root data-slot="item-separator" orientation="horizontal" className={cn("my-2", className)} {...props} />
+  )
 }
 
 const itemVariants = cva(
@@ -45,13 +47,7 @@ const itemVariants = cva(
   }
 )
 
-function Item({
-  className,
-  variant = "default",
-  size = "default",
-  asChild = false,
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof itemVariants> & { asChild?: boolean }) {
+function ItemRoot({ className, variant = "default", size = "default", asChild = false, ...props }: ItemRootProps) {
   const Comp = ark.div
   return (
     <Comp
@@ -82,13 +78,9 @@ const itemMediaVariants = cva(
   }
 )
 
-function ItemMedia({
-  className,
-  variant = "default",
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof itemMediaVariants>) {
+function ItemMedia({ className, variant = "default", ...props }: ItemMediaProps) {
   return (
-    <div
+    <ark.div
       data-slot="item-media"
       data-variant={variant}
       className={cn(itemMediaVariants({ variant, className }))}
@@ -97,9 +89,9 @@ function ItemMedia({
   )
 }
 
-function ItemContent({ className, ...props }: React.ComponentProps<"div">) {
+function ItemContent({ className, ...props }: ItemContentProps) {
   return (
-    <div
+    <ark.div
       data-slot="item-content"
       className={cn(
         "flex flex-1 flex-col gap-1 group-data-[size=xs]/item:gap-0 [&+[data-slot=item-content]]:flex-none",
@@ -110,9 +102,9 @@ function ItemContent({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function ItemTitle({ className, ...props }: React.ComponentProps<"div">) {
+function ItemTitle({ className, ...props }: ItemTitleProps) {
   return (
-    <div
+    <ark.div
       data-slot="item-title"
       className={cn(
         "line-clamp-1 flex w-fit items-center gap-2 text-sm/snug font-medium underline-offset-4",
@@ -123,9 +115,9 @@ function ItemTitle({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function ItemDescription({ className, ...props }: React.ComponentProps<"p">) {
+function ItemDescription({ className, ...props }: ItemDescriptionProps) {
   return (
-    <p
+    <ark.p
       data-slot="item-description"
       className={cn(
         "line-clamp-2 text-left text-sm/normal font-normal text-muted-foreground group-data-[size=xs]/item:text-xs [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary",
@@ -136,13 +128,13 @@ function ItemDescription({ className, ...props }: React.ComponentProps<"p">) {
   )
 }
 
-function ItemActions({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="item-actions" className={cn("flex items-center gap-2", className)} {...props} />
+function ItemActions({ className, ...props }: ItemActionsProps) {
+  return <ark.div data-slot="item-actions" className={cn("flex items-center gap-2", className)} {...props} />
 }
 
-function ItemHeader({ className, ...props }: React.ComponentProps<"div">) {
+function ItemHeader({ className, ...props }: ItemHeaderProps) {
   return (
-    <div
+    <ark.div
       data-slot="item-header"
       className={cn("flex basis-full items-center justify-between gap-2", className)}
       {...props}
@@ -150,9 +142,9 @@ function ItemHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function ItemFooter({ className, ...props }: React.ComponentProps<"div">) {
+function ItemFooter({ className, ...props }: ItemFooterProps) {
   return (
-    <div
+    <ark.div
       data-slot="item-footer"
       className={cn("flex basis-full items-center justify-between gap-2", className)}
       {...props}
@@ -160,15 +152,49 @@ function ItemFooter({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+type ItemRootProps = React.ComponentProps<typeof ark.div> & VariantProps<typeof itemVariants> & { asChild?: boolean }
+
+type ItemMediaProps = React.ComponentProps<typeof ark.div> & VariantProps<typeof itemMediaVariants>
+
+type ItemContentProps = React.ComponentProps<typeof ark.div>
+
+type ItemActionsProps = React.ComponentProps<typeof ark.div>
+
+type ItemGroupProps = React.ComponentProps<typeof ark.div>
+
+type ItemSeparatorProps = React.ComponentProps<typeof Separator.Root>
+
+type ItemTitleProps = React.ComponentProps<typeof ark.div>
+
+type ItemDescriptionProps = React.ComponentProps<typeof ark.p>
+
+type ItemHeaderProps = React.ComponentProps<typeof ark.div>
+
+type ItemFooterProps = React.ComponentProps<typeof ark.div>
+
+const Item = {
+  Root: ItemRoot,
+  Media: ItemMedia,
+  Content: ItemContent,
+  Actions: ItemActions,
+  Group: ItemGroup,
+  Separator: ItemSeparator,
+  Title: ItemTitle,
+  Description: ItemDescription,
+  Header: ItemHeader,
+  Footer: ItemFooter,
+}
+
 export {
   Item,
-  ItemMedia,
-  ItemContent,
-  ItemActions,
-  ItemGroup,
-  ItemSeparator,
-  ItemTitle,
-  ItemDescription,
-  ItemHeader,
-  ItemFooter,
+  type ItemRootProps,
+  type ItemMediaProps,
+  type ItemContentProps,
+  type ItemActionsProps,
+  type ItemGroupProps,
+  type ItemSeparatorProps,
+  type ItemTitleProps,
+  type ItemDescriptionProps,
+  type ItemHeaderProps,
+  type ItemFooterProps,
 }

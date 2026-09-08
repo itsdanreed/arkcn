@@ -1,3 +1,4 @@
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
@@ -6,9 +7,9 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 
-function InputGroup({ className, ...props }: React.ComponentProps<"div">) {
+function InputGroupRoot({ className, ...props }: InputGroupRootProps) {
   return (
-    <div
+    <ark.div
       data-slot="input-group"
       role="group"
       className={cn(
@@ -38,13 +39,9 @@ const inputGroupAddonVariants = cva(
   }
 )
 
-function InputGroupAddon({
-  className,
-  align = "inline-start",
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof inputGroupAddonVariants>) {
+function InputGroupAddon({ className, align = "inline-start", ...props }: InputGroupAddonProps) {
   return (
-    <div
+    <ark.div
       role="group"
       data-slot="input-group-addon"
       data-align={align}
@@ -80,7 +77,7 @@ function InputGroupTrigger({
   variant = "ghost",
   size = "xs",
   ...props
-}: Omit<React.ComponentProps<typeof Button>, "size"> & VariantProps<typeof inputGroupTriggerVariants>) {
+}: InputGroupTriggerProps) {
   return (
     <Button
       type={type}
@@ -92,9 +89,9 @@ function InputGroupTrigger({
   )
 }
 
-function InputGroupText({ className, ...props }: React.ComponentProps<"span">) {
+function InputGroupText({ className, ...props }: InputGroupTextProps) {
   return (
-    <span
+    <ark.span
       className={cn(
         "flex items-center gap-2 text-sm text-muted-foreground [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
         className
@@ -104,9 +101,9 @@ function InputGroupText({ className, ...props }: React.ComponentProps<"span">) {
   )
 }
 
-function InputGroupInput({ className, ...props }: React.ComponentProps<"input">) {
+function InputGroupInput({ className, ...props }: InputGroupInputProps) {
   return (
-    <Input
+    <Input.Root
       data-slot="input-group-control"
       className={cn(
         "flex-1 rounded-none border-0 bg-transparent shadow-none ring-0 focus-visible:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent",
@@ -117,9 +114,9 @@ function InputGroupInput({ className, ...props }: React.ComponentProps<"input">)
   )
 }
 
-function InputGroupTextarea({ className, ...props }: React.ComponentProps<"textarea">) {
+function InputGroupTextarea({ className, ...props }: InputGroupTextareaProps) {
   return (
-    <Textarea
+    <Textarea.Root
       data-slot="input-group-control"
       className={cn(
         "flex-1 resize-none rounded-none border-0 bg-transparent py-2 shadow-none ring-0 focus-visible:ring-0 disabled:bg-transparent aria-invalid:ring-0 dark:bg-transparent dark:disabled:bg-transparent",
@@ -130,4 +127,34 @@ function InputGroupTextarea({ className, ...props }: React.ComponentProps<"texta
   )
 }
 
-export { InputGroup, InputGroupAddon, InputGroupTrigger, InputGroupText, InputGroupInput, InputGroupTextarea }
+type InputGroupRootProps = React.ComponentProps<typeof ark.div>
+
+type InputGroupAddonProps = React.ComponentProps<typeof ark.div> & VariantProps<typeof inputGroupAddonVariants>
+
+type InputGroupTriggerProps = Omit<React.ComponentProps<typeof Button>, "size"> &
+  VariantProps<typeof inputGroupTriggerVariants>
+
+type InputGroupTextProps = React.ComponentProps<typeof ark.span>
+
+type InputGroupInputProps = React.ComponentProps<typeof ark.input>
+
+type InputGroupTextareaProps = React.ComponentProps<typeof ark.textarea>
+
+const InputGroup = {
+  Root: InputGroupRoot,
+  Addon: InputGroupAddon,
+  Trigger: InputGroupTrigger,
+  Text: InputGroupText,
+  Input: InputGroupInput,
+  Textarea: InputGroupTextarea,
+}
+
+export {
+  InputGroup,
+  type InputGroupRootProps,
+  type InputGroupAddonProps,
+  type InputGroupTriggerProps,
+  type InputGroupTextProps,
+  type InputGroupInputProps,
+  type InputGroupTextareaProps,
+}

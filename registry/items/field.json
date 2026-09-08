@@ -2,21 +2,15 @@
   "name": "field",
   "type": "ui",
   "description": "",
+  "ark": "Field",
   "exports": [
-    "Field",
-    "FieldLabel",
-    "FieldDescription",
-    "FieldError",
-    "FieldGroup",
-    "FieldLegend",
-    "FieldSeparator",
-    "FieldSet",
-    "FieldContent",
-    "FieldTitle"
+    "useField",
+    "useFieldContext",
+    "Field"
   ],
   "parts": [
     {
-      "name": "Field",
+      "name": "Field.Root",
       "props": [
         {
           "name": "orientation",
@@ -27,6 +21,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -41,75 +42,84 @@
           "from": "@types/react"
         },
         {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Indicates whether the field is disabled.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the field parts.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Indicates whether the field is invalid.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Indicates whether the field is read-only.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "Indicates whether the field is required.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
           "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
+        },
+        {
+          "name": "target",
+          "type": "string",
+          "required": false,
+          "description": "The target field item value the label should point to.",
+          "from": "@ark-ui/react"
         }
       ]
     },
     {
-      "name": "FieldLabel",
+      "name": "Field.Context",
       "props": [
         {
           "name": "children",
-          "type": "ReactNode",
-          "required": false,
+          "type": "(context: UseFieldContext) => ReactNode",
+          "required": true,
           "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
+          "from": "@ark-ui/react"
         }
       ]
     },
     {
-      "name": "FieldDescription",
+      "name": "Field.RootProvider",
       "props": [
         {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
+          "name": "value",
+          "type": "{ ariaDescribedby: string | undefined; ids: { root: string; control: string; label: string; errorText: string; helperText: string; }; refs: { rootRef: RefObj…",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
         },
         {
-          "name": "className",
-          "type": "string",
+          "name": "asChild",
+          "type": "boolean",
           "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "FieldError",
-      "props": [
-        {
-          "name": "errors",
-          "type": "({ message?: string | undefined; } | undefined)[]",
-          "required": false,
-          "description": "Error messages to render; a string, an array, or an object with a `message`.",
-          "from": "arkcn"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -135,8 +145,15 @@
       ]
     },
     {
-      "name": "FieldGroup",
+      "name": "Field.Input",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -161,7 +178,205 @@
       ]
     },
     {
-      "name": "FieldLegend",
+      "name": "Field.Textarea",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "autoresize",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether the textarea should autoresize",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Field.Select",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Field.Item",
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Field.RequiredIndicator",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "fallback",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Field.Label",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Field.Group",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Field.Legend",
       "props": [
         {
           "name": "variant",
@@ -172,57 +387,12 @@
           "from": "arkcn"
         },
         {
-          "name": "children",
-          "type": "ReactNode",
+          "name": "asChild",
+          "type": "boolean",
           "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "FieldSeparator",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "FieldSet",
-      "props": [
         {
           "name": "children",
           "type": "ReactNode",
@@ -247,8 +417,15 @@
       ]
     },
     {
-      "name": "FieldContent",
+      "name": "Field.Separator",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -273,8 +450,154 @@
       ]
     },
     {
-      "name": "FieldTitle",
+      "name": "Field.Set",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Field.Content",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Field.Title",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Field.HelperText",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Field.ErrorText",
+      "props": [
+        {
+          "name": "errors",
+          "type": "({ message?: string | undefined; } | undefined)[]",
+          "required": false,
+          "description": "Error messages to render; a string, an array, or an object with a `message`.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -300,17 +623,17 @@
     }
   ],
   "dependencies": {
+    "@ark-ui/react": "^5.39.1",
     "class-variance-authority": "^0.7.1"
   },
   "registryDependencies": [
-    "label",
     "lib/utils",
     "separator"
   ],
   "files": [
     {
       "path": "components/ui/field.tsx",
-      "content": "\"use client\"\n\nimport { useMemo } from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\nimport { cn } from \"@/lib/utils\"\n\nimport { Label } from \"@/components/ui/label\"\nimport { Separator } from \"@/components/ui/separator\"\n\nfunction FieldSet({ className, ...props }: React.ComponentProps<\"fieldset\">) {\n  return (\n    <fieldset\n      data-slot=\"field-set\"\n      className={cn(\n        \"flex flex-col gap-4 has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction FieldLegend({\n  className,\n  variant = \"legend\",\n  ...props\n}: React.ComponentProps<\"legend\"> & { variant?: \"legend\" | \"label\" }) {\n  return (\n    <legend\n      data-slot=\"field-legend\"\n      data-variant={variant}\n      className={cn(\"mb-1.5 font-medium data-[variant=label]:text-sm data-[variant=legend]:text-base\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FieldGroup({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"field-group\"\n      className={cn(\n        \"group/field-group @container/field-group flex w-full flex-col gap-5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nconst fieldVariants = cva(\"group/field flex w-full gap-2 data-[invalid=true]:text-destructive\", {\n  variants: {\n    orientation: {\n      vertical: \"flex-col *:w-full [&>.sr-only]:w-auto\",\n      horizontal:\n        \"flex-row items-center has-[>[data-slot=field-content]]:items-start *:data-[slot=field-label]:flex-auto has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px\",\n      responsive:\n        \"flex-col *:w-full @md/field-group:flex-row @md/field-group:items-center @md/field-group:*:w-auto @md/field-group:has-[>[data-slot=field-content]]:items-start @md/field-group:*:data-[slot=field-label]:flex-auto [&>.sr-only]:w-auto @md/field-group:has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px\",\n    },\n  },\n  defaultVariants: {\n    orientation: \"vertical\",\n  },\n})\n\nfunction Field({\n  className,\n  orientation = \"vertical\",\n  ...props\n}: React.ComponentProps<\"div\"> & VariantProps<typeof fieldVariants>) {\n  return (\n    <div\n      role=\"group\"\n      data-slot=\"field\"\n      data-orientation={orientation}\n      className={cn(fieldVariants({ orientation }), className)}\n      {...props}\n    />\n  )\n}\n\nfunction FieldContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"field-content\"\n      className={cn(\"group/field-content flex flex-1 flex-col gap-0.5 leading-snug\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FieldLabel({ className, ...props }: React.ComponentProps<typeof Label>) {\n  return (\n    <Label\n      data-slot=\"field-label\"\n      className={cn(\n        \"group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border has-[>[data-slot=field]]:not-has-[:disabled,[data-disabled]]:hover:bg-muted/50 has-[>[data-slot=field]]:has-focus-visible:border-ring has-[>[data-slot=field]]:has-focus-visible:ring-3 has-[>[data-slot=field]]:has-focus-visible:ring-ring/50 *:data-[slot=field]:p-2.5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10\",\n        \"has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction FieldTitle({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"field-label\"\n      className={cn(\n        \"flex w-fit items-center gap-2 text-sm font-medium group-data-[disabled=true]/field:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction FieldDescription({ className, ...props }: React.ComponentProps<\"p\">) {\n  return (\n    <p\n      data-slot=\"field-description\"\n      className={cn(\n        \"text-left text-sm/normal font-normal text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5\",\n        \"last:mt-0 nth-last-2:-mt-1\",\n        \"[&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction FieldSeparator({\n  children,\n  className,\n  ...props\n}: React.ComponentProps<\"div\"> & {\n  children?: React.ReactNode\n}) {\n  return (\n    <div\n      data-slot=\"field-separator\"\n      data-content={!!children}\n      className={cn(\"relative -my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2\", className)}\n      {...props}\n    >\n      <Separator className=\"absolute inset-0 top-1/2\" />\n      {children && (\n        <span\n          className=\"relative mx-auto block w-fit bg-background px-2 text-muted-foreground\"\n          data-slot=\"field-separator-content\"\n        >\n          {children}\n        </span>\n      )}\n    </div>\n  )\n}\n\nfunction FieldError({\n  className,\n  children,\n  errors,\n  ...props\n}: React.ComponentProps<\"div\"> & {\n  /** Error messages to render; a string, an array, or an object with a `message`. */\n  errors?: Array<{ message?: string } | undefined>\n}) {\n  const content = useMemo(() => {\n    if (children) {\n      return children\n    }\n\n    if (!errors?.length) {\n      return null\n    }\n\n    const uniqueErrors = [...new Map(errors.map((error) => [error?.message, error])).values()]\n\n    if (uniqueErrors?.length == 1) {\n      return uniqueErrors[0]?.message\n    }\n\n    return (\n      <ul className=\"ml-4 flex list-disc flex-col gap-1\">\n        {uniqueErrors.map((error, index) => error?.message && <li key={index}>{error.message}</li>)}\n      </ul>\n    )\n  }, [children, errors])\n\n  if (!content) {\n    return null\n  }\n\n  return (\n    <div\n      role=\"alert\"\n      data-slot=\"field-error\"\n      className={cn(\"text-sm font-normal text-destructive\", className)}\n      {...props}\n    >\n      {content}\n    </div>\n  )\n}\n\nexport {\n  Field,\n  FieldLabel,\n  FieldDescription,\n  FieldError,\n  FieldGroup,\n  FieldLegend,\n  FieldSeparator,\n  FieldSet,\n  FieldContent,\n  FieldTitle,\n}\n"
+      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { ark } from \"@ark-ui/react\"\nimport { useMemo } from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\nimport { cn } from \"@/lib/utils\"\n\nimport { Field as FieldPrimitive, useField, useFieldContext } from \"@ark-ui/react\"\nimport { Separator } from \"@/components/ui/separator\"\n\nfunction FieldSet({ className, ...props }: FieldSetProps) {\n  return (\n    <ark.fieldset\n      data-slot=\"field-set\"\n      className={cn(\n        \"flex flex-col gap-4 has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction FieldLegend({ className, variant = \"legend\", ...props }: FieldLegendProps) {\n  return (\n    <ark.legend\n      data-slot=\"field-legend\"\n      data-variant={variant}\n      className={cn(\"mb-1.5 font-medium data-[variant=label]:text-sm data-[variant=legend]:text-base\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FieldGroup({ className, ...props }: FieldGroupProps) {\n  return (\n    <ark.div\n      data-slot=\"field-group\"\n      className={cn(\n        \"group/field-group @container/field-group flex w-full flex-col gap-5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nconst fieldVariants = cva(\"group/field flex w-full gap-2 data-[invalid=true]:text-destructive\", {\n  variants: {\n    orientation: {\n      vertical: \"flex-col *:w-full [&>.sr-only]:w-auto\",\n      horizontal:\n        \"flex-row items-center has-[>[data-slot=field-content]]:items-start *:data-[slot=field-label]:flex-auto has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px\",\n      responsive:\n        \"flex-col *:w-full @md/field-group:flex-row @md/field-group:items-center @md/field-group:*:w-auto @md/field-group:has-[>[data-slot=field-content]]:items-start @md/field-group:*:data-[slot=field-label]:flex-auto [&>.sr-only]:w-auto @md/field-group:has-[>[data-slot=field-content]]:[&>[role=checkbox],[role=radio]]:mt-px\",\n    },\n  },\n  defaultVariants: {\n    orientation: \"vertical\",\n  },\n})\n\nfunction FieldRoot({ className, orientation = \"vertical\", ...props }: FieldRootProps) {\n  return (\n    <FieldPrimitive.Root\n      role=\"group\"\n      data-slot=\"field\"\n      data-orientation={orientation}\n      className={cn(fieldVariants({ orientation }), className)}\n      {...props}\n    />\n  )\n}\n\nfunction FieldContent({ className, ...props }: FieldContentProps) {\n  return (\n    <ark.div\n      data-slot=\"field-content\"\n      className={cn(\"group/field-content flex flex-1 flex-col gap-0.5 leading-snug\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FieldLabel({ className, ...props }: FieldLabelProps) {\n  return (\n    <FieldPrimitive.Label\n      data-slot=\"field-label\"\n      className={cn(\n        \"group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border has-[>[data-slot=field]]:not-has-[:disabled,[data-disabled]]:hover:bg-muted/50 has-[>[data-slot=field]]:has-focus-visible:border-ring has-[>[data-slot=field]]:has-focus-visible:ring-3 has-[>[data-slot=field]]:has-focus-visible:ring-ring/50 *:data-[slot=field]:p-2.5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10\",\n        \"has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction FieldTitle({ className, ...props }: FieldTitleProps) {\n  return (\n    <ark.div\n      data-slot=\"field-label\"\n      className={cn(\n        \"flex w-fit items-center gap-2 text-sm font-medium group-data-[disabled=true]/field:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction FieldHelperText({ className, ...props }: FieldHelperTextProps) {\n  return (\n    <FieldPrimitive.HelperText\n      data-slot=\"field-description\"\n      className={cn(\n        \"text-left text-sm/normal font-normal text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5\",\n        \"last:mt-0 nth-last-2:-mt-1\",\n        \"[&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction FieldSeparator({ children, className, ...props }: FieldSeparatorProps) {\n  return (\n    <ark.div\n      data-slot=\"field-separator\"\n      data-content={!!children}\n      className={cn(\"relative -my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <Separator.Root className=\"absolute inset-0 top-1/2\" />\n          {children && (\n            <span\n              className=\"relative mx-auto block w-fit bg-background px-2 text-muted-foreground\"\n              data-slot=\"field-separator-content\"\n            >\n              {children}\n            </span>\n          )}\n        </>\n      )}\n    </ark.div>\n  )\n}\n\nfunction FieldErrorText({ className, children, errors, ...props }: FieldErrorTextProps) {\n  const content = useMemo(() => {\n    if (children) {\n      return children\n    }\n\n    if (!errors?.length) {\n      return null\n    }\n\n    const uniqueErrors = [...new Map(errors.map((error) => [error?.message, error])).values()]\n\n    if (uniqueErrors?.length == 1) {\n      return uniqueErrors[0]?.message\n    }\n\n    return (\n      <ul className=\"ml-4 flex list-disc flex-col gap-1\">\n        {uniqueErrors.map((error, index) => error?.message && <li key={index}>{error.message}</li>)}\n      </ul>\n    )\n  }, [children, errors])\n\n  if (!content) {\n    return null\n  }\n\n  return (\n    <FieldPrimitive.ErrorText\n      role=\"alert\"\n      data-slot=\"field-error\"\n      className={cn(\"text-sm font-normal text-destructive\", className)}\n      {...props}\n    >\n      {props.asChild ? React.isValidElement(children) ? children : null : <>{content}</>}\n    </FieldPrimitive.ErrorText>\n  )\n}\n\nfunction FieldContext(props: FieldContextProps) {\n  return <FieldPrimitive.Context {...props} />\n}\nfunction FieldRootProvider({ className, ...props }: FieldRootProviderProps) {\n  return (\n    <FieldPrimitive.RootProvider\n      data-slot=\"field-root-provider\"\n      className={cn(\"group/field flex w-full flex-col gap-2\", className)}\n      {...props}\n    />\n  )\n}\nfunction FieldInput({ className, ...props }: FieldInputProps) {\n  return (\n    <FieldPrimitive.Input\n      data-slot=\"field-input\"\n      className={cn(\n        \"min-h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\nfunction FieldTextarea({ className, ...props }: FieldTextareaProps) {\n  return (\n    <FieldPrimitive.Textarea\n      data-slot=\"field-textarea\"\n      className={cn(\n        \"min-h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\nfunction FieldSelect({ className, ...props }: FieldSelectProps) {\n  return (\n    <FieldPrimitive.Select\n      data-slot=\"field-select\"\n      className={cn(\n        \"min-h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\nfunction FieldItem(props: FieldItemProps) {\n  return <FieldPrimitive.Item {...props} />\n}\nfunction FieldRequiredIndicator({ className, ...props }: FieldRequiredIndicatorProps) {\n  return <FieldPrimitive.RequiredIndicator data-slot=\"field-required-indicator\" className={cn(className)} {...props} />\n}\n\ntype FieldRootProps = React.ComponentProps<typeof FieldPrimitive.Root> & VariantProps<typeof fieldVariants>\n\ntype FieldContextProps = React.ComponentProps<typeof FieldPrimitive.Context>\n\ntype FieldRootProviderProps = React.ComponentProps<typeof FieldPrimitive.RootProvider>\n\ntype FieldInputProps = React.ComponentProps<typeof FieldPrimitive.Input>\n\ntype FieldTextareaProps = React.ComponentProps<typeof FieldPrimitive.Textarea>\n\ntype FieldSelectProps = React.ComponentProps<typeof FieldPrimitive.Select>\n\ntype FieldItemProps = React.ComponentProps<typeof FieldPrimitive.Item>\n\ntype FieldRequiredIndicatorProps = React.ComponentProps<typeof FieldPrimitive.RequiredIndicator>\n\ntype FieldLabelProps = React.ComponentProps<typeof FieldPrimitive.Label>\n\ntype FieldGroupProps = React.ComponentProps<typeof ark.div>\n\ntype FieldLegendProps = React.ComponentProps<typeof ark.legend> & { variant?: \"legend\" | \"label\" }\n\ntype FieldSeparatorProps = React.ComponentProps<typeof ark.div> & {\n  children?: React.ReactNode\n}\n\ntype FieldSetProps = React.ComponentProps<typeof ark.fieldset>\n\ntype FieldContentProps = React.ComponentProps<typeof ark.div>\n\ntype FieldTitleProps = React.ComponentProps<typeof ark.div>\n\ntype FieldHelperTextProps = React.ComponentProps<typeof FieldPrimitive.HelperText>\n\ntype FieldErrorTextProps = React.ComponentProps<typeof FieldPrimitive.ErrorText> & {\n  /** Error messages to render; a string, an array, or an object with a `message`. */\n  errors?: Array<{ message?: string } | undefined>\n}\n\nconst Field = {\n  Root: FieldRoot,\n  Context: FieldContext,\n  RootProvider: FieldRootProvider,\n  Input: FieldInput,\n  Textarea: FieldTextarea,\n  Select: FieldSelect,\n  Item: FieldItem,\n  RequiredIndicator: FieldRequiredIndicator,\n  Label: FieldLabel,\n  Group: FieldGroup,\n  Legend: FieldLegend,\n  Separator: FieldSeparator,\n  Set: FieldSet,\n  Content: FieldContent,\n  Title: FieldTitle,\n  HelperText: FieldHelperText,\n  ErrorText: FieldErrorText,\n}\n\nexport {\n  useField,\n  useFieldContext,\n  Field,\n  type FieldRootProps,\n  type FieldContextProps,\n  type FieldRootProviderProps,\n  type FieldInputProps,\n  type FieldTextareaProps,\n  type FieldSelectProps,\n  type FieldItemProps,\n  type FieldRequiredIndicatorProps,\n  type FieldLabelProps,\n  type FieldGroupProps,\n  type FieldLegendProps,\n  type FieldSeparatorProps,\n  type FieldSetProps,\n  type FieldContentProps,\n  type FieldTitleProps,\n  type FieldHelperTextProps,\n  type FieldErrorTextProps,\n}\n"
     }
   ]
 }

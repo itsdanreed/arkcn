@@ -1,25 +1,5 @@
 import * as React from "react"
-import {
-  Scheduler,
-  SchedulerDayColumn,
-  SchedulerDayColumns,
-  SchedulerDayHeadings,
-  SchedulerEvent,
-  SchedulerEventResizeHandle,
-  SchedulerEventTime,
-  SchedulerEventTitle,
-  SchedulerNextTrigger,
-  SchedulerNowIndicator,
-  SchedulerPrevTrigger,
-  SchedulerTimeGrid,
-  SchedulerTimeGridBody,
-  SchedulerTimeGridHeader,
-  SchedulerTimeGutter,
-  SchedulerTitle,
-  SchedulerTodayTrigger,
-  SchedulerToolbar,
-  useScheduler,
-} from "@/components/ui/scheduler"
+import { Scheduler, useScheduler } from "@/components/ui/scheduler"
 
 type Event = { id: string; title: string; start: Date; end: Date }
 
@@ -35,28 +15,32 @@ const sameDay = (a: Date, b: Date) => a.toDateString() === b.toDateString()
 function Week({ events }: { events: Event[] }) {
   const { days } = useScheduler()
   return (
-    <SchedulerTimeGrid>
-      <SchedulerTimeGridHeader>
-        <SchedulerDayHeadings />
-      </SchedulerTimeGridHeader>
-      <SchedulerTimeGridBody>
-        <SchedulerTimeGutter />
-        <SchedulerDayColumns>
+    <Scheduler.TimeGrid>
+      <Scheduler.TimeGridHeader>
+        <Scheduler.DayHeadings />
+      </Scheduler.TimeGridHeader>
+      <Scheduler.TimeGridBody>
+        <Scheduler.TimeGutter />
+        <Scheduler.DayColumns>
           {days.map((day) => (
-            <SchedulerDayColumn key={day.toISOString()} date={day} events={events.filter((e) => sameDay(e.start, day))}>
+            <Scheduler.DayColumn
+              key={day.toISOString()}
+              date={day}
+              events={events.filter((e) => sameDay(e.start, day))}
+            >
               {(e) => (
-                <SchedulerEvent value={e.id} start={e.start} end={e.end} className="border-sky-500/40 bg-sky-500/15">
-                  <SchedulerEventTitle>{e.title}</SchedulerEventTitle>
-                  <SchedulerEventTime />
-                  <SchedulerEventResizeHandle />
-                </SchedulerEvent>
+                <Scheduler.Event value={e.id} start={e.start} end={e.end} className="border-sky-500/40 bg-sky-500/15">
+                  <Scheduler.EventTitle>{e.title}</Scheduler.EventTitle>
+                  <Scheduler.EventTime />
+                  <Scheduler.EventResizeHandle />
+                </Scheduler.Event>
               )}
-            </SchedulerDayColumn>
+            </Scheduler.DayColumn>
           ))}
-          <SchedulerNowIndicator />
-        </SchedulerDayColumns>
-      </SchedulerTimeGridBody>
-    </SchedulerTimeGrid>
+          <Scheduler.NowIndicator />
+        </Scheduler.DayColumns>
+      </Scheduler.TimeGridBody>
+    </Scheduler.TimeGrid>
   )
 }
 
@@ -68,7 +52,7 @@ export default function SchedulerExample() {
     { id: "planning", title: "Sprint planning", start: at(2, 14), end: at(2, 15, 30) },
   ])
   return (
-    <Scheduler
+    <Scheduler.Root
       defaultView="week"
       minHour={7}
       maxHour={19}
@@ -78,13 +62,13 @@ export default function SchedulerExample() {
       }
       className="h-112 w-full"
     >
-      <SchedulerToolbar>
-        <SchedulerPrevTrigger />
-        <SchedulerNextTrigger />
-        <SchedulerTodayTrigger />
-        <SchedulerTitle className="ms-2" />
-      </SchedulerToolbar>
+      <Scheduler.Toolbar>
+        <Scheduler.PrevTrigger />
+        <Scheduler.NextTrigger />
+        <Scheduler.TodayTrigger />
+        <Scheduler.Title className="ms-2" />
+      </Scheduler.Toolbar>
       <Week events={events} />
-    </Scheduler>
+    </Scheduler.Root>
   )
 }

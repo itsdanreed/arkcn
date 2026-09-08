@@ -1,17 +1,18 @@
 "use client"
 
+import { useTabs, useTabsContext } from "@ark-ui/react"
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 import { Tabs as TabsPrimitive } from "@ark-ui/react"
 
-function Tabs({
+function TabsRoot({
   className,
   orientation = "horizontal",
   lazyMount = true,
   unmountOnExit = true,
   ...props
-}: React.ComponentProps<typeof TabsPrimitive.Root>) {
+}: TabsRootProps) {
   return (
     <TabsPrimitive.Root
       data-slot="tabs"
@@ -24,7 +25,7 @@ function Tabs({
   )
 }
 
-function TabsContext({ ...props }: React.ComponentProps<typeof TabsPrimitive.Context>) {
+function TabsContext({ ...props }: TabsContextProps) {
   return <TabsPrimitive.Context {...props} />
 }
 
@@ -43,11 +44,7 @@ const tabsListVariants = cva(
   }
 )
 
-function TabsList({
-  className,
-  variant = "default",
-  ...props
-}: React.ComponentProps<typeof TabsPrimitive.List> & VariantProps<typeof tabsListVariants>) {
+function TabsList({ className, variant = "default", ...props }: TabsListProps) {
   return (
     <TabsPrimitive.List
       data-slot="tabs-list"
@@ -58,7 +55,7 @@ function TabsList({
   )
 }
 
-function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Trigger>) {
+function TabsTrigger({ className, ...props }: TabsTriggerProps) {
   return (
     <TabsPrimitive.Trigger
       data-slot="tabs-trigger"
@@ -74,7 +71,7 @@ function TabsTrigger({ className, ...props }: React.ComponentProps<typeof TabsPr
   )
 }
 
-function TabsIndicator({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Indicator>) {
+function TabsIndicator({ className, ...props }: TabsIndicatorProps) {
   return (
     <TabsPrimitive.Indicator
       data-slot="tabs-indicator"
@@ -87,7 +84,7 @@ function TabsIndicator({ className, ...props }: React.ComponentProps<typeof Tabs
   )
 }
 
-function TabsContent({ className, ...props }: React.ComponentProps<typeof TabsPrimitive.Content>) {
+function TabsContent({ className, ...props }: TabsContentProps) {
   return (
     <TabsPrimitive.Content
       data-slot="tabs-content"
@@ -97,4 +94,50 @@ function TabsContent({ className, ...props }: React.ComponentProps<typeof TabsPr
   )
 }
 
-export { Tabs, TabsContent, TabsContext, TabsIndicator, TabsList, TabsTrigger, tabsListVariants }
+function TabsRootProvider({ className, ...props }: TabsRootProviderProps) {
+  return (
+    <TabsPrimitive.RootProvider
+      data-slot="tabs"
+      className={cn("group/tabs flex gap-2 data-horizontal:flex-col", className)}
+      {...props}
+    />
+  )
+}
+
+type TabsRootProps = React.ComponentProps<typeof TabsPrimitive.Root>
+
+type TabsRootProviderProps = React.ComponentProps<typeof TabsPrimitive.RootProvider>
+
+type TabsContentProps = React.ComponentProps<typeof TabsPrimitive.Content>
+
+type TabsContextProps = React.ComponentProps<typeof TabsPrimitive.Context>
+
+type TabsIndicatorProps = React.ComponentProps<typeof TabsPrimitive.Indicator>
+
+type TabsListProps = React.ComponentProps<typeof TabsPrimitive.List> & VariantProps<typeof tabsListVariants>
+
+type TabsTriggerProps = React.ComponentProps<typeof TabsPrimitive.Trigger>
+
+const Tabs = {
+  Root: TabsRoot,
+  RootProvider: TabsRootProvider,
+  Content: TabsContent,
+  Context: TabsContext,
+  Indicator: TabsIndicator,
+  List: TabsList,
+  Trigger: TabsTrigger,
+}
+
+export {
+  useTabs,
+  useTabsContext,
+  Tabs,
+  tabsListVariants,
+  type TabsRootProps,
+  type TabsRootProviderProps,
+  type TabsContentProps,
+  type TabsContextProps,
+  type TabsIndicatorProps,
+  type TabsListProps,
+  type TabsTriggerProps,
+}

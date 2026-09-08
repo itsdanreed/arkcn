@@ -3,13 +3,19 @@
   "type": "ui",
   "description": "",
   "exports": [
-    "Kbd",
-    "KbdGroup"
+    "Kbd"
   ],
   "parts": [
     {
-      "name": "Kbd",
+      "name": "Kbd.Root",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -34,8 +40,15 @@
       ]
     },
     {
-      "name": "KbdGroup",
+      "name": "Kbd.Group",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -60,14 +73,16 @@
       ]
     }
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
   "registryDependencies": [
     "lib/utils"
   ],
   "files": [
     {
       "path": "components/ui/kbd.tsx",
-      "content": "import { cn } from \"@/lib/utils\"\n\nfunction Kbd({ className, ...props }: React.ComponentProps<\"kbd\">) {\n  return (\n    <kbd\n      data-slot=\"kbd\"\n      className={cn(\n        \"pointer-events-none inline-flex h-5 w-fit min-w-5 items-center justify-center gap-1 rounded-sm bg-muted px-1 font-sans text-xs font-medium text-muted-foreground select-none in-data-[slot=tooltip-content]:bg-background/20 in-data-[slot=tooltip-content]:text-background dark:in-data-[slot=tooltip-content]:bg-background/10 [&_svg:not([class*='size-'])]:size-3\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction KbdGroup({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <kbd data-slot=\"kbd-group\" className={cn(\"inline-flex items-center gap-1\", className)} {...props} />\n}\n\nexport { Kbd, KbdGroup }\n"
+      "content": "import { ark } from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction KbdRoot({ className, ...props }: KbdRootProps) {\n  return (\n    <ark.kbd\n      data-slot=\"kbd\"\n      className={cn(\n        \"pointer-events-none inline-flex h-5 w-fit min-w-5 items-center justify-center gap-1 rounded-sm bg-muted px-1 font-sans text-xs font-medium text-muted-foreground select-none in-data-[slot=tooltip-content]:bg-background/20 in-data-[slot=tooltip-content]:text-background dark:in-data-[slot=tooltip-content]:bg-background/10 [&_svg:not([class*='size-'])]:size-3\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction KbdGroup({ className, ...props }: KbdGroupProps) {\n  return <ark.kbd data-slot=\"kbd-group\" className={cn(\"inline-flex items-center gap-1\", className)} {...props} />\n}\n\ntype KbdRootProps = React.ComponentProps<typeof ark.kbd>\n\ntype KbdGroupProps = React.ComponentProps<typeof ark.div>\n\nconst Kbd = {\n  Root: KbdRoot,\n  Group: KbdGroup,\n}\n\nexport { Kbd, type KbdRootProps, type KbdGroupProps }\n"
     }
   ]
 }

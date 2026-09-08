@@ -4,24 +4,11 @@
   "description": "Canvas — a compositional, data-agnostic drag-and-drop layout surface on Pragmatic drag and drop. Items come from a palette (`CanvasPaletteItem`, carrying arbitrary `data`) or are existing nodes (`CanvasNode`). Nodes are drop targets on all ",
   "exports": [
     "Canvas",
-    "CanvasArea",
-    "CanvasDropIndicator",
-    "CanvasEmpty",
-    "CanvasNode",
-    "CanvasNodeActions",
-    "CanvasNodeHandle",
-    "CanvasNodeHeader",
-    "CanvasNodeOverlay",
-    "CanvasNodeTitle",
-    "CanvasPalette",
-    "CanvasPaletteItem",
-    "CanvasResizeHandle",
-    "CanvasRow",
     "useCanvas"
   ],
   "parts": [
     {
-      "name": "Canvas",
+      "name": "Canvas.Root",
       "props": [
         {
           "name": "onDrop",
@@ -31,145 +18,11 @@
           "from": "arkcn"
         },
         {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "CanvasArea",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "CanvasDropIndicator",
-      "props": [
-        {
-          "name": "edge",
-          "type": "Edge",
-          "required": true,
-          "description": "Which edge of the node the indicator marks.",
-          "from": "arkcn"
-        },
-        {
-          "name": "gap",
-          "type": "string",
-          "required": false,
-          "default": "\"0.75rem\"",
-          "description": "Gap between the indicator line and the node edge.",
-          "from": "arkcn"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "CanvasEmpty",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "CanvasNode",
-      "props": [
-        {
-          "name": "value",
-          "type": "string",
-          "required": true,
-          "description": "The controlled value.",
-          "from": "arkcn"
-        },
-        {
-          "name": "selected",
+          "name": "asChild",
           "type": "boolean",
           "required": false,
-          "description": "Whether the part is selected; sets `data-selected`.",
-          "from": "arkcn"
-        },
-        {
-          "name": "width",
-          "type": "number",
-          "required": false,
-          "default": "1",
-          "description": "Relative width within the row (flex-grow weight).",
-          "from": "arkcn"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -195,33 +48,7 @@
       ]
     },
     {
-      "name": "CanvasNodeActions",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "CanvasNodeHandle",
+      "name": "Canvas.Area",
       "props": [
         {
           "name": "asChild",
@@ -254,8 +81,30 @@
       ]
     },
     {
-      "name": "CanvasNodeHeader",
+      "name": "Canvas.DropIndicator",
       "props": [
+        {
+          "name": "edge",
+          "type": "Edge",
+          "required": true,
+          "description": "Which edge of the node the indicator marks.",
+          "from": "arkcn"
+        },
+        {
+          "name": "gap",
+          "type": "string",
+          "required": false,
+          "default": "\"0.75rem\"",
+          "description": "Gap between the indicator line and the node edge.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -280,8 +129,15 @@
       ]
     },
     {
-      "name": "CanvasNodeOverlay",
+      "name": "Canvas.Empty",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -306,8 +162,37 @@
       ]
     },
     {
-      "name": "CanvasNodeTitle",
+      "name": "Canvas.Node",
       "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "selected",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the part is selected; sets `data-selected`.",
+          "from": "arkcn"
+        },
+        {
+          "name": "width",
+          "type": "number",
+          "required": false,
+          "default": "1",
+          "description": "Relative width within the row (flex-grow weight).",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -332,8 +217,15 @@
       ]
     },
     {
-      "name": "CanvasPalette",
+      "name": "Canvas.NodeActions",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -358,7 +250,172 @@
       ]
     },
     {
-      "name": "CanvasPaletteItem",
+      "name": "Canvas.NodeHandle",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Canvas.NodeHeader",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Canvas.NodeOverlay",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Canvas.NodeTitle",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Canvas.Palette",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Canvas.PaletteItem",
       "props": [
         {
           "name": "data",
@@ -368,6 +425,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -391,7 +455,7 @@
       ]
     },
     {
-      "name": "CanvasResizeHandle",
+      "name": "Canvas.ResizeHandle",
       "props": [
         {
           "name": "onResize",
@@ -415,6 +479,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -438,8 +509,15 @@
       ]
     },
     {
-      "name": "CanvasRow",
+      "name": "Canvas.Row",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -479,7 +557,7 @@
   "files": [
     {
       "path": "components/ui/canvas.tsx",
-      "content": "import * as React from \"react\"\nimport { combine } from \"@atlaskit/pragmatic-drag-and-drop/combine\"\nimport { draggable, dropTargetForElements, monitorForElements } from \"@atlaskit/pragmatic-drag-and-drop/element/adapter\"\nimport { autoScrollForElements } from \"@atlaskit/pragmatic-drag-and-drop-auto-scroll/element\"\nimport { attachClosestEdge, extractClosestEdge, type Edge } from \"@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge\"\nimport { ark } from \"@ark-ui/react\"\nimport { GripVerticalIcon } from \"lucide-react\"\nimport { cloneDragPreview } from \"@/lib/drag-preview\"\nimport { cn } from \"@/lib/utils\"\nimport { LiveRegion, useLiveRegion } from \"@/components/ui/live-region\"\n\n/**\n * Canvas — a compositional, data-agnostic drag-and-drop layout surface on\n * Pragmatic drag and drop. Items come from a palette (`CanvasPaletteItem`,\n * carrying arbitrary `data`) or are existing nodes (`CanvasNode`). Nodes are\n * drop targets on all four edges; the empty area is a target too. The canvas\n * reports every drop as an intent (`onDrop`) and leaves layout state to the\n * consumer, which renders rows/nodes from it. `CanvasResizeHandle` reports\n * pointer resizes between siblings as a fraction of the row width.\n */\n\ntype CanvasSource = { type: \"palette\"; data: unknown } | { type: \"node\"; id: string }\ntype CanvasTarget = { type: \"node\"; id: string; edge: Edge } | { type: \"area\" }\ntype CanvasDropDetails = { source: CanvasSource; target: CanvasTarget }\n\ntype DragData =\n  { instanceId: symbol; type: \"palette\"; data: unknown } | { instanceId: symbol; type: \"node\"; id: string }\n\nconst NODE_TARGET = \"canvas-node-target\"\nconst AREA_TARGET = \"canvas-area-target\"\n\ntype CanvasDirection = \"up\" | \"down\" | \"left\" | \"right\"\n\ntype CanvasContextValue = {\n  instanceId: symbol\n  dragging: { type: \"palette\" | \"node\"; id?: string } | null\n  /** Keyboard \"pick up\" state for nodes; arrows emit drop intents. */\n  grabbed: string | null\n  grab: (nodeId: string | null) => void\n  moveByKey: (nodeId: string, direction: CanvasDirection) => void\n  /** Keyboard activation of a palette item: drops it onto the area. */\n  dropFromPalette: (data: unknown) => void\n}\n\n/** Focus the first selector that matches, after React has committed. */\nconst focusLater = (...selectors: string[]) =>\n  requestAnimationFrame(() =>\n    requestAnimationFrame(() => {\n      for (const selector of selectors) {\n        const el = document.querySelector<HTMLElement>(selector)\n        if (el) {\n          el.focus()\n          return\n        }\n      }\n    })\n  )\n\nconst cssEscape = (value: string) => (typeof CSS !== \"undefined\" && CSS.escape ? CSS.escape(value) : value)\n\nconst CanvasContext = React.createContext<CanvasContextValue | null>(null)\n\nfunction useCanvas() {\n  const ctx = React.useContext(CanvasContext)\n  if (!ctx) throw new Error(\"Canvas parts must be used within <Canvas>\")\n  return ctx\n}\n\nconst isOwnData = (instanceId: symbol, data: Record<string | symbol, unknown>): data is DragData =>\n  data.instanceId === instanceId && (data.type === \"palette\" || data.type === \"node\")\n\nfunction Canvas({\n  onDrop,\n  className,\n  children,\n  ...props\n}: Omit<React.ComponentProps<\"div\">, \"onDrop\"> & { onDrop?: (details: CanvasDropDetails) => void }) {\n  const [instanceId] = React.useState(() => Symbol(\"canvas\"))\n  const [dragging, setDragging] = React.useState<CanvasContextValue[\"dragging\"]>(null)\n  const [grabbed, setGrabbed] = React.useState<string | null>(null)\n  const { message: announcement, announce: setAnnouncement } = useLiveRegion()\n  const ref = React.useRef<HTMLDivElement>(null)\n  const onDropRef = React.useRef(onDrop)\n  React.useEffect(() => {\n    onDropRef.current = onDrop\n  })\n\n  const grab = React.useCallback(\n    (nodeId: string | null) => {\n      setGrabbed(nodeId)\n      setAnnouncement(\n        nodeId\n          ? `Picked up ${nodeId}. Arrow up or down moves it to its own row, left or right moves it beside a neighbour. Space or Enter drops, Escape cancels.`\n          : \"Dropped.\"\n      )\n    },\n    [setAnnouncement]\n  )\n\n  const moveByKey = React.useCallback(\n    (nodeId: string, direction: CanvasDirection) => {\n      const root = ref.current\n      const node = root?.querySelector<HTMLElement>(`[data-slot=canvas-node][data-value=\"${cssEscape(nodeId)}\"]`)\n      const row = node?.closest<HTMLElement>(\"[data-slot=canvas-row]\")\n      if (!root || !node || !row) return\n      const siblings = Array.from(row.querySelectorAll<HTMLElement>(\":scope > [data-slot=canvas-node]\"))\n      const index = siblings.indexOf(node)\n      let target: CanvasTarget | null = null\n      if (direction === \"up\") {\n        const first = siblings[0]\n        // Already alone at the top of its row: hop above the previous row instead.\n        if (siblings.length === 1) {\n          const rows = Array.from(root.querySelectorAll<HTMLElement>(\"[data-slot=canvas-row]\"))\n          const prev = rows[rows.indexOf(row) - 1]?.querySelector<HTMLElement>(\"[data-slot=canvas-node]\")\n          if (!prev) return\n          target = { type: \"node\", id: prev.dataset.value ?? \"\", edge: \"top\" }\n        } else target = { type: \"node\", id: first.dataset.value ?? \"\", edge: \"top\" }\n      } else if (direction === \"down\") {\n        const last = siblings[siblings.length - 1]\n        if (siblings.length === 1) {\n          const rows = Array.from(root.querySelectorAll<HTMLElement>(\"[data-slot=canvas-row]\"))\n          const next = rows[rows.indexOf(row) + 1]?.querySelector<HTMLElement>(\"[data-slot=canvas-node]\")\n          if (!next) return\n          target = { type: \"node\", id: next.dataset.value ?? \"\", edge: \"bottom\" }\n        } else target = { type: \"node\", id: last.dataset.value ?? \"\", edge: \"bottom\" }\n      } else {\n        const neighbour = siblings[direction === \"left\" ? index - 1 : index + 1]\n        if (!neighbour) return\n        target = { type: \"node\", id: neighbour.dataset.value ?? \"\", edge: direction }\n      }\n      // A vertical drop on the node itself means \"pull me out into a new row\"; horizontal is a no-op.\n      if (target.type === \"node\" && target.id === nodeId && (target.edge === \"left\" || target.edge === \"right\")) return\n      onDropRef.current?.({ source: { type: \"node\", id: nodeId }, target })\n      setAnnouncement(`Moved ${nodeId} ${direction}.`)\n      const nodeSelector = `[data-slot=canvas-node][data-value=\"${cssEscape(nodeId)}\"]`\n      focusLater(`${nodeSelector} [data-slot=canvas-node-handle]`, nodeSelector)\n    },\n    [setAnnouncement]\n  )\n\n  const dropFromPalette = React.useCallback(\n    (data: unknown) => {\n      onDropRef.current?.({ source: { type: \"palette\", data }, target: { type: \"area\" } })\n      setAnnouncement(\"Added to the canvas.\")\n    },\n    [setAnnouncement]\n  )\n\n  React.useEffect(\n    () =>\n      monitorForElements({\n        canMonitor: ({ source }) => isOwnData(instanceId, source.data),\n        onDragStart: ({ source }) => {\n          const data = source.data as DragData\n          setDragging(data.type === \"node\" ? { type: \"node\", id: data.id } : { type: \"palette\" })\n        },\n        /** Called with `{ source, target }` for every drop: a palette item or node onto a node edge or the empty area. */\n        onDrop: ({ source, location }) => {\n          setDragging(null)\n          const data = source.data as DragData\n          const targets = location.current.dropTargets\n          const nodeTarget = targets.find((t) => t.data[NODE_TARGET] === true)\n          const areaTarget = targets.find((t) => t.data[AREA_TARGET] === true)\n          const src: CanvasSource =\n            data.type === \"node\" ? { type: \"node\", id: data.id } : { type: \"palette\", data: data.data }\n          if (nodeTarget) {\n            const id = String(nodeTarget.data.id)\n            if (src.type === \"node\" && src.id === id) return\n            const edge = extractClosestEdge(nodeTarget.data) ?? \"bottom\"\n            onDropRef.current?.({ source: src, target: { type: \"node\", id, edge } })\n          } else if (areaTarget) {\n            onDropRef.current?.({ source: src, target: { type: \"area\" } })\n          }\n        },\n      }),\n    [instanceId]\n  )\n\n  const ctx = React.useMemo(\n    () => ({ instanceId, dragging, grabbed, grab, moveByKey, dropFromPalette }),\n    [instanceId, dragging, grabbed, grab, moveByKey, dropFromPalette]\n  )\n  return (\n    <CanvasContext.Provider value={ctx}>\n      <div\n        ref={ref}\n        data-slot=\"canvas\"\n        data-dragging={dragging ? dragging.type : undefined}\n        data-grabbed={grabbed ? \"\" : undefined}\n        className={cn(\"flex min-h-0 flex-1 flex-col gap-4 lg:flex-row\", className)}\n        {...props}\n      >\n        {children}\n        <LiveRegion data-slot=\"canvas-live-region\" message={announcement} />\n      </div>\n    </CanvasContext.Provider>\n  )\n}\n\n/** Keyboard handling shared by nodes and their handles. */\nfunction useCanvasKeyboard(nodeId: string) {\n  const { grabbed, grab, moveByKey } = useCanvas()\n  const isGrabbed = grabbed === nodeId\n  const onKeyDown = (event: React.KeyboardEvent) => {\n    const key = event.key\n    if (key === \" \" || key === \"Enter\") {\n      event.preventDefault()\n      grab(isGrabbed ? null : nodeId)\n      return\n    }\n    if (!isGrabbed) return\n    if (key === \"Escape\") {\n      event.preventDefault()\n      grab(null)\n      return\n    }\n    const direction = { ArrowUp: \"up\", ArrowDown: \"down\", ArrowLeft: \"left\", ArrowRight: \"right\" }[key] as\n      CanvasDirection | undefined\n    if (!direction) return\n    event.preventDefault()\n    moveByKey(nodeId, direction)\n  }\n  return { isGrabbed, onKeyDown, onBlur: () => isGrabbed && grab(null) }\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Palette                                                                   */\n/* -------------------------------------------------------------------------- */\n\nfunction CanvasPalette({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"canvas-palette\"\n      className={cn(\n        \"flex shrink-0 flex-row flex-wrap gap-1 lg:w-56 lg:flex-col lg:flex-nowrap lg:overflow-y-auto\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** A draggable source. `data` is handed back untouched in `onDrop`. */\nfunction CanvasPaletteItem({ data, className, onKeyDown, ...props }: React.ComponentProps<\"div\"> & { data: unknown }) {\n  const { instanceId, dropFromPalette } = useCanvas()\n  const ref = React.useRef<HTMLDivElement>(null)\n  const dataRef = React.useRef(data)\n  React.useEffect(() => {\n    dataRef.current = data\n  })\n  const [isDragging, setIsDragging] = React.useState(false)\n\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    return draggable({\n      element: el,\n      getInitialData: (): DragData => ({ instanceId, type: \"palette\", data: dataRef.current }),\n      onGenerateDragPreview: (args) => cloneDragPreview(args),\n      onDragStart: () => setIsDragging(true),\n      /** Called with `{ source, target }` for every drop: a palette item or node onto a node edge or the empty area. */\n      onDrop: () => setIsDragging(false),\n    })\n  }, [instanceId])\n\n  return (\n    <div\n      ref={ref}\n      data-slot=\"canvas-palette-item\"\n      data-dragging={isDragging ? \"\" : undefined}\n      tabIndex={0}\n      role=\"button\"\n      aria-roledescription=\"draggable palette item\"\n      onKeyDown={(event) => {\n        onKeyDown?.(event)\n        if (event.defaultPrevented) return\n        if (event.key === \" \" || event.key === \"Enter\") {\n          event.preventDefault()\n          dropFromPalette(dataRef.current)\n        }\n      }}\n      className={cn(\n        \"flex cursor-grab items-center gap-2 rounded-lg border bg-card px-2.5 py-2 text-sm shadow-xs transition-colors outline-none select-none hover:bg-accent focus-visible:ring-3 focus-visible:ring-ring/50 active:cursor-grabbing data-dragging:opacity-50 [&_svg]:size-4 [&_svg]:text-muted-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Area + rows                                                               */\n/* -------------------------------------------------------------------------- */\n\n/** The drop surface. Dropping here (not on a node) reports `{ type: \"area\" }`. */\nfunction CanvasArea({ className, ...props }: React.ComponentProps<\"div\">) {\n  const { instanceId } = useCanvas()\n  const ref = React.useRef<HTMLDivElement>(null)\n  const [isOver, setIsOver] = React.useState(false)\n\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    return combine(\n      dropTargetForElements({\n        element: el,\n        canDrop: ({ source }) => isOwnData(instanceId, source.data),\n        getData: () => ({ [AREA_TARGET]: true }),\n        onDragEnter: ({ self, location }) => setIsOver(location.current.dropTargets[0]?.element === self.element),\n        onDrag: ({ self, location }) => {\n          const over = location.current.dropTargets[0]?.element === self.element\n          setIsOver((prev) => (prev === over ? prev : over))\n        },\n        onDragLeave: () => setIsOver(false),\n        /** Called with `{ source, target }` for every drop: a palette item or node onto a node edge or the empty area. */\n        onDrop: () => setIsOver(false),\n      }),\n      autoScrollForElements({ element: el, canScroll: ({ source }) => isOwnData(instanceId, source.data) })\n    )\n  }, [instanceId])\n\n  return (\n    <div\n      ref={ref}\n      data-slot=\"canvas-area\"\n      data-over={isOver ? \"\" : undefined}\n      className={cn(\n        \"flex min-h-40 min-w-0 flex-1 flex-col gap-3 overflow-y-auto rounded-xl border border-dashed bg-muted/30 p-4 transition-colors data-over:border-primary/50 data-over:bg-primary/5\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction CanvasEmpty({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"canvas-empty\"\n      className={cn(\n        \"flex flex-1 flex-col items-center justify-center gap-1 py-16 text-center text-sm text-muted-foreground [&_svg]:mb-1 [&_svg]:size-6\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype RowContextValue = {\n  ref: React.RefObject<HTMLDivElement | null>\n  /** True while a `CanvasResizeHandle` in this row is being dragged. */\n  resizing: boolean\n  setResizing: (resizing: boolean) => void\n}\nconst RowContext = React.createContext<RowContextValue | null>(null)\n\n/** A horizontal row of nodes. Node widths are `flex-grow` weights. */\nfunction CanvasRow({ className, ...props }: React.ComponentProps<\"div\">) {\n  const ref = React.useRef<HTMLDivElement>(null)\n  const [resizing, setResizing] = React.useState(false)\n  const ctx = React.useMemo(() => ({ ref, resizing, setResizing }), [resizing])\n  return (\n    <RowContext.Provider value={ctx}>\n      <div\n        ref={ref}\n        data-slot=\"canvas-row\"\n        data-resizing={resizing ? \"\" : undefined}\n        className={cn(\"flex items-stretch gap-3\", className)}\n        {...props}\n      />\n    </RowContext.Provider>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Node                                                                      */\n/* -------------------------------------------------------------------------- */\n\ntype NodeContextValue = { handleRef: React.RefObject<HTMLElement | null>; isDragging: boolean; value: string }\nconst NodeContext = React.createContext<NodeContextValue | null>(null)\n\nfunction CanvasNode({\n  value,\n  width = 1,\n  draggable: isDraggable = true,\n  selected,\n  className,\n  children,\n  style,\n  onKeyDown,\n  onBlur,\n  ...props\n}: React.ComponentProps<\"div\"> & {\n  value: string\n  /** Relative width within the row (flex-grow weight). */\n  width?: number\n  draggable?: boolean\n  selected?: boolean\n}) {\n  const { instanceId } = useCanvas()\n  const keyboard = useCanvasKeyboard(value)\n  const row = React.useContext(RowContext)\n  const ref = React.useRef<HTMLDivElement>(null)\n  const handleRef = React.useRef<HTMLElement | null>(null)\n  const [isDragging, setIsDragging] = React.useState(false)\n  const [closestEdge, setClosestEdge] = React.useState<Edge | null>(null)\n  const [percent, setPercent] = React.useState<number | null>(null)\n  const resizing = row?.resizing ?? false\n\n  // While the row is being resized, show this node's share of the row.\n  React.useLayoutEffect(() => {\n    const el = ref.current\n    const rowEl = row?.ref.current\n    if (!resizing || !el || !rowEl) {\n      setPercent(null)\n      return\n    }\n    const siblings = Array.from(rowEl.querySelectorAll<HTMLElement>(\":scope > [data-slot=canvas-node]\"))\n    const total = siblings.reduce((sum, n) => sum + n.getBoundingClientRect().width, 0)\n    setPercent(total ? Math.round((el.getBoundingClientRect().width / total) * 100) : null)\n  }, [resizing, width, row])\n\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    const cleanups = [\n      dropTargetForElements({\n        element: el,\n        canDrop: ({ source }) =>\n          isOwnData(instanceId, source.data) && !(source.data.type === \"node\" && source.data.id === value),\n        getIsSticky: () => true,\n        getData: ({ input, element }) =>\n          attachClosestEdge(\n            { [NODE_TARGET]: true, id: value },\n            { element, input, allowedEdges: [\"top\", \"bottom\", \"left\", \"right\"] }\n          ),\n        onDragEnter: ({ self }) => setClosestEdge(extractClosestEdge(self.data)),\n        onDrag: ({ self }) => {\n          const edge = extractClosestEdge(self.data)\n          setClosestEdge((prev) => (prev === edge ? prev : edge))\n        },\n        onDragLeave: () => setClosestEdge(null),\n        /** Called with `{ source, target }` for every drop: a palette item or node onto a node edge or the empty area. */\n        onDrop: () => setClosestEdge(null),\n      }),\n    ]\n    if (isDraggable) {\n      cleanups.push(\n        draggable({\n          element: el,\n          dragHandle: handleRef.current ?? undefined,\n          getInitialData: (): DragData => ({ instanceId, type: \"node\", id: value }),\n          onGenerateDragPreview: (args) => cloneDragPreview(args),\n          onDragStart: () => setIsDragging(true),\n          /** Called with `{ source, target }` for every drop: a palette item or node onto a node edge or the empty area. */\n          onDrop: () => setIsDragging(false),\n        })\n      )\n    }\n    return combine(...cleanups)\n  }, [instanceId, value, isDraggable])\n\n  const [hasHandle, setHasHandle] = React.useState(false)\n  React.useEffect(() => setHasHandle(!!handleRef.current), [])\n  const ctx = React.useMemo(() => ({ handleRef, isDragging, value }), [isDragging, value])\n  return (\n    <NodeContext.Provider value={ctx}>\n      <div\n        ref={ref}\n        data-slot=\"canvas-node\"\n        data-value={value}\n        data-dragging={isDragging ? \"\" : undefined}\n        data-edge={closestEdge ?? undefined}\n        data-selected={selected ? \"\" : undefined}\n        data-grabbed={keyboard.isGrabbed ? \"\" : undefined}\n        tabIndex={isDraggable && !hasHandle ? 0 : undefined}\n        aria-roledescription={isDraggable && !hasHandle ? \"draggable item\" : undefined}\n        onKeyDown={(event) => {\n          onKeyDown?.(event)\n          if (!event.defaultPrevented && !hasHandle && event.target === event.currentTarget) keyboard.onKeyDown(event)\n        }}\n        onBlur={(event) => {\n          onBlur?.(event)\n          if (!hasHandle && event.target === event.currentTarget) keyboard.onBlur()\n        }}\n        style={{ flexGrow: width, flexBasis: 0, ...style }}\n        className={cn(\n          \"group/canvas-node relative flex min-w-0 flex-col rounded-lg border bg-card p-3 text-sm shadow-xs transition-[opacity,box-shadow,border-color] outline-none hover:border-foreground/20 focus-visible:ring-3 focus-visible:ring-ring/50 data-dragging:opacity-40 data-grabbed:border-primary data-grabbed:ring-3 data-grabbed:ring-primary/30 data-selected:border-primary data-selected:ring-3 data-selected:ring-primary/20\",\n          className\n        )}\n        {...props}\n      >\n        {children}\n        {closestEdge && <CanvasDropIndicator edge={closestEdge} />}\n        {percent !== null && <CanvasNodeOverlay>{percent}%</CanvasNodeOverlay>}\n      </div>\n    </NodeContext.Provider>\n  )\n}\n\n/** Optional explicit drag handle; without it the whole node is the handle. */\nfunction CanvasNodeHandle({\n  className,\n  children,\n  onKeyDown,\n  onBlur,\n  asChild,\n  ...props\n}: React.ComponentProps<typeof ark.button>) {\n  const ctx = React.useContext(NodeContext)\n  const keyboard = useCanvasKeyboard(ctx?.value ?? \"\")\n  return (\n    <ark.button\n      asChild={asChild}\n      ref={(el: HTMLElement | null) => {\n        if (ctx) ctx.handleRef.current = el\n      }}\n      type=\"button\"\n      data-slot=\"canvas-node-handle\"\n      data-grabbed={keyboard.isGrabbed ? \"\" : undefined}\n      aria-label=\"Drag\"\n      aria-pressed={keyboard.isGrabbed}\n      onKeyDown={(event) => {\n        onKeyDown?.(event)\n        if (!event.defaultPrevented) {\n          keyboard.onKeyDown(event)\n          event.stopPropagation()\n        }\n      }}\n      onBlur={(event) => {\n        onBlur?.(event)\n        keyboard.onBlur()\n      }}\n      className={cn(\n        \"flex size-6 cursor-grab items-center justify-center rounded-md text-muted-foreground outline-none hover:bg-accent hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 active:cursor-grabbing data-grabbed:bg-primary data-grabbed:text-primary-foreground [&_svg]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {asChild ? children : (children ?? <GripVerticalIcon />)}\n    </ark.button>\n  )\n}\n\nfunction CanvasNodeHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"canvas-node-header\" className={cn(\"mb-2 flex items-center gap-1\", className)} {...props} />\n}\n\nfunction CanvasNodeTitle({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span\n      data-slot=\"canvas-node-title\"\n      className={cn(\"min-w-0 flex-1 truncate text-xs font-medium text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\n/** A blurring overlay with a centered pill, e.g. the node's width share while resizing. */\nfunction CanvasNodeOverlay({ className, children, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"canvas-node-overlay\"\n      aria-hidden\n      className={cn(\n        \"pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-[inherit] bg-background/50 backdrop-blur-xs\",\n        className\n      )}\n      {...props}\n    >\n      <span\n        data-slot=\"canvas-node-overlay-pill\"\n        className=\"rounded-full bg-foreground px-2.5 py-1 text-xs font-semibold text-background tabular-nums shadow-md\"\n      >\n        {children}\n      </span>\n    </div>\n  )\n}\n\n/** Actions revealed on hover/selection. */\nfunction CanvasNodeActions({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"canvas-node-actions\"\n      className={cn(\n        \"ms-auto flex items-center gap-0.5 opacity-0 transition-opacity group-focus-within/canvas-node:opacity-100 group-hover/canvas-node:opacity-100 group-data-selected/canvas-node:opacity-100\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Resize handle                                                             */\n/* -------------------------------------------------------------------------- */\n\n/**\n * Place between two nodes in a `CanvasRow`. Pointer drags call `onResize`\n * with the horizontal movement as a fraction of the row width (signed).\n */\nfunction CanvasResizeHandle({\n  onResize,\n  onResizeStart,\n  onResizeEnd,\n  className,\n  ...props\n}: Omit<React.ComponentProps<\"div\">, \"onResize\"> & {\n  /** Called while dragging with the width change as a fraction of the row width. */\n  onResize: (deltaFraction: number) => void\n  /** Called once when the resize drag starts. */\n  onResizeStart?: () => void\n  /** Called once when the resize drag ends. */\n  onResizeEnd?: () => void\n}) {\n  const row = React.useContext(RowContext)\n  const [active, setActive] = React.useState(false)\n  const handlers = React.useRef({ onResize, onResizeStart, onResizeEnd })\n  React.useEffect(() => {\n    handlers.current = { onResize, onResizeStart, onResizeEnd }\n  })\n\n  const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {\n    if (event.button !== 0) return\n    const rowEl = row?.ref.current\n    if (!rowEl) return\n    event.preventDefault()\n    const target = event.currentTarget\n    try {\n      target.setPointerCapture(event.pointerId)\n    } catch {\n      // Synthetic pointers can't be captured; moves still arrive via bubbling.\n    }\n    let lastX = event.clientX\n    setActive(true)\n    row.setResizing(true)\n    handlers.current.onResizeStart?.()\n    const move = (e: PointerEvent) => {\n      const width = rowEl.getBoundingClientRect().width\n      if (!width) return\n      const delta = (e.clientX - lastX) / width\n      lastX = e.clientX\n      if (delta !== 0) handlers.current.onResize(delta)\n    }\n    const up = () => {\n      target.removeEventListener(\"pointermove\", move)\n      target.removeEventListener(\"pointerup\", up)\n      target.removeEventListener(\"pointercancel\", up)\n      setActive(false)\n      row.setResizing(false)\n      handlers.current.onResizeEnd?.()\n    }\n    target.addEventListener(\"pointermove\", move)\n    target.addEventListener(\"pointerup\", up)\n    target.addEventListener(\"pointercancel\", up)\n  }\n\n  return (\n    <div\n      role=\"separator\"\n      aria-orientation=\"vertical\"\n      data-slot=\"canvas-resize-handle\"\n      data-active={active ? \"\" : undefined}\n      onPointerDown={onPointerDown}\n      className={cn(\n        \"group/resize relative -mx-2 flex w-4 shrink-0 cursor-col-resize touch-none items-center justify-center select-none\",\n        className\n      )}\n      {...props}\n    >\n      <span className=\"h-8 w-1 rounded-full bg-border transition-colors group-hover/resize:bg-primary/60 group-data-active/resize:bg-primary\" />\n    </div>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Drop indicator                                                            */\n/* -------------------------------------------------------------------------- */\n\nfunction CanvasDropIndicator({\n  edge,\n  gap = \"0.75rem\",\n  className,\n  style,\n  ...props\n}: React.ComponentProps<\"div\"> & { edge: Edge; gap?: string }) {\n  const horizontal = edge === \"top\" || edge === \"bottom\"\n  return (\n    <div\n      data-slot=\"canvas-drop-indicator\"\n      data-edge={edge}\n      aria-hidden\n      style={{ [\"--canvas-gap\" as string]: gap, ...style }}\n      className={cn(\n        \"pointer-events-none absolute z-10 rounded-full bg-primary\",\n        \"before:absolute before:size-2 before:rounded-full before:border-2 before:border-primary before:bg-background\",\n        horizontal\n          ? \"inset-x-0 h-0.5 before:top-1/2 before:-left-1 before:-translate-y-1/2\"\n          : \"inset-y-0 w-0.5 before:-top-1 before:left-1/2 before:-translate-x-1/2\",\n        edge === \"top\" && \"top-[calc(-1*var(--canvas-gap)/2-1px)]\",\n        edge === \"bottom\" && \"bottom-[calc(-1*var(--canvas-gap)/2-1px)]\",\n        edge === \"left\" && \"left-[calc(-1*var(--canvas-gap)/2-1px)]\",\n        edge === \"right\" && \"right-[calc(-1*var(--canvas-gap)/2-1px)]\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nexport {\n  Canvas,\n  CanvasArea,\n  CanvasDropIndicator,\n  CanvasEmpty,\n  CanvasNode,\n  CanvasNodeActions,\n  CanvasNodeHandle,\n  CanvasNodeHeader,\n  CanvasNodeOverlay,\n  CanvasNodeTitle,\n  CanvasPalette,\n  CanvasPaletteItem,\n  CanvasResizeHandle,\n  CanvasRow,\n  useCanvas,\n  type CanvasDropDetails,\n  type CanvasSource,\n  type CanvasTarget,\n}\n"
+      "content": "import * as React from \"react\"\nimport { combine } from \"@atlaskit/pragmatic-drag-and-drop/combine\"\nimport { draggable, dropTargetForElements, monitorForElements } from \"@atlaskit/pragmatic-drag-and-drop/element/adapter\"\nimport { autoScrollForElements } from \"@atlaskit/pragmatic-drag-and-drop-auto-scroll/element\"\nimport { attachClosestEdge, extractClosestEdge, type Edge } from \"@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge\"\nimport { ark } from \"@ark-ui/react\"\nimport { GripVerticalIcon } from \"lucide-react\"\nimport { cloneDragPreview } from \"@/lib/drag-preview\"\nimport { cn } from \"@/lib/utils\"\nimport { LiveRegion, useLiveRegion } from \"@/components/ui/live-region\"\n\n/**\n * Canvas — a compositional, data-agnostic drag-and-drop layout surface on\n * Pragmatic drag and drop. Items come from a palette (`CanvasPaletteItem`,\n * carrying arbitrary `data`) or are existing nodes (`CanvasNode`). Nodes are\n * drop targets on all four edges; the empty area is a target too. The canvas\n * reports every drop as an intent (`onDrop`) and leaves layout state to the\n * consumer, which renders rows/nodes from it. `CanvasResizeHandle` reports\n * pointer resizes between siblings as a fraction of the row width.\n */\n\ntype CanvasSource = { type: \"palette\"; data: unknown } | { type: \"node\"; id: string }\ntype CanvasTarget = { type: \"node\"; id: string; edge: Edge } | { type: \"area\" }\ntype CanvasDropDetails = { source: CanvasSource; target: CanvasTarget }\n\ntype DragData =\n  { instanceId: symbol; type: \"palette\"; data: unknown } | { instanceId: symbol; type: \"node\"; id: string }\n\nconst NODE_TARGET = \"canvas-node-target\"\nconst AREA_TARGET = \"canvas-area-target\"\n\ntype CanvasDirection = \"up\" | \"down\" | \"left\" | \"right\"\n\ntype CanvasContextValue = {\n  instanceId: symbol\n  dragging: { type: \"palette\" | \"node\"; id?: string } | null\n  /** Keyboard \"pick up\" state for nodes; arrows emit drop intents. */\n  grabbed: string | null\n  grab: (nodeId: string | null) => void\n  moveByKey: (nodeId: string, direction: CanvasDirection) => void\n  /** Keyboard activation of a palette item: drops it onto the area. */\n  dropFromPalette: (data: unknown) => void\n}\n\n/** Focus the first selector that matches, after React has committed. */\nconst focusLater = (...selectors: string[]) =>\n  requestAnimationFrame(() =>\n    requestAnimationFrame(() => {\n      for (const selector of selectors) {\n        const el = document.querySelector<HTMLElement>(selector)\n        if (el) {\n          el.focus()\n          return\n        }\n      }\n    })\n  )\n\nconst cssEscape = (value: string) => (typeof CSS !== \"undefined\" && CSS.escape ? CSS.escape(value) : value)\n\nconst CanvasContext = React.createContext<CanvasContextValue | null>(null)\n\nfunction useCanvas() {\n  const ctx = React.useContext(CanvasContext)\n  if (!ctx) throw new Error(\"Canvas parts must be used within <Canvas>\")\n  return ctx\n}\n\nconst isOwnData = (instanceId: symbol, data: Record<string | symbol, unknown>): data is DragData =>\n  data.instanceId === instanceId && (data.type === \"palette\" || data.type === \"node\")\n\nfunction CanvasRoot({ onDrop, className, children, ...props }: CanvasRootProps) {\n  const [instanceId] = React.useState(() => Symbol(\"canvas\"))\n  const [dragging, setDragging] = React.useState<CanvasContextValue[\"dragging\"]>(null)\n  const [grabbed, setGrabbed] = React.useState<string | null>(null)\n  const { message: announcement, announce: setAnnouncement } = useLiveRegion()\n  const ref = React.useRef<HTMLDivElement>(null)\n  const onDropRef = React.useRef(onDrop)\n  React.useEffect(() => {\n    onDropRef.current = onDrop\n  })\n\n  const grab = React.useCallback(\n    (nodeId: string | null) => {\n      setGrabbed(nodeId)\n      setAnnouncement(\n        nodeId\n          ? `Picked up ${nodeId}. Arrow up or down moves it to its own row, left or right moves it beside a neighbour. Space or Enter drops, Escape cancels.`\n          : \"Dropped.\"\n      )\n    },\n    [setAnnouncement]\n  )\n\n  const moveByKey = React.useCallback(\n    (nodeId: string, direction: CanvasDirection) => {\n      const root = ref.current\n      const node = root?.querySelector<HTMLElement>(`[data-slot=canvas-node][data-value=\"${cssEscape(nodeId)}\"]`)\n      const row = node?.closest<HTMLElement>(\"[data-slot=canvas-row]\")\n      if (!root || !node || !row) return\n      const siblings = Array.from(row.querySelectorAll<HTMLElement>(\":scope > [data-slot=canvas-node]\"))\n      const index = siblings.indexOf(node)\n      let target: CanvasTarget | null = null\n      if (direction === \"up\") {\n        const first = siblings[0]\n        // Already alone at the top of its row: hop above the previous row instead.\n        if (siblings.length === 1) {\n          const rows = Array.from(root.querySelectorAll<HTMLElement>(\"[data-slot=canvas-row]\"))\n          const prev = rows[rows.indexOf(row) - 1]?.querySelector<HTMLElement>(\"[data-slot=canvas-node]\")\n          if (!prev) return\n          target = { type: \"node\", id: prev.dataset.value ?? \"\", edge: \"top\" }\n        } else target = { type: \"node\", id: first.dataset.value ?? \"\", edge: \"top\" }\n      } else if (direction === \"down\") {\n        const last = siblings[siblings.length - 1]\n        if (siblings.length === 1) {\n          const rows = Array.from(root.querySelectorAll<HTMLElement>(\"[data-slot=canvas-row]\"))\n          const next = rows[rows.indexOf(row) + 1]?.querySelector<HTMLElement>(\"[data-slot=canvas-node]\")\n          if (!next) return\n          target = { type: \"node\", id: next.dataset.value ?? \"\", edge: \"bottom\" }\n        } else target = { type: \"node\", id: last.dataset.value ?? \"\", edge: \"bottom\" }\n      } else {\n        const neighbour = siblings[direction === \"left\" ? index - 1 : index + 1]\n        if (!neighbour) return\n        target = { type: \"node\", id: neighbour.dataset.value ?? \"\", edge: direction }\n      }\n      // A vertical drop on the node itself means \"pull me out into a new row\"; horizontal is a no-op.\n      if (target.type === \"node\" && target.id === nodeId && (target.edge === \"left\" || target.edge === \"right\")) return\n      onDropRef.current?.({ source: { type: \"node\", id: nodeId }, target })\n      setAnnouncement(`Moved ${nodeId} ${direction}.`)\n      const nodeSelector = `[data-slot=canvas-node][data-value=\"${cssEscape(nodeId)}\"]`\n      focusLater(`${nodeSelector} [data-slot=canvas-node-handle]`, nodeSelector)\n    },\n    [setAnnouncement]\n  )\n\n  const dropFromPalette = React.useCallback(\n    (data: unknown) => {\n      onDropRef.current?.({ source: { type: \"palette\", data }, target: { type: \"area\" } })\n      setAnnouncement(\"Added to the canvas.\")\n    },\n    [setAnnouncement]\n  )\n\n  React.useEffect(\n    () =>\n      monitorForElements({\n        canMonitor: ({ source }) => isOwnData(instanceId, source.data),\n        onDragStart: ({ source }) => {\n          const data = source.data as DragData\n          setDragging(data.type === \"node\" ? { type: \"node\", id: data.id } : { type: \"palette\" })\n        },\n        /** Called with `{ source, target }` for every drop: a palette item or node onto a node edge or the empty area. */\n        onDrop: ({ source, location }) => {\n          setDragging(null)\n          const data = source.data as DragData\n          const targets = location.current.dropTargets\n          const nodeTarget = targets.find((t) => t.data[NODE_TARGET] === true)\n          const areaTarget = targets.find((t) => t.data[AREA_TARGET] === true)\n          const src: CanvasSource =\n            data.type === \"node\" ? { type: \"node\", id: data.id } : { type: \"palette\", data: data.data }\n          if (nodeTarget) {\n            const id = String(nodeTarget.data.id)\n            if (src.type === \"node\" && src.id === id) return\n            const edge = extractClosestEdge(nodeTarget.data) ?? \"bottom\"\n            onDropRef.current?.({ source: src, target: { type: \"node\", id, edge } })\n          } else if (areaTarget) {\n            onDropRef.current?.({ source: src, target: { type: \"area\" } })\n          }\n        },\n      }),\n    [instanceId]\n  )\n\n  const ctx = React.useMemo(\n    () => ({ instanceId, dragging, grabbed, grab, moveByKey, dropFromPalette }),\n    [instanceId, dragging, grabbed, grab, moveByKey, dropFromPalette]\n  )\n  return (\n    <CanvasContext.Provider value={ctx}>\n      <ark.div\n        ref={ref}\n        data-slot=\"canvas\"\n        data-dragging={dragging ? dragging.type : undefined}\n        data-grabbed={grabbed ? \"\" : undefined}\n        className={cn(\"flex min-h-0 flex-1 flex-col gap-4 lg:flex-row\", className)}\n        {...props}\n      >\n        {props.asChild ? (\n          React.isValidElement(children) ? (\n            children\n          ) : null\n        ) : (\n          <>\n            {children}\n            <LiveRegion.Root data-slot=\"canvas-live-region\" message={announcement} />\n          </>\n        )}\n      </ark.div>\n    </CanvasContext.Provider>\n  )\n}\n\n/** Keyboard handling shared by nodes and their handles. */\nfunction useCanvasKeyboard(nodeId: string) {\n  const { grabbed, grab, moveByKey } = useCanvas()\n  const isGrabbed = grabbed === nodeId\n  const onKeyDown = (event: React.KeyboardEvent) => {\n    const key = event.key\n    if (key === \" \" || key === \"Enter\") {\n      event.preventDefault()\n      grab(isGrabbed ? null : nodeId)\n      return\n    }\n    if (!isGrabbed) return\n    if (key === \"Escape\") {\n      event.preventDefault()\n      grab(null)\n      return\n    }\n    const direction = { ArrowUp: \"up\", ArrowDown: \"down\", ArrowLeft: \"left\", ArrowRight: \"right\" }[key] as\n      CanvasDirection | undefined\n    if (!direction) return\n    event.preventDefault()\n    moveByKey(nodeId, direction)\n  }\n  return { isGrabbed, onKeyDown, onBlur: () => isGrabbed && grab(null) }\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Palette                                                                   */\n/* -------------------------------------------------------------------------- */\n\nfunction CanvasPalette({ className, ...props }: CanvasPaletteProps) {\n  return (\n    <ark.div\n      data-slot=\"canvas-palette\"\n      className={cn(\n        \"flex shrink-0 flex-row flex-wrap gap-1 lg:w-56 lg:flex-col lg:flex-nowrap lg:overflow-y-auto\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** A draggable source. `data` is handed back untouched in `onDrop`. */\nfunction CanvasPaletteItem({ data, className, onKeyDown, ...props }: CanvasPaletteItemProps) {\n  const { instanceId, dropFromPalette } = useCanvas()\n  const ref = React.useRef<HTMLDivElement>(null)\n  const dataRef = React.useRef(data)\n  React.useEffect(() => {\n    dataRef.current = data\n  })\n  const [isDragging, setIsDragging] = React.useState(false)\n\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    return draggable({\n      element: el,\n      getInitialData: (): DragData => ({ instanceId, type: \"palette\", data: dataRef.current }),\n      onGenerateDragPreview: (args) => cloneDragPreview(args),\n      onDragStart: () => setIsDragging(true),\n      /** Called with `{ source, target }` for every drop: a palette item or node onto a node edge or the empty area. */\n      onDrop: () => setIsDragging(false),\n    })\n  }, [instanceId])\n\n  return (\n    <ark.div\n      ref={ref}\n      data-slot=\"canvas-palette-item\"\n      data-dragging={isDragging ? \"\" : undefined}\n      tabIndex={0}\n      role=\"button\"\n      aria-roledescription=\"draggable palette item\"\n      onKeyDown={(event) => {\n        onKeyDown?.(event)\n        if (event.defaultPrevented) return\n        if (event.key === \" \" || event.key === \"Enter\") {\n          event.preventDefault()\n          dropFromPalette(dataRef.current)\n        }\n      }}\n      className={cn(\n        \"flex cursor-grab items-center gap-2 rounded-lg border bg-card px-2.5 py-2 text-sm shadow-xs transition-colors outline-none select-none hover:bg-accent focus-visible:ring-3 focus-visible:ring-ring/50 active:cursor-grabbing data-dragging:opacity-50 [&_svg]:size-4 [&_svg]:text-muted-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Area + rows                                                               */\n/* -------------------------------------------------------------------------- */\n\n/** The drop surface. Dropping here (not on a node) reports `{ type: \"area\" }`. */\nfunction CanvasArea({ className, ...props }: CanvasAreaProps) {\n  const { instanceId } = useCanvas()\n  const ref = React.useRef<HTMLDivElement>(null)\n  const [isOver, setIsOver] = React.useState(false)\n\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    return combine(\n      dropTargetForElements({\n        element: el,\n        canDrop: ({ source }) => isOwnData(instanceId, source.data),\n        getData: () => ({ [AREA_TARGET]: true }),\n        onDragEnter: ({ self, location }) => setIsOver(location.current.dropTargets[0]?.element === self.element),\n        onDrag: ({ self, location }) => {\n          const over = location.current.dropTargets[0]?.element === self.element\n          setIsOver((prev) => (prev === over ? prev : over))\n        },\n        onDragLeave: () => setIsOver(false),\n        /** Called with `{ source, target }` for every drop: a palette item or node onto a node edge or the empty area. */\n        onDrop: () => setIsOver(false),\n      }),\n      autoScrollForElements({ element: el, canScroll: ({ source }) => isOwnData(instanceId, source.data) })\n    )\n  }, [instanceId])\n\n  return (\n    <ark.div\n      ref={ref}\n      data-slot=\"canvas-area\"\n      data-over={isOver ? \"\" : undefined}\n      className={cn(\n        \"flex min-h-40 min-w-0 flex-1 flex-col gap-3 overflow-y-auto rounded-xl border border-dashed bg-muted/30 p-4 transition-colors data-over:border-primary/50 data-over:bg-primary/5\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction CanvasEmpty({ className, ...props }: CanvasEmptyProps) {\n  return (\n    <ark.div\n      data-slot=\"canvas-empty\"\n      className={cn(\n        \"flex flex-1 flex-col items-center justify-center gap-1 py-16 text-center text-sm text-muted-foreground [&_svg]:mb-1 [&_svg]:size-6\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype RowContextValue = {\n  ref: React.RefObject<HTMLDivElement | null>\n  /** True while a `CanvasResizeHandle` in this row is being dragged. */\n  resizing: boolean\n  setResizing: (resizing: boolean) => void\n}\nconst RowContext = React.createContext<RowContextValue | null>(null)\n\n/** A horizontal row of nodes. Node widths are `flex-grow` weights. */\nfunction CanvasRow({ className, ...props }: CanvasRowProps) {\n  const ref = React.useRef<HTMLDivElement>(null)\n  const [resizing, setResizing] = React.useState(false)\n  const ctx = React.useMemo(() => ({ ref, resizing, setResizing }), [resizing])\n  return (\n    <RowContext.Provider value={ctx}>\n      <ark.div\n        ref={ref}\n        data-slot=\"canvas-row\"\n        data-resizing={resizing ? \"\" : undefined}\n        className={cn(\"flex items-stretch gap-3\", className)}\n        {...props}\n      />\n    </RowContext.Provider>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Node                                                                      */\n/* -------------------------------------------------------------------------- */\n\ntype NodeContextValue = { handleRef: React.RefObject<HTMLElement | null>; isDragging: boolean; value: string }\nconst NodeContext = React.createContext<NodeContextValue | null>(null)\n\nfunction CanvasNode({\n  value,\n  width = 1,\n  draggable: isDraggable = true,\n  selected,\n  className,\n  children,\n  style,\n  onKeyDown,\n  onBlur,\n  ...props\n}: CanvasNodeProps) {\n  const { instanceId } = useCanvas()\n  const keyboard = useCanvasKeyboard(value)\n  const row = React.useContext(RowContext)\n  const ref = React.useRef<HTMLDivElement>(null)\n  const handleRef = React.useRef<HTMLElement | null>(null)\n  const [isDragging, setIsDragging] = React.useState(false)\n  const [closestEdge, setClosestEdge] = React.useState<Edge | null>(null)\n  const [percent, setPercent] = React.useState<number | null>(null)\n  const resizing = row?.resizing ?? false\n\n  // While the row is being resized, show this node's share of the row.\n  React.useLayoutEffect(() => {\n    const el = ref.current\n    const rowEl = row?.ref.current\n    if (!resizing || !el || !rowEl) {\n      setPercent(null)\n      return\n    }\n    const siblings = Array.from(rowEl.querySelectorAll<HTMLElement>(\":scope > [data-slot=canvas-node]\"))\n    const total = siblings.reduce((sum, n) => sum + n.getBoundingClientRect().width, 0)\n    setPercent(total ? Math.round((el.getBoundingClientRect().width / total) * 100) : null)\n  }, [resizing, width, row])\n\n  React.useEffect(() => {\n    const el = ref.current\n    if (!el) return\n    const cleanups = [\n      dropTargetForElements({\n        element: el,\n        canDrop: ({ source }) =>\n          isOwnData(instanceId, source.data) && !(source.data.type === \"node\" && source.data.id === value),\n        getIsSticky: () => true,\n        getData: ({ input, element }) =>\n          attachClosestEdge(\n            { [NODE_TARGET]: true, id: value },\n            { element, input, allowedEdges: [\"top\", \"bottom\", \"left\", \"right\"] }\n          ),\n        onDragEnter: ({ self }) => setClosestEdge(extractClosestEdge(self.data)),\n        onDrag: ({ self }) => {\n          const edge = extractClosestEdge(self.data)\n          setClosestEdge((prev) => (prev === edge ? prev : edge))\n        },\n        onDragLeave: () => setClosestEdge(null),\n        /** Called with `{ source, target }` for every drop: a palette item or node onto a node edge or the empty area. */\n        onDrop: () => setClosestEdge(null),\n      }),\n    ]\n    if (isDraggable) {\n      cleanups.push(\n        draggable({\n          element: el,\n          dragHandle: handleRef.current ?? undefined,\n          getInitialData: (): DragData => ({ instanceId, type: \"node\", id: value }),\n          onGenerateDragPreview: (args) => cloneDragPreview(args),\n          onDragStart: () => setIsDragging(true),\n          /** Called with `{ source, target }` for every drop: a palette item or node onto a node edge or the empty area. */\n          onDrop: () => setIsDragging(false),\n        })\n      )\n    }\n    return combine(...cleanups)\n  }, [instanceId, value, isDraggable])\n\n  const [hasHandle, setHasHandle] = React.useState(false)\n  React.useEffect(() => setHasHandle(!!handleRef.current), [])\n  const ctx = React.useMemo(() => ({ handleRef, isDragging, value }), [isDragging, value])\n  return (\n    <NodeContext.Provider value={ctx}>\n      <ark.div\n        ref={ref}\n        data-slot=\"canvas-node\"\n        data-value={value}\n        data-dragging={isDragging ? \"\" : undefined}\n        data-edge={closestEdge ?? undefined}\n        data-selected={selected ? \"\" : undefined}\n        data-grabbed={keyboard.isGrabbed ? \"\" : undefined}\n        tabIndex={isDraggable && !hasHandle ? 0 : undefined}\n        aria-roledescription={isDraggable && !hasHandle ? \"draggable item\" : undefined}\n        onKeyDown={(event) => {\n          onKeyDown?.(event)\n          if (!event.defaultPrevented && !hasHandle && event.target === event.currentTarget) keyboard.onKeyDown(event)\n        }}\n        onBlur={(event) => {\n          onBlur?.(event)\n          if (!hasHandle && event.target === event.currentTarget) keyboard.onBlur()\n        }}\n        style={{ flexGrow: width, flexBasis: 0, ...style }}\n        className={cn(\n          \"group/canvas-node relative flex min-w-0 flex-col rounded-lg border bg-card p-3 text-sm shadow-xs transition-[opacity,box-shadow,border-color] outline-none hover:border-foreground/20 focus-visible:ring-3 focus-visible:ring-ring/50 data-dragging:opacity-40 data-grabbed:border-primary data-grabbed:ring-3 data-grabbed:ring-primary/30 data-selected:border-primary data-selected:ring-3 data-selected:ring-primary/20\",\n          className\n        )}\n        {...props}\n      >\n        {props.asChild ? (\n          React.isValidElement(children) ? (\n            children\n          ) : null\n        ) : (\n          <>\n            {children}\n            {closestEdge && <CanvasDropIndicator edge={closestEdge} />}\n            {percent !== null && <CanvasNodeOverlay>{percent}%</CanvasNodeOverlay>}\n          </>\n        )}\n      </ark.div>\n    </NodeContext.Provider>\n  )\n}\n\n/** Optional explicit drag handle; without it the whole node is the handle. */\nfunction CanvasNodeHandle({ className, children, onKeyDown, onBlur, asChild, ...props }: CanvasNodeHandleProps) {\n  const ctx = React.useContext(NodeContext)\n  const keyboard = useCanvasKeyboard(ctx?.value ?? \"\")\n  return (\n    <ark.button\n      asChild={asChild}\n      ref={(el: HTMLElement | null) => {\n        if (ctx) ctx.handleRef.current = el\n      }}\n      type=\"button\"\n      data-slot=\"canvas-node-handle\"\n      data-grabbed={keyboard.isGrabbed ? \"\" : undefined}\n      aria-label=\"Drag\"\n      aria-pressed={keyboard.isGrabbed}\n      onKeyDown={(event) => {\n        onKeyDown?.(event)\n        if (!event.defaultPrevented) {\n          keyboard.onKeyDown(event)\n          event.stopPropagation()\n        }\n      }}\n      onBlur={(event) => {\n        onBlur?.(event)\n        keyboard.onBlur()\n      }}\n      className={cn(\n        \"flex size-6 cursor-grab items-center justify-center rounded-md text-muted-foreground outline-none hover:bg-accent hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 active:cursor-grabbing data-grabbed:bg-primary data-grabbed:text-primary-foreground [&_svg]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {asChild ? children : (children ?? <GripVerticalIcon />)}\n    </ark.button>\n  )\n}\n\nfunction CanvasNodeHeader({ className, ...props }: CanvasNodeHeaderProps) {\n  return <ark.div data-slot=\"canvas-node-header\" className={cn(\"mb-2 flex items-center gap-1\", className)} {...props} />\n}\n\nfunction CanvasNodeTitle({ className, ...props }: CanvasNodeTitleProps) {\n  return (\n    <ark.span\n      data-slot=\"canvas-node-title\"\n      className={cn(\"min-w-0 flex-1 truncate text-xs font-medium text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\n/** A blurring overlay with a centered pill, e.g. the node's width share while resizing. */\nfunction CanvasNodeOverlay({ className, children, ...props }: CanvasNodeOverlayProps) {\n  return (\n    <ark.div\n      data-slot=\"canvas-node-overlay\"\n      aria-hidden\n      className={cn(\n        \"pointer-events-none absolute inset-0 z-10 flex items-center justify-center rounded-[inherit] bg-background/50 backdrop-blur-xs\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <span\n            data-slot=\"canvas-node-overlay-pill\"\n            className=\"rounded-full bg-foreground px-2.5 py-1 text-xs font-semibold text-background tabular-nums shadow-md\"\n          >\n            {children}\n          </span>\n        </>\n      )}\n    </ark.div>\n  )\n}\n\n/** Actions revealed on hover/selection. */\nfunction CanvasNodeActions({ className, ...props }: CanvasNodeActionsProps) {\n  return (\n    <ark.div\n      data-slot=\"canvas-node-actions\"\n      className={cn(\n        \"ms-auto flex items-center gap-0.5 opacity-0 transition-opacity group-focus-within/canvas-node:opacity-100 group-hover/canvas-node:opacity-100 group-data-selected/canvas-node:opacity-100\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Resize handle                                                             */\n/* -------------------------------------------------------------------------- */\n\n/**\n * Place between two nodes in a `CanvasRow`. Pointer drags call `onResize`\n * with the horizontal movement as a fraction of the row width (signed).\n */\nfunction CanvasResizeHandle({ onResize, onResizeStart, onResizeEnd, className, ...props }: CanvasResizeHandleProps) {\n  const row = React.useContext(RowContext)\n  const [active, setActive] = React.useState(false)\n  const handlers = React.useRef({ onResize, onResizeStart, onResizeEnd })\n  React.useEffect(() => {\n    handlers.current = { onResize, onResizeStart, onResizeEnd }\n  })\n\n  const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {\n    if (event.button !== 0) return\n    const rowEl = row?.ref.current\n    if (!rowEl) return\n    event.preventDefault()\n    const target = event.currentTarget\n    try {\n      target.setPointerCapture(event.pointerId)\n    } catch {\n      // Synthetic pointers can't be captured; moves still arrive via bubbling.\n    }\n    let lastX = event.clientX\n    setActive(true)\n    row.setResizing(true)\n    handlers.current.onResizeStart?.()\n    const move = (e: PointerEvent) => {\n      const width = rowEl.getBoundingClientRect().width\n      if (!width) return\n      const delta = (e.clientX - lastX) / width\n      lastX = e.clientX\n      if (delta !== 0) handlers.current.onResize(delta)\n    }\n    const up = () => {\n      target.removeEventListener(\"pointermove\", move)\n      target.removeEventListener(\"pointerup\", up)\n      target.removeEventListener(\"pointercancel\", up)\n      setActive(false)\n      row.setResizing(false)\n      handlers.current.onResizeEnd?.()\n    }\n    target.addEventListener(\"pointermove\", move)\n    target.addEventListener(\"pointerup\", up)\n    target.addEventListener(\"pointercancel\", up)\n  }\n\n  return (\n    <ark.div\n      role=\"separator\"\n      aria-orientation=\"vertical\"\n      data-slot=\"canvas-resize-handle\"\n      data-active={active ? \"\" : undefined}\n      onPointerDown={onPointerDown}\n      className={cn(\n        \"group/resize relative -mx-2 flex w-4 shrink-0 cursor-col-resize touch-none items-center justify-center select-none\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <span className=\"h-8 w-1 rounded-full bg-border transition-colors group-hover/resize:bg-primary/60 group-data-active/resize:bg-primary\" />\n        </>\n      )}\n    </ark.div>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Drop indicator                                                            */\n/* -------------------------------------------------------------------------- */\n\nfunction CanvasDropIndicator({ edge, gap = \"0.75rem\", className, style, ...props }: CanvasDropIndicatorProps) {\n  const horizontal = edge === \"top\" || edge === \"bottom\"\n  return (\n    <ark.div\n      data-slot=\"canvas-drop-indicator\"\n      data-edge={edge}\n      aria-hidden\n      style={{ [\"--canvas-gap\" as string]: gap, ...style }}\n      className={cn(\n        \"pointer-events-none absolute z-10 rounded-full bg-primary\",\n        \"before:absolute before:size-2 before:rounded-full before:border-2 before:border-primary before:bg-background\",\n        horizontal\n          ? \"inset-x-0 h-0.5 before:top-1/2 before:-left-1 before:-translate-y-1/2\"\n          : \"inset-y-0 w-0.5 before:-top-1 before:left-1/2 before:-translate-x-1/2\",\n        edge === \"top\" && \"top-[calc(-1*var(--canvas-gap)/2-1px)]\",\n        edge === \"bottom\" && \"bottom-[calc(-1*var(--canvas-gap)/2-1px)]\",\n        edge === \"left\" && \"left-[calc(-1*var(--canvas-gap)/2-1px)]\",\n        edge === \"right\" && \"right-[calc(-1*var(--canvas-gap)/2-1px)]\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype CanvasRootProps = Omit<React.ComponentProps<typeof ark.div>, \"onDrop\"> & {\n  onDrop?: (details: CanvasDropDetails) => void\n}\n\ntype CanvasAreaProps = React.ComponentProps<typeof ark.div>\n\ntype CanvasDropIndicatorProps = React.ComponentProps<typeof ark.div> & { edge: Edge; gap?: string }\n\ntype CanvasEmptyProps = React.ComponentProps<typeof ark.div>\n\ntype CanvasNodeProps = React.ComponentProps<typeof ark.div> & {\n  value: string\n  /** Relative width within the row (flex-grow weight). */\n  width?: number\n  draggable?: boolean\n  selected?: boolean\n}\n\ntype CanvasNodeActionsProps = React.ComponentProps<typeof ark.div>\n\ntype CanvasNodeHandleProps = React.ComponentProps<typeof ark.button>\n\ntype CanvasNodeHeaderProps = React.ComponentProps<typeof ark.div>\n\ntype CanvasNodeOverlayProps = React.ComponentProps<typeof ark.div>\n\ntype CanvasNodeTitleProps = React.ComponentProps<typeof ark.span>\n\ntype CanvasPaletteProps = React.ComponentProps<typeof ark.div>\n\ntype CanvasPaletteItemProps = React.ComponentProps<typeof ark.div> & { data: unknown }\n\ntype CanvasResizeHandleProps = Omit<React.ComponentProps<typeof ark.div>, \"onResize\"> & {\n  /** Called while dragging with the width change as a fraction of the row width. */\n  onResize: (deltaFraction: number) => void\n  /** Called once when the resize drag starts. */\n  onResizeStart?: () => void\n  /** Called once when the resize drag ends. */\n  onResizeEnd?: () => void\n}\n\ntype CanvasRowProps = React.ComponentProps<typeof ark.div>\n\nconst Canvas = {\n  Root: CanvasRoot,\n  Area: CanvasArea,\n  DropIndicator: CanvasDropIndicator,\n  Empty: CanvasEmpty,\n  Node: CanvasNode,\n  NodeActions: CanvasNodeActions,\n  NodeHandle: CanvasNodeHandle,\n  NodeHeader: CanvasNodeHeader,\n  NodeOverlay: CanvasNodeOverlay,\n  NodeTitle: CanvasNodeTitle,\n  Palette: CanvasPalette,\n  PaletteItem: CanvasPaletteItem,\n  ResizeHandle: CanvasResizeHandle,\n  Row: CanvasRow,\n}\n\nexport {\n  Canvas,\n  useCanvas,\n  type CanvasDropDetails,\n  type CanvasSource,\n  type CanvasTarget,\n  type CanvasRootProps,\n  type CanvasAreaProps,\n  type CanvasDropIndicatorProps,\n  type CanvasEmptyProps,\n  type CanvasNodeProps,\n  type CanvasNodeActionsProps,\n  type CanvasNodeHandleProps,\n  type CanvasNodeHeaderProps,\n  type CanvasNodeOverlayProps,\n  type CanvasNodeTitleProps,\n  type CanvasPaletteProps,\n  type CanvasPaletteItemProps,\n  type CanvasResizeHandleProps,\n  type CanvasRowProps,\n}\n"
     }
   ],
   "docs": "## Canvas\n`src/components/ui/canvas.tsx` is a compositional, data-agnostic drag-and-drop layout surface\non Pragmatic drag and drop. `Canvas` owns nothing but drag state; it reports every drop as an\nintent via `onDrop({ source, target })` where `source` is `{ type: \"palette\", data }` (from a\n`CanvasPaletteItem`, `data` passed back untouched) or `{ type: \"node\", id }`, and `target` is\n`{ type: \"node\", id, edge }` (closest of top/bottom/left/right) or `{ type: \"area\" }`. Parts:\n`CanvasPalette/PaletteItem`, `CanvasArea` (drop surface, `data-over`, auto-scroll),\n`CanvasEmpty`, `CanvasRow` (flex row; node `width` is a flex-grow weight), `CanvasNode`\n(`value`, `width`, `selected`, draggable via optional `CanvasNodeHandle`, four-edge drop\ntarget with `data-edge` + `CanvasDropIndicator`), `CanvasNodeHeader/Title/Actions`, and\n`CanvasResizeHandle` (pointer-driven; calls `onResize(deltaFraction)` relative to the row\nwidth; place it between siblings). While a handle is dragged, `CanvasRow` sets\n`data-resizing` and every node in that row (only that row) renders `CanvasNodeOverlay`: a\nblurring overlay with a pill showing its percentage share, computed from rendered widths. Stacks palette above the area below `lg`. Keyboard: nodes (or their handle) pick up with\nSpace/Enter; ArrowUp/Down emit a top/bottom-edge drop on the row's first/last node (or hop\nto the adjacent row when alone), ArrowLeft/Right emit a left/right-edge drop on the\nneighbour; palette items are focusable and Enter/Space drops them on the area. Same live\nregion + clone preview approach as Kanban.\n`src/demo/form-builder/` is the reference (route `/forms`), a composition only: `model.ts`\n(schema `{ title, description, rows: { fields }[] }`, field types text/email/url/phone/number/\ntextarea/date/select/multiselect/radio/checkbox/switch + heading/paragraph/divider, `name` key\nslugified from the label until edited, `options`, `validation` min/max/minLength/maxLength/\npattern, `width`, `condition: QueryGroup | null`; `applyDrop`, `resizeRow`, `updateField`,\n`removeField`, `duplicateField`, `findProblems`, `serializeSchema`/`parseSchema`,\n`conditionFields` mapping other fields to query-builder fields), `form-builder-page.tsx` (Canvas\nwith a grouped palette, node actions edit/duplicate/remove, a Drawer inspector with Basics /\nOptions editor / Validation (format presets or custom regex) / Visibility built from the\nQueryBuilder parts, Build|Preview `SegmentGroup`, undo/redo on `src/lib/history.ts`, Import\ndialog + Export/Copy JSON, problem badges) and `form-renderer.tsx` (renders a schema on the\ntoolkit controls with `useForm`, live conditions via the query-builder demo interpreter, hidden\nfields dropped from the submission). Nothing here is use-case specific in `components/ui`."

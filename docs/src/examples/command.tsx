@@ -1,14 +1,5 @@
 import { CalendarIcon, SmileIcon, UserIcon } from "lucide-react"
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  useFilter,
-  useListCollection,
-} from "@/components/ui/command"
+import { Command, useFilter, useListCollection } from "@/components/ui/command"
 
 const items = [
   { value: "calendar", label: "Calendar", group: "Suggestions", icon: CalendarIcon },
@@ -25,22 +16,22 @@ export default function CommandExample() {
     filter: contains,
   })
   return (
-    <Command collection={collection} className="w-80 rounded-lg border">
-      <CommandInput placeholder="Type a command or search…" onValueChange={filter} />
-      <CommandList>
-        <CommandEmpty>No results found.</CommandEmpty>
+    <Command.Root collection={collection} className="w-80 rounded-lg border">
+      <Command.Input placeholder="Type a command or search…" onValueChange={filter} />
+      <Command.Content>
+        <Command.Empty>No results found.</Command.Empty>
         {["Suggestions", "Settings"].map((group) => (
-          <CommandGroup key={group} heading={group}>
+          <Command.ItemGroup key={group} heading={group}>
             {collection.items
               .filter((i) => i.group === group)
               .map((item) => (
-                <CommandItem key={item.value} item={item}>
+                <Command.Item key={item.value} item={item}>
                   <item.icon /> {item.label}
-                </CommandItem>
+                </Command.Item>
               ))}
-          </CommandGroup>
+          </Command.ItemGroup>
         ))}
-      </CommandList>
-    </Command>
+      </Command.Content>
+    </Command.Root>
   )
 }

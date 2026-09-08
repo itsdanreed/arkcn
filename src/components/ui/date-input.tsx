@@ -1,31 +1,40 @@
 "use client"
 
+import { useDateInput, useDateInputContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { DateInput as DateInputPrimitive } from "@ark-ui/react"
 
-function DateInput({ className, children, ...props }: React.ComponentProps<typeof DateInputPrimitive.Root>) {
+function DateInputRoot({ className, children, ...props }: DateInputRootProps) {
   return (
     <DateInputPrimitive.Root
       data-slot="date-input"
       className={cn("flex w-full flex-col gap-1.5", className)}
       {...props}
     >
-      {children ?? (
-        <DateInputControl>
-          <DateInputSegmentGroup />
-          <DateInputHiddenInput />
-        </DateInputControl>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {children ?? (
+            <DateInputControl>
+              <DateInputSegmentGroup />
+              <DateInputHiddenInput />
+            </DateInputControl>
+          )}
+        </>
       )}
     </DateInputPrimitive.Root>
   )
 }
 
-function DateInputContext({ ...props }: React.ComponentProps<typeof DateInputPrimitive.Context>) {
+function DateInputContext({ ...props }: DateInputContextProps) {
   return <DateInputPrimitive.Context {...props} />
 }
 
-function DateInputLabel({ className, ...props }: React.ComponentProps<typeof DateInputPrimitive.Label>) {
+function DateInputLabel({ className, ...props }: DateInputLabelProps) {
   return (
     <DateInputPrimitive.Label
       data-slot="date-input-label"
@@ -35,7 +44,7 @@ function DateInputLabel({ className, ...props }: React.ComponentProps<typeof Dat
   )
 }
 
-function DateInputControl({ className, ...props }: React.ComponentProps<typeof DateInputPrimitive.Control>) {
+function DateInputControl({ className, ...props }: DateInputControlProps) {
   return (
     <DateInputPrimitive.Control
       data-slot="date-input-control"
@@ -48,12 +57,7 @@ function DateInputControl({ className, ...props }: React.ComponentProps<typeof D
   )
 }
 
-function DateInputSegmentGroup({
-  className,
-  children,
-  index = 0,
-  ...props
-}: React.ComponentProps<typeof DateInputPrimitive.SegmentGroup>) {
+function DateInputSegmentGroup({ className, children, index = 0, ...props }: DateInputSegmentGroupProps) {
   return (
     <DateInputPrimitive.SegmentGroup
       data-slot="date-input-segment-group"
@@ -61,16 +65,24 @@ function DateInputSegmentGroup({
       className={cn("flex items-center", className)}
       {...props}
     >
-      {children ?? (
-        <DateInputPrimitive.Context>
-          {(api) => api.getSegments({ index }).map((segment, i) => <DateInputSegment key={i} segment={segment} />)}
-        </DateInputPrimitive.Context>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {children ?? (
+            <DateInputPrimitive.Context>
+              {(api) => api.getSegments({ index }).map((segment, i) => <DateInputSegment key={i} segment={segment} />)}
+            </DateInputPrimitive.Context>
+          )}
+        </>
       )}
     </DateInputPrimitive.SegmentGroup>
   )
 }
 
-function DateInputSegment({ className, ...props }: React.ComponentProps<typeof DateInputPrimitive.Segment>) {
+function DateInputSegment({ className, ...props }: DateInputSegmentProps) {
   return (
     <DateInputPrimitive.Segment
       data-slot="date-input-segment"
@@ -83,21 +95,65 @@ function DateInputSegment({ className, ...props }: React.ComponentProps<typeof D
   )
 }
 
-function DateInputSegmentContext({ ...props }: React.ComponentProps<typeof DateInputPrimitive.SegmentContext>) {
+function DateInputSegmentContext({ ...props }: DateInputSegmentContextProps) {
   return <DateInputPrimitive.SegmentContext {...props} />
 }
 
-function DateInputHiddenInput({ ...props }: React.ComponentProps<typeof DateInputPrimitive.HiddenInput>) {
+function DateInputHiddenInput({ ...props }: DateInputHiddenInputProps) {
   return <DateInputPrimitive.HiddenInput {...props} />
 }
 
+function DateInputRootProvider({ className, ...props }: DateInputRootProviderProps) {
+  return (
+    <DateInputPrimitive.RootProvider
+      data-slot="date-input"
+      className={cn("flex w-full flex-col gap-1.5", className)}
+      {...props}
+    />
+  )
+}
+
+type DateInputRootProps = React.ComponentProps<typeof DateInputPrimitive.Root>
+
+type DateInputRootProviderProps = React.ComponentProps<typeof DateInputPrimitive.RootProvider>
+
+type DateInputContextProps = React.ComponentProps<typeof DateInputPrimitive.Context>
+
+type DateInputControlProps = React.ComponentProps<typeof DateInputPrimitive.Control>
+
+type DateInputHiddenInputProps = React.ComponentProps<typeof DateInputPrimitive.HiddenInput>
+
+type DateInputLabelProps = React.ComponentProps<typeof DateInputPrimitive.Label>
+
+type DateInputSegmentProps = React.ComponentProps<typeof DateInputPrimitive.Segment>
+
+type DateInputSegmentContextProps = React.ComponentProps<typeof DateInputPrimitive.SegmentContext>
+
+type DateInputSegmentGroupProps = React.ComponentProps<typeof DateInputPrimitive.SegmentGroup>
+
+const DateInput = {
+  Root: DateInputRoot,
+  RootProvider: DateInputRootProvider,
+  Context: DateInputContext,
+  Control: DateInputControl,
+  HiddenInput: DateInputHiddenInput,
+  Label: DateInputLabel,
+  Segment: DateInputSegment,
+  SegmentContext: DateInputSegmentContext,
+  SegmentGroup: DateInputSegmentGroup,
+}
+
 export {
+  useDateInput,
+  useDateInputContext,
   DateInput,
-  DateInputContext,
-  DateInputControl,
-  DateInputHiddenInput,
-  DateInputLabel,
-  DateInputSegment,
-  DateInputSegmentContext,
-  DateInputSegmentGroup,
+  type DateInputRootProps,
+  type DateInputRootProviderProps,
+  type DateInputContextProps,
+  type DateInputControlProps,
+  type DateInputHiddenInputProps,
+  type DateInputLabelProps,
+  type DateInputSegmentProps,
+  type DateInputSegmentContextProps,
+  type DateInputSegmentGroupProps,
 }

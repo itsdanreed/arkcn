@@ -4,33 +4,207 @@
   "description": "",
   "ark": "Menu",
   "exports": [
-    "DropdownMenu",
-    "DropdownMenuArrow",
-    "DropdownMenuCheckboxItem",
-    "DropdownMenuContent",
-    "DropdownMenuContext",
-    "DropdownMenuGroup",
-    "DropdownMenuItem",
-    "DropdownMenuItemIndicator",
-    "DropdownMenuItemText",
-    "DropdownMenuLabel",
-    "DropdownMenuPortal",
-    "DropdownMenuPositioner",
-    "DropdownMenuRadioGroup",
-    "DropdownMenuRadioItem",
-    "DropdownMenuSeparator",
-    "DropdownMenuShortcut",
-    "DropdownMenuSub",
-    "DropdownMenuSubContent",
-    "DropdownMenuSubTrigger",
-    "DropdownMenuTrigger",
-    "DropdownMenuItemContext",
-    "DropdownMenuContextTrigger",
-    "DropdownMenuIndicator"
+    "useMenu",
+    "useMenuContext",
+    "useMenuItemContext",
+    "DropdownMenu"
   ],
   "parts": [
     {
-      "name": "DropdownMenu",
+      "name": "DropdownMenu.ArrowTip",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DropdownMenu.ItemGroup",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DropdownMenu.ItemGroupLabel",
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false,
+          "description": "Indent the item to align with items that have an indicator.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DropdownMenu.RadioItemGroup",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((e: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Called with the new value whenever it changes.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "DropdownMenu.TriggerItem",
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false,
+          "description": "Indent the item to align with items that have an indicator.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DropdownMenu.Root",
       "props": [
         {
           "name": "anchorPoint",
@@ -281,7 +455,86 @@
       ]
     },
     {
-      "name": "DropdownMenuArrow",
+      "name": "DropdownMenu.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseMenuReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "DropdownMenu.Arrow",
       "props": [
         {
           "name": "asChild",
@@ -314,7 +567,7 @@
       ]
     },
     {
-      "name": "DropdownMenuCheckboxItem",
+      "name": "DropdownMenu.CheckboxItem",
       "props": [
         {
           "name": "checked",
@@ -397,7 +650,7 @@
       ]
     },
     {
-      "name": "DropdownMenuContent",
+      "name": "DropdownMenu.Content",
       "props": [
         {
           "name": "asChild",
@@ -430,7 +683,7 @@
       ]
     },
     {
-      "name": "DropdownMenuContext",
+      "name": "DropdownMenu.Context",
       "props": [
         {
           "name": "children",
@@ -442,40 +695,7 @@
       ]
     },
     {
-      "name": "DropdownMenuGroup",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "DropdownMenuItem",
+      "name": "DropdownMenu.Item",
       "props": [
         {
           "name": "inset",
@@ -558,7 +778,7 @@
       ]
     },
     {
-      "name": "DropdownMenuItemIndicator",
+      "name": "DropdownMenu.ItemIndicator",
       "props": [
         {
           "name": "asChild",
@@ -591,7 +811,7 @@
       ]
     },
     {
-      "name": "DropdownMenuItemText",
+      "name": "DropdownMenu.ItemText",
       "props": [
         {
           "name": "asChild",
@@ -624,47 +844,7 @@
       ]
     },
     {
-      "name": "DropdownMenuLabel",
-      "props": [
-        {
-          "name": "inset",
-          "type": "boolean",
-          "required": false,
-          "description": "Indent the item to align with items that have an indicator.",
-          "from": "arkcn"
-        },
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "DropdownMenuPortal",
+      "name": "DropdownMenu.Portal",
       "props": [
         {
           "name": "children",
@@ -689,7 +869,7 @@
       ]
     },
     {
-      "name": "DropdownMenuPositioner",
+      "name": "DropdownMenu.Positioner",
       "props": [
         {
           "name": "asChild",
@@ -722,54 +902,7 @@
       ]
     },
     {
-      "name": "DropdownMenuRadioGroup",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "onValueChange",
-          "type": "((e: ValueChangeDetails) => void)",
-          "required": false,
-          "description": "Called with the new value whenever it changes.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        },
-        {
-          "name": "value",
-          "type": "string",
-          "required": false,
-          "description": "The controlled value.",
-          "from": "@ark-ui/react"
-        }
-      ]
-    },
-    {
-      "name": "DropdownMenuRadioItem",
+      "name": "DropdownMenu.RadioItem",
       "props": [
         {
           "name": "inset",
@@ -837,7 +970,7 @@
       ]
     },
     {
-      "name": "DropdownMenuSeparator",
+      "name": "DropdownMenu.Separator",
       "props": [
         {
           "name": "asChild",
@@ -870,8 +1003,15 @@
       ]
     },
     {
-      "name": "DropdownMenuShortcut",
+      "name": "DropdownMenu.Shortcut",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -896,7 +1036,7 @@
       ]
     },
     {
-      "name": "DropdownMenuSub",
+      "name": "DropdownMenu.Sub",
       "props": [
         {
           "name": "anchorPoint",
@@ -1147,7 +1287,7 @@
       ]
     },
     {
-      "name": "DropdownMenuSubContent",
+      "name": "DropdownMenu.SubContent",
       "props": [
         {
           "name": "asChild",
@@ -1180,47 +1320,7 @@
       ]
     },
     {
-      "name": "DropdownMenuSubTrigger",
-      "props": [
-        {
-          "name": "inset",
-          "type": "boolean",
-          "required": false,
-          "description": "Indent the item to align with items that have an indicator.",
-          "from": "arkcn"
-        },
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "DropdownMenuTrigger",
+      "name": "DropdownMenu.Trigger",
       "props": [
         {
           "name": "asChild",
@@ -1260,7 +1360,7 @@
       ]
     },
     {
-      "name": "DropdownMenuItemContext",
+      "name": "DropdownMenu.ItemContext",
       "props": [
         {
           "name": "children",
@@ -1272,7 +1372,7 @@
       ]
     },
     {
-      "name": "DropdownMenuContextTrigger",
+      "name": "DropdownMenu.ContextTrigger",
       "props": [
         {
           "name": "asChild",
@@ -1305,7 +1405,7 @@
       ]
     },
     {
-      "name": "DropdownMenuIndicator",
+      "name": "DropdownMenu.Indicator",
       "props": [
         {
           "name": "asChild",
@@ -1348,7 +1448,7 @@
   "files": [
     {
       "path": "components/ui/dropdown-menu.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Menu as DropdownMenuPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\nimport { CheckIcon, ChevronRightIcon, ChevronDownIcon } from \"lucide-react\"\n\nfunction DropdownMenu({\n  positioning,\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: React.ComponentProps<typeof DropdownMenuPrimitive.Root>) {\n  return (\n    <DropdownMenuPrimitive.Root\n      positioning={{ placement: \"bottom-start\", gutter: 4, ...positioning }}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction DropdownMenuPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction DropdownMenuContext({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Context>) {\n  return <DropdownMenuPrimitive.Context {...props} />\n}\n\nfunction DropdownMenuTrigger({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Trigger>) {\n  return <DropdownMenuPrimitive.Trigger data-slot=\"dropdown-menu-trigger\" {...props} />\n}\n\nfunction DropdownMenuPositioner({\n  className,\n  ...props\n}: React.ComponentProps<typeof DropdownMenuPrimitive.Positioner>) {\n  return (\n    <DropdownMenuPrimitive.Positioner\n      data-slot=\"dropdown-menu-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DropdownMenuContent({ className, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Content>) {\n  return (\n    <DropdownMenuPortal>\n      <DropdownMenuPositioner>\n        <DropdownMenuPrimitive.Content\n          data-slot=\"dropdown-menu-content\"\n          className={cn(\n            \"z-50 max-h-(--available-height) w-(--reference-width) min-w-32 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[state=closed]:overflow-hidden data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </DropdownMenuPositioner>\n    </DropdownMenuPortal>\n  )\n}\n\nfunction DropdownMenuArrow({ className, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Arrow>) {\n  return (\n    <DropdownMenuPrimitive.Arrow\n      data-slot=\"dropdown-menu-arrow\"\n      className={cn(\"[--arrow-background:var(--color-popover)] [--arrow-size:0.625rem]\", className)}\n      {...props}\n    >\n      <DropdownMenuPrimitive.ArrowTip\n        data-slot=\"dropdown-menu-arrow-tip\"\n        className=\"border-t border-l border-foreground/10\"\n      />\n    </DropdownMenuPrimitive.Arrow>\n  )\n}\n\nfunction DropdownMenuGroup({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.ItemGroup>) {\n  return <DropdownMenuPrimitive.ItemGroup data-slot=\"dropdown-menu-group\" {...props} />\n}\n\nconst itemClassName =\n  \"group/dropdown-menu-item relative flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground not-data-[variant=destructive]:data-highlighted:**:text-accent-foreground data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:data-highlighted:bg-destructive/10 data-[variant=destructive]:data-highlighted:text-destructive dark:data-[variant=destructive]:data-highlighted:bg-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive\"\n\nfunction DropdownMenuItem({\n  className,\n  inset,\n  variant = \"default\",\n  value,\n  ...props\n}: Omit<React.ComponentProps<typeof DropdownMenuPrimitive.Item>, \"value\"> & {\n  value?: string\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n  variant?: \"default\" | \"destructive\"\n}) {\n  const id = React.useId()\n  return (\n    <DropdownMenuPrimitive.Item\n      data-slot=\"dropdown-menu-item\"\n      data-inset={inset}\n      data-variant={variant}\n      value={value ?? id}\n      className={cn(itemClassName, className)}\n      {...props}\n    />\n  )\n}\n\nfunction DropdownMenuItemText({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.ItemText>) {\n  return <DropdownMenuPrimitive.ItemText data-slot=\"dropdown-menu-item-text\" {...props} />\n}\n\nfunction DropdownMenuItemIndicator({\n  className,\n  ...props\n}: React.ComponentProps<typeof DropdownMenuPrimitive.ItemIndicator>) {\n  return (\n    <DropdownMenuPrimitive.ItemIndicator\n      data-slot=\"dropdown-menu-item-indicator\"\n      className={cn(\"pointer-events-none absolute right-2 flex items-center justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\nconst optionItemClassName =\n  \"relative flex cursor-default items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-highlighted:**:text-accent-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\"\n\nfunction DropdownMenuCheckboxItem({\n  className,\n  children,\n  checked = false,\n  inset,\n  value,\n  ...props\n}: Omit<React.ComponentProps<typeof DropdownMenuPrimitive.CheckboxItem>, \"checked\" | \"value\"> & {\n  /** Checked state of the item. */\n  checked?: boolean\n  value?: string\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}) {\n  const id = React.useId()\n  return (\n    <DropdownMenuPrimitive.CheckboxItem\n      data-slot=\"dropdown-menu-checkbox-item\"\n      data-inset={inset}\n      className={cn(optionItemClassName, className)}\n      checked={checked}\n      value={value ?? id}\n      {...props}\n    >\n      <DropdownMenuItemIndicator data-slot=\"dropdown-menu-checkbox-item-indicator\">\n        <CheckIcon />\n      </DropdownMenuItemIndicator>\n      {children}\n    </DropdownMenuPrimitive.CheckboxItem>\n  )\n}\n\nfunction DropdownMenuRadioGroup({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.RadioItemGroup>) {\n  return <DropdownMenuPrimitive.RadioItemGroup data-slot=\"dropdown-menu-radio-group\" {...props} />\n}\n\nfunction DropdownMenuRadioItem({\n  className,\n  children,\n  inset,\n  ...props\n}: React.ComponentProps<typeof DropdownMenuPrimitive.RadioItem> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}) {\n  return (\n    <DropdownMenuPrimitive.RadioItem\n      data-slot=\"dropdown-menu-radio-item\"\n      data-inset={inset}\n      className={cn(optionItemClassName, className)}\n      {...props}\n    >\n      <DropdownMenuItemIndicator data-slot=\"dropdown-menu-radio-item-indicator\">\n        <CheckIcon />\n      </DropdownMenuItemIndicator>\n      {children}\n    </DropdownMenuPrimitive.RadioItem>\n  )\n}\n\nfunction DropdownMenuLabel({\n  className,\n  inset,\n  ...props\n}: React.ComponentProps<typeof DropdownMenuPrimitive.ItemGroupLabel> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}) {\n  return (\n    <DropdownMenuPrimitive.ItemGroupLabel\n      data-slot=\"dropdown-menu-label\"\n      data-inset={inset}\n      className={cn(\"px-1.5 py-1 text-xs font-medium text-muted-foreground data-inset:pl-7\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DropdownMenuSeparator({ className, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Separator>) {\n  return (\n    <DropdownMenuPrimitive.Separator\n      data-slot=\"dropdown-menu-separator\"\n      className={cn(\"-mx-1 my-1 h-px bg-border\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DropdownMenuShortcut({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span\n      data-slot=\"dropdown-menu-shortcut\"\n      className={cn(\n        \"ml-auto text-xs tracking-widest text-muted-foreground group-data-highlighted/dropdown-menu-item:text-accent-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DropdownMenuSub({\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: React.ComponentProps<typeof DropdownMenuPrimitive.Root>) {\n  return <DropdownMenuPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n}\n\nfunction DropdownMenuSubTrigger({\n  className,\n  inset,\n  children,\n  ...props\n}: React.ComponentProps<typeof DropdownMenuPrimitive.TriggerItem> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}) {\n  return (\n    <DropdownMenuPrimitive.TriggerItem\n      data-slot=\"dropdown-menu-sub-trigger\"\n      data-inset={inset}\n      className={cn(\n        \"flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground not-data-[variant=destructive]:data-highlighted:**:text-accent-foreground data-inset:pl-7 data-open:bg-accent data-open:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n      <ChevronRightIcon className=\"ml-auto\" />\n    </DropdownMenuPrimitive.TriggerItem>\n  )\n}\n\nfunction DropdownMenuSubContent({ className, ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.Content>) {\n  return (\n    <DropdownMenuPortal>\n      <DropdownMenuPositioner>\n        <DropdownMenuPrimitive.Content\n          data-slot=\"dropdown-menu-sub-content\"\n          className={cn(\n            \"z-50 min-w-24 origin-(--transform-origin) overflow-hidden rounded-lg bg-popover p-1 text-popover-foreground shadow-lg ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </DropdownMenuPositioner>\n    </DropdownMenuPortal>\n  )\n}\n\n/** Render-prop access to one item's state (`{ selected, highlighted, disabled, ... }`). */\nfunction DropdownMenuItemContext({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.ItemContext>) {\n  return <DropdownMenuPrimitive.ItemContext {...props} />\n}\n\n/** Opens the menu from a right-click (context-menu style) instead of a click. */\nfunction DropdownMenuContextTrigger({ ...props }: React.ComponentProps<typeof DropdownMenuPrimitive.ContextTrigger>) {\n  return <DropdownMenuPrimitive.ContextTrigger data-slot=\"dropdown-menu-context-trigger\" {...props} />\n}\n\n/** Open-state indicator for a trigger; rotates when open. */\nfunction DropdownMenuIndicator({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof DropdownMenuPrimitive.Indicator>) {\n  return (\n    <DropdownMenuPrimitive.Indicator\n      data-slot=\"dropdown-menu-indicator\"\n      className={cn(\"inline-flex transition-transform data-[state=open]:rotate-180 [&_svg]:size-4\", className)}\n      {...props}\n    >\n      {children ?? <ChevronDownIcon />}\n    </DropdownMenuPrimitive.Indicator>\n  )\n}\n\nexport {\n  DropdownMenu,\n  DropdownMenuArrow,\n  DropdownMenuCheckboxItem,\n  DropdownMenuContent,\n  DropdownMenuContext,\n  DropdownMenuGroup,\n  DropdownMenuItem,\n  DropdownMenuItemIndicator,\n  DropdownMenuItemText,\n  DropdownMenuLabel,\n  DropdownMenuPortal,\n  DropdownMenuPositioner,\n  DropdownMenuRadioGroup,\n  DropdownMenuRadioItem,\n  DropdownMenuSeparator,\n  DropdownMenuShortcut,\n  DropdownMenuSub,\n  DropdownMenuSubContent,\n  DropdownMenuSubTrigger,\n  DropdownMenuTrigger,\n  DropdownMenuItemContext,\n  DropdownMenuContextTrigger,\n  DropdownMenuIndicator,\n}\n"
+      "content": "\"use client\"\n\nimport { ark } from \"@ark-ui/react\"\nimport { useMenu, useMenuContext, useMenuItemContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Menu as DropdownMenuPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\nimport { CheckIcon, ChevronRightIcon, ChevronDownIcon } from \"lucide-react\"\n\nfunction DropdownMenuRoot({ positioning, lazyMount = true, unmountOnExit = true, ...props }: DropdownMenuRootProps) {\n  return (\n    <DropdownMenuPrimitive.Root\n      positioning={{ placement: \"bottom-start\", gutter: 4, ...positioning }}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction DropdownMenuPortal({ ...props }: DropdownMenuPortalProps) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction DropdownMenuContext({ ...props }: DropdownMenuContextProps) {\n  return <DropdownMenuPrimitive.Context {...props} />\n}\n\nfunction DropdownMenuTrigger({ ...props }: DropdownMenuTriggerProps) {\n  return <DropdownMenuPrimitive.Trigger data-slot=\"dropdown-menu-trigger\" {...props} />\n}\n\nfunction DropdownMenuPositioner({ className, ...props }: DropdownMenuPositionerProps) {\n  return (\n    <DropdownMenuPrimitive.Positioner\n      data-slot=\"dropdown-menu-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DropdownMenuContent({ className, ...props }: DropdownMenuContentProps) {\n  return (\n    <DropdownMenuPortal>\n      <DropdownMenuPositioner>\n        <DropdownMenuPrimitive.Content\n          data-slot=\"dropdown-menu-content\"\n          className={cn(\n            \"z-50 max-h-(--available-height) w-(--reference-width) min-w-32 origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[state=closed]:overflow-hidden data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </DropdownMenuPositioner>\n    </DropdownMenuPortal>\n  )\n}\n\nfunction DropdownMenuArrow({ className, ...props }: DropdownMenuArrowProps) {\n  return (\n    <DropdownMenuPrimitive.Arrow\n      data-slot=\"dropdown-menu-arrow\"\n      className={cn(\"[--arrow-background:var(--color-popover)] [--arrow-size:0.625rem]\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <DropdownMenuPrimitive.ArrowTip\n            data-slot=\"dropdown-menu-arrow-tip\"\n            className=\"border-t border-l border-foreground/10\"\n          />\n        </>\n      )}\n    </DropdownMenuPrimitive.Arrow>\n  )\n}\n\nfunction DropdownMenuItemGroup({ ...props }: DropdownMenuItemGroupProps) {\n  return <DropdownMenuPrimitive.ItemGroup data-slot=\"dropdown-menu-group\" {...props} />\n}\n\nconst itemClassName =\n  \"group/dropdown-menu-item relative flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground not-data-[variant=destructive]:data-highlighted:**:text-accent-foreground data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:data-highlighted:bg-destructive/10 data-[variant=destructive]:data-highlighted:text-destructive dark:data-[variant=destructive]:data-highlighted:bg-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-[variant=destructive]:*:[svg]:text-destructive\"\n\nfunction DropdownMenuItem({ className, inset, variant = \"default\", value, ...props }: DropdownMenuItemProps) {\n  const id = React.useId()\n  return (\n    <DropdownMenuPrimitive.Item\n      data-slot=\"dropdown-menu-item\"\n      data-inset={inset}\n      data-variant={variant}\n      value={value ?? id}\n      className={cn(itemClassName, className)}\n      {...props}\n    />\n  )\n}\n\nfunction DropdownMenuItemText({ ...props }: DropdownMenuItemTextProps) {\n  return <DropdownMenuPrimitive.ItemText data-slot=\"dropdown-menu-item-text\" {...props} />\n}\n\nfunction DropdownMenuItemIndicator({ className, ...props }: DropdownMenuItemIndicatorProps) {\n  return (\n    <DropdownMenuPrimitive.ItemIndicator\n      data-slot=\"dropdown-menu-item-indicator\"\n      className={cn(\"pointer-events-none absolute right-2 flex items-center justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\nconst optionItemClassName =\n  \"relative flex cursor-default items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-highlighted:**:text-accent-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\"\n\nfunction DropdownMenuCheckboxItem({\n  className,\n  children,\n  checked = false,\n  inset,\n  value,\n  ...props\n}: DropdownMenuCheckboxItemProps) {\n  const id = React.useId()\n  return (\n    <DropdownMenuPrimitive.CheckboxItem\n      data-slot=\"dropdown-menu-checkbox-item\"\n      data-inset={inset}\n      className={cn(optionItemClassName, className)}\n      checked={checked}\n      value={value ?? id}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <DropdownMenuItemIndicator data-slot=\"dropdown-menu-checkbox-item-indicator\">\n            <CheckIcon />\n          </DropdownMenuItemIndicator>\n          {children}\n        </>\n      )}\n    </DropdownMenuPrimitive.CheckboxItem>\n  )\n}\n\nfunction DropdownMenuRadioItemGroup({ ...props }: DropdownMenuRadioItemGroupProps) {\n  return <DropdownMenuPrimitive.RadioItemGroup data-slot=\"dropdown-menu-radio-group\" {...props} />\n}\n\nfunction DropdownMenuRadioItem({ className, children, inset, ...props }: DropdownMenuRadioItemProps) {\n  return (\n    <DropdownMenuPrimitive.RadioItem\n      data-slot=\"dropdown-menu-radio-item\"\n      data-inset={inset}\n      className={cn(optionItemClassName, className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <DropdownMenuItemIndicator data-slot=\"dropdown-menu-radio-item-indicator\">\n            <CheckIcon />\n          </DropdownMenuItemIndicator>\n          {children}\n        </>\n      )}\n    </DropdownMenuPrimitive.RadioItem>\n  )\n}\n\nfunction DropdownMenuItemGroupLabel({ className, inset, ...props }: DropdownMenuItemGroupLabelProps) {\n  return (\n    <DropdownMenuPrimitive.ItemGroupLabel\n      data-slot=\"dropdown-menu-label\"\n      data-inset={inset}\n      className={cn(\"px-1.5 py-1 text-xs font-medium text-muted-foreground data-inset:pl-7\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DropdownMenuSeparator({ className, ...props }: DropdownMenuSeparatorProps) {\n  return (\n    <DropdownMenuPrimitive.Separator\n      data-slot=\"dropdown-menu-separator\"\n      className={cn(\"-mx-1 my-1 h-px bg-border\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DropdownMenuShortcut({ className, ...props }: DropdownMenuShortcutProps) {\n  return (\n    <ark.span\n      data-slot=\"dropdown-menu-shortcut\"\n      className={cn(\n        \"ml-auto text-xs tracking-widest text-muted-foreground group-data-highlighted/dropdown-menu-item:text-accent-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DropdownMenuSub({ lazyMount = true, unmountOnExit = true, ...props }: DropdownMenuSubProps) {\n  return <DropdownMenuPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n}\n\nfunction DropdownMenuTriggerItem({ className, inset, children, ...props }: DropdownMenuTriggerItemProps) {\n  return (\n    <DropdownMenuPrimitive.TriggerItem\n      data-slot=\"dropdown-menu-sub-trigger\"\n      data-inset={inset}\n      className={cn(\n        \"flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground not-data-[variant=destructive]:data-highlighted:**:text-accent-foreground data-inset:pl-7 data-open:bg-accent data-open:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children}\n          <ChevronRightIcon className=\"ml-auto\" />\n        </>\n      )}\n    </DropdownMenuPrimitive.TriggerItem>\n  )\n}\n\nfunction DropdownMenuSubContent({ className, ...props }: DropdownMenuSubContentProps) {\n  return (\n    <DropdownMenuPortal>\n      <DropdownMenuPositioner>\n        <DropdownMenuPrimitive.Content\n          data-slot=\"dropdown-menu-sub-content\"\n          className={cn(\n            \"z-50 min-w-24 origin-(--transform-origin) overflow-hidden rounded-lg bg-popover p-1 text-popover-foreground shadow-lg ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </DropdownMenuPositioner>\n    </DropdownMenuPortal>\n  )\n}\n\n/** Render-prop access to one item's state (`{ selected, highlighted, disabled, ... }`). */\nfunction DropdownMenuItemContext({ ...props }: DropdownMenuItemContextProps) {\n  return <DropdownMenuPrimitive.ItemContext {...props} />\n}\n\n/** Opens the menu from a right-click (context-menu style) instead of a click. */\nfunction DropdownMenuContextTrigger({ ...props }: DropdownMenuContextTriggerProps) {\n  return <DropdownMenuPrimitive.ContextTrigger data-slot=\"dropdown-menu-context-trigger\" {...props} />\n}\n\n/** Open-state indicator for a trigger; rotates when open. */\nfunction DropdownMenuIndicator({ className, children, ...props }: DropdownMenuIndicatorProps) {\n  return (\n    <DropdownMenuPrimitive.Indicator\n      data-slot=\"dropdown-menu-indicator\"\n      className={cn(\"inline-flex transition-transform data-[state=open]:rotate-180 [&_svg]:size-4\", className)}\n      {...props}\n    >\n      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <ChevronDownIcon />}</>}\n    </DropdownMenuPrimitive.Indicator>\n  )\n}\n\nfunction DropdownMenuRootProvider(props: DropdownMenuRootProviderProps) {\n  return <DropdownMenuPrimitive.RootProvider {...props} />\n}\n\nfunction DropdownMenuArrowTip({ className, ...props }: DropdownMenuArrowTipProps) {\n  return <DropdownMenuPrimitive.ArrowTip data-slot=\"menu-arrow-tip\" className={cn(className)} {...props} />\n}\n\ntype DropdownMenuArrowTipProps = React.ComponentProps<typeof DropdownMenuPrimitive.ArrowTip>\n\ntype DropdownMenuItemGroupProps = React.ComponentProps<typeof DropdownMenuPrimitive.ItemGroup>\n\ntype DropdownMenuItemGroupLabelProps = React.ComponentProps<typeof DropdownMenuPrimitive.ItemGroupLabel> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}\n\ntype DropdownMenuRadioItemGroupProps = React.ComponentProps<typeof DropdownMenuPrimitive.RadioItemGroup>\n\ntype DropdownMenuTriggerItemProps = React.ComponentProps<typeof DropdownMenuPrimitive.TriggerItem> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}\n\ntype DropdownMenuRootProps = React.ComponentProps<typeof DropdownMenuPrimitive.Root>\n\ntype DropdownMenuRootProviderProps = React.ComponentProps<typeof DropdownMenuPrimitive.RootProvider>\n\ntype DropdownMenuArrowProps = React.ComponentProps<typeof DropdownMenuPrimitive.Arrow>\n\ntype DropdownMenuCheckboxItemProps = Omit<\n  React.ComponentProps<typeof DropdownMenuPrimitive.CheckboxItem>,\n  \"checked\" | \"value\"\n> & {\n  /** Checked state of the item. */\n  checked?: boolean\n  value?: string\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}\n\ntype DropdownMenuContentProps = React.ComponentProps<typeof DropdownMenuPrimitive.Content>\n\ntype DropdownMenuContextProps = React.ComponentProps<typeof DropdownMenuPrimitive.Context>\n\ntype DropdownMenuItemProps = Omit<React.ComponentProps<typeof DropdownMenuPrimitive.Item>, \"value\"> & {\n  value?: string\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n  variant?: \"default\" | \"destructive\"\n}\n\ntype DropdownMenuItemIndicatorProps = React.ComponentProps<typeof DropdownMenuPrimitive.ItemIndicator>\n\ntype DropdownMenuItemTextProps = React.ComponentProps<typeof DropdownMenuPrimitive.ItemText>\n\ntype DropdownMenuPortalProps = React.ComponentProps<typeof PortalPrimitive>\n\ntype DropdownMenuPositionerProps = React.ComponentProps<typeof DropdownMenuPrimitive.Positioner>\n\ntype DropdownMenuRadioItemProps = React.ComponentProps<typeof DropdownMenuPrimitive.RadioItem> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}\n\ntype DropdownMenuSeparatorProps = React.ComponentProps<typeof DropdownMenuPrimitive.Separator>\n\ntype DropdownMenuShortcutProps = React.ComponentProps<typeof ark.span>\n\ntype DropdownMenuSubProps = React.ComponentProps<typeof DropdownMenuPrimitive.Root>\n\ntype DropdownMenuSubContentProps = React.ComponentProps<typeof DropdownMenuPrimitive.Content>\n\ntype DropdownMenuTriggerProps = React.ComponentProps<typeof DropdownMenuPrimitive.Trigger>\n\ntype DropdownMenuItemContextProps = React.ComponentProps<typeof DropdownMenuPrimitive.ItemContext>\n\ntype DropdownMenuContextTriggerProps = React.ComponentProps<typeof DropdownMenuPrimitive.ContextTrigger>\n\ntype DropdownMenuIndicatorProps = React.ComponentProps<typeof DropdownMenuPrimitive.Indicator>\n\nconst DropdownMenu = {\n  ArrowTip: DropdownMenuArrowTip,\n  ItemGroup: DropdownMenuItemGroup,\n  ItemGroupLabel: DropdownMenuItemGroupLabel,\n  RadioItemGroup: DropdownMenuRadioItemGroup,\n  TriggerItem: DropdownMenuTriggerItem,\n  Root: DropdownMenuRoot,\n  RootProvider: DropdownMenuRootProvider,\n  Arrow: DropdownMenuArrow,\n  CheckboxItem: DropdownMenuCheckboxItem,\n  Content: DropdownMenuContent,\n  Context: DropdownMenuContext,\n  Item: DropdownMenuItem,\n  ItemIndicator: DropdownMenuItemIndicator,\n  ItemText: DropdownMenuItemText,\n  Portal: DropdownMenuPortal,\n  Positioner: DropdownMenuPositioner,\n  RadioItem: DropdownMenuRadioItem,\n  Separator: DropdownMenuSeparator,\n  Shortcut: DropdownMenuShortcut,\n  Sub: DropdownMenuSub,\n  SubContent: DropdownMenuSubContent,\n  Trigger: DropdownMenuTrigger,\n  ItemContext: DropdownMenuItemContext,\n  ContextTrigger: DropdownMenuContextTrigger,\n  Indicator: DropdownMenuIndicator,\n}\n\nexport {\n  useMenu,\n  useMenuContext,\n  useMenuItemContext,\n  DropdownMenu,\n  type DropdownMenuArrowTipProps,\n  type DropdownMenuItemGroupProps,\n  type DropdownMenuItemGroupLabelProps,\n  type DropdownMenuRadioItemGroupProps,\n  type DropdownMenuTriggerItemProps,\n  type DropdownMenuRootProps,\n  type DropdownMenuRootProviderProps,\n  type DropdownMenuArrowProps,\n  type DropdownMenuCheckboxItemProps,\n  type DropdownMenuContentProps,\n  type DropdownMenuContextProps,\n  type DropdownMenuItemProps,\n  type DropdownMenuItemIndicatorProps,\n  type DropdownMenuItemTextProps,\n  type DropdownMenuPortalProps,\n  type DropdownMenuPositionerProps,\n  type DropdownMenuRadioItemProps,\n  type DropdownMenuSeparatorProps,\n  type DropdownMenuShortcutProps,\n  type DropdownMenuSubProps,\n  type DropdownMenuSubContentProps,\n  type DropdownMenuTriggerProps,\n  type DropdownMenuItemContextProps,\n  type DropdownMenuContextTriggerProps,\n  type DropdownMenuIndicatorProps,\n}\n"
     }
   ]
 }

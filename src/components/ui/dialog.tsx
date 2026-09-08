@@ -1,5 +1,7 @@
 "use client"
 
+import { ark } from "@ark-ui/react"
+import { useDialog, useDialogContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Dialog as DialogPrimitive, Portal as PortalPrimitive } from "@ark-ui/react"
@@ -7,31 +9,27 @@ import { Dialog as DialogPrimitive, Portal as PortalPrimitive } from "@ark-ui/re
 import { Button } from "@/components/ui/button"
 import { XIcon } from "lucide-react"
 
-function Dialog({
-  lazyMount = true,
-  unmountOnExit = true,
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Root>) {
+function DialogRoot({ lazyMount = true, unmountOnExit = true, ...props }: DialogRootProps) {
   return <DialogPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />
 }
 
-function DialogTrigger({ ...props }: React.ComponentProps<typeof DialogPrimitive.Trigger>) {
+function DialogTrigger({ ...props }: DialogTriggerProps) {
   return <DialogPrimitive.Trigger data-slot="dialog-trigger" {...props} />
 }
 
-function DialogPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {
+function DialogPortal({ ...props }: DialogPortalProps) {
   return <PortalPrimitive {...props} />
 }
 
-function DialogClose({ ...props }: React.ComponentProps<typeof DialogPrimitive.CloseTrigger>) {
+function DialogCloseTrigger({ ...props }: DialogCloseTriggerProps) {
   return <DialogPrimitive.CloseTrigger data-slot="dialog-close" {...props} />
 }
 
-function DialogContext({ ...props }: React.ComponentProps<typeof DialogPrimitive.Context>) {
+function DialogContext({ ...props }: DialogContextProps) {
   return <DialogPrimitive.Context {...props} />
 }
 
-function DialogOverlay({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Backdrop>) {
+function DialogBackdrop({ className, ...props }: DialogBackdropProps) {
   return (
     <DialogPrimitive.Backdrop
       data-slot="dialog-overlay"
@@ -44,7 +42,7 @@ function DialogOverlay({ className, ...props }: React.ComponentProps<typeof Dial
   )
 }
 
-function DialogPositioner({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Positioner>) {
+function DialogPositioner({ className, ...props }: DialogPositionerProps) {
   return (
     <DialogPrimitive.Positioner
       data-slot="dialog-positioner"
@@ -54,17 +52,10 @@ function DialogPositioner({ className, ...props }: React.ComponentProps<typeof D
   )
 }
 
-function DialogContent({
-  className,
-  children,
-  showCloseButton = true,
-  ...props
-}: React.ComponentProps<typeof DialogPrimitive.Content> & {
-  showCloseButton?: boolean
-}) {
+function DialogContent({ className, children, showCloseButton = true, ...props }: DialogContentProps) {
   return (
     <DialogPortal>
-      <DialogOverlay />
+      <DialogBackdrop />
       <DialogPositioner>
         <DialogPrimitive.Content
           data-slot="dialog-content"
@@ -89,20 +80,13 @@ function DialogContent({
   )
 }
 
-function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="dialog-header" className={cn("flex flex-col gap-2", className)} {...props} />
+function DialogHeader({ className, ...props }: DialogHeaderProps) {
+  return <ark.div data-slot="dialog-header" className={cn("flex flex-col gap-2", className)} {...props} />
 }
 
-function DialogFooter({
-  className,
-  showCloseButton = false,
-  children,
-  ...props
-}: React.ComponentProps<"div"> & {
-  showCloseButton?: boolean
-}) {
+function DialogFooter({ className, showCloseButton = false, children, ...props }: DialogFooterProps) {
   return (
-    <div
+    <ark.div
       data-slot="dialog-footer"
       className={cn(
         "-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 p-4 sm:flex-row sm:justify-end",
@@ -116,11 +100,11 @@ function DialogFooter({
           <Button variant="outline">Close</Button>
         </DialogPrimitive.CloseTrigger>
       )}
-    </div>
+    </ark.div>
   )
 }
 
-function DialogTitle({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Title>) {
+function DialogTitle({ className, ...props }: DialogTitleProps) {
   return (
     <DialogPrimitive.Title
       data-slot="dialog-title"
@@ -130,7 +114,7 @@ function DialogTitle({ className, ...props }: React.ComponentProps<typeof Dialog
   )
 }
 
-function DialogDescription({ className, ...props }: React.ComponentProps<typeof DialogPrimitive.Description>) {
+function DialogDescription({ className, ...props }: DialogDescriptionProps) {
   return (
     <DialogPrimitive.Description
       data-slot="dialog-description"
@@ -143,17 +127,71 @@ function DialogDescription({ className, ...props }: React.ComponentProps<typeof 
   )
 }
 
+function DialogRootProvider(props: DialogRootProviderProps) {
+  return <DialogPrimitive.RootProvider {...props} />
+}
+
+type DialogBackdropProps = React.ComponentProps<typeof DialogPrimitive.Backdrop>
+
+type DialogCloseTriggerProps = React.ComponentProps<typeof DialogPrimitive.CloseTrigger>
+
+type DialogRootProps = React.ComponentProps<typeof DialogPrimitive.Root>
+
+type DialogRootProviderProps = React.ComponentProps<typeof DialogPrimitive.RootProvider>
+
+type DialogContentProps = React.ComponentProps<typeof DialogPrimitive.Content> & {
+  showCloseButton?: boolean
+}
+
+type DialogContextProps = React.ComponentProps<typeof DialogPrimitive.Context>
+
+type DialogDescriptionProps = React.ComponentProps<typeof DialogPrimitive.Description>
+
+type DialogFooterProps = React.ComponentProps<typeof ark.div> & {
+  showCloseButton?: boolean
+}
+
+type DialogHeaderProps = React.ComponentProps<typeof ark.div>
+
+type DialogPortalProps = React.ComponentProps<typeof PortalPrimitive>
+
+type DialogPositionerProps = React.ComponentProps<typeof DialogPrimitive.Positioner>
+
+type DialogTitleProps = React.ComponentProps<typeof DialogPrimitive.Title>
+
+type DialogTriggerProps = React.ComponentProps<typeof DialogPrimitive.Trigger>
+
+const Dialog = {
+  Backdrop: DialogBackdrop,
+  CloseTrigger: DialogCloseTrigger,
+  Root: DialogRoot,
+  RootProvider: DialogRootProvider,
+  Content: DialogContent,
+  Context: DialogContext,
+  Description: DialogDescription,
+  Footer: DialogFooter,
+  Header: DialogHeader,
+  Portal: DialogPortal,
+  Positioner: DialogPositioner,
+  Title: DialogTitle,
+  Trigger: DialogTrigger,
+}
+
 export {
+  useDialog,
+  useDialogContext,
   Dialog,
-  DialogClose,
-  DialogContent,
-  DialogContext,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogOverlay,
-  DialogPortal,
-  DialogPositioner,
-  DialogTitle,
-  DialogTrigger,
+  type DialogBackdropProps,
+  type DialogCloseTriggerProps,
+  type DialogRootProps,
+  type DialogRootProviderProps,
+  type DialogContentProps,
+  type DialogContextProps,
+  type DialogDescriptionProps,
+  type DialogFooterProps,
+  type DialogHeaderProps,
+  type DialogPortalProps,
+  type DialogPositionerProps,
+  type DialogTitleProps,
+  type DialogTriggerProps,
 }

@@ -1,17 +1,5 @@
 import { GitCommitIcon, MessageSquareIcon, UploadIcon } from "lucide-react"
-import {
-  ActivityFeed,
-  ActivityFeedGroup,
-  ActivityFeedGroupLabel,
-  ActivityFeedItem,
-  ActivityFeedItemActor,
-  ActivityFeedItemBody,
-  ActivityFeedItemContent,
-  ActivityFeedItemHeader,
-  ActivityFeedItemMarker,
-  ActivityFeedItemTime,
-  ActivityFeedItems,
-} from "@/components/ui/activity-feed"
+import { ActivityFeed } from "@/components/ui/activity-feed"
 
 const hours = 3_600_000
 const items = [
@@ -45,31 +33,31 @@ const items = [
 export default function ActivityFeedExample() {
   const days = ["Today", "Yesterday"]
   return (
-    <ActivityFeed className="w-full max-w-lg">
+    <ActivityFeed.Root className="w-full max-w-lg">
       {days.map((day) => (
-        <ActivityFeedGroup key={day}>
-          <ActivityFeedGroupLabel>{day}</ActivityFeedGroupLabel>
-          <ActivityFeedItems>
+        <ActivityFeed.Group key={day}>
+          <ActivityFeed.GroupLabel>{day}</ActivityFeed.GroupLabel>
+          <ActivityFeed.Items>
             {items
               .filter((i) => i.day === day)
               .map((item) => (
-                <ActivityFeedItem key={item.id} value={item.id}>
-                  <ActivityFeedItemMarker>
+                <ActivityFeed.Item key={item.id} value={item.id}>
+                  <ActivityFeed.ItemMarker>
                     <item.icon />
-                  </ActivityFeedItemMarker>
-                  <ActivityFeedItemContent>
-                    <ActivityFeedItemHeader>
-                      <ActivityFeedItemActor>{item.actor}</ActivityFeedItemActor>
+                  </ActivityFeed.ItemMarker>
+                  <ActivityFeed.ItemContent>
+                    <ActivityFeed.ItemHeader>
+                      <ActivityFeed.ItemActor>{item.actor}</ActivityFeed.ItemActor>
                       <span>{item.summary}</span>
-                      <ActivityFeedItemTime date={item.at} className="ms-auto" />
-                    </ActivityFeedItemHeader>
-                    {item.detail && <ActivityFeedItemBody>{item.detail}</ActivityFeedItemBody>}
-                  </ActivityFeedItemContent>
-                </ActivityFeedItem>
+                      <ActivityFeed.ItemTime date={item.at} className="ms-auto" />
+                    </ActivityFeed.ItemHeader>
+                    {item.detail && <ActivityFeed.ItemBody>{item.detail}</ActivityFeed.ItemBody>}
+                  </ActivityFeed.ItemContent>
+                </ActivityFeed.Item>
               ))}
-          </ActivityFeedItems>
-        </ActivityFeedGroup>
+          </ActivityFeed.Items>
+        </ActivityFeed.Group>
       ))}
-    </ActivityFeed>
+    </ActivityFeed.Root>
   )
 }

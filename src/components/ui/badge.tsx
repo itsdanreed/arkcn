@@ -23,12 +23,7 @@ const badgeVariants = cva(
   }
 )
 
-function Badge({
-  className,
-  variant = "default",
-  asChild = false,
-  ...props
-}: React.ComponentProps<"span"> & VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
+function BadgeRoot({ className, variant = "default", asChild = false, ...props }: BadgeRootProps) {
   const Comp = ark.span
 
   return (
@@ -42,4 +37,10 @@ function Badge({
   )
 }
 
-export { Badge, badgeVariants }
+type BadgeRootProps = React.ComponentProps<typeof ark.span> & VariantProps<typeof badgeVariants> & { asChild?: boolean }
+
+const Badge = {
+  Root: BadgeRoot,
+}
+
+export { Badge, badgeVariants, type BadgeRootProps }

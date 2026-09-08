@@ -1,3 +1,4 @@
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import {
   addDays,
@@ -21,7 +22,7 @@ import {
 } from "date-fns"
 import { CalendarIcon, ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { SegmentGroup, SegmentGroupIndicator, SegmentGroupItem } from "@/components/ui/segment-group"
+import { SegmentGroup } from "@/components/ui/segment-group"
 import { cn } from "@/lib/utils"
 import { useControllable } from "@/lib/controllable"
 import { LiveRegion, useLiveRegion } from "@/components/ui/live-region"
@@ -115,7 +116,7 @@ function visibleRange(date: Date, view: SchedulerView, weekStartsOn: SchedulerCo
  * Root
  * ------------------------------------------------------------------------- */
 
-function Scheduler({
+function SchedulerRoot({
   date: dateProp,
   defaultDate,
   onDateChange,
@@ -133,34 +134,7 @@ function Scheduler({
   className,
   children,
   ...props
-}: Omit<React.ComponentProps<"div">, "onChange"> & {
-  date?: Date
-  /** Initial anchor date when uncontrolled. */
-  defaultDate?: Date
-  /** Called when the anchor date changes. */
-  onDateChange?: (date: Date) => void
-  /** Controlled view: `day`, `week`, or `month`. */
-  view?: SchedulerView
-  /** Initial view when uncontrolled. */
-  defaultView?: SchedulerView
-  /** Called when the view changes. */
-  onViewChange?: (view: SchedulerView) => void
-  /** First day of the week, 0 for Sunday. */
-  weekStartsOn?: SchedulerContextValue["weekStartsOn"]
-  /** Pixels per hour in the time grid. */
-  hourHeight?: number
-  /** Snap and keyboard step in minutes. */
-  slotMinutes?: number
-  /** First hour shown in the time grid. */
-  minHour?: number
-  /** Last hour shown in the time grid. */
-  maxHour?: number
-  editable?: boolean
-  /** Called with `{ id, start, end }` snapped to `slotMinutes` after a move, resize, or keyboard change. */
-  onEventChange?: (change: SchedulerEventChange) => void
-  /** Drag on empty time (or a month cell click) proposes a new event. */
-  onCreate?: (range: { start: Date; end: Date; allDay?: boolean }) => void
-}) {
+}: SchedulerRootProps) {
   const [initialDate] = React.useState(() => startOfDay(defaultDate ?? new Date()))
   const [date, setDate] = useControllable(dateProp, initialDate, onDateChange)
   const [view, setView] = useControllable<SchedulerView>(viewProp, defaultView, onViewChange)
@@ -453,16 +427,24 @@ function Scheduler({
 
   return (
     <SchedulerContext.Provider value={ctx}>
-      <div
+      <ark.div
         data-slot="scheduler"
         data-view={view}
         data-interacting={interaction?.type ?? (creating ? "create" : undefined)}
         className={cn("flex min-h-0 flex-1 flex-col gap-3", className)}
         {...props}
       >
-        {children}
-        <LiveRegion data-slot="scheduler-live-region" message={announcement} />
-      </div>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            {children}
+            <LiveRegion.Root data-slot="scheduler-live-region" message={announcement} />
+          </>
+        )}
+      </ark.div>
     </SchedulerContext.Provider>
   )
 }
@@ -471,8 +453,10 @@ function Scheduler({
  * Toolbar
  * ------------------------------------------------------------------------- */
 
-function SchedulerToolbar({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="scheduler-toolbar" className={cn("flex flex-wrap items-center gap-2", className)} {...props} />
+function SchedulerToolbar({ className, ...props }: SchedulerToolbarProps) {
+  return (
+    <ark.div data-slot="scheduler-toolbar" className={cn("flex flex-wrap items-center gap-2", className)} {...props} />
+  )
 }
 
 function shift(date: Date, view: SchedulerView, direction: 1 | -1) {
@@ -481,7 +465,7 @@ function shift(date: Date, view: SchedulerView, direction: 1 | -1) {
   return addMonths(date, direction)
 }
 
-function SchedulerPrevTrigger({ asChild, children, onClick, ...props }: React.ComponentProps<typeof Button>) {
+function SchedulerPrevTrigger({ asChild, children, onClick, ...props }: SchedulerPrevTriggerProps) {
   const { date, view, setDate } = useScheduler()
   return (
     <Button
@@ -501,7 +485,7 @@ function SchedulerPrevTrigger({ asChild, children, onClick, ...props }: React.Co
   )
 }
 
-function SchedulerNextTrigger({ asChild, children, onClick, ...props }: React.ComponentProps<typeof Button>) {
+function SchedulerNextTrigger({ asChild, children, onClick, ...props }: SchedulerNextTriggerProps) {
   const { date, view, setDate } = useScheduler()
   return (
     <Button
@@ -521,7 +505,7 @@ function SchedulerNextTrigger({ asChild, children, onClick, ...props }: React.Co
   )
 }
 
-function SchedulerTodayTrigger({ asChild, children, onClick, ...props }: React.ComponentProps<typeof Button>) {
+function SchedulerTodayTrigger({ asChild, children, onClick, ...props }: SchedulerTodayTriggerProps) {
   const { setDate } = useScheduler()
   return (
     <Button
@@ -547,7 +531,7 @@ function SchedulerTodayTrigger({ asChild, children, onClick, ...props }: React.C
 }
 
 /** "September 2026", "Sep 7 – 13, 2026" or "Mon, Sep 7". */
-function SchedulerTitle({ className, children, ...props }: React.ComponentProps<"h2">) {
+function SchedulerTitle({ className, children, ...props }: SchedulerTitleProps) {
   const { date, view, range } = useScheduler()
   const text =
     view === "month"
@@ -558,30 +542,35 @@ function SchedulerTitle({ className, children, ...props }: React.ComponentProps<
           ? `${format(range.start, "MMM d")} – ${format(range.end, "d, yyyy")}`
           : `${format(range.start, "MMM d")} – ${format(range.end, "MMM d, yyyy")}`
   return (
-    <h2 data-slot="scheduler-title" className={cn("text-base font-semibold tabular-nums", className)} {...props}>
-      {children ?? text}
-    </h2>
+    <ark.h2 data-slot="scheduler-title" className={cn("text-base font-semibold tabular-nums", className)} {...props}>
+      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? text}</>}
+    </ark.h2>
   )
 }
 
-function SchedulerViewSelect({
-  className,
-  ...props
-}: Omit<React.ComponentProps<typeof SegmentGroup>, "value" | "onValueChange">) {
+function SchedulerViewSelect({ className, ...props }: SchedulerViewSelectProps) {
   const { view, setView } = useScheduler()
   return (
-    <SegmentGroup
+    <SegmentGroup.Root
       data-slot="scheduler-view-select"
       value={view}
       onValueChange={({ value }) => value && setView(value as SchedulerView)}
       className={className}
       {...props}
     >
-      <SegmentGroupIndicator />
-      <SegmentGroupItem value="day">Day</SegmentGroupItem>
-      <SegmentGroupItem value="week">Week</SegmentGroupItem>
-      <SegmentGroupItem value="month">Month</SegmentGroupItem>
-    </SegmentGroup>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <SegmentGroup.Indicator />
+          <SegmentGroup.Item value="day">Day</SegmentGroup.Item>
+          <SegmentGroup.Item value="week">Week</SegmentGroup.Item>
+          <SegmentGroup.Item value="month">Month</SegmentGroup.Item>
+        </>
+      )}
+    </SegmentGroup.Root>
   )
 }
 
@@ -591,9 +580,9 @@ function SchedulerViewSelect({
 
 const GUTTER = "3.5rem"
 
-function SchedulerTimeGrid({ className, style, ...props }: React.ComponentProps<"div">) {
+function SchedulerTimeGrid({ className, style, ...props }: SchedulerTimeGridProps) {
   return (
-    <div
+    <ark.div
       data-slot="scheduler-time-grid"
       className={cn("flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border bg-background", className)}
       style={{ ["--scheduler-gutter" as string]: GUTTER, ...style }}
@@ -602,9 +591,9 @@ function SchedulerTimeGrid({ className, style, ...props }: React.ComponentProps<
   )
 }
 
-function SchedulerTimeGridHeader({ className, ...props }: React.ComponentProps<"div">) {
+function SchedulerTimeGridHeader({ className, ...props }: SchedulerTimeGridHeaderProps) {
   return (
-    <div
+    <ark.div
       data-slot="scheduler-time-grid-header"
       className={cn("grid shrink-0 border-b bg-muted/50", className)}
       style={{ gridTemplateColumns: "var(--scheduler-gutter) 1fr" }}
@@ -614,83 +603,95 @@ function SchedulerTimeGridHeader({ className, ...props }: React.ComponentProps<"
 }
 
 /** Day headings across the top, one per visible day. */
-function SchedulerDayHeadings({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<"div"> & { children?: (day: Date) => React.ReactNode }) {
+function SchedulerDayHeadings({ className, children, ...props }: SchedulerDayHeadingsProps) {
   const { days, setDate, setView } = useScheduler()
   return (
     <>
       <div aria-hidden className="border-e" />
-      <div
+      <ark.div
         data-slot="scheduler-day-headings"
         className={cn("grid", className)}
         style={{ gridTemplateColumns: `repeat(${days.length}, minmax(0, 1fr))` }}
         {...props}
       >
-        {days.map((day) => (
-          <button
-            key={day.toISOString()}
-            type="button"
-            data-slot="scheduler-day-heading"
-            data-today={isToday(day) ? "" : undefined}
-            className="group/heading flex flex-col items-center gap-0.5 border-e py-2 text-xs text-muted-foreground outline-none last:border-e-0 hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-inset"
-            onClick={() => {
-              setDate(day)
-              setView("day")
-            }}
-          >
-            {children ? (
-              children(day)
-            ) : (
-              <>
-                <span>{format(day, "EEE")}</span>
-                <span className="flex size-7 items-center justify-center rounded-full text-base font-semibold text-foreground group-data-today/heading:bg-primary group-data-today/heading:text-primary-foreground">
-                  {format(day, "d")}
-                </span>
-              </>
-            )}
-          </button>
-        ))}
-      </div>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            {days.map((day) => (
+              <button
+                key={day.toISOString()}
+                type="button"
+                data-slot="scheduler-day-heading"
+                data-today={isToday(day) ? "" : undefined}
+                className="group/heading flex flex-col items-center gap-0.5 border-e py-2 text-xs text-muted-foreground outline-none last:border-e-0 hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:ring-inset"
+                onClick={() => {
+                  setDate(day)
+                  setView("day")
+                }}
+              >
+                {children ? (
+                  typeof children === "function" ? (
+                    children(day)
+                  ) : (
+                    children
+                  )
+                ) : (
+                  <>
+                    <span>{format(day, "EEE")}</span>
+                    <span className="flex size-7 items-center justify-center rounded-full text-base font-semibold text-foreground group-data-today/heading:bg-primary group-data-today/heading:text-primary-foreground">
+                      {format(day, "d")}
+                    </span>
+                  </>
+                )}
+              </button>
+            ))}
+          </>
+        )}
+      </ark.div>
     </>
   )
 }
 
 /** Strip under the headings for all-day events; render chips inside per day. */
-function SchedulerAllDayRow({
-  className,
-  children,
-  ...props
-}: Omit<React.ComponentProps<"div">, "children"> & { children: (day: Date) => React.ReactNode }) {
+function SchedulerAllDayRow({ className, children, ...props }: SchedulerAllDayRowProps) {
   const { days } = useScheduler()
   return (
     <>
       <div className="flex items-start justify-end border-e border-t px-1.5 py-1 text-[10px] text-muted-foreground uppercase">
         all day
       </div>
-      <div
+      <ark.div
         data-slot="scheduler-all-day-row"
         className={cn("grid border-t", className)}
         style={{ gridTemplateColumns: `repeat(${days.length}, minmax(0, 1fr))` }}
         {...props}
       >
-        {days.map((day) => (
-          <div
-            key={day.toISOString()}
-            data-slot="scheduler-all-day-cell"
-            className="flex min-h-7 flex-col gap-0.5 border-e p-0.5 last:border-e-0"
-          >
-            {children(day)}
-          </div>
-        ))}
-      </div>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            {days.map((day) => (
+              <div
+                key={day.toISOString()}
+                data-slot="scheduler-all-day-cell"
+                className="flex min-h-7 flex-col gap-0.5 border-e p-0.5 last:border-e-0"
+              >
+                {typeof children === "function" ? children(day) : children}
+              </div>
+            ))}
+          </>
+        )}
+      </ark.div>
     </>
   )
 }
 
-function SchedulerTimeGridBody({ className, children, ...props }: React.ComponentProps<"div">) {
+function SchedulerTimeGridBody({ className, children, ...props }: SchedulerTimeGridBodyProps) {
   const { bodyRef, hourHeight, minHour, maxHour } = useScheduler()
   // Scroll to a sensible hour on mount.
   React.useEffect(() => {
@@ -698,58 +699,82 @@ function SchedulerTimeGridBody({ className, children, ...props }: React.Componen
     if (el) el.scrollTop = Math.max(0, (8 - minHour) * hourHeight - 8)
   }, [bodyRef, hourHeight, minHour])
   return (
-    <div
+    <ark.div
       ref={bodyRef}
       data-slot="scheduler-time-grid-body"
       className={cn("relative min-h-0 flex-1 overflow-y-auto", className)}
       {...props}
     >
-      <div
-        className="grid"
-        style={{ gridTemplateColumns: "var(--scheduler-gutter) 1fr", height: (maxHour - minHour) * hourHeight }}
-      >
-        {children}
-      </div>
-    </div>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <div
+            className="grid"
+            style={{ gridTemplateColumns: "var(--scheduler-gutter) 1fr", height: (maxHour - minHour) * hourHeight }}
+          >
+            {children}
+          </div>
+        </>
+      )}
+    </ark.div>
   )
 }
 
-function SchedulerTimeGutter({ className, ...props }: React.ComponentProps<"div">) {
+function SchedulerTimeGutter({ className, ...props }: SchedulerTimeGutterProps) {
   const { hourHeight, minHour, maxHour } = useScheduler()
   const hours = Array.from({ length: maxHour - minHour }, (_, i) => minHour + i)
   return (
-    <div data-slot="scheduler-time-gutter" className={cn("relative border-e", className)} {...props}>
-      {hours.map((h) => (
-        <div
-          key={h}
-          className="absolute inset-e-1.5 -translate-y-1/2 text-[11px] text-muted-foreground tabular-nums"
-          style={{ top: (h - minHour) * hourHeight }}
-        >
-          {h > minHour ? format(setHours(new Date(), h), "h a") : ""}
-        </div>
-      ))}
-    </div>
+    <ark.div data-slot="scheduler-time-gutter" className={cn("relative border-e", className)} {...props}>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          {hours.map((h) => (
+            <div
+              key={h}
+              className="absolute inset-e-1.5 -translate-y-1/2 text-[11px] text-muted-foreground tabular-nums"
+              style={{ top: (h - minHour) * hourHeight }}
+            >
+              {h > minHour ? format(setHours(new Date(), h), "h a") : ""}
+            </div>
+          ))}
+        </>
+      )}
+    </ark.div>
   )
 }
 
 /** The columns container; hour lines are drawn behind. */
-function SchedulerDayColumns({ className, children, ...props }: React.ComponentProps<"div">) {
+function SchedulerDayColumns({ className, children, ...props }: SchedulerDayColumnsProps) {
   const { days, hourHeight, minHour, maxHour } = useScheduler()
   const hours = Array.from({ length: maxHour - minHour }, (_, i) => i)
   return (
-    <div
+    <ark.div
       data-slot="scheduler-day-columns"
       className={cn("relative grid", className)}
       style={{ gridTemplateColumns: `repeat(${days.length}, minmax(0, 1fr))` }}
       {...props}
     >
-      <div aria-hidden className="pointer-events-none absolute inset-0">
-        {hours.map((i) => (
-          <div key={i} className="absolute inset-x-0 border-t border-border/70" style={{ top: i * hourHeight }} />
-        ))}
-      </div>
-      {children}
-    </div>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <div aria-hidden className="pointer-events-none absolute inset-0">
+            {hours.map((i) => (
+              <div key={i} className="absolute inset-x-0 border-t border-border/70" style={{ top: i * hourHeight }} />
+            ))}
+          </div>
+          {children}
+        </>
+      )}
+    </ark.div>
   )
 }
 
@@ -795,18 +820,13 @@ function SchedulerDayColumn<T extends EventLike>({
   children,
   onPointerDown,
   ...props
-}: Omit<React.ComponentProps<"div">, "children"> & {
-  date: Date
-  /** Events shown in this column; overlaps are laid out side by side. */
-  events: T[]
-  children: (event: T) => React.ReactNode
-}) {
+}: SchedulerDayColumnProps<T>) {
   const scheduler = useScheduler()
   const lanes = React.useMemo(() => layoutLanes(events), [events])
   const ctx = React.useMemo(() => ({ day: date, lanes }), [date, lanes])
   return (
     <ColumnContext.Provider value={ctx}>
-      <div
+      <ark.div
         data-slot="scheduler-day-column"
         data-date={date.toISOString()}
         data-today={isToday(date) ? "" : undefined}
@@ -819,10 +839,20 @@ function SchedulerDayColumn<T extends EventLike>({
         }}
         {...props}
       >
-        {events.map((event) => (
-          <React.Fragment key={event.id}>{children(event)}</React.Fragment>
-        ))}
-      </div>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            {events.map((event) => (
+              <React.Fragment key={event.id}>
+                {typeof children === "function" ? children(event) : children}
+              </React.Fragment>
+            ))}
+          </>
+        )}
+      </ark.div>
     </ColumnContext.Provider>
   )
 }
@@ -840,7 +870,7 @@ function SchedulerEvent({
   onKeyDown,
   onBlur,
   ...props
-}: React.ComponentProps<"div"> & { value: string; start: Date; end: Date }) {
+}: SchedulerEventProps) {
   const s = useScheduler()
   const column = React.useContext(ColumnContext)
   const live = s.interaction?.id === value ? s.interaction : null
@@ -855,7 +885,7 @@ function SchedulerEvent({
   const eventLike = React.useMemo(() => ({ id: value, start, end }), [value, start, end])
   return (
     <EventContext.Provider value={eventLike}>
-      <div
+      <ark.div
         {...props}
         data-slot="scheduler-event"
         data-value={value}
@@ -912,17 +942,17 @@ function SchedulerEvent({
         }}
       >
         {children}
-      </div>
+      </ark.div>
     </EventContext.Provider>
   )
 }
 
-function SchedulerEventTitle({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="scheduler-event-title" className={cn("truncate font-medium", className)} {...props} />
+function SchedulerEventTitle({ className, ...props }: SchedulerEventTitleProps) {
+  return <ark.div data-slot="scheduler-event-title" className={cn("truncate font-medium", className)} {...props} />
 }
 
 /** "9:00 – 9:45 AM"; reflects the live drag. */
-function SchedulerEventTime({ className, children, ...props }: React.ComponentProps<"div">) {
+function SchedulerEventTime({ className, children, ...props }: SchedulerEventTimeProps) {
   const s = useScheduler()
   const e = React.useContext(EventContext)
   if (!e) return null
@@ -930,22 +960,28 @@ function SchedulerEventTime({ className, children, ...props }: React.ComponentPr
   const start = live ? live.start : e.start
   const end = live ? live.end : e.end
   return (
-    <div
+    <ark.div
       data-slot="scheduler-event-time"
       className={cn("truncate text-[11px] tabular-nums opacity-80", className)}
       {...props}
     >
-      {children ?? `${format(start, "h:mm")} – ${format(end, "h:mm a")}`}
-    </div>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>{children ?? `${format(start, "h:mm")} – ${format(end, "h:mm a")}`}</>
+      )}
+    </ark.div>
   )
 }
 
-function SchedulerEventResizeHandle({ className, onPointerDown, ...props }: React.ComponentProps<"div">) {
+function SchedulerEventResizeHandle({ className, onPointerDown, ...props }: SchedulerEventResizeHandleProps) {
   const s = useScheduler()
   const e = React.useContext(EventContext)
   if (!s.editable || !e) return null
   return (
-    <div
+    <ark.div
       data-slot="scheduler-event-resize-handle"
       role="separator"
       aria-orientation="horizontal"
@@ -964,7 +1000,7 @@ function SchedulerEventResizeHandle({ className, onPointerDown, ...props }: Reac
 }
 
 /** Outline of the event being created by dragging; renders nothing when idle. */
-function SchedulerCreatePreview({ className, children, ...props }: React.ComponentProps<"div">) {
+function SchedulerCreatePreview({ className, children, ...props }: SchedulerCreatePreviewProps) {
   const s = useScheduler()
   if (!s.creating) return null
   const index = s.days.findIndex((d) => isSameDay(d, s.creating!.start))
@@ -972,7 +1008,7 @@ function SchedulerCreatePreview({ className, children, ...props }: React.Compone
   const top = s.timeToY(s.creating.start)
   const height = (differenceInMinutes(s.creating.end, s.creating.start) * s.hourHeight) / 60
   return (
-    <div
+    <ark.div
       data-slot="scheduler-create-preview"
       aria-hidden
       className={cn(
@@ -987,13 +1023,19 @@ function SchedulerCreatePreview({ className, children, ...props }: React.Compone
       }}
       {...props}
     >
-      {children ?? `${format(s.creating.start, "h:mm")} – ${format(s.creating.end, "h:mm a")}`}
-    </div>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>{children ?? `${format(s.creating.start, "h:mm")} – ${format(s.creating.end, "h:mm a")}`}</>
+      )}
+    </ark.div>
   )
 }
 
 /** Red line at the current time in today's column. */
-function SchedulerNowIndicator({ className, ...props }: React.ComponentProps<"div">) {
+function SchedulerNowIndicator({ className, ...props }: SchedulerNowIndicatorProps) {
   const s = useScheduler()
   const [now, setNow] = React.useState(() => new Date())
   React.useEffect(() => {
@@ -1003,15 +1045,23 @@ function SchedulerNowIndicator({ className, ...props }: React.ComponentProps<"di
   const index = s.days.findIndex((d) => isToday(d))
   if (index === -1) return null
   return (
-    <div
+    <ark.div
       data-slot="scheduler-now-indicator"
       aria-hidden
       className={cn("pointer-events-none absolute z-10 h-px bg-destructive", className)}
       style={{ top: s.timeToY(now), left: `${(index / s.days.length) * 100}%`, width: `${100 / s.days.length}%` }}
       {...props}
     >
-      <span className="absolute -top-1 -left-1 size-2 rounded-full bg-destructive" />
-    </div>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <span className="absolute -top-1 -left-1 size-2 rounded-full bg-destructive" />
+        </>
+      )}
+    </ark.div>
   )
 }
 
@@ -1019,9 +1069,9 @@ function SchedulerNowIndicator({ className, ...props }: React.ComponentProps<"di
  * Month grid
  * ------------------------------------------------------------------------- */
 
-function SchedulerMonthGrid({ className, ...props }: React.ComponentProps<"div">) {
+function SchedulerMonthGrid({ className, ...props }: SchedulerMonthGridProps) {
   return (
-    <div
+    <ark.div
       data-slot="scheduler-month-grid"
       className={cn("flex min-h-0 flex-1 flex-col overflow-hidden rounded-xl border bg-background", className)}
       {...props}
@@ -1029,48 +1079,50 @@ function SchedulerMonthGrid({ className, ...props }: React.ComponentProps<"div">
   )
 }
 
-function SchedulerMonthHeader({ className, ...props }: React.ComponentProps<"div">) {
+function SchedulerMonthHeader({ className, ...props }: SchedulerMonthHeaderProps) {
   const { days } = useScheduler()
   return (
-    <div
+    <ark.div
       data-slot="scheduler-month-header"
       className={cn("grid grid-cols-7 border-b bg-muted/50 text-xs text-muted-foreground", className)}
       {...props}
     >
-      {days.slice(0, 7).map((d) => (
-        <div key={d.toISOString()} className="border-e px-2 py-1.5 text-center font-medium last:border-e-0">
-          {format(d, "EEE")}
-        </div>
-      ))}
-    </div>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          {days.slice(0, 7).map((d) => (
+            <div key={d.toISOString()} className="border-e px-2 py-1.5 text-center font-medium last:border-e-0">
+              {format(d, "EEE")}
+            </div>
+          ))}
+        </>
+      )}
+    </ark.div>
   )
 }
 
-function SchedulerMonthBody({ className, children, ...props }: React.ComponentProps<"div">) {
+function SchedulerMonthBody({ className, children, ...props }: SchedulerMonthBodyProps) {
   const { days } = useScheduler()
   return (
-    <div
+    <ark.div
       data-slot="scheduler-month-body"
       className={cn("grid min-h-0 flex-1 grid-cols-7 overflow-y-auto", className)}
       style={{ gridTemplateRows: `repeat(${Math.ceil(days.length / 7)}, minmax(6rem, 1fr))` }}
       {...props}
     >
       {children}
-    </div>
+    </ark.div>
   )
 }
 
-function SchedulerMonthCell({
-  date,
-  className,
-  children,
-  onClick,
-  ...props
-}: React.ComponentProps<"div"> & { date: Date }) {
+function SchedulerMonthCell({ date, className, children, onClick, ...props }: SchedulerMonthCellProps) {
   const s = useScheduler()
   const outside = !isSameMonth(date, s.date)
   return (
-    <div
+    <ark.div
       data-slot="scheduler-month-cell"
       data-date={date.toISOString()}
       data-today={isToday(date) ? "" : undefined}
@@ -1087,20 +1139,28 @@ function SchedulerMonthCell({
       }}
       {...props}
     >
-      <button
-        type="button"
-        data-slot="scheduler-month-day"
-        className="mb-0.5 flex size-6 items-center justify-center self-start rounded-full text-xs font-medium outline-none group-data-today/cell:bg-primary group-data-today/cell:text-primary-foreground hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/50"
-        onClick={(event) => {
-          event.stopPropagation()
-          s.setDate(date)
-          s.setView("day")
-        }}
-      >
-        {format(date, "d")}
-      </button>
-      <div className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-hidden">{children}</div>
-    </div>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <button
+            type="button"
+            data-slot="scheduler-month-day"
+            className="mb-0.5 flex size-6 items-center justify-center self-start rounded-full text-xs font-medium outline-none group-data-today/cell:bg-primary group-data-today/cell:text-primary-foreground hover:bg-muted focus-visible:ring-2 focus-visible:ring-ring/50"
+            onClick={(event) => {
+              event.stopPropagation()
+              s.setDate(date)
+              s.setView("day")
+            }}
+          >
+            {format(date, "d")}
+          </button>
+          <div className="flex min-h-0 flex-1 flex-col gap-0.5 overflow-hidden">{children}</div>
+        </>
+      )}
+    </ark.div>
   )
 }
 
@@ -1113,12 +1173,12 @@ function SchedulerMonthEvent({
   children,
   onPointerDown,
   ...props
-}: React.ComponentProps<"div"> & { value: string; start: Date; end: Date }) {
+}: SchedulerMonthEventProps) {
   const s = useScheduler()
   const live = s.interaction?.id === value ? s.interaction : null
   const eventLike = React.useMemo(() => ({ id: value, start, end }), [value, start, end])
   return (
-    <div
+    <ark.div
       {...props}
       data-slot="scheduler-month-event"
       data-value={value}
@@ -1136,13 +1196,13 @@ function SchedulerMonthEvent({
       }}
     >
       {children}
-    </div>
+    </ark.div>
   )
 }
 
-function SchedulerMonthMore({ className, ...props }: React.ComponentProps<"button">) {
+function SchedulerMonthMore({ className, ...props }: SchedulerMonthMoreProps) {
   return (
-    <button
+    <ark.button
       type="button"
       data-slot="scheduler-month-more"
       className={cn(
@@ -1154,37 +1214,161 @@ function SchedulerMonthMore({ className, ...props }: React.ComponentProps<"butto
   )
 }
 
+type SchedulerRootProps = Omit<React.ComponentProps<typeof ark.div>, "onChange"> & {
+  date?: Date
+  /** Initial anchor date when uncontrolled. */
+  defaultDate?: Date
+  /** Called when the anchor date changes. */
+  onDateChange?: (date: Date) => void
+  /** Controlled view: `day`, `week`, or `month`. */
+  view?: SchedulerView
+  /** Initial view when uncontrolled. */
+  defaultView?: SchedulerView
+  /** Called when the view changes. */
+  onViewChange?: (view: SchedulerView) => void
+  /** First day of the week, 0 for Sunday. */
+  weekStartsOn?: SchedulerContextValue["weekStartsOn"]
+  /** Pixels per hour in the time grid. */
+  hourHeight?: number
+  /** Snap and keyboard step in minutes. */
+  slotMinutes?: number
+  /** First hour shown in the time grid. */
+  minHour?: number
+  /** Last hour shown in the time grid. */
+  maxHour?: number
+  editable?: boolean
+  /** Called with `{ id, start, end }` snapped to `slotMinutes` after a move, resize, or keyboard change. */
+  onEventChange?: (change: SchedulerEventChange) => void
+  /** Drag on empty time (or a month cell click) proposes a new event. */
+  onCreate?: (range: { start: Date; end: Date; allDay?: boolean }) => void
+}
+
+type SchedulerToolbarProps = React.ComponentProps<typeof ark.div>
+
+type SchedulerPrevTriggerProps = React.ComponentProps<typeof Button>
+
+type SchedulerNextTriggerProps = React.ComponentProps<typeof Button>
+
+type SchedulerTodayTriggerProps = React.ComponentProps<typeof Button>
+
+type SchedulerTitleProps = React.ComponentProps<typeof ark.h2>
+
+type SchedulerViewSelectProps = Omit<React.ComponentProps<typeof SegmentGroup.Root>, "value" | "onValueChange">
+
+type SchedulerTimeGridProps = React.ComponentProps<typeof ark.div>
+
+type SchedulerTimeGridHeaderProps = React.ComponentProps<typeof ark.div>
+
+type SchedulerDayHeadingsProps = React.ComponentProps<typeof ark.div> & {
+  children?: ((day: Date) => React.ReactNode) | React.ReactElement
+}
+
+type SchedulerAllDayRowProps = Omit<React.ComponentProps<typeof ark.div>, "children"> & {
+  children: ((day: Date) => React.ReactNode) | React.ReactElement
+}
+
+type SchedulerTimeGridBodyProps = React.ComponentProps<typeof ark.div>
+
+type SchedulerTimeGutterProps = React.ComponentProps<typeof ark.div>
+
+type SchedulerDayColumnsProps = React.ComponentProps<typeof ark.div>
+
+type SchedulerDayColumnProps<T extends EventLike = EventLike> = Omit<
+  React.ComponentProps<typeof ark.div>,
+  "children"
+> & {
+  date: Date
+  /** Events shown in this column; overlaps are laid out side by side. */
+  events: T[]
+  children: ((event: T) => React.ReactNode) | React.ReactElement
+}
+
+type SchedulerEventProps = React.ComponentProps<typeof ark.div> & { value: string; start: Date; end: Date }
+
+type SchedulerEventTitleProps = React.ComponentProps<typeof ark.div>
+
+type SchedulerEventTimeProps = React.ComponentProps<typeof ark.div>
+
+type SchedulerEventResizeHandleProps = React.ComponentProps<typeof ark.div>
+
+type SchedulerCreatePreviewProps = React.ComponentProps<typeof ark.div>
+
+type SchedulerNowIndicatorProps = React.ComponentProps<typeof ark.div>
+
+type SchedulerMonthGridProps = React.ComponentProps<typeof ark.div>
+
+type SchedulerMonthHeaderProps = React.ComponentProps<typeof ark.div>
+
+type SchedulerMonthBodyProps = React.ComponentProps<typeof ark.div>
+
+type SchedulerMonthCellProps = React.ComponentProps<typeof ark.div> & { date: Date }
+
+type SchedulerMonthEventProps = React.ComponentProps<typeof ark.div> & { value: string; start: Date; end: Date }
+
+type SchedulerMonthMoreProps = React.ComponentProps<typeof ark.button>
+
+const Scheduler = {
+  Root: SchedulerRoot,
+  Toolbar: SchedulerToolbar,
+  PrevTrigger: SchedulerPrevTrigger,
+  NextTrigger: SchedulerNextTrigger,
+  TodayTrigger: SchedulerTodayTrigger,
+  Title: SchedulerTitle,
+  ViewSelect: SchedulerViewSelect,
+  TimeGrid: SchedulerTimeGrid,
+  TimeGridHeader: SchedulerTimeGridHeader,
+  DayHeadings: SchedulerDayHeadings,
+  AllDayRow: SchedulerAllDayRow,
+  TimeGridBody: SchedulerTimeGridBody,
+  TimeGutter: SchedulerTimeGutter,
+  DayColumns: SchedulerDayColumns,
+  DayColumn: SchedulerDayColumn,
+  Event: SchedulerEvent,
+  EventTitle: SchedulerEventTitle,
+  EventTime: SchedulerEventTime,
+  EventResizeHandle: SchedulerEventResizeHandle,
+  CreatePreview: SchedulerCreatePreview,
+  NowIndicator: SchedulerNowIndicator,
+  MonthGrid: SchedulerMonthGrid,
+  MonthHeader: SchedulerMonthHeader,
+  MonthBody: SchedulerMonthBody,
+  MonthCell: SchedulerMonthCell,
+  MonthEvent: SchedulerMonthEvent,
+  MonthMore: SchedulerMonthMore,
+}
+
 export {
   Scheduler,
-  SchedulerToolbar,
-  SchedulerPrevTrigger,
-  SchedulerNextTrigger,
-  SchedulerTodayTrigger,
-  SchedulerTitle,
-  SchedulerViewSelect,
-  SchedulerTimeGrid,
-  SchedulerTimeGridHeader,
-  SchedulerDayHeadings,
-  SchedulerAllDayRow,
-  SchedulerTimeGridBody,
-  SchedulerTimeGutter,
-  SchedulerDayColumns,
-  SchedulerDayColumn,
-  SchedulerEvent,
-  SchedulerEventTitle,
-  SchedulerEventTime,
-  SchedulerEventResizeHandle,
-  SchedulerCreatePreview,
-  SchedulerNowIndicator,
-  SchedulerMonthGrid,
-  SchedulerMonthHeader,
-  SchedulerMonthBody,
-  SchedulerMonthCell,
-  SchedulerMonthEvent,
-  SchedulerMonthMore,
   useScheduler,
   layoutLanes,
   visibleRange,
   type SchedulerView,
   type SchedulerEventChange,
+  type SchedulerRootProps,
+  type SchedulerToolbarProps,
+  type SchedulerPrevTriggerProps,
+  type SchedulerNextTriggerProps,
+  type SchedulerTodayTriggerProps,
+  type SchedulerTitleProps,
+  type SchedulerViewSelectProps,
+  type SchedulerTimeGridProps,
+  type SchedulerTimeGridHeaderProps,
+  type SchedulerDayHeadingsProps,
+  type SchedulerAllDayRowProps,
+  type SchedulerTimeGridBodyProps,
+  type SchedulerTimeGutterProps,
+  type SchedulerDayColumnsProps,
+  type SchedulerDayColumnProps,
+  type SchedulerEventProps,
+  type SchedulerEventTitleProps,
+  type SchedulerEventTimeProps,
+  type SchedulerEventResizeHandleProps,
+  type SchedulerCreatePreviewProps,
+  type SchedulerNowIndicatorProps,
+  type SchedulerMonthGridProps,
+  type SchedulerMonthHeaderProps,
+  type SchedulerMonthBodyProps,
+  type SchedulerMonthCellProps,
+  type SchedulerMonthEventProps,
+  type SchedulerMonthMoreProps,
 }

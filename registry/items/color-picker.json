@@ -4,40 +4,14 @@
   "description": "",
   "ark": "ColorPicker",
   "exports": [
+    "useColorPicker",
+    "useColorPickerContext",
     "ColorPicker",
-    "ColorPickerArea",
-    "ColorPickerAreaBackground",
-    "ColorPickerAreaThumb",
-    "ColorPickerChannelInput",
-    "ColorPickerChannelSlider",
-    "ColorPickerChannelSliderLabel",
-    "ColorPickerChannelSliderThumb",
-    "ColorPickerChannelSliderTrack",
-    "ColorPickerChannelSliderValueText",
-    "ColorPickerContent",
-    "ColorPickerContext",
-    "ColorPickerControl",
-    "ColorPickerEyeDropperTrigger",
-    "ColorPickerFormatSelect",
-    "ColorPickerFormatTrigger",
-    "ColorPickerHiddenInput",
-    "ColorPickerLabel",
-    "ColorPickerPortal",
-    "ColorPickerPositioner",
-    "ColorPickerSwatch",
-    "ColorPickerSwatchGroup",
-    "ColorPickerSwatchIndicator",
-    "ColorPickerSwatchTrigger",
-    "ColorPickerTransparencyGrid",
-    "ColorPickerTrigger",
-    "ColorPickerValueSwatch",
-    "ColorPickerValueText",
-    "ColorPickerView",
     "parseColor"
   ],
   "parts": [
     {
-      "name": "ColorPicker",
+      "name": "ColorPicker.Root",
       "props": [
         {
           "name": "asChild",
@@ -309,7 +283,107 @@
       ]
     },
     {
-      "name": "ColorPickerArea",
+      "name": "ColorPicker.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseColorPickerReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "ColorPicker.Area",
       "props": [
         {
           "name": "asChild",
@@ -354,7 +428,7 @@
       ]
     },
     {
-      "name": "ColorPickerAreaBackground",
+      "name": "ColorPicker.AreaBackground",
       "props": [
         {
           "name": "asChild",
@@ -387,7 +461,7 @@
       ]
     },
     {
-      "name": "ColorPickerAreaThumb",
+      "name": "ColorPicker.AreaThumb",
       "props": [
         {
           "name": "asChild",
@@ -420,7 +494,7 @@
       ]
     },
     {
-      "name": "ColorPickerChannelInput",
+      "name": "ColorPicker.ChannelInput",
       "props": [
         {
           "name": "channel",
@@ -466,7 +540,7 @@
       ]
     },
     {
-      "name": "ColorPickerChannelSlider",
+      "name": "ColorPicker.ChannelSlider",
       "props": [
         {
           "name": "channel",
@@ -512,7 +586,7 @@
       ]
     },
     {
-      "name": "ColorPickerChannelSliderLabel",
+      "name": "ColorPicker.ChannelSliderLabel",
       "props": [
         {
           "name": "asChild",
@@ -545,7 +619,7 @@
       ]
     },
     {
-      "name": "ColorPickerChannelSliderThumb",
+      "name": "ColorPicker.ChannelSliderThumb",
       "props": [
         {
           "name": "asChild",
@@ -578,7 +652,7 @@
       ]
     },
     {
-      "name": "ColorPickerChannelSliderTrack",
+      "name": "ColorPicker.ChannelSliderTrack",
       "props": [
         {
           "name": "asChild",
@@ -611,7 +685,7 @@
       ]
     },
     {
-      "name": "ColorPickerChannelSliderValueText",
+      "name": "ColorPicker.ChannelSliderValueText",
       "props": [
         {
           "name": "asChild",
@@ -644,7 +718,7 @@
       ]
     },
     {
-      "name": "ColorPickerContent",
+      "name": "ColorPicker.Content",
       "props": [
         {
           "name": "asChild",
@@ -677,7 +751,7 @@
       ]
     },
     {
-      "name": "ColorPickerContext",
+      "name": "ColorPicker.Context",
       "props": [
         {
           "name": "children",
@@ -689,7 +763,7 @@
       ]
     },
     {
-      "name": "ColorPickerControl",
+      "name": "ColorPicker.Control",
       "props": [
         {
           "name": "asChild",
@@ -722,7 +796,7 @@
       ]
     },
     {
-      "name": "ColorPickerEyeDropperTrigger",
+      "name": "ColorPicker.EyeDropperTrigger",
       "props": [
         {
           "name": "asChild",
@@ -755,7 +829,7 @@
       ]
     },
     {
-      "name": "ColorPickerFormatSelect",
+      "name": "ColorPicker.FormatSelect",
       "props": [
         {
           "name": "asChild",
@@ -788,7 +862,7 @@
       ]
     },
     {
-      "name": "ColorPickerFormatTrigger",
+      "name": "ColorPicker.FormatTrigger",
       "props": [
         {
           "name": "asChild",
@@ -821,7 +895,7 @@
       ]
     },
     {
-      "name": "ColorPickerHiddenInput",
+      "name": "ColorPicker.HiddenInput",
       "props": [
         {
           "name": "asChild",
@@ -854,7 +928,7 @@
       ]
     },
     {
-      "name": "ColorPickerLabel",
+      "name": "ColorPicker.Label",
       "props": [
         {
           "name": "asChild",
@@ -887,7 +961,7 @@
       ]
     },
     {
-      "name": "ColorPickerPortal",
+      "name": "ColorPicker.Portal",
       "props": [
         {
           "name": "children",
@@ -912,7 +986,7 @@
       ]
     },
     {
-      "name": "ColorPickerPositioner",
+      "name": "ColorPicker.Positioner",
       "props": [
         {
           "name": "asChild",
@@ -945,7 +1019,7 @@
       ]
     },
     {
-      "name": "ColorPickerSwatch",
+      "name": "ColorPicker.Swatch",
       "props": [
         {
           "name": "value",
@@ -992,7 +1066,7 @@
       ]
     },
     {
-      "name": "ColorPickerSwatchGroup",
+      "name": "ColorPicker.SwatchGroup",
       "props": [
         {
           "name": "asChild",
@@ -1025,7 +1099,7 @@
       ]
     },
     {
-      "name": "ColorPickerSwatchIndicator",
+      "name": "ColorPicker.SwatchIndicator",
       "props": [
         {
           "name": "asChild",
@@ -1058,7 +1132,7 @@
       ]
     },
     {
-      "name": "ColorPickerSwatchTrigger",
+      "name": "ColorPicker.SwatchTrigger",
       "props": [
         {
           "name": "value",
@@ -1105,7 +1179,7 @@
       ]
     },
     {
-      "name": "ColorPickerTransparencyGrid",
+      "name": "ColorPicker.TransparencyGrid",
       "props": [
         {
           "name": "asChild",
@@ -1145,7 +1219,7 @@
       ]
     },
     {
-      "name": "ColorPickerTrigger",
+      "name": "ColorPicker.Trigger",
       "props": [
         {
           "name": "asChild",
@@ -1178,7 +1252,7 @@
       ]
     },
     {
-      "name": "ColorPickerValueSwatch",
+      "name": "ColorPicker.ValueSwatch",
       "props": [
         {
           "name": "asChild",
@@ -1218,7 +1292,7 @@
       ]
     },
     {
-      "name": "ColorPickerValueText",
+      "name": "ColorPicker.ValueText",
       "props": [
         {
           "name": "asChild",
@@ -1257,7 +1331,7 @@
       ]
     },
     {
-      "name": "ColorPickerView",
+      "name": "ColorPicker.View",
       "props": [
         {
           "name": "format",
@@ -1307,7 +1381,7 @@
   "files": [
     {
       "path": "components/ui/color-picker.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { ColorPicker as ColorPickerPrimitive, Portal as PortalPrimitive, parseColor } from \"@ark-ui/react\"\nimport { PipetteIcon } from \"lucide-react\"\n\nimport { Button } from \"@/components/ui/button\"\n\nfunction ColorPicker({\n  className,\n  positioning,\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.Root>) {\n  return (\n    <ColorPickerPrimitive.Root\n      data-slot=\"color-picker\"\n      positioning={{ placement: \"bottom-start\", gutter: 4, ...positioning }}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerContext({ ...props }: React.ComponentProps<typeof ColorPickerPrimitive.Context>) {\n  return <ColorPickerPrimitive.Context {...props} />\n}\n\nfunction ColorPickerLabel({ className, ...props }: React.ComponentProps<typeof ColorPickerPrimitive.Label>) {\n  return (\n    <ColorPickerPrimitive.Label\n      data-slot=\"color-picker-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerControl({ className, ...props }: React.ComponentProps<typeof ColorPickerPrimitive.Control>) {\n  return (\n    <ColorPickerPrimitive.Control\n      data-slot=\"color-picker-control\"\n      className={cn(\"flex items-center gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerChannelInput({\n  className,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.ChannelInput>) {\n  return (\n    <ColorPickerPrimitive.ChannelInput\n      data-slot=\"color-picker-channel-input\"\n      className={cn(\n        \"h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive dark:bg-input/30\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerTrigger({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.Trigger>) {\n  return (\n    <ColorPickerPrimitive.Trigger\n      data-slot=\"color-picker-trigger\"\n      className={cn(\n        \"flex size-8 shrink-0 items-center justify-center rounded-lg border border-input bg-transparent p-1 outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30 data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    >\n      {children ?? (\n        <ColorPickerTransparencyGrid className=\"rounded-sm\">\n          <ColorPickerValueSwatch />\n        </ColorPickerTransparencyGrid>\n      )}\n    </ColorPickerPrimitive.Trigger>\n  )\n}\n\nfunction ColorPickerValueSwatch({\n  className,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.ValueSwatch>) {\n  return (\n    <ColorPickerPrimitive.ValueSwatch\n      data-slot=\"color-picker-value-swatch\"\n      className={cn(\"size-full rounded-sm\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerValueText({ className, ...props }: React.ComponentProps<typeof ColorPickerPrimitive.ValueText>) {\n  return (\n    <ColorPickerPrimitive.ValueText\n      data-slot=\"color-picker-value-text\"\n      className={cn(\"font-mono text-sm\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerTransparencyGrid({\n  className,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.TransparencyGrid>) {\n  return (\n    <ColorPickerPrimitive.TransparencyGrid\n      data-slot=\"color-picker-transparency-grid\"\n      className={cn(\"size-full overflow-hidden\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction ColorPickerPositioner({ className, ...props }: React.ComponentProps<typeof ColorPickerPrimitive.Positioner>) {\n  return (\n    <ColorPickerPrimitive.Positioner\n      data-slot=\"color-picker-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerContent({ className, ...props }: React.ComponentProps<typeof ColorPickerPrimitive.Content>) {\n  return (\n    <ColorPickerPortal>\n      <ColorPickerPositioner>\n        <ColorPickerPrimitive.Content\n          data-slot=\"color-picker-content\"\n          className={cn(\n            \"z-50 flex w-64 flex-col gap-3 rounded-lg bg-popover p-3 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </ColorPickerPositioner>\n    </ColorPickerPortal>\n  )\n}\n\nfunction ColorPickerArea({ className, children, ...props }: React.ComponentProps<typeof ColorPickerPrimitive.Area>) {\n  return (\n    <ColorPickerPrimitive.Area\n      data-slot=\"color-picker-area\"\n      className={cn(\"h-40 w-full overflow-hidden rounded-md\", className)}\n      {...props}\n    >\n      {children ?? (\n        <>\n          <ColorPickerAreaBackground />\n          <ColorPickerAreaThumb />\n        </>\n      )}\n    </ColorPickerPrimitive.Area>\n  )\n}\n\nfunction ColorPickerAreaBackground({\n  className,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.AreaBackground>) {\n  return (\n    <ColorPickerPrimitive.AreaBackground\n      data-slot=\"color-picker-area-background\"\n      className={cn(\"size-full\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerAreaThumb({ className, ...props }: React.ComponentProps<typeof ColorPickerPrimitive.AreaThumb>) {\n  return (\n    <ColorPickerPrimitive.AreaThumb\n      data-slot=\"color-picker-area-thumb\"\n      className={cn(\n        \"size-3 rounded-full border-2 border-white shadow-[0_0_0_1px_rgba(0,0,0,0.3)] outline-none focus-visible:ring-3 focus-visible:ring-ring/50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerChannelSlider({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.ChannelSlider>) {\n  return (\n    <ColorPickerPrimitive.ChannelSlider\n      data-slot=\"color-picker-channel-slider\"\n      className={cn(\"relative h-3 w-full\", className)}\n      {...props}\n    >\n      {children ?? (\n        <>\n          <ColorPickerChannelSliderTrack />\n          <ColorPickerChannelSliderThumb />\n        </>\n      )}\n    </ColorPickerPrimitive.ChannelSlider>\n  )\n}\n\nfunction ColorPickerChannelSliderTrack({\n  className,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.ChannelSliderTrack>) {\n  return (\n    <ColorPickerPrimitive.ChannelSliderTrack\n      data-slot=\"color-picker-channel-slider-track\"\n      className={cn(\"size-full rounded-full\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerChannelSliderThumb({\n  className,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.ChannelSliderThumb>) {\n  return (\n    <ColorPickerPrimitive.ChannelSliderThumb\n      data-slot=\"color-picker-channel-slider-thumb\"\n      className={cn(\n        \"size-3 -translate-1/2 rounded-full border-2 border-white shadow-[0_0_0_1px_rgba(0,0,0,0.3)] outline-none focus-visible:ring-3 focus-visible:ring-ring/50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerChannelSliderLabel({\n  className,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.ChannelSliderLabel>) {\n  return (\n    <ColorPickerPrimitive.ChannelSliderLabel\n      data-slot=\"color-picker-channel-slider-label\"\n      className={cn(\"text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerChannelSliderValueText({\n  className,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.ChannelSliderValueText>) {\n  return (\n    <ColorPickerPrimitive.ChannelSliderValueText\n      data-slot=\"color-picker-channel-slider-value-text\"\n      className={cn(\"text-xs tabular-nums\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerEyeDropperTrigger({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.EyeDropperTrigger>) {\n  return (\n    <ColorPickerPrimitive.EyeDropperTrigger\n      data-slot=\"color-picker-eye-dropper-trigger\"\n      className={cn(className)}\n      asChild\n      {...props}\n    >\n      <Button variant=\"outline\" size=\"icon-sm\">\n        {children ?? <PipetteIcon />}\n        <span className=\"sr-only\">Pick color</span>\n      </Button>\n    </ColorPickerPrimitive.EyeDropperTrigger>\n  )\n}\n\nfunction ColorPickerFormatTrigger({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.FormatTrigger>) {\n  return (\n    <ColorPickerPrimitive.FormatTrigger\n      data-slot=\"color-picker-format-trigger\"\n      className={cn(className)}\n      asChild\n      {...props}\n    >\n      <Button variant=\"outline\" size=\"sm\">\n        {children}\n      </Button>\n    </ColorPickerPrimitive.FormatTrigger>\n  )\n}\n\nfunction ColorPickerFormatSelect({\n  className,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.FormatSelect>) {\n  return (\n    <ColorPickerPrimitive.FormatSelect\n      data-slot=\"color-picker-format-select\"\n      className={cn(\n        \"h-7 rounded-md border border-input bg-transparent px-1.5 text-xs outline-none focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerView({ className, ...props }: React.ComponentProps<typeof ColorPickerPrimitive.View>) {\n  return (\n    <ColorPickerPrimitive.View\n      data-slot=\"color-picker-view\"\n      className={cn(\"flex items-center gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerSwatchGroup({\n  className,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.SwatchGroup>) {\n  return (\n    <ColorPickerPrimitive.SwatchGroup\n      data-slot=\"color-picker-swatch-group\"\n      className={cn(\"flex flex-wrap gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerSwatchTrigger({\n  className,\n  children,\n  value,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.SwatchTrigger>) {\n  return (\n    <ColorPickerPrimitive.SwatchTrigger\n      data-slot=\"color-picker-swatch-trigger\"\n      value={value}\n      className={cn(\"size-6 rounded-md outline-none focus-visible:ring-3 focus-visible:ring-ring/50\", className)}\n      {...props}\n    >\n      {children ?? (\n        <ColorPickerTransparencyGrid className=\"rounded-md\">\n          <ColorPickerSwatch value={value}>\n            <ColorPickerSwatchIndicator />\n          </ColorPickerSwatch>\n        </ColorPickerTransparencyGrid>\n      )}\n    </ColorPickerPrimitive.SwatchTrigger>\n  )\n}\n\nfunction ColorPickerSwatch({ className, ...props }: React.ComponentProps<typeof ColorPickerPrimitive.Swatch>) {\n  return (\n    <ColorPickerPrimitive.Swatch\n      data-slot=\"color-picker-swatch\"\n      className={cn(\"flex size-full items-center justify-center rounded-[inherit]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerSwatchIndicator({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof ColorPickerPrimitive.SwatchIndicator>) {\n  return (\n    <ColorPickerPrimitive.SwatchIndicator\n      data-slot=\"color-picker-swatch-indicator\"\n      className={cn(\"size-2 rounded-full bg-white shadow-sm\", className)}\n      {...props}\n    >\n      {children}\n    </ColorPickerPrimitive.SwatchIndicator>\n  )\n}\n\nfunction ColorPickerHiddenInput({ ...props }: React.ComponentProps<typeof ColorPickerPrimitive.HiddenInput>) {\n  return <ColorPickerPrimitive.HiddenInput {...props} />\n}\n\nexport {\n  ColorPicker,\n  ColorPickerArea,\n  ColorPickerAreaBackground,\n  ColorPickerAreaThumb,\n  ColorPickerChannelInput,\n  ColorPickerChannelSlider,\n  ColorPickerChannelSliderLabel,\n  ColorPickerChannelSliderThumb,\n  ColorPickerChannelSliderTrack,\n  ColorPickerChannelSliderValueText,\n  ColorPickerContent,\n  ColorPickerContext,\n  ColorPickerControl,\n  ColorPickerEyeDropperTrigger,\n  ColorPickerFormatSelect,\n  ColorPickerFormatTrigger,\n  ColorPickerHiddenInput,\n  ColorPickerLabel,\n  ColorPickerPortal,\n  ColorPickerPositioner,\n  ColorPickerSwatch,\n  ColorPickerSwatchGroup,\n  ColorPickerSwatchIndicator,\n  ColorPickerSwatchTrigger,\n  ColorPickerTransparencyGrid,\n  ColorPickerTrigger,\n  ColorPickerValueSwatch,\n  ColorPickerValueText,\n  ColorPickerView,\n  parseColor,\n}\n"
+      "content": "\"use client\"\n\nimport { useColorPicker, useColorPickerContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { ColorPicker as ColorPickerPrimitive, Portal as PortalPrimitive, parseColor } from \"@ark-ui/react\"\nimport { PipetteIcon } from \"lucide-react\"\n\nimport { Button } from \"@/components/ui/button\"\n\nfunction ColorPickerRoot({\n  className,\n  positioning,\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: ColorPickerRootProps) {\n  return (\n    <ColorPickerPrimitive.Root\n      data-slot=\"color-picker\"\n      positioning={{ placement: \"bottom-start\", gutter: 4, ...positioning }}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerContext({ ...props }: ColorPickerContextProps) {\n  return <ColorPickerPrimitive.Context {...props} />\n}\n\nfunction ColorPickerLabel({ className, ...props }: ColorPickerLabelProps) {\n  return (\n    <ColorPickerPrimitive.Label\n      data-slot=\"color-picker-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerControl({ className, ...props }: ColorPickerControlProps) {\n  return (\n    <ColorPickerPrimitive.Control\n      data-slot=\"color-picker-control\"\n      className={cn(\"flex items-center gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerChannelInput({ className, ...props }: ColorPickerChannelInputProps) {\n  return (\n    <ColorPickerPrimitive.ChannelInput\n      data-slot=\"color-picker-channel-input\"\n      className={cn(\n        \"h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive dark:bg-input/30\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerTrigger({ className, children, ...props }: ColorPickerTriggerProps) {\n  return (\n    <ColorPickerPrimitive.Trigger\n      data-slot=\"color-picker-trigger\"\n      className={cn(\n        \"flex size-8 shrink-0 items-center justify-center rounded-lg border border-input bg-transparent p-1 outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30 data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <ColorPickerTransparencyGrid className=\"rounded-sm\">\n              <ColorPickerValueSwatch />\n            </ColorPickerTransparencyGrid>\n          )}\n        </>\n      )}\n    </ColorPickerPrimitive.Trigger>\n  )\n}\n\nfunction ColorPickerValueSwatch({ className, ...props }: ColorPickerValueSwatchProps) {\n  return (\n    <ColorPickerPrimitive.ValueSwatch\n      data-slot=\"color-picker-value-swatch\"\n      className={cn(\"size-full rounded-sm\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerValueText({ className, ...props }: ColorPickerValueTextProps) {\n  return (\n    <ColorPickerPrimitive.ValueText\n      data-slot=\"color-picker-value-text\"\n      className={cn(\"font-mono text-sm\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerTransparencyGrid({ className, ...props }: ColorPickerTransparencyGridProps) {\n  return (\n    <ColorPickerPrimitive.TransparencyGrid\n      data-slot=\"color-picker-transparency-grid\"\n      className={cn(\"size-full overflow-hidden\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerPortal({ ...props }: ColorPickerPortalProps) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction ColorPickerPositioner({ className, ...props }: ColorPickerPositionerProps) {\n  return (\n    <ColorPickerPrimitive.Positioner\n      data-slot=\"color-picker-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerContent({ className, ...props }: ColorPickerContentProps) {\n  return (\n    <ColorPickerPortal>\n      <ColorPickerPositioner>\n        <ColorPickerPrimitive.Content\n          data-slot=\"color-picker-content\"\n          className={cn(\n            \"z-50 flex w-64 flex-col gap-3 rounded-lg bg-popover p-3 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </ColorPickerPositioner>\n    </ColorPickerPortal>\n  )\n}\n\nfunction ColorPickerArea({ className, children, ...props }: ColorPickerAreaProps) {\n  return (\n    <ColorPickerPrimitive.Area\n      data-slot=\"color-picker-area\"\n      className={cn(\"h-40 w-full overflow-hidden rounded-md\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <>\n              <ColorPickerAreaBackground />\n              <ColorPickerAreaThumb />\n            </>\n          )}\n        </>\n      )}\n    </ColorPickerPrimitive.Area>\n  )\n}\n\nfunction ColorPickerAreaBackground({ className, ...props }: ColorPickerAreaBackgroundProps) {\n  return (\n    <ColorPickerPrimitive.AreaBackground\n      data-slot=\"color-picker-area-background\"\n      className={cn(\"size-full\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerAreaThumb({ className, ...props }: ColorPickerAreaThumbProps) {\n  return (\n    <ColorPickerPrimitive.AreaThumb\n      data-slot=\"color-picker-area-thumb\"\n      className={cn(\n        \"size-3 rounded-full border-2 border-white shadow-[0_0_0_1px_rgba(0,0,0,0.3)] outline-none focus-visible:ring-3 focus-visible:ring-ring/50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerChannelSlider({ className, children, ...props }: ColorPickerChannelSliderProps) {\n  return (\n    <ColorPickerPrimitive.ChannelSlider\n      data-slot=\"color-picker-channel-slider\"\n      className={cn(\"relative h-3 w-full\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <>\n              <ColorPickerChannelSliderTrack />\n              <ColorPickerChannelSliderThumb />\n            </>\n          )}\n        </>\n      )}\n    </ColorPickerPrimitive.ChannelSlider>\n  )\n}\n\nfunction ColorPickerChannelSliderTrack({ className, ...props }: ColorPickerChannelSliderTrackProps) {\n  return (\n    <ColorPickerPrimitive.ChannelSliderTrack\n      data-slot=\"color-picker-channel-slider-track\"\n      className={cn(\"size-full rounded-full\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerChannelSliderThumb({ className, ...props }: ColorPickerChannelSliderThumbProps) {\n  return (\n    <ColorPickerPrimitive.ChannelSliderThumb\n      data-slot=\"color-picker-channel-slider-thumb\"\n      className={cn(\n        \"size-3 -translate-1/2 rounded-full border-2 border-white shadow-[0_0_0_1px_rgba(0,0,0,0.3)] outline-none focus-visible:ring-3 focus-visible:ring-ring/50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerChannelSliderLabel({ className, ...props }: ColorPickerChannelSliderLabelProps) {\n  return (\n    <ColorPickerPrimitive.ChannelSliderLabel\n      data-slot=\"color-picker-channel-slider-label\"\n      className={cn(\"text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerChannelSliderValueText({ className, ...props }: ColorPickerChannelSliderValueTextProps) {\n  return (\n    <ColorPickerPrimitive.ChannelSliderValueText\n      data-slot=\"color-picker-channel-slider-value-text\"\n      className={cn(\"text-xs tabular-nums\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerEyeDropperTrigger({ className, children, ...props }: ColorPickerEyeDropperTriggerProps) {\n  return (\n    <ColorPickerPrimitive.EyeDropperTrigger\n      data-slot=\"color-picker-eye-dropper-trigger\"\n      className={cn(className)}\n      asChild\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <Button variant=\"outline\" size=\"icon-sm\">\n            {children ?? <PipetteIcon />}\n            <span className=\"sr-only\">Pick color</span>\n          </Button>\n        </>\n      )}\n    </ColorPickerPrimitive.EyeDropperTrigger>\n  )\n}\n\nfunction ColorPickerFormatTrigger({ className, children, ...props }: ColorPickerFormatTriggerProps) {\n  return (\n    <ColorPickerPrimitive.FormatTrigger\n      data-slot=\"color-picker-format-trigger\"\n      className={cn(className)}\n      asChild\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <Button variant=\"outline\" size=\"sm\">\n            {children}\n          </Button>\n        </>\n      )}\n    </ColorPickerPrimitive.FormatTrigger>\n  )\n}\n\nfunction ColorPickerFormatSelect({ className, ...props }: ColorPickerFormatSelectProps) {\n  return (\n    <ColorPickerPrimitive.FormatSelect\n      data-slot=\"color-picker-format-select\"\n      className={cn(\n        \"h-7 rounded-md border border-input bg-transparent px-1.5 text-xs outline-none focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerView({ className, ...props }: ColorPickerViewProps) {\n  return (\n    <ColorPickerPrimitive.View\n      data-slot=\"color-picker-view\"\n      className={cn(\"flex items-center gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerSwatchGroup({ className, ...props }: ColorPickerSwatchGroupProps) {\n  return (\n    <ColorPickerPrimitive.SwatchGroup\n      data-slot=\"color-picker-swatch-group\"\n      className={cn(\"flex flex-wrap gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerSwatchTrigger({ className, children, value, ...props }: ColorPickerSwatchTriggerProps) {\n  return (\n    <ColorPickerPrimitive.SwatchTrigger\n      data-slot=\"color-picker-swatch-trigger\"\n      value={value}\n      className={cn(\"size-6 rounded-md outline-none focus-visible:ring-3 focus-visible:ring-ring/50\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <ColorPickerTransparencyGrid className=\"rounded-md\">\n              <ColorPickerSwatch value={value}>\n                <ColorPickerSwatchIndicator />\n              </ColorPickerSwatch>\n            </ColorPickerTransparencyGrid>\n          )}\n        </>\n      )}\n    </ColorPickerPrimitive.SwatchTrigger>\n  )\n}\n\nfunction ColorPickerSwatch({ className, ...props }: ColorPickerSwatchProps) {\n  return (\n    <ColorPickerPrimitive.Swatch\n      data-slot=\"color-picker-swatch\"\n      className={cn(\"flex size-full items-center justify-center rounded-[inherit]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ColorPickerSwatchIndicator({ className, children, ...props }: ColorPickerSwatchIndicatorProps) {\n  return (\n    <ColorPickerPrimitive.SwatchIndicator\n      data-slot=\"color-picker-swatch-indicator\"\n      className={cn(\"size-2 rounded-full bg-white shadow-sm\", className)}\n      {...props}\n    >\n      {children}\n    </ColorPickerPrimitive.SwatchIndicator>\n  )\n}\n\nfunction ColorPickerHiddenInput({ ...props }: ColorPickerHiddenInputProps) {\n  return <ColorPickerPrimitive.HiddenInput {...props} />\n}\n\nfunction ColorPickerRootProvider({ className, ...props }: ColorPickerRootProviderProps) {\n  return (\n    <ColorPickerPrimitive.RootProvider\n      data-slot=\"color-picker\"\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\ntype ColorPickerRootProps = React.ComponentProps<typeof ColorPickerPrimitive.Root>\n\ntype ColorPickerRootProviderProps = React.ComponentProps<typeof ColorPickerPrimitive.RootProvider>\n\ntype ColorPickerAreaProps = React.ComponentProps<typeof ColorPickerPrimitive.Area>\n\ntype ColorPickerAreaBackgroundProps = React.ComponentProps<typeof ColorPickerPrimitive.AreaBackground>\n\ntype ColorPickerAreaThumbProps = React.ComponentProps<typeof ColorPickerPrimitive.AreaThumb>\n\ntype ColorPickerChannelInputProps = React.ComponentProps<typeof ColorPickerPrimitive.ChannelInput>\n\ntype ColorPickerChannelSliderProps = React.ComponentProps<typeof ColorPickerPrimitive.ChannelSlider>\n\ntype ColorPickerChannelSliderLabelProps = React.ComponentProps<typeof ColorPickerPrimitive.ChannelSliderLabel>\n\ntype ColorPickerChannelSliderThumbProps = React.ComponentProps<typeof ColorPickerPrimitive.ChannelSliderThumb>\n\ntype ColorPickerChannelSliderTrackProps = React.ComponentProps<typeof ColorPickerPrimitive.ChannelSliderTrack>\n\ntype ColorPickerChannelSliderValueTextProps = React.ComponentProps<typeof ColorPickerPrimitive.ChannelSliderValueText>\n\ntype ColorPickerContentProps = React.ComponentProps<typeof ColorPickerPrimitive.Content>\n\ntype ColorPickerContextProps = React.ComponentProps<typeof ColorPickerPrimitive.Context>\n\ntype ColorPickerControlProps = React.ComponentProps<typeof ColorPickerPrimitive.Control>\n\ntype ColorPickerEyeDropperTriggerProps = React.ComponentProps<typeof ColorPickerPrimitive.EyeDropperTrigger>\n\ntype ColorPickerFormatSelectProps = React.ComponentProps<typeof ColorPickerPrimitive.FormatSelect>\n\ntype ColorPickerFormatTriggerProps = React.ComponentProps<typeof ColorPickerPrimitive.FormatTrigger>\n\ntype ColorPickerHiddenInputProps = React.ComponentProps<typeof ColorPickerPrimitive.HiddenInput>\n\ntype ColorPickerLabelProps = React.ComponentProps<typeof ColorPickerPrimitive.Label>\n\ntype ColorPickerPortalProps = React.ComponentProps<typeof PortalPrimitive>\n\ntype ColorPickerPositionerProps = React.ComponentProps<typeof ColorPickerPrimitive.Positioner>\n\ntype ColorPickerSwatchProps = React.ComponentProps<typeof ColorPickerPrimitive.Swatch>\n\ntype ColorPickerSwatchGroupProps = React.ComponentProps<typeof ColorPickerPrimitive.SwatchGroup>\n\ntype ColorPickerSwatchIndicatorProps = React.ComponentProps<typeof ColorPickerPrimitive.SwatchIndicator>\n\ntype ColorPickerSwatchTriggerProps = React.ComponentProps<typeof ColorPickerPrimitive.SwatchTrigger>\n\ntype ColorPickerTransparencyGridProps = React.ComponentProps<typeof ColorPickerPrimitive.TransparencyGrid>\n\ntype ColorPickerTriggerProps = React.ComponentProps<typeof ColorPickerPrimitive.Trigger>\n\ntype ColorPickerValueSwatchProps = React.ComponentProps<typeof ColorPickerPrimitive.ValueSwatch>\n\ntype ColorPickerValueTextProps = React.ComponentProps<typeof ColorPickerPrimitive.ValueText>\n\ntype ColorPickerViewProps = React.ComponentProps<typeof ColorPickerPrimitive.View>\n\nconst ColorPicker = {\n  Root: ColorPickerRoot,\n  RootProvider: ColorPickerRootProvider,\n  Area: ColorPickerArea,\n  AreaBackground: ColorPickerAreaBackground,\n  AreaThumb: ColorPickerAreaThumb,\n  ChannelInput: ColorPickerChannelInput,\n  ChannelSlider: ColorPickerChannelSlider,\n  ChannelSliderLabel: ColorPickerChannelSliderLabel,\n  ChannelSliderThumb: ColorPickerChannelSliderThumb,\n  ChannelSliderTrack: ColorPickerChannelSliderTrack,\n  ChannelSliderValueText: ColorPickerChannelSliderValueText,\n  Content: ColorPickerContent,\n  Context: ColorPickerContext,\n  Control: ColorPickerControl,\n  EyeDropperTrigger: ColorPickerEyeDropperTrigger,\n  FormatSelect: ColorPickerFormatSelect,\n  FormatTrigger: ColorPickerFormatTrigger,\n  HiddenInput: ColorPickerHiddenInput,\n  Label: ColorPickerLabel,\n  Portal: ColorPickerPortal,\n  Positioner: ColorPickerPositioner,\n  Swatch: ColorPickerSwatch,\n  SwatchGroup: ColorPickerSwatchGroup,\n  SwatchIndicator: ColorPickerSwatchIndicator,\n  SwatchTrigger: ColorPickerSwatchTrigger,\n  TransparencyGrid: ColorPickerTransparencyGrid,\n  Trigger: ColorPickerTrigger,\n  ValueSwatch: ColorPickerValueSwatch,\n  ValueText: ColorPickerValueText,\n  View: ColorPickerView,\n}\n\nexport {\n  useColorPicker,\n  useColorPickerContext,\n  ColorPicker,\n  parseColor,\n  type ColorPickerRootProps,\n  type ColorPickerRootProviderProps,\n  type ColorPickerAreaProps,\n  type ColorPickerAreaBackgroundProps,\n  type ColorPickerAreaThumbProps,\n  type ColorPickerChannelInputProps,\n  type ColorPickerChannelSliderProps,\n  type ColorPickerChannelSliderLabelProps,\n  type ColorPickerChannelSliderThumbProps,\n  type ColorPickerChannelSliderTrackProps,\n  type ColorPickerChannelSliderValueTextProps,\n  type ColorPickerContentProps,\n  type ColorPickerContextProps,\n  type ColorPickerControlProps,\n  type ColorPickerEyeDropperTriggerProps,\n  type ColorPickerFormatSelectProps,\n  type ColorPickerFormatTriggerProps,\n  type ColorPickerHiddenInputProps,\n  type ColorPickerLabelProps,\n  type ColorPickerPortalProps,\n  type ColorPickerPositionerProps,\n  type ColorPickerSwatchProps,\n  type ColorPickerSwatchGroupProps,\n  type ColorPickerSwatchIndicatorProps,\n  type ColorPickerSwatchTriggerProps,\n  type ColorPickerTransparencyGridProps,\n  type ColorPickerTriggerProps,\n  type ColorPickerValueSwatchProps,\n  type ColorPickerValueTextProps,\n  type ColorPickerViewProps,\n}\n"
     }
   ]
 }

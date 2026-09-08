@@ -21,13 +21,9 @@ const buttonGroupVariants = cva(
   }
 )
 
-function ButtonGroup({
-  className,
-  orientation,
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof buttonGroupVariants>) {
+function ButtonGroupRoot({ className, orientation, ...props }: ButtonGroupRootProps) {
   return (
-    <div
+    <ark.div
       role="group"
       data-slot="button-group"
       data-orientation={orientation}
@@ -37,13 +33,7 @@ function ButtonGroup({
   )
 }
 
-function ButtonGroupText({
-  className,
-  asChild = false,
-  ...props
-}: React.ComponentProps<"div"> & {
-  asChild?: boolean
-}) {
+function ButtonGroupText({ className, asChild = false, ...props }: ButtonGroupTextProps) {
   const Comp = ark.div
 
   return (
@@ -58,13 +48,9 @@ function ButtonGroupText({
   )
 }
 
-function ButtonGroupSeparator({
-  className,
-  orientation = "vertical",
-  ...props
-}: React.ComponentProps<typeof Separator>) {
+function ButtonGroupSeparator({ className, orientation = "vertical", ...props }: ButtonGroupSeparatorProps) {
   return (
-    <Separator
+    <Separator.Root
       data-slot="button-group-separator"
       orientation={orientation}
       className={cn(
@@ -76,4 +62,24 @@ function ButtonGroupSeparator({
   )
 }
 
-export { ButtonGroup, ButtonGroupSeparator, ButtonGroupText, buttonGroupVariants }
+type ButtonGroupRootProps = React.ComponentProps<typeof ark.div> & VariantProps<typeof buttonGroupVariants>
+
+type ButtonGroupSeparatorProps = React.ComponentProps<typeof Separator.Root>
+
+type ButtonGroupTextProps = React.ComponentProps<typeof ark.div> & {
+  asChild?: boolean
+}
+
+const ButtonGroup = {
+  Root: ButtonGroupRoot,
+  Separator: ButtonGroupSeparator,
+  Text: ButtonGroupText,
+}
+
+export {
+  ButtonGroup,
+  buttonGroupVariants,
+  type ButtonGroupRootProps,
+  type ButtonGroupSeparatorProps,
+  type ButtonGroupTextProps,
+}

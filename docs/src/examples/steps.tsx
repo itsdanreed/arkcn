@@ -1,49 +1,38 @@
 import { Button } from "@/components/ui/button"
-import {
-  Steps,
-  StepsContent,
-  StepsCompletedContent,
-  StepsIndicator,
-  StepsItem,
-  StepsList,
-  StepsNextTrigger,
-  StepsPrevTrigger,
-  StepsSeparator,
-  StepsTrigger,
-} from "@/components/ui/steps"
+import { Steps } from "@/components/ui/steps"
 
 const items = ["Account", "Profile", "Review"]
 
 export default function StepsExample() {
   return (
-    <Steps count={items.length} className="w-full max-w-lg">
-      <StepsList>
+    <Steps.Root count={items.length} className="w-full max-w-lg">
+      <Steps.List>
         {items.map((label, index) => (
-          <StepsItem key={label} index={index}>
-            <StepsTrigger>
-              <StepsIndicator>{index + 1}</StepsIndicator>
+          <Steps.Item key={label} index={index}>
+            <Steps.Trigger>
+              <Steps.Indicator>{index + 1}</Steps.Indicator>
               <span>{label}</span>
-            </StepsTrigger>
-            <StepsSeparator />
-          </StepsItem>
+            </Steps.Trigger>
+            <Steps.Separator />
+          </Steps.Item>
         ))}
-      </StepsList>
+      </Steps.List>
       {items.map((label, index) => (
-        <StepsContent key={label} index={index} className="py-4 text-sm text-muted-foreground">
+        <Steps.Content key={label} index={index} className="py-4 text-sm text-muted-foreground">
           {label} step content.
-        </StepsContent>
+        </Steps.Content>
       ))}
-      <StepsCompletedContent>All steps complete.</StepsCompletedContent>
+      <Steps.CompletedContent>All steps complete.</Steps.CompletedContent>
       <div className="flex gap-2">
-        <StepsPrevTrigger asChild>
+        <Steps.PrevTrigger asChild>
           <Button variant="outline" size="sm">
             Back
           </Button>
-        </StepsPrevTrigger>
-        <StepsNextTrigger asChild>
+        </Steps.PrevTrigger>
+        <Steps.NextTrigger asChild>
           <Button size="sm">Next</Button>
-        </StepsNextTrigger>
+        </Steps.NextTrigger>
       </div>
-    </Steps>
+    </Steps.Root>
   )
 }

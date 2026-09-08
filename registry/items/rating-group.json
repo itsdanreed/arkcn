@@ -4,17 +4,14 @@
   "description": "",
   "ark": "RatingGroup",
   "exports": [
-    "RatingGroup",
-    "RatingGroupContext",
-    "RatingGroupControl",
-    "RatingGroupHiddenInput",
-    "RatingGroupItem",
-    "RatingGroupItemContext",
-    "RatingGroupLabel"
+    "useRatingGroup",
+    "useRatingGroupContext",
+    "useRatingGroupItemContext",
+    "RatingGroup"
   ],
   "parts": [
     {
-      "name": "RatingGroup",
+      "name": "RatingGroup.Root",
       "props": [
         {
           "name": "allowHalf",
@@ -153,7 +150,47 @@
       ]
     },
     {
-      "name": "RatingGroupContext",
+      "name": "RatingGroup.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseRatingGroupReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "RatingGroup.Context",
       "props": [
         {
           "name": "children",
@@ -165,7 +202,7 @@
       ]
     },
     {
-      "name": "RatingGroupControl",
+      "name": "RatingGroup.Control",
       "props": [
         {
           "name": "asChild",
@@ -198,7 +235,7 @@
       ]
     },
     {
-      "name": "RatingGroupHiddenInput",
+      "name": "RatingGroup.HiddenInput",
       "props": [
         {
           "name": "asChild",
@@ -231,7 +268,7 @@
       ]
     },
     {
-      "name": "RatingGroupItem",
+      "name": "RatingGroup.Item",
       "props": [
         {
           "name": "index",
@@ -271,7 +308,7 @@
       ]
     },
     {
-      "name": "RatingGroupItemContext",
+      "name": "RatingGroup.ItemContext",
       "props": [
         {
           "name": "children",
@@ -283,7 +320,7 @@
       ]
     },
     {
-      "name": "RatingGroupLabel",
+      "name": "RatingGroup.Label",
       "props": [
         {
           "name": "asChild",
@@ -326,7 +363,7 @@
   "files": [
     {
       "path": "components/ui/rating-group.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { RatingGroup as RatingGroupPrimitive } from \"@ark-ui/react\"\nimport { StarIcon, StarHalfIcon } from \"lucide-react\"\n\nfunction RatingGroup({ className, children, ...props }: React.ComponentProps<typeof RatingGroupPrimitive.Root>) {\n  return (\n    <RatingGroupPrimitive.Root data-slot=\"rating-group\" className={cn(\"flex flex-col gap-1.5\", className)} {...props}>\n      {children ?? (\n        <RatingGroupControl>\n          <RatingGroupContext>\n            {({ items }) => items.map((index) => <RatingGroupItem key={index} index={index} />)}\n          </RatingGroupContext>\n          <RatingGroupHiddenInput />\n        </RatingGroupControl>\n      )}\n    </RatingGroupPrimitive.Root>\n  )\n}\n\nfunction RatingGroupContext({ ...props }: React.ComponentProps<typeof RatingGroupPrimitive.Context>) {\n  return <RatingGroupPrimitive.Context {...props} />\n}\n\nfunction RatingGroupLabel({ className, ...props }: React.ComponentProps<typeof RatingGroupPrimitive.Label>) {\n  return (\n    <RatingGroupPrimitive.Label\n      data-slot=\"rating-group-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction RatingGroupControl({ className, ...props }: React.ComponentProps<typeof RatingGroupPrimitive.Control>) {\n  return (\n    <RatingGroupPrimitive.Control\n      data-slot=\"rating-group-control\"\n      className={cn(\n        \"inline-flex items-center gap-0.5 rounded-md outline-none focus-visible:ring-3 focus-visible:ring-ring/50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction RatingGroupItem({ className, children, ...props }: React.ComponentProps<typeof RatingGroupPrimitive.Item>) {\n  return (\n    <RatingGroupPrimitive.Item\n      data-slot=\"rating-group-item\"\n      className={cn(\n        \"group/rating-group-item inline-flex cursor-pointer text-muted-foreground/40 transition-colors data-highlighted:text-primary data-readonly:cursor-default data-disabled:cursor-not-allowed [&_svg]:size-5\",\n        className\n      )}\n      {...props}\n    >\n      {children ?? (\n        <RatingGroupPrimitive.ItemContext>\n          {({ half, highlighted }) =>\n            half ? (\n              <StarHalfIcon className=\"fill-current\" />\n            ) : (\n              <StarIcon className={highlighted ? \"fill-current\" : undefined} />\n            )\n          }\n        </RatingGroupPrimitive.ItemContext>\n      )}\n    </RatingGroupPrimitive.Item>\n  )\n}\n\nfunction RatingGroupItemContext({ ...props }: React.ComponentProps<typeof RatingGroupPrimitive.ItemContext>) {\n  return <RatingGroupPrimitive.ItemContext {...props} />\n}\n\nfunction RatingGroupHiddenInput({ ...props }: React.ComponentProps<typeof RatingGroupPrimitive.HiddenInput>) {\n  return <RatingGroupPrimitive.HiddenInput {...props} />\n}\n\nexport {\n  RatingGroup,\n  RatingGroupContext,\n  RatingGroupControl,\n  RatingGroupHiddenInput,\n  RatingGroupItem,\n  RatingGroupItemContext,\n  RatingGroupLabel,\n}\n"
+      "content": "\"use client\"\n\nimport { useRatingGroup, useRatingGroupContext, useRatingGroupItemContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { RatingGroup as RatingGroupPrimitive } from \"@ark-ui/react\"\nimport { StarIcon, StarHalfIcon } from \"lucide-react\"\n\nfunction RatingGroupRoot({ className, children, ...props }: RatingGroupRootProps) {\n  return (\n    <RatingGroupPrimitive.Root data-slot=\"rating-group\" className={cn(\"flex flex-col gap-1.5\", className)} {...props}>\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <RatingGroupControl>\n              <RatingGroupContext>\n                {({ items }) => items.map((index) => <RatingGroupItem key={index} index={index} />)}\n              </RatingGroupContext>\n              <RatingGroupHiddenInput />\n            </RatingGroupControl>\n          )}\n        </>\n      )}\n    </RatingGroupPrimitive.Root>\n  )\n}\n\nfunction RatingGroupContext({ ...props }: RatingGroupContextProps) {\n  return <RatingGroupPrimitive.Context {...props} />\n}\n\nfunction RatingGroupLabel({ className, ...props }: RatingGroupLabelProps) {\n  return (\n    <RatingGroupPrimitive.Label\n      data-slot=\"rating-group-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction RatingGroupControl({ className, ...props }: RatingGroupControlProps) {\n  return (\n    <RatingGroupPrimitive.Control\n      data-slot=\"rating-group-control\"\n      className={cn(\n        \"inline-flex items-center gap-0.5 rounded-md outline-none focus-visible:ring-3 focus-visible:ring-ring/50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction RatingGroupItem({ className, children, ...props }: RatingGroupItemProps) {\n  return (\n    <RatingGroupPrimitive.Item\n      data-slot=\"rating-group-item\"\n      className={cn(\n        \"group/rating-group-item inline-flex cursor-pointer text-muted-foreground/40 transition-colors data-highlighted:text-primary data-readonly:cursor-default data-disabled:cursor-not-allowed [&_svg]:size-5\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <RatingGroupPrimitive.ItemContext>\n              {({ half, highlighted }) =>\n                half ? (\n                  <StarHalfIcon className=\"fill-current\" />\n                ) : (\n                  <StarIcon className={highlighted ? \"fill-current\" : undefined} />\n                )\n              }\n            </RatingGroupPrimitive.ItemContext>\n          )}\n        </>\n      )}\n    </RatingGroupPrimitive.Item>\n  )\n}\n\nfunction RatingGroupItemContext({ ...props }: RatingGroupItemContextProps) {\n  return <RatingGroupPrimitive.ItemContext {...props} />\n}\n\nfunction RatingGroupHiddenInput({ ...props }: RatingGroupHiddenInputProps) {\n  return <RatingGroupPrimitive.HiddenInput {...props} />\n}\n\nfunction RatingGroupRootProvider({ className, ...props }: RatingGroupRootProviderProps) {\n  return (\n    <RatingGroupPrimitive.RootProvider\n      data-slot=\"rating-group\"\n      className={cn(\"flex flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\ntype RatingGroupRootProps = React.ComponentProps<typeof RatingGroupPrimitive.Root>\n\ntype RatingGroupRootProviderProps = React.ComponentProps<typeof RatingGroupPrimitive.RootProvider>\n\ntype RatingGroupContextProps = React.ComponentProps<typeof RatingGroupPrimitive.Context>\n\ntype RatingGroupControlProps = React.ComponentProps<typeof RatingGroupPrimitive.Control>\n\ntype RatingGroupHiddenInputProps = React.ComponentProps<typeof RatingGroupPrimitive.HiddenInput>\n\ntype RatingGroupItemProps = React.ComponentProps<typeof RatingGroupPrimitive.Item>\n\ntype RatingGroupItemContextProps = React.ComponentProps<typeof RatingGroupPrimitive.ItemContext>\n\ntype RatingGroupLabelProps = React.ComponentProps<typeof RatingGroupPrimitive.Label>\n\nconst RatingGroup = {\n  Root: RatingGroupRoot,\n  RootProvider: RatingGroupRootProvider,\n  Context: RatingGroupContext,\n  Control: RatingGroupControl,\n  HiddenInput: RatingGroupHiddenInput,\n  Item: RatingGroupItem,\n  ItemContext: RatingGroupItemContext,\n  Label: RatingGroupLabel,\n}\n\nexport {\n  useRatingGroup,\n  useRatingGroupContext,\n  useRatingGroupItemContext,\n  RatingGroup,\n  type RatingGroupRootProps,\n  type RatingGroupRootProviderProps,\n  type RatingGroupContextProps,\n  type RatingGroupControlProps,\n  type RatingGroupHiddenInputProps,\n  type RatingGroupItemProps,\n  type RatingGroupItemContextProps,\n  type RatingGroupLabelProps,\n}\n"
     }
   ]
 }

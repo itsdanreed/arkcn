@@ -1,20 +1,6 @@
 import * as React from "react"
 import {
   QueryBuilder,
-  QueryBuilderAddGroupTrigger,
-  QueryBuilderAddRuleTrigger,
-  QueryBuilderFieldSelect,
-  QueryBuilderGroup,
-  QueryBuilderGroupBody,
-  QueryBuilderGroupFooter,
-  QueryBuilderGroupHeader,
-  QueryBuilderMatch,
-  QueryBuilderOperatorSelect,
-  QueryBuilderRemoveTrigger,
-  QueryBuilderRule,
-  QueryBuilderRuleActions,
-  QueryBuilderSummary,
-  QueryBuilderValueEditor,
   createGroup,
   createRule,
   isGroup,
@@ -41,38 +27,38 @@ const fields: QueryField[] = [
 
 function GroupRemove() {
   const { depth } = useQueryBuilderGroup()
-  return depth === 0 ? null : <QueryBuilderRemoveTrigger className="ms-auto" />
+  return depth === 0 ? null : <QueryBuilder.RemoveTrigger className="ms-auto" />
 }
 
 // The consumer renders groups recursively from the parts; the root applies edits.
 function Group({ group }: { group: QueryGroup }) {
   return (
-    <QueryBuilderGroup group={group}>
-      <QueryBuilderGroupHeader>
-        <QueryBuilderMatch />
+    <QueryBuilder.Group group={group}>
+      <QueryBuilder.GroupHeader>
+        <QueryBuilder.Match />
         <GroupRemove />
-      </QueryBuilderGroupHeader>
-      <QueryBuilderGroupBody>
+      </QueryBuilder.GroupHeader>
+      <QueryBuilder.GroupBody>
         {group.rules.map((node) =>
           isGroup(node) ? (
             <Group key={node.id} group={node} />
           ) : (
-            <QueryBuilderRule key={node.id} rule={node}>
-              <QueryBuilderFieldSelect />
-              <QueryBuilderOperatorSelect />
-              <QueryBuilderValueEditor />
-              <QueryBuilderRuleActions>
-                <QueryBuilderRemoveTrigger />
-              </QueryBuilderRuleActions>
-            </QueryBuilderRule>
+            <QueryBuilder.Rule key={node.id} rule={node}>
+              <QueryBuilder.FieldSelect />
+              <QueryBuilder.OperatorSelect />
+              <QueryBuilder.ValueEditor />
+              <QueryBuilder.RuleActions>
+                <QueryBuilder.RemoveTrigger />
+              </QueryBuilder.RuleActions>
+            </QueryBuilder.Rule>
           )
         )}
-      </QueryBuilderGroupBody>
-      <QueryBuilderGroupFooter>
-        <QueryBuilderAddRuleTrigger />
-        <QueryBuilderAddGroupTrigger />
-      </QueryBuilderGroupFooter>
-    </QueryBuilderGroup>
+      </QueryBuilder.GroupBody>
+      <QueryBuilder.GroupFooter>
+        <QueryBuilder.AddRuleTrigger />
+        <QueryBuilder.AddGroupTrigger />
+      </QueryBuilder.GroupFooter>
+    </QueryBuilder.Group>
   )
 }
 
@@ -85,10 +71,10 @@ export default function QueryBuilderExample() {
   )
   return (
     <div className="flex w-full flex-col gap-4">
-      <QueryBuilder fields={fields} value={query} onValueChange={setQuery}>
+      <QueryBuilder.Root fields={fields} value={query} onValueChange={setQuery}>
         <Group group={query} />
-        <QueryBuilderSummary className="text-sm text-muted-foreground" />
-      </QueryBuilder>
+        <QueryBuilder.Summary className="text-sm text-muted-foreground" />
+      </QueryBuilder.Root>
     </div>
   )
 }

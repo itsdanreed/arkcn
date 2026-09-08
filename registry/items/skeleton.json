@@ -7,8 +7,15 @@
   ],
   "parts": [
     {
-      "name": "Skeleton",
+      "name": "Skeleton.Root",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -33,14 +40,16 @@
       ]
     }
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
   "registryDependencies": [
     "lib/utils"
   ],
   "files": [
     {
       "path": "components/ui/skeleton.tsx",
-      "content": "import { cn } from \"@/lib/utils\"\n\nfunction Skeleton({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"skeleton\" className={cn(\"animate-pulse rounded-md bg-muted\", className)} {...props} />\n}\n\nexport { Skeleton }\n"
+      "content": "import { ark } from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction SkeletonRoot({ className, ...props }: SkeletonRootProps) {\n  return <ark.div data-slot=\"skeleton\" className={cn(\"animate-pulse rounded-md bg-muted\", className)} {...props} />\n}\n\ntype SkeletonRootProps = React.ComponentProps<typeof ark.div>\n\nconst Skeleton = {\n  Root: SkeletonRoot,\n}\n\nexport { Skeleton, type SkeletonRootProps }\n"
     }
   ]
 }

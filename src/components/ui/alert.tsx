@@ -1,3 +1,4 @@
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
@@ -18,13 +19,13 @@ const alertVariants = cva(
   }
 )
 
-function Alert({ className, variant, ...props }: React.ComponentProps<"div"> & VariantProps<typeof alertVariants>) {
-  return <div data-slot="alert" role="alert" className={cn(alertVariants({ variant }), className)} {...props} />
+function AlertRoot({ className, variant, ...props }: AlertRootProps) {
+  return <ark.div data-slot="alert" role="alert" className={cn(alertVariants({ variant }), className)} {...props} />
 }
 
-function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
+function AlertTitle({ className, ...props }: AlertTitleProps) {
   return (
-    <div
+    <ark.div
       data-slot="alert-title"
       className={cn(
         "font-medium group-has-[>svg]/alert:col-start-2 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground",
@@ -35,9 +36,9 @@ function AlertTitle({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function AlertDescription({ className, ...props }: React.ComponentProps<"div">) {
+function AlertDescription({ className, ...props }: AlertDescriptionProps) {
   return (
-    <div
+    <ark.div
       data-slot="alert-description"
       className={cn(
         "text-sm text-balance text-muted-foreground md:text-pretty [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4",
@@ -48,8 +49,23 @@ function AlertDescription({ className, ...props }: React.ComponentProps<"div">) 
   )
 }
 
-function AlertAction({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="alert-action" className={cn("absolute top-2 right-2", className)} {...props} />
+function AlertAction({ className, ...props }: AlertActionProps) {
+  return <ark.div data-slot="alert-action" className={cn("absolute top-2 right-2", className)} {...props} />
 }
 
-export { Alert, AlertTitle, AlertDescription, AlertAction }
+type AlertRootProps = React.ComponentProps<typeof ark.div> & VariantProps<typeof alertVariants>
+
+type AlertTitleProps = React.ComponentProps<typeof ark.div>
+
+type AlertDescriptionProps = React.ComponentProps<typeof ark.div>
+
+type AlertActionProps = React.ComponentProps<typeof ark.div>
+
+const Alert = {
+  Root: AlertRoot,
+  Title: AlertTitle,
+  Description: AlertDescription,
+  Action: AlertAction,
+}
+
+export { Alert, type AlertRootProps, type AlertTitleProps, type AlertDescriptionProps, type AlertActionProps }

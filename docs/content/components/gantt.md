@@ -1,10 +1,10 @@
 ## How it works
 
-You own the rows, bars, milestones, and dependency links; the timeline owns the time scale and the interactions. `Gantt` takes the visible range as `start` and `end`, a `dayWidth` that zooming changes (controllable), and reports `onBarChange({ id, start, end })` snapped to whole days after a drag, resize, or keyboard move.
+You own the rows, bars, milestones, and dependency links; the timeline owns the time scale and the interactions. `Gantt.Root` takes the visible range as `start` and `end`, a `dayWidth` that zooming changes (controllable), and reports `onBarChange({ id, start, end })` snapped to whole days after a drag, resize, or keyboard move.
 
 ## Parts
 
-`GanttViewport` is the single scroll container for both axes. `GanttHeader` is the sticky two-tier date header, with tiers chosen by the scale: days under a week row when zoomed in, weeks under months when zoomed out. `GanttBody` holds `GanttGridLines` with weekend shading, `GanttToday`, and `GanttRows`. Each `GanttRow value=` has a sticky `GanttRowLabel` and a `GanttRowTrack` containing a `GanttBar value= start= end= progress=` with a `GanttBarLabel` and `GanttBarResizeHandle side=` on each end, or a `GanttMilestone value= date=`. `GanttDependencies links=` draws orthogonal arrows between bars; positions are measured from the DOM, so collapsed groups and custom row order need no bookkeeping. `GanttControls` holds the zoom and today triggers.
+`Gantt.Viewport` is the single scroll container for both axes. `Gantt.Header` is the sticky two-tier date header, with tiers chosen by the scale: days under a week row when zoomed in, weeks under months when zoomed out. `Gantt.Body` holds `Gantt.GridLines` with weekend shading, `Gantt.Today`, and `Gantt.Rows`. Each `GanttRow value=` has a sticky `Gantt.RowLabel` and a `Gantt.RowTrack` containing a `GanttBar value= start= end= progress=` with a `Gantt.BarLabel` and `GanttBarResizeHandle side=` on each end, or a `GanttMilestone value= date=`. `GanttDependencies links=` draws orthogonal arrows between bars; positions are measured from the DOM, so collapsed groups and custom row order need no bookkeeping. `Gantt.Controls` holds the zoom and today triggers.
 
 ## Keyboard
 

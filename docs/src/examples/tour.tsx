@@ -1,19 +1,5 @@
 import { Button } from "@/components/ui/button"
-import {
-  Tour,
-  TourActionTrigger,
-  TourActions,
-  TourArrow,
-  TourBackdrop,
-  TourCloseTrigger,
-  TourContent,
-  TourDescription,
-  TourPositioner,
-  TourProgressText,
-  TourSpotlight,
-  TourTitle,
-  useTour,
-} from "@/components/ui/tour"
+import { Tour, useTour } from "@/components/ui/tour"
 
 export default function TourExample() {
   const tour = useTour({
@@ -43,28 +29,28 @@ export default function TourExample() {
       <Button id="tour-target" variant="outline" onClick={() => tour.start()}>
         Start tour
       </Button>
-      <Tour tour={tour}>
-        <TourBackdrop />
-        <TourSpotlight />
-        <TourPositioner>
-          <TourContent>
-            <TourArrow />
-            <TourTitle />
-            <TourDescription />
-            <TourProgressText />
-            <TourActions>
+      <Tour.Root tour={tour}>
+        <Tour.Backdrop />
+        <Tour.Spotlight />
+        <Tour.Positioner>
+          <Tour.Content>
+            <Tour.Arrow />
+            <Tour.Title />
+            <Tour.Description />
+            <Tour.ProgressText />
+            <Tour.Actions>
               {(actions) =>
                 actions.map((a) => (
-                  <TourActionTrigger key={a.label} action={a}>
+                  <Tour.ActionTrigger key={a.label} action={a}>
                     {a.label}
-                  </TourActionTrigger>
+                  </Tour.ActionTrigger>
                 ))
               }
-            </TourActions>
-            <TourCloseTrigger />
-          </TourContent>
-        </TourPositioner>
-      </Tour>
+            </Tour.Actions>
+            <Tour.CloseTrigger />
+          </Tour.Content>
+        </Tour.Positioner>
+      </Tour.Root>
     </>
   )
 }

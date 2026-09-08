@@ -4,18 +4,46 @@
   "description": "",
   "ark": "Portal",
   "exports": [
-    "Tooltip",
-    "TooltipArrow",
-    "TooltipContent",
-    "TooltipContext",
-    "TooltipPortal",
-    "TooltipPositioner",
-    "TooltipProvider",
-    "TooltipTrigger"
+    "useTooltip",
+    "useTooltipContext",
+    "Tooltip"
   ],
   "parts": [
     {
-      "name": "Tooltip",
+      "name": "Tooltip.ArrowTip",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Tooltip.Root",
       "props": [
         {
           "name": "aria-label",
@@ -220,7 +248,86 @@
       ]
     },
     {
-      "name": "TooltipArrow",
+      "name": "Tooltip.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseTooltipReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Tooltip.Arrow",
       "props": [
         {
           "name": "asChild",
@@ -253,7 +360,7 @@
       ]
     },
     {
-      "name": "TooltipContent",
+      "name": "Tooltip.Content",
       "props": [
         {
           "name": "asChild",
@@ -286,7 +393,7 @@
       ]
     },
     {
-      "name": "TooltipContext",
+      "name": "Tooltip.Context",
       "props": [
         {
           "name": "children",
@@ -298,7 +405,7 @@
       ]
     },
     {
-      "name": "TooltipPortal",
+      "name": "Tooltip.Portal",
       "props": [
         {
           "name": "children",
@@ -323,7 +430,7 @@
       ]
     },
     {
-      "name": "TooltipPositioner",
+      "name": "Tooltip.Positioner",
       "props": [
         {
           "name": "asChild",
@@ -356,7 +463,7 @@
       ]
     },
     {
-      "name": "TooltipProvider",
+      "name": "Tooltip.Provider",
       "props": [
         {
           "name": "children",
@@ -390,7 +497,7 @@
       ]
     },
     {
-      "name": "TooltipTrigger",
+      "name": "Tooltip.Trigger",
       "props": [
         {
           "name": "asChild",
@@ -439,7 +546,7 @@
   "files": [
     {
       "path": "components/ui/tooltip.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Portal as PortalPrimitive, Tooltip as TooltipPrimitive } from \"@ark-ui/react\"\n\ntype TooltipProviderProps = {\n  /** Delay before the tooltip opens, in ms. Maps to Ark's `openDelay`. */\n  delayDuration?: number\n  /** Delay before the tooltip closes, in ms. Maps to Ark's `closeDelay`. */\n  closeDelay?: number\n  /** When true the content cannot be hovered. Maps to Ark's `interactive: false`. */\n  disableHoverableContent?: boolean\n  children?: React.ReactNode\n}\n\nconst TooltipProviderContext = React.createContext<Omit<TooltipProviderProps, \"children\">>({})\n\nfunction TooltipProvider({ delayDuration = 0, closeDelay, disableHoverableContent, children }: TooltipProviderProps) {\n  const value = React.useMemo(\n    () => ({ delayDuration, closeDelay, disableHoverableContent }),\n    [delayDuration, closeDelay, disableHoverableContent]\n  )\n  return <TooltipProviderContext.Provider value={value}>{children}</TooltipProviderContext.Provider>\n}\n\nfunction Tooltip({\n  openDelay,\n  closeDelay,\n  interactive,\n  positioning,\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: React.ComponentProps<typeof TooltipPrimitive.Root>) {\n  const provider = React.useContext(TooltipProviderContext)\n  return (\n    <TooltipPrimitive.Root\n      openDelay={openDelay ?? provider.delayDuration ?? 0}\n      closeDelay={closeDelay ?? provider.closeDelay}\n      interactive={interactive ?? !provider.disableHoverableContent}\n      positioning={{ placement: \"top\", gutter: 0, ...positioning }}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction TooltipTrigger({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Trigger>) {\n  return <TooltipPrimitive.Trigger data-slot=\"tooltip-trigger\" {...props} />\n}\n\nfunction TooltipPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction TooltipContext({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Context>) {\n  return <TooltipPrimitive.Context {...props} />\n}\n\nfunction TooltipPositioner({ className, ...props }: React.ComponentProps<typeof TooltipPrimitive.Positioner>) {\n  return (\n    <TooltipPrimitive.Positioner\n      data-slot=\"tooltip-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TooltipArrow({ className, ...props }: React.ComponentProps<typeof TooltipPrimitive.Arrow>) {\n  return (\n    <TooltipPrimitive.Arrow\n      data-slot=\"tooltip-arrow\"\n      className={cn(\"z-50 [--arrow-background:var(--color-foreground)] [--arrow-size:0.625rem]\", className)}\n      {...props}\n    >\n      <TooltipPrimitive.ArrowTip data-slot=\"tooltip-arrow-tip\" className=\"rounded-xs\" />\n    </TooltipPrimitive.Arrow>\n  )\n}\n\nfunction TooltipContent({ className, children, ...props }: React.ComponentProps<typeof TooltipPrimitive.Content>) {\n  return (\n    <TooltipPortal>\n      <TooltipPositioner>\n        <TooltipPrimitive.Content\n          data-slot=\"tooltip-content\"\n          className={cn(\n            \"z-50 inline-flex w-fit max-w-xs origin-(--transform-origin) items-center gap-1.5 rounded-md bg-foreground px-3 py-1.5 text-xs text-background has-data-[slot=kbd]:pr-1.5 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-sm data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        >\n          {children}\n          <TooltipArrow />\n        </TooltipPrimitive.Content>\n      </TooltipPositioner>\n    </TooltipPortal>\n  )\n}\n\nexport {\n  Tooltip,\n  TooltipArrow,\n  TooltipContent,\n  TooltipContext,\n  TooltipPortal,\n  TooltipPositioner,\n  TooltipProvider,\n  TooltipTrigger,\n}\n"
+      "content": "\"use client\"\n\nimport { useTooltip, useTooltipContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Portal as PortalPrimitive, Tooltip as TooltipPrimitive } from \"@ark-ui/react\"\n\ntype TooltipProviderProps = {\n  /** Delay before the tooltip opens, in ms. Maps to Ark's `openDelay`. */\n  delayDuration?: number\n  /** Delay before the tooltip closes, in ms. Maps to Ark's `closeDelay`. */\n  closeDelay?: number\n  /** When true the content cannot be hovered. Maps to Ark's `interactive: false`. */\n  disableHoverableContent?: boolean\n  children?: React.ReactNode\n}\n\nconst TooltipProviderContext = React.createContext<Omit<TooltipProviderProps, \"children\">>({})\n\nfunction TooltipProvider({ delayDuration = 0, closeDelay, disableHoverableContent, children }: TooltipProviderProps) {\n  const value = React.useMemo(\n    () => ({ delayDuration, closeDelay, disableHoverableContent }),\n    [delayDuration, closeDelay, disableHoverableContent]\n  )\n  return <TooltipProviderContext.Provider value={value}>{children}</TooltipProviderContext.Provider>\n}\n\nfunction TooltipRoot({\n  openDelay,\n  closeDelay,\n  interactive,\n  positioning,\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: TooltipRootProps) {\n  const provider = React.useContext(TooltipProviderContext)\n  return (\n    <TooltipPrimitive.Root\n      openDelay={openDelay ?? provider.delayDuration ?? 0}\n      closeDelay={closeDelay ?? provider.closeDelay}\n      interactive={interactive ?? !provider.disableHoverableContent}\n      positioning={{ placement: \"top\", gutter: 0, ...positioning }}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction TooltipTrigger({ ...props }: TooltipTriggerProps) {\n  return <TooltipPrimitive.Trigger data-slot=\"tooltip-trigger\" {...props} />\n}\n\nfunction TooltipPortal({ ...props }: TooltipPortalProps) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction TooltipContext({ ...props }: TooltipContextProps) {\n  return <TooltipPrimitive.Context {...props} />\n}\n\nfunction TooltipPositioner({ className, ...props }: TooltipPositionerProps) {\n  return (\n    <TooltipPrimitive.Positioner\n      data-slot=\"tooltip-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TooltipArrow({ className, ...props }: TooltipArrowProps) {\n  return (\n    <TooltipPrimitive.Arrow\n      data-slot=\"tooltip-arrow\"\n      className={cn(\"z-50 [--arrow-background:var(--color-foreground)] [--arrow-size:0.625rem]\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <TooltipPrimitive.ArrowTip data-slot=\"tooltip-arrow-tip\" className=\"rounded-xs\" />\n        </>\n      )}\n    </TooltipPrimitive.Arrow>\n  )\n}\n\nfunction TooltipContent({ className, children, ...props }: TooltipContentProps) {\n  return (\n    <TooltipPortal>\n      <TooltipPositioner>\n        <TooltipPrimitive.Content\n          data-slot=\"tooltip-content\"\n          className={cn(\n            \"z-50 inline-flex w-fit max-w-xs origin-(--transform-origin) items-center gap-1.5 rounded-md bg-foreground px-3 py-1.5 text-xs text-background has-data-[slot=kbd]:pr-1.5 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-sm data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        >\n          {props.asChild ? (\n            React.isValidElement(children) ? (\n              children\n            ) : null\n          ) : (\n            <>\n              {children}\n              <TooltipArrow />\n            </>\n          )}\n        </TooltipPrimitive.Content>\n      </TooltipPositioner>\n    </TooltipPortal>\n  )\n}\n\nfunction TooltipRootProvider(props: TooltipRootProviderProps) {\n  return <TooltipPrimitive.RootProvider {...props} />\n}\n\nfunction TooltipArrowTip({ className, ...props }: TooltipArrowTipProps) {\n  return <TooltipPrimitive.ArrowTip data-slot=\"tooltip-arrow-tip\" className={cn(className)} {...props} />\n}\n\ntype TooltipArrowTipProps = React.ComponentProps<typeof TooltipPrimitive.ArrowTip>\n\ntype TooltipRootProps = React.ComponentProps<typeof TooltipPrimitive.Root>\n\ntype TooltipRootProviderProps = React.ComponentProps<typeof TooltipPrimitive.RootProvider>\n\ntype TooltipArrowProps = React.ComponentProps<typeof TooltipPrimitive.Arrow>\n\ntype TooltipContentProps = React.ComponentProps<typeof TooltipPrimitive.Content>\n\ntype TooltipContextProps = React.ComponentProps<typeof TooltipPrimitive.Context>\n\ntype TooltipPortalProps = React.ComponentProps<typeof PortalPrimitive>\n\ntype TooltipPositionerProps = React.ComponentProps<typeof TooltipPrimitive.Positioner>\n\ntype TooltipTriggerProps = React.ComponentProps<typeof TooltipPrimitive.Trigger>\n\nconst Tooltip = {\n  ArrowTip: TooltipArrowTip,\n  Root: TooltipRoot,\n  RootProvider: TooltipRootProvider,\n  Arrow: TooltipArrow,\n  Content: TooltipContent,\n  Context: TooltipContext,\n  Portal: TooltipPortal,\n  Positioner: TooltipPositioner,\n  Provider: TooltipProvider,\n  Trigger: TooltipTrigger,\n}\n\nexport {\n  useTooltip,\n  useTooltipContext,\n  Tooltip,\n  type TooltipArrowTipProps,\n  type TooltipRootProps,\n  type TooltipRootProviderProps,\n  type TooltipArrowProps,\n  type TooltipContentProps,\n  type TooltipContextProps,\n  type TooltipPortalProps,\n  type TooltipPositionerProps,\n  type TooltipProviderProps,\n  type TooltipTriggerProps,\n}\n"
     }
   ]
 }

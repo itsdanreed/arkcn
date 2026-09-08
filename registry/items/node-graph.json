@@ -4,38 +4,12 @@
   "description": "NodeGraph — a compositional, data-agnostic node editor in the spirit of visual scripting graphs. The consumer owns nodes and edges; the graph owns only the viewport (pan/zoom), the selection, and in-flight interactions (dragging nodes, draw",
   "exports": [
     "NodeGraph",
-    "NodeGraphViewport",
-    "NodeGraphBackground",
-    "NodeGraphSurface",
-    "NodeGraphEdges",
-    "NodeGraphEdge",
-    "NodeGraphConnectionLine",
-    "NodeGraphSelectionBox",
-    "NodeGraphNode",
-    "NodeGraphNodeHeader",
-    "NodeGraphNodeActions",
-    "NodeGraphNodeTitle",
-    "NodeGraphNodeSubtitle",
-    "NodeGraphNodeBody",
-    "NodeGraphNodeInputs",
-    "NodeGraphNodeOutputs",
-    "NodeGraphNodeFooter",
-    "NodeGraphPort",
-    "NodeGraphPortPin",
-    "NodeGraphPortLabel",
-    "NodeGraphControls",
-    "NodeGraphZoomInTrigger",
-    "NodeGraphZoomOutTrigger",
-    "NodeGraphFitViewTrigger",
-    "NodeGraphZoomValue",
-    "NodeGraphMinimap",
-    "NodeGraphEmpty",
     "useNodeGraph",
     "getBezierPath"
   ],
   "parts": [
     {
-      "name": "NodeGraph",
+      "name": "NodeGraph.Root",
       "props": [
         {
           "name": "defaultSelection",
@@ -190,6 +164,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -213,7 +194,7 @@
       ]
     },
     {
-      "name": "NodeGraphViewport",
+      "name": "NodeGraph.Viewport",
       "props": [
         {
           "name": "panOnScroll",
@@ -224,6 +205,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -247,7 +235,7 @@
       ]
     },
     {
-      "name": "NodeGraphBackground",
+      "name": "NodeGraph.Background",
       "props": [
         {
           "name": "gap",
@@ -266,605 +254,11 @@
           "from": "arkcn"
         },
         {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphSurface",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphEdges",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphEdge",
-      "props": [
-        {
-          "name": "source",
-          "type": "NodeGraphPortRef",
-          "required": true,
-          "description": "Output-side port as `{ nodeId, portId }`.",
-          "from": "arkcn"
-        },
-        {
-          "name": "target",
-          "type": "NodeGraphPortRef",
-          "required": true,
-          "description": "Input-side port as `{ nodeId, portId }`.",
-          "from": "arkcn"
-        },
-        {
-          "name": "value",
-          "type": "string",
-          "required": true,
-          "description": "The controlled value.",
-          "from": "arkcn"
-        },
-        {
-          "name": "children",
-          "type": "((details: { midpoint: XY; from: XY; to: XY; }) => ReactNode)",
-          "required": false,
-          "description": "Render prop for labels; receives the path midpoint.",
-          "from": "arkcn"
-        },
-        {
-          "name": "selected",
-          "type": "boolean",
-          "required": false,
-          "description": "Whether the part is selected; sets `data-selected`.",
-          "from": "arkcn"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphConnectionLine",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphSelectionBox",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphNode",
-      "props": [
-        {
-          "name": "position",
-          "type": "XY",
-          "required": true,
-          "description": "Node position in graph coordinates.",
-          "from": "arkcn"
-        },
-        {
-          "name": "value",
-          "type": "string",
-          "required": true,
-          "description": "The controlled value.",
-          "from": "arkcn"
-        },
-        {
-          "name": "selected",
-          "type": "boolean",
-          "required": false,
-          "description": "Whether the part is selected; sets `data-selected`.",
-          "from": "arkcn"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphNodeHeader",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphNodeActions",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphNodeTitle",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphNodeSubtitle",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphNodeBody",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphNodeInputs",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphNodeOutputs",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphNodeFooter",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphPort",
-      "props": [
-        {
-          "name": "side",
-          "type": "NodeGraphPortSide",
-          "required": true,
-          "description": "Which side of the anchor or container the part sits on.",
-          "from": "arkcn"
-        },
-        {
-          "name": "value",
-          "type": "string",
-          "required": true,
-          "description": "The controlled value.",
-          "from": "arkcn"
-        },
-        {
-          "name": "connected",
-          "type": "boolean",
-          "required": false,
-          "default": "false",
-          "description": "Whether the port has at least one edge; sets `data-connected`.",
-          "from": "arkcn"
-        },
-        {
-          "name": "type",
-          "type": "string",
-          "required": false,
-          "default": "\"any\"",
-          "description": "Type of the part.",
-          "from": "arkcn"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphPortPin",
-      "props": [
-        {
-          "name": "variant",
-          "type": "\"circle\" | \"exec\" | null",
-          "required": false,
-          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
-          "from": "arkcn"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphPortLabel",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphControls",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphZoomInTrigger",
-      "props": [
-        {
           "name": "asChild",
           "type": "boolean",
           "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
-        },
-        {
-          "name": "size",
-          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
-          "required": false,
-          "description": "Size variant; sets a `data-size` attribute.",
-          "from": "arkcn"
-        },
-        {
-          "name": "variant",
-          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
-          "required": false,
-          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
-          "from": "arkcn"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -890,101 +284,7 @@
       ]
     },
     {
-      "name": "NodeGraphZoomOutTrigger",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
-        },
-        {
-          "name": "size",
-          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
-          "required": false,
-          "description": "Size variant; sets a `data-size` attribute.",
-          "from": "arkcn"
-        },
-        {
-          "name": "variant",
-          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
-          "required": false,
-          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
-          "from": "arkcn"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphFitViewTrigger",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
-        },
-        {
-          "name": "size",
-          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
-          "required": false,
-          "description": "Size variant; sets a `data-size` attribute.",
-          "from": "arkcn"
-        },
-        {
-          "name": "variant",
-          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
-          "required": false,
-          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
-          "from": "arkcn"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "NodeGraphZoomValue",
+      "name": "NodeGraph.Surface",
       "props": [
         {
           "name": "asChild",
@@ -1017,8 +317,15 @@
       ]
     },
     {
-      "name": "NodeGraphMinimap",
+      "name": "NodeGraph.Edges",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -1043,8 +350,836 @@
       ]
     },
     {
-      "name": "NodeGraphEmpty",
+      "name": "NodeGraph.Edge",
       "props": [
+        {
+          "name": "source",
+          "type": "NodeGraphPortRef",
+          "required": true,
+          "description": "Output-side port as `{ nodeId, portId }`.",
+          "from": "arkcn"
+        },
+        {
+          "name": "target",
+          "type": "NodeGraphPortRef",
+          "required": true,
+          "description": "Input-side port as `{ nodeId, portId }`.",
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ((details: { midpoint: XY; from: XY; to: XY; }) => ReactNode)",
+          "required": false,
+          "description": "Render prop for labels; receives the path midpoint.",
+          "from": "arkcn"
+        },
+        {
+          "name": "selected",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the part is selected; sets `data-selected`.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.ConnectionLine",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.SelectionBox",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.Node",
+      "props": [
+        {
+          "name": "position",
+          "type": "XY",
+          "required": true,
+          "description": "Node position in graph coordinates.",
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "selected",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the part is selected; sets `data-selected`.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.NodeHeader",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.NodeActions",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.NodeTitle",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.NodeSubtitle",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.NodeBody",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.NodeInputs",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.NodeOutputs",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.NodeFooter",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.Port",
+      "props": [
+        {
+          "name": "side",
+          "type": "NodeGraphPortSide",
+          "required": true,
+          "description": "Which side of the anchor or container the part sits on.",
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "connected",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether the port has at least one edge; sets `data-connected`.",
+          "from": "arkcn"
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": false,
+          "default": "\"any\"",
+          "description": "Type of the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.PortPin",
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"circle\" | \"exec\" | null",
+          "required": false,
+          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.PortLabel",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.Controls",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.ZoomInTrigger",
+      "props": [
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
+          "required": false,
+          "description": "Size variant; sets a `data-size` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
+          "required": false,
+          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.ZoomOutTrigger",
+      "props": [
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
+          "required": false,
+          "description": "Size variant; sets a `data-size` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
+          "required": false,
+          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.FitViewTrigger",
+      "props": [
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
+          "required": false,
+          "description": "Size variant; sets a `data-size` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
+          "required": false,
+          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.ZoomValue",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.Minimap",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NodeGraph.Empty",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -1082,7 +1217,7 @@
   "files": [
     {
       "path": "components/ui/node-graph.tsx",
-      "content": "import * as React from \"react\"\nimport { ark } from \"@ark-ui/react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\nimport { MaximizeIcon, MinusIcon, PlusIcon } from \"lucide-react\"\nimport { Button } from \"@/components/ui/button\"\nimport { cn } from \"@/lib/utils\"\nimport { LiveRegion, useLiveRegion } from \"@/components/ui/live-region\"\n\n/**\n * NodeGraph — a compositional, data-agnostic node editor in the spirit of\n * visual scripting graphs. The consumer owns nodes and edges; the graph owns\n * only the viewport (pan/zoom), the selection, and in-flight interactions\n * (dragging nodes, drawing a connection, marquee selection). Everything else\n * is reported as an intent: `onNodesMove`, `onConnect`, `onConnectEnd`,\n * `onDisconnect` (alt+click on a pin), `onDelete`, `onSelectionChange`, and\n * `onPane/Node/Edge/PortContextMenu` (right-click without a drag).\n *\n * Anatomy:\n *   NodeGraph\n *     NodeGraphViewport            pan/zoom pane, keyboard target\n *       NodeGraphBackground        dotted/lined grid that follows the viewport\n *       NodeGraphSurface           the transformed layer\n *         NodeGraphEdges           svg layer with NodeGraphEdge children\n *         NodeGraphConnectionLine  the edge being drawn\n *         NodeGraphNode*           absolutely positioned nodes\n *           NodeGraphNodeHeader/Title/Subtitle/Body/Inputs/Outputs/Footer\n *           NodeGraphPort > NodeGraphPortPin + NodeGraphPortLabel\n *       NodeGraphSelectionBox      marquee\n *       NodeGraphControls          zoom in/out/fit triggers + NodeGraphZoomValue\n *       NodeGraphMinimap\n *       NodeGraphEmpty\n */\n\ntype XY = { x: number; y: number }\ntype NodeGraphViewportState = { x: number; y: number; zoom: number }\ntype NodeGraphPortRef = { nodeId: string; portId: string }\ntype NodeGraphPortSide = \"input\" | \"output\"\ntype NodeGraphConnection = { source: NodeGraphPortRef; target: NodeGraphPortRef }\ntype NodeGraphSelection = { nodes: string[]; edges: string[] }\ntype NodeGraphNodeMove = { id: string; position: XY }\ntype NodeGraphConnectingState = {\n  /** Output-side port as `{ nodeId, portId }`. */\n  source: NodeGraphPortRef & { side: NodeGraphPortSide; type: string }\n  /** Cursor position in graph coordinates. */\n  position: XY\n  /** Input-side port as `{ nodeId, portId }`. */\n  target: (NodeGraphPortRef & { side: NodeGraphPortSide; type: string }) | null\n  valid: boolean\n}\ntype NodeGraphRect = { x: number; y: number; width: number; height: number }\ntype NodeGraphPortDetails = NodeGraphPortRef & { side: NodeGraphPortSide; type: string }\n\nconst EMPTY_SELECTION: NodeGraphSelection = { nodes: [], edges: [] }\nconst INTERACTIVE = \"input, textarea, select, button, a, [contenteditable], [data-slot=node-graph-port-pin]\"\n\n/* ---------------------------------------------------------------------------\n * Layout store: node positions/sizes and port offsets, measured from the DOM.\n * Edges and the minimap subscribe to it instead of re-measuring themselves.\n * ------------------------------------------------------------------------- */\n\ntype PortLayout = { side: NodeGraphPortSide; type: string; el: HTMLElement | null; offset: XY }\ntype NodeLayout = { position: XY; width: number; height: number; ports: Map<string, PortLayout> }\n\nfunction createLayoutStore() {\n  const nodes = new Map<string, NodeLayout>()\n  const listeners = new Set<() => void>()\n  let version = 0\n  const emit = () => {\n    version++\n    listeners.forEach((l) => l())\n  }\n  return {\n    nodes,\n    subscribe: (l: () => void) => {\n      listeners.add(l)\n      return () => {\n        listeners.delete(l)\n      }\n    },\n    getVersion: () => version,\n    emit,\n    ensure(id: string) {\n      let node = nodes.get(id)\n      if (!node) {\n        node = { position: { x: 0, y: 0 }, width: 0, height: 0, ports: new Map() }\n        nodes.set(id, node)\n      }\n      return node\n    },\n    getPortPosition(ref: NodeGraphPortRef): XY | null {\n      const node = nodes.get(ref.nodeId)\n      const port = node?.ports.get(ref.portId)\n      if (!node || !port) return null\n      return { x: node.position.x + port.offset.x, y: node.position.y + port.offset.y }\n    },\n    getPort(ref: NodeGraphPortRef) {\n      return nodes.get(ref.nodeId)?.ports.get(ref.portId) ?? null\n    },\n    getBounds(ids?: Iterable<string>): NodeGraphRect | null {\n      let minX = Infinity\n      let minY = Infinity\n      let maxX = -Infinity\n      let maxY = -Infinity\n      for (const id of ids ?? nodes.keys()) {\n        const node = nodes.get(id)\n        if (!node) continue\n        minX = Math.min(minX, node.position.x)\n        minY = Math.min(minY, node.position.y)\n        maxX = Math.max(maxX, node.position.x + node.width)\n        maxY = Math.max(maxY, node.position.y + node.height)\n      }\n      if (!Number.isFinite(minX)) return null\n      return { x: minX, y: minY, width: maxX - minX, height: maxY - minY }\n    },\n  }\n}\n\ntype LayoutStore = ReturnType<typeof createLayoutStore>\n\n/* ---------------------------------------------------------------------------\n * Context\n * ------------------------------------------------------------------------- */\n\ntype NodeGraphContextValue = {\n  store: LayoutStore\n  /** Controlled pan and zoom as `{ x, y, zoom }`. */\n  viewport: NodeGraphViewportState\n  setViewport: (next: NodeGraphViewportState | ((prev: NodeGraphViewportState) => NodeGraphViewportState)) => void\n  viewportRef: React.RefObject<HTMLDivElement | null>\n  size: { width: number; height: number }\n  /** Lower zoom bound. */\n  minZoom: number\n  /** Upper zoom bound. */\n  maxZoom: number\n  snapGrid: number\n  /** Controlled selection as `{ nodes, edges }` ids. */\n  selection: NodeGraphSelection\n  setSelection: (next: NodeGraphSelection) => void\n  connecting: NodeGraphConnectingState | null\n  marquee: NodeGraphRect | null\n  draggingNodes: boolean\n  panning: boolean\n  spaceHeld: boolean\n  /** Convert a client (screen) point to graph coordinates. */\n  screenToGraph: (client: XY) => XY\n  graphToScreen: (point: XY) => XY\n  zoomIn: () => void\n  zoomOut: () => void\n  zoomTo: (zoom: number, client?: XY) => void\n  fitView: (options?: { padding?: number; ids?: string[]; maxZoom?: number }) => void\n  centerOn: (point: XY) => void\n  announce: (message: string) => void\n  // internal interaction hooks used by parts\n  startNodeDrag: (nodeId: string, event: React.PointerEvent) => void\n  startConnection: (source: NodeGraphConnectingState[\"source\"], event: React.PointerEvent) => void\n  disconnect: (details: NodeGraphPortDetails) => void\n  edgeAt: (details: NodeGraphPortDetails) => NodeGraphPortDetails | null\n  deleteSelection: () => void\n  nudgeSelection: (delta: XY, focusedNodeId?: string) => void\n  selectAll: () => void\n  onNodeClick: (nodeId: string, event: React.MouseEvent | React.KeyboardEvent) => void\n  onEdgeClick: (edgeId: string, event: React.MouseEvent) => void\n}\n\nconst NodeGraphContext = React.createContext<NodeGraphContextValue | null>(null)\n\n/** Access the graph (viewport, selection, coordinate helpers) from any part or consumer code inside `NodeGraph`. */\nfunction useNodeGraph() {\n  const ctx = React.useContext(NodeGraphContext)\n  if (!ctx) throw new Error(\"NodeGraph parts must be used within <NodeGraph>\")\n  return ctx\n}\n\n/** Re-render when node/port layout changes. */\nfunction useLayoutVersion(store: LayoutStore) {\n  return React.useSyncExternalStore(store.subscribe, store.getVersion, store.getVersion)\n}\n\nconst clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value))\nconst snap = (value: number, grid: number) => (grid > 0 ? Math.round(value / grid) * grid : value)\nconst sameSelection = (a: NodeGraphSelection, b: NodeGraphSelection) =>\n  a.nodes.length === b.nodes.length &&\n  a.edges.length === b.edges.length &&\n  a.nodes.every((id, i) => b.nodes[i] === id) &&\n  a.edges.every((id, i) => b.edges[i] === id)\n\nfunction useControllable<T>(value: T | undefined, defaultValue: T, onChange?: (value: T) => void) {\n  const [internal, setInternal] = React.useState(defaultValue)\n  const controlled = value !== undefined\n  const current = controlled ? value : internal\n  // Tracks the latest value synchronously so back-to-back functional updates (wheel zoom) compose.\n  const ref = React.useRef(current)\n  React.useLayoutEffect(() => {\n    ref.current = current\n  }, [current])\n  const onChangeRef = React.useRef(onChange)\n  React.useEffect(() => {\n    onChangeRef.current = onChange\n  }, [onChange])\n  const set = React.useCallback(\n    (next: T | ((prev: T) => T)) => {\n      const resolved = typeof next === \"function\" ? (next as (prev: T) => T)(ref.current) : next\n      ref.current = resolved\n      if (!controlled) setInternal(resolved)\n      onChangeRef.current?.(resolved)\n    },\n    [controlled]\n  )\n  return [current, set] as const\n}\n\n/* ---------------------------------------------------------------------------\n * Root\n * ------------------------------------------------------------------------- */\n\ntype NodeGraphProps = Omit<React.ComponentProps<\"div\">, \"onSelect\"> & {\n  /** Controlled pan and zoom as `{ x, y, zoom }`. */\n  viewport?: NodeGraphViewportState\n  /** Initial pan and zoom when uncontrolled. */\n  defaultViewport?: NodeGraphViewportState\n  /** Called with `{ x, y, zoom }` while panning or zooming. */\n  onViewportChange?: (viewport: NodeGraphViewportState) => void\n  /** Controlled selection as `{ nodes, edges }` ids. */\n  selection?: NodeGraphSelection\n  /** Initial selected nodes and edges when uncontrolled. */\n  defaultSelection?: NodeGraphSelection\n  /** Called with `{ nodes, edges }` when the selection changes. */\n  onSelectionChange?: (selection: NodeGraphSelection) => void\n  /** Lower zoom bound. */\n  minZoom?: number\n  /** Upper zoom bound. */\n  maxZoom?: number\n  /** Grid size nodes snap to while dragging and nudging. `0` disables snapping. */\n  snapGrid?: number\n  /** Live position updates while nodes are dragged or nudged. */\n  onNodesMove?: (moves: NodeGraphNodeMove[]) => void\n  /** Fired once when a drag or nudge finishes, with the final positions. */\n  onNodesMoveEnd?: (moves: NodeGraphNodeMove[]) => void\n  /** A connection was completed on a valid port. `source` is always the output side. */\n  onConnect?: (connection: NodeGraphConnection) => void\n  /** A connection was released on empty space; `position` is in graph coordinates. */\n  onConnectEnd?: (details: { source: NodeGraphConnectingState[\"source\"]; position: XY; client: XY }) => void\n  /** Override the built-in check (sides differ, nodes differ, port types match or are \"any\"). */\n  isValidConnection?: (connection: NodeGraphConnection & { sourceType: string; targetType: string }) => boolean\n  /** Delete/Backspace with a selection. */\n  onDelete?: (selection: NodeGraphSelection) => void\n  /** Right-click on empty space (a right-drag pans instead). */\n  onPaneContextMenu?: (details: { position: XY; client: XY }) => void\n  /** Right-click on a node (selects it first unless already selected). */\n  onNodeContextMenu?: (details: { id: string; position: XY; client: XY }) => void\n  /** Right-click on an edge. */\n  onEdgeContextMenu?: (details: { id: string; position: XY; client: XY }) => void\n  /** Right-click on a port pin. */\n  onPortContextMenu?: (details: NodeGraphPortDetails & { position: XY; client: XY }) => void\n  /** Alt+click on a port pin: the conventional \"break links\" gesture. */\n  onDisconnect?: (details: NodeGraphPortDetails) => void\n  /**\n   * Enables re-routing: return the other end of the single link attached to `port` (or null).\n   * Dragging from such a pin then calls `onDisconnect(port)` and continues the drag from that other end.\n   */\n  edgeAt?: (port: NodeGraphPortDetails) => NodeGraphPortDetails | null\n}\n\nfunction NodeGraph({\n  viewport: viewportProp,\n  defaultViewport = { x: 0, y: 0, zoom: 1 },\n  onViewportChange,\n  selection: selectionProp,\n  defaultSelection = EMPTY_SELECTION,\n  onSelectionChange,\n  minZoom = 0.25,\n  maxZoom = 2,\n  snapGrid = 20,\n  onNodesMove,\n  onNodesMoveEnd,\n  onConnect,\n  onConnectEnd,\n  isValidConnection,\n  onDelete,\n  onPaneContextMenu,\n  onNodeContextMenu,\n  onEdgeContextMenu,\n  onPortContextMenu,\n  onDisconnect,\n  edgeAt,\n  className,\n  children,\n  ...props\n}: NodeGraphProps) {\n  const store = React.useMemo(() => createLayoutStore(), [])\n  const viewportRef = React.useRef<HTMLDivElement>(null)\n  const [viewport, setViewportState] = useControllable(viewportProp, defaultViewport, onViewportChange)\n  const [selection, setSelectionState] = useControllable(selectionProp, defaultSelection, onSelectionChange)\n  const [size, setSize] = React.useState({ width: 0, height: 0 })\n  const [connecting, setConnecting] = React.useState<NodeGraphConnectingState | null>(null)\n  const [marquee, setMarquee] = React.useState<NodeGraphRect | null>(null)\n  const [draggingNodes, setDraggingNodes] = React.useState(false)\n  const [panning, setPanning] = React.useState(false)\n  const [spaceHeld, setSpaceHeld] = React.useState(false)\n  const { message: announcement, announce } = useLiveRegion()\n  const spaceRef = React.useRef(false)\n  React.useEffect(() => {\n    const down = (event: KeyboardEvent) => {\n      if (event.key !== \" \" || event.repeat) return\n      const target = event.target as HTMLElement\n      if (target.closest(\"input, textarea, select, button, [contenteditable]\")) return\n      if (!viewportRef.current?.contains(target) && target !== document.body) return\n      spaceRef.current = true\n      setSpaceHeld(true)\n    }\n    const up = (event: KeyboardEvent) => {\n      if (event.key !== \" \") return\n      spaceRef.current = false\n      setSpaceHeld(false)\n    }\n    const blur = () => {\n      spaceRef.current = false\n      setSpaceHeld(false)\n    }\n    window.addEventListener(\"keydown\", down)\n    window.addEventListener(\"keyup\", up)\n    window.addEventListener(\"blur\", blur)\n    return () => {\n      window.removeEventListener(\"keydown\", down)\n      window.removeEventListener(\"keyup\", up)\n      window.removeEventListener(\"blur\", blur)\n    }\n  }, [])\n\n  const latest = React.useRef({\n    viewport,\n    selection,\n    size,\n    onNodesMove,\n    onNodesMoveEnd,\n    onConnect,\n    onConnectEnd,\n    onPaneContextMenu,\n    onNodeContextMenu,\n    onEdgeContextMenu,\n    onPortContextMenu,\n    onDisconnect,\n    edgeAt,\n  })\n  React.useEffect(() => {\n    latest.current = {\n      viewport,\n      selection,\n      size,\n      onNodesMove,\n      onNodesMoveEnd,\n      onConnect,\n      onConnectEnd,\n      onPaneContextMenu,\n      onNodeContextMenu,\n      onEdgeContextMenu,\n      onPortContextMenu,\n      onDisconnect,\n      edgeAt,\n    }\n  })\n\n  const setViewport = React.useCallback(\n    (next: NodeGraphViewportState | ((prev: NodeGraphViewportState) => NodeGraphViewportState)) =>\n      setViewportState((prev) => {\n        const resolved = typeof next === \"function\" ? next(prev) : next\n        return { ...resolved, zoom: clamp(resolved.zoom, minZoom, maxZoom) }\n      }),\n    [setViewportState, minZoom, maxZoom]\n  )\n  const setSelection = React.useCallback(\n    (next: NodeGraphSelection) => {\n      if (!sameSelection(latest.current.selection, next)) setSelectionState(next)\n    },\n    [setSelectionState]\n  )\n\n  const screenToGraph = React.useCallback((client: XY): XY => {\n    const rect = viewportRef.current?.getBoundingClientRect()\n    const vp = latest.current.viewport\n    return {\n      x: (client.x - (rect?.left ?? 0) - vp.x) / vp.zoom,\n      y: (client.y - (rect?.top ?? 0) - vp.y) / vp.zoom,\n    }\n  }, [])\n  const graphToScreen = React.useCallback((point: XY): XY => {\n    const rect = viewportRef.current?.getBoundingClientRect()\n    const vp = latest.current.viewport\n    return { x: point.x * vp.zoom + vp.x + (rect?.left ?? 0), y: point.y * vp.zoom + vp.y + (rect?.top ?? 0) }\n  }, [])\n\n  /** Zoom keeping the graph point under `client` (defaults to the pane centre) fixed. */\n  const zoomTo = React.useCallback(\n    (zoom: number, client?: XY) => {\n      const rect = viewportRef.current?.getBoundingClientRect()\n      const cx = client ? client.x - (rect?.left ?? 0) : latest.current.size.width / 2\n      const cy = client ? client.y - (rect?.top ?? 0) : latest.current.size.height / 2\n      setViewport((prev) => {\n        const next = clamp(zoom, minZoom, maxZoom)\n        const gx = (cx - prev.x) / prev.zoom\n        const gy = (cy - prev.y) / prev.zoom\n        return { x: cx - gx * next, y: cy - gy * next, zoom: next }\n      })\n    },\n    [setViewport, minZoom, maxZoom]\n  )\n  const zoomIn = React.useCallback(() => zoomTo(latest.current.viewport.zoom * 1.2), [zoomTo])\n  const zoomOut = React.useCallback(() => zoomTo(latest.current.viewport.zoom / 1.2), [zoomTo])\n  const fitView = React.useCallback(\n    (options?: { padding?: number; ids?: string[]; maxZoom?: number }) => {\n      const bounds = store.getBounds(options?.ids)\n      const { width, height } = latest.current.size\n      if (!bounds || !width || !height) return\n      const padding = options?.padding ?? 40\n      const zoom = clamp(\n        Math.min(\n          (width - padding * 2) / Math.max(bounds.width, 1),\n          (height - padding * 2) / Math.max(bounds.height, 1)\n        ),\n        minZoom,\n        options?.maxZoom ?? 1\n      )\n      setViewport({\n        x: (width - bounds.width * zoom) / 2 - bounds.x * zoom,\n        y: (height - bounds.height * zoom) / 2 - bounds.y * zoom,\n        zoom,\n      })\n    },\n    [store, setViewport, minZoom]\n  )\n  const centerOn = React.useCallback(\n    (point: XY) =>\n      setViewport((prev) => ({\n        ...prev,\n        x: latest.current.size.width / 2 - point.x * prev.zoom,\n        y: latest.current.size.height / 2 - point.y * prev.zoom,\n      })),\n    [setViewport]\n  )\n\n  // Pane size for fitView / minimap.\n  React.useLayoutEffect(() => {\n    const el = viewportRef.current\n    if (!el) return\n    const update = () => setSize({ width: el.clientWidth, height: el.clientHeight })\n    update()\n    const observer = new ResizeObserver(update)\n    observer.observe(el)\n    return () => observer.disconnect()\n  }, [])\n\n  /* ----- pointer interactions: they attach move/up listeners to the window ----- */\n\n  const track = React.useCallback((onMove: (event: PointerEvent) => void, onUp: (event: PointerEvent) => void) => {\n    const up = (event: PointerEvent) => {\n      window.removeEventListener(\"pointermove\", onMove)\n      window.removeEventListener(\"pointerup\", up)\n      window.removeEventListener(\"pointercancel\", up)\n      onUp(event)\n    }\n    window.addEventListener(\"pointermove\", onMove)\n    window.addEventListener(\"pointerup\", up)\n    window.addEventListener(\"pointercancel\", up)\n  }, [])\n\n  const startNodeDrag = React.useCallback(\n    (nodeId: string, event: React.PointerEvent) => {\n      const startClient = { x: event.clientX, y: event.clientY }\n      const current = latest.current.selection\n      const additive = event.shiftKey || event.metaKey || event.ctrlKey\n      const wasSelected = current.nodes.includes(nodeId)\n      // Selection resolves on pointer down so a drag moves the whole group.\n      const nodes = wasSelected ? current.nodes : additive ? [...current.nodes, nodeId] : [nodeId]\n      if (!wasSelected) setSelection({ nodes, edges: additive ? current.edges : [] })\n      const starts = new Map(nodes.map((id) => [id, { ...store.ensure(id).position }]))\n      let moved = false\n      let lastMoves: NodeGraphNodeMove[] = []\n      track(\n        (e) => {\n          const zoom = latest.current.viewport.zoom\n          const dx = (e.clientX - startClient.x) / zoom\n          const dy = (e.clientY - startClient.y) / zoom\n          if (!moved && Math.hypot(dx * zoom, dy * zoom) < 3) return\n          if (!moved) {\n            moved = true\n            setDraggingNodes(true)\n          }\n          lastMoves = [...starts].map(([id, start]) => ({\n            id,\n            /** Node position in graph coordinates. */\n            position: { x: snap(start.x + dx, snapGrid), y: snap(start.y + dy, snapGrid) },\n          }))\n          latest.current.onNodesMove?.(lastMoves)\n        },\n        () => {\n          if (moved) {\n            setDraggingNodes(false)\n            latest.current.onNodesMoveEnd?.(lastMoves)\n          } else if (wasSelected && additive) {\n            setSelection({ nodes: current.nodes.filter((id) => id !== nodeId), edges: current.edges })\n          } else if (wasSelected && current.nodes.length > 1) {\n            setSelection({ nodes: [nodeId], edges: [] })\n          }\n        }\n      )\n    },\n    [store, track, setSelection, snapGrid]\n  )\n\n  const validate = React.useCallback(\n    (a: NodeGraphConnectingState[\"source\"], b: NodeGraphConnectingState[\"source\"]) => {\n      if (a.side === b.side || a.nodeId === b.nodeId) return false\n      const [source, target] = a.side === \"output\" ? [a, b] : [b, a]\n      if (isValidConnection) {\n        return isValidConnection({\n          /** Output-side port as `{ nodeId, portId }`. */\n          source: { nodeId: source.nodeId, portId: source.portId },\n          /** Input-side port as `{ nodeId, portId }`. */\n          target: { nodeId: target.nodeId, portId: target.portId },\n          sourceType: source.type,\n          targetType: target.type,\n        })\n      }\n      return source.type === target.type || source.type === \"any\" || target.type === \"any\"\n    },\n    [isValidConnection]\n  )\n\n  const startConnection = React.useCallback(\n    (source: NodeGraphConnectingState[\"source\"], event: React.PointerEvent) => {\n      const position = screenToGraph({ x: event.clientX, y: event.clientY })\n      let state: NodeGraphConnectingState = { source, position, target: null, valid: false }\n      setConnecting(state)\n      track(\n        (e) => {\n          const el = document\n            .elementFromPoint(e.clientX, e.clientY)\n            ?.closest<HTMLElement>(\"[data-slot=node-graph-port-pin]\")\n          const target =\n            el && el.dataset.nodeId && el.dataset.portId\n              ? {\n                  nodeId: el.dataset.nodeId,\n                  portId: el.dataset.portId,\n                  side: (el.dataset.side as NodeGraphPortSide) ?? \"input\",\n                  type: el.dataset.type ?? \"any\",\n                }\n              : null\n          const anchored = target && validate(source, target) ? store.getPortPosition(target) : null\n          state = {\n            source,\n            /** Node position in graph coordinates. */\n            position: anchored ?? screenToGraph({ x: e.clientX, y: e.clientY }),\n            target,\n            valid: !!anchored,\n          }\n          setConnecting(state)\n        },\n        (e) => {\n          setConnecting(null)\n          if (state.target && state.valid) {\n            const [from, to] = source.side === \"output\" ? [source, state.target] : [state.target, source]\n            latest.current.onConnect?.({\n              /** Output-side port as `{ nodeId, portId }`. */\n              source: { nodeId: from.nodeId, portId: from.portId },\n              /** Input-side port as `{ nodeId, portId }`. */\n              target: { nodeId: to.nodeId, portId: to.portId },\n            })\n          } else if (!state.target) {\n            latest.current.onConnectEnd?.({\n              source,\n              /** Node position in graph coordinates. */\n              position: screenToGraph({ x: e.clientX, y: e.clientY }),\n              client: { x: e.clientX, y: e.clientY },\n            })\n          }\n        }\n      )\n    },\n    [screenToGraph, store, track, validate]\n  )\n\n  /** Pointer down on the pane itself: pan (middle/right button, space, or alt) or marquee (left). */\n  const onPanePointerDown = React.useCallback(\n    (event: React.PointerEvent) => {\n      const target = event.target as HTMLElement\n      if (target.closest(\"[data-slot=node-graph-controls], [data-slot=node-graph-minimap]\")) return\n      const pin = target.closest<HTMLElement>(\"[data-slot=node-graph-port-pin]\")\n      const nodeEl = target.closest<HTMLElement>(\"[data-slot=node-graph-node]\")\n      const edgeEl = target.closest<HTMLElement>(\"[data-slot=node-graph-edge]\")\n      const startClient = { x: event.clientX, y: event.clientY }\n      const touch = event.pointerType === \"touch\"\n      const isPan =\n        event.button === 1 ||\n        event.button === 2 ||\n        spaceRef.current ||\n        ((event.altKey || touch) && !nodeEl && !edgeEl && !pin)\n      if (!isPan && (nodeEl || edgeEl)) return\n      if (isPan) {\n        event.preventDefault()\n        const startViewport = latest.current.viewport\n        let moved = false\n        setPanning(true)\n        // Right-click selects the node under the cursor like a left click would.\n        const nodeId = nodeEl?.dataset.value\n        if (event.button === 2 && nodeId && !latest.current.selection.nodes.includes(nodeId)) {\n          setSelection({ nodes: [nodeId], edges: [] })\n        }\n        track(\n          (e) => {\n            const dx = e.clientX - startClient.x\n            const dy = e.clientY - startClient.y\n            if (!moved && Math.hypot(dx, dy) < 3) return\n            moved = true\n            setViewport({ ...startViewport, x: startViewport.x + dx, y: startViewport.y + dy })\n          },\n          (e) => {\n            setPanning(false)\n            if (!moved && event.button === 2) {\n              const client = { x: e.clientX, y: e.clientY }\n              const position = screenToGraph(client)\n              const handlers = latest.current\n              if (pin && pin.dataset.nodeId && pin.dataset.portId) {\n                handlers.onPortContextMenu?.({\n                  nodeId: pin.dataset.nodeId,\n                  portId: pin.dataset.portId,\n                  side: (pin.dataset.side as NodeGraphPortSide) ?? \"input\",\n                  type: pin.dataset.type ?? \"any\",\n                  position,\n                  client,\n                })\n              } else if (nodeId) {\n                handlers.onNodeContextMenu?.({ id: nodeId, position, client })\n              } else if (edgeEl?.dataset.value) {\n                handlers.onEdgeContextMenu?.({ id: edgeEl.dataset.value, position, client })\n              } else {\n                handlers.onPaneContextMenu?.({ position, client })\n              }\n            }\n          }\n        )\n        return\n      }\n      if (event.button !== 0) return\n      const additive = event.shiftKey || event.metaKey || event.ctrlKey\n      const base = additive ? latest.current.selection : EMPTY_SELECTION\n      if (!additive) setSelection(EMPTY_SELECTION)\n      const origin = screenToGraph(startClient)\n      let box: NodeGraphRect | null = null\n      track(\n        (e) => {\n          const point = screenToGraph({ x: e.clientX, y: e.clientY })\n          if (!box && Math.hypot(e.clientX - startClient.x, e.clientY - startClient.y) < 3) return\n          box = {\n            x: Math.min(origin.x, point.x),\n            y: Math.min(origin.y, point.y),\n            width: Math.abs(point.x - origin.x),\n            height: Math.abs(point.y - origin.y),\n          }\n          setMarquee(box)\n          const hits: string[] = []\n          for (const [id, node] of store.nodes) {\n            const intersects =\n              node.position.x < box.x + box.width &&\n              node.position.x + node.width > box.x &&\n              node.position.y < box.y + box.height &&\n              node.position.y + node.height > box.y\n            if (intersects) hits.push(id)\n          }\n          setSelection({ nodes: [...new Set([...base.nodes, ...hits])], edges: base.edges })\n        },\n        () => setMarquee(null)\n      )\n    },\n    [track, setViewport, setSelection, screenToGraph, store]\n  )\n\n  const disconnect = React.useCallback(\n    (details: NodeGraphPortDetails) => {\n      latest.current.onDisconnect?.(details)\n      announce(`Broke links on ${details.side} ${details.portId}.`)\n    },\n    [announce]\n  )\n\n  const edgeAtStable = React.useCallback(\n    (details: NodeGraphPortDetails) => latest.current.edgeAt?.(details) ?? null,\n    []\n  )\n\n  const deleteSelection = React.useCallback(() => {\n    const current = latest.current.selection\n    if (!current.nodes.length && !current.edges.length) return\n    onDelete?.(current)\n    setSelection(EMPTY_SELECTION)\n    announce(\n      `Deleted ${current.nodes.length} node${current.nodes.length === 1 ? \"\" : \"s\"} and ${current.edges.length} connection${current.edges.length === 1 ? \"\" : \"s\"}.`\n    )\n  }, [onDelete, setSelection, announce])\n\n  const nudgeSelection = React.useCallback(\n    (delta: XY, focusedNodeId?: string) => {\n      const current = latest.current.selection\n      const ids = current.nodes.length ? current.nodes : focusedNodeId ? [focusedNodeId] : []\n      if (!ids.length) return\n      const moves = ids.map((id) => {\n        const { position } = store.ensure(id)\n        return { id, position: { x: position.x + delta.x, y: position.y + delta.y } }\n      })\n      latest.current.onNodesMove?.(moves)\n      latest.current.onNodesMoveEnd?.(moves)\n      announce(\n        `Moved ${ids.length} node${ids.length === 1 ? \"\" : \"s\"} ${delta.x < 0 ? \"left\" : delta.x > 0 ? \"right\" : delta.y < 0 ? \"up\" : \"down\"}.`\n      )\n    },\n    [store, announce]\n  )\n\n  const selectAll = React.useCallback(\n    () => setSelection({ nodes: [...store.nodes.keys()], edges: latest.current.selection.edges }),\n    [store, setSelection]\n  )\n\n  const onNodeClick = React.useCallback(\n    (nodeId: string, event: React.MouseEvent | React.KeyboardEvent) => {\n      const current = latest.current.selection\n      const additive = event.shiftKey || event.metaKey || event.ctrlKey\n      if (additive) {\n        setSelection({\n          nodes: current.nodes.includes(nodeId)\n            ? current.nodes.filter((id) => id !== nodeId)\n            : [...current.nodes, nodeId],\n          edges: current.edges,\n        })\n      } else {\n        setSelection({ nodes: [nodeId], edges: [] })\n      }\n    },\n    [setSelection]\n  )\n  const onEdgeClick = React.useCallback(\n    (edgeId: string, event: React.MouseEvent) => {\n      const current = latest.current.selection\n      const additive = event.shiftKey || event.metaKey || event.ctrlKey\n      if (additive) {\n        setSelection({\n          nodes: current.nodes,\n          edges: current.edges.includes(edgeId)\n            ? current.edges.filter((id) => id !== edgeId)\n            : [...current.edges, edgeId],\n        })\n      } else {\n        setSelection({ nodes: [], edges: [edgeId] })\n      }\n    },\n    [setSelection]\n  )\n\n  const ctx = React.useMemo<NodeGraphContextValue>(\n    () => ({\n      store,\n      viewport,\n      setViewport,\n      viewportRef,\n      size,\n      minZoom,\n      maxZoom,\n      snapGrid,\n      selection,\n      setSelection,\n      connecting,\n      marquee,\n      draggingNodes,\n      panning,\n      spaceHeld,\n      screenToGraph,\n      graphToScreen,\n      zoomIn,\n      zoomOut,\n      zoomTo,\n      fitView,\n      centerOn,\n      announce,\n      startNodeDrag,\n      startConnection,\n      disconnect,\n      edgeAt: edgeAtStable,\n      deleteSelection,\n      nudgeSelection,\n      selectAll,\n      onNodeClick,\n      onEdgeClick,\n    }),\n    [\n      store,\n      viewport,\n      setViewport,\n      size,\n      minZoom,\n      maxZoom,\n      snapGrid,\n      selection,\n      setSelection,\n      connecting,\n      marquee,\n      draggingNodes,\n      panning,\n      spaceHeld,\n      screenToGraph,\n      graphToScreen,\n      zoomIn,\n      zoomOut,\n      zoomTo,\n      fitView,\n      centerOn,\n      announce,\n      startNodeDrag,\n      startConnection,\n      disconnect,\n      edgeAtStable,\n      deleteSelection,\n      nudgeSelection,\n      selectAll,\n      onNodeClick,\n      onEdgeClick,\n    ]\n  )\n\n  return (\n    <NodeGraphContext.Provider value={ctx}>\n      <PanePointerDownContext.Provider value={onPanePointerDown}>\n        <div\n          data-slot=\"node-graph\"\n          data-connecting={connecting ? \"\" : undefined}\n          data-dragging={draggingNodes ? \"\" : undefined}\n          data-panning={panning ? \"\" : undefined}\n          className={cn(\"relative flex min-h-0 flex-1 flex-col\", className)}\n          {...props}\n        >\n          {children}\n          <LiveRegion data-slot=\"node-graph-live-region\" message={announcement} />\n        </div>\n      </PanePointerDownContext.Provider>\n    </NodeGraphContext.Provider>\n  )\n}\n\nconst PanePointerDownContext = React.createContext<((event: React.PointerEvent) => void) | null>(null)\n\n/* ---------------------------------------------------------------------------\n * Viewport\n * ------------------------------------------------------------------------- */\n\nfunction NodeGraphViewport({\n  className,\n  children,\n  panOnScroll = false,\n  onKeyDown,\n  ...props\n}: React.ComponentProps<\"div\"> & {\n  /** Plain wheel pans instead of zooming (pinch / ctrl+wheel always zooms). */\n  panOnScroll?: boolean\n}) {\n  const ctx = useNodeGraph()\n  const onPanePointerDown = React.useContext(PanePointerDownContext)\n  const { viewportRef, setViewport, zoomTo, connecting, panning, spaceHeld } = ctx\n  const ctxRef = React.useRef(ctx)\n  React.useEffect(() => {\n    ctxRef.current = ctx\n  })\n\n  // Wheel must be non-passive to prevent page scroll.\n  React.useEffect(() => {\n    const el = viewportRef.current\n    if (!el) return\n    const onWheel = (event: WheelEvent) => {\n      event.preventDefault()\n      const zooming = event.ctrlKey || event.metaKey || !panOnScroll\n      if (zooming) {\n        const factor = Math.exp(-event.deltaY * (event.ctrlKey ? 0.01 : 0.002))\n        zoomTo(ctxRef.current.viewport.zoom * factor, { x: event.clientX, y: event.clientY })\n      } else {\n        setViewport((prev) => ({ ...prev, x: prev.x - event.deltaX, y: prev.y - event.deltaY }))\n      }\n    }\n    el.addEventListener(\"wheel\", onWheel, { passive: false })\n    return () => el.removeEventListener(\"wheel\", onWheel)\n  }, [viewportRef, setViewport, zoomTo, panOnScroll])\n\n  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {\n    onKeyDown?.(event)\n    if (event.defaultPrevented) return\n    const target = event.target as HTMLElement\n    if (target.closest(\"input, textarea, select, [contenteditable]\")) return\n    const focusedNode = target.closest<HTMLElement>(\"[data-slot=node-graph-node]\")?.dataset.value\n    const step = (event.shiftKey ? 10 : 1) * (ctx.snapGrid || 10)\n    const meta = event.metaKey || event.ctrlKey\n    switch (event.key) {\n      case \" \":\n        if (!focusedNode) event.preventDefault()\n        break\n      case \"Delete\":\n      case \"Backspace\":\n        event.preventDefault()\n        ctx.deleteSelection()\n        break\n      case \"Escape\":\n        ctx.setSelection(EMPTY_SELECTION)\n        break\n      case \"a\":\n      case \"A\":\n        if (meta) {\n          event.preventDefault()\n          ctx.selectAll()\n        }\n        break\n      case \"ArrowLeft\":\n        event.preventDefault()\n        ctx.nudgeSelection({ x: -step, y: 0 }, focusedNode)\n        break\n      case \"ArrowRight\":\n        event.preventDefault()\n        ctx.nudgeSelection({ x: step, y: 0 }, focusedNode)\n        break\n      case \"ArrowUp\":\n        event.preventDefault()\n        ctx.nudgeSelection({ x: 0, y: -step }, focusedNode)\n        break\n      case \"ArrowDown\":\n        event.preventDefault()\n        ctx.nudgeSelection({ x: 0, y: step }, focusedNode)\n        break\n      case \"=\":\n      case \"+\":\n        if (meta) {\n          event.preventDefault()\n          ctx.zoomIn()\n        }\n        break\n      case \"-\":\n        if (meta) {\n          event.preventDefault()\n          ctx.zoomOut()\n        }\n        break\n      case \"0\":\n        if (meta) {\n          event.preventDefault()\n          ctx.fitView()\n        }\n        break\n    }\n  }\n\n  return (\n    <div\n      ref={viewportRef}\n      data-slot=\"node-graph-viewport\"\n      tabIndex={0}\n      role=\"application\"\n      aria-label=\"Node graph\"\n      data-connecting={connecting ? \"\" : undefined}\n      data-panning={panning ? \"\" : undefined}\n      data-space={spaceHeld ? \"\" : undefined}\n      className={cn(\n        \"relative min-h-0 flex-1 touch-none overflow-hidden rounded-xl border bg-muted/30 outline-none select-none focus-visible:ring-2 focus-visible:ring-ring/50\",\n        \"data-connecting:cursor-crosshair data-panning:cursor-grabbing data-space:cursor-grab\",\n        className\n      )}\n      onPointerDown={(event) => onPanePointerDown?.(event)}\n      onContextMenu={(event) => event.preventDefault()}\n      onKeyDown={handleKeyDown}\n      {...props}\n    >\n      {children}\n    </div>\n  )\n}\n\n/* ---------------------------------------------------------------------------\n * Background grid\n * ------------------------------------------------------------------------- */\n\nfunction NodeGraphBackground({\n  className,\n  variant = \"dots\",\n  gap = 20,\n  ...props\n}: React.ComponentProps<\"svg\"> & { variant?: \"dots\" | \"lines\"; gap?: number }) {\n  const { viewport } = useNodeGraph()\n  const id = React.useId()\n  const size = gap * viewport.zoom\n  const major = size * 5\n  return (\n    <svg\n      data-slot=\"node-graph-background\"\n      aria-hidden\n      className={cn(\"pointer-events-none absolute inset-0 size-full text-foreground/60\", className)}\n      {...props}\n    >\n      <pattern\n        id={`${id}-minor`}\n        x={viewport.x % size}\n        y={viewport.y % size}\n        width={size}\n        height={size}\n        patternUnits=\"userSpaceOnUse\"\n      >\n        {variant === \"dots\" ? (\n          <circle\n            cx={size / 2}\n            cy={size / 2}\n            r={Math.max(0.6, viewport.zoom * 0.9)}\n            fill=\"currentColor\"\n            opacity={0.28}\n          />\n        ) : (\n          <path d={`M ${size} 0 L 0 0 0 ${size}`} fill=\"none\" stroke=\"currentColor\" strokeWidth={1} opacity={0.08} />\n        )}\n      </pattern>\n      <pattern\n        id={`${id}-major`}\n        x={viewport.x % major}\n        y={viewport.y % major}\n        width={major}\n        height={major}\n        patternUnits=\"userSpaceOnUse\"\n      >\n        <path d={`M ${major} 0 L 0 0 0 ${major}`} fill=\"none\" stroke=\"currentColor\" strokeWidth={1} opacity={0.1} />\n      </pattern>\n      <rect width=\"100%\" height=\"100%\" fill={`url(#${id}-minor)`} />\n      <rect width=\"100%\" height=\"100%\" fill={`url(#${id}-major)`} />\n    </svg>\n  )\n}\n\n/* ---------------------------------------------------------------------------\n * Surface (transformed layer), edges, connection line, marquee\n * ------------------------------------------------------------------------- */\n\nfunction NodeGraphSurface({ className, style, ...props }: React.ComponentProps<\"div\">) {\n  const { viewport } = useNodeGraph()\n  return (\n    <div\n      data-slot=\"node-graph-surface\"\n      className={cn(\"absolute top-0 left-0 origin-top-left\", className)}\n      style={{ transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`, ...style }}\n      {...props}\n    />\n  )\n}\n\nfunction NodeGraphEdges({ className, ...props }: React.ComponentProps<\"svg\">) {\n  return (\n    <svg\n      data-slot=\"node-graph-edges\"\n      className={cn(\"pointer-events-none absolute top-0 left-0 size-px overflow-visible\", className)}\n      {...props}\n    />\n  )\n}\n\n/** Cubic path between two points; horizontal handles scale with distance like a scripting graph. */\nfunction getBezierPath(source: XY, target: XY) {\n  const dx = target.x - source.x\n  const offset = clamp(Math.abs(dx) * 0.5, 40, 240) + (dx < 0 ? Math.min(Math.abs(dx) * 0.25, 120) : 0)\n  return `M ${source.x} ${source.y} C ${source.x + offset} ${source.y}, ${target.x - offset} ${target.y}, ${target.x} ${target.y}`\n}\n\nfunction NodeGraphEdge({\n  value,\n  source,\n  target,\n  selected: selectedProp,\n  className,\n  onClick,\n  children,\n  ...props\n}: Omit<React.ComponentProps<\"g\">, \"children\" | \"target\"> & {\n  value: string\n  /** Output-side port as `{ nodeId, portId }`. */\n  source: NodeGraphPortRef\n  /** Input-side port as `{ nodeId, portId }`. */\n  target: NodeGraphPortRef\n  selected?: boolean\n  /** Render prop for labels; receives the path midpoint. */\n  children?: (details: { midpoint: XY; from: XY; to: XY }) => React.ReactNode\n}) {\n  const { store, selection, onEdgeClick } = useNodeGraph()\n  useLayoutVersion(store)\n  const from = store.getPortPosition(source)\n  const to = store.getPortPosition(target)\n  if (!from || !to) return null\n  const selected = selectedProp ?? selection.edges.includes(value)\n  const d = getBezierPath(from, to)\n  const midpoint = { x: (from.x + to.x) / 2, y: (from.y + to.y) / 2 }\n  const type = store.getPort(source)?.type\n  return (\n    <g\n      data-slot=\"node-graph-edge\"\n      data-value={value}\n      data-selected={selected ? \"\" : undefined}\n      data-type={type}\n      className={cn(\"group/edge pointer-events-auto cursor-pointer text-muted-foreground\", className)}\n      onClick={(event) => {\n        onClick?.(event)\n        if (!event.defaultPrevented) onEdgeClick(value, event)\n      }}\n      {...props}\n    >\n      <path d={d} fill=\"none\" stroke=\"transparent\" strokeWidth={14} />\n      <path\n        d={d}\n        fill=\"none\"\n        stroke=\"currentColor\"\n        strokeWidth={2}\n        className=\"transition-[stroke-width] group-hover/edge:stroke-3 group-data-selected/edge:stroke-3 group-data-selected/edge:drop-shadow-[0_0_4px_currentColor]\"\n      />\n      {children?.({ midpoint, from, to })}\n    </g>\n  )\n}\n\n/** The edge being drawn from a pin. Renders nothing when idle. */\nfunction NodeGraphConnectionLine({ className, ...props }: React.ComponentProps<\"svg\">) {\n  const { store, connecting } = useNodeGraph()\n  useLayoutVersion(store)\n  if (!connecting) return null\n  const from = store.getPortPosition(connecting.source)\n  if (!from) return null\n  const [a, b] = connecting.source.side === \"output\" ? [from, connecting.position] : [connecting.position, from]\n  return (\n    <svg\n      data-slot=\"node-graph-connection-line\"\n      data-type={connecting.source.type}\n      data-valid={connecting.valid ? \"\" : undefined}\n      data-invalid={connecting.target && !connecting.valid ? \"\" : undefined}\n      className={cn(\n        \"pointer-events-none absolute top-0 left-0 size-px overflow-visible text-foreground data-invalid:text-destructive\",\n        className\n      )}\n      {...props}\n    >\n      <path\n        d={getBezierPath(a, b)}\n        fill=\"none\"\n        stroke=\"currentColor\"\n        strokeWidth={2}\n        strokeDasharray={connecting.valid ? undefined : \"6 4\"}\n      />\n      <circle cx={b.x} cy={b.y} r={3} fill=\"currentColor\" />\n    </svg>\n  )\n}\n\n/** Marquee selection rectangle. Renders nothing when idle. */\nfunction NodeGraphSelectionBox({ className, style, ...props }: React.ComponentProps<\"div\">) {\n  const { marquee, viewport } = useNodeGraph()\n  if (!marquee) return null\n  return (\n    <div\n      data-slot=\"node-graph-selection-box\"\n      className={cn(\"pointer-events-none absolute rounded-sm border border-primary/60 bg-primary/10\", className)}\n      style={{\n        left: marquee.x * viewport.zoom + viewport.x,\n        top: marquee.y * viewport.zoom + viewport.y,\n        width: marquee.width * viewport.zoom,\n        height: marquee.height * viewport.zoom,\n        ...style,\n      }}\n      {...props}\n    />\n  )\n}\n\n/* ---------------------------------------------------------------------------\n * Nodes\n * ------------------------------------------------------------------------- */\n\ntype NodeContextValue = {\n  value: string\n  registerPort: (portId: string, layout: PortLayout) => () => void\n  measure: () => void\n}\nconst NodeContext = React.createContext<NodeContextValue | null>(null)\n\nfunction useNodeGraphNode() {\n  const ctx = React.useContext(NodeContext)\n  if (!ctx) throw new Error(\"Node parts must be used within <NodeGraphNode>\")\n  return ctx\n}\n\nfunction NodeGraphNode({\n  value,\n  position,\n  selected: selectedProp,\n  className,\n  style,\n  onPointerDown,\n  onKeyDown,\n  onDoubleClick,\n  children,\n  ...props\n}: React.ComponentProps<\"div\"> & { value: string; position: XY; selected?: boolean }) {\n  const graph = useNodeGraph()\n  const { store, selection, draggingNodes, startNodeDrag, onNodeClick } = graph\n  const ref = React.useRef<HTMLDivElement>(null)\n  const selected = selectedProp ?? selection.nodes.includes(value)\n  const zoomRef = React.useRef(graph.viewport.zoom)\n  React.useLayoutEffect(() => {\n    zoomRef.current = graph.viewport.zoom\n  }, [graph.viewport.zoom])\n\n  const measure = React.useCallback(() => {\n    const el = ref.current\n    if (!el) return\n    const zoom = zoomRef.current || 1\n    const rect = el.getBoundingClientRect()\n    const node = store.ensure(value)\n    node.width = rect.width / zoom\n    node.height = rect.height / zoom\n    for (const port of node.ports.values()) {\n      const pin = port.el?.getBoundingClientRect()\n      if (!pin) continue\n      port.offset = {\n        x: (pin.left + pin.width / 2 - rect.left) / zoom,\n        y: (pin.top + pin.height / 2 - rect.top) / zoom,\n      }\n    }\n    store.emit()\n  }, [store, value])\n\n  // Position from props is the source of truth; keep the store in sync for edges/minimap.\n  React.useLayoutEffect(() => {\n    const node = store.ensure(value)\n    node.position = position\n    store.emit()\n  }, [store, value, position])\n  React.useLayoutEffect(() => {\n    measure()\n    const el = ref.current\n    if (!el) return\n    const observer = new ResizeObserver(() => measure())\n    observer.observe(el)\n    return () => observer.disconnect()\n  }, [measure])\n  React.useEffect(\n    () => () => {\n      store.nodes.delete(value)\n      store.emit()\n    },\n    [store, value]\n  )\n\n  const nodeCtx = React.useMemo<NodeContextValue>(\n    () => ({\n      value,\n      registerPort: (portId, layout) => {\n        const node = store.ensure(value)\n        node.ports.set(portId, layout)\n        measure()\n        return () => {\n          node.ports.delete(portId)\n          store.emit()\n        }\n      },\n      measure,\n    }),\n    [store, value, measure]\n  )\n\n  return (\n    <NodeContext.Provider value={nodeCtx}>\n      <div\n        ref={ref}\n        data-slot=\"node-graph-node\"\n        data-value={value}\n        data-selected={selected ? \"\" : undefined}\n        data-dragging={draggingNodes && selected ? \"\" : undefined}\n        tabIndex={0}\n        className={cn(\n          \"group/node absolute top-0 left-0 flex w-56 flex-col rounded-lg border bg-card text-card-foreground shadow-md outline-none\",\n          \"cursor-grab data-dragging:cursor-grabbing data-dragging:shadow-xl\",\n          \"focus-visible:ring-2 focus-visible:ring-ring/50 data-selected:border-primary data-selected:ring-2 data-selected:ring-primary/40\",\n          className\n        )}\n        style={{ transform: `translate(${position.x}px, ${position.y}px)`, ...style }}\n        onPointerDown={(event) => {\n          onPointerDown?.(event)\n          if (event.defaultPrevented || event.button !== 0) return\n          if ((event.target as HTMLElement).closest(INTERACTIVE)) return\n          if (graph.spaceHeld) return\n          event.stopPropagation()\n          startNodeDrag(value, event)\n        }}\n        onDoubleClick={(event) => {\n          onDoubleClick?.(event)\n          if (!event.defaultPrevented) graph.fitView({ ids: [value], padding: 80, maxZoom: 1.5 })\n        }}\n        onKeyDown={(event) => {\n          onKeyDown?.(event)\n          if (event.defaultPrevented || event.target !== event.currentTarget) return\n          if (event.key === \" \" || event.key === \"Enter\") {\n            event.preventDefault()\n            onNodeClick(value, event)\n          }\n        }}\n        {...props}\n      >\n        {children}\n      </div>\n    </NodeContext.Provider>\n  )\n}\n\n/** Header slot for buttons (menus, run triggers). Revealed on hover/selection; clicks never start a drag. */\nfunction NodeGraphNodeActions({ className, onPointerDown, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"node-graph-node-actions\"\n      className={cn(\n        \"ml-auto flex shrink-0 items-center gap-0.5 opacity-0 transition-opacity group-focus-within/node:opacity-100 group-hover/node:opacity-100 group-data-selected/node:opacity-100\",\n        className\n      )}\n      onPointerDown={(event) => {\n        onPointerDown?.(event)\n        event.stopPropagation()\n      }}\n      {...props}\n    />\n  )\n}\n\nfunction NodeGraphNodeHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"node-graph-node-header\"\n      className={cn(\n        \"flex items-center gap-2 rounded-t-[inherit] border-b bg-muted/60 px-3 py-2 text-sm font-medium [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction NodeGraphNodeTitle({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"node-graph-node-title\" className={cn(\"truncate leading-tight\", className)} {...props} />\n}\n\nfunction NodeGraphNodeSubtitle({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"node-graph-node-subtitle\"\n      className={cn(\"truncate text-xs font-normal text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction NodeGraphNodeBody({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"node-graph-node-body\" className={cn(\"grid grid-cols-2 gap-x-2 py-2\", className)} {...props} />\n}\n\nfunction NodeGraphNodeInputs({ className, ...props }: React.ComponentProps<\"div\">) {\n  return <div data-slot=\"node-graph-node-inputs\" className={cn(\"flex flex-col gap-1\", className)} {...props} />\n}\n\nfunction NodeGraphNodeOutputs({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"node-graph-node-outputs\"\n      className={cn(\"col-start-2 flex flex-col items-end gap-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction NodeGraphNodeFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"node-graph-node-footer\"\n      className={cn(\"rounded-b-[inherit] border-t px-3 py-1.5 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\n/* ---------------------------------------------------------------------------\n * Ports\n * ------------------------------------------------------------------------- */\n\ntype PortContextValue = { value: string; side: NodeGraphPortSide; type: string; connected: boolean }\nconst PortContext = React.createContext<PortContextValue | null>(null)\n\nfunction NodeGraphPort({\n  value,\n  side,\n  type = \"any\",\n  connected = false,\n  className,\n  ...props\n}: React.ComponentProps<\"div\"> & { value: string; side: NodeGraphPortSide; type?: string; connected?: boolean }) {\n  const ctx = React.useMemo(() => ({ value, side, type, connected }), [value, side, type, connected])\n  return (\n    <PortContext.Provider value={ctx}>\n      <div\n        data-slot=\"node-graph-port\"\n        data-side={side}\n        data-type={type}\n        data-connected={connected ? \"\" : undefined}\n        className={cn(\n          \"flex min-h-6 items-center gap-1.5 text-xs\",\n          side === \"input\" ? \"pr-2 pl-0\" : \"flex-row-reverse pr-0 pl-2\",\n          className\n        )}\n        {...props}\n      />\n    </PortContext.Provider>\n  )\n}\n\nconst pinVariants = cva(\n  \"relative z-10 box-content shrink-0 cursor-crosshair border-2 border-current bg-background transition-transform hover:scale-125 data-connected:bg-current data-target:scale-125 data-target:ring-2 data-target:ring-current/40\",\n  {\n    variants: {\n      variant: {\n        circle: \"size-2.5 rounded-full\",\n        exec: \"size-3 border-0 bg-current opacity-45 [clip-path:polygon(0_0,60%_0,100%_50%,60%_100%,0_100%)] data-connected:opacity-100\",\n      },\n    },\n    defaultVariants: { variant: \"circle\" },\n  }\n)\n\n/** The connection handle. Sits on the node's edge: inputs are pulled left, outputs right. */\nfunction NodeGraphPortPin({\n  className,\n  variant,\n  onPointerDown,\n  ...props\n}: React.ComponentProps<\"div\"> & VariantProps<typeof pinVariants>) {\n  const graph = useNodeGraph()\n  const node = useNodeGraphNode()\n  const port = React.useContext(PortContext)\n  if (!port) throw new Error(\"NodeGraphPortPin must be used within <NodeGraphPort>\")\n  const ref = React.useRef<HTMLDivElement>(null)\n  const { registerPort } = node\n  React.useLayoutEffect(\n    () => registerPort(port.value, { side: port.side, type: port.type, el: ref.current, offset: { x: 0, y: 0 } }),\n    [registerPort, port.value, port.side, port.type]\n  )\n  const connecting = graph.connecting\n  const isTarget = connecting?.target?.nodeId === node.value && connecting.target.portId === port.value\n  const isSource = connecting?.source.nodeId === node.value && connecting.source.portId === port.value\n  return (\n    <div\n      ref={ref}\n      data-slot=\"node-graph-port-pin\"\n      data-node-id={node.value}\n      data-port-id={port.value}\n      data-side={port.side}\n      data-type={port.type}\n      data-connected={port.connected || isSource ? \"\" : undefined}\n      data-target={isTarget ? (connecting?.valid ? \"valid\" : \"invalid\") : undefined}\n      aria-label={`${port.side} ${port.value}`}\n      className={cn(\n        pinVariants({ variant }),\n        port.side === \"input\" ? \"-ml-1.75\" : \"-mr-1.75\",\n        isTarget && !connecting?.valid && \"cursor-not-allowed text-destructive\",\n        className\n      )}\n      onPointerDown={(event) => {\n        onPointerDown?.(event)\n        if (event.defaultPrevented || event.button !== 0) return\n        event.stopPropagation()\n        event.preventDefault()\n        const details = { nodeId: node.value, portId: port.value, side: port.side, type: port.type }\n        if (event.altKey) {\n          graph.disconnect(details)\n          return\n        }\n        const other = port.connected ? graph.edgeAt(details) : null\n        if (other) {\n          // Pick the existing link up: drop it, then keep dragging from its far end.\n          graph.disconnect(details)\n          graph.startConnection(other, event)\n          return\n        }\n        graph.startConnection(details, event)\n      }}\n      {...props}\n    />\n  )\n}\n\nfunction NodeGraphPortLabel({ className, ...props }: React.ComponentProps<\"span\">) {\n  return <span data-slot=\"node-graph-port-label\" className={cn(\"truncate\", className)} {...props} />\n}\n\n/* ---------------------------------------------------------------------------\n * Controls, minimap, empty\n * ------------------------------------------------------------------------- */\n\nfunction NodeGraphControls({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"node-graph-controls\"\n      className={cn(\n        \"absolute bottom-3 left-3 z-20 flex items-center gap-1 rounded-lg border bg-background/90 p-1 shadow-sm backdrop-blur-sm\",\n        className\n      )}\n      onPointerDown={(event) => event.stopPropagation()}\n      {...props}\n    />\n  )\n}\n\ntype ControlTriggerProps = React.ComponentProps<typeof Button>\n\nfunction NodeGraphZoomInTrigger({ asChild, children, onClick, ...props }: ControlTriggerProps) {\n  const { zoomIn } = useNodeGraph()\n  return (\n    <Button\n      data-slot=\"node-graph-zoom-in-trigger\"\n      variant=\"ghost\"\n      size=\"icon-sm\"\n      asChild={asChild}\n      aria-label=\"Zoom in\"\n      onClick={(event) => {\n        onClick?.(event)\n        if (!event.defaultPrevented) zoomIn()\n      }}\n      {...props}\n    >\n      {asChild ? children : (children ?? <PlusIcon />)}\n    </Button>\n  )\n}\n\nfunction NodeGraphZoomOutTrigger({ asChild, children, onClick, ...props }: ControlTriggerProps) {\n  const { zoomOut } = useNodeGraph()\n  return (\n    <Button\n      data-slot=\"node-graph-zoom-out-trigger\"\n      variant=\"ghost\"\n      size=\"icon-sm\"\n      asChild={asChild}\n      aria-label=\"Zoom out\"\n      onClick={(event) => {\n        onClick?.(event)\n        if (!event.defaultPrevented) zoomOut()\n      }}\n      {...props}\n    >\n      {asChild ? children : (children ?? <MinusIcon />)}\n    </Button>\n  )\n}\n\nfunction NodeGraphFitViewTrigger({ asChild, children, onClick, ...props }: ControlTriggerProps) {\n  const { fitView } = useNodeGraph()\n  return (\n    <Button\n      data-slot=\"node-graph-fit-view-trigger\"\n      variant=\"ghost\"\n      size=\"icon-sm\"\n      asChild={asChild}\n      aria-label=\"Fit view\"\n      onClick={(event) => {\n        onClick?.(event)\n        if (!event.defaultPrevented) fitView()\n      }}\n      {...props}\n    >\n      {asChild ? children : (children ?? <MaximizeIcon />)}\n    </Button>\n  )\n}\n\n/** Current zoom as a percentage; click resets to 100%. */\nfunction NodeGraphZoomValue({\n  className,\n  asChild,\n  children,\n  onClick,\n  ...props\n}: React.ComponentProps<typeof ark.button>) {\n  const { viewport, zoomTo } = useNodeGraph()\n  return (\n    <ark.button\n      data-slot=\"node-graph-zoom-value\"\n      type=\"button\"\n      asChild={asChild}\n      aria-label=\"Reset zoom\"\n      className={cn(\n        \"h-7 min-w-12 rounded-md px-2 text-xs font-medium text-muted-foreground tabular-nums hover:bg-muted hover:text-foreground\",\n        className\n      )}\n      onClick={(event) => {\n        onClick?.(event)\n        if (!event.defaultPrevented) zoomTo(1)\n      }}\n      {...props}\n    >\n      {asChild ? children : (children ?? `${Math.round(viewport.zoom * 100)}%`)}\n    </ark.button>\n  )\n}\n\nfunction NodeGraphMinimap({\n  className,\n  width = 180,\n  height = 120,\n  ...props\n}: React.ComponentProps<\"svg\"> & { width?: number; height?: number }) {\n  const { store, viewport, size, selection, centerOn } = useNodeGraph()\n  useLayoutVersion(store)\n  const nodes = [...store.nodes]\n  const view = {\n    x: -viewport.x / viewport.zoom,\n    y: -viewport.y / viewport.zoom,\n    width: size.width / viewport.zoom,\n    height: size.height / viewport.zoom,\n  }\n  const bounds = store.getBounds() ?? view\n  const minX = Math.min(bounds.x, view.x)\n  const minY = Math.min(bounds.y, view.y)\n  const maxX = Math.max(bounds.x + bounds.width, view.x + view.width)\n  const maxY = Math.max(bounds.y + bounds.height, view.y + view.height)\n  const pad = Math.max(maxX - minX, maxY - minY) * 0.05\n  const viewBox = `${minX - pad} ${minY - pad} ${maxX - minX + pad * 2} ${maxY - minY + pad * 2}`\n  const scale = (maxX - minX + pad * 2) / width\n\n  // Match \"meet\" scaling: the viewBox is centred inside the svg box.\n  const pointToGraph = (svg: SVGSVGElement, client: XY) => {\n    const rect = svg.getBoundingClientRect()\n    const vbW = maxX - minX + pad * 2\n    const vbH = maxY - minY + pad * 2\n    const s = Math.max(vbW / rect.width, vbH / rect.height)\n    const offsetX = (rect.width * s - vbW) / 2\n    const offsetY = (rect.height * s - vbH) / 2\n    return { x: minX - pad - offsetX + (client.x - rect.left) * s, y: minY - pad - offsetY + (client.y - rect.top) * s }\n  }\n\n  return (\n    <svg\n      data-slot=\"node-graph-minimap\"\n      viewBox={viewBox}\n      width={width}\n      height={height}\n      className={cn(\n        \"absolute right-3 bottom-3 z-20 cursor-pointer rounded-lg border bg-background/90 shadow-sm backdrop-blur-sm\",\n        className\n      )}\n      onPointerDown={(event) => {\n        event.stopPropagation()\n        event.preventDefault()\n        const svg = event.currentTarget\n        centerOn(pointToGraph(svg, { x: event.clientX, y: event.clientY }))\n        const move = (e: PointerEvent) => centerOn(pointToGraph(svg, { x: e.clientX, y: e.clientY }))\n        const up = () => {\n          window.removeEventListener(\"pointermove\", move)\n          window.removeEventListener(\"pointerup\", up)\n        }\n        window.addEventListener(\"pointermove\", move)\n        window.addEventListener(\"pointerup\", up)\n      }}\n      {...props}\n    >\n      {nodes.map(([id, node]) => (\n        <rect\n          key={id}\n          data-slot=\"node-graph-minimap-node\"\n          data-selected={selection.nodes.includes(id) ? \"\" : undefined}\n          x={node.position.x}\n          y={node.position.y}\n          width={node.width}\n          height={node.height}\n          rx={4 * scale}\n          className=\"fill-muted-foreground/40 data-selected:fill-primary\"\n        />\n      ))}\n      <rect\n        data-slot=\"node-graph-minimap-viewport\"\n        x={view.x}\n        y={view.y}\n        width={view.width}\n        height={view.height}\n        className=\"fill-primary/10 stroke-primary/60\"\n        strokeWidth={scale}\n      />\n    </svg>\n  )\n}\n\nfunction NodeGraphEmpty({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"node-graph-empty\"\n      className={cn(\n        \"pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1 text-center text-sm text-muted-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nexport {\n  NodeGraph,\n  NodeGraphViewport,\n  NodeGraphBackground,\n  NodeGraphSurface,\n  NodeGraphEdges,\n  NodeGraphEdge,\n  NodeGraphConnectionLine,\n  NodeGraphSelectionBox,\n  NodeGraphNode,\n  NodeGraphNodeHeader,\n  NodeGraphNodeActions,\n  NodeGraphNodeTitle,\n  NodeGraphNodeSubtitle,\n  NodeGraphNodeBody,\n  NodeGraphNodeInputs,\n  NodeGraphNodeOutputs,\n  NodeGraphNodeFooter,\n  NodeGraphPort,\n  NodeGraphPortPin,\n  NodeGraphPortLabel,\n  NodeGraphControls,\n  NodeGraphZoomInTrigger,\n  NodeGraphZoomOutTrigger,\n  NodeGraphFitViewTrigger,\n  NodeGraphZoomValue,\n  NodeGraphMinimap,\n  NodeGraphEmpty,\n  useNodeGraph,\n  getBezierPath,\n  type NodeGraphViewportState,\n  type NodeGraphPortRef,\n  type NodeGraphPortDetails,\n  type NodeGraphPortSide,\n  type NodeGraphConnection,\n  type NodeGraphSelection,\n  type NodeGraphNodeMove,\n}\n"
+      "content": "import * as React from \"react\"\nimport { ark } from \"@ark-ui/react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\nimport { MaximizeIcon, MinusIcon, PlusIcon } from \"lucide-react\"\nimport { Button } from \"@/components/ui/button\"\nimport { cn } from \"@/lib/utils\"\nimport { LiveRegion, useLiveRegion } from \"@/components/ui/live-region\"\n\n/**\n * NodeGraph — a compositional, data-agnostic node editor in the spirit of\n * visual scripting graphs. The consumer owns nodes and edges; the graph owns\n * only the viewport (pan/zoom), the selection, and in-flight interactions\n * (dragging nodes, drawing a connection, marquee selection). Everything else\n * is reported as an intent: `onNodesMove`, `onConnect`, `onConnectEnd`,\n * `onDisconnect` (alt+click on a pin), `onDelete`, `onSelectionChange`, and\n * `onPane/Node/Edge/PortContextMenu` (right-click without a drag).\n *\n * Anatomy:\n *   NodeGraph\n *     NodeGraphViewport            pan/zoom pane, keyboard target\n *       NodeGraphBackground        dotted/lined grid that follows the viewport\n *       NodeGraphSurface           the transformed layer\n *         NodeGraphEdges           svg layer with NodeGraphEdge children\n *         NodeGraphConnectionLine  the edge being drawn\n *         NodeGraphNode*           absolutely positioned nodes\n *           NodeGraphNodeHeader/Title/Subtitle/Body/Inputs/Outputs/Footer\n *           NodeGraphPort > NodeGraphPortPin + NodeGraphPortLabel\n *       NodeGraphSelectionBox      marquee\n *       NodeGraphControls          zoom in/out/fit triggers + NodeGraphZoomValue\n *       NodeGraphMinimap\n *       NodeGraphEmpty\n */\n\ntype XY = { x: number; y: number }\ntype NodeGraphViewportState = { x: number; y: number; zoom: number }\ntype NodeGraphPortRef = { nodeId: string; portId: string }\ntype NodeGraphPortSide = \"input\" | \"output\"\ntype NodeGraphConnection = { source: NodeGraphPortRef; target: NodeGraphPortRef }\ntype NodeGraphSelection = { nodes: string[]; edges: string[] }\ntype NodeGraphNodeMove = { id: string; position: XY }\ntype NodeGraphConnectingState = {\n  /** Output-side port as `{ nodeId, portId }`. */\n  source: NodeGraphPortRef & { side: NodeGraphPortSide; type: string }\n  /** Cursor position in graph coordinates. */\n  position: XY\n  /** Input-side port as `{ nodeId, portId }`. */\n  target: (NodeGraphPortRef & { side: NodeGraphPortSide; type: string }) | null\n  valid: boolean\n}\ntype NodeGraphRect = { x: number; y: number; width: number; height: number }\ntype NodeGraphPortDetails = NodeGraphPortRef & { side: NodeGraphPortSide; type: string }\n\nconst EMPTY_SELECTION: NodeGraphSelection = { nodes: [], edges: [] }\nconst INTERACTIVE = \"input, textarea, select, button, a, [contenteditable], [data-slot=node-graph-port-pin]\"\n\n/* ---------------------------------------------------------------------------\n * Layout store: node positions/sizes and port offsets, measured from the DOM.\n * Edges and the minimap subscribe to it instead of re-measuring themselves.\n * ------------------------------------------------------------------------- */\n\ntype PortLayout = { side: NodeGraphPortSide; type: string; el: HTMLElement | null; offset: XY }\ntype NodeLayout = { position: XY; width: number; height: number; ports: Map<string, PortLayout> }\n\nfunction createLayoutStore() {\n  const nodes = new Map<string, NodeLayout>()\n  const listeners = new Set<() => void>()\n  let version = 0\n  const emit = () => {\n    version++\n    listeners.forEach((l) => l())\n  }\n  return {\n    nodes,\n    subscribe: (l: () => void) => {\n      listeners.add(l)\n      return () => {\n        listeners.delete(l)\n      }\n    },\n    getVersion: () => version,\n    emit,\n    ensure(id: string) {\n      let node = nodes.get(id)\n      if (!node) {\n        node = { position: { x: 0, y: 0 }, width: 0, height: 0, ports: new Map() }\n        nodes.set(id, node)\n      }\n      return node\n    },\n    getPortPosition(ref: NodeGraphPortRef): XY | null {\n      const node = nodes.get(ref.nodeId)\n      const port = node?.ports.get(ref.portId)\n      if (!node || !port) return null\n      return { x: node.position.x + port.offset.x, y: node.position.y + port.offset.y }\n    },\n    getPort(ref: NodeGraphPortRef) {\n      return nodes.get(ref.nodeId)?.ports.get(ref.portId) ?? null\n    },\n    getBounds(ids?: Iterable<string>): NodeGraphRect | null {\n      let minX = Infinity\n      let minY = Infinity\n      let maxX = -Infinity\n      let maxY = -Infinity\n      for (const id of ids ?? nodes.keys()) {\n        const node = nodes.get(id)\n        if (!node) continue\n        minX = Math.min(minX, node.position.x)\n        minY = Math.min(minY, node.position.y)\n        maxX = Math.max(maxX, node.position.x + node.width)\n        maxY = Math.max(maxY, node.position.y + node.height)\n      }\n      if (!Number.isFinite(minX)) return null\n      return { x: minX, y: minY, width: maxX - minX, height: maxY - minY }\n    },\n  }\n}\n\ntype LayoutStore = ReturnType<typeof createLayoutStore>\n\n/* ---------------------------------------------------------------------------\n * Context\n * ------------------------------------------------------------------------- */\n\ntype NodeGraphContextValue = {\n  store: LayoutStore\n  /** Controlled pan and zoom as `{ x, y, zoom }`. */\n  viewport: NodeGraphViewportState\n  setViewport: (next: NodeGraphViewportState | ((prev: NodeGraphViewportState) => NodeGraphViewportState)) => void\n  viewportRef: React.RefObject<HTMLDivElement | null>\n  size: { width: number; height: number }\n  /** Lower zoom bound. */\n  minZoom: number\n  /** Upper zoom bound. */\n  maxZoom: number\n  snapGrid: number\n  /** Controlled selection as `{ nodes, edges }` ids. */\n  selection: NodeGraphSelection\n  setSelection: (next: NodeGraphSelection) => void\n  connecting: NodeGraphConnectingState | null\n  marquee: NodeGraphRect | null\n  draggingNodes: boolean\n  panning: boolean\n  spaceHeld: boolean\n  /** Convert a client (screen) point to graph coordinates. */\n  screenToGraph: (client: XY) => XY\n  graphToScreen: (point: XY) => XY\n  zoomIn: () => void\n  zoomOut: () => void\n  zoomTo: (zoom: number, client?: XY) => void\n  fitView: (options?: { padding?: number; ids?: string[]; maxZoom?: number }) => void\n  centerOn: (point: XY) => void\n  announce: (message: string) => void\n  // internal interaction hooks used by parts\n  startNodeDrag: (nodeId: string, event: React.PointerEvent) => void\n  startConnection: (source: NodeGraphConnectingState[\"source\"], event: React.PointerEvent) => void\n  disconnect: (details: NodeGraphPortDetails) => void\n  edgeAt: (details: NodeGraphPortDetails) => NodeGraphPortDetails | null\n  deleteSelection: () => void\n  nudgeSelection: (delta: XY, focusedNodeId?: string) => void\n  selectAll: () => void\n  onNodeClick: (nodeId: string, event: React.MouseEvent | React.KeyboardEvent) => void\n  onEdgeClick: (edgeId: string, event: React.MouseEvent) => void\n}\n\nconst NodeGraphContext = React.createContext<NodeGraphContextValue | null>(null)\n\n/** Access the graph (viewport, selection, coordinate helpers) from any part or consumer code inside `NodeGraph`. */\nfunction useNodeGraph() {\n  const ctx = React.useContext(NodeGraphContext)\n  if (!ctx) throw new Error(\"NodeGraph parts must be used within <NodeGraph>\")\n  return ctx\n}\n\n/** Re-render when node/port layout changes. */\nfunction useLayoutVersion(store: LayoutStore) {\n  return React.useSyncExternalStore(store.subscribe, store.getVersion, store.getVersion)\n}\n\nconst clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, value))\nconst snap = (value: number, grid: number) => (grid > 0 ? Math.round(value / grid) * grid : value)\nconst sameSelection = (a: NodeGraphSelection, b: NodeGraphSelection) =>\n  a.nodes.length === b.nodes.length &&\n  a.edges.length === b.edges.length &&\n  a.nodes.every((id, i) => b.nodes[i] === id) &&\n  a.edges.every((id, i) => b.edges[i] === id)\n\nfunction useControllable<T>(value: T | undefined, defaultValue: T, onChange?: (value: T) => void) {\n  const [internal, setInternal] = React.useState(defaultValue)\n  const controlled = value !== undefined\n  const current = controlled ? value : internal\n  // Tracks the latest value synchronously so back-to-back functional updates (wheel zoom) compose.\n  const ref = React.useRef(current)\n  React.useLayoutEffect(() => {\n    ref.current = current\n  }, [current])\n  const onChangeRef = React.useRef(onChange)\n  React.useEffect(() => {\n    onChangeRef.current = onChange\n  }, [onChange])\n  const set = React.useCallback(\n    (next: T | ((prev: T) => T)) => {\n      const resolved = typeof next === \"function\" ? (next as (prev: T) => T)(ref.current) : next\n      ref.current = resolved\n      if (!controlled) setInternal(resolved)\n      onChangeRef.current?.(resolved)\n    },\n    [controlled]\n  )\n  return [current, set] as const\n}\n\n/* ---------------------------------------------------------------------------\n * Root\n * ------------------------------------------------------------------------- */\n\ntype NodeGraphProps = Omit<React.ComponentProps<typeof ark.div>, \"onSelect\"> & {\n  /** Controlled pan and zoom as `{ x, y, zoom }`. */\n  viewport?: NodeGraphViewportState\n  /** Initial pan and zoom when uncontrolled. */\n  defaultViewport?: NodeGraphViewportState\n  /** Called with `{ x, y, zoom }` while panning or zooming. */\n  onViewportChange?: (viewport: NodeGraphViewportState) => void\n  /** Controlled selection as `{ nodes, edges }` ids. */\n  selection?: NodeGraphSelection\n  /** Initial selected nodes and edges when uncontrolled. */\n  defaultSelection?: NodeGraphSelection\n  /** Called with `{ nodes, edges }` when the selection changes. */\n  onSelectionChange?: (selection: NodeGraphSelection) => void\n  /** Lower zoom bound. */\n  minZoom?: number\n  /** Upper zoom bound. */\n  maxZoom?: number\n  /** Grid size nodes snap to while dragging and nudging. `0` disables snapping. */\n  snapGrid?: number\n  /** Live position updates while nodes are dragged or nudged. */\n  onNodesMove?: (moves: NodeGraphNodeMove[]) => void\n  /** Fired once when a drag or nudge finishes, with the final positions. */\n  onNodesMoveEnd?: (moves: NodeGraphNodeMove[]) => void\n  /** A connection was completed on a valid port. `source` is always the output side. */\n  onConnect?: (connection: NodeGraphConnection) => void\n  /** A connection was released on empty space; `position` is in graph coordinates. */\n  onConnectEnd?: (details: { source: NodeGraphConnectingState[\"source\"]; position: XY; client: XY }) => void\n  /** Override the built-in check (sides differ, nodes differ, port types match or are \"any\"). */\n  isValidConnection?: (connection: NodeGraphConnection & { sourceType: string; targetType: string }) => boolean\n  /** Delete/Backspace with a selection. */\n  onDelete?: (selection: NodeGraphSelection) => void\n  /** Right-click on empty space (a right-drag pans instead). */\n  onPaneContextMenu?: (details: { position: XY; client: XY }) => void\n  /** Right-click on a node (selects it first unless already selected). */\n  onNodeContextMenu?: (details: { id: string; position: XY; client: XY }) => void\n  /** Right-click on an edge. */\n  onEdgeContextMenu?: (details: { id: string; position: XY; client: XY }) => void\n  /** Right-click on a port pin. */\n  onPortContextMenu?: (details: NodeGraphPortDetails & { position: XY; client: XY }) => void\n  /** Alt+click on a port pin: the conventional \"break links\" gesture. */\n  onDisconnect?: (details: NodeGraphPortDetails) => void\n  /**\n   * Enables re-routing: return the other end of the single link attached to `port` (or null).\n   * Dragging from such a pin then calls `onDisconnect(port)` and continues the drag from that other end.\n   */\n  edgeAt?: (port: NodeGraphPortDetails) => NodeGraphPortDetails | null\n}\n\nfunction NodeGraphRoot({\n  viewport: viewportProp,\n  defaultViewport = { x: 0, y: 0, zoom: 1 },\n  onViewportChange,\n  selection: selectionProp,\n  defaultSelection = EMPTY_SELECTION,\n  onSelectionChange,\n  minZoom = 0.25,\n  maxZoom = 2,\n  snapGrid = 20,\n  onNodesMove,\n  onNodesMoveEnd,\n  onConnect,\n  onConnectEnd,\n  isValidConnection,\n  onDelete,\n  onPaneContextMenu,\n  onNodeContextMenu,\n  onEdgeContextMenu,\n  onPortContextMenu,\n  onDisconnect,\n  edgeAt,\n  className,\n  children,\n  ...props\n}: NodeGraphRootProps) {\n  const store = React.useMemo(() => createLayoutStore(), [])\n  const viewportRef = React.useRef<HTMLDivElement>(null)\n  const [viewport, setViewportState] = useControllable(viewportProp, defaultViewport, onViewportChange)\n  const [selection, setSelectionState] = useControllable(selectionProp, defaultSelection, onSelectionChange)\n  const [size, setSize] = React.useState({ width: 0, height: 0 })\n  const [connecting, setConnecting] = React.useState<NodeGraphConnectingState | null>(null)\n  const [marquee, setMarquee] = React.useState<NodeGraphRect | null>(null)\n  const [draggingNodes, setDraggingNodes] = React.useState(false)\n  const [panning, setPanning] = React.useState(false)\n  const [spaceHeld, setSpaceHeld] = React.useState(false)\n  const { message: announcement, announce } = useLiveRegion()\n  const spaceRef = React.useRef(false)\n  React.useEffect(() => {\n    const down = (event: KeyboardEvent) => {\n      if (event.key !== \" \" || event.repeat) return\n      const target = event.target as HTMLElement\n      if (target.closest(\"input, textarea, select, button, [contenteditable]\")) return\n      if (!viewportRef.current?.contains(target) && target !== document.body) return\n      spaceRef.current = true\n      setSpaceHeld(true)\n    }\n    const up = (event: KeyboardEvent) => {\n      if (event.key !== \" \") return\n      spaceRef.current = false\n      setSpaceHeld(false)\n    }\n    const blur = () => {\n      spaceRef.current = false\n      setSpaceHeld(false)\n    }\n    window.addEventListener(\"keydown\", down)\n    window.addEventListener(\"keyup\", up)\n    window.addEventListener(\"blur\", blur)\n    return () => {\n      window.removeEventListener(\"keydown\", down)\n      window.removeEventListener(\"keyup\", up)\n      window.removeEventListener(\"blur\", blur)\n    }\n  }, [])\n\n  const latest = React.useRef({\n    viewport,\n    selection,\n    size,\n    onNodesMove,\n    onNodesMoveEnd,\n    onConnect,\n    onConnectEnd,\n    onPaneContextMenu,\n    onNodeContextMenu,\n    onEdgeContextMenu,\n    onPortContextMenu,\n    onDisconnect,\n    edgeAt,\n  })\n  React.useEffect(() => {\n    latest.current = {\n      viewport,\n      selection,\n      size,\n      onNodesMove,\n      onNodesMoveEnd,\n      onConnect,\n      onConnectEnd,\n      onPaneContextMenu,\n      onNodeContextMenu,\n      onEdgeContextMenu,\n      onPortContextMenu,\n      onDisconnect,\n      edgeAt,\n    }\n  })\n\n  const setViewport = React.useCallback(\n    (next: NodeGraphViewportState | ((prev: NodeGraphViewportState) => NodeGraphViewportState)) =>\n      setViewportState((prev) => {\n        const resolved = typeof next === \"function\" ? next(prev) : next\n        return { ...resolved, zoom: clamp(resolved.zoom, minZoom, maxZoom) }\n      }),\n    [setViewportState, minZoom, maxZoom]\n  )\n  const setSelection = React.useCallback(\n    (next: NodeGraphSelection) => {\n      if (!sameSelection(latest.current.selection, next)) setSelectionState(next)\n    },\n    [setSelectionState]\n  )\n\n  const screenToGraph = React.useCallback((client: XY): XY => {\n    const rect = viewportRef.current?.getBoundingClientRect()\n    const vp = latest.current.viewport\n    return {\n      x: (client.x - (rect?.left ?? 0) - vp.x) / vp.zoom,\n      y: (client.y - (rect?.top ?? 0) - vp.y) / vp.zoom,\n    }\n  }, [])\n  const graphToScreen = React.useCallback((point: XY): XY => {\n    const rect = viewportRef.current?.getBoundingClientRect()\n    const vp = latest.current.viewport\n    return { x: point.x * vp.zoom + vp.x + (rect?.left ?? 0), y: point.y * vp.zoom + vp.y + (rect?.top ?? 0) }\n  }, [])\n\n  /** Zoom keeping the graph point under `client` (defaults to the pane centre) fixed. */\n  const zoomTo = React.useCallback(\n    (zoom: number, client?: XY) => {\n      const rect = viewportRef.current?.getBoundingClientRect()\n      const cx = client ? client.x - (rect?.left ?? 0) : latest.current.size.width / 2\n      const cy = client ? client.y - (rect?.top ?? 0) : latest.current.size.height / 2\n      setViewport((prev) => {\n        const next = clamp(zoom, minZoom, maxZoom)\n        const gx = (cx - prev.x) / prev.zoom\n        const gy = (cy - prev.y) / prev.zoom\n        return { x: cx - gx * next, y: cy - gy * next, zoom: next }\n      })\n    },\n    [setViewport, minZoom, maxZoom]\n  )\n  const zoomIn = React.useCallback(() => zoomTo(latest.current.viewport.zoom * 1.2), [zoomTo])\n  const zoomOut = React.useCallback(() => zoomTo(latest.current.viewport.zoom / 1.2), [zoomTo])\n  const fitView = React.useCallback(\n    (options?: { padding?: number; ids?: string[]; maxZoom?: number }) => {\n      const bounds = store.getBounds(options?.ids)\n      const { width, height } = latest.current.size\n      if (!bounds || !width || !height) return\n      const padding = options?.padding ?? 40\n      const zoom = clamp(\n        Math.min(\n          (width - padding * 2) / Math.max(bounds.width, 1),\n          (height - padding * 2) / Math.max(bounds.height, 1)\n        ),\n        minZoom,\n        options?.maxZoom ?? 1\n      )\n      setViewport({\n        x: (width - bounds.width * zoom) / 2 - bounds.x * zoom,\n        y: (height - bounds.height * zoom) / 2 - bounds.y * zoom,\n        zoom,\n      })\n    },\n    [store, setViewport, minZoom]\n  )\n  const centerOn = React.useCallback(\n    (point: XY) =>\n      setViewport((prev) => ({\n        ...prev,\n        x: latest.current.size.width / 2 - point.x * prev.zoom,\n        y: latest.current.size.height / 2 - point.y * prev.zoom,\n      })),\n    [setViewport]\n  )\n\n  // Pane size for fitView / minimap.\n  React.useLayoutEffect(() => {\n    const el = viewportRef.current\n    if (!el) return\n    const update = () => setSize({ width: el.clientWidth, height: el.clientHeight })\n    update()\n    const observer = new ResizeObserver(update)\n    observer.observe(el)\n    return () => observer.disconnect()\n  }, [])\n\n  /* ----- pointer interactions: they attach move/up listeners to the window ----- */\n\n  const track = React.useCallback((onMove: (event: PointerEvent) => void, onUp: (event: PointerEvent) => void) => {\n    const up = (event: PointerEvent) => {\n      window.removeEventListener(\"pointermove\", onMove)\n      window.removeEventListener(\"pointerup\", up)\n      window.removeEventListener(\"pointercancel\", up)\n      onUp(event)\n    }\n    window.addEventListener(\"pointermove\", onMove)\n    window.addEventListener(\"pointerup\", up)\n    window.addEventListener(\"pointercancel\", up)\n  }, [])\n\n  const startNodeDrag = React.useCallback(\n    (nodeId: string, event: React.PointerEvent) => {\n      const startClient = { x: event.clientX, y: event.clientY }\n      const current = latest.current.selection\n      const additive = event.shiftKey || event.metaKey || event.ctrlKey\n      const wasSelected = current.nodes.includes(nodeId)\n      // Selection resolves on pointer down so a drag moves the whole group.\n      const nodes = wasSelected ? current.nodes : additive ? [...current.nodes, nodeId] : [nodeId]\n      if (!wasSelected) setSelection({ nodes, edges: additive ? current.edges : [] })\n      const starts = new Map(nodes.map((id) => [id, { ...store.ensure(id).position }]))\n      let moved = false\n      let lastMoves: NodeGraphNodeMove[] = []\n      track(\n        (e) => {\n          const zoom = latest.current.viewport.zoom\n          const dx = (e.clientX - startClient.x) / zoom\n          const dy = (e.clientY - startClient.y) / zoom\n          if (!moved && Math.hypot(dx * zoom, dy * zoom) < 3) return\n          if (!moved) {\n            moved = true\n            setDraggingNodes(true)\n          }\n          lastMoves = [...starts].map(([id, start]) => ({\n            id,\n            /** Node position in graph coordinates. */\n            position: { x: snap(start.x + dx, snapGrid), y: snap(start.y + dy, snapGrid) },\n          }))\n          latest.current.onNodesMove?.(lastMoves)\n        },\n        () => {\n          if (moved) {\n            setDraggingNodes(false)\n            latest.current.onNodesMoveEnd?.(lastMoves)\n          } else if (wasSelected && additive) {\n            setSelection({ nodes: current.nodes.filter((id) => id !== nodeId), edges: current.edges })\n          } else if (wasSelected && current.nodes.length > 1) {\n            setSelection({ nodes: [nodeId], edges: [] })\n          }\n        }\n      )\n    },\n    [store, track, setSelection, snapGrid]\n  )\n\n  const validate = React.useCallback(\n    (a: NodeGraphConnectingState[\"source\"], b: NodeGraphConnectingState[\"source\"]) => {\n      if (a.side === b.side || a.nodeId === b.nodeId) return false\n      const [source, target] = a.side === \"output\" ? [a, b] : [b, a]\n      if (isValidConnection) {\n        return isValidConnection({\n          /** Output-side port as `{ nodeId, portId }`. */\n          source: { nodeId: source.nodeId, portId: source.portId },\n          /** Input-side port as `{ nodeId, portId }`. */\n          target: { nodeId: target.nodeId, portId: target.portId },\n          sourceType: source.type,\n          targetType: target.type,\n        })\n      }\n      return source.type === target.type || source.type === \"any\" || target.type === \"any\"\n    },\n    [isValidConnection]\n  )\n\n  const startConnection = React.useCallback(\n    (source: NodeGraphConnectingState[\"source\"], event: React.PointerEvent) => {\n      const position = screenToGraph({ x: event.clientX, y: event.clientY })\n      let state: NodeGraphConnectingState = { source, position, target: null, valid: false }\n      setConnecting(state)\n      track(\n        (e) => {\n          const el = document\n            .elementFromPoint(e.clientX, e.clientY)\n            ?.closest<HTMLElement>(\"[data-slot=node-graph-port-pin]\")\n          const target =\n            el && el.dataset.nodeId && el.dataset.portId\n              ? {\n                  nodeId: el.dataset.nodeId,\n                  portId: el.dataset.portId,\n                  side: (el.dataset.side as NodeGraphPortSide) ?? \"input\",\n                  type: el.dataset.type ?? \"any\",\n                }\n              : null\n          const anchored = target && validate(source, target) ? store.getPortPosition(target) : null\n          state = {\n            source,\n            /** Node position in graph coordinates. */\n            position: anchored ?? screenToGraph({ x: e.clientX, y: e.clientY }),\n            target,\n            valid: !!anchored,\n          }\n          setConnecting(state)\n        },\n        (e) => {\n          setConnecting(null)\n          if (state.target && state.valid) {\n            const [from, to] = source.side === \"output\" ? [source, state.target] : [state.target, source]\n            latest.current.onConnect?.({\n              /** Output-side port as `{ nodeId, portId }`. */\n              source: { nodeId: from.nodeId, portId: from.portId },\n              /** Input-side port as `{ nodeId, portId }`. */\n              target: { nodeId: to.nodeId, portId: to.portId },\n            })\n          } else if (!state.target) {\n            latest.current.onConnectEnd?.({\n              source,\n              /** Node position in graph coordinates. */\n              position: screenToGraph({ x: e.clientX, y: e.clientY }),\n              client: { x: e.clientX, y: e.clientY },\n            })\n          }\n        }\n      )\n    },\n    [screenToGraph, store, track, validate]\n  )\n\n  /** Pointer down on the pane itself: pan (middle/right button, space, or alt) or marquee (left). */\n  const onPanePointerDown = React.useCallback(\n    (event: React.PointerEvent) => {\n      const target = event.target as HTMLElement\n      if (target.closest(\"[data-slot=node-graph-controls], [data-slot=node-graph-minimap]\")) return\n      const pin = target.closest<HTMLElement>(\"[data-slot=node-graph-port-pin]\")\n      const nodeEl = target.closest<HTMLElement>(\"[data-slot=node-graph-node]\")\n      const edgeEl = target.closest<HTMLElement>(\"[data-slot=node-graph-edge]\")\n      const startClient = { x: event.clientX, y: event.clientY }\n      const touch = event.pointerType === \"touch\"\n      const isPan =\n        event.button === 1 ||\n        event.button === 2 ||\n        spaceRef.current ||\n        ((event.altKey || touch) && !nodeEl && !edgeEl && !pin)\n      if (!isPan && (nodeEl || edgeEl)) return\n      if (isPan) {\n        event.preventDefault()\n        const startViewport = latest.current.viewport\n        let moved = false\n        setPanning(true)\n        // Right-click selects the node under the cursor like a left click would.\n        const nodeId = nodeEl?.dataset.value\n        if (event.button === 2 && nodeId && !latest.current.selection.nodes.includes(nodeId)) {\n          setSelection({ nodes: [nodeId], edges: [] })\n        }\n        track(\n          (e) => {\n            const dx = e.clientX - startClient.x\n            const dy = e.clientY - startClient.y\n            if (!moved && Math.hypot(dx, dy) < 3) return\n            moved = true\n            setViewport({ ...startViewport, x: startViewport.x + dx, y: startViewport.y + dy })\n          },\n          (e) => {\n            setPanning(false)\n            if (!moved && event.button === 2) {\n              const client = { x: e.clientX, y: e.clientY }\n              const position = screenToGraph(client)\n              const handlers = latest.current\n              if (pin && pin.dataset.nodeId && pin.dataset.portId) {\n                handlers.onPortContextMenu?.({\n                  nodeId: pin.dataset.nodeId,\n                  portId: pin.dataset.portId,\n                  side: (pin.dataset.side as NodeGraphPortSide) ?? \"input\",\n                  type: pin.dataset.type ?? \"any\",\n                  position,\n                  client,\n                })\n              } else if (nodeId) {\n                handlers.onNodeContextMenu?.({ id: nodeId, position, client })\n              } else if (edgeEl?.dataset.value) {\n                handlers.onEdgeContextMenu?.({ id: edgeEl.dataset.value, position, client })\n              } else {\n                handlers.onPaneContextMenu?.({ position, client })\n              }\n            }\n          }\n        )\n        return\n      }\n      if (event.button !== 0) return\n      const additive = event.shiftKey || event.metaKey || event.ctrlKey\n      const base = additive ? latest.current.selection : EMPTY_SELECTION\n      if (!additive) setSelection(EMPTY_SELECTION)\n      const origin = screenToGraph(startClient)\n      let box: NodeGraphRect | null = null\n      track(\n        (e) => {\n          const point = screenToGraph({ x: e.clientX, y: e.clientY })\n          if (!box && Math.hypot(e.clientX - startClient.x, e.clientY - startClient.y) < 3) return\n          box = {\n            x: Math.min(origin.x, point.x),\n            y: Math.min(origin.y, point.y),\n            width: Math.abs(point.x - origin.x),\n            height: Math.abs(point.y - origin.y),\n          }\n          setMarquee(box)\n          const hits: string[] = []\n          for (const [id, node] of store.nodes) {\n            const intersects =\n              node.position.x < box.x + box.width &&\n              node.position.x + node.width > box.x &&\n              node.position.y < box.y + box.height &&\n              node.position.y + node.height > box.y\n            if (intersects) hits.push(id)\n          }\n          setSelection({ nodes: [...new Set([...base.nodes, ...hits])], edges: base.edges })\n        },\n        () => setMarquee(null)\n      )\n    },\n    [track, setViewport, setSelection, screenToGraph, store]\n  )\n\n  const disconnect = React.useCallback(\n    (details: NodeGraphPortDetails) => {\n      latest.current.onDisconnect?.(details)\n      announce(`Broke links on ${details.side} ${details.portId}.`)\n    },\n    [announce]\n  )\n\n  const edgeAtStable = React.useCallback(\n    (details: NodeGraphPortDetails) => latest.current.edgeAt?.(details) ?? null,\n    []\n  )\n\n  const deleteSelection = React.useCallback(() => {\n    const current = latest.current.selection\n    if (!current.nodes.length && !current.edges.length) return\n    onDelete?.(current)\n    setSelection(EMPTY_SELECTION)\n    announce(\n      `Deleted ${current.nodes.length} node${current.nodes.length === 1 ? \"\" : \"s\"} and ${current.edges.length} connection${current.edges.length === 1 ? \"\" : \"s\"}.`\n    )\n  }, [onDelete, setSelection, announce])\n\n  const nudgeSelection = React.useCallback(\n    (delta: XY, focusedNodeId?: string) => {\n      const current = latest.current.selection\n      const ids = current.nodes.length ? current.nodes : focusedNodeId ? [focusedNodeId] : []\n      if (!ids.length) return\n      const moves = ids.map((id) => {\n        const { position } = store.ensure(id)\n        return { id, position: { x: position.x + delta.x, y: position.y + delta.y } }\n      })\n      latest.current.onNodesMove?.(moves)\n      latest.current.onNodesMoveEnd?.(moves)\n      announce(\n        `Moved ${ids.length} node${ids.length === 1 ? \"\" : \"s\"} ${delta.x < 0 ? \"left\" : delta.x > 0 ? \"right\" : delta.y < 0 ? \"up\" : \"down\"}.`\n      )\n    },\n    [store, announce]\n  )\n\n  const selectAll = React.useCallback(\n    () => setSelection({ nodes: [...store.nodes.keys()], edges: latest.current.selection.edges }),\n    [store, setSelection]\n  )\n\n  const onNodeClick = React.useCallback(\n    (nodeId: string, event: React.MouseEvent | React.KeyboardEvent) => {\n      const current = latest.current.selection\n      const additive = event.shiftKey || event.metaKey || event.ctrlKey\n      if (additive) {\n        setSelection({\n          nodes: current.nodes.includes(nodeId)\n            ? current.nodes.filter((id) => id !== nodeId)\n            : [...current.nodes, nodeId],\n          edges: current.edges,\n        })\n      } else {\n        setSelection({ nodes: [nodeId], edges: [] })\n      }\n    },\n    [setSelection]\n  )\n  const onEdgeClick = React.useCallback(\n    (edgeId: string, event: React.MouseEvent) => {\n      const current = latest.current.selection\n      const additive = event.shiftKey || event.metaKey || event.ctrlKey\n      if (additive) {\n        setSelection({\n          nodes: current.nodes,\n          edges: current.edges.includes(edgeId)\n            ? current.edges.filter((id) => id !== edgeId)\n            : [...current.edges, edgeId],\n        })\n      } else {\n        setSelection({ nodes: [], edges: [edgeId] })\n      }\n    },\n    [setSelection]\n  )\n\n  const ctx = React.useMemo<NodeGraphContextValue>(\n    () => ({\n      store,\n      viewport,\n      setViewport,\n      viewportRef,\n      size,\n      minZoom,\n      maxZoom,\n      snapGrid,\n      selection,\n      setSelection,\n      connecting,\n      marquee,\n      draggingNodes,\n      panning,\n      spaceHeld,\n      screenToGraph,\n      graphToScreen,\n      zoomIn,\n      zoomOut,\n      zoomTo,\n      fitView,\n      centerOn,\n      announce,\n      startNodeDrag,\n      startConnection,\n      disconnect,\n      edgeAt: edgeAtStable,\n      deleteSelection,\n      nudgeSelection,\n      selectAll,\n      onNodeClick,\n      onEdgeClick,\n    }),\n    [\n      store,\n      viewport,\n      setViewport,\n      size,\n      minZoom,\n      maxZoom,\n      snapGrid,\n      selection,\n      setSelection,\n      connecting,\n      marquee,\n      draggingNodes,\n      panning,\n      spaceHeld,\n      screenToGraph,\n      graphToScreen,\n      zoomIn,\n      zoomOut,\n      zoomTo,\n      fitView,\n      centerOn,\n      announce,\n      startNodeDrag,\n      startConnection,\n      disconnect,\n      edgeAtStable,\n      deleteSelection,\n      nudgeSelection,\n      selectAll,\n      onNodeClick,\n      onEdgeClick,\n    ]\n  )\n\n  return (\n    <NodeGraphContext.Provider value={ctx}>\n      <PanePointerDownContext.Provider value={onPanePointerDown}>\n        <ark.div\n          data-slot=\"node-graph\"\n          data-connecting={connecting ? \"\" : undefined}\n          data-dragging={draggingNodes ? \"\" : undefined}\n          data-panning={panning ? \"\" : undefined}\n          className={cn(\"relative flex min-h-0 flex-1 flex-col\", className)}\n          {...props}\n        >\n          {props.asChild ? (\n            React.isValidElement(children) ? (\n              children\n            ) : null\n          ) : (\n            <>\n              {children}\n              <LiveRegion.Root data-slot=\"node-graph-live-region\" message={announcement} />\n            </>\n          )}\n        </ark.div>\n      </PanePointerDownContext.Provider>\n    </NodeGraphContext.Provider>\n  )\n}\n\nconst PanePointerDownContext = React.createContext<((event: React.PointerEvent) => void) | null>(null)\n\n/* ---------------------------------------------------------------------------\n * Viewport\n * ------------------------------------------------------------------------- */\n\nfunction NodeGraphViewport({ className, children, panOnScroll = false, onKeyDown, ...props }: NodeGraphViewportProps) {\n  const ctx = useNodeGraph()\n  const onPanePointerDown = React.useContext(PanePointerDownContext)\n  const { viewportRef, setViewport, zoomTo, connecting, panning, spaceHeld } = ctx\n  const ctxRef = React.useRef(ctx)\n  React.useEffect(() => {\n    ctxRef.current = ctx\n  })\n\n  // Wheel must be non-passive to prevent page scroll.\n  React.useEffect(() => {\n    const el = viewportRef.current\n    if (!el) return\n    const onWheel = (event: WheelEvent) => {\n      event.preventDefault()\n      const zooming = event.ctrlKey || event.metaKey || !panOnScroll\n      if (zooming) {\n        const factor = Math.exp(-event.deltaY * (event.ctrlKey ? 0.01 : 0.002))\n        zoomTo(ctxRef.current.viewport.zoom * factor, { x: event.clientX, y: event.clientY })\n      } else {\n        setViewport((prev) => ({ ...prev, x: prev.x - event.deltaX, y: prev.y - event.deltaY }))\n      }\n    }\n    el.addEventListener(\"wheel\", onWheel, { passive: false })\n    return () => el.removeEventListener(\"wheel\", onWheel)\n  }, [viewportRef, setViewport, zoomTo, panOnScroll])\n\n  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {\n    onKeyDown?.(event)\n    if (event.defaultPrevented) return\n    const target = event.target as HTMLElement\n    if (target.closest(\"input, textarea, select, [contenteditable]\")) return\n    const focusedNode = target.closest<HTMLElement>(\"[data-slot=node-graph-node]\")?.dataset.value\n    const step = (event.shiftKey ? 10 : 1) * (ctx.snapGrid || 10)\n    const meta = event.metaKey || event.ctrlKey\n    switch (event.key) {\n      case \" \":\n        if (!focusedNode) event.preventDefault()\n        break\n      case \"Delete\":\n      case \"Backspace\":\n        event.preventDefault()\n        ctx.deleteSelection()\n        break\n      case \"Escape\":\n        ctx.setSelection(EMPTY_SELECTION)\n        break\n      case \"a\":\n      case \"A\":\n        if (meta) {\n          event.preventDefault()\n          ctx.selectAll()\n        }\n        break\n      case \"ArrowLeft\":\n        event.preventDefault()\n        ctx.nudgeSelection({ x: -step, y: 0 }, focusedNode)\n        break\n      case \"ArrowRight\":\n        event.preventDefault()\n        ctx.nudgeSelection({ x: step, y: 0 }, focusedNode)\n        break\n      case \"ArrowUp\":\n        event.preventDefault()\n        ctx.nudgeSelection({ x: 0, y: -step }, focusedNode)\n        break\n      case \"ArrowDown\":\n        event.preventDefault()\n        ctx.nudgeSelection({ x: 0, y: step }, focusedNode)\n        break\n      case \"=\":\n      case \"+\":\n        if (meta) {\n          event.preventDefault()\n          ctx.zoomIn()\n        }\n        break\n      case \"-\":\n        if (meta) {\n          event.preventDefault()\n          ctx.zoomOut()\n        }\n        break\n      case \"0\":\n        if (meta) {\n          event.preventDefault()\n          ctx.fitView()\n        }\n        break\n    }\n  }\n\n  return (\n    <ark.div\n      ref={viewportRef}\n      data-slot=\"node-graph-viewport\"\n      tabIndex={0}\n      role=\"application\"\n      aria-label=\"Node graph\"\n      data-connecting={connecting ? \"\" : undefined}\n      data-panning={panning ? \"\" : undefined}\n      data-space={spaceHeld ? \"\" : undefined}\n      className={cn(\n        \"relative min-h-0 flex-1 touch-none overflow-hidden rounded-xl border bg-muted/30 outline-none select-none focus-visible:ring-2 focus-visible:ring-ring/50\",\n        \"data-connecting:cursor-crosshair data-panning:cursor-grabbing data-space:cursor-grab\",\n        className\n      )}\n      onPointerDown={(event) => onPanePointerDown?.(event)}\n      onContextMenu={(event) => event.preventDefault()}\n      onKeyDown={handleKeyDown}\n      {...props}\n    >\n      {children}\n    </ark.div>\n  )\n}\n\n/* ---------------------------------------------------------------------------\n * Background grid\n * ------------------------------------------------------------------------- */\n\nfunction NodeGraphBackground({ className, variant = \"dots\", gap = 20, ...props }: NodeGraphBackgroundProps) {\n  const { viewport } = useNodeGraph()\n  const id = React.useId()\n  const size = gap * viewport.zoom\n  const major = size * 5\n  return (\n    <ark.svg\n      data-slot=\"node-graph-background\"\n      aria-hidden\n      className={cn(\"pointer-events-none absolute inset-0 size-full text-foreground/60\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <pattern\n            id={`${id}-minor`}\n            x={viewport.x % size}\n            y={viewport.y % size}\n            width={size}\n            height={size}\n            patternUnits=\"userSpaceOnUse\"\n          >\n            {variant === \"dots\" ? (\n              <circle\n                cx={size / 2}\n                cy={size / 2}\n                r={Math.max(0.6, viewport.zoom * 0.9)}\n                fill=\"currentColor\"\n                opacity={0.28}\n              />\n            ) : (\n              <path\n                d={`M ${size} 0 L 0 0 0 ${size}`}\n                fill=\"none\"\n                stroke=\"currentColor\"\n                strokeWidth={1}\n                opacity={0.08}\n              />\n            )}\n          </pattern>\n          <pattern\n            id={`${id}-major`}\n            x={viewport.x % major}\n            y={viewport.y % major}\n            width={major}\n            height={major}\n            patternUnits=\"userSpaceOnUse\"\n          >\n            <path d={`M ${major} 0 L 0 0 0 ${major}`} fill=\"none\" stroke=\"currentColor\" strokeWidth={1} opacity={0.1} />\n          </pattern>\n          <rect width=\"100%\" height=\"100%\" fill={`url(#${id}-minor)`} />\n          <rect width=\"100%\" height=\"100%\" fill={`url(#${id}-major)`} />\n        </>\n      )}\n    </ark.svg>\n  )\n}\n\n/* ---------------------------------------------------------------------------\n * Surface (transformed layer), edges, connection line, marquee\n * ------------------------------------------------------------------------- */\n\nfunction NodeGraphSurface({ className, style, ...props }: NodeGraphSurfaceProps) {\n  const { viewport } = useNodeGraph()\n  return (\n    <ark.div\n      data-slot=\"node-graph-surface\"\n      className={cn(\"absolute top-0 left-0 origin-top-left\", className)}\n      style={{ transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`, ...style }}\n      {...props}\n    />\n  )\n}\n\nfunction NodeGraphEdges({ className, ...props }: NodeGraphEdgesProps) {\n  return (\n    <ark.svg\n      data-slot=\"node-graph-edges\"\n      className={cn(\"pointer-events-none absolute top-0 left-0 size-px overflow-visible\", className)}\n      {...props}\n    />\n  )\n}\n\n/** Cubic path between two points; horizontal handles scale with distance like a scripting graph. */\nfunction getBezierPath(source: XY, target: XY) {\n  const dx = target.x - source.x\n  const offset = clamp(Math.abs(dx) * 0.5, 40, 240) + (dx < 0 ? Math.min(Math.abs(dx) * 0.25, 120) : 0)\n  return `M ${source.x} ${source.y} C ${source.x + offset} ${source.y}, ${target.x - offset} ${target.y}, ${target.x} ${target.y}`\n}\n\nfunction NodeGraphEdge({\n  value,\n  source,\n  target,\n  selected: selectedProp,\n  className,\n  onClick,\n  children,\n  ...props\n}: NodeGraphEdgeProps) {\n  const { store, selection, onEdgeClick } = useNodeGraph()\n  useLayoutVersion(store)\n  const from = store.getPortPosition(source)\n  const to = store.getPortPosition(target)\n  if (!from || !to) return null\n  const selected = selectedProp ?? selection.edges.includes(value)\n  const d = getBezierPath(from, to)\n  const midpoint = { x: (from.x + to.x) / 2, y: (from.y + to.y) / 2 }\n  const type = store.getPort(source)?.type\n  return (\n    <ark.g\n      data-slot=\"node-graph-edge\"\n      data-value={value}\n      data-selected={selected ? \"\" : undefined}\n      data-type={type}\n      className={cn(\"group/edge pointer-events-auto cursor-pointer text-muted-foreground\", className)}\n      onClick={(event) => {\n        onClick?.(event)\n        if (!event.defaultPrevented) onEdgeClick(value, event)\n      }}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <path d={d} fill=\"none\" stroke=\"transparent\" strokeWidth={14} />\n          <path\n            d={d}\n            fill=\"none\"\n            stroke=\"currentColor\"\n            strokeWidth={2}\n            className=\"transition-[stroke-width] group-hover/edge:stroke-3 group-data-selected/edge:stroke-3 group-data-selected/edge:drop-shadow-[0_0_4px_currentColor]\"\n          />\n          {typeof children === \"function\" ? children?.({ midpoint, from, to }) : children}\n        </>\n      )}\n    </ark.g>\n  )\n}\n\n/** The edge being drawn from a pin. Renders nothing when idle. */\nfunction NodeGraphConnectionLine({ className, ...props }: NodeGraphConnectionLineProps) {\n  const { store, connecting } = useNodeGraph()\n  useLayoutVersion(store)\n  if (!connecting) return null\n  const from = store.getPortPosition(connecting.source)\n  if (!from) return null\n  const [a, b] = connecting.source.side === \"output\" ? [from, connecting.position] : [connecting.position, from]\n  return (\n    <ark.svg\n      data-slot=\"node-graph-connection-line\"\n      data-type={connecting.source.type}\n      data-valid={connecting.valid ? \"\" : undefined}\n      data-invalid={connecting.target && !connecting.valid ? \"\" : undefined}\n      className={cn(\n        \"pointer-events-none absolute top-0 left-0 size-px overflow-visible text-foreground data-invalid:text-destructive\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <path\n            d={getBezierPath(a, b)}\n            fill=\"none\"\n            stroke=\"currentColor\"\n            strokeWidth={2}\n            strokeDasharray={connecting.valid ? undefined : \"6 4\"}\n          />\n          <circle cx={b.x} cy={b.y} r={3} fill=\"currentColor\" />\n        </>\n      )}\n    </ark.svg>\n  )\n}\n\n/** Marquee selection rectangle. Renders nothing when idle. */\nfunction NodeGraphSelectionBox({ className, style, ...props }: NodeGraphSelectionBoxProps) {\n  const { marquee, viewport } = useNodeGraph()\n  if (!marquee) return null\n  return (\n    <ark.div\n      data-slot=\"node-graph-selection-box\"\n      className={cn(\"pointer-events-none absolute rounded-sm border border-primary/60 bg-primary/10\", className)}\n      style={{\n        left: marquee.x * viewport.zoom + viewport.x,\n        top: marquee.y * viewport.zoom + viewport.y,\n        width: marquee.width * viewport.zoom,\n        height: marquee.height * viewport.zoom,\n        ...style,\n      }}\n      {...props}\n    />\n  )\n}\n\n/* ---------------------------------------------------------------------------\n * Nodes\n * ------------------------------------------------------------------------- */\n\ntype NodeContextValue = {\n  value: string\n  registerPort: (portId: string, layout: PortLayout) => () => void\n  measure: () => void\n}\nconst NodeContext = React.createContext<NodeContextValue | null>(null)\n\nfunction useNodeGraphNode() {\n  const ctx = React.useContext(NodeContext)\n  if (!ctx) throw new Error(\"Node parts must be used within <NodeGraphNode>\")\n  return ctx\n}\n\nfunction NodeGraphNode({\n  value,\n  position,\n  selected: selectedProp,\n  className,\n  style,\n  onPointerDown,\n  onKeyDown,\n  onDoubleClick,\n  children,\n  ...props\n}: NodeGraphNodeProps) {\n  const graph = useNodeGraph()\n  const { store, selection, draggingNodes, startNodeDrag, onNodeClick } = graph\n  const ref = React.useRef<HTMLDivElement>(null)\n  const selected = selectedProp ?? selection.nodes.includes(value)\n  const zoomRef = React.useRef(graph.viewport.zoom)\n  React.useLayoutEffect(() => {\n    zoomRef.current = graph.viewport.zoom\n  }, [graph.viewport.zoom])\n\n  const measure = React.useCallback(() => {\n    const el = ref.current\n    if (!el) return\n    const zoom = zoomRef.current || 1\n    const rect = el.getBoundingClientRect()\n    const node = store.ensure(value)\n    node.width = rect.width / zoom\n    node.height = rect.height / zoom\n    for (const port of node.ports.values()) {\n      const pin = port.el?.getBoundingClientRect()\n      if (!pin) continue\n      port.offset = {\n        x: (pin.left + pin.width / 2 - rect.left) / zoom,\n        y: (pin.top + pin.height / 2 - rect.top) / zoom,\n      }\n    }\n    store.emit()\n  }, [store, value])\n\n  // Position from props is the source of truth; keep the store in sync for edges/minimap.\n  React.useLayoutEffect(() => {\n    const node = store.ensure(value)\n    node.position = position\n    store.emit()\n  }, [store, value, position])\n  React.useLayoutEffect(() => {\n    measure()\n    const el = ref.current\n    if (!el) return\n    const observer = new ResizeObserver(() => measure())\n    observer.observe(el)\n    return () => observer.disconnect()\n  }, [measure])\n  React.useEffect(\n    () => () => {\n      store.nodes.delete(value)\n      store.emit()\n    },\n    [store, value]\n  )\n\n  const nodeCtx = React.useMemo<NodeContextValue>(\n    () => ({\n      value,\n      registerPort: (portId, layout) => {\n        const node = store.ensure(value)\n        node.ports.set(portId, layout)\n        measure()\n        return () => {\n          node.ports.delete(portId)\n          store.emit()\n        }\n      },\n      measure,\n    }),\n    [store, value, measure]\n  )\n\n  return (\n    <NodeContext.Provider value={nodeCtx}>\n      <ark.div\n        ref={ref}\n        data-slot=\"node-graph-node\"\n        data-value={value}\n        data-selected={selected ? \"\" : undefined}\n        data-dragging={draggingNodes && selected ? \"\" : undefined}\n        tabIndex={0}\n        className={cn(\n          \"group/node absolute top-0 left-0 flex w-56 flex-col rounded-lg border bg-card text-card-foreground shadow-md outline-none\",\n          \"cursor-grab data-dragging:cursor-grabbing data-dragging:shadow-xl\",\n          \"focus-visible:ring-2 focus-visible:ring-ring/50 data-selected:border-primary data-selected:ring-2 data-selected:ring-primary/40\",\n          className\n        )}\n        style={{ transform: `translate(${position.x}px, ${position.y}px)`, ...style }}\n        onPointerDown={(event) => {\n          onPointerDown?.(event)\n          if (event.defaultPrevented || event.button !== 0) return\n          if ((event.target as HTMLElement).closest(INTERACTIVE)) return\n          if (graph.spaceHeld) return\n          event.stopPropagation()\n          startNodeDrag(value, event)\n        }}\n        onDoubleClick={(event) => {\n          onDoubleClick?.(event)\n          if (!event.defaultPrevented) graph.fitView({ ids: [value], padding: 80, maxZoom: 1.5 })\n        }}\n        onKeyDown={(event) => {\n          onKeyDown?.(event)\n          if (event.defaultPrevented || event.target !== event.currentTarget) return\n          if (event.key === \" \" || event.key === \"Enter\") {\n            event.preventDefault()\n            onNodeClick(value, event)\n          }\n        }}\n        {...props}\n      >\n        {children}\n      </ark.div>\n    </NodeContext.Provider>\n  )\n}\n\n/** Header slot for buttons (menus, run triggers). Revealed on hover/selection; clicks never start a drag. */\nfunction NodeGraphNodeActions({ className, onPointerDown, ...props }: NodeGraphNodeActionsProps) {\n  return (\n    <ark.div\n      data-slot=\"node-graph-node-actions\"\n      className={cn(\n        \"ml-auto flex shrink-0 items-center gap-0.5 opacity-0 transition-opacity group-focus-within/node:opacity-100 group-hover/node:opacity-100 group-data-selected/node:opacity-100\",\n        className\n      )}\n      onPointerDown={(event) => {\n        onPointerDown?.(event)\n        event.stopPropagation()\n      }}\n      {...props}\n    />\n  )\n}\n\nfunction NodeGraphNodeHeader({ className, ...props }: NodeGraphNodeHeaderProps) {\n  return (\n    <ark.div\n      data-slot=\"node-graph-node-header\"\n      className={cn(\n        \"flex items-center gap-2 rounded-t-[inherit] border-b bg-muted/60 px-3 py-2 text-sm font-medium [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction NodeGraphNodeTitle({ className, ...props }: NodeGraphNodeTitleProps) {\n  return <ark.div data-slot=\"node-graph-node-title\" className={cn(\"truncate leading-tight\", className)} {...props} />\n}\n\nfunction NodeGraphNodeSubtitle({ className, ...props }: NodeGraphNodeSubtitleProps) {\n  return (\n    <ark.div\n      data-slot=\"node-graph-node-subtitle\"\n      className={cn(\"truncate text-xs font-normal text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction NodeGraphNodeBody({ className, ...props }: NodeGraphNodeBodyProps) {\n  return (\n    <ark.div data-slot=\"node-graph-node-body\" className={cn(\"grid grid-cols-2 gap-x-2 py-2\", className)} {...props} />\n  )\n}\n\nfunction NodeGraphNodeInputs({ className, ...props }: NodeGraphNodeInputsProps) {\n  return <ark.div data-slot=\"node-graph-node-inputs\" className={cn(\"flex flex-col gap-1\", className)} {...props} />\n}\n\nfunction NodeGraphNodeOutputs({ className, ...props }: NodeGraphNodeOutputsProps) {\n  return (\n    <ark.div\n      data-slot=\"node-graph-node-outputs\"\n      className={cn(\"col-start-2 flex flex-col items-end gap-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction NodeGraphNodeFooter({ className, ...props }: NodeGraphNodeFooterProps) {\n  return (\n    <ark.div\n      data-slot=\"node-graph-node-footer\"\n      className={cn(\"rounded-b-[inherit] border-t px-3 py-1.5 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\n/* ---------------------------------------------------------------------------\n * Ports\n * ------------------------------------------------------------------------- */\n\ntype PortContextValue = { value: string; side: NodeGraphPortSide; type: string; connected: boolean }\nconst PortContext = React.createContext<PortContextValue | null>(null)\n\nfunction NodeGraphPort({ value, side, type = \"any\", connected = false, className, ...props }: NodeGraphPortProps) {\n  const ctx = React.useMemo(() => ({ value, side, type, connected }), [value, side, type, connected])\n  return (\n    <PortContext.Provider value={ctx}>\n      <ark.div\n        data-slot=\"node-graph-port\"\n        data-side={side}\n        data-type={type}\n        data-connected={connected ? \"\" : undefined}\n        className={cn(\n          \"flex min-h-6 items-center gap-1.5 text-xs\",\n          side === \"input\" ? \"pr-2 pl-0\" : \"flex-row-reverse pr-0 pl-2\",\n          className\n        )}\n        {...props}\n      />\n    </PortContext.Provider>\n  )\n}\n\nconst pinVariants = cva(\n  \"relative z-10 box-content shrink-0 cursor-crosshair border-2 border-current bg-background transition-transform hover:scale-125 data-connected:bg-current data-target:scale-125 data-target:ring-2 data-target:ring-current/40\",\n  {\n    variants: {\n      variant: {\n        circle: \"size-2.5 rounded-full\",\n        exec: \"size-3 border-0 bg-current opacity-45 [clip-path:polygon(0_0,60%_0,100%_50%,60%_100%,0_100%)] data-connected:opacity-100\",\n      },\n    },\n    defaultVariants: { variant: \"circle\" },\n  }\n)\n\n/** The connection handle. Sits on the node's edge: inputs are pulled left, outputs right. */\nfunction NodeGraphPortPin({ className, variant, onPointerDown, ...props }: NodeGraphPortPinProps) {\n  const graph = useNodeGraph()\n  const node = useNodeGraphNode()\n  const port = React.useContext(PortContext)\n  if (!port) throw new Error(\"NodeGraphPortPin must be used within <NodeGraphPort>\")\n  const ref = React.useRef<HTMLDivElement>(null)\n  const { registerPort } = node\n  React.useLayoutEffect(\n    () => registerPort(port.value, { side: port.side, type: port.type, el: ref.current, offset: { x: 0, y: 0 } }),\n    [registerPort, port.value, port.side, port.type]\n  )\n  const connecting = graph.connecting\n  const isTarget = connecting?.target?.nodeId === node.value && connecting.target.portId === port.value\n  const isSource = connecting?.source.nodeId === node.value && connecting.source.portId === port.value\n  return (\n    <ark.div\n      ref={ref}\n      data-slot=\"node-graph-port-pin\"\n      data-node-id={node.value}\n      data-port-id={port.value}\n      data-side={port.side}\n      data-type={port.type}\n      data-connected={port.connected || isSource ? \"\" : undefined}\n      data-target={isTarget ? (connecting?.valid ? \"valid\" : \"invalid\") : undefined}\n      aria-label={`${port.side} ${port.value}`}\n      className={cn(\n        pinVariants({ variant }),\n        port.side === \"input\" ? \"-ml-1.75\" : \"-mr-1.75\",\n        isTarget && !connecting?.valid && \"cursor-not-allowed text-destructive\",\n        className\n      )}\n      onPointerDown={(event) => {\n        onPointerDown?.(event)\n        if (event.defaultPrevented || event.button !== 0) return\n        event.stopPropagation()\n        event.preventDefault()\n        const details = { nodeId: node.value, portId: port.value, side: port.side, type: port.type }\n        if (event.altKey) {\n          graph.disconnect(details)\n          return\n        }\n        const other = port.connected ? graph.edgeAt(details) : null\n        if (other) {\n          // Pick the existing link up: drop it, then keep dragging from its far end.\n          graph.disconnect(details)\n          graph.startConnection(other, event)\n          return\n        }\n        graph.startConnection(details, event)\n      }}\n      {...props}\n    />\n  )\n}\n\nfunction NodeGraphPortLabel({ className, ...props }: NodeGraphPortLabelProps) {\n  return <ark.span data-slot=\"node-graph-port-label\" className={cn(\"truncate\", className)} {...props} />\n}\n\n/* ---------------------------------------------------------------------------\n * Controls, minimap, empty\n * ------------------------------------------------------------------------- */\n\nfunction NodeGraphControls({ className, ...props }: NodeGraphControlsProps) {\n  return (\n    <ark.div\n      data-slot=\"node-graph-controls\"\n      className={cn(\n        \"absolute bottom-3 left-3 z-20 flex items-center gap-1 rounded-lg border bg-background/90 p-1 shadow-sm backdrop-blur-sm\",\n        className\n      )}\n      onPointerDown={(event) => event.stopPropagation()}\n      {...props}\n    />\n  )\n}\n\ntype ControlTriggerProps = React.ComponentProps<typeof Button>\n\nfunction NodeGraphZoomInTrigger({ asChild, children, onClick, ...props }: NodeGraphZoomInTriggerProps) {\n  const { zoomIn } = useNodeGraph()\n  return (\n    <Button\n      data-slot=\"node-graph-zoom-in-trigger\"\n      variant=\"ghost\"\n      size=\"icon-sm\"\n      asChild={asChild}\n      aria-label=\"Zoom in\"\n      onClick={(event) => {\n        onClick?.(event)\n        if (!event.defaultPrevented) zoomIn()\n      }}\n      {...props}\n    >\n      {asChild ? children : (children ?? <PlusIcon />)}\n    </Button>\n  )\n}\n\nfunction NodeGraphZoomOutTrigger({ asChild, children, onClick, ...props }: NodeGraphZoomOutTriggerProps) {\n  const { zoomOut } = useNodeGraph()\n  return (\n    <Button\n      data-slot=\"node-graph-zoom-out-trigger\"\n      variant=\"ghost\"\n      size=\"icon-sm\"\n      asChild={asChild}\n      aria-label=\"Zoom out\"\n      onClick={(event) => {\n        onClick?.(event)\n        if (!event.defaultPrevented) zoomOut()\n      }}\n      {...props}\n    >\n      {asChild ? children : (children ?? <MinusIcon />)}\n    </Button>\n  )\n}\n\nfunction NodeGraphFitViewTrigger({ asChild, children, onClick, ...props }: NodeGraphFitViewTriggerProps) {\n  const { fitView } = useNodeGraph()\n  return (\n    <Button\n      data-slot=\"node-graph-fit-view-trigger\"\n      variant=\"ghost\"\n      size=\"icon-sm\"\n      asChild={asChild}\n      aria-label=\"Fit view\"\n      onClick={(event) => {\n        onClick?.(event)\n        if (!event.defaultPrevented) fitView()\n      }}\n      {...props}\n    >\n      {asChild ? children : (children ?? <MaximizeIcon />)}\n    </Button>\n  )\n}\n\n/** Current zoom as a percentage; click resets to 100%. */\nfunction NodeGraphZoomValue({ className, asChild, children, onClick, ...props }: NodeGraphZoomValueProps) {\n  const { viewport, zoomTo } = useNodeGraph()\n  return (\n    <ark.button\n      data-slot=\"node-graph-zoom-value\"\n      type=\"button\"\n      asChild={asChild}\n      aria-label=\"Reset zoom\"\n      className={cn(\n        \"h-7 min-w-12 rounded-md px-2 text-xs font-medium text-muted-foreground tabular-nums hover:bg-muted hover:text-foreground\",\n        className\n      )}\n      onClick={(event) => {\n        onClick?.(event)\n        if (!event.defaultPrevented) zoomTo(1)\n      }}\n      {...props}\n    >\n      {asChild ? children : (children ?? `${Math.round(viewport.zoom * 100)}%`)}\n    </ark.button>\n  )\n}\n\nfunction NodeGraphMinimap({ className, width = 180, height = 120, ...props }: NodeGraphMinimapProps) {\n  const { store, viewport, size, selection, centerOn } = useNodeGraph()\n  useLayoutVersion(store)\n  const nodes = [...store.nodes]\n  const view = {\n    x: -viewport.x / viewport.zoom,\n    y: -viewport.y / viewport.zoom,\n    width: size.width / viewport.zoom,\n    height: size.height / viewport.zoom,\n  }\n  const bounds = store.getBounds() ?? view\n  const minX = Math.min(bounds.x, view.x)\n  const minY = Math.min(bounds.y, view.y)\n  const maxX = Math.max(bounds.x + bounds.width, view.x + view.width)\n  const maxY = Math.max(bounds.y + bounds.height, view.y + view.height)\n  const pad = Math.max(maxX - minX, maxY - minY) * 0.05\n  const viewBox = `${minX - pad} ${minY - pad} ${maxX - minX + pad * 2} ${maxY - minY + pad * 2}`\n  const scale = (maxX - minX + pad * 2) / width\n\n  // Match \"meet\" scaling: the viewBox is centred inside the svg box.\n  const pointToGraph = (svg: SVGSVGElement, client: XY) => {\n    const rect = svg.getBoundingClientRect()\n    const vbW = maxX - minX + pad * 2\n    const vbH = maxY - minY + pad * 2\n    const s = Math.max(vbW / rect.width, vbH / rect.height)\n    const offsetX = (rect.width * s - vbW) / 2\n    const offsetY = (rect.height * s - vbH) / 2\n    return { x: minX - pad - offsetX + (client.x - rect.left) * s, y: minY - pad - offsetY + (client.y - rect.top) * s }\n  }\n\n  return (\n    <ark.svg\n      data-slot=\"node-graph-minimap\"\n      viewBox={viewBox}\n      width={width}\n      height={height}\n      className={cn(\n        \"absolute right-3 bottom-3 z-20 cursor-pointer rounded-lg border bg-background/90 shadow-sm backdrop-blur-sm\",\n        className\n      )}\n      onPointerDown={(event) => {\n        event.stopPropagation()\n        event.preventDefault()\n        const svg = event.currentTarget\n        centerOn(pointToGraph(svg, { x: event.clientX, y: event.clientY }))\n        const move = (e: PointerEvent) => centerOn(pointToGraph(svg, { x: e.clientX, y: e.clientY }))\n        const up = () => {\n          window.removeEventListener(\"pointermove\", move)\n          window.removeEventListener(\"pointerup\", up)\n        }\n        window.addEventListener(\"pointermove\", move)\n        window.addEventListener(\"pointerup\", up)\n      }}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          {nodes.map(([id, node]) => (\n            <rect\n              key={id}\n              data-slot=\"node-graph-minimap-node\"\n              data-selected={selection.nodes.includes(id) ? \"\" : undefined}\n              x={node.position.x}\n              y={node.position.y}\n              width={node.width}\n              height={node.height}\n              rx={4 * scale}\n              className=\"fill-muted-foreground/40 data-selected:fill-primary\"\n            />\n          ))}\n          <rect\n            data-slot=\"node-graph-minimap-viewport\"\n            x={view.x}\n            y={view.y}\n            width={view.width}\n            height={view.height}\n            className=\"fill-primary/10 stroke-primary/60\"\n            strokeWidth={scale}\n          />\n        </>\n      )}\n    </ark.svg>\n  )\n}\n\nfunction NodeGraphEmpty({ className, ...props }: NodeGraphEmptyProps) {\n  return (\n    <ark.div\n      data-slot=\"node-graph-empty\"\n      className={cn(\n        \"pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1 text-center text-sm text-muted-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype NodeGraphRootProps = NodeGraphProps\n\ntype NodeGraphViewportProps = React.ComponentProps<typeof ark.div> & {\n  /** Plain wheel pans instead of zooming (pinch / ctrl+wheel always zooms). */\n  panOnScroll?: boolean\n}\n\ntype NodeGraphBackgroundProps = React.ComponentProps<typeof ark.svg> & {\n  variant?: \"dots\" | \"lines\"\n  gap?: number\n}\n\ntype NodeGraphSurfaceProps = React.ComponentProps<typeof ark.div>\n\ntype NodeGraphEdgesProps = React.ComponentProps<typeof ark.svg>\n\ntype NodeGraphEdgeProps = Omit<React.ComponentProps<typeof ark.g>, \"children\" | \"target\"> & {\n  value: string\n  /** Output-side port as `{ nodeId, portId }`. */\n  source: NodeGraphPortRef\n  /** Input-side port as `{ nodeId, portId }`. */\n  target: NodeGraphPortRef\n  selected?: boolean\n  /** Render prop for labels; receives the path midpoint. */\n  children?: ((details: { midpoint: XY; from: XY; to: XY }) => React.ReactNode) | React.ReactElement\n}\n\ntype NodeGraphConnectionLineProps = React.ComponentProps<typeof ark.svg>\n\ntype NodeGraphSelectionBoxProps = React.ComponentProps<typeof ark.div>\n\ntype NodeGraphNodeProps = React.ComponentProps<typeof ark.div> & {\n  value: string\n  position: XY\n  selected?: boolean\n}\n\ntype NodeGraphNodeHeaderProps = React.ComponentProps<typeof ark.div>\n\ntype NodeGraphNodeActionsProps = React.ComponentProps<typeof ark.div>\n\ntype NodeGraphNodeTitleProps = React.ComponentProps<typeof ark.div>\n\ntype NodeGraphNodeSubtitleProps = React.ComponentProps<typeof ark.div>\n\ntype NodeGraphNodeBodyProps = React.ComponentProps<typeof ark.div>\n\ntype NodeGraphNodeInputsProps = React.ComponentProps<typeof ark.div>\n\ntype NodeGraphNodeOutputsProps = React.ComponentProps<typeof ark.div>\n\ntype NodeGraphNodeFooterProps = React.ComponentProps<typeof ark.div>\n\ntype NodeGraphPortProps = React.ComponentProps<typeof ark.div> & {\n  value: string\n  side: NodeGraphPortSide\n  type?: string\n  connected?: boolean\n}\n\ntype NodeGraphPortPinProps = React.ComponentProps<typeof ark.div> & VariantProps<typeof pinVariants>\n\ntype NodeGraphPortLabelProps = React.ComponentProps<typeof ark.span>\n\ntype NodeGraphControlsProps = React.ComponentProps<typeof ark.div>\n\ntype NodeGraphZoomInTriggerProps = ControlTriggerProps\n\ntype NodeGraphZoomOutTriggerProps = ControlTriggerProps\n\ntype NodeGraphFitViewTriggerProps = ControlTriggerProps\n\ntype NodeGraphZoomValueProps = React.ComponentProps<typeof ark.button>\n\ntype NodeGraphMinimapProps = React.ComponentProps<typeof ark.svg> & { width?: number; height?: number }\n\ntype NodeGraphEmptyProps = React.ComponentProps<typeof ark.div>\n\nconst NodeGraph = {\n  Root: NodeGraphRoot,\n  Viewport: NodeGraphViewport,\n  Background: NodeGraphBackground,\n  Surface: NodeGraphSurface,\n  Edges: NodeGraphEdges,\n  Edge: NodeGraphEdge,\n  ConnectionLine: NodeGraphConnectionLine,\n  SelectionBox: NodeGraphSelectionBox,\n  Node: NodeGraphNode,\n  NodeHeader: NodeGraphNodeHeader,\n  NodeActions: NodeGraphNodeActions,\n  NodeTitle: NodeGraphNodeTitle,\n  NodeSubtitle: NodeGraphNodeSubtitle,\n  NodeBody: NodeGraphNodeBody,\n  NodeInputs: NodeGraphNodeInputs,\n  NodeOutputs: NodeGraphNodeOutputs,\n  NodeFooter: NodeGraphNodeFooter,\n  Port: NodeGraphPort,\n  PortPin: NodeGraphPortPin,\n  PortLabel: NodeGraphPortLabel,\n  Controls: NodeGraphControls,\n  ZoomInTrigger: NodeGraphZoomInTrigger,\n  ZoomOutTrigger: NodeGraphZoomOutTrigger,\n  FitViewTrigger: NodeGraphFitViewTrigger,\n  ZoomValue: NodeGraphZoomValue,\n  Minimap: NodeGraphMinimap,\n  Empty: NodeGraphEmpty,\n}\n\nexport {\n  NodeGraph,\n  useNodeGraph,\n  getBezierPath,\n  type NodeGraphViewportState,\n  type NodeGraphPortRef,\n  type NodeGraphPortDetails,\n  type NodeGraphPortSide,\n  type NodeGraphConnection,\n  type NodeGraphSelection,\n  type NodeGraphNodeMove,\n  type NodeGraphRootProps,\n  type NodeGraphViewportProps,\n  type NodeGraphBackgroundProps,\n  type NodeGraphSurfaceProps,\n  type NodeGraphEdgesProps,\n  type NodeGraphEdgeProps,\n  type NodeGraphConnectionLineProps,\n  type NodeGraphSelectionBoxProps,\n  type NodeGraphNodeProps,\n  type NodeGraphNodeHeaderProps,\n  type NodeGraphNodeActionsProps,\n  type NodeGraphNodeTitleProps,\n  type NodeGraphNodeSubtitleProps,\n  type NodeGraphNodeBodyProps,\n  type NodeGraphNodeInputsProps,\n  type NodeGraphNodeOutputsProps,\n  type NodeGraphNodeFooterProps,\n  type NodeGraphPortProps,\n  type NodeGraphPortPinProps,\n  type NodeGraphPortLabelProps,\n  type NodeGraphControlsProps,\n  type NodeGraphZoomInTriggerProps,\n  type NodeGraphZoomOutTriggerProps,\n  type NodeGraphFitViewTriggerProps,\n  type NodeGraphZoomValueProps,\n  type NodeGraphMinimapProps,\n  type NodeGraphEmptyProps,\n}\n"
     }
   ],
   "docs": "## Node graph\n`src/components/ui/node-graph.tsx` is a compositional, data-agnostic node editor (visual\nscripting style). The consumer owns nodes and edges; `NodeGraph` owns only the viewport\n(`viewport`/`onViewportChange`, pan/zoom), the selection (`selection`/`onSelectionChange`,\n`{ nodes, edges }`), and in-flight interactions. Intents: `onNodesMove` (live) +\n`onNodesMoveEnd` (once per drag/nudge), `onConnect({ source, target })` (source is always the\noutput side), `onConnectEnd({ source, position, client })` when released on empty space,\n`onDelete(selection)`, `onDisconnect(port)` (alt+click on a pin), and `onPane/Node/Edge/PortContextMenu`\n(right-click without a drag; a right-click on a node selects it first). `edgeAt(port)` enables\nre-routing: return the other end of the single link on a pin and dragging that pin picks the link\nup. `isValidConnection` overrides the built-in check (sides differ, nodes differ, port `type`s\nmatch or are `any`). Parts: `NodeGraphViewport` (pane, keyboard target: Delete/Backspace,\nEscape, ⌘A, arrows nudge by `snapGrid`, ⌘+/−/0; wheel zooms, pinch/ctrl always zooms,\n`panOnScroll` flips plain wheel to pan; middle/right/alt drag, Space+drag, or a single touch\npans, left drag on empty space is a marquee), `NodeGraphBackground` (`dots`/`lines`),\n`NodeGraphSurface` (transformed layer), `NodeGraphEdges` > `NodeGraphEdge` (`value`, `source`,\n`target`, render-prop children get the midpoint; `data-type` from the source port),\n`NodeGraphConnectionLine` (`data-type`, `data-valid`/`data-invalid`), `NodeGraphSelectionBox`,\n`NodeGraphNode` (`value`, `position`; draggable anywhere except interactive descendants,\nfocusable, Space/Enter toggles selection, double-click zooms to it; extra `data-*` props pass\nthrough, e.g. `data-active` for simulation highlights) with\n`Header/Title/Subtitle/Body/Inputs/Outputs/Footer` and `NodeGraphNodeActions` (header slot for\nbuttons, revealed on hover/selection, never starts a drag), `NodeGraphPort` (`value`, `side`,\n`type`, `connected`) > `NodeGraphPortPin` (`variant` `circle`|`exec`, colored via `text-*`,\nexposes `data-node-id/port-id/side/type/connected/target`) + `NodeGraphPortLabel`,\n`NodeGraphControls` > `NodeGraphZoomIn/ZoomOut/FitViewTrigger` + `NodeGraphZoomValue`,\n`NodeGraphMinimap` (click/drag to pan), `NodeGraphEmpty`, and `useNodeGraph()` (viewport,\nselection, `screenToGraph`, `fitView`, `zoomTo`, `centerOn`, ...). Port positions are measured\nfrom the DOM into an internal layout store; edges subscribe to it, so nodes need no size props.\n`src/demo/node-graph/` is the reference (\"Automations\", route `/automations`): typed pins\n(exec/number/string/boolean), category-tinted headers, literal inputs on unconnected data pins,\npalette (click or native drag), add-node Command popover from a dropped connection (filtered to\ncompatible nodes, auto-connects) or right-click on the pane, DropdownMenu context menus for nodes\n(run from here, duplicate ⌘D, break all links, delete), links (break) and pins (break, reset to\ndefault) anchored via `positioning.getAnchorRect`, a header \"more\" button on every node, undo/redo\nhistory on `src/lib/history.ts`, and a **simulator** (`simulate.ts`: async generator that walks\nexec pins from an event node, pulls data pins lazily, pure nodes evaluated on demand) driving\n`data-active` highlights (`--animate-node-graph-flow` dashes on the live edge), per-pin value\nbadges, a Delay progress bar, and an Output/Variables panel with Run/Stop and speed."

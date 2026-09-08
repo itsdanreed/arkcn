@@ -4,17 +4,54 @@
   "description": "",
   "ark": "ScrollArea",
   "exports": [
-    "ScrollArea",
-    "ScrollAreaContent",
-    "ScrollAreaContext",
-    "ScrollAreaCorner",
-    "ScrollAreaThumb",
-    "ScrollAreaViewport",
-    "ScrollBar"
+    "useScrollArea",
+    "useScrollAreaContext",
+    "ScrollArea"
   ],
   "parts": [
     {
-      "name": "ScrollArea",
+      "name": "ScrollArea.Scrollbar",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "orientation",
+          "type": "Orientation",
+          "required": false,
+          "default": "\"vertical\"",
+          "description": "Layout direction of the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "ScrollArea.Root",
       "props": [
         {
           "name": "asChild",
@@ -54,7 +91,47 @@
       ]
     },
     {
-      "name": "ScrollAreaContent",
+      "name": "ScrollArea.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseScrollAreaReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "ScrollArea.Content",
       "props": [
         {
           "name": "asChild",
@@ -87,7 +164,7 @@
       ]
     },
     {
-      "name": "ScrollAreaContext",
+      "name": "ScrollArea.Context",
       "props": [
         {
           "name": "children",
@@ -99,7 +176,7 @@
       ]
     },
     {
-      "name": "ScrollAreaCorner",
+      "name": "ScrollArea.Corner",
       "props": [
         {
           "name": "asChild",
@@ -132,7 +209,7 @@
       ]
     },
     {
-      "name": "ScrollAreaThumb",
+      "name": "ScrollArea.Thumb",
       "props": [
         {
           "name": "asChild",
@@ -165,7 +242,7 @@
       ]
     },
     {
-      "name": "ScrollAreaViewport",
+      "name": "ScrollArea.Viewport",
       "props": [
         {
           "name": "asChild",
@@ -187,47 +264,6 @@
           "required": false,
           "description": "Extra classes merged into the part's own classes with `cn`.",
           "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "ScrollBar",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "orientation",
-          "type": "Orientation",
-          "required": false,
-          "default": "\"vertical\"",
-          "description": "Layout direction of the part.",
-          "from": "@ark-ui/react"
         },
         {
           "name": "style",
@@ -248,7 +284,7 @@
   "files": [
     {
       "path": "components/ui/scroll-area.tsx",
-      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { ScrollArea as ScrollAreaPrimitive } from \"@ark-ui/react\"\n\nfunction ScrollArea({ className, children, ...props }: React.ComponentProps<typeof ScrollAreaPrimitive.Root>) {\n  return (\n    <ScrollAreaPrimitive.Root data-slot=\"scroll-area\" className={cn(\"relative\", className)} {...props}>\n      <ScrollAreaViewport>\n        <ScrollAreaContent>{children}</ScrollAreaContent>\n      </ScrollAreaViewport>\n      <ScrollBar />\n      <ScrollAreaCorner />\n    </ScrollAreaPrimitive.Root>\n  )\n}\n\nfunction ScrollAreaContext({ ...props }: React.ComponentProps<typeof ScrollAreaPrimitive.Context>) {\n  return <ScrollAreaPrimitive.Context {...props} />\n}\n\nfunction ScrollAreaViewport({ className, ...props }: React.ComponentProps<typeof ScrollAreaPrimitive.Viewport>) {\n  return (\n    <ScrollAreaPrimitive.Viewport\n      data-slot=\"scroll-area-viewport\"\n      className={cn(\n        \"no-scrollbar size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ScrollAreaContent({ className, ...props }: React.ComponentProps<typeof ScrollAreaPrimitive.Content>) {\n  return (\n    <ScrollAreaPrimitive.Content data-slot=\"scroll-area-content\" className={cn(\"min-w-full\", className)} {...props} />\n  )\n}\n\nfunction ScrollBar({\n  className,\n  orientation = \"vertical\",\n  ...props\n}: React.ComponentProps<typeof ScrollAreaPrimitive.Scrollbar>) {\n  return (\n    <ScrollAreaPrimitive.Scrollbar\n      data-slot=\"scroll-area-scrollbar\"\n      orientation={orientation}\n      className={cn(\n        \"flex touch-none p-px transition-colors select-none data-horizontal:h-2.5 data-horizontal:flex-col data-horizontal:border-t data-horizontal:border-t-transparent data-horizontal:not-data-overflow-x:hidden data-vertical:h-full data-vertical:w-2.5 data-vertical:border-l data-vertical:border-l-transparent data-vertical:not-data-overflow-y:hidden\",\n        className\n      )}\n      {...props}\n    >\n      <ScrollAreaThumb />\n    </ScrollAreaPrimitive.Scrollbar>\n  )\n}\n\nfunction ScrollAreaThumb({ className, ...props }: React.ComponentProps<typeof ScrollAreaPrimitive.Thumb>) {\n  return (\n    <ScrollAreaPrimitive.Thumb\n      data-slot=\"scroll-area-thumb\"\n      className={cn(\"relative flex-1 rounded-full bg-border\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ScrollAreaCorner({ ...props }: React.ComponentProps<typeof ScrollAreaPrimitive.Corner>) {\n  return <ScrollAreaPrimitive.Corner data-slot=\"scroll-area-corner\" {...props} />\n}\n\nexport {\n  ScrollArea,\n  ScrollAreaContent,\n  ScrollAreaContext,\n  ScrollAreaCorner,\n  ScrollAreaThumb,\n  ScrollAreaViewport,\n  ScrollBar,\n}\n"
+      "content": "import { useScrollArea, useScrollAreaContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { ScrollArea as ScrollAreaPrimitive } from \"@ark-ui/react\"\n\nfunction ScrollAreaRoot({ className, children, ...props }: ScrollAreaRootProps) {\n  return (\n    <ScrollAreaPrimitive.Root data-slot=\"scroll-area\" className={cn(\"relative\", className)} {...props}>\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <ScrollAreaViewport>\n            <ScrollAreaContent>{children}</ScrollAreaContent>\n          </ScrollAreaViewport>\n          <ScrollAreaScrollbar />\n          <ScrollAreaCorner />\n        </>\n      )}\n    </ScrollAreaPrimitive.Root>\n  )\n}\n\nfunction ScrollAreaContext({ ...props }: ScrollAreaContextProps) {\n  return <ScrollAreaPrimitive.Context {...props} />\n}\n\nfunction ScrollAreaViewport({ className, ...props }: ScrollAreaViewportProps) {\n  return (\n    <ScrollAreaPrimitive.Viewport\n      data-slot=\"scroll-area-viewport\"\n      className={cn(\n        \"no-scrollbar size-full rounded-[inherit] transition-[color,box-shadow] outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50 focus-visible:outline-1\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction ScrollAreaContent({ className, ...props }: ScrollAreaContentProps) {\n  return (\n    <ScrollAreaPrimitive.Content data-slot=\"scroll-area-content\" className={cn(\"min-w-full\", className)} {...props} />\n  )\n}\n\nfunction ScrollAreaScrollbar({ className, orientation = \"vertical\", ...props }: ScrollAreaScrollbarProps) {\n  return (\n    <ScrollAreaPrimitive.Scrollbar\n      data-slot=\"scroll-area-scrollbar\"\n      orientation={orientation}\n      className={cn(\n        \"flex touch-none p-px transition-colors select-none data-horizontal:h-2.5 data-horizontal:flex-col data-horizontal:border-t data-horizontal:border-t-transparent data-horizontal:not-data-overflow-x:hidden data-vertical:h-full data-vertical:w-2.5 data-vertical:border-l data-vertical:border-l-transparent data-vertical:not-data-overflow-y:hidden\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <ScrollAreaThumb />\n        </>\n      )}\n    </ScrollAreaPrimitive.Scrollbar>\n  )\n}\n\nfunction ScrollAreaThumb({ className, ...props }: ScrollAreaThumbProps) {\n  return (\n    <ScrollAreaPrimitive.Thumb\n      data-slot=\"scroll-area-thumb\"\n      className={cn(\"relative flex-1 rounded-full bg-border\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction ScrollAreaCorner({ ...props }: ScrollAreaCornerProps) {\n  return <ScrollAreaPrimitive.Corner data-slot=\"scroll-area-corner\" {...props} />\n}\n\nfunction ScrollAreaRootProvider({ className, ...props }: ScrollAreaRootProviderProps) {\n  return <ScrollAreaPrimitive.RootProvider data-slot=\"scroll-area\" className={cn(\"relative\", className)} {...props} />\n}\n\ntype ScrollAreaScrollbarProps = React.ComponentProps<typeof ScrollAreaPrimitive.Scrollbar>\n\ntype ScrollAreaRootProps = React.ComponentProps<typeof ScrollAreaPrimitive.Root>\n\ntype ScrollAreaRootProviderProps = React.ComponentProps<typeof ScrollAreaPrimitive.RootProvider>\n\ntype ScrollAreaContentProps = React.ComponentProps<typeof ScrollAreaPrimitive.Content>\n\ntype ScrollAreaContextProps = React.ComponentProps<typeof ScrollAreaPrimitive.Context>\n\ntype ScrollAreaCornerProps = React.ComponentProps<typeof ScrollAreaPrimitive.Corner>\n\ntype ScrollAreaThumbProps = React.ComponentProps<typeof ScrollAreaPrimitive.Thumb>\n\ntype ScrollAreaViewportProps = React.ComponentProps<typeof ScrollAreaPrimitive.Viewport>\n\nconst ScrollArea = {\n  Scrollbar: ScrollAreaScrollbar,\n  Root: ScrollAreaRoot,\n  RootProvider: ScrollAreaRootProvider,\n  Content: ScrollAreaContent,\n  Context: ScrollAreaContext,\n  Corner: ScrollAreaCorner,\n  Thumb: ScrollAreaThumb,\n  Viewport: ScrollAreaViewport,\n}\n\nexport {\n  useScrollArea,\n  useScrollAreaContext,\n  ScrollArea,\n  type ScrollAreaScrollbarProps,\n  type ScrollAreaRootProps,\n  type ScrollAreaRootProviderProps,\n  type ScrollAreaContentProps,\n  type ScrollAreaContextProps,\n  type ScrollAreaCornerProps,\n  type ScrollAreaThumbProps,\n  type ScrollAreaViewportProps,\n}\n"
     }
   ]
 }

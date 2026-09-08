@@ -6,7 +6,7 @@ It is not a component library you install. It is a collection of source files yo
 
 ## Why Ark UI
 
-Ark UI is a headless component library built on state machines. Every component exposes its state through `data-*` attributes (`data-state`, `data-open`, `data-highlighted`, `data-disabled`, `data-placement`, and so on), which makes Tailwind styling declarative and keeps the parts composable. arkcn keeps Ark's anatomy: where Ark has a `Positioner`, a `Control`, an `ItemGroup`, or a `HiddenInput`, the part is exported rather than folded away.
+Ark UI is a headless component library built on state machines. Every component exposes its state through `data-*` attributes (`data-state`, `data-open`, `data-highlighted`, `data-disabled`, `data-placement`, and so on), which makes Tailwind styling declarative and keeps the parts composable. arkcn keeps Ark's anatomy: where Ark has a `Positioner`, a `Control`, an `Item.Group`, or a `HiddenInput`, the part is exported rather than folded away.
 
 ## What you get
 

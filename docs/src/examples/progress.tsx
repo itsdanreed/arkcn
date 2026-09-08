@@ -7,5 +7,11 @@ export default function ProgressExample() {
     const t = setInterval(() => setValue((v) => (v >= 100 ? 0 : v + 10)), 800)
     return () => clearInterval(t)
   }, [])
-  return <Progress value={value} className="w-80" />
+  return (
+    <Progress.Root value={value} className="w-80">
+      <Progress.Track>
+        <Progress.Range />
+      </Progress.Track>
+    </Progress.Root>
+  )
 }

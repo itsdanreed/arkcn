@@ -1,19 +1,13 @@
-import {
-  AngleSlider,
-  AngleSliderControl,
-  AngleSliderLabel,
-  AngleSliderThumb,
-  AngleSliderValueText,
-} from "@/components/ui/angle-slider"
+import { AngleSlider } from "@/components/ui/angle-slider"
 
 export default function AngleSliderExample() {
   return (
-    <AngleSlider defaultValue={45}>
-      <AngleSliderLabel>Rotation</AngleSliderLabel>
-      <AngleSliderControl>
-        <AngleSliderThumb />
-      </AngleSliderControl>
-      <AngleSliderValueText />
-    </AngleSlider>
+    <AngleSlider.Root defaultValue={45}>
+      <AngleSlider.Label>Rotation</AngleSlider.Label>
+      <AngleSlider.Control>
+        <AngleSlider.Thumb />
+      </AngleSlider.Control>
+      <AngleSlider.ValueText />
+    </AngleSlider.Root>
   )
 }

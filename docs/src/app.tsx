@@ -1,7 +1,7 @@
 import * as React from "react"
 import { ThemeProvider } from "next-themes"
-import { TooltipProvider } from "@/components/ui/tooltip"
-import { Toaster } from "@/components/ui/sonner"
+import { Tooltip } from "@/components/ui/tooltip"
+import { Sonner } from "@/components/ui/sonner"
 import { Layout } from "./layout"
 import { ComponentPage, ComponentsIndex, GuidePage, Home, NotFound, OutlineProvider } from "./pages"
 import { RouterProvider, useRoute } from "./router"
@@ -28,10 +28,10 @@ function Routes() {
 export default function App() {
   return (
     <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
-      <TooltipProvider>
+      <Tooltip.Provider>
         <Routes />
-        <Toaster />
-      </TooltipProvider>
+        <Sonner.Root />
+      </Tooltip.Provider>
     </ThemeProvider>
   )
 }

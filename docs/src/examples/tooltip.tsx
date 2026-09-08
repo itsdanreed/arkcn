@@ -1,13 +1,13 @@
 import { Button } from "@/components/ui/button"
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip"
+import { Tooltip } from "@/components/ui/tooltip"
 
 export default function TooltipExample() {
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
+    <Tooltip.Root>
+      <Tooltip.Trigger asChild>
         <Button variant="outline">Hover me</Button>
-      </TooltipTrigger>
-      <TooltipContent>Add to library</TooltipContent>
-    </Tooltip>
+      </Tooltip.Trigger>
+      <Tooltip.Content>Add to library</Tooltip.Content>
+    </Tooltip.Root>
   )
 }

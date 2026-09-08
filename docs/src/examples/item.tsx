@@ -1,19 +1,19 @@
 import { toast } from "sonner"
 import { FileTextIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Item, ItemActions, ItemContent, ItemDescription, ItemMedia, ItemTitle } from "@/components/ui/item"
+import { Item } from "@/components/ui/item"
 
 export default function ItemExample() {
   return (
-    <Item variant="outline" className="w-96">
-      <ItemMedia variant="icon">
+    <Item.Root variant="outline" className="w-96">
+      <Item.Media variant="icon">
         <FileTextIcon />
-      </ItemMedia>
-      <ItemContent>
-        <ItemTitle>Quarterly report.pdf</ItemTitle>
-        <ItemDescription>2.4 MB · uploaded yesterday</ItemDescription>
-      </ItemContent>
-      <ItemActions>
+      </Item.Media>
+      <Item.Content>
+        <Item.Title>Quarterly report.pdf</Item.Title>
+        <Item.Description>2.4 MB · uploaded yesterday</Item.Description>
+      </Item.Content>
+      <Item.Actions>
         <Button
           variant="outline"
           size="sm"
@@ -21,7 +21,7 @@ export default function ItemExample() {
         >
           Download
         </Button>
-      </ItemActions>
-    </Item>
+      </Item.Actions>
+    </Item.Root>
   )
 }

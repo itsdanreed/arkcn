@@ -1,49 +1,35 @@
 import { parseColor } from "@ark-ui/react"
-import {
-  ColorPicker,
-  ColorPickerArea,
-  ColorPickerChannelInput,
-  ColorPickerChannelSlider,
-  ColorPickerContent,
-  ColorPickerControl,
-  ColorPickerEyeDropperTrigger,
-  ColorPickerLabel,
-  ColorPickerSwatch,
-  ColorPickerSwatchGroup,
-  ColorPickerSwatchTrigger,
-  ColorPickerTrigger,
-  ColorPickerValueSwatch,
-} from "@/components/ui/color-picker"
+import { ColorPicker } from "@/components/ui/color-picker"
 
 const swatches = ["#ef4444", "#f59e0b", "#22c55e", "#3b82f6", "#8b5cf6"]
 
 export default function ColorPickerExample() {
   return (
-    <ColorPicker defaultFormat="hsla" defaultValue={parseColor("#3b82f6").toFormat("hsla")} className="w-72">
-      <ColorPickerLabel>Accent</ColorPickerLabel>
-      <ColorPickerControl>
-        <ColorPickerChannelInput channel="hex" />
-        <ColorPickerTrigger>
-          <ColorPickerValueSwatch />
-        </ColorPickerTrigger>
-      </ColorPickerControl>
-      <ColorPickerContent>
-        <ColorPickerArea />
+    <ColorPicker.Root defaultFormat="hsla" defaultValue={parseColor("#3b82f6").toFormat("hsla")} className="w-72">
+      <ColorPicker.Label>Accent</ColorPicker.Label>
+      <ColorPicker.Control>
+        <ColorPicker.ChannelInput channel="hex" />
+        <ColorPicker.Trigger>
+          <ColorPicker.ValueSwatch />
+        </ColorPicker.Trigger>
+      </ColorPicker.Control>
+      <ColorPicker.Content>
+        <ColorPicker.Area />
         <div className="flex items-center gap-2">
-          <ColorPickerEyeDropperTrigger />
+          <ColorPicker.EyeDropperTrigger />
           <div className="flex flex-1 flex-col gap-2">
-            <ColorPickerChannelSlider channel="hue" />
-            <ColorPickerChannelSlider channel="alpha" />
+            <ColorPicker.ChannelSlider channel="hue" />
+            <ColorPicker.ChannelSlider channel="alpha" />
           </div>
         </div>
-        <ColorPickerSwatchGroup>
+        <ColorPicker.SwatchGroup>
           {swatches.map((c) => (
-            <ColorPickerSwatchTrigger key={c} value={parseColor(c).toFormat("hsla")} aria-label={`Select ${c}`}>
-              <ColorPickerSwatch value={c} />
-            </ColorPickerSwatchTrigger>
+            <ColorPicker.SwatchTrigger key={c} value={parseColor(c).toFormat("hsla")} aria-label={`Select ${c}`}>
+              <ColorPicker.Swatch value={c} />
+            </ColorPicker.SwatchTrigger>
           ))}
-        </ColorPickerSwatchGroup>
-      </ColorPickerContent>
-    </ColorPicker>
+        </ColorPicker.SwatchGroup>
+      </ColorPicker.Content>
+    </ColorPicker.Root>
   )
 }

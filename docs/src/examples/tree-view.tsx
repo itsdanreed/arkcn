@@ -1,17 +1,4 @@
-import {
-  TreeView,
-  TreeViewBranch,
-  TreeViewBranchContent,
-  TreeViewBranchControl,
-  TreeViewBranchIndicator,
-  TreeViewBranchText,
-  TreeViewBranchTrigger,
-  TreeViewItem,
-  TreeViewItemText,
-  TreeViewNodeProvider,
-  TreeViewTree,
-  createTreeCollection,
-} from "@/components/ui/tree-view"
+import { TreeView, createTreeCollection } from "@/components/ui/tree-view"
 
 type Node = { value: string; label: string; children?: Node[] }
 
@@ -40,38 +27,38 @@ const files = createTreeCollection<Node>({
 
 function Nodes({ node, indexPath }: { node: Node; indexPath: number[] }) {
   return (
-    <TreeViewNodeProvider node={node} indexPath={indexPath}>
+    <TreeView.NodeProvider node={node} indexPath={indexPath}>
       {node.children ? (
-        <TreeViewBranch>
-          <TreeViewBranchControl>
-            <TreeViewBranchTrigger>
-              <TreeViewBranchIndicator />
-            </TreeViewBranchTrigger>
-            <TreeViewBranchText>{node.label}</TreeViewBranchText>
-          </TreeViewBranchControl>
-          <TreeViewBranchContent>
+        <TreeView.Branch>
+          <TreeView.BranchControl>
+            <TreeView.BranchTrigger>
+              <TreeView.BranchIndicator />
+            </TreeView.BranchTrigger>
+            <TreeView.BranchText>{node.label}</TreeView.BranchText>
+          </TreeView.BranchControl>
+          <TreeView.BranchContent>
             {node.children.map((child, i) => (
               <Nodes key={child.value} node={child} indexPath={[...indexPath, i]} />
             ))}
-          </TreeViewBranchContent>
-        </TreeViewBranch>
+          </TreeView.BranchContent>
+        </TreeView.Branch>
       ) : (
-        <TreeViewItem>
-          <TreeViewItemText>{node.label}</TreeViewItemText>
-        </TreeViewItem>
+        <TreeView.Item>
+          <TreeView.ItemText>{node.label}</TreeView.ItemText>
+        </TreeView.Item>
       )}
-    </TreeViewNodeProvider>
+    </TreeView.NodeProvider>
   )
 }
 
 export default function TreeViewExample() {
   return (
-    <TreeView collection={files} defaultExpandedValue={["src"]} className="w-72">
-      <TreeViewTree>
+    <TreeView.Root collection={files} defaultExpandedValue={["src"]} className="w-72">
+      <TreeView.Tree>
         {files.rootNode.children?.map((node, i) => (
           <Nodes key={node.value} node={node} indexPath={[i]} />
         ))}
-      </TreeViewTree>
-    </TreeView>
+      </TreeView.Tree>
+    </TreeView.Root>
   )
 }

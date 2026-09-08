@@ -2,10 +2,10 @@ import * as React from "react"
 import { useTheme } from "next-themes"
 import { MenuIcon, MoonIcon, SearchIcon, SunIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
+import { Dialog } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Kbd } from "@/components/ui/kbd"
-import { Sheet, SheetContent, SheetTitle, SheetTrigger } from "@/components/ui/sheet"
+import { Sheet } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
 import { guides } from "./nav"
 import { groupedComponents, title, version } from "./registry"
@@ -106,13 +106,13 @@ function SearchDialog() {
         onClick={() => setOpen(true)}
       >
         <SearchIcon /> <span className="hidden sm:inline">Search docs…</span>
-        <Kbd className="ml-auto hidden sm:inline-flex">⌘K</Kbd>
+        <Kbd.Root className="ml-auto hidden sm:inline-flex">⌘K</Kbd.Root>
       </Button>
-      <Dialog open={open} onOpenChange={({ open }) => setOpen(open)}>
-        <DialogContent className="gap-0 p-0 sm:max-w-lg" showCloseButton={false}>
-          <DialogTitle className="sr-only">Search</DialogTitle>
+      <Dialog.Root open={open} onOpenChange={({ open }) => setOpen(open)}>
+        <Dialog.Content className="gap-0 p-0 sm:max-w-lg" showCloseButton={false}>
+          <Dialog.Title className="sr-only">Search</Dialog.Title>
           <div className="border-b p-2">
-            <Input
+            <Input.Root
               autoFocus
               placeholder="Search components and guides"
               value={query}
@@ -146,8 +146,8 @@ function SearchDialog() {
               </li>
             ))}
           </ul>
-        </DialogContent>
-      </Dialog>
+        </Dialog.Content>
+      </Dialog.Root>
     </>
   )
 }
@@ -174,20 +174,20 @@ export function Layout({ children, outline }: { children: React.ReactNode; outli
     <div className="min-h-svh bg-background text-foreground">
       <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-sm">
         <div className="mx-auto flex h-14 max-w-screen-2xl items-center gap-4 px-4 md:px-6">
-          <Sheet open={menuOpen} onOpenChange={({ open }) => setMenuOpen(open)}>
-            <SheetTrigger asChild>
+          <Sheet.Root open={menuOpen} onOpenChange={({ open }) => setMenuOpen(open)}>
+            <Sheet.Trigger asChild>
               <Button variant="ghost" size="icon-sm" className="md:hidden" aria-label="Open menu">
                 <MenuIcon />
               </Button>
-            </SheetTrigger>
-            <SheetContent side="left" className="w-72 overflow-y-auto p-4">
-              <SheetTitle className="sr-only">Navigation</SheetTitle>
+            </Sheet.Trigger>
+            <Sheet.Content side="left" className="w-72 overflow-y-auto p-4">
+              <Sheet.Title className="sr-only">Navigation</Sheet.Title>
               <div className="mb-4">
                 <Brand />
               </div>
               <SidebarNav onNavigate={() => setMenuOpen(false)} />
-            </SheetContent>
-          </Sheet>
+            </Sheet.Content>
+          </Sheet.Root>
           <Brand />
           <nav className="hidden items-center gap-4 text-sm md:flex">
             <Link

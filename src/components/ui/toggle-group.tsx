@@ -1,5 +1,6 @@
 "use client"
 
+import { useToggleGroup, useToggleGroupContext } from "@ark-ui/react"
 import * as React from "react"
 import { type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
@@ -21,7 +22,7 @@ const ToggleGroupVariantContext = React.createContext<
   orientation: "horizontal",
 })
 
-function ToggleGroup({
+function ToggleGroupRoot({
   className,
   variant,
   size,
@@ -29,11 +30,7 @@ function ToggleGroup({
   orientation = "horizontal",
   children,
   ...props
-}: React.ComponentProps<typeof ToggleGroupPrimitive.Root> &
-  VariantProps<typeof toggleVariants> & {
-    /** Gap between items; 0 joins them into one control. */
-    spacing?: number
-  }) {
+}: ToggleGroupRootProps) {
   return (
     <ToggleGroupPrimitive.Root
       data-slot="toggle-group"
@@ -48,14 +45,22 @@ function ToggleGroup({
       )}
       {...props}
     >
-      <ToggleGroupVariantContext.Provider value={{ variant, size, spacing, orientation }}>
-        {children}
-      </ToggleGroupVariantContext.Provider>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <ToggleGroupVariantContext.Provider value={{ variant, size, spacing, orientation }}>
+            {children}
+          </ToggleGroupVariantContext.Provider>
+        </>
+      )}
     </ToggleGroupPrimitive.Root>
   )
 }
 
-function ToggleGroupContext({ ...props }: React.ComponentProps<typeof ToggleGroupPrimitive.Context>) {
+function ToggleGroupContext({ ...props }: ToggleGroupContextProps) {
   return <ToggleGroupPrimitive.Context {...props} />
 }
 
@@ -65,7 +70,7 @@ function ToggleGroupItem({
   variant = "default",
   size = "default",
   ...props
-}: React.ComponentProps<typeof ToggleGroupPrimitive.Item> & VariantProps<typeof toggleVariants>) {
+}: ToggleGroupItemProps) {
   const context = React.useContext(ToggleGroupVariantContext)
 
   return (
@@ -89,4 +94,44 @@ function ToggleGroupItem({
   )
 }
 
-export { ToggleGroup, ToggleGroupContext, ToggleGroupItem }
+function ToggleGroupRootProvider({ className, ...props }: ToggleGroupRootProviderProps) {
+  return (
+    <ToggleGroupPrimitive.RootProvider
+      data-slot="toggle-group"
+      className={cn(
+        "group/toggle-group flex w-fit flex-row items-center gap-[--spacing(var(--gap))] rounded-lg data-[size=sm]:rounded-[min(var(--radius-md),10px)] data-vertical:flex-col data-vertical:items-stretch",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+type ToggleGroupRootProps = React.ComponentProps<typeof ToggleGroupPrimitive.Root> &
+  VariantProps<typeof toggleVariants> & {
+    /** Gap between items; 0 joins them into one control. */
+    spacing?: number
+  }
+
+type ToggleGroupRootProviderProps = React.ComponentProps<typeof ToggleGroupPrimitive.RootProvider>
+
+type ToggleGroupContextProps = React.ComponentProps<typeof ToggleGroupPrimitive.Context>
+
+type ToggleGroupItemProps = React.ComponentProps<typeof ToggleGroupPrimitive.Item> & VariantProps<typeof toggleVariants>
+
+const ToggleGroup = {
+  Root: ToggleGroupRoot,
+  RootProvider: ToggleGroupRootProvider,
+  Context: ToggleGroupContext,
+  Item: ToggleGroupItem,
+}
+
+export {
+  useToggleGroup,
+  useToggleGroupContext,
+  ToggleGroup,
+  type ToggleGroupRootProps,
+  type ToggleGroupRootProviderProps,
+  type ToggleGroupContextProps,
+  type ToggleGroupItemProps,
+}

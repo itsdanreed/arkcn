@@ -1,3 +1,5 @@
+import { ark } from "@ark-ui/react"
+import { useDrawer, useDrawerContext, useDrawerStackContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Drawer as DrawerPrimitive, Portal as PortalPrimitive } from "@ark-ui/react"
@@ -11,16 +13,13 @@ const swipeDirectionByDirection = {
   right: "end",
 } as const
 
-function Drawer({
+function DrawerRoot({
   direction = "bottom",
   swipeDirection,
   lazyMount = true,
   unmountOnExit = true,
   ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Root> & {
-  /** Edge the drawer slides in from. Maps to Ark's `swipeDirection`. */
-  direction?: DrawerDirection
-}) {
+}: DrawerRootProps) {
   return (
     <DrawerPrimitive.Root
       swipeDirection={swipeDirection ?? swipeDirectionByDirection[direction]}
@@ -31,23 +30,23 @@ function Drawer({
   )
 }
 
-function DrawerTrigger({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Trigger>) {
+function DrawerTrigger({ ...props }: DrawerTriggerProps) {
   return <DrawerPrimitive.Trigger data-slot="drawer-trigger" {...props} />
 }
 
-function DrawerPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {
+function DrawerPortal({ ...props }: DrawerPortalProps) {
   return <PortalPrimitive {...props} />
 }
 
-function DrawerContext({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Context>) {
+function DrawerContext({ ...props }: DrawerContextProps) {
   return <DrawerPrimitive.Context {...props} />
 }
 
-function DrawerClose({ ...props }: React.ComponentProps<typeof DrawerPrimitive.CloseTrigger>) {
+function DrawerCloseTrigger({ ...props }: DrawerCloseTriggerProps) {
   return <DrawerPrimitive.CloseTrigger data-slot="drawer-close" {...props} />
 }
 
-function DrawerOverlay({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Backdrop>) {
+function DrawerBackdrop({ className, ...props }: DrawerBackdropProps) {
   return (
     <DrawerPrimitive.Backdrop
       data-slot="drawer-overlay"
@@ -60,7 +59,7 @@ function DrawerOverlay({ className, ...props }: React.ComponentProps<typeof Draw
   )
 }
 
-function DrawerPositioner({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Positioner>) {
+function DrawerPositioner({ className, ...props }: DrawerPositionerProps) {
   return (
     <DrawerPrimitive.Positioner
       data-slot="drawer-positioner"
@@ -70,7 +69,7 @@ function DrawerPositioner({ className, ...props }: React.ComponentProps<typeof D
   )
 }
 
-function DrawerGrabber({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Grabber>) {
+function DrawerGrabber({ className, ...props }: DrawerGrabberProps) {
   return (
     <DrawerPrimitive.Grabber
       data-slot="drawer-grabber"
@@ -80,18 +79,26 @@ function DrawerGrabber({ className, ...props }: React.ComponentProps<typeof Draw
       )}
       {...props}
     >
-      <DrawerPrimitive.GrabberIndicator
-        data-slot="drawer-grabber-indicator"
-        className="block h-1 w-25 rounded-full bg-muted"
-      />
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <DrawerPrimitive.GrabberIndicator
+            data-slot="drawer-grabber-indicator"
+            className="block h-1 w-25 rounded-full bg-muted"
+          />
+        </>
+      )}
     </DrawerPrimitive.Grabber>
   )
 }
 
-function DrawerContent({ className, children, ...props }: React.ComponentProps<typeof DrawerPrimitive.Content>) {
+function DrawerContent({ className, children, ...props }: DrawerContentProps) {
   return (
     <DrawerPortal>
-      <DrawerOverlay />
+      <DrawerBackdrop />
       <DrawerPositioner>
         <DrawerPrimitive.Content
           data-slot="drawer-content"
@@ -101,17 +108,25 @@ function DrawerContent({ className, children, ...props }: React.ComponentProps<t
           )}
           {...props}
         >
-          <DrawerGrabber />
-          {children}
+          {props.asChild ? (
+            React.isValidElement(children) ? (
+              children
+            ) : null
+          ) : (
+            <>
+              <DrawerGrabber />
+              {children}
+            </>
+          )}
         </DrawerPrimitive.Content>
       </DrawerPositioner>
     </DrawerPortal>
   )
 }
 
-function DrawerHeader({ className, ...props }: React.ComponentProps<"div">) {
+function DrawerHeader({ className, ...props }: DrawerHeaderProps) {
   return (
-    <div
+    <ark.div
       data-slot="drawer-header"
       className={cn(
         "flex flex-col gap-0.5 p-4 group-data-[swipe-direction=down]/drawer-content:text-center group-data-[swipe-direction=up]/drawer-content:text-center md:gap-0.5 md:text-left",
@@ -122,11 +137,11 @@ function DrawerHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function DrawerFooter({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="drawer-footer" className={cn("mt-auto flex flex-col gap-2 p-4", className)} {...props} />
+function DrawerFooter({ className, ...props }: DrawerFooterProps) {
+  return <ark.div data-slot="drawer-footer" className={cn("mt-auto flex flex-col gap-2 p-4", className)} {...props} />
 }
 
-function DrawerTitle({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Title>) {
+function DrawerTitle({ className, ...props }: DrawerTitleProps) {
   return (
     <DrawerPrimitive.Title
       data-slot="drawer-title"
@@ -136,7 +151,7 @@ function DrawerTitle({ className, ...props }: React.ComponentProps<typeof Drawer
   )
 }
 
-function DrawerDescription({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Description>) {
+function DrawerDescription({ className, ...props }: DrawerDescriptionProps) {
   return (
     <DrawerPrimitive.Description
       data-slot="drawer-description"
@@ -146,17 +161,17 @@ function DrawerDescription({ className, ...props }: React.ComponentProps<typeof 
   )
 }
 
-function DrawerSwipeArea({ ...props }: React.ComponentProps<typeof DrawerPrimitive.SwipeArea>) {
+function DrawerSwipeArea({ ...props }: DrawerSwipeAreaProps) {
   return <DrawerPrimitive.SwipeArea data-slot="drawer-swipe-area" {...props} />
 }
 
 /** Wrap page content in a stack so nested drawers push it back (`Drawer` parts inside read the stack). */
-function DrawerStack({ ...props }: React.ComponentProps<typeof DrawerPrimitive.Stack>) {
+function DrawerStack({ ...props }: DrawerStackProps) {
   return <DrawerPrimitive.Stack data-slot="drawer-stack" {...props} />
 }
 
 /** The layer that scales and shifts back when a drawer opens over it. */
-function DrawerIndent({ className, ...props }: React.ComponentProps<typeof DrawerPrimitive.Indent>) {
+function DrawerIndent({ className, ...props }: DrawerIndentProps) {
   return (
     <DrawerPrimitive.Indent
       data-slot="drawer-indent"
@@ -166,10 +181,7 @@ function DrawerIndent({ className, ...props }: React.ComponentProps<typeof Drawe
   )
 }
 
-function DrawerIndentBackground({
-  className,
-  ...props
-}: React.ComponentProps<typeof DrawerPrimitive.IndentBackground>) {
+function DrawerIndentBackground({ className, ...props }: DrawerIndentBackgroundProps) {
   return (
     <DrawerPrimitive.IndentBackground
       data-slot="drawer-indent-background"
@@ -179,22 +191,99 @@ function DrawerIndentBackground({
   )
 }
 
+function DrawerRootProvider(props: DrawerRootProviderProps) {
+  return <DrawerPrimitive.RootProvider {...props} />
+}
+
+function DrawerGrabberIndicator({ className, ...props }: DrawerGrabberIndicatorProps) {
+  return <DrawerPrimitive.GrabberIndicator data-slot="drawer-grabber-indicator" className={cn(className)} {...props} />
+}
+
+type DrawerBackdropProps = React.ComponentProps<typeof DrawerPrimitive.Backdrop>
+
+type DrawerCloseTriggerProps = React.ComponentProps<typeof DrawerPrimitive.CloseTrigger>
+
+type DrawerGrabberIndicatorProps = React.ComponentProps<typeof DrawerPrimitive.GrabberIndicator>
+
+type DrawerRootProps = React.ComponentProps<typeof DrawerPrimitive.Root> & {
+  /** Edge the drawer slides in from. Maps to Ark's `swipeDirection`. */
+  direction?: DrawerDirection
+}
+
+type DrawerRootProviderProps = React.ComponentProps<typeof DrawerPrimitive.RootProvider>
+
+type DrawerContentProps = React.ComponentProps<typeof DrawerPrimitive.Content>
+
+type DrawerContextProps = React.ComponentProps<typeof DrawerPrimitive.Context>
+
+type DrawerDescriptionProps = React.ComponentProps<typeof DrawerPrimitive.Description>
+
+type DrawerFooterProps = React.ComponentProps<typeof ark.div>
+
+type DrawerGrabberProps = React.ComponentProps<typeof DrawerPrimitive.Grabber>
+
+type DrawerHeaderProps = React.ComponentProps<typeof ark.div>
+
+type DrawerPortalProps = React.ComponentProps<typeof PortalPrimitive>
+
+type DrawerPositionerProps = React.ComponentProps<typeof DrawerPrimitive.Positioner>
+
+type DrawerSwipeAreaProps = React.ComponentProps<typeof DrawerPrimitive.SwipeArea>
+
+type DrawerTitleProps = React.ComponentProps<typeof DrawerPrimitive.Title>
+
+type DrawerTriggerProps = React.ComponentProps<typeof DrawerPrimitive.Trigger>
+
+type DrawerIndentProps = React.ComponentProps<typeof DrawerPrimitive.Indent>
+
+type DrawerIndentBackgroundProps = React.ComponentProps<typeof DrawerPrimitive.IndentBackground>
+
+type DrawerStackProps = React.ComponentProps<typeof DrawerPrimitive.Stack>
+
+const Drawer = {
+  Backdrop: DrawerBackdrop,
+  CloseTrigger: DrawerCloseTrigger,
+  GrabberIndicator: DrawerGrabberIndicator,
+  Root: DrawerRoot,
+  RootProvider: DrawerRootProvider,
+  Content: DrawerContent,
+  Context: DrawerContext,
+  Description: DrawerDescription,
+  Footer: DrawerFooter,
+  Grabber: DrawerGrabber,
+  Header: DrawerHeader,
+  Portal: DrawerPortal,
+  Positioner: DrawerPositioner,
+  SwipeArea: DrawerSwipeArea,
+  Title: DrawerTitle,
+  Trigger: DrawerTrigger,
+  Indent: DrawerIndent,
+  IndentBackground: DrawerIndentBackground,
+  Stack: DrawerStack,
+}
+
 export {
+  useDrawer,
+  useDrawerContext,
+  useDrawerStackContext,
   Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerContext,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerGrabber,
-  DrawerHeader,
-  DrawerOverlay,
-  DrawerPortal,
-  DrawerPositioner,
-  DrawerSwipeArea,
-  DrawerTitle,
-  DrawerTrigger,
-  DrawerIndent,
-  DrawerIndentBackground,
-  DrawerStack,
+  type DrawerBackdropProps,
+  type DrawerCloseTriggerProps,
+  type DrawerGrabberIndicatorProps,
+  type DrawerRootProps,
+  type DrawerRootProviderProps,
+  type DrawerContentProps,
+  type DrawerContextProps,
+  type DrawerDescriptionProps,
+  type DrawerFooterProps,
+  type DrawerGrabberProps,
+  type DrawerHeaderProps,
+  type DrawerPortalProps,
+  type DrawerPositionerProps,
+  type DrawerSwipeAreaProps,
+  type DrawerTitleProps,
+  type DrawerTriggerProps,
+  type DrawerIndentProps,
+  type DrawerIndentBackgroundProps,
+  type DrawerStackProps,
 }

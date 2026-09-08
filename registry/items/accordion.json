@@ -4,17 +4,80 @@
   "description": "",
   "ark": "Accordion",
   "exports": [
-    "Accordion",
-    "AccordionContent",
-    "AccordionContext",
-    "AccordionItem",
-    "AccordionItemContext",
-    "AccordionItemIndicator",
-    "AccordionTrigger"
+    "useAccordion",
+    "useAccordionContext",
+    "useAccordionItemContext",
+    "Accordion"
   ],
   "parts": [
     {
-      "name": "Accordion",
+      "name": "Accordion.ItemContent",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Accordion.ItemTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Accordion.Root",
       "props": [
         {
           "name": "asChild",
@@ -144,8 +207,15 @@
       ]
     },
     {
-      "name": "AccordionContent",
+      "name": "Accordion.RootProvider",
       "props": [
+        {
+          "name": "value",
+          "type": "UseAccordionReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "asChild",
           "type": "boolean",
@@ -168,16 +238,40 @@
           "from": "@types/react"
         },
         {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "style",
           "type": "CSSProperties",
           "required": false,
           "description": "Inline styles applied to the rendered element.",
           "from": "@types/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
         }
       ]
     },
     {
-      "name": "AccordionContext",
+      "name": "Accordion.Context",
       "props": [
         {
           "name": "children",
@@ -189,7 +283,7 @@
       ]
     },
     {
-      "name": "AccordionItem",
+      "name": "Accordion.Item",
       "props": [
         {
           "name": "value",
@@ -236,7 +330,7 @@
       ]
     },
     {
-      "name": "AccordionItemContext",
+      "name": "Accordion.ItemContext",
       "props": [
         {
           "name": "children",
@@ -248,40 +342,7 @@
       ]
     },
     {
-      "name": "AccordionItemIndicator",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "AccordionTrigger",
+      "name": "Accordion.ItemIndicator",
       "props": [
         {
           "name": "asChild",
@@ -324,7 +385,7 @@
   "files": [
     {
       "path": "components/ui/accordion.tsx",
-      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Accordion as AccordionPrimitive } from \"@ark-ui/react\"\nimport { ChevronDownIcon, ChevronUpIcon } from \"lucide-react\"\n\nfunction Accordion({\n  className,\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: React.ComponentProps<typeof AccordionPrimitive.Root>) {\n  return (\n    <AccordionPrimitive.Root\n      data-slot=\"accordion\"\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      className={cn(\"flex w-full flex-col\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AccordionContext({ ...props }: React.ComponentProps<typeof AccordionPrimitive.Context>) {\n  return <AccordionPrimitive.Context {...props} />\n}\n\nfunction AccordionItem({ className, ...props }: React.ComponentProps<typeof AccordionPrimitive.Item>) {\n  return (\n    <AccordionPrimitive.Item data-slot=\"accordion-item\" className={cn(\"not-last:border-b\", className)} {...props} />\n  )\n}\n\nfunction AccordionItemContext({ ...props }: React.ComponentProps<typeof AccordionPrimitive.ItemContext>) {\n  return <AccordionPrimitive.ItemContext {...props} />\n}\n\nfunction AccordionTrigger({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof AccordionPrimitive.ItemTrigger>) {\n  return (\n    <AccordionPrimitive.ItemTrigger\n      data-slot=\"accordion-trigger\"\n      className={cn(\n        \"group/accordion-trigger relative flex w-full flex-1 items-start justify-between rounded-lg border border-transparent py-2.5 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:after:border-ring disabled:pointer-events-none disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-muted-foreground\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n      <ChevronDownIcon\n        data-slot=\"accordion-trigger-icon\"\n        className=\"pointer-events-none shrink-0 group-aria-expanded/accordion-trigger:hidden\"\n      />\n      <ChevronUpIcon\n        data-slot=\"accordion-trigger-icon\"\n        className=\"pointer-events-none hidden shrink-0 group-aria-expanded/accordion-trigger:inline\"\n      />\n    </AccordionPrimitive.ItemTrigger>\n  )\n}\n\nfunction AccordionItemIndicator({\n  className,\n  ...props\n}: React.ComponentProps<typeof AccordionPrimitive.ItemIndicator>) {\n  return (\n    <AccordionPrimitive.ItemIndicator\n      data-slot=\"accordion-item-indicator\"\n      className={cn(\n        \"ml-auto size-4 shrink-0 text-muted-foreground transition-transform data-open:rotate-180\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AccordionContent({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof AccordionPrimitive.ItemContent>) {\n  return (\n    <AccordionPrimitive.ItemContent\n      data-slot=\"accordion-content\"\n      className=\"overflow-hidden text-sm [--accordion-panel-height:var(--height)] data-open:animate-accordion-down data-closed:animate-accordion-up\"\n      {...props}\n    >\n      <div\n        className={cn(\n          \"pt-0 pb-2.5 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4\",\n          className\n        )}\n      >\n        {children}\n      </div>\n    </AccordionPrimitive.ItemContent>\n  )\n}\n\nexport {\n  Accordion,\n  AccordionContent,\n  AccordionContext,\n  AccordionItem,\n  AccordionItemContext,\n  AccordionItemIndicator,\n  AccordionTrigger,\n}\n"
+      "content": "import { useAccordion, useAccordionContext, useAccordionItemContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Accordion as AccordionPrimitive } from \"@ark-ui/react\"\nimport { ChevronDownIcon, ChevronUpIcon } from \"lucide-react\"\n\nfunction AccordionRoot({ className, lazyMount = true, unmountOnExit = true, ...props }: AccordionRootProps) {\n  return (\n    <AccordionPrimitive.Root\n      data-slot=\"accordion\"\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      className={cn(\"flex w-full flex-col\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AccordionContext({ ...props }: AccordionContextProps) {\n  return <AccordionPrimitive.Context {...props} />\n}\n\nfunction AccordionItem({ className, ...props }: AccordionItemProps) {\n  return (\n    <AccordionPrimitive.Item data-slot=\"accordion-item\" className={cn(\"not-last:border-b\", className)} {...props} />\n  )\n}\n\nfunction AccordionItemContext({ ...props }: AccordionItemContextProps) {\n  return <AccordionPrimitive.ItemContext {...props} />\n}\n\nfunction AccordionItemTrigger({ className, children, ...props }: AccordionItemTriggerProps) {\n  return (\n    <AccordionPrimitive.ItemTrigger\n      data-slot=\"accordion-trigger\"\n      className={cn(\n        \"group/accordion-trigger relative flex w-full flex-1 items-start justify-between rounded-lg border border-transparent py-2.5 text-left text-sm font-medium transition-all outline-none hover:underline focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:after:border-ring disabled:pointer-events-none disabled:opacity-50 **:data-[slot=accordion-trigger-icon]:ml-auto **:data-[slot=accordion-trigger-icon]:size-4 **:data-[slot=accordion-trigger-icon]:text-muted-foreground\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children}\n          <ChevronDownIcon\n            data-slot=\"accordion-trigger-icon\"\n            className=\"pointer-events-none shrink-0 group-aria-expanded/accordion-trigger:hidden\"\n          />\n          <ChevronUpIcon\n            data-slot=\"accordion-trigger-icon\"\n            className=\"pointer-events-none hidden shrink-0 group-aria-expanded/accordion-trigger:inline\"\n          />\n        </>\n      )}\n    </AccordionPrimitive.ItemTrigger>\n  )\n}\n\nfunction AccordionItemIndicator({ className, ...props }: AccordionItemIndicatorProps) {\n  return (\n    <AccordionPrimitive.ItemIndicator\n      data-slot=\"accordion-item-indicator\"\n      className={cn(\n        \"ml-auto size-4 shrink-0 text-muted-foreground transition-transform data-open:rotate-180\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AccordionItemContent({ className, children, ...props }: AccordionItemContentProps) {\n  return (\n    <AccordionPrimitive.ItemContent\n      data-slot=\"accordion-content\"\n      className=\"overflow-hidden text-sm [--accordion-panel-height:var(--height)] data-open:animate-accordion-down data-closed:animate-accordion-up\"\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <div\n            className={cn(\n              \"pt-0 pb-2.5 [&_a]:underline [&_a]:underline-offset-3 [&_a]:hover:text-foreground [&_p:not(:last-child)]:mb-4\",\n              className\n            )}\n          >\n            {children}\n          </div>\n        </>\n      )}\n    </AccordionPrimitive.ItemContent>\n  )\n}\n\nfunction AccordionRootProvider({ className, ...props }: AccordionRootProviderProps) {\n  return (\n    <AccordionPrimitive.RootProvider\n      data-slot=\"accordion\"\n      className={cn(\"flex w-full flex-col\", className)}\n      {...props}\n    />\n  )\n}\n\ntype AccordionItemContentProps = React.ComponentProps<typeof AccordionPrimitive.ItemContent>\n\ntype AccordionItemTriggerProps = React.ComponentProps<typeof AccordionPrimitive.ItemTrigger>\n\ntype AccordionRootProps = React.ComponentProps<typeof AccordionPrimitive.Root>\n\ntype AccordionRootProviderProps = React.ComponentProps<typeof AccordionPrimitive.RootProvider>\n\ntype AccordionContextProps = React.ComponentProps<typeof AccordionPrimitive.Context>\n\ntype AccordionItemProps = React.ComponentProps<typeof AccordionPrimitive.Item>\n\ntype AccordionItemContextProps = React.ComponentProps<typeof AccordionPrimitive.ItemContext>\n\ntype AccordionItemIndicatorProps = React.ComponentProps<typeof AccordionPrimitive.ItemIndicator>\n\nconst Accordion = {\n  ItemContent: AccordionItemContent,\n  ItemTrigger: AccordionItemTrigger,\n  Root: AccordionRoot,\n  RootProvider: AccordionRootProvider,\n  Context: AccordionContext,\n  Item: AccordionItem,\n  ItemContext: AccordionItemContext,\n  ItemIndicator: AccordionItemIndicator,\n}\n\nexport {\n  useAccordion,\n  useAccordionContext,\n  useAccordionItemContext,\n  Accordion,\n  type AccordionItemContentProps,\n  type AccordionItemTriggerProps,\n  type AccordionRootProps,\n  type AccordionRootProviderProps,\n  type AccordionContextProps,\n  type AccordionItemProps,\n  type AccordionItemContextProps,\n  type AccordionItemIndicatorProps,\n}\n"
     }
   ]
 }

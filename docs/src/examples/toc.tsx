@@ -1,4 +1,4 @@
-import { Toc, TocContent, TocItem, TocLink, TocList, TocTitle } from "@/components/ui/toc"
+import { Toc } from "@/components/ui/toc"
 
 // Headings on this docs page; `Toc` tracks which one is in view and marks its link active.
 const items = [
@@ -11,17 +11,17 @@ const items = [
 
 export default function TocExample() {
   return (
-    <Toc items={items} className="w-56">
-      <TocTitle>On this page</TocTitle>
-      <TocContent>
-        <TocList>
+    <Toc.Root items={items} className="w-56">
+      <Toc.Title>On this page</Toc.Title>
+      <Toc.Content>
+        <Toc.List>
           {items.map((item) => (
-            <TocItem key={item.value} item={item}>
-              <TocLink href={`#${item.value}`}>{item.label}</TocLink>
-            </TocItem>
+            <Toc.Item key={item.value} item={item}>
+              <Toc.Link href={`#${item.value}`}>{item.label}</Toc.Link>
+            </Toc.Item>
           ))}
-        </TocList>
-      </TocContent>
-    </Toc>
+        </Toc.List>
+      </Toc.Content>
+    </Toc.Root>
   )
 }

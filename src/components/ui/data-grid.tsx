@@ -1,18 +1,9 @@
 import * as React from "react"
 import { ark } from "@ark-ui/react"
-import { ArrowDownIcon, ArrowUpIcon, ChevronsUpDownIcon } from "lucide-react"
+import { CheckIcon, MinusIcon, ArrowDownIcon, ArrowUpIcon, ChevronsUpDownIcon } from "lucide-react"
 import { createListCollection } from "@ark-ui/react/collection"
 import { Checkbox } from "@/components/ui/checkbox"
-import {
-  Select,
-  SelectContent,
-  SelectControl,
-  SelectItem,
-  SelectItemIndicator,
-  SelectItemText,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
+import { Select } from "@/components/ui/select"
 import type { DataTableInstance, DataTableRow } from "@/lib/data-table-adapter"
 import { cn } from "@/lib/utils"
 import { useControllable } from "@/lib/controllable"
@@ -153,7 +144,7 @@ const defaultFormat = (value: unknown) => {
  * Root
  * ------------------------------------------------------------------------- */
 
-function DataGrid<TData>({
+function DataGridRoot<TData>({
   table,
   columns = [],
   rowHeight = 36,
@@ -165,24 +156,7 @@ function DataGrid<TData>({
   className,
   children,
   ...props
-}: Omit<React.ComponentProps<"div">, "children"> & {
-  table: DataTableInstance<TData>
-  /** Per-column grid behaviour keyed by column id: editor type, width, pinning, options, format and parse. */
-  columns?: DataGridColumnConfig[]
-  /** Fixed height of every row in px. */
-  rowHeight?: number
-  /** Rows rendered beyond the visible window on each side. */
-  overscan?: number
-  /** Called with `{ row, columnId, value, previous }` when a cell edit commits; the consumer applies it. */
-  onCellChange?: (change: DataGridCellChange<TData>) => void
-  /** Controlled column widths by column id. */
-  columnSizing?: Record<string, number>
-  /** Initial column widths when uncontrolled. */
-  defaultColumnSizing?: Record<string, number>
-  /** Called when a column is resized. */
-  onColumnSizingChange?: (sizing: Record<string, number>) => void
-  children?: React.ReactNode
-}) {
+}: DataGridRootProps<TData>) {
   const containerRef = React.useRef<HTMLDivElement>(null)
   const rows = table.getRowModel().rows
   const visibleColumns = table.getAllColumns().filter((c) => c.getIsVisible())
@@ -478,15 +452,23 @@ function DataGrid<TData>({
 
   return (
     <DataGridContext.Provider value={ctx as DataGridContextValue}>
-      <div
+      <ark.div
         data-slot="data-grid"
         data-editing={editing ? "" : undefined}
         className={cn("flex min-h-0 flex-1 flex-col", className)}
         {...props}
       >
-        {children}
-        <LiveRegion data-slot="data-grid-live-region" message={announcement} />
-      </div>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            {children}
+            <LiveRegion.Root data-slot="data-grid-live-region" message={announcement} />
+          </>
+        )}
+      </ark.div>
     </DataGridContext.Provider>
   )
 }
@@ -529,7 +511,7 @@ function parseInput(config: DataGridColumnConfig, input: string, previous: unkno
  * Container, header, body
  * ------------------------------------------------------------------------- */
 
-function DataGridContainer({ className, onScroll, ...props }: React.ComponentProps<"div">) {
+function DataGridContainer({ className, onScroll, ...props }: DataGridContainerProps) {
   const { containerRef, setScrollTop, setViewportHeight, rows, closeEditor } = useDataGrid()
   React.useLayoutEffect(() => {
     const el = containerRef.current
@@ -541,7 +523,7 @@ function DataGridContainer({ className, onScroll, ...props }: React.ComponentPro
     return () => observer.disconnect()
   }, [containerRef, setViewportHeight])
   return (
-    <div
+    <ark.div
       ref={containerRef}
       data-slot="data-grid-container"
       role="grid"
@@ -558,9 +540,9 @@ function DataGridContainer({ className, onScroll, ...props }: React.ComponentPro
   )
 }
 
-function DataGridHeader({ className, ...props }: React.ComponentProps<"div">) {
+function DataGridHeader({ className, ...props }: DataGridHeaderProps) {
   return (
-    <div
+    <ark.div
       data-slot="data-grid-header"
       role="rowgroup"
       className={cn("sticky top-0 z-30 w-fit min-w-full bg-muted", className)}
@@ -569,10 +551,10 @@ function DataGridHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function DataGridHeaderRow({ className, style, ...props }: React.ComponentProps<"div">) {
+function DataGridHeaderRow({ className, style, ...props }: DataGridHeaderRowProps) {
   const { templateColumns, totalWidth } = useDataGrid()
   return (
-    <div
+    <ark.div
       data-slot="data-grid-header-row"
       role="row"
       className={cn("grid border-b bg-muted", className)}
@@ -586,13 +568,7 @@ const pinnedStyle = (col: ColumnLayout | undefined): React.CSSProperties | undef
   col?.pinned === "left" ? { left: col.offset } : col?.pinned === "right" ? { right: col.offset } : undefined
 
 /** A header cell. Sortable columns get a sort button with `children` as the title. */
-function DataGridHead({
-  column: columnId,
-  className,
-  children,
-  style,
-  ...props
-}: React.ComponentProps<"div"> & { column: string }) {
+function DataGridHead({ column: columnId, className, children, style, ...props }: DataGridHeadProps) {
   const { table, layoutById } = useDataGrid()
   const column = table.getColumn(columnId)
   const layout = layoutById.get(columnId)
@@ -600,7 +576,7 @@ function DataGridHead({
   const sorted = column.getIsSorted()
   const sortable = column.getCanSort()
   return (
-    <div
+    <ark.div
       data-slot="data-grid-head"
       data-column={columnId}
       data-pinned={layout.pinned}
@@ -616,35 +592,43 @@ function DataGridHead({
       style={{ ...pinnedStyle(layout), ...style }}
       {...props}
     >
-      {sortable ? (
-        <ark.button
-          type="button"
-          data-slot="data-grid-sort-trigger"
-          className="-ms-1 flex h-7 min-w-0 items-center gap-1 rounded-md px-1 outline-none hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
-          onClick={() => column.toggleSorting()}
-        >
-          <span className="truncate">{children}</span>
-          {sorted === "desc" ? (
-            <ArrowDownIcon className="size-3.5 shrink-0" />
-          ) : sorted === "asc" ? (
-            <ArrowUpIcon className="size-3.5 shrink-0" />
-          ) : (
-            <ChevronsUpDownIcon className="size-3.5 shrink-0 opacity-50" />
-          )}
-        </ark.button>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
       ) : (
-        <span className="truncate">{children}</span>
+        <>
+          {sortable ? (
+            <ark.button
+              type="button"
+              data-slot="data-grid-sort-trigger"
+              className="-ms-1 flex h-7 min-w-0 items-center gap-1 rounded-md px-1 outline-none hover:bg-accent hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring/50"
+              onClick={() => column.toggleSorting()}
+            >
+              <span className="truncate">{children}</span>
+              {sorted === "desc" ? (
+                <ArrowDownIcon className="size-3.5 shrink-0" />
+              ) : sorted === "asc" ? (
+                <ArrowUpIcon className="size-3.5 shrink-0" />
+              ) : (
+                <ChevronsUpDownIcon className="size-3.5 shrink-0 opacity-50" />
+              )}
+            </ark.button>
+          ) : (
+            <span className="truncate">{children}</span>
+          )}
+        </>
       )}
-    </div>
+    </ark.div>
   )
 }
 
 /** Pointer-driven column resizer; double-click resets to the configured width. */
-function DataGridResizeHandle({ className, onPointerDown, onDoubleClick, ...props }: React.ComponentProps<"div">) {
+function DataGridResizeHandle({ className, onPointerDown, onDoubleClick, ...props }: DataGridResizeHandleProps) {
   const { setWidth, layoutById } = useDataGrid()
   const head = React.useContext(HeadColumnContext)
   return (
-    <div
+    <ark.div
       data-slot="data-grid-resize-handle"
       role="separator"
       aria-orientation="vertical"
@@ -683,60 +667,63 @@ function DataGridResizeHandle({ className, onPointerDown, onDoubleClick, ...prop
 const HeadColumnContext = React.createContext<string | null>(null)
 
 /** Wraps `DataGridHead` so `DataGridResizeHandle` knows its column. */
-function DataGridHeadWithResize({ column, children, ...props }: React.ComponentProps<typeof DataGridHead>) {
+function DataGridHeadWithResize({ column, children, ...props }: DataGridHeadWithResizeProps) {
   return (
     <HeadColumnContext.Provider value={column}>
       <DataGridHead column={column} {...props}>
-        {children}
-        <DataGridResizeHandle />
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            {children}
+            <DataGridResizeHandle />
+          </>
+        )}
       </DataGridHead>
     </HeadColumnContext.Provider>
   )
 }
 
 /** Virtualized rows. `children` renders the cells for a row. */
-function DataGridBody<TData>({
-  className,
-  children,
-  style,
-  ...props
-}: Omit<React.ComponentProps<"div">, "children"> & {
-  children: (row: DataTableRow<TData>, index: number) => React.ReactNode
-}) {
+function DataGridBody<TData>({ className, children, style, ...props }: DataGridBodyProps<TData>) {
   const { rows, window: win, rowHeight, totalWidth } = useDataGrid<TData>()
   const visible = rows.slice(win.start, win.end)
   return (
-    <div
+    <ark.div
       data-slot="data-grid-body"
       role="rowgroup"
       className={cn("relative", className)}
       style={{ height: rows.length * rowHeight, minWidth: totalWidth, ...style }}
       {...props}
     >
-      <div style={{ transform: `translateY(${win.start * rowHeight}px)` }}>
-        {visible.map((row, i) => (
-          <DataGridRow key={row.id} row={row} index={win.start + i}>
-            {children(row, win.start + i)}
-          </DataGridRow>
-        ))}
-      </div>
-    </div>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <div style={{ transform: `translateY(${win.start * rowHeight}px)` }}>
+            {visible.map((row, i) => (
+              <DataGridRow key={row.id} row={row} index={win.start + i}>
+                {typeof children === "function" ? children(row, win.start + i) : children}
+              </DataGridRow>
+            ))}
+          </div>
+        </>
+      )}
+    </ark.div>
   )
 }
 
-function DataGridRow<TData>({
-  row,
-  index,
-  className,
-  style,
-  ...props
-}: React.ComponentProps<"div"> & { row: DataTableRow<TData>; index: number }) {
+function DataGridRow<TData>({ row, index, className, style, ...props }: DataGridRowProps<TData>) {
   const { templateColumns, rowHeight, focus } = useDataGrid()
   const ctx = React.useMemo(() => ({ row: row as DataTableRow<unknown>, index }), [row, index])
   const selected = row.getIsSelected()
   return (
     <RowContext.Provider value={ctx}>
-      <div
+      <ark.div
         data-slot="data-grid-row"
         data-index={index}
         data-state={selected ? "selected" : undefined}
@@ -774,14 +761,7 @@ function DataGridCell({
   onKeyDown,
   onPointerDown,
   ...props
-}: Omit<React.ComponentProps<"div">, "children"> & {
-  column: string
-  /** Override the column config for this cell. */
-  editable?: boolean
-  /** Custom editor; return `undefined` to use the default for the column type. */
-  editor?: (props: EditorRenderProps) => React.ReactNode | undefined
-  children?: React.ReactNode
-}) {
+}: DataGridCellProps) {
   const grid = useDataGrid()
   const { row, index } = useDataGridRow()
   const layout = grid.layoutById.get(columnId)
@@ -902,7 +882,7 @@ function DataGridCell({
   }
 
   return (
-    <div
+    <ark.div
       ref={ref}
       data-slot="data-grid-cell"
       data-column={columnId}
@@ -943,29 +923,47 @@ function DataGridCell({
       onKeyDown={handleKeyDown}
       {...props}
     >
-      {isEditing ? (
-        <CellEditor
-          address={address}
-          config={config}
-          row={row}
-          value={value}
-          format={format}
-          editor={editor}
-          display={children}
-        />
-      ) : children !== undefined ? (
-        children
-      ) : config.type === "boolean" ? (
-        <Checkbox
-          checked={!!value}
-          disabled={!editable}
-          onCheckedChange={({ checked }) => grid.commit(address, checked === true)}
-          aria-label={columnId}
-        />
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
       ) : (
-        <span className="truncate">{format(value)}</span>
+        <>
+          {isEditing ? (
+            <CellEditor
+              address={address}
+              config={config}
+              row={row}
+              value={value}
+              format={format}
+              editor={editor}
+              display={children}
+            />
+          ) : children !== undefined ? (
+            children
+          ) : config.type === "boolean" ? (
+            <Checkbox.Root
+              checked={!!value}
+              disabled={!editable}
+              onCheckedChange={({ checked }) => grid.commit(address, checked === true)}
+              aria-label={columnId}
+            >
+              <Checkbox.Control>
+                <Checkbox.Indicator>
+                  <CheckIcon />
+                </Checkbox.Indicator>
+                <Checkbox.Indicator indeterminate>
+                  <MinusIcon />
+                </Checkbox.Indicator>
+              </Checkbox.Control>
+              <Checkbox.HiddenInput />
+            </Checkbox.Root>
+          ) : (
+            <span className="truncate">{format(value)}</span>
+          )}
+        </>
       )}
-    </div>
+    </ark.div>
   )
 }
 
@@ -1066,7 +1064,7 @@ function CellEditor({
     )
   }
   const type = config.type === "number" ? "number" : config.type === "date" ? "date" : "text"
-  return <input data-slot="data-grid-editor" type={type} {...inputProps} />
+  return <ark.input data-slot="data-grid-editor" type={type} {...inputProps} />
 }
 
 /** Opens the toolkit Select immediately; picking commits, closing without a pick cancels. */
@@ -1099,7 +1097,7 @@ function SelectEditor({
   }, [contentId])
   const label = options.find((o) => o.value === value)?.label ?? value
   return (
-    <Select
+    <Select.Root
       collection={collection}
       value={value ? [value] : []}
       defaultOpen
@@ -1116,25 +1114,25 @@ function SelectEditor({
       onPointerDown={(event) => event.stopPropagation()}
       className="size-full"
     >
-      <SelectControl className="size-full">
-        <SelectTrigger
+      <Select.Control className="size-full">
+        <Select.Trigger
           variant="unstyled"
           data-slot="data-grid-select-editor"
           className="size-full px-2 [&_svg]:text-muted-foreground"
           aria-label="Edit value"
         >
-          <SelectValue placeholder="Choose…">{display ?? label}</SelectValue>
-        </SelectTrigger>
-      </SelectControl>
-      <SelectContent>
+          <Select.ValueText placeholder="Choose…">{display ?? label}</Select.ValueText>
+        </Select.Trigger>
+      </Select.Control>
+      <Select.Content>
         {options.map((o) => (
-          <SelectItem key={o.value} item={o}>
-            <SelectItemText>{o.label}</SelectItemText>
-            <SelectItemIndicator />
-          </SelectItem>
+          <Select.Item key={o.value} item={o}>
+            <Select.ItemText>{o.label}</Select.ItemText>
+            <Select.ItemIndicator />
+          </Select.Item>
         ))}
-      </SelectContent>
-    </Select>
+      </Select.Content>
+    </Select.Root>
   )
 }
 
@@ -1142,7 +1140,7 @@ function SelectEditor({
  * Selection cells, empty
  * ------------------------------------------------------------------------- */
 
-function DataGridSelectAll({ className, ...props }: React.ComponentProps<"div">) {
+function DataGridSelectAll({ className, ...props }: DataGridSelectAllProps) {
   const { table, layoutById } = useDataGrid()
   const layout = layoutById.get("select")
   const t = table as DataTableInstance<unknown> & {
@@ -1153,7 +1151,7 @@ function DataGridSelectAll({ className, ...props }: React.ComponentProps<"div">)
   const all = t.getIsAllPageRowsSelected?.() ?? false
   const some = t.getIsSomePageRowsSelected?.() ?? false
   return (
-    <div
+    <ark.div
       data-slot="data-grid-select-all"
       role="columnheader"
       className={cn(
@@ -1165,21 +1163,39 @@ function DataGridSelectAll({ className, ...props }: React.ComponentProps<"div">)
       style={pinnedStyle(layout)}
       {...props}
     >
-      <Checkbox
-        checked={all ? true : some ? "indeterminate" : false}
-        onCheckedChange={({ checked }) => t.toggleAllPageRowsSelected?.(checked === true)}
-        aria-label="Select all"
-      />
-    </div>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <Checkbox.Root
+            checked={all ? true : some ? "indeterminate" : false}
+            onCheckedChange={({ checked }) => t.toggleAllPageRowsSelected?.(checked === true)}
+            aria-label="Select all"
+          >
+            <Checkbox.Control>
+              <Checkbox.Indicator>
+                <CheckIcon />
+              </Checkbox.Indicator>
+              <Checkbox.Indicator indeterminate>
+                <MinusIcon />
+              </Checkbox.Indicator>
+            </Checkbox.Control>
+            <Checkbox.HiddenInput />
+          </Checkbox.Root>
+        </>
+      )}
+    </ark.div>
   )
 }
 
-function DataGridSelectRow({ className, ...props }: React.ComponentProps<"div">) {
+function DataGridSelectRow({ className, ...props }: DataGridSelectRowProps) {
   const { layoutById } = useDataGrid()
   const { row } = useDataGridRow()
   const layout = layoutById.get("select")
   return (
-    <div
+    <ark.div
       data-slot="data-grid-select-row"
       role="gridcell"
       className={cn(
@@ -1191,20 +1207,38 @@ function DataGridSelectRow({ className, ...props }: React.ComponentProps<"div">)
       style={pinnedStyle(layout)}
       {...props}
     >
-      <Checkbox
-        checked={row.getIsSelected()}
-        onCheckedChange={({ checked }) => row.toggleSelected(checked === true)}
-        aria-label="Select row"
-      />
-    </div>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <Checkbox.Root
+            checked={row.getIsSelected()}
+            onCheckedChange={({ checked }) => row.toggleSelected(checked === true)}
+            aria-label="Select row"
+          >
+            <Checkbox.Control>
+              <Checkbox.Indicator>
+                <CheckIcon />
+              </Checkbox.Indicator>
+              <Checkbox.Indicator indeterminate>
+                <MinusIcon />
+              </Checkbox.Indicator>
+            </Checkbox.Control>
+            <Checkbox.HiddenInput />
+          </Checkbox.Root>
+        </>
+      )}
+    </ark.div>
   )
 }
 
-function DataGridEmpty({ className, ...props }: React.ComponentProps<"div">) {
+function DataGridEmpty({ className, ...props }: DataGridEmptyProps) {
   const { rows } = useDataGrid()
   if (rows.length) return null
   return (
-    <div
+    <ark.div
       data-slot="data-grid-empty"
       className={cn("flex h-24 items-center justify-center text-sm text-muted-foreground", className)}
       {...props}
@@ -1212,24 +1246,96 @@ function DataGridEmpty({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+type DataGridRootProps<TData = unknown> = Omit<React.ComponentProps<typeof ark.div>, "children"> & {
+  table: DataTableInstance<TData>
+  /** Per-column grid behaviour keyed by column id: editor type, width, pinning, options, format and parse. */
+  columns?: DataGridColumnConfig[]
+  /** Fixed height of every row in px. */
+  rowHeight?: number
+  /** Rows rendered beyond the visible window on each side. */
+  overscan?: number
+  /** Called with `{ row, columnId, value, previous }` when a cell edit commits; the consumer applies it. */
+  onCellChange?: (change: DataGridCellChange<TData>) => void
+  /** Controlled column widths by column id. */
+  columnSizing?: Record<string, number>
+  /** Initial column widths when uncontrolled. */
+  defaultColumnSizing?: Record<string, number>
+  /** Called when a column is resized. */
+  onColumnSizingChange?: (sizing: Record<string, number>) => void
+  children?: React.ReactNode
+}
+
+type DataGridContainerProps = React.ComponentProps<typeof ark.div>
+
+type DataGridHeaderProps = React.ComponentProps<typeof ark.div>
+
+type DataGridHeaderRowProps = React.ComponentProps<typeof ark.div>
+
+type DataGridHeadProps = React.ComponentProps<typeof ark.div> & { column: string }
+
+type DataGridHeadWithResizeProps = React.ComponentProps<typeof DataGridHead>
+
+type DataGridResizeHandleProps = React.ComponentProps<typeof ark.div>
+
+type DataGridBodyProps<TData = unknown> = Omit<React.ComponentProps<typeof ark.div>, "children"> & {
+  children: ((row: DataTableRow<TData>, index: number) => React.ReactNode) | React.ReactElement
+}
+
+type DataGridRowProps<TData = unknown> = React.ComponentProps<typeof ark.div> & {
+  row: DataTableRow<TData>
+  index: number
+}
+
+type DataGridCellProps = Omit<React.ComponentProps<typeof ark.div>, "children"> & {
+  column: string
+  /** Override the column config for this cell. */
+  editable?: boolean
+  /** Custom editor; return `undefined` to use the default for the column type. */
+  editor?: (props: EditorRenderProps) => React.ReactNode | undefined
+  children?: React.ReactNode
+}
+
+type DataGridSelectAllProps = React.ComponentProps<typeof ark.div>
+
+type DataGridSelectRowProps = React.ComponentProps<typeof ark.div>
+
+type DataGridEmptyProps = React.ComponentProps<typeof ark.div>
+
+const DataGrid = {
+  Root: DataGridRoot,
+  Container: DataGridContainer,
+  Header: DataGridHeader,
+  HeaderRow: DataGridHeaderRow,
+  Head: DataGridHead,
+  HeadWithResize: DataGridHeadWithResize,
+  ResizeHandle: DataGridResizeHandle,
+  Body: DataGridBody,
+  Row: DataGridRow,
+  Cell: DataGridCell,
+  SelectAll: DataGridSelectAll,
+  SelectRow: DataGridSelectRow,
+  Empty: DataGridEmpty,
+}
+
 export {
   DataGrid,
-  DataGridContainer,
-  DataGridHeader,
-  DataGridHeaderRow,
-  DataGridHead,
-  DataGridHeadWithResize,
-  DataGridResizeHandle,
-  DataGridBody,
-  DataGridRow,
-  DataGridCell,
-  DataGridSelectAll,
-  DataGridSelectRow,
-  DataGridEmpty,
   useDataGrid,
   useDataGridRow,
   type DataGridColumnConfig,
   type DataGridColumnType,
   type DataGridCellChange,
   type DataGridOption,
+  type DataGridRootProps,
+  type DataGridContainerProps,
+  type DataGridHeaderProps,
+  type DataGridHeaderRowProps,
+  type DataGridHeadProps,
+  type DataGridHeadWithResizeProps,
+  type DataGridResizeHandleProps,
+  type DataGridBodyProps,
+  type DataGridRowProps,
+  type DataGridCellProps,
+  type DataGridSelectAllProps,
+  type DataGridSelectRowProps,
+  type DataGridEmptyProps,
 }

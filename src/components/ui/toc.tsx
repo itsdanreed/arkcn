@@ -1,22 +1,23 @@
 "use client"
 
+import { useToc, useTocContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Toc as TocPrimitive } from "@ark-ui/react"
 
-function Toc({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Root>) {
+function TocRoot({ className, ...props }: TocRootProps) {
   return <TocPrimitive.Root data-slot="toc" className={cn("w-full text-sm", className)} {...props} />
 }
 
-function TocContext({ ...props }: React.ComponentProps<typeof TocPrimitive.Context>) {
+function TocContext({ ...props }: TocContextProps) {
   return <TocPrimitive.Context {...props} />
 }
 
-function TocNav({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Nav>) {
+function TocNav({ className, ...props }: TocNavProps) {
   return <TocPrimitive.Nav data-slot="toc-nav" className={cn("flex flex-col gap-2", className)} {...props} />
 }
 
-function TocTitle({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Title>) {
+function TocTitle({ className, ...props }: TocTitleProps) {
   return (
     <TocPrimitive.Title
       data-slot="toc-title"
@@ -26,19 +27,19 @@ function TocTitle({ className, ...props }: React.ComponentProps<typeof TocPrimit
   )
 }
 
-function TocContent({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Content>) {
+function TocContent({ className, ...props }: TocContentProps) {
   return <TocPrimitive.Content data-slot="toc-content" className={cn("relative", className)} {...props} />
 }
 
-function TocList({ className, ...props }: React.ComponentProps<typeof TocPrimitive.List>) {
+function TocList({ className, ...props }: TocListProps) {
   return <TocPrimitive.List data-slot="toc-list" className={cn("flex flex-col border-l", className)} {...props} />
 }
 
-function TocItem({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Item>) {
+function TocItem({ className, ...props }: TocItemProps) {
   return <TocPrimitive.Item data-slot="toc-item" className={cn("flex", className)} {...props} />
 }
 
-function TocLink({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Link>) {
+function TocLink({ className, ...props }: TocLinkProps) {
   return (
     <TocPrimitive.Link
       data-slot="toc-link"
@@ -51,7 +52,7 @@ function TocLink({ className, ...props }: React.ComponentProps<typeof TocPrimiti
   )
 }
 
-function TocIndicator({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Indicator>) {
+function TocIndicator({ className, ...props }: TocIndicatorProps) {
   return (
     <TocPrimitive.Indicator
       data-slot="toc-indicator"
@@ -61,4 +62,55 @@ function TocIndicator({ className, ...props }: React.ComponentProps<typeof TocPr
   )
 }
 
-export { Toc, TocContent, TocContext, TocIndicator, TocItem, TocLink, TocList, TocNav, TocTitle }
+function TocRootProvider({ className, ...props }: TocRootProviderProps) {
+  return <TocPrimitive.RootProvider data-slot="toc" className={cn("w-full text-sm", className)} {...props} />
+}
+
+type TocRootProps = React.ComponentProps<typeof TocPrimitive.Root>
+
+type TocRootProviderProps = React.ComponentProps<typeof TocPrimitive.RootProvider>
+
+type TocContentProps = React.ComponentProps<typeof TocPrimitive.Content>
+
+type TocContextProps = React.ComponentProps<typeof TocPrimitive.Context>
+
+type TocIndicatorProps = React.ComponentProps<typeof TocPrimitive.Indicator>
+
+type TocItemProps = React.ComponentProps<typeof TocPrimitive.Item>
+
+type TocLinkProps = React.ComponentProps<typeof TocPrimitive.Link>
+
+type TocListProps = React.ComponentProps<typeof TocPrimitive.List>
+
+type TocNavProps = React.ComponentProps<typeof TocPrimitive.Nav>
+
+type TocTitleProps = React.ComponentProps<typeof TocPrimitive.Title>
+
+const Toc = {
+  Root: TocRoot,
+  RootProvider: TocRootProvider,
+  Content: TocContent,
+  Context: TocContext,
+  Indicator: TocIndicator,
+  Item: TocItem,
+  Link: TocLink,
+  List: TocList,
+  Nav: TocNav,
+  Title: TocTitle,
+}
+
+export {
+  useToc,
+  useTocContext,
+  Toc,
+  type TocRootProps,
+  type TocRootProviderProps,
+  type TocContentProps,
+  type TocContextProps,
+  type TocIndicatorProps,
+  type TocItemProps,
+  type TocLinkProps,
+  type TocListProps,
+  type TocNavProps,
+  type TocTitleProps,
+}

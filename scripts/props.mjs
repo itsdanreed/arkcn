@@ -115,17 +115,29 @@ export function createPropsExtractor() {
     const moduleSymbol = checker.getSymbolAtLocation(source)
     if (!moduleSymbol) return []
     const parts = []
+    const targets = []
     for (const exp of checker.getExportsOfModule(moduleSymbol)) {
       const symbol = exp.flags & ts.SymbolFlags.Alias ? checker.getAliasedSymbol(exp) : exp
       if (!/^[A-Z]/.test(exp.name)) continue
       const decl = symbol.valueDeclaration ?? symbol.declarations?.[0]
       if (!decl) continue
       const type = checker.getTypeOfSymbolAtLocation(symbol, decl)
+      if (type.getCallSignatures().length) targets.push({ name: exp.name, symbol, decl, type })
+      for (const member of type.getProperties()) {
+        if (!/^[A-Z]/.test(member.name)) continue
+        const memberDecl = member.valueDeclaration ?? member.declarations?.[0] ?? decl
+        const memberType = checker.getTypeOfSymbolAtLocation(member, memberDecl)
+        if (memberType.getCallSignatures().length) {
+          targets.push({ name: `${exp.name}.${member.name}`, symbol: member, decl: memberDecl, type: memberType })
+        }
+      }
+    }
+    for (const { name, decl, type } of targets) {
       const signature = type.getCallSignatures()[0]
       if (!signature) continue
       const param = signature.getParameters()[0]
       if (!param) {
-        parts.push({ name: exp.name, props: [] })
+        parts.push({ name, props: [] })
         continue
       }
       const propsType = checker.getTypeOfSymbolAtLocation(param, param.valueDeclaration ?? decl)
@@ -156,7 +168,7 @@ export function createPropsExtractor() {
           Number(b.required) - Number(a.required) ||
           a.name.localeCompare(b.name)
       )
-      parts.push({ name: exp.name, props })
+      parts.push({ name, props })
     }
     return parts
   }

@@ -1,38 +1,29 @@
 import { Button } from "@/components/ui/button"
-import {
-  Dialog,
-  DialogContent,
-  DialogClose,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
+import { Dialog } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 export default function DialogExample() {
   return (
-    <Dialog>
-      <DialogTrigger asChild>
+    <Dialog.Root>
+      <Dialog.Trigger asChild>
         <Button variant="outline">Edit profile</Button>
-      </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Edit profile</DialogTitle>
-          <DialogDescription>Make changes to your profile here. Click save when you are done.</DialogDescription>
-        </DialogHeader>
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Dialog.Header>
+          <Dialog.Title>Edit profile</Dialog.Title>
+          <Dialog.Description>Make changes to your profile here. Click save when you are done.</Dialog.Description>
+        </Dialog.Header>
         <div className="grid gap-3">
-          <Label htmlFor="dialog-name">Name</Label>
-          <Input id="dialog-name" defaultValue="Alex Morgan" />
+          <Label.Root htmlFor="dialog-name">Name</Label.Root>
+          <Input.Root id="dialog-name" defaultValue="Alex Morgan" />
         </div>
-        <DialogFooter>
-          <DialogClose asChild>
+        <Dialog.Footer>
+          <Dialog.CloseTrigger asChild>
             <Button>Save changes</Button>
-          </DialogClose>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+          </Dialog.CloseTrigger>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   )
 }

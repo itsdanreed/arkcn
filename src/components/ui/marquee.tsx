@@ -1,10 +1,11 @@
 "use client"
 
+import { useMarquee, useMarqueeContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Marquee as MarqueePrimitive } from "@ark-ui/react"
 
-function Marquee({ className, ...props }: React.ComponentProps<typeof MarqueePrimitive.Root>) {
+function MarqueeRoot({ className, ...props }: MarqueeRootProps) {
   return (
     <MarqueePrimitive.Root
       data-slot="marquee"
@@ -14,11 +15,11 @@ function Marquee({ className, ...props }: React.ComponentProps<typeof MarqueePri
   )
 }
 
-function MarqueeContext({ ...props }: React.ComponentProps<typeof MarqueePrimitive.Context>) {
+function MarqueeContext({ ...props }: MarqueeContextProps) {
   return <MarqueePrimitive.Context {...props} />
 }
 
-function MarqueeViewport({ className, ...props }: React.ComponentProps<typeof MarqueePrimitive.Viewport>) {
+function MarqueeViewport({ className, ...props }: MarqueeViewportProps) {
   return (
     <MarqueePrimitive.Viewport
       data-slot="marquee-viewport"
@@ -28,7 +29,7 @@ function MarqueeViewport({ className, ...props }: React.ComponentProps<typeof Ma
   )
 }
 
-function MarqueeContent({ className, ...props }: React.ComponentProps<typeof MarqueePrimitive.Content>) {
+function MarqueeContent({ className, ...props }: MarqueeContentProps) {
   return (
     <MarqueePrimitive.Content
       data-slot="marquee-content"
@@ -41,11 +42,11 @@ function MarqueeContent({ className, ...props }: React.ComponentProps<typeof Mar
   )
 }
 
-function MarqueeItem({ className, ...props }: React.ComponentProps<typeof MarqueePrimitive.Item>) {
+function MarqueeItem({ className, ...props }: MarqueeItemProps) {
   return <MarqueePrimitive.Item data-slot="marquee-item" className={cn("shrink-0", className)} {...props} />
 }
 
-function MarqueeEdge({ className, ...props }: React.ComponentProps<typeof MarqueePrimitive.Edge>) {
+function MarqueeEdge({ className, ...props }: MarqueeEdgeProps) {
   return (
     <MarqueePrimitive.Edge
       data-slot="marquee-edge"
@@ -58,4 +59,49 @@ function MarqueeEdge({ className, ...props }: React.ComponentProps<typeof Marque
   )
 }
 
-export { Marquee, MarqueeContent, MarqueeContext, MarqueeEdge, MarqueeItem, MarqueeViewport }
+function MarqueeRootProvider({ className, ...props }: MarqueeRootProviderProps) {
+  return (
+    <MarqueePrimitive.RootProvider
+      data-slot="marquee"
+      className={cn("group/marquee relative w-full overflow-hidden", className)}
+      {...props}
+    />
+  )
+}
+
+type MarqueeRootProps = React.ComponentProps<typeof MarqueePrimitive.Root>
+
+type MarqueeRootProviderProps = React.ComponentProps<typeof MarqueePrimitive.RootProvider>
+
+type MarqueeContentProps = React.ComponentProps<typeof MarqueePrimitive.Content>
+
+type MarqueeContextProps = React.ComponentProps<typeof MarqueePrimitive.Context>
+
+type MarqueeEdgeProps = React.ComponentProps<typeof MarqueePrimitive.Edge>
+
+type MarqueeItemProps = React.ComponentProps<typeof MarqueePrimitive.Item>
+
+type MarqueeViewportProps = React.ComponentProps<typeof MarqueePrimitive.Viewport>
+
+const Marquee = {
+  Root: MarqueeRoot,
+  RootProvider: MarqueeRootProvider,
+  Content: MarqueeContent,
+  Context: MarqueeContext,
+  Edge: MarqueeEdge,
+  Item: MarqueeItem,
+  Viewport: MarqueeViewport,
+}
+
+export {
+  useMarquee,
+  useMarqueeContext,
+  Marquee,
+  type MarqueeRootProps,
+  type MarqueeRootProviderProps,
+  type MarqueeContentProps,
+  type MarqueeContextProps,
+  type MarqueeEdgeProps,
+  type MarqueeItemProps,
+  type MarqueeViewportProps,
+}

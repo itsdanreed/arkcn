@@ -1,0 +1,85 @@
+{
+  "name": "highlight",
+  "type": "ui",
+  "description": "",
+  "ark": "Highlight",
+  "exports": [
+    "Highlight",
+    "useHighlight"
+  ],
+  "parts": [
+    {
+      "name": "Highlight.Root",
+      "props": [
+        {
+          "name": "query",
+          "type": "string | string[]",
+          "required": true,
+          "description": "The query to highlight in the text",
+          "from": "@zag-js/highlight-word"
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "required": true,
+          "description": "The text to highlight",
+          "from": "@zag-js/highlight-word"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "exactMatch",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to match whole words only",
+          "from": "@zag-js/highlight-word"
+        },
+        {
+          "name": "ignoreCase",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to ignore case while matching",
+          "from": "@zag-js/highlight-word"
+        },
+        {
+          "name": "matchAll",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to match multiple instances of the query",
+          "from": "@zag-js/highlight-word"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/highlight.tsx",
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport { Highlight as HighlightPrimitive, useHighlight } from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction HighlightRoot({ className, ...props }: HighlightRootProps) {\n  return (\n    <HighlightPrimitive\n      data-slot=\"highlight\"\n      className={cn(\"rounded-sm bg-primary/15 text-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\ntype HighlightRootProps = React.ComponentProps<typeof HighlightPrimitive>\n\nconst Highlight = {\n  Root: HighlightRoot,\n}\n\nexport { Highlight, useHighlight, type HighlightRootProps }\n"
+    }
+  ]
+}

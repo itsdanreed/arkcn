@@ -1,12 +1,12 @@
 ## How it works
 
-You own the columns and cards; the board owns dragging. `Kanban` reports every move as an intent, `onCardMove({ cardId, fromColumnId, toColumnId, fromIndex, toIndex })` and `onColumnMove({ columnId, fromIndex, toIndex })`, and the `moveCard` and `moveColumn` helpers apply those to a `{ id, cards: { id }[] }[]` shape. Indices come from DOM order at drop time, so cards need no index prop.
+You own the columns and cards; the board owns dragging. `Kanban.Root` reports every move as an intent, `onCardMove({ cardId, fromColumnId, toColumnId, fromIndex, toIndex })` and `onColumnMove({ columnId, fromIndex, toIndex })`, and the `moveCard` and `moveColumn` helpers apply those to a `{ id, cards: { id }[] }[]` shape. Indices come from DOM order at drop time, so cards need no index prop.
 
 ## Parts
 
-`KanbanBoard` scrolls horizontally and auto-scrolls near its edges. `KanbanColumn value=` is a drop target for cards and columns and can be dragged by its `KanbanColumnHandle` or header. Inside it, `KanbanColumnHeader` with `KanbanColumnTitle`, `KanbanColumnCount`, and `KanbanColumnActions`, then `KanbanColumnContent` for the cards and `KanbanColumnFooter` for an `KanbanAddTrigger`. `KanbanCard value=` is draggable, optionally only by its `KanbanCardHandle`, and composes `KanbanCardHeader`, `KanbanCardTitle`, `KanbanCardDescription`, and `KanbanCardFooter`.
+`Kanban.Board` scrolls horizontally and auto-scrolls near its edges. `KanbanColumn value=` is a drop target for cards and columns and can be dragged by its `Kanban.ColumnHandle` or header. Inside it, `Kanban.ColumnHeader` with `Kanban.ColumnTitle`, `Kanban.ColumnCount`, and `Kanban.ColumnActions`, then `Kanban.ColumnContent` for the cards and `Kanban.ColumnFooter` for an `Kanban.AddTrigger`. `KanbanCard value=` is draggable, optionally only by its `Kanban.CardHandle`, and composes `Kanban.CardHeader`, `Kanban.CardTitle`, `Kanban.CardDescription`, and `Kanban.CardFooter`.
 
-While dragging, a `KanbanDropSlot` shows where the card will land, sized like the card, and the source card collapses. Column reordering shows a `KanbanDropIndicator` line. State is exposed as `data-dragging`, `data-over`, `data-target`, and `data-edge` attributes.
+While dragging, a `Kanban.DropSlot` shows where the card will land, sized like the card, and the source card collapses. Column reordering shows a `Kanban.DropIndicator` line. State is exposed as `data-dragging`, `data-over`, `data-target`, and `data-edge` attributes.
 
 ## Keyboard
 

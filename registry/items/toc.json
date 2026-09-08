@@ -4,19 +4,13 @@
   "description": "",
   "ark": "Toc",
   "exports": [
-    "Toc",
-    "TocContent",
-    "TocContext",
-    "TocIndicator",
-    "TocItem",
-    "TocLink",
-    "TocList",
-    "TocNav",
-    "TocTitle"
+    "useToc",
+    "useTocContext",
+    "Toc"
   ],
   "parts": [
     {
-      "name": "Toc",
+      "name": "Toc.Root",
       "props": [
         {
           "name": "items",
@@ -130,7 +124,47 @@
       ]
     },
     {
-      "name": "TocContent",
+      "name": "Toc.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseTocReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Toc.Content",
       "props": [
         {
           "name": "asChild",
@@ -163,7 +197,7 @@
       ]
     },
     {
-      "name": "TocContext",
+      "name": "Toc.Context",
       "props": [
         {
           "name": "children",
@@ -175,7 +209,7 @@
       ]
     },
     {
-      "name": "TocIndicator",
+      "name": "Toc.Indicator",
       "props": [
         {
           "name": "asChild",
@@ -208,7 +242,7 @@
       ]
     },
     {
-      "name": "TocItem",
+      "name": "Toc.Item",
       "props": [
         {
           "name": "item",
@@ -248,7 +282,7 @@
       ]
     },
     {
-      "name": "TocLink",
+      "name": "Toc.Link",
       "props": [
         {
           "name": "asChild",
@@ -281,7 +315,7 @@
       ]
     },
     {
-      "name": "TocList",
+      "name": "Toc.List",
       "props": [
         {
           "name": "asChild",
@@ -314,7 +348,7 @@
       ]
     },
     {
-      "name": "TocNav",
+      "name": "Toc.Nav",
       "props": [
         {
           "name": "asChild",
@@ -353,7 +387,7 @@
       ]
     },
     {
-      "name": "TocTitle",
+      "name": "Toc.Title",
       "props": [
         {
           "name": "asChild",
@@ -395,7 +429,7 @@
   "files": [
     {
       "path": "components/ui/toc.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Toc as TocPrimitive } from \"@ark-ui/react\"\n\nfunction Toc({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Root>) {\n  return <TocPrimitive.Root data-slot=\"toc\" className={cn(\"w-full text-sm\", className)} {...props} />\n}\n\nfunction TocContext({ ...props }: React.ComponentProps<typeof TocPrimitive.Context>) {\n  return <TocPrimitive.Context {...props} />\n}\n\nfunction TocNav({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Nav>) {\n  return <TocPrimitive.Nav data-slot=\"toc-nav\" className={cn(\"flex flex-col gap-2\", className)} {...props} />\n}\n\nfunction TocTitle({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Title>) {\n  return (\n    <TocPrimitive.Title\n      data-slot=\"toc-title\"\n      className={cn(\"text-xs font-medium text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TocContent({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Content>) {\n  return <TocPrimitive.Content data-slot=\"toc-content\" className={cn(\"relative\", className)} {...props} />\n}\n\nfunction TocList({ className, ...props }: React.ComponentProps<typeof TocPrimitive.List>) {\n  return <TocPrimitive.List data-slot=\"toc-list\" className={cn(\"flex flex-col border-l\", className)} {...props} />\n}\n\nfunction TocItem({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Item>) {\n  return <TocPrimitive.Item data-slot=\"toc-item\" className={cn(\"flex\", className)} {...props} />\n}\n\nfunction TocLink({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Link>) {\n  return (\n    <TocPrimitive.Link\n      data-slot=\"toc-link\"\n      className={cn(\n        \"-ml-px flex-1 border-l border-transparent py-1 pl-[calc(var(--depth,1)*(--spacing(3)))] text-muted-foreground transition-colors hover:text-foreground data-active:border-foreground data-active:text-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TocIndicator({ className, ...props }: React.ComponentProps<typeof TocPrimitive.Indicator>) {\n  return (\n    <TocPrimitive.Indicator\n      data-slot=\"toc-indicator\"\n      className={cn(\"w-px bg-foreground transition-all\", className)}\n      {...props}\n    />\n  )\n}\n\nexport { Toc, TocContent, TocContext, TocIndicator, TocItem, TocLink, TocList, TocNav, TocTitle }\n"
+      "content": "\"use client\"\n\nimport { useToc, useTocContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Toc as TocPrimitive } from \"@ark-ui/react\"\n\nfunction TocRoot({ className, ...props }: TocRootProps) {\n  return <TocPrimitive.Root data-slot=\"toc\" className={cn(\"w-full text-sm\", className)} {...props} />\n}\n\nfunction TocContext({ ...props }: TocContextProps) {\n  return <TocPrimitive.Context {...props} />\n}\n\nfunction TocNav({ className, ...props }: TocNavProps) {\n  return <TocPrimitive.Nav data-slot=\"toc-nav\" className={cn(\"flex flex-col gap-2\", className)} {...props} />\n}\n\nfunction TocTitle({ className, ...props }: TocTitleProps) {\n  return (\n    <TocPrimitive.Title\n      data-slot=\"toc-title\"\n      className={cn(\"text-xs font-medium text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TocContent({ className, ...props }: TocContentProps) {\n  return <TocPrimitive.Content data-slot=\"toc-content\" className={cn(\"relative\", className)} {...props} />\n}\n\nfunction TocList({ className, ...props }: TocListProps) {\n  return <TocPrimitive.List data-slot=\"toc-list\" className={cn(\"flex flex-col border-l\", className)} {...props} />\n}\n\nfunction TocItem({ className, ...props }: TocItemProps) {\n  return <TocPrimitive.Item data-slot=\"toc-item\" className={cn(\"flex\", className)} {...props} />\n}\n\nfunction TocLink({ className, ...props }: TocLinkProps) {\n  return (\n    <TocPrimitive.Link\n      data-slot=\"toc-link\"\n      className={cn(\n        \"-ml-px flex-1 border-l border-transparent py-1 pl-[calc(var(--depth,1)*(--spacing(3)))] text-muted-foreground transition-colors hover:text-foreground data-active:border-foreground data-active:text-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction TocIndicator({ className, ...props }: TocIndicatorProps) {\n  return (\n    <TocPrimitive.Indicator\n      data-slot=\"toc-indicator\"\n      className={cn(\"w-px bg-foreground transition-all\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TocRootProvider({ className, ...props }: TocRootProviderProps) {\n  return <TocPrimitive.RootProvider data-slot=\"toc\" className={cn(\"w-full text-sm\", className)} {...props} />\n}\n\ntype TocRootProps = React.ComponentProps<typeof TocPrimitive.Root>\n\ntype TocRootProviderProps = React.ComponentProps<typeof TocPrimitive.RootProvider>\n\ntype TocContentProps = React.ComponentProps<typeof TocPrimitive.Content>\n\ntype TocContextProps = React.ComponentProps<typeof TocPrimitive.Context>\n\ntype TocIndicatorProps = React.ComponentProps<typeof TocPrimitive.Indicator>\n\ntype TocItemProps = React.ComponentProps<typeof TocPrimitive.Item>\n\ntype TocLinkProps = React.ComponentProps<typeof TocPrimitive.Link>\n\ntype TocListProps = React.ComponentProps<typeof TocPrimitive.List>\n\ntype TocNavProps = React.ComponentProps<typeof TocPrimitive.Nav>\n\ntype TocTitleProps = React.ComponentProps<typeof TocPrimitive.Title>\n\nconst Toc = {\n  Root: TocRoot,\n  RootProvider: TocRootProvider,\n  Content: TocContent,\n  Context: TocContext,\n  Indicator: TocIndicator,\n  Item: TocItem,\n  Link: TocLink,\n  List: TocList,\n  Nav: TocNav,\n  Title: TocTitle,\n}\n\nexport {\n  useToc,\n  useTocContext,\n  Toc,\n  type TocRootProps,\n  type TocRootProviderProps,\n  type TocContentProps,\n  type TocContextProps,\n  type TocIndicatorProps,\n  type TocItemProps,\n  type TocLinkProps,\n  type TocListProps,\n  type TocNavProps,\n  type TocTitleProps,\n}\n"
     }
   ]
 }

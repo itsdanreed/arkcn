@@ -1,15 +1,5 @@
 import * as React from "react"
-import {
-  TreeSelect,
-  TreeSelectChips,
-  TreeSelectClearTrigger,
-  TreeSelectContent,
-  TreeSelectIndicator,
-  TreeSelectSearch,
-  TreeSelectTree,
-  TreeSelectTrigger,
-  createTreeCollection,
-} from "@/components/ui/tree-select"
+import { TreeSelect, createTreeCollection } from "@/components/ui/tree-select"
 
 const org = createTreeCollection({
   rootNode: {
@@ -39,22 +29,22 @@ const org = createTreeCollection({
 export default function TreeSelectExample() {
   const [value, setValue] = React.useState<string[]>(["ava", "noah"])
   return (
-    <TreeSelect
+    <TreeSelect.Root
       collection={org}
       multiple
       value={value}
       onValueChange={({ value }) => setValue(value)}
       defaultExpandedValue={["eng"]}
     >
-      <TreeSelectTrigger className="w-80" aria-label="People">
-        <TreeSelectChips placeholder="Add people or teams" />
-        <TreeSelectClearTrigger />
-        <TreeSelectIndicator />
-      </TreeSelectTrigger>
-      <TreeSelectContent>
-        <TreeSelectSearch placeholder="Find people" />
-        <TreeSelectTree />
-      </TreeSelectContent>
-    </TreeSelect>
+      <TreeSelect.Trigger className="w-80" aria-label="People">
+        <TreeSelect.Chips placeholder="Add people or teams" />
+        <TreeSelect.ClearTrigger />
+        <TreeSelect.Indicator />
+      </TreeSelect.Trigger>
+      <TreeSelect.Content>
+        <TreeSelect.Search placeholder="Find people" />
+        <TreeSelect.Tree />
+      </TreeSelect.Content>
+    </TreeSelect.Root>
   )
 }

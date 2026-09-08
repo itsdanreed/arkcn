@@ -1,12 +1,5 @@
 import { useFilter, useListCollection } from "@ark-ui/react"
-import {
-  Combobox,
-  ComboboxContent,
-  ComboboxEmpty,
-  ComboboxInput,
-  ComboboxItem,
-  ComboboxList,
-} from "@/components/ui/combobox"
+import { Combobox } from "@/components/ui/combobox"
 
 const languages = [
   { label: "English", value: "en" },
@@ -25,23 +18,23 @@ export default function ComboboxExample() {
     filter: contains,
   })
   return (
-    <Combobox
+    <Combobox.Root
       collection={collection}
       onInputValueChange={({ inputValue }) => filter(inputValue)}
       onOpenChange={({ open }) => !open && filter("")}
       openOnClick
     >
-      <ComboboxInput placeholder="Select language" className="w-56" />
-      <ComboboxContent>
-        <ComboboxList>
-          <ComboboxEmpty>No language found.</ComboboxEmpty>
+      <Combobox.Input placeholder="Select language" className="w-56" />
+      <Combobox.Content>
+        <Combobox.List>
+          <Combobox.Empty>No language found.</Combobox.Empty>
           {collection.items.map((language) => (
-            <ComboboxItem key={language.value} item={language}>
+            <Combobox.Item key={language.value} item={language}>
               {language.label}
-            </ComboboxItem>
+            </Combobox.Item>
           ))}
-        </ComboboxList>
-      </ComboboxContent>
-    </Combobox>
+        </Combobox.List>
+      </Combobox.Content>
+    </Combobox.Root>
   )
 }

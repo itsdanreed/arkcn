@@ -4,7 +4,7 @@ const tags = Array.from({ length: 30 }, (_, i) => `v1.${i}.0`)
 
 export default function ScrollAreaExample() {
   return (
-    <ScrollArea className="h-56 w-48 rounded-md border">
+    <ScrollArea.Root className="h-56 w-48 rounded-md border">
       <div className="p-3">
         <h4 className="mb-2 text-sm font-medium">Tags</h4>
         {tags.map((tag) => (
@@ -13,6 +13,6 @@ export default function ScrollAreaExample() {
           </div>
         ))}
       </div>
-    </ScrollArea>
+    </ScrollArea.Root>
   )
 }

@@ -1,26 +1,19 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "@/components/ui/breadcrumb"
-import { DirectionProvider } from "@/components/ui/direction"
+import { Breadcrumb } from "@/components/ui/breadcrumb"
+import { Direction } from "@/components/ui/direction"
 
 function Crumbs() {
   return (
-    <Breadcrumb>
-      <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink href="#">Home</BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>Settings</BreadcrumbPage>
-        </BreadcrumbItem>
-      </BreadcrumbList>
-    </Breadcrumb>
+    <Breadcrumb.Root>
+      <Breadcrumb.List>
+        <Breadcrumb.Item>
+          <Breadcrumb.Link href="#">Home</Breadcrumb.Link>
+        </Breadcrumb.Item>
+        <Breadcrumb.Separator />
+        <Breadcrumb.Item>
+          <Breadcrumb.Page>Settings</Breadcrumb.Page>
+        </Breadcrumb.Item>
+      </Breadcrumb.List>
+    </Breadcrumb.Root>
   )
 }
 
@@ -29,9 +22,9 @@ export default function DirectionExample() {
     <div className="flex flex-col gap-4">
       <Crumbs />
       <div dir="rtl">
-        <DirectionProvider dir="rtl">
+        <Direction.Root dir="rtl">
           <Crumbs />
-        </DirectionProvider>
+        </Direction.Root>
       </div>
     </div>
   )

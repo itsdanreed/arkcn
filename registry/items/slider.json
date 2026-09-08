@@ -4,23 +4,13 @@
   "description": "",
   "ark": "Slider",
   "exports": [
-    "Slider",
-    "SliderContext",
-    "SliderControl",
-    "SliderHiddenInput",
-    "SliderLabel",
-    "SliderMarker",
-    "SliderMarkerGroup",
-    "SliderRange",
-    "SliderRoot",
-    "SliderThumb",
-    "SliderTrack",
-    "SliderValueText",
-    "SliderDraggingIndicator"
+    "useSlider",
+    "useSliderContext",
+    "Slider"
   ],
   "parts": [
     {
-      "name": "Slider",
+      "name": "Slider.Root",
       "props": [
         {
           "name": "aria-label",
@@ -176,7 +166,7 @@
         },
         {
           "name": "origin",
-          "type": "\"center\" | \"end\" | \"start\"",
+          "type": "\"center\" | \"start\" | \"end\"",
           "required": false,
           "default": "\"start\"",
           "description": "The origin of the slider range. The track is filled from the origin\nto the thumb for single values.\n- \"start\": Useful when the value represents an absolute value\n- \"center\": Useful when the value represents an offset (relative)\n- \"end\": Useful when the value represents an offset from the end",
@@ -237,7 +227,47 @@
       ]
     },
     {
-      "name": "SliderContext",
+      "name": "Slider.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseSliderReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Slider.Context",
       "props": [
         {
           "name": "children",
@@ -249,7 +279,7 @@
       ]
     },
     {
-      "name": "SliderControl",
+      "name": "Slider.Control",
       "props": [
         {
           "name": "asChild",
@@ -282,7 +312,7 @@
       ]
     },
     {
-      "name": "SliderHiddenInput",
+      "name": "Slider.HiddenInput",
       "props": [
         {
           "name": "asChild",
@@ -315,7 +345,7 @@
       ]
     },
     {
-      "name": "SliderLabel",
+      "name": "Slider.Label",
       "props": [
         {
           "name": "asChild",
@@ -348,7 +378,7 @@
       ]
     },
     {
-      "name": "SliderMarker",
+      "name": "Slider.Marker",
       "props": [
         {
           "name": "value",
@@ -388,7 +418,7 @@
       ]
     },
     {
-      "name": "SliderMarkerGroup",
+      "name": "Slider.MarkerGroup",
       "props": [
         {
           "name": "asChild",
@@ -421,7 +451,7 @@
       ]
     },
     {
-      "name": "SliderRange",
+      "name": "Slider.Range",
       "props": [
         {
           "name": "asChild",
@@ -454,224 +484,7 @@
       ]
     },
     {
-      "name": "SliderRoot",
-      "props": [
-        {
-          "name": "aria-label",
-          "type": "string[]",
-          "required": false,
-          "description": "The aria-label of each slider thumb. Useful for providing an accessible name to the slider",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "aria-labelledby",
-          "type": "string[]",
-          "required": false,
-          "description": "The `id` of the elements that labels each slider thumb. Useful for providing an accessible name to the slider",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "defaultValue",
-          "type": "number[]",
-          "required": false,
-          "description": "The initial value of the slider when rendered.\nUse when you don't need to control the value of the slider.",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "disabled",
-          "type": "boolean",
-          "required": false,
-          "description": "Whether the slider is disabled",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "form",
-          "type": "string",
-          "required": false,
-          "description": "The associate form of the underlying input element.",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "getAriaValueText",
-          "type": "((details: ValueTextDetails) => string)",
-          "required": false,
-          "description": "Function that returns a human readable value for the slider thumb",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "id",
-          "type": "string",
-          "required": false,
-          "description": "The unique identifier of the machine.",
-          "from": "@zag-js/types"
-        },
-        {
-          "name": "ids",
-          "type": "ElementIds",
-          "required": false,
-          "description": "The ids of the elements in the slider. Useful for composition.",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "invalid",
-          "type": "boolean",
-          "required": false,
-          "description": "Whether the slider is invalid",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "largeStep",
-          "type": "number",
-          "required": false,
-          "default": "10 * step",
-          "description": "The step value of the slider when the `Shift` key is held, or the\n`PageUp`/`PageDown` keys are used.",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "max",
-          "type": "number",
-          "required": false,
-          "default": "100",
-          "description": "The maximum value of the slider",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "min",
-          "type": "number",
-          "required": false,
-          "default": "0",
-          "description": "The minimum value of the slider",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "minStepsBetweenThumbs",
-          "type": "number",
-          "required": false,
-          "default": "0",
-          "description": "The minimum permitted steps between multiple thumbs.\n\n`minStepsBetweenThumbs` * `step` should reflect the gap between the thumbs.\n\n- `step: 1` and `minStepsBetweenThumbs: 10` => gap is `10`\n- `step: 10` and `minStepsBetweenThumbs: 2` => gap is `20`",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "name",
-          "type": "string",
-          "required": false,
-          "description": "The name associated with each slider thumb (when used in a form)",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "onFocusChange",
-          "type": "((details: FocusChangeDetails) => void)",
-          "required": false,
-          "description": "Function invoked when the slider's focused index changes",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "onValueChange",
-          "type": "((details: ValueChangeDetails) => void)",
-          "required": false,
-          "description": "Function invoked when the value of the slider changes",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "onValueChangeEnd",
-          "type": "((details: ValueChangeDetails) => void)",
-          "required": false,
-          "description": "Function invoked when the slider value change is done",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "orientation",
-          "type": "\"horizontal\" | \"vertical\"",
-          "required": false,
-          "default": "\"horizontal\"",
-          "description": "The orientation of the slider",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "origin",
-          "type": "\"center\" | \"end\" | \"start\"",
-          "required": false,
-          "default": "\"start\"",
-          "description": "The origin of the slider range. The track is filled from the origin\nto the thumb for single values.\n- \"start\": Useful when the value represents an absolute value\n- \"center\": Useful when the value represents an offset (relative)\n- \"end\": Useful when the value represents an offset from the end",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "readOnly",
-          "type": "boolean",
-          "required": false,
-          "description": "Whether the slider is read-only",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "step",
-          "type": "number",
-          "required": false,
-          "default": "1",
-          "description": "The step value of the slider",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        },
-        {
-          "name": "thumbAlignment",
-          "type": "\"center\" | \"contain\"",
-          "required": false,
-          "default": "\"contain\"",
-          "description": "The alignment of the slider thumb relative to the track\n- `center`: the thumb will extend beyond the bounds of the slider track.\n- `contain`: the thumb will be contained within the bounds of the track.",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "thumbCollisionBehavior",
-          "type": "\"push\" | \"none\" | \"swap\"",
-          "required": false,
-          "default": "\"none\"",
-          "description": "Controls how thumbs behave when they collide during pointer interactions.\n- `none` (default): Thumbs cannot move past each other; excess movement is ignored.\n- `push`: Thumbs push each other without restoring their previous positions when dragged back.\n- `swap`: Thumbs swap places when dragged past each other.",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "thumbSize",
-          "type": "{ width: number; height: number; }",
-          "required": false,
-          "description": "The slider thumbs dimensions",
-          "from": "@zag-js/slider"
-        },
-        {
-          "name": "value",
-          "type": "number[]",
-          "required": false,
-          "description": "The controlled value of the slider",
-          "from": "@zag-js/slider"
-        }
-      ]
-    },
-    {
-      "name": "SliderThumb",
+      "name": "Slider.Thumb",
       "props": [
         {
           "name": "index",
@@ -718,7 +531,7 @@
       ]
     },
     {
-      "name": "SliderTrack",
+      "name": "Slider.Track",
       "props": [
         {
           "name": "asChild",
@@ -751,7 +564,7 @@
       ]
     },
     {
-      "name": "SliderValueText",
+      "name": "Slider.ValueText",
       "props": [
         {
           "name": "asChild",
@@ -784,7 +597,7 @@
       ]
     },
     {
-      "name": "SliderDraggingIndicator",
+      "name": "Slider.DraggingIndicator",
       "props": [
         {
           "name": "asChild",
@@ -826,7 +639,7 @@
   "files": [
     {
       "path": "components/ui/slider.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Slider as SliderPrimitive } from \"@ark-ui/react\"\n\nfunction Slider({\n  className,\n  children,\n  defaultValue,\n  value,\n  min = 0,\n  max = 100,\n  ...props\n}: React.ComponentProps<typeof SliderPrimitive.Root>) {\n  const _values = React.useMemo(\n    () => (Array.isArray(value) ? value : Array.isArray(defaultValue) ? defaultValue : [min, max]),\n    [value, defaultValue, min, max]\n  )\n\n  return (\n    <SliderPrimitive.Root\n      data-slot=\"slider\"\n      defaultValue={defaultValue}\n      value={value}\n      min={min}\n      max={max}\n      className={cn(\n        \"relative flex w-full touch-none flex-col gap-2 select-none data-disabled:opacity-50 data-vertical:h-full data-vertical:min-h-40 data-vertical:w-auto\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n      <SliderControl>\n        <SliderTrack>\n          <SliderRange />\n        </SliderTrack>\n        {Array.from({ length: _values.length }, (_, index) => (\n          <SliderThumb key={index} index={index}>\n            <SliderHiddenInput />\n          </SliderThumb>\n        ))}\n      </SliderControl>\n    </SliderPrimitive.Root>\n  )\n}\n\nfunction SliderRoot({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Root>) {\n  return (\n    <SliderPrimitive.Root\n      data-slot=\"slider\"\n      className={cn(\n        \"relative flex w-full touch-none flex-col gap-2 select-none data-disabled:opacity-50 data-vertical:h-full data-vertical:min-h-40 data-vertical:w-auto\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SliderContext({ ...props }: React.ComponentProps<typeof SliderPrimitive.Context>) {\n  return <SliderPrimitive.Context {...props} />\n}\n\nfunction SliderLabel({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Label>) {\n  return <SliderPrimitive.Label data-slot=\"slider-label\" className={cn(\"text-sm font-medium\", className)} {...props} />\n}\n\nfunction SliderValueText({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.ValueText>) {\n  return (\n    <SliderPrimitive.ValueText\n      data-slot=\"slider-value-text\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SliderControl({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Control>) {\n  return (\n    <SliderPrimitive.Control\n      data-slot=\"slider-control\"\n      className={cn(\"relative flex items-center data-vertical:h-full data-vertical:flex-col\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SliderTrack({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Track>) {\n  return (\n    <SliderPrimitive.Track\n      data-slot=\"slider-track\"\n      className={cn(\n        \"relative grow overflow-hidden rounded-full bg-muted data-horizontal:h-1 data-horizontal:w-full data-vertical:h-full data-vertical:w-1\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SliderRange({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Range>) {\n  return (\n    <SliderPrimitive.Range\n      data-slot=\"slider-range\"\n      className={cn(\"absolute bg-primary select-none data-horizontal:h-full data-vertical:w-full\", className)}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction SliderThumb({ className, ...props }: Omit<React.ComponentProps<typeof SliderPrimitive.Thumb>, \"id\">) {\n  return (\n    <SliderPrimitive.Thumb\n      data-slot=\"slider-thumb\"\n      className={cn(\n        \"relative block size-3 shrink-0 rounded-full border border-ring bg-white ring-ring/50 transition-[color,box-shadow] select-none after:absolute after:-inset-2 hover:ring-3 focus-visible:ring-3 focus-visible:outline-hidden data-dragging:ring-3 data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction SliderHiddenInput({ ...props }: Omit<React.ComponentProps<typeof SliderPrimitive.HiddenInput>, \"id\">) {\n  return <SliderPrimitive.HiddenInput {...props} />\n}\n\nfunction SliderMarkerGroup({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.MarkerGroup>) {\n  return (\n    <SliderPrimitive.MarkerGroup\n      data-slot=\"slider-marker-group\"\n      className={cn(\"relative h-4 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SliderMarker({ className, ...props }: React.ComponentProps<typeof SliderPrimitive.Marker>) {\n  return (\n    <SliderPrimitive.Marker\n      data-slot=\"slider-marker\"\n      className={cn(\"absolute -translate-x-1/2\", className)}\n      {...props}\n    />\n  )\n}\n\n/** Value bubble shown above a thumb while it is dragged. Place it inside `SliderThumb`. */\nfunction SliderDraggingIndicator({\n  className,\n  ...props\n}: React.ComponentProps<typeof SliderPrimitive.DraggingIndicator>) {\n  return (\n    <SliderPrimitive.DraggingIndicator\n      data-slot=\"slider-dragging-indicator\"\n      className={cn(\n        \"pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 rounded-md bg-primary px-1.5 py-0.5 text-xs font-medium text-primary-foreground tabular-nums\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nexport {\n  Slider,\n  SliderContext,\n  SliderControl,\n  SliderHiddenInput,\n  SliderLabel,\n  SliderMarker,\n  SliderMarkerGroup,\n  SliderRange,\n  SliderRoot,\n  SliderThumb,\n  SliderTrack,\n  SliderValueText,\n  SliderDraggingIndicator,\n}\n"
+      "content": "\"use client\"\n\nimport { useSlider, useSliderContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Slider as SliderPrimitive } from \"@ark-ui/react\"\n\nfunction SliderRoot({ className, ...props }: SliderRootProps) {\n  return (\n    <SliderPrimitive.Root\n      data-slot=\"slider\"\n      className={cn(\n        \"relative flex w-full touch-none flex-col gap-2 select-none data-disabled:opacity-50 data-vertical:h-full data-vertical:min-h-40 data-vertical:w-auto\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SliderContext({ ...props }: SliderContextProps) {\n  return <SliderPrimitive.Context {...props} />\n}\n\nfunction SliderLabel({ className, ...props }: SliderLabelProps) {\n  return <SliderPrimitive.Label data-slot=\"slider-label\" className={cn(\"text-sm font-medium\", className)} {...props} />\n}\n\nfunction SliderValueText({ className, ...props }: SliderValueTextProps) {\n  return (\n    <SliderPrimitive.ValueText\n      data-slot=\"slider-value-text\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SliderControl({ className, ...props }: SliderControlProps) {\n  return (\n    <SliderPrimitive.Control\n      data-slot=\"slider-control\"\n      className={cn(\"relative flex items-center data-vertical:h-full data-vertical:flex-col\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SliderTrack({ className, ...props }: SliderTrackProps) {\n  return (\n    <SliderPrimitive.Track\n      data-slot=\"slider-track\"\n      className={cn(\n        \"relative grow overflow-hidden rounded-full bg-muted data-horizontal:h-1 data-horizontal:w-full data-vertical:h-full data-vertical:w-1\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SliderRange({ className, ...props }: SliderRangeProps) {\n  return (\n    <SliderPrimitive.Range\n      data-slot=\"slider-range\"\n      className={cn(\"absolute bg-primary select-none data-horizontal:h-full data-vertical:w-full\", className)}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction SliderThumb({ className, ...props }: SliderThumbProps) {\n  return (\n    <SliderPrimitive.Thumb\n      data-slot=\"slider-thumb\"\n      className={cn(\n        \"relative block size-3 shrink-0 rounded-full border border-ring bg-white ring-ring/50 transition-[color,box-shadow] select-none after:absolute after:-inset-2 hover:ring-3 focus-visible:ring-3 focus-visible:outline-hidden data-dragging:ring-3 data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction SliderHiddenInput({ ...props }: SliderHiddenInputProps) {\n  return <SliderPrimitive.HiddenInput {...props} />\n}\n\nfunction SliderMarkerGroup({ className, ...props }: SliderMarkerGroupProps) {\n  return (\n    <SliderPrimitive.MarkerGroup\n      data-slot=\"slider-marker-group\"\n      className={cn(\"relative h-4 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SliderMarker({ className, ...props }: SliderMarkerProps) {\n  return (\n    <SliderPrimitive.Marker\n      data-slot=\"slider-marker\"\n      className={cn(\"absolute -translate-x-1/2\", className)}\n      {...props}\n    />\n  )\n}\n\n/** Value bubble shown above a thumb while it is dragged. Place it inside `SliderThumb`. */\nfunction SliderDraggingIndicator({ className, ...props }: SliderDraggingIndicatorProps) {\n  return (\n    <SliderPrimitive.DraggingIndicator\n      data-slot=\"slider-dragging-indicator\"\n      className={cn(\n        \"pointer-events-none absolute bottom-full left-1/2 mb-2 -translate-x-1/2 rounded-md bg-primary px-1.5 py-0.5 text-xs font-medium text-primary-foreground tabular-nums\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SliderRootProvider({ className, ...props }: SliderRootProviderProps) {\n  return (\n    <SliderPrimitive.RootProvider\n      data-slot=\"slider\"\n      className={cn(\n        \"relative flex w-full touch-none flex-col gap-2 select-none data-disabled:opacity-50 data-vertical:h-full data-vertical:min-h-40 data-vertical:w-auto\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype SliderRootProps = React.ComponentProps<typeof SliderPrimitive.Root>\n\ntype SliderRootProviderProps = React.ComponentProps<typeof SliderPrimitive.RootProvider>\n\ntype SliderContextProps = React.ComponentProps<typeof SliderPrimitive.Context>\n\ntype SliderControlProps = React.ComponentProps<typeof SliderPrimitive.Control>\n\ntype SliderHiddenInputProps = Omit<React.ComponentProps<typeof SliderPrimitive.HiddenInput>, \"id\">\n\ntype SliderLabelProps = React.ComponentProps<typeof SliderPrimitive.Label>\n\ntype SliderMarkerProps = React.ComponentProps<typeof SliderPrimitive.Marker>\n\ntype SliderMarkerGroupProps = React.ComponentProps<typeof SliderPrimitive.MarkerGroup>\n\ntype SliderRangeProps = React.ComponentProps<typeof SliderPrimitive.Range>\n\ntype SliderThumbProps = Omit<React.ComponentProps<typeof SliderPrimitive.Thumb>, \"id\">\n\ntype SliderTrackProps = React.ComponentProps<typeof SliderPrimitive.Track>\n\ntype SliderValueTextProps = React.ComponentProps<typeof SliderPrimitive.ValueText>\n\ntype SliderDraggingIndicatorProps = React.ComponentProps<typeof SliderPrimitive.DraggingIndicator>\n\nconst Slider = {\n  Root: SliderRoot,\n  RootProvider: SliderRootProvider,\n  Context: SliderContext,\n  Control: SliderControl,\n  HiddenInput: SliderHiddenInput,\n  Label: SliderLabel,\n  Marker: SliderMarker,\n  MarkerGroup: SliderMarkerGroup,\n  Range: SliderRange,\n  Thumb: SliderThumb,\n  Track: SliderTrack,\n  ValueText: SliderValueText,\n  DraggingIndicator: SliderDraggingIndicator,\n}\n\nexport {\n  useSlider,\n  useSliderContext,\n  Slider,\n  type SliderRootProps,\n  type SliderRootProviderProps,\n  type SliderContextProps,\n  type SliderControlProps,\n  type SliderHiddenInputProps,\n  type SliderLabelProps,\n  type SliderMarkerProps,\n  type SliderMarkerGroupProps,\n  type SliderRangeProps,\n  type SliderThumbProps,\n  type SliderTrackProps,\n  type SliderValueTextProps,\n  type SliderDraggingIndicatorProps,\n}\n"
     }
   ]
 }

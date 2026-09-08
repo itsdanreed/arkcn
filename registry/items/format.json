@@ -4,14 +4,11 @@
   "description": "Locale-aware formatting helpers from Ark, wrapping `Intl`.",
   "ark": "Format",
   "exports": [
-    "FormatByte",
-    "FormatNumber",
-    "FormatRelativeTime",
-    "FormatTime"
+    "Format"
   ],
   "parts": [
     {
-      "name": "FormatByte",
+      "name": "Format.Byte",
       "props": [
         {
           "name": "value",
@@ -44,7 +41,7 @@
       ]
     },
     {
-      "name": "FormatNumber",
+      "name": "Format.Number",
       "props": [
         {
           "name": "value",
@@ -63,7 +60,7 @@
       ]
     },
     {
-      "name": "FormatRelativeTime",
+      "name": "Format.RelativeTime",
       "props": [
         {
           "name": "value",
@@ -82,7 +79,7 @@
       ]
     },
     {
-      "name": "FormatTime",
+      "name": "Format.Time",
       "props": [
         {
           "name": "value",
@@ -125,7 +122,7 @@
   "files": [
     {
       "path": "components/ui/format.tsx",
-      "content": "import * as React from \"react\"\nimport { Format as FormatPrimitive } from \"@ark-ui/react\"\n\n/** Locale-aware formatting helpers from Ark, wrapping `Intl`. */\n\nfunction FormatNumber({ ...props }: React.ComponentProps<typeof FormatPrimitive.Number>) {\n  return <FormatPrimitive.Number {...props} />\n}\n\nfunction FormatByte({ ...props }: React.ComponentProps<typeof FormatPrimitive.Byte>) {\n  return <FormatPrimitive.Byte {...props} />\n}\n\nfunction FormatTime({ ...props }: React.ComponentProps<typeof FormatPrimitive.Time>) {\n  return <FormatPrimitive.Time {...props} />\n}\n\nfunction FormatRelativeTime({ ...props }: React.ComponentProps<typeof FormatPrimitive.RelativeTime>) {\n  return <FormatPrimitive.RelativeTime {...props} />\n}\n\nexport { FormatByte, FormatNumber, FormatRelativeTime, FormatTime }\n"
+      "content": "import * as React from \"react\"\nimport { Format as FormatPrimitive } from \"@ark-ui/react\"\n\n/** Locale-aware formatting helpers from Ark, wrapping `Intl`. */\n\nfunction FormatNumber({ ...props }: FormatNumberProps) {\n  return <FormatPrimitive.Number {...props} />\n}\n\nfunction FormatByte({ ...props }: FormatByteProps) {\n  return <FormatPrimitive.Byte {...props} />\n}\n\nfunction FormatTime({ ...props }: FormatTimeProps) {\n  return <FormatPrimitive.Time {...props} />\n}\n\nfunction FormatRelativeTime({ ...props }: FormatRelativeTimeProps) {\n  return <FormatPrimitive.RelativeTime {...props} />\n}\n\ntype FormatByteProps = React.ComponentProps<typeof FormatPrimitive.Byte>\n\ntype FormatNumberProps = React.ComponentProps<typeof FormatPrimitive.Number>\n\ntype FormatRelativeTimeProps = React.ComponentProps<typeof FormatPrimitive.RelativeTime>\n\ntype FormatTimeProps = React.ComponentProps<typeof FormatPrimitive.Time>\n\nconst Format = {\n  Byte: FormatByte,\n  Number: FormatNumber,\n  RelativeTime: FormatRelativeTime,\n  Time: FormatTime,\n}\n\nexport { Format, type FormatByteProps, type FormatNumberProps, type FormatRelativeTimeProps, type FormatTimeProps }\n"
     }
   ]
 }

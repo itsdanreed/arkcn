@@ -1,0 +1,1486 @@
+{
+  "name": "date-picker",
+  "type": "ui",
+  "description": "",
+  "ark": "DatePicker",
+  "exports": [
+    "DatePicker",
+    "useDatePicker",
+    "useDatePickerContext",
+    "parseDate"
+  ],
+  "parts": [
+    {
+      "name": "DatePicker.Root",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "closeOnSelect",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether the calendar should close after the date selection is complete.\nThis is ignored when the selection mode is `multiple`.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "createCalendar",
+          "type": "((identifier: CalendarIdentifier) => Calendar)",
+          "required": false,
+          "description": "A function that creates a Calendar object for a given calendar identifier.\nEnables non-Gregorian calendar support (Persian, Buddhist, Islamic, etc.)\nwithout bundling all calendars by default.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "defaultFocusedValue",
+          "type": "DateValue",
+          "required": false,
+          "description": "The initial focused date when rendered.\nUse when you don't need to control the focused date of the date picker.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "description": "The initial open state of the date picker when rendered.\nUse when you don't need to control the open state of the date picker.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "defaultValue",
+          "type": "DateValue[]",
+          "required": false,
+          "description": "The initial selected date(s) when rendered.\nUse when you don't need to control the selected date(s) of the date picker.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "defaultView",
+          "type": "DateView",
+          "required": false,
+          "default": "\"day\"",
+          "description": "The default view of the calendar",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the calendar is disabled.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "fixedWeeks",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the calendar should have a fixed number of weeks.\nThis renders the calendar with 6 weeks instead of 5 or 6.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "focusedValue",
+          "type": "DateValue",
+          "required": false,
+          "description": "The controlled focused date.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "format",
+          "type": "((date: DateValue, details: LocaleDetails) => string)",
+          "required": false,
+          "description": "The format of the date to display in the input.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the date picker. Useful for composition.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "inline",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to render the date picker inline",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the date picker is invalid",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "isDateUnavailable",
+          "type": "((date: DateValue, locale: string) => boolean)",
+          "required": false,
+          "description": "Returns whether a date of the calendar is available.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false,
+          "default": "\"en-US\"",
+          "description": "The locale (BCP 47 language tag) to use when formatting the date.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "max",
+          "type": "DateValue",
+          "required": false,
+          "description": "The maximum date that can be selected.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "maxSelectedDates",
+          "type": "number",
+          "required": false,
+          "description": "The maximum number of dates that can be selected.\nThis is only applicable when `selectionMode` is `multiple`.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "maxView",
+          "type": "DateView",
+          "required": false,
+          "default": "\"year\"",
+          "description": "The maximum view of the calendar",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "min",
+          "type": "DateValue",
+          "required": false,
+          "description": "The minimum date that can be selected.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "minView",
+          "type": "DateView",
+          "required": false,
+          "default": "\"day\"",
+          "description": "The minimum view of the calendar",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The `name` attribute of the input element.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "numOfMonths",
+          "type": "number",
+          "required": false,
+          "description": "The number of months to display.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onFocusChange",
+          "type": "((details: FocusChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the focused date changes.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "((details: OpenChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the calendar opens or closes.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the value changes.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "onViewChange",
+          "type": "((details: ViewChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the view changes.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "onVisibleRangeChange",
+          "type": "((details: VisibleRangeChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the visible range changes.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "description": "The controlled open state of the date picker",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "openOnClick",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to open the calendar when the input is clicked.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "outsideDaySelectable",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether day outside the visible range can be selected.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "parse",
+          "type": "((value: string, details: LocaleDetails) => DateValue | undefined)",
+          "required": false,
+          "description": "Function to parse the date from the input back to a DateValue.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "The placeholder text to display in the input.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "positioning",
+          "type": "PositioningOptions",
+          "required": false,
+          "description": "The user provided options used to position the date picker content",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the calendar is read-only.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the date picker is required",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "selectionMode",
+          "type": "SelectionMode",
+          "required": false,
+          "default": "\"single\"",
+          "description": "The selection mode of the calendar.\n- `single` - only one date can be selected\n- `multiple` - multiple dates can be selected\n- `range` - a range of dates can be selected",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "showWeekNumbers",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to show the week number column in the day view.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "startOfWeek",
+          "type": "number",
+          "required": false,
+          "description": "The first day of the week.\n `0` - Sunday\n `1` - Monday\n `2` - Tuesday\n `3` - Wednesday\n `4` - Thursday\n `5` - Friday\n `6` - Saturday",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "timeZone",
+          "type": "string",
+          "required": false,
+          "default": "\"UTC\"",
+          "description": "The time zone to use",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "translations",
+          "type": "IntlTranslations",
+          "required": false,
+          "description": "The localized messages to use.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "value",
+          "type": "DateValue[]",
+          "required": false,
+          "description": "The controlled selected date(s).",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "view",
+          "type": "DateView",
+          "required": false,
+          "description": "The view of the calendar",
+          "from": "@zag-js/date-picker"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.ClearTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.Content",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseDatePickerContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.Control",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.Input",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "fixOnBlur",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to fix the input value on blur.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "index",
+          "type": "number",
+          "required": false,
+          "description": "The index of the input to focus.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.Label",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.MonthSelect",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.NextTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.Positioner",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.PresetTrigger",
+      "props": [
+        {
+          "name": "value",
+          "type": "PresetTriggerValue",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.PrevTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.RangeText",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.ValueText",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "((props: DatePickerValueTextRenderProps) => ReactNode)",
+          "required": false,
+          "description": "A function to render each selected date value.\nWhen provided, each date in the selection will be rendered using this function.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "Text to display when no date is selected.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "separator",
+          "type": "string",
+          "required": false,
+          "default": "\", \"",
+          "description": "The separator to use between multiple date values when using default rendering.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseDatePickerReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.Table",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "columns",
+          "type": "number",
+          "required": false,
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.TableBody",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.TableCell",
+      "props": [
+        {
+          "name": "value",
+          "type": "number | DateValue",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "columns",
+          "type": "number",
+          "required": false,
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "visibleRange",
+          "type": "VisibleRange",
+          "required": false,
+          "from": "@zag-js/date-picker"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.TableCellTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.TableHead",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.TableHeader",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.WeekNumberHeaderCell",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.WeekNumberCell",
+      "props": [
+        {
+          "name": "week",
+          "type": "DateValue[]",
+          "required": true,
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "weekIndex",
+          "type": "number",
+          "required": true,
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.TableRow",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.Trigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.View",
+      "props": [
+        {
+          "name": "view",
+          "type": "DateView",
+          "required": true,
+          "from": "@zag-js/date-picker"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.ViewControl",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.ViewTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker.YearSelect",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/date-picker.tsx",
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport { DatePicker as DatePickerPrimitive, useDatePicker, useDatePickerContext, parseDate } from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction DatePickerClearTrigger({ className, ...props }: DatePickerClearTriggerProps) {\n  return (\n    <DatePickerPrimitive.ClearTrigger\n      data-slot=\"date-picker-clear-trigger\"\n      className={cn(\n        \"inline-flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-lg px-2.5 text-sm font-medium whitespace-nowrap outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerContent({ className, ...props }: DatePickerContentProps) {\n  return (\n    <DatePickerPrimitive.Content\n      data-slot=\"date-picker-content\"\n      className={cn(\n        \"w-fit min-w-64 rounded-lg border bg-popover p-3 text-popover-foreground shadow-md outline-none\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerContext(props: DatePickerContextProps) {\n  return <DatePickerPrimitive.Context {...props} />\n}\n\nfunction DatePickerControl({ className, ...props }: DatePickerControlProps) {\n  return (\n    <DatePickerPrimitive.Control\n      data-slot=\"date-picker-control\"\n      className={cn(\"flex items-center gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerInput({ className, ...props }: DatePickerInputProps) {\n  return (\n    <DatePickerPrimitive.Input\n      data-slot=\"date-picker-input\"\n      className={cn(\n        \"h-8 min-w-0 rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerLabel({ className, ...props }: DatePickerLabelProps) {\n  return (\n    <DatePickerPrimitive.Label\n      data-slot=\"date-picker-label\"\n      className={cn(\"text-sm font-medium data-disabled:opacity-50\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerMonthSelect({ className, ...props }: DatePickerMonthSelectProps) {\n  return (\n    <DatePickerPrimitive.MonthSelect\n      data-slot=\"date-picker-month-select\"\n      className={cn(\n        \"h-8 min-w-0 rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerNextTrigger({ className, ...props }: DatePickerNextTriggerProps) {\n  return (\n    <DatePickerPrimitive.NextTrigger\n      data-slot=\"date-picker-next-trigger\"\n      className={cn(\n        \"inline-flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-lg px-2.5 text-sm font-medium whitespace-nowrap outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerPositioner({ className, ...props }: DatePickerPositionerProps) {\n  return (\n    <DatePickerPrimitive.Positioner data-slot=\"date-picker-positioner\" className={cn(\"z-50\", className)} {...props} />\n  )\n}\n\nfunction DatePickerPresetTrigger({ className, ...props }: DatePickerPresetTriggerProps) {\n  return (\n    <DatePickerPrimitive.PresetTrigger\n      data-slot=\"date-picker-preset-trigger\"\n      className={cn(\n        \"inline-flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-lg px-2.5 text-sm font-medium whitespace-nowrap outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerPrevTrigger({ className, ...props }: DatePickerPrevTriggerProps) {\n  return (\n    <DatePickerPrimitive.PrevTrigger\n      data-slot=\"date-picker-prev-trigger\"\n      className={cn(\n        \"inline-flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-lg px-2.5 text-sm font-medium whitespace-nowrap outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerRangeText({ className, ...props }: DatePickerRangeTextProps) {\n  return (\n    <DatePickerPrimitive.RangeText\n      data-slot=\"date-picker-range-text\"\n      className={cn(\"text-sm font-medium\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerValueText({ className, ...props }: DatePickerValueTextProps) {\n  return (\n    <DatePickerPrimitive.ValueText data-slot=\"date-picker-value-text\" className={cn(\"text-sm\", className)} {...props} />\n  )\n}\n\nfunction DatePickerRoot({ className, ...props }: DatePickerRootProps) {\n  return (\n    <DatePickerPrimitive.Root data-slot=\"date-picker\" className={cn(\"flex flex-col gap-1.5\", className)} {...props} />\n  )\n}\n\nfunction DatePickerRootProvider({ className, ...props }: DatePickerRootProviderProps) {\n  return (\n    <DatePickerPrimitive.RootProvider\n      data-slot=\"date-picker-root-provider\"\n      className={cn(\"flex flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerTable({ className, ...props }: DatePickerTableProps) {\n  return (\n    <DatePickerPrimitive.Table\n      data-slot=\"date-picker-table\"\n      className={cn(\"w-full border-collapse text-sm\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerTableBody({ className, ...props }: DatePickerTableBodyProps) {\n  return <DatePickerPrimitive.TableBody data-slot=\"date-picker-table-body\" className={cn(className)} {...props} />\n}\n\nfunction DatePickerTableCell({ className, ...props }: DatePickerTableCellProps) {\n  return (\n    <DatePickerPrimitive.TableCell\n      data-slot=\"date-picker-table-cell\"\n      className={cn(\"p-0.5 text-center\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerTableCellTrigger({ className, ...props }: DatePickerTableCellTriggerProps) {\n  return (\n    <DatePickerPrimitive.TableCellTrigger\n      data-slot=\"date-picker-table-cell-trigger\"\n      className={cn(\n        \"flex min-h-8 min-w-8 cursor-default items-center justify-center rounded-md px-2 outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-outside-range:opacity-40 data-today:font-bold data-selected:bg-primary data-selected:text-primary-foreground data-disabled:pointer-events-none data-disabled:opacity-40\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerTableHead({ className, ...props }: DatePickerTableHeadProps) {\n  return <DatePickerPrimitive.TableHead data-slot=\"date-picker-table-head\" className={cn(className)} {...props} />\n}\n\nfunction DatePickerTableHeader({ className, ...props }: DatePickerTableHeaderProps) {\n  return (\n    <DatePickerPrimitive.TableHeader\n      data-slot=\"date-picker-table-header\"\n      className={cn(\"h-8 text-center text-xs font-normal text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerWeekNumberHeaderCell({ className, ...props }: DatePickerWeekNumberHeaderCellProps) {\n  return (\n    <DatePickerPrimitive.WeekNumberHeaderCell\n      data-slot=\"date-picker-week-number-header-cell\"\n      className={cn(\"px-1 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerWeekNumberCell({ className, ...props }: DatePickerWeekNumberCellProps) {\n  return (\n    <DatePickerPrimitive.WeekNumberCell\n      data-slot=\"date-picker-week-number-cell\"\n      className={cn(\"px-1 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerTableRow({ className, ...props }: DatePickerTableRowProps) {\n  return <DatePickerPrimitive.TableRow data-slot=\"date-picker-table-row\" className={cn(className)} {...props} />\n}\n\nfunction DatePickerTrigger({ className, ...props }: DatePickerTriggerProps) {\n  return (\n    <DatePickerPrimitive.Trigger\n      data-slot=\"date-picker-trigger\"\n      className={cn(\n        \"inline-flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-lg border border-input px-2.5 text-sm font-medium outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerView({ className, ...props }: DatePickerViewProps) {\n  return (\n    <DatePickerPrimitive.View\n      data-slot=\"date-picker-view\"\n      className={cn(\"flex flex-col gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerViewControl({ className, ...props }: DatePickerViewControlProps) {\n  return (\n    <DatePickerPrimitive.ViewControl\n      data-slot=\"date-picker-view-control\"\n      className={cn(\"flex items-center justify-between gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerViewTrigger({ className, ...props }: DatePickerViewTriggerProps) {\n  return (\n    <DatePickerPrimitive.ViewTrigger\n      data-slot=\"date-picker-view-trigger\"\n      className={cn(\n        \"inline-flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-lg px-2.5 text-sm font-medium whitespace-nowrap outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DatePickerYearSelect({ className, ...props }: DatePickerYearSelectProps) {\n  return (\n    <DatePickerPrimitive.YearSelect\n      data-slot=\"date-picker-year-select\"\n      className={cn(\n        \"h-8 min-w-0 rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype DatePickerRootProps = React.ComponentProps<typeof DatePickerPrimitive.Root>\n\ntype DatePickerClearTriggerProps = React.ComponentProps<typeof DatePickerPrimitive.ClearTrigger>\n\ntype DatePickerContentProps = React.ComponentProps<typeof DatePickerPrimitive.Content>\n\ntype DatePickerContextProps = React.ComponentProps<typeof DatePickerPrimitive.Context>\n\ntype DatePickerControlProps = React.ComponentProps<typeof DatePickerPrimitive.Control>\n\ntype DatePickerInputProps = React.ComponentProps<typeof DatePickerPrimitive.Input>\n\ntype DatePickerLabelProps = React.ComponentProps<typeof DatePickerPrimitive.Label>\n\ntype DatePickerMonthSelectProps = React.ComponentProps<typeof DatePickerPrimitive.MonthSelect>\n\ntype DatePickerNextTriggerProps = React.ComponentProps<typeof DatePickerPrimitive.NextTrigger>\n\ntype DatePickerPositionerProps = React.ComponentProps<typeof DatePickerPrimitive.Positioner>\n\ntype DatePickerPresetTriggerProps = React.ComponentProps<typeof DatePickerPrimitive.PresetTrigger>\n\ntype DatePickerPrevTriggerProps = React.ComponentProps<typeof DatePickerPrimitive.PrevTrigger>\n\ntype DatePickerRangeTextProps = React.ComponentProps<typeof DatePickerPrimitive.RangeText>\n\ntype DatePickerValueTextProps = React.ComponentProps<typeof DatePickerPrimitive.ValueText>\n\ntype DatePickerRootProviderProps = React.ComponentProps<typeof DatePickerPrimitive.RootProvider>\n\ntype DatePickerTableProps = React.ComponentProps<typeof DatePickerPrimitive.Table>\n\ntype DatePickerTableBodyProps = React.ComponentProps<typeof DatePickerPrimitive.TableBody>\n\ntype DatePickerTableCellProps = React.ComponentProps<typeof DatePickerPrimitive.TableCell>\n\ntype DatePickerTableCellTriggerProps = React.ComponentProps<typeof DatePickerPrimitive.TableCellTrigger>\n\ntype DatePickerTableHeadProps = React.ComponentProps<typeof DatePickerPrimitive.TableHead>\n\ntype DatePickerTableHeaderProps = React.ComponentProps<typeof DatePickerPrimitive.TableHeader>\n\ntype DatePickerWeekNumberHeaderCellProps = React.ComponentProps<typeof DatePickerPrimitive.WeekNumberHeaderCell>\n\ntype DatePickerWeekNumberCellProps = React.ComponentProps<typeof DatePickerPrimitive.WeekNumberCell>\n\ntype DatePickerTableRowProps = React.ComponentProps<typeof DatePickerPrimitive.TableRow>\n\ntype DatePickerTriggerProps = React.ComponentProps<typeof DatePickerPrimitive.Trigger>\n\ntype DatePickerViewProps = React.ComponentProps<typeof DatePickerPrimitive.View>\n\ntype DatePickerViewControlProps = React.ComponentProps<typeof DatePickerPrimitive.ViewControl>\n\ntype DatePickerViewTriggerProps = React.ComponentProps<typeof DatePickerPrimitive.ViewTrigger>\n\ntype DatePickerYearSelectProps = React.ComponentProps<typeof DatePickerPrimitive.YearSelect>\n\nconst DatePicker = {\n  Root: DatePickerRoot,\n  ClearTrigger: DatePickerClearTrigger,\n  Content: DatePickerContent,\n  Context: DatePickerContext,\n  Control: DatePickerControl,\n  Input: DatePickerInput,\n  Label: DatePickerLabel,\n  MonthSelect: DatePickerMonthSelect,\n  NextTrigger: DatePickerNextTrigger,\n  Positioner: DatePickerPositioner,\n  PresetTrigger: DatePickerPresetTrigger,\n  PrevTrigger: DatePickerPrevTrigger,\n  RangeText: DatePickerRangeText,\n  ValueText: DatePickerValueText,\n  RootProvider: DatePickerRootProvider,\n  Table: DatePickerTable,\n  TableBody: DatePickerTableBody,\n  TableCell: DatePickerTableCell,\n  TableCellTrigger: DatePickerTableCellTrigger,\n  TableHead: DatePickerTableHead,\n  TableHeader: DatePickerTableHeader,\n  WeekNumberHeaderCell: DatePickerWeekNumberHeaderCell,\n  WeekNumberCell: DatePickerWeekNumberCell,\n  TableRow: DatePickerTableRow,\n  Trigger: DatePickerTrigger,\n  View: DatePickerView,\n  ViewControl: DatePickerViewControl,\n  ViewTrigger: DatePickerViewTrigger,\n  YearSelect: DatePickerYearSelect,\n}\n\nexport {\n  DatePicker,\n  useDatePicker,\n  useDatePickerContext,\n  parseDate,\n  type DatePickerRootProps,\n  type DatePickerClearTriggerProps,\n  type DatePickerContentProps,\n  type DatePickerContextProps,\n  type DatePickerControlProps,\n  type DatePickerInputProps,\n  type DatePickerLabelProps,\n  type DatePickerMonthSelectProps,\n  type DatePickerNextTriggerProps,\n  type DatePickerPositionerProps,\n  type DatePickerPresetTriggerProps,\n  type DatePickerPrevTriggerProps,\n  type DatePickerRangeTextProps,\n  type DatePickerValueTextProps,\n  type DatePickerRootProviderProps,\n  type DatePickerTableProps,\n  type DatePickerTableBodyProps,\n  type DatePickerTableCellProps,\n  type DatePickerTableCellTriggerProps,\n  type DatePickerTableHeadProps,\n  type DatePickerTableHeaderProps,\n  type DatePickerWeekNumberHeaderCellProps,\n  type DatePickerWeekNumberCellProps,\n  type DatePickerTableRowProps,\n  type DatePickerTriggerProps,\n  type DatePickerViewProps,\n  type DatePickerViewControlProps,\n  type DatePickerViewTriggerProps,\n  type DatePickerYearSelectProps,\n}\n"
+    }
+  ]
+}

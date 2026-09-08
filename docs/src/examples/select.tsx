@@ -1,14 +1,4 @@
-import {
-  Select,
-  SelectContent,
-  SelectControl,
-  SelectItem,
-  SelectItemIndicator,
-  SelectItemText,
-  SelectTrigger,
-  SelectValue,
-  createListCollection,
-} from "@/components/ui/select"
+import { Select, createListCollection } from "@/components/ui/select"
 
 const fruits = createListCollection({
   items: [
@@ -21,20 +11,20 @@ const fruits = createListCollection({
 
 export default function SelectExample() {
   return (
-    <Select collection={fruits} defaultValue={["apple"]}>
-      <SelectControl>
-        <SelectTrigger className="w-48">
-          <SelectValue placeholder="Pick a fruit" />
-        </SelectTrigger>
-      </SelectControl>
-      <SelectContent>
+    <Select.Root collection={fruits} defaultValue={["apple"]}>
+      <Select.Control>
+        <Select.Trigger className="w-48">
+          <Select.ValueText placeholder="Pick a fruit" />
+        </Select.Trigger>
+      </Select.Control>
+      <Select.Content>
         {fruits.items.map((item) => (
-          <SelectItem key={item.value} item={item}>
-            <SelectItemText>{item.label}</SelectItemText>
-            <SelectItemIndicator />
-          </SelectItem>
+          <Select.Item key={item.value} item={item}>
+            <Select.ItemText>{item.label}</Select.ItemText>
+            <Select.ItemIndicator />
+          </Select.Item>
         ))}
-      </SelectContent>
-    </Select>
+      </Select.Content>
+    </Select.Root>
   )
 }

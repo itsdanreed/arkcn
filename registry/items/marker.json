@@ -4,31 +4,29 @@
   "description": "",
   "exports": [
     "Marker",
-    "MarkerIcon",
-    "MarkerContent",
     "markerVariants"
   ],
   "parts": [
     {
-      "name": "Marker",
+      "name": "Marker.Root",
       "props": [
         {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "default": "false",
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
-        },
-        {
           "name": "variant",
-          "type": "\"default\" | \"separator\" | \"border\" | null",
+          "type": "\"separator\" | \"default\" | \"border\" | null",
           "required": false,
           "default": "\"default\"",
           "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -52,8 +50,15 @@
       ]
     },
     {
-      "name": "MarkerIcon",
+      "name": "Marker.Icon",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -78,8 +83,15 @@
       ]
     },
     {
-      "name": "MarkerContent",
+      "name": "Marker.Content",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -114,7 +126,7 @@
   "files": [
     {
       "path": "components/ui/marker.tsx",
-      "content": "import * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\nimport { cn } from \"@/lib/utils\"\nimport { ark } from \"@ark-ui/react\"\n\nconst markerVariants = cva(\n  \"group/marker relative flex min-h-4 w-full items-center gap-2 text-left text-sm text-muted-foreground [&_svg:not([class*='size-'])]:size-4 [a]:underline [a]:underline-offset-3 [a]:hover:text-foreground\",\n  {\n    variants: {\n      variant: {\n        default: \"\",\n        separator:\n          \"before:mr-1 before:h-px before:min-w-0 before:flex-1 before:bg-border after:ml-1 after:h-px after:min-w-0 after:flex-1 after:bg-border\",\n        border: \"border-b border-border pb-2\",\n      },\n    },\n  }\n)\n\nfunction Marker({\n  className,\n  variant = \"default\",\n  asChild = false,\n  ...props\n}: React.ComponentProps<\"div\"> &\n  VariantProps<typeof markerVariants> & {\n    asChild?: boolean\n  }) {\n  const Comp = ark.div\n\n  return (\n    <Comp\n      asChild={asChild}\n      data-slot=\"marker\"\n      data-variant={variant}\n      className={cn(markerVariants({ variant, className }))}\n      {...props}\n    />\n  )\n}\n\nfunction MarkerIcon({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span\n      data-slot=\"marker-icon\"\n      aria-hidden=\"true\"\n      className={cn(\"size-4 shrink-0 [&_svg:not([class*='size-'])]:size-4\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction MarkerContent({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span\n      data-slot=\"marker-content\"\n      className={cn(\n        \"min-w-0 wrap-break-word group-data-[variant=separator]/marker:flex-none group-data-[variant=separator]/marker:text-center *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nexport { Marker, MarkerIcon, MarkerContent, markerVariants }\n"
+      "content": "import * as React from \"react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\nimport { cn } from \"@/lib/utils\"\nimport { ark } from \"@ark-ui/react\"\n\nconst markerVariants = cva(\n  \"group/marker relative flex min-h-4 w-full items-center gap-2 text-left text-sm text-muted-foreground [&_svg:not([class*='size-'])]:size-4 [a]:underline [a]:underline-offset-3 [a]:hover:text-foreground\",\n  {\n    variants: {\n      variant: {\n        default: \"\",\n        separator:\n          \"before:mr-1 before:h-px before:min-w-0 before:flex-1 before:bg-border after:ml-1 after:h-px after:min-w-0 after:flex-1 after:bg-border\",\n        border: \"border-b border-border pb-2\",\n      },\n    },\n  }\n)\n\nfunction MarkerRoot({ className, variant = \"default\", asChild = false, ...props }: MarkerRootProps) {\n  const Comp = ark.div\n\n  return (\n    <Comp\n      asChild={asChild}\n      data-slot=\"marker\"\n      data-variant={variant}\n      className={cn(markerVariants({ variant, className }))}\n      {...props}\n    />\n  )\n}\n\nfunction MarkerIcon({ className, ...props }: MarkerIconProps) {\n  return (\n    <ark.span\n      data-slot=\"marker-icon\"\n      aria-hidden=\"true\"\n      className={cn(\"size-4 shrink-0 [&_svg:not([class*='size-'])]:size-4\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction MarkerContent({ className, ...props }: MarkerContentProps) {\n  return (\n    <ark.span\n      data-slot=\"marker-content\"\n      className={cn(\n        \"min-w-0 wrap-break-word group-data-[variant=separator]/marker:flex-none group-data-[variant=separator]/marker:text-center *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype MarkerRootProps = React.ComponentProps<typeof ark.div> &\n  VariantProps<typeof markerVariants> & {\n    asChild?: boolean\n  }\n\ntype MarkerIconProps = React.ComponentProps<typeof ark.span>\n\ntype MarkerContentProps = React.ComponentProps<typeof ark.span>\n\nconst Marker = {\n  Root: MarkerRoot,\n  Icon: MarkerIcon,\n  Content: MarkerContent,\n}\n\nexport { Marker, markerVariants, type MarkerRootProps, type MarkerIconProps, type MarkerContentProps }\n"
     }
   ]
 }

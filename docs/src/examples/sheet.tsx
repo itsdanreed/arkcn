@@ -1,32 +1,23 @@
 import { Button } from "@/components/ui/button"
-import {
-  Sheet,
-  SheetContent,
-  SheetClose,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet"
+import { Sheet } from "@/components/ui/sheet"
 
 export default function SheetExample() {
   return (
-    <Sheet>
-      <SheetTrigger asChild>
+    <Sheet.Root>
+      <Sheet.Trigger asChild>
         <Button variant="outline">Open sheet</Button>
-      </SheetTrigger>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
-          <SheetDescription>Make changes to your profile here.</SheetDescription>
-        </SheetHeader>
-        <SheetFooter>
-          <SheetClose asChild>
+      </Sheet.Trigger>
+      <Sheet.Content>
+        <Sheet.Header>
+          <Sheet.Title>Edit profile</Sheet.Title>
+          <Sheet.Description>Make changes to your profile here.</Sheet.Description>
+        </Sheet.Header>
+        <Sheet.Footer>
+          <Sheet.CloseTrigger asChild>
             <Button>Save</Button>
-          </SheetClose>
-        </SheetFooter>
-      </SheetContent>
-    </Sheet>
+          </Sheet.CloseTrigger>
+        </Sheet.Footer>
+      </Sheet.Content>
+    </Sheet.Root>
   )
 }

@@ -1,7 +1,8 @@
+import { ark } from "@ark-ui/react"
 import { cn } from "@/lib/utils"
 import { Loader2Icon } from "lucide-react"
 
-function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
+function SpinnerRoot({ className, ...props }: SpinnerRootProps) {
   return (
     <Loader2Icon
       data-slot="spinner"
@@ -13,4 +14,10 @@ function Spinner({ className, ...props }: React.ComponentProps<"svg">) {
   )
 }
 
-export { Spinner }
+type SpinnerRootProps = React.ComponentProps<typeof ark.svg>
+
+const Spinner = {
+  Root: SpinnerRoot,
+}
+
+export { Spinner, type SpinnerRootProps }

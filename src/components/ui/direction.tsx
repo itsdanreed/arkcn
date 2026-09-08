@@ -12,17 +12,7 @@ type Direction = "ltr" | "rtl"
  */
 const DirectionContext = React.createContext<Direction | undefined>(undefined)
 
-function DirectionProvider({
-  dir,
-  direction,
-  children,
-}: {
-  /** Text direction, `ltr` or `rtl`. */
-  dir?: Direction
-  /** Alias of `dir`. */
-  direction?: Direction
-  children?: React.ReactNode
-}) {
+function DirectionRoot({ dir, direction, children }: DirectionRootProps) {
   return <DirectionContext.Provider value={direction ?? dir}>{children}</DirectionContext.Provider>
 }
 
@@ -31,4 +21,16 @@ function useDirection(localDir?: Direction): Direction {
   return localDir ?? globalDir ?? "ltr"
 }
 
-export { DirectionProvider, useDirection }
+type DirectionRootProps = {
+  /** Text direction, `ltr` or `rtl`. */
+  dir?: Direction
+  /** Alias of `dir`. */
+  direction?: Direction
+  children?: React.ReactNode
+}
+
+const Direction = {
+  Root: DirectionRoot,
+}
+
+export { useDirection, Direction, type DirectionRootProps }

@@ -7,7 +7,7 @@
   ],
   "parts": [
     {
-      "name": "AspectRatio",
+      "name": "AspectRatio.Root",
       "props": [
         {
           "name": "ratio",
@@ -16,6 +16,13 @@
           "default": "1 / 1",
           "description": "Width divided by height, e.g. `16 / 9`.",
           "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -41,12 +48,14 @@
       ]
     }
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
   "registryDependencies": [],
   "files": [
     {
       "path": "components/ui/aspect-ratio.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\n\n/**\n * Ark UI has no AspectRatio primitive. This mirrors Radix's: a wrapper with a\n * percentage padding-bottom, and an absolutely positioned content box.\n */\nfunction AspectRatio({ ratio = 1 / 1, style, ...props }: React.ComponentProps<\"div\"> & { ratio?: number }) {\n  return (\n    <div\n      data-slot=\"aspect-ratio-wrapper\"\n      style={{\n        position: \"relative\",\n        width: \"100%\",\n        paddingBottom: `${100 / ratio}%`,\n      }}\n    >\n      <div\n        data-slot=\"aspect-ratio\"\n        style={{\n          position: \"absolute\",\n          top: 0,\n          right: 0,\n          bottom: 0,\n          left: 0,\n          ...style,\n        }}\n        {...props}\n      />\n    </div>\n  )\n}\n\nexport { AspectRatio }\n"
+      "content": "\"use client\"\n\nimport { ark } from \"@ark-ui/react\"\nimport * as React from \"react\"\n\n/**\n * Ark UI has no AspectRatio primitive. This mirrors Radix's: a wrapper with a\n * percentage padding-bottom, and an absolutely positioned content box.\n */\nfunction AspectRatioRoot({ ratio = 1 / 1, style, ...props }: AspectRatioRootProps) {\n  return (\n    <div\n      data-slot=\"aspect-ratio-wrapper\"\n      style={{\n        position: \"relative\",\n        width: \"100%\",\n        paddingBottom: `${100 / ratio}%`,\n      }}\n    >\n      <ark.div\n        data-slot=\"aspect-ratio\"\n        style={{\n          position: \"absolute\",\n          top: 0,\n          right: 0,\n          bottom: 0,\n          left: 0,\n          ...style,\n        }}\n        {...props}\n      />\n    </div>\n  )\n}\n\ntype AspectRatioRootProps = React.ComponentProps<typeof ark.div> & { ratio?: number }\n\nconst AspectRatio = {\n  Root: AspectRatioRoot,\n}\n\nexport { AspectRatio, type AspectRatioRootProps }\n"
     }
   ]
 }

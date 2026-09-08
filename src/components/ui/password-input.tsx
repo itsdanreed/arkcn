@@ -1,32 +1,41 @@
 "use client"
 
+import { usePasswordInput, usePasswordInputContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { PasswordInput as PasswordInputPrimitive } from "@ark-ui/react"
 import { EyeIcon, EyeOffIcon } from "lucide-react"
 
-function PasswordInput({ className, children, ...props }: React.ComponentProps<typeof PasswordInputPrimitive.Root>) {
+function PasswordInputRoot({ className, children, ...props }: PasswordInputRootProps) {
   return (
     <PasswordInputPrimitive.Root
       data-slot="password-input"
       className={cn("flex w-full flex-col gap-1.5", className)}
       {...props}
     >
-      {children ?? (
-        <PasswordInputControl>
-          <PasswordInputInput />
-          <PasswordInputVisibilityTrigger />
-        </PasswordInputControl>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {children ?? (
+            <PasswordInputControl>
+              <PasswordInputInput />
+              <PasswordInputVisibilityTrigger />
+            </PasswordInputControl>
+          )}
+        </>
       )}
     </PasswordInputPrimitive.Root>
   )
 }
 
-function PasswordInputContext({ ...props }: React.ComponentProps<typeof PasswordInputPrimitive.Context>) {
+function PasswordInputContext({ ...props }: PasswordInputContextProps) {
   return <PasswordInputPrimitive.Context {...props} />
 }
 
-function PasswordInputLabel({ className, ...props }: React.ComponentProps<typeof PasswordInputPrimitive.Label>) {
+function PasswordInputLabel({ className, ...props }: PasswordInputLabelProps) {
   return (
     <PasswordInputPrimitive.Label
       data-slot="password-input-label"
@@ -36,7 +45,7 @@ function PasswordInputLabel({ className, ...props }: React.ComponentProps<typeof
   )
 }
 
-function PasswordInputControl({ className, ...props }: React.ComponentProps<typeof PasswordInputPrimitive.Control>) {
+function PasswordInputControl({ className, ...props }: PasswordInputControlProps) {
   return (
     <PasswordInputPrimitive.Control
       data-slot="password-input-control"
@@ -50,10 +59,7 @@ function PasswordInputControl({ className, ...props }: React.ComponentProps<type
 }
 
 /** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */
-function PasswordInputInput({
-  className,
-  ...props
-}: Omit<React.ComponentProps<typeof PasswordInputPrimitive.Input>, "id">) {
+function PasswordInputInput({ className, ...props }: PasswordInputInputProps) {
   return (
     <PasswordInputPrimitive.Input
       data-slot="password-input-input"
@@ -66,11 +72,7 @@ function PasswordInputInput({
   )
 }
 
-function PasswordInputVisibilityTrigger({
-  className,
-  children,
-  ...props
-}: React.ComponentProps<typeof PasswordInputPrimitive.VisibilityTrigger>) {
+function PasswordInputVisibilityTrigger({ className, children, ...props }: PasswordInputVisibilityTriggerProps) {
   return (
     <PasswordInputPrimitive.VisibilityTrigger
       data-slot="password-input-visibility-trigger"
@@ -80,25 +82,74 @@ function PasswordInputVisibilityTrigger({
       )}
       {...props}
     >
-      {children ?? (
-        <PasswordInputIndicator fallback={<EyeOffIcon />}>
-          <EyeIcon />
-        </PasswordInputIndicator>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {children ?? (
+            <PasswordInputIndicator fallback={<EyeOffIcon />}>
+              <EyeIcon />
+            </PasswordInputIndicator>
+          )}
+        </>
       )}
     </PasswordInputPrimitive.VisibilityTrigger>
   )
 }
 
-function PasswordInputIndicator({ ...props }: React.ComponentProps<typeof PasswordInputPrimitive.Indicator>) {
+function PasswordInputIndicator({ ...props }: PasswordInputIndicatorProps) {
   return <PasswordInputPrimitive.Indicator data-slot="password-input-indicator" {...props} />
 }
 
+function PasswordInputRootProvider({ className, ...props }: PasswordInputRootProviderProps) {
+  return (
+    <PasswordInputPrimitive.RootProvider
+      data-slot="password-input"
+      className={cn("flex w-full flex-col gap-1.5", className)}
+      {...props}
+    />
+  )
+}
+
+type PasswordInputRootProps = React.ComponentProps<typeof PasswordInputPrimitive.Root>
+
+type PasswordInputRootProviderProps = React.ComponentProps<typeof PasswordInputPrimitive.RootProvider>
+
+type PasswordInputContextProps = React.ComponentProps<typeof PasswordInputPrimitive.Context>
+
+type PasswordInputControlProps = React.ComponentProps<typeof PasswordInputPrimitive.Control>
+
+type PasswordInputIndicatorProps = React.ComponentProps<typeof PasswordInputPrimitive.Indicator>
+
+type PasswordInputInputProps = Omit<React.ComponentProps<typeof PasswordInputPrimitive.Input>, "id">
+
+type PasswordInputLabelProps = React.ComponentProps<typeof PasswordInputPrimitive.Label>
+
+type PasswordInputVisibilityTriggerProps = React.ComponentProps<typeof PasswordInputPrimitive.VisibilityTrigger>
+
+const PasswordInput = {
+  Root: PasswordInputRoot,
+  RootProvider: PasswordInputRootProvider,
+  Context: PasswordInputContext,
+  Control: PasswordInputControl,
+  Indicator: PasswordInputIndicator,
+  Input: PasswordInputInput,
+  Label: PasswordInputLabel,
+  VisibilityTrigger: PasswordInputVisibilityTrigger,
+}
+
 export {
+  usePasswordInput,
+  usePasswordInputContext,
   PasswordInput,
-  PasswordInputContext,
-  PasswordInputControl,
-  PasswordInputIndicator,
-  PasswordInputInput,
-  PasswordInputLabel,
-  PasswordInputVisibilityTrigger,
+  type PasswordInputRootProps,
+  type PasswordInputRootProviderProps,
+  type PasswordInputContextProps,
+  type PasswordInputControlProps,
+  type PasswordInputIndicatorProps,
+  type PasswordInputInputProps,
+  type PasswordInputLabelProps,
+  type PasswordInputVisibilityTriggerProps,
 }

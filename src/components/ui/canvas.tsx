@@ -69,12 +69,7 @@ function useCanvas() {
 const isOwnData = (instanceId: symbol, data: Record<string | symbol, unknown>): data is DragData =>
   data.instanceId === instanceId && (data.type === "palette" || data.type === "node")
 
-function Canvas({
-  onDrop,
-  className,
-  children,
-  ...props
-}: Omit<React.ComponentProps<"div">, "onDrop"> & { onDrop?: (details: CanvasDropDetails) => void }) {
+function CanvasRoot({ onDrop, className, children, ...props }: CanvasRootProps) {
   const [instanceId] = React.useState(() => Symbol("canvas"))
   const [dragging, setDragging] = React.useState<CanvasContextValue["dragging"]>(null)
   const [grabbed, setGrabbed] = React.useState<string | null>(null)
@@ -182,7 +177,7 @@ function Canvas({
   )
   return (
     <CanvasContext.Provider value={ctx}>
-      <div
+      <ark.div
         ref={ref}
         data-slot="canvas"
         data-dragging={dragging ? dragging.type : undefined}
@@ -190,9 +185,17 @@ function Canvas({
         className={cn("flex min-h-0 flex-1 flex-col gap-4 lg:flex-row", className)}
         {...props}
       >
-        {children}
-        <LiveRegion data-slot="canvas-live-region" message={announcement} />
-      </div>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            {children}
+            <LiveRegion.Root data-slot="canvas-live-region" message={announcement} />
+          </>
+        )}
+      </ark.div>
     </CanvasContext.Provider>
   )
 }
@@ -227,9 +230,9 @@ function useCanvasKeyboard(nodeId: string) {
 /*  Palette                                                                   */
 /* -------------------------------------------------------------------------- */
 
-function CanvasPalette({ className, ...props }: React.ComponentProps<"div">) {
+function CanvasPalette({ className, ...props }: CanvasPaletteProps) {
   return (
-    <div
+    <ark.div
       data-slot="canvas-palette"
       className={cn(
         "flex shrink-0 flex-row flex-wrap gap-1 lg:w-56 lg:flex-col lg:flex-nowrap lg:overflow-y-auto",
@@ -241,7 +244,7 @@ function CanvasPalette({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 /** A draggable source. `data` is handed back untouched in `onDrop`. */
-function CanvasPaletteItem({ data, className, onKeyDown, ...props }: React.ComponentProps<"div"> & { data: unknown }) {
+function CanvasPaletteItem({ data, className, onKeyDown, ...props }: CanvasPaletteItemProps) {
   const { instanceId, dropFromPalette } = useCanvas()
   const ref = React.useRef<HTMLDivElement>(null)
   const dataRef = React.useRef(data)
@@ -264,7 +267,7 @@ function CanvasPaletteItem({ data, className, onKeyDown, ...props }: React.Compo
   }, [instanceId])
 
   return (
-    <div
+    <ark.div
       ref={ref}
       data-slot="canvas-palette-item"
       data-dragging={isDragging ? "" : undefined}
@@ -293,7 +296,7 @@ function CanvasPaletteItem({ data, className, onKeyDown, ...props }: React.Compo
 /* -------------------------------------------------------------------------- */
 
 /** The drop surface. Dropping here (not on a node) reports `{ type: "area" }`. */
-function CanvasArea({ className, ...props }: React.ComponentProps<"div">) {
+function CanvasArea({ className, ...props }: CanvasAreaProps) {
   const { instanceId } = useCanvas()
   const ref = React.useRef<HTMLDivElement>(null)
   const [isOver, setIsOver] = React.useState(false)
@@ -320,7 +323,7 @@ function CanvasArea({ className, ...props }: React.ComponentProps<"div">) {
   }, [instanceId])
 
   return (
-    <div
+    <ark.div
       ref={ref}
       data-slot="canvas-area"
       data-over={isOver ? "" : undefined}
@@ -333,9 +336,9 @@ function CanvasArea({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function CanvasEmpty({ className, ...props }: React.ComponentProps<"div">) {
+function CanvasEmpty({ className, ...props }: CanvasEmptyProps) {
   return (
-    <div
+    <ark.div
       data-slot="canvas-empty"
       className={cn(
         "flex flex-1 flex-col items-center justify-center gap-1 py-16 text-center text-sm text-muted-foreground [&_svg]:mb-1 [&_svg]:size-6",
@@ -355,13 +358,13 @@ type RowContextValue = {
 const RowContext = React.createContext<RowContextValue | null>(null)
 
 /** A horizontal row of nodes. Node widths are `flex-grow` weights. */
-function CanvasRow({ className, ...props }: React.ComponentProps<"div">) {
+function CanvasRow({ className, ...props }: CanvasRowProps) {
   const ref = React.useRef<HTMLDivElement>(null)
   const [resizing, setResizing] = React.useState(false)
   const ctx = React.useMemo(() => ({ ref, resizing, setResizing }), [resizing])
   return (
     <RowContext.Provider value={ctx}>
-      <div
+      <ark.div
         ref={ref}
         data-slot="canvas-row"
         data-resizing={resizing ? "" : undefined}
@@ -390,13 +393,7 @@ function CanvasNode({
   onKeyDown,
   onBlur,
   ...props
-}: React.ComponentProps<"div"> & {
-  value: string
-  /** Relative width within the row (flex-grow weight). */
-  width?: number
-  draggable?: boolean
-  selected?: boolean
-}) {
+}: CanvasNodeProps) {
   const { instanceId } = useCanvas()
   const keyboard = useCanvasKeyboard(value)
   const row = React.useContext(RowContext)
@@ -465,7 +462,7 @@ function CanvasNode({
   const ctx = React.useMemo(() => ({ handleRef, isDragging, value }), [isDragging, value])
   return (
     <NodeContext.Provider value={ctx}>
-      <div
+      <ark.div
         ref={ref}
         data-slot="canvas-node"
         data-value={value}
@@ -490,23 +487,24 @@ function CanvasNode({
         )}
         {...props}
       >
-        {children}
-        {closestEdge && <CanvasDropIndicator edge={closestEdge} />}
-        {percent !== null && <CanvasNodeOverlay>{percent}%</CanvasNodeOverlay>}
-      </div>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            {children}
+            {closestEdge && <CanvasDropIndicator edge={closestEdge} />}
+            {percent !== null && <CanvasNodeOverlay>{percent}%</CanvasNodeOverlay>}
+          </>
+        )}
+      </ark.div>
     </NodeContext.Provider>
   )
 }
 
 /** Optional explicit drag handle; without it the whole node is the handle. */
-function CanvasNodeHandle({
-  className,
-  children,
-  onKeyDown,
-  onBlur,
-  asChild,
-  ...props
-}: React.ComponentProps<typeof ark.button>) {
+function CanvasNodeHandle({ className, children, onKeyDown, onBlur, asChild, ...props }: CanvasNodeHandleProps) {
   const ctx = React.useContext(NodeContext)
   const keyboard = useCanvasKeyboard(ctx?.value ?? "")
   return (
@@ -542,13 +540,13 @@ function CanvasNodeHandle({
   )
 }
 
-function CanvasNodeHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="canvas-node-header" className={cn("mb-2 flex items-center gap-1", className)} {...props} />
+function CanvasNodeHeader({ className, ...props }: CanvasNodeHeaderProps) {
+  return <ark.div data-slot="canvas-node-header" className={cn("mb-2 flex items-center gap-1", className)} {...props} />
 }
 
-function CanvasNodeTitle({ className, ...props }: React.ComponentProps<"span">) {
+function CanvasNodeTitle({ className, ...props }: CanvasNodeTitleProps) {
   return (
-    <span
+    <ark.span
       data-slot="canvas-node-title"
       className={cn("min-w-0 flex-1 truncate text-xs font-medium text-muted-foreground", className)}
       {...props}
@@ -557,9 +555,9 @@ function CanvasNodeTitle({ className, ...props }: React.ComponentProps<"span">) 
 }
 
 /** A blurring overlay with a centered pill, e.g. the node's width share while resizing. */
-function CanvasNodeOverlay({ className, children, ...props }: React.ComponentProps<"div">) {
+function CanvasNodeOverlay({ className, children, ...props }: CanvasNodeOverlayProps) {
   return (
-    <div
+    <ark.div
       data-slot="canvas-node-overlay"
       aria-hidden
       className={cn(
@@ -568,20 +566,28 @@ function CanvasNodeOverlay({ className, children, ...props }: React.ComponentPro
       )}
       {...props}
     >
-      <span
-        data-slot="canvas-node-overlay-pill"
-        className="rounded-full bg-foreground px-2.5 py-1 text-xs font-semibold text-background tabular-nums shadow-md"
-      >
-        {children}
-      </span>
-    </div>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <span
+            data-slot="canvas-node-overlay-pill"
+            className="rounded-full bg-foreground px-2.5 py-1 text-xs font-semibold text-background tabular-nums shadow-md"
+          >
+            {children}
+          </span>
+        </>
+      )}
+    </ark.div>
   )
 }
 
 /** Actions revealed on hover/selection. */
-function CanvasNodeActions({ className, ...props }: React.ComponentProps<"div">) {
+function CanvasNodeActions({ className, ...props }: CanvasNodeActionsProps) {
   return (
-    <div
+    <ark.div
       data-slot="canvas-node-actions"
       className={cn(
         "ms-auto flex items-center gap-0.5 opacity-0 transition-opacity group-focus-within/canvas-node:opacity-100 group-hover/canvas-node:opacity-100 group-data-selected/canvas-node:opacity-100",
@@ -600,20 +606,7 @@ function CanvasNodeActions({ className, ...props }: React.ComponentProps<"div">)
  * Place between two nodes in a `CanvasRow`. Pointer drags call `onResize`
  * with the horizontal movement as a fraction of the row width (signed).
  */
-function CanvasResizeHandle({
-  onResize,
-  onResizeStart,
-  onResizeEnd,
-  className,
-  ...props
-}: Omit<React.ComponentProps<"div">, "onResize"> & {
-  /** Called while dragging with the width change as a fraction of the row width. */
-  onResize: (deltaFraction: number) => void
-  /** Called once when the resize drag starts. */
-  onResizeStart?: () => void
-  /** Called once when the resize drag ends. */
-  onResizeEnd?: () => void
-}) {
+function CanvasResizeHandle({ onResize, onResizeStart, onResizeEnd, className, ...props }: CanvasResizeHandleProps) {
   const row = React.useContext(RowContext)
   const [active, setActive] = React.useState(false)
   const handlers = React.useRef({ onResize, onResizeStart, onResizeEnd })
@@ -657,7 +650,7 @@ function CanvasResizeHandle({
   }
 
   return (
-    <div
+    <ark.div
       role="separator"
       aria-orientation="vertical"
       data-slot="canvas-resize-handle"
@@ -669,8 +662,16 @@ function CanvasResizeHandle({
       )}
       {...props}
     >
-      <span className="h-8 w-1 rounded-full bg-border transition-colors group-hover/resize:bg-primary/60 group-data-active/resize:bg-primary" />
-    </div>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <span className="h-8 w-1 rounded-full bg-border transition-colors group-hover/resize:bg-primary/60 group-data-active/resize:bg-primary" />
+        </>
+      )}
+    </ark.div>
   )
 }
 
@@ -678,16 +679,10 @@ function CanvasResizeHandle({
 /*  Drop indicator                                                            */
 /* -------------------------------------------------------------------------- */
 
-function CanvasDropIndicator({
-  edge,
-  gap = "0.75rem",
-  className,
-  style,
-  ...props
-}: React.ComponentProps<"div"> & { edge: Edge; gap?: string }) {
+function CanvasDropIndicator({ edge, gap = "0.75rem", className, style, ...props }: CanvasDropIndicatorProps) {
   const horizontal = edge === "top" || edge === "bottom"
   return (
-    <div
+    <ark.div
       data-slot="canvas-drop-indicator"
       data-edge={edge}
       aria-hidden
@@ -709,23 +704,84 @@ function CanvasDropIndicator({
   )
 }
 
+type CanvasRootProps = Omit<React.ComponentProps<typeof ark.div>, "onDrop"> & {
+  onDrop?: (details: CanvasDropDetails) => void
+}
+
+type CanvasAreaProps = React.ComponentProps<typeof ark.div>
+
+type CanvasDropIndicatorProps = React.ComponentProps<typeof ark.div> & { edge: Edge; gap?: string }
+
+type CanvasEmptyProps = React.ComponentProps<typeof ark.div>
+
+type CanvasNodeProps = React.ComponentProps<typeof ark.div> & {
+  value: string
+  /** Relative width within the row (flex-grow weight). */
+  width?: number
+  draggable?: boolean
+  selected?: boolean
+}
+
+type CanvasNodeActionsProps = React.ComponentProps<typeof ark.div>
+
+type CanvasNodeHandleProps = React.ComponentProps<typeof ark.button>
+
+type CanvasNodeHeaderProps = React.ComponentProps<typeof ark.div>
+
+type CanvasNodeOverlayProps = React.ComponentProps<typeof ark.div>
+
+type CanvasNodeTitleProps = React.ComponentProps<typeof ark.span>
+
+type CanvasPaletteProps = React.ComponentProps<typeof ark.div>
+
+type CanvasPaletteItemProps = React.ComponentProps<typeof ark.div> & { data: unknown }
+
+type CanvasResizeHandleProps = Omit<React.ComponentProps<typeof ark.div>, "onResize"> & {
+  /** Called while dragging with the width change as a fraction of the row width. */
+  onResize: (deltaFraction: number) => void
+  /** Called once when the resize drag starts. */
+  onResizeStart?: () => void
+  /** Called once when the resize drag ends. */
+  onResizeEnd?: () => void
+}
+
+type CanvasRowProps = React.ComponentProps<typeof ark.div>
+
+const Canvas = {
+  Root: CanvasRoot,
+  Area: CanvasArea,
+  DropIndicator: CanvasDropIndicator,
+  Empty: CanvasEmpty,
+  Node: CanvasNode,
+  NodeActions: CanvasNodeActions,
+  NodeHandle: CanvasNodeHandle,
+  NodeHeader: CanvasNodeHeader,
+  NodeOverlay: CanvasNodeOverlay,
+  NodeTitle: CanvasNodeTitle,
+  Palette: CanvasPalette,
+  PaletteItem: CanvasPaletteItem,
+  ResizeHandle: CanvasResizeHandle,
+  Row: CanvasRow,
+}
+
 export {
   Canvas,
-  CanvasArea,
-  CanvasDropIndicator,
-  CanvasEmpty,
-  CanvasNode,
-  CanvasNodeActions,
-  CanvasNodeHandle,
-  CanvasNodeHeader,
-  CanvasNodeOverlay,
-  CanvasNodeTitle,
-  CanvasPalette,
-  CanvasPaletteItem,
-  CanvasResizeHandle,
-  CanvasRow,
   useCanvas,
   type CanvasDropDetails,
   type CanvasSource,
   type CanvasTarget,
+  type CanvasRootProps,
+  type CanvasAreaProps,
+  type CanvasDropIndicatorProps,
+  type CanvasEmptyProps,
+  type CanvasNodeProps,
+  type CanvasNodeActionsProps,
+  type CanvasNodeHandleProps,
+  type CanvasNodeHeaderProps,
+  type CanvasNodeOverlayProps,
+  type CanvasNodeTitleProps,
+  type CanvasPaletteProps,
+  type CanvasPaletteItemProps,
+  type CanvasResizeHandleProps,
+  type CanvasRowProps,
 }

@@ -5,7 +5,12 @@ export default function SwitchExample() {
   const [on, setOn] = React.useState(true)
   return (
     <label className="flex items-center gap-2 text-sm">
-      <Switch checked={on} onCheckedChange={({ checked }) => setOn(checked)} />
+      <Switch.Root checked={on} onCheckedChange={({ checked }) => setOn(checked)}>
+        <Switch.Control>
+          <Switch.Thumb />
+        </Switch.Control>
+        <Switch.HiddenInput />
+      </Switch.Root>
       Notifications {on ? "on" : "off"}
     </label>
   )

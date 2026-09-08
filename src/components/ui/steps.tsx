@@ -1,5 +1,6 @@
 "use client"
 
+import { useSteps, useStepsContext, useStepsItemContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Steps as StepsPrimitive } from "@ark-ui/react"
@@ -7,7 +8,7 @@ import { CheckIcon } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 
-function Steps({ className, ...props }: React.ComponentProps<typeof StepsPrimitive.Root>) {
+function StepsRoot({ className, ...props }: StepsRootProps) {
   return (
     <StepsPrimitive.Root
       data-slot="steps"
@@ -17,11 +18,11 @@ function Steps({ className, ...props }: React.ComponentProps<typeof StepsPrimiti
   )
 }
 
-function StepsContext({ ...props }: React.ComponentProps<typeof StepsPrimitive.Context>) {
+function StepsContext({ ...props }: StepsContextProps) {
   return <StepsPrimitive.Context {...props} />
 }
 
-function StepsList({ className, ...props }: React.ComponentProps<typeof StepsPrimitive.List>) {
+function StepsList({ className, ...props }: StepsListProps) {
   return (
     <StepsPrimitive.List
       data-slot="steps-list"
@@ -31,7 +32,7 @@ function StepsList({ className, ...props }: React.ComponentProps<typeof StepsPri
   )
 }
 
-function StepsItem({ className, ...props }: React.ComponentProps<typeof StepsPrimitive.Item>) {
+function StepsItem({ className, ...props }: StepsItemProps) {
   return (
     <StepsPrimitive.Item
       data-slot="steps-item"
@@ -44,11 +45,11 @@ function StepsItem({ className, ...props }: React.ComponentProps<typeof StepsPri
   )
 }
 
-function StepsItemContext({ ...props }: React.ComponentProps<typeof StepsPrimitive.ItemContext>) {
+function StepsItemContext({ ...props }: StepsItemContextProps) {
   return <StepsPrimitive.ItemContext {...props} />
 }
 
-function StepsTrigger({ className, ...props }: React.ComponentProps<typeof StepsPrimitive.Trigger>) {
+function StepsTrigger({ className, ...props }: StepsTriggerProps) {
   return (
     <StepsPrimitive.Trigger
       data-slot="steps-trigger"
@@ -61,7 +62,7 @@ function StepsTrigger({ className, ...props }: React.ComponentProps<typeof Steps
   )
 }
 
-function StepsIndicator({ className, children, ...props }: React.ComponentProps<typeof StepsPrimitive.Indicator>) {
+function StepsIndicator({ className, children, ...props }: StepsIndicatorProps) {
   return (
     <StepsPrimitive.Indicator
       data-slot="steps-indicator"
@@ -71,16 +72,24 @@ function StepsIndicator({ className, children, ...props }: React.ComponentProps<
       )}
       {...props}
     >
-      {children ?? (
-        <StepsPrimitive.ItemContext>
-          {({ completed, index }) => (completed ? <CheckIcon /> : index + 1)}
-        </StepsPrimitive.ItemContext>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {children ?? (
+            <StepsPrimitive.ItemContext>
+              {({ completed, index }) => (completed ? <CheckIcon /> : index + 1)}
+            </StepsPrimitive.ItemContext>
+          )}
+        </>
       )}
     </StepsPrimitive.Indicator>
   )
 }
 
-function StepsSeparator({ className, ...props }: React.ComponentProps<typeof StepsPrimitive.Separator>) {
+function StepsSeparator({ className, ...props }: StepsSeparatorProps) {
   return (
     <StepsPrimitive.Separator
       data-slot="steps-separator"
@@ -93,11 +102,11 @@ function StepsSeparator({ className, ...props }: React.ComponentProps<typeof Ste
   )
 }
 
-function StepsContent({ className, ...props }: React.ComponentProps<typeof StepsPrimitive.Content>) {
+function StepsContent({ className, ...props }: StepsContentProps) {
   return <StepsPrimitive.Content data-slot="steps-content" className={cn("text-sm", className)} {...props} />
 }
 
-function StepsCompletedContent({ className, ...props }: React.ComponentProps<typeof StepsPrimitive.CompletedContent>) {
+function StepsCompletedContent({ className, ...props }: StepsCompletedContentProps) {
   return (
     <StepsPrimitive.CompletedContent
       data-slot="steps-completed-content"
@@ -107,7 +116,7 @@ function StepsCompletedContent({ className, ...props }: React.ComponentProps<typ
   )
 }
 
-function StepsProgress({ className, ...props }: React.ComponentProps<typeof StepsPrimitive.Progress>) {
+function StepsProgress({ className, ...props }: StepsProgressProps) {
   return (
     <StepsPrimitive.Progress
       data-slot="steps-progress"
@@ -117,12 +126,7 @@ function StepsProgress({ className, ...props }: React.ComponentProps<typeof Step
   )
 }
 
-function StepsPrevTrigger({
-  className,
-  children,
-  asChild,
-  ...props
-}: React.ComponentProps<typeof StepsPrimitive.PrevTrigger>) {
+function StepsPrevTrigger({ className, children, asChild, ...props }: StepsPrevTriggerProps) {
   return (
     <StepsPrimitive.PrevTrigger data-slot="steps-prev-trigger" className={cn(className)} asChild {...props}>
       {asChild ? (
@@ -136,12 +140,7 @@ function StepsPrevTrigger({
   )
 }
 
-function StepsNextTrigger({
-  className,
-  children,
-  asChild,
-  ...props
-}: React.ComponentProps<typeof StepsPrimitive.NextTrigger>) {
+function StepsNextTrigger({ className, children, asChild, ...props }: StepsNextTriggerProps) {
   return (
     <StepsPrimitive.NextTrigger data-slot="steps-next-trigger" className={cn(className)} asChild {...props}>
       {asChild ? children : <Button size="sm">{children}</Button>}
@@ -149,18 +148,78 @@ function StepsNextTrigger({
   )
 }
 
+function StepsRootProvider({ className, ...props }: StepsRootProviderProps) {
+  return (
+    <StepsPrimitive.RootProvider
+      data-slot="steps"
+      className={cn("flex w-full flex-col gap-4 data-vertical:flex-row", className)}
+      {...props}
+    />
+  )
+}
+
+type StepsRootProps = React.ComponentProps<typeof StepsPrimitive.Root>
+
+type StepsRootProviderProps = React.ComponentProps<typeof StepsPrimitive.RootProvider>
+
+type StepsCompletedContentProps = React.ComponentProps<typeof StepsPrimitive.CompletedContent>
+
+type StepsContentProps = React.ComponentProps<typeof StepsPrimitive.Content>
+
+type StepsContextProps = React.ComponentProps<typeof StepsPrimitive.Context>
+
+type StepsIndicatorProps = React.ComponentProps<typeof StepsPrimitive.Indicator>
+
+type StepsItemProps = React.ComponentProps<typeof StepsPrimitive.Item>
+
+type StepsItemContextProps = React.ComponentProps<typeof StepsPrimitive.ItemContext>
+
+type StepsListProps = React.ComponentProps<typeof StepsPrimitive.List>
+
+type StepsNextTriggerProps = React.ComponentProps<typeof StepsPrimitive.NextTrigger>
+
+type StepsPrevTriggerProps = React.ComponentProps<typeof StepsPrimitive.PrevTrigger>
+
+type StepsProgressProps = React.ComponentProps<typeof StepsPrimitive.Progress>
+
+type StepsSeparatorProps = React.ComponentProps<typeof StepsPrimitive.Separator>
+
+type StepsTriggerProps = React.ComponentProps<typeof StepsPrimitive.Trigger>
+
+const Steps = {
+  Root: StepsRoot,
+  RootProvider: StepsRootProvider,
+  CompletedContent: StepsCompletedContent,
+  Content: StepsContent,
+  Context: StepsContext,
+  Indicator: StepsIndicator,
+  Item: StepsItem,
+  ItemContext: StepsItemContext,
+  List: StepsList,
+  NextTrigger: StepsNextTrigger,
+  PrevTrigger: StepsPrevTrigger,
+  Progress: StepsProgress,
+  Separator: StepsSeparator,
+  Trigger: StepsTrigger,
+}
+
 export {
+  useSteps,
+  useStepsContext,
+  useStepsItemContext,
   Steps,
-  StepsCompletedContent,
-  StepsContent,
-  StepsContext,
-  StepsIndicator,
-  StepsItem,
-  StepsItemContext,
-  StepsList,
-  StepsNextTrigger,
-  StepsPrevTrigger,
-  StepsProgress,
-  StepsSeparator,
-  StepsTrigger,
+  type StepsRootProps,
+  type StepsRootProviderProps,
+  type StepsCompletedContentProps,
+  type StepsContentProps,
+  type StepsContextProps,
+  type StepsIndicatorProps,
+  type StepsItemProps,
+  type StepsItemContextProps,
+  type StepsListProps,
+  type StepsNextTriggerProps,
+  type StepsPrevTriggerProps,
+  type StepsProgressProps,
+  type StepsSeparatorProps,
+  type StepsTriggerProps,
 }

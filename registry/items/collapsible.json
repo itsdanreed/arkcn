@@ -4,15 +4,13 @@
   "description": "",
   "ark": "Collapsible",
   "exports": [
-    "Collapsible",
-    "CollapsibleContent",
-    "CollapsibleContext",
-    "CollapsibleIndicator",
-    "CollapsibleTrigger"
+    "useCollapsible",
+    "useCollapsibleContext",
+    "Collapsible"
   ],
   "parts": [
     {
-      "name": "Collapsible",
+      "name": "Collapsible.Root",
       "props": [
         {
           "name": "asChild",
@@ -125,7 +123,47 @@
       ]
     },
     {
-      "name": "CollapsibleContent",
+      "name": "Collapsible.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseCollapsibleReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Collapsible.Content",
       "props": [
         {
           "name": "asChild",
@@ -158,7 +196,7 @@
       ]
     },
     {
-      "name": "CollapsibleContext",
+      "name": "Collapsible.Context",
       "props": [
         {
           "name": "children",
@@ -170,7 +208,7 @@
       ]
     },
     {
-      "name": "CollapsibleIndicator",
+      "name": "Collapsible.Indicator",
       "props": [
         {
           "name": "asChild",
@@ -203,7 +241,7 @@
       ]
     },
     {
-      "name": "CollapsibleTrigger",
+      "name": "Collapsible.Trigger",
       "props": [
         {
           "name": "asChild",
@@ -239,11 +277,13 @@
   "dependencies": {
     "@ark-ui/react": "^5.39.1"
   },
-  "registryDependencies": [],
+  "registryDependencies": [
+    "lib/utils"
+  ],
   "files": [
     {
       "path": "components/ui/collapsible.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { Collapsible as CollapsiblePrimitive } from \"@ark-ui/react\"\n\nfunction Collapsible({\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: React.ComponentProps<typeof CollapsiblePrimitive.Root>) {\n  return (\n    <CollapsiblePrimitive.Root data-slot=\"collapsible\" lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n  )\n}\n\nfunction CollapsibleContext({ ...props }: React.ComponentProps<typeof CollapsiblePrimitive.Context>) {\n  return <CollapsiblePrimitive.Context {...props} />\n}\n\nfunction CollapsibleTrigger({ ...props }: React.ComponentProps<typeof CollapsiblePrimitive.Trigger>) {\n  return <CollapsiblePrimitive.Trigger data-slot=\"collapsible-trigger\" {...props} />\n}\n\nfunction CollapsibleIndicator({ ...props }: React.ComponentProps<typeof CollapsiblePrimitive.Indicator>) {\n  return <CollapsiblePrimitive.Indicator data-slot=\"collapsible-indicator\" {...props} />\n}\n\nfunction CollapsibleContent({ ...props }: React.ComponentProps<typeof CollapsiblePrimitive.Content>) {\n  return <CollapsiblePrimitive.Content data-slot=\"collapsible-content\" {...props} />\n}\n\nexport { Collapsible, CollapsibleContent, CollapsibleContext, CollapsibleIndicator, CollapsibleTrigger }\n"
+      "content": "\"use client\"\n\nimport { cn } from \"@/lib/utils\"\n\nimport { useCollapsible, useCollapsibleContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { Collapsible as CollapsiblePrimitive } from \"@ark-ui/react\"\n\nfunction CollapsibleRoot({ lazyMount = true, unmountOnExit = true, ...props }: CollapsibleRootProps) {\n  return (\n    <CollapsiblePrimitive.Root data-slot=\"collapsible\" lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n  )\n}\n\nfunction CollapsibleContext({ ...props }: CollapsibleContextProps) {\n  return <CollapsiblePrimitive.Context {...props} />\n}\n\nfunction CollapsibleTrigger({ ...props }: CollapsibleTriggerProps) {\n  return <CollapsiblePrimitive.Trigger data-slot=\"collapsible-trigger\" {...props} />\n}\n\nfunction CollapsibleIndicator({ ...props }: CollapsibleIndicatorProps) {\n  return <CollapsiblePrimitive.Indicator data-slot=\"collapsible-indicator\" {...props} />\n}\n\nfunction CollapsibleContent({ ...props }: CollapsibleContentProps) {\n  return <CollapsiblePrimitive.Content data-slot=\"collapsible-content\" {...props} />\n}\n\nfunction CollapsibleRootProvider({ className, ...props }: CollapsibleRootProviderProps) {\n  return <CollapsiblePrimitive.RootProvider data-slot=\"collapsible\" className={cn(className)} {...props} />\n}\n\ntype CollapsibleRootProps = React.ComponentProps<typeof CollapsiblePrimitive.Root>\n\ntype CollapsibleRootProviderProps = React.ComponentProps<typeof CollapsiblePrimitive.RootProvider>\n\ntype CollapsibleContentProps = React.ComponentProps<typeof CollapsiblePrimitive.Content>\n\ntype CollapsibleContextProps = React.ComponentProps<typeof CollapsiblePrimitive.Context>\n\ntype CollapsibleIndicatorProps = React.ComponentProps<typeof CollapsiblePrimitive.Indicator>\n\ntype CollapsibleTriggerProps = React.ComponentProps<typeof CollapsiblePrimitive.Trigger>\n\nconst Collapsible = {\n  Root: CollapsibleRoot,\n  RootProvider: CollapsibleRootProvider,\n  Content: CollapsibleContent,\n  Context: CollapsibleContext,\n  Indicator: CollapsibleIndicator,\n  Trigger: CollapsibleTrigger,\n}\n\nexport {\n  useCollapsible,\n  useCollapsibleContext,\n  Collapsible,\n  type CollapsibleRootProps,\n  type CollapsibleRootProviderProps,\n  type CollapsibleContentProps,\n  type CollapsibleContextProps,\n  type CollapsibleIndicatorProps,\n  type CollapsibleTriggerProps,\n}\n"
     }
   ]
 }

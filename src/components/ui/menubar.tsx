@@ -1,5 +1,7 @@
 "use client"
 
+import { ark } from "@ark-ui/react"
+import { useMenu, useMenuContext, useMenuItemContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { useControllable } from "@/lib/controllable"
@@ -22,11 +24,11 @@ type MenubarContextValue = {
   rootRef: React.RefObject<HTMLDivElement | null>
 }
 
-const MenubarContext = React.createContext<MenubarContextValue | null>(null)
+const MenubarContextStore = React.createContext<MenubarContextValue | null>(null)
 const MenubarMenuContext = React.createContext<string | null>(null)
 
 function useMenubar(component: string) {
-  const ctx = React.useContext(MenubarContext)
+  const ctx = React.useContext(MenubarContextStore)
   if (!ctx) throw new Error(`${component} must be used within <Menubar>`)
   return ctx
 }
@@ -37,21 +39,14 @@ function useMenubarMenu(component: string) {
   return id
 }
 
-function Menubar({
+function MenubarRoot({
   className,
   value: valueProp,
   defaultValue = null,
   onValueChange,
   loop = false,
   ...props
-}: Omit<React.ComponentProps<"div">, "value" | "defaultValue"> & {
-  /** The id of the open menu (controlled). */
-  value?: string | null
-  defaultValue?: string | null
-  onValueChange?: (value: string | null) => void
-  /** Whether ArrowLeft/ArrowRight wrap around at the ends. */
-  loop?: boolean
-}) {
+}: MenubarRootProps) {
   const [value, setValue] = useControllable(valueProp, defaultValue, onValueChange)
   const [order, setOrder] = React.useState<string[]>([])
   const register = React.useCallback((id: string) => {
@@ -64,15 +59,15 @@ function Menubar({
     [value, setValue, loop, register, order]
   )
   return (
-    <MenubarContext.Provider value={ctx}>
-      <div
+    <MenubarContextStore.Provider value={ctx}>
+      <ark.div
         ref={rootRef}
         role="menubar"
         data-slot="menubar"
         className={cn("flex h-8 items-center gap-0.5 rounded-lg border p-0.75", className)}
         {...props}
       />
-    </MenubarContext.Provider>
+    </MenubarContextStore.Provider>
   )
 }
 
@@ -104,10 +99,7 @@ function MenubarMenu({
   unmountOnExit = true,
   onOpenChange,
   ...props
-}: Omit<React.ComponentProps<typeof MenubarPrimitive.Root>, "open" | "defaultOpen"> & {
-  /** Identifies this menu within the menubar. Auto-generated when omitted. */
-  value?: string
-}) {
+}: MenubarMenuProps) {
   const ctx = useMenubar("MenubarMenu")
   const generated = React.useId()
   const id = valueProp ?? generated
@@ -135,12 +127,7 @@ function MenubarMenu({
   )
 }
 
-function MenubarTrigger({
-  className,
-  onPointerEnter,
-  onKeyDown,
-  ...props
-}: React.ComponentProps<typeof MenubarPrimitive.Trigger>) {
+function MenubarTrigger({ className, onPointerEnter, onKeyDown, ...props }: MenubarTriggerProps) {
   const ctx = useMenubar("MenubarTrigger")
   const id = useMenubarMenu("MenubarTrigger")
   const navigate = useMenubarNavigation()
@@ -172,15 +159,15 @@ function MenubarTrigger({
   )
 }
 
-function MenubarPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {
+function MenubarPortal({ ...props }: MenubarPortalProps) {
   return <PortalPrimitive {...props} />
 }
 
-function MenubarMenuContext_({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Context>) {
+function MenubarContext({ ...props }: MenubarContextProps) {
   return <MenubarPrimitive.Context {...props} />
 }
 
-function MenubarPositioner({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Positioner>) {
+function MenubarPositioner({ className, ...props }: MenubarPositionerProps) {
   return (
     <MenubarPrimitive.Positioner
       data-slot="menubar-positioner"
@@ -190,7 +177,7 @@ function MenubarPositioner({ className, ...props }: React.ComponentProps<typeof 
   )
 }
 
-function MenubarContent({ className, onKeyDown, ...props }: React.ComponentProps<typeof MenubarPrimitive.Content>) {
+function MenubarContent({ className, onKeyDown, ...props }: MenubarContentProps) {
   const id = useMenubarMenu("MenubarContent")
   const navigate = useMenubarNavigation()
   return (
@@ -225,34 +212,31 @@ function MenubarContent({ className, onKeyDown, ...props }: React.ComponentProps
   )
 }
 
-function MenubarArrow({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Arrow>) {
+function MenubarArrow({ className, ...props }: MenubarArrowProps) {
   return (
     <MenubarPrimitive.Arrow
       data-slot="menubar-arrow"
       className={cn("[--arrow-background:var(--color-popover)] [--arrow-size:0.625rem]", className)}
       {...props}
     >
-      <MenubarPrimitive.ArrowTip data-slot="menubar-arrow-tip" className="border-t border-l border-foreground/10" />
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <MenubarPrimitive.ArrowTip data-slot="menubar-arrow-tip" className="border-t border-l border-foreground/10" />
+        </>
+      )}
     </MenubarPrimitive.Arrow>
   )
 }
 
-function MenubarGroup({ ...props }: React.ComponentProps<typeof MenubarPrimitive.ItemGroup>) {
+function MenubarItemGroup({ ...props }: MenubarItemGroupProps) {
   return <MenubarPrimitive.ItemGroup data-slot="menubar-group" {...props} />
 }
 
-function MenubarItem({
-  className,
-  inset,
-  variant = "default",
-  value,
-  ...props
-}: Omit<React.ComponentProps<typeof MenubarPrimitive.Item>, "value"> & {
-  value?: string
-  /** Indent the item to align with items that have an indicator. */
-  inset?: boolean
-  variant?: "default" | "destructive"
-}) {
+function MenubarItem({ className, inset, variant = "default", value, ...props }: MenubarItemProps) {
   const id = React.useId()
   return (
     <MenubarPrimitive.Item
@@ -269,11 +253,11 @@ function MenubarItem({
   )
 }
 
-function MenubarItemText({ ...props }: React.ComponentProps<typeof MenubarPrimitive.ItemText>) {
+function MenubarItemText({ ...props }: MenubarItemTextProps) {
   return <MenubarPrimitive.ItemText data-slot="menubar-item-text" {...props} />
 }
 
-function MenubarItemIndicator({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.ItemIndicator>) {
+function MenubarItemIndicator({ className, ...props }: MenubarItemIndicatorProps) {
   return (
     <MenubarPrimitive.ItemIndicator
       data-slot="menubar-item-indicator"
@@ -293,13 +277,7 @@ function MenubarCheckboxItem({
   inset,
   value,
   ...props
-}: Omit<React.ComponentProps<typeof MenubarPrimitive.CheckboxItem>, "checked" | "value"> & {
-  /** Checked state of the item. */
-  checked?: boolean
-  value?: string
-  /** Indent the item to align with items that have an indicator. */
-  inset?: boolean
-}) {
+}: MenubarCheckboxItemProps) {
   const id = React.useId()
   return (
     <MenubarPrimitive.CheckboxItem
@@ -310,27 +288,27 @@ function MenubarCheckboxItem({
       value={value ?? id}
       {...props}
     >
-      <MenubarItemIndicator data-slot="menubar-checkbox-item-indicator">
-        <CheckIcon />
-      </MenubarItemIndicator>
-      {children}
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <MenubarItemIndicator data-slot="menubar-checkbox-item-indicator">
+            <CheckIcon />
+          </MenubarItemIndicator>
+          {children}
+        </>
+      )}
     </MenubarPrimitive.CheckboxItem>
   )
 }
 
-function MenubarRadioGroup({ ...props }: React.ComponentProps<typeof MenubarPrimitive.RadioItemGroup>) {
+function MenubarRadioItemGroup({ ...props }: MenubarRadioItemGroupProps) {
   return <MenubarPrimitive.RadioItemGroup data-slot="menubar-radio-group" {...props} />
 }
 
-function MenubarRadioItem({
-  className,
-  children,
-  inset,
-  ...props
-}: React.ComponentProps<typeof MenubarPrimitive.RadioItem> & {
-  /** Indent the item to align with items that have an indicator. */
-  inset?: boolean
-}) {
+function MenubarRadioItem({ className, children, inset, ...props }: MenubarRadioItemProps) {
   return (
     <MenubarPrimitive.RadioItem
       data-slot="menubar-radio-item"
@@ -338,22 +316,23 @@ function MenubarRadioItem({
       className={cn(optionItemClassName, className)}
       {...props}
     >
-      <MenubarItemIndicator data-slot="menubar-radio-item-indicator">
-        <CheckIcon />
-      </MenubarItemIndicator>
-      {children}
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <MenubarItemIndicator data-slot="menubar-radio-item-indicator">
+            <CheckIcon />
+          </MenubarItemIndicator>
+          {children}
+        </>
+      )}
     </MenubarPrimitive.RadioItem>
   )
 }
 
-function MenubarLabel({
-  className,
-  inset,
-  ...props
-}: React.ComponentProps<typeof MenubarPrimitive.ItemGroupLabel> & {
-  /** Indent the item to align with items that have an indicator. */
-  inset?: boolean
-}) {
+function MenubarItemGroupLabel({ className, inset, ...props }: MenubarItemGroupLabelProps) {
   return (
     <MenubarPrimitive.ItemGroupLabel
       data-slot="menubar-label"
@@ -364,7 +343,7 @@ function MenubarLabel({
   )
 }
 
-function MenubarSeparator({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Separator>) {
+function MenubarSeparator({ className, ...props }: MenubarSeparatorProps) {
   return (
     <MenubarPrimitive.Separator
       data-slot="menubar-separator"
@@ -374,9 +353,9 @@ function MenubarSeparator({ className, ...props }: React.ComponentProps<typeof M
   )
 }
 
-function MenubarShortcut({ className, ...props }: React.ComponentProps<"span">) {
+function MenubarShortcut({ className, ...props }: MenubarShortcutProps) {
   return (
-    <span
+    <ark.span
       data-slot="menubar-shortcut"
       className={cn(
         "ml-auto text-xs tracking-widest text-muted-foreground group-data-highlighted/menubar-item:text-accent-foreground",
@@ -387,23 +366,11 @@ function MenubarShortcut({ className, ...props }: React.ComponentProps<"span">) 
   )
 }
 
-function MenubarSub({
-  lazyMount = true,
-  unmountOnExit = true,
-  ...props
-}: React.ComponentProps<typeof MenubarPrimitive.Root>) {
+function MenubarSub({ lazyMount = true, unmountOnExit = true, ...props }: MenubarSubProps) {
   return <MenubarPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />
 }
 
-function MenubarSubTrigger({
-  className,
-  inset,
-  children,
-  ...props
-}: React.ComponentProps<typeof MenubarPrimitive.TriggerItem> & {
-  /** Indent the item to align with items that have an indicator. */
-  inset?: boolean
-}) {
+function MenubarTriggerItem({ className, inset, children, ...props }: MenubarTriggerItemProps) {
   return (
     <MenubarPrimitive.TriggerItem
       data-slot="menubar-sub-trigger"
@@ -414,13 +381,21 @@ function MenubarSubTrigger({
       )}
       {...props}
     >
-      {children}
-      <ChevronRightIcon className="ml-auto" />
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {children}
+          <ChevronRightIcon className="ml-auto" />
+        </>
+      )}
     </MenubarPrimitive.TriggerItem>
   )
 }
 
-function MenubarSubContent({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Content>) {
+function MenubarSubContent({ className, ...props }: MenubarSubContentProps) {
   return (
     <MenubarPortal>
       <MenubarPositioner>
@@ -437,26 +412,166 @@ function MenubarSubContent({ className, ...props }: React.ComponentProps<typeof 
   )
 }
 
+function MenubarContextTrigger({ className, ...props }: MenubarContextTriggerProps) {
+  return <MenubarPrimitive.ContextTrigger data-slot="menubar-context-trigger" className={cn(className)} {...props} />
+}
+function MenubarIndicator({ className, ...props }: MenubarIndicatorProps) {
+  return <MenubarPrimitive.Indicator data-slot="menubar-indicator" className={cn(className)} {...props} />
+}
+function MenubarItemContext(props: MenubarItemContextProps) {
+  return <MenubarPrimitive.ItemContext {...props} />
+}
+function MenubarRootProvider(props: MenubarRootProviderProps) {
+  return <MenubarPrimitive.RootProvider {...props} />
+}
+
+function MenubarArrowTip({ className, ...props }: MenubarArrowTipProps) {
+  return <MenubarPrimitive.ArrowTip data-slot="menu-arrow-tip" className={cn(className)} {...props} />
+}
+
+type MenubarArrowTipProps = React.ComponentProps<typeof MenubarPrimitive.ArrowTip>
+
+type MenubarContextProps = React.ComponentProps<typeof MenubarPrimitive.Context>
+
+type MenubarItemGroupProps = React.ComponentProps<typeof MenubarPrimitive.ItemGroup>
+
+type MenubarItemGroupLabelProps = React.ComponentProps<typeof MenubarPrimitive.ItemGroupLabel> & {
+  /** Indent the item to align with items that have an indicator. */
+  inset?: boolean
+}
+
+type MenubarRadioItemGroupProps = React.ComponentProps<typeof MenubarPrimitive.RadioItemGroup>
+
+type MenubarTriggerItemProps = React.ComponentProps<typeof MenubarPrimitive.TriggerItem> & {
+  /** Indent the item to align with items that have an indicator. */
+  inset?: boolean
+}
+
+type MenubarRootProps = Omit<React.ComponentProps<typeof ark.div>, "value" | "defaultValue"> & {
+  /** The id of the open menu (controlled). */
+  value?: string | null
+  defaultValue?: string | null
+  onValueChange?: (value: string | null) => void
+  /** Whether ArrowLeft/ArrowRight wrap around at the ends. */
+  loop?: boolean
+}
+
+type MenubarContextTriggerProps = React.ComponentProps<typeof MenubarPrimitive.ContextTrigger>
+
+type MenubarIndicatorProps = React.ComponentProps<typeof MenubarPrimitive.Indicator>
+
+type MenubarItemContextProps = React.ComponentProps<typeof MenubarPrimitive.ItemContext>
+
+type MenubarRootProviderProps = React.ComponentProps<typeof MenubarPrimitive.RootProvider>
+
+type MenubarArrowProps = React.ComponentProps<typeof MenubarPrimitive.Arrow>
+
+type MenubarCheckboxItemProps = Omit<
+  React.ComponentProps<typeof MenubarPrimitive.CheckboxItem>,
+  "checked" | "value"
+> & {
+  /** Checked state of the item. */
+  checked?: boolean
+  value?: string
+  /** Indent the item to align with items that have an indicator. */
+  inset?: boolean
+}
+
+type MenubarContentProps = React.ComponentProps<typeof MenubarPrimitive.Content>
+
+type MenubarItemProps = Omit<React.ComponentProps<typeof MenubarPrimitive.Item>, "value"> & {
+  value?: string
+  /** Indent the item to align with items that have an indicator. */
+  inset?: boolean
+  variant?: "default" | "destructive"
+}
+
+type MenubarItemIndicatorProps = React.ComponentProps<typeof MenubarPrimitive.ItemIndicator>
+
+type MenubarItemTextProps = React.ComponentProps<typeof MenubarPrimitive.ItemText>
+
+type MenubarMenuProps = Omit<React.ComponentProps<typeof MenubarPrimitive.Root>, "open" | "defaultOpen"> & {
+  /** Identifies this menu within the menubar. Auto-generated when omitted. */
+  value?: string
+}
+
+type MenubarPortalProps = React.ComponentProps<typeof PortalPrimitive>
+
+type MenubarPositionerProps = React.ComponentProps<typeof MenubarPrimitive.Positioner>
+
+type MenubarRadioItemProps = React.ComponentProps<typeof MenubarPrimitive.RadioItem> & {
+  /** Indent the item to align with items that have an indicator. */
+  inset?: boolean
+}
+
+type MenubarSeparatorProps = React.ComponentProps<typeof MenubarPrimitive.Separator>
+
+type MenubarShortcutProps = React.ComponentProps<typeof ark.span>
+
+type MenubarSubProps = React.ComponentProps<typeof MenubarPrimitive.Root>
+
+type MenubarSubContentProps = React.ComponentProps<typeof MenubarPrimitive.Content>
+
+type MenubarTriggerProps = React.ComponentProps<typeof MenubarPrimitive.Trigger>
+
+const Menubar = {
+  ArrowTip: MenubarArrowTip,
+  Context: MenubarContext,
+  ItemGroup: MenubarItemGroup,
+  ItemGroupLabel: MenubarItemGroupLabel,
+  RadioItemGroup: MenubarRadioItemGroup,
+  TriggerItem: MenubarTriggerItem,
+  Root: MenubarRoot,
+  ContextTrigger: MenubarContextTrigger,
+  Indicator: MenubarIndicator,
+  ItemContext: MenubarItemContext,
+  RootProvider: MenubarRootProvider,
+  Arrow: MenubarArrow,
+  CheckboxItem: MenubarCheckboxItem,
+  Content: MenubarContent,
+  Item: MenubarItem,
+  ItemIndicator: MenubarItemIndicator,
+  ItemText: MenubarItemText,
+  Menu: MenubarMenu,
+  Portal: MenubarPortal,
+  Positioner: MenubarPositioner,
+  RadioItem: MenubarRadioItem,
+  Separator: MenubarSeparator,
+  Shortcut: MenubarShortcut,
+  Sub: MenubarSub,
+  SubContent: MenubarSubContent,
+  Trigger: MenubarTrigger,
+}
+
 export {
+  useMenu,
+  useMenuContext,
+  useMenuItemContext,
   Menubar,
-  MenubarArrow,
-  MenubarCheckboxItem,
-  MenubarContent,
-  MenubarMenuContext_ as MenubarContext,
-  MenubarGroup,
-  MenubarItem,
-  MenubarItemIndicator,
-  MenubarItemText,
-  MenubarLabel,
-  MenubarMenu,
-  MenubarPortal,
-  MenubarPositioner,
-  MenubarRadioGroup,
-  MenubarRadioItem,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarSub,
-  MenubarSubContent,
-  MenubarSubTrigger,
-  MenubarTrigger,
+  type MenubarArrowTipProps,
+  type MenubarContextProps,
+  type MenubarItemGroupProps,
+  type MenubarItemGroupLabelProps,
+  type MenubarRadioItemGroupProps,
+  type MenubarTriggerItemProps,
+  type MenubarRootProps,
+  type MenubarContextTriggerProps,
+  type MenubarIndicatorProps,
+  type MenubarItemContextProps,
+  type MenubarRootProviderProps,
+  type MenubarArrowProps,
+  type MenubarCheckboxItemProps,
+  type MenubarContentProps,
+  type MenubarItemProps,
+  type MenubarItemIndicatorProps,
+  type MenubarItemTextProps,
+  type MenubarMenuProps,
+  type MenubarPortalProps,
+  type MenubarPositionerProps,
+  type MenubarRadioItemProps,
+  type MenubarSeparatorProps,
+  type MenubarShortcutProps,
+  type MenubarSubProps,
+  type MenubarSubContentProps,
+  type MenubarTriggerProps,
 }

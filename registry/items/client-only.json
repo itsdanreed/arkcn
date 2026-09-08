@@ -1,0 +1,39 @@
+{
+  "name": "client-only",
+  "type": "ui",
+  "description": "",
+  "ark": "ClientOnly",
+  "exports": [
+    "ClientOnly"
+  ],
+  "parts": [
+    {
+      "name": "ClientOnly.Root",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode | (() => ReactNode)",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "fallback",
+          "type": "ReactNode",
+          "required": false,
+          "from": "@ark-ui/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/client-only.tsx",
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport { ClientOnly as ClientOnlyPrimitive } from \"@ark-ui/react\"\n\nfunction ClientOnlyRoot(props: ClientOnlyRootProps) {\n  return <ClientOnlyPrimitive {...props} />\n}\n\ntype ClientOnlyRootProps = React.ComponentProps<typeof ClientOnlyPrimitive>\n\nconst ClientOnly = {\n  Root: ClientOnlyRoot,\n}\n\nexport { ClientOnly, type ClientOnlyRootProps }\n"
+    }
+  ]
+}

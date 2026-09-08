@@ -1,3 +1,5 @@
+import { ark } from "@ark-ui/react"
+import { useDialog, useDialogContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Dialog as AlertDialogPrimitive, Portal as PortalPrimitive } from "@ark-ui/react"
@@ -10,14 +12,14 @@ function getDefaultInitialFocusEl() {
   )
 }
 
-function AlertDialog({
+function AlertDialogRoot({
   role = "alertdialog",
   closeOnInteractOutside = false,
   initialFocusEl = getDefaultInitialFocusEl,
   lazyMount = true,
   unmountOnExit = true,
   ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.Root>) {
+}: AlertDialogRootProps) {
   return (
     <AlertDialogPrimitive.Root
       role={role}
@@ -30,19 +32,19 @@ function AlertDialog({
   )
 }
 
-function AlertDialogTrigger({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Trigger>) {
+function AlertDialogTrigger({ ...props }: AlertDialogTriggerProps) {
   return <AlertDialogPrimitive.Trigger data-slot="alert-dialog-trigger" {...props} />
 }
 
-function AlertDialogPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {
+function AlertDialogPortal({ ...props }: AlertDialogPortalProps) {
   return <PortalPrimitive {...props} />
 }
 
-function AlertDialogContext({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Context>) {
+function AlertDialogContext({ ...props }: AlertDialogContextProps) {
   return <AlertDialogPrimitive.Context {...props} />
 }
 
-function AlertDialogOverlay({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Backdrop>) {
+function AlertDialogBackdrop({ className, ...props }: AlertDialogBackdropProps) {
   return (
     <AlertDialogPrimitive.Backdrop
       data-slot="alert-dialog-overlay"
@@ -55,7 +57,7 @@ function AlertDialogOverlay({ className, ...props }: React.ComponentProps<typeof
   )
 }
 
-function AlertDialogPositioner({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Positioner>) {
+function AlertDialogPositioner({ className, ...props }: AlertDialogPositionerProps) {
   return (
     <AlertDialogPrimitive.Positioner
       data-slot="alert-dialog-positioner"
@@ -65,16 +67,10 @@ function AlertDialogPositioner({ className, ...props }: React.ComponentProps<typ
   )
 }
 
-function AlertDialogContent({
-  className,
-  size = "default",
-  ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.Content> & {
-  size?: "default" | "sm"
-}) {
+function AlertDialogContent({ className, size = "default", ...props }: AlertDialogContentProps) {
   return (
     <AlertDialogPortal>
-      <AlertDialogOverlay />
+      <AlertDialogBackdrop />
       <AlertDialogPositioner>
         <AlertDialogPrimitive.Content
           data-slot="alert-dialog-content"
@@ -90,9 +86,9 @@ function AlertDialogContent({
   )
 }
 
-function AlertDialogHeader({ className, ...props }: React.ComponentProps<"div">) {
+function AlertDialogHeader({ className, ...props }: AlertDialogHeaderProps) {
   return (
-    <div
+    <ark.div
       data-slot="alert-dialog-header"
       className={cn(
         "grid grid-rows-[auto_1fr] place-items-center gap-1.5 text-center has-data-[slot=alert-dialog-media]:grid-rows-[auto_auto_1fr] has-data-[slot=alert-dialog-media]:gap-x-4 sm:group-data-[size=default]/alert-dialog-content:place-items-start sm:group-data-[size=default]/alert-dialog-content:text-left sm:group-data-[size=default]/alert-dialog-content:has-data-[slot=alert-dialog-media]:grid-rows-[auto_1fr]",
@@ -103,9 +99,9 @@ function AlertDialogHeader({ className, ...props }: React.ComponentProps<"div">)
   )
 }
 
-function AlertDialogFooter({ className, ...props }: React.ComponentProps<"div">) {
+function AlertDialogFooter({ className, ...props }: AlertDialogFooterProps) {
   return (
-    <div
+    <ark.div
       data-slot="alert-dialog-footer"
       className={cn(
         "-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 p-4 group-data-[size=sm]/alert-dialog-content:grid group-data-[size=sm]/alert-dialog-content:grid-cols-2 sm:flex-row sm:justify-end",
@@ -116,9 +112,9 @@ function AlertDialogFooter({ className, ...props }: React.ComponentProps<"div">)
   )
 }
 
-function AlertDialogMedia({ className, ...props }: React.ComponentProps<"div">) {
+function AlertDialogMedia({ className, ...props }: AlertDialogMediaProps) {
   return (
-    <div
+    <ark.div
       data-slot="alert-dialog-media"
       className={cn(
         "mb-2 inline-flex size-10 items-center justify-center rounded-md bg-muted sm:group-data-[size=default]/alert-dialog-content:row-span-2 *:[svg:not([class*='size-'])]:size-6",
@@ -129,7 +125,7 @@ function AlertDialogMedia({ className, ...props }: React.ComponentProps<"div">) 
   )
 }
 
-function AlertDialogTitle({ className, ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Title>) {
+function AlertDialogTitle({ className, ...props }: AlertDialogTitleProps) {
   return (
     <AlertDialogPrimitive.Title
       data-slot="alert-dialog-title"
@@ -142,10 +138,7 @@ function AlertDialogTitle({ className, ...props }: React.ComponentProps<typeof A
   )
 }
 
-function AlertDialogDescription({
-  className,
-  ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.Description>) {
+function AlertDialogDescription({ className, ...props }: AlertDialogDescriptionProps) {
   return (
     <AlertDialogPrimitive.Description
       data-slot="alert-dialog-description"
@@ -158,13 +151,12 @@ function AlertDialogDescription({
   )
 }
 
-function AlertDialogAction({
+function AlertDialogCloseTrigger({
   className,
   variant = "default",
   size = "default",
   ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.CloseTrigger> &
-  Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
+}: AlertDialogCloseTriggerProps) {
   return (
     <Button variant={variant} size={size} asChild>
       <AlertDialogPrimitive.CloseTrigger data-slot="alert-dialog-action" className={cn(className)} {...props} />
@@ -172,13 +164,7 @@ function AlertDialogAction({
   )
 }
 
-function AlertDialogCancel({
-  className,
-  variant = "outline",
-  size = "default",
-  ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.CloseTrigger> &
-  Pick<React.ComponentProps<typeof Button>, "variant" | "size">) {
+function AlertDialogCancel({ className, variant = "outline", size = "default", ...props }: AlertDialogCancelProps) {
   return (
     <Button variant={variant} size={size} asChild>
       <AlertDialogPrimitive.CloseTrigger data-slot="alert-dialog-cancel" className={cn(className)} {...props} />
@@ -186,19 +172,79 @@ function AlertDialogCancel({
   )
 }
 
+function AlertDialogRootProvider(props: AlertDialogRootProviderProps) {
+  return <AlertDialogPrimitive.RootProvider {...props} />
+}
+
+type AlertDialogBackdropProps = React.ComponentProps<typeof AlertDialogPrimitive.Backdrop>
+
+type AlertDialogCloseTriggerProps = React.ComponentProps<typeof AlertDialogPrimitive.CloseTrigger> &
+  Pick<React.ComponentProps<typeof Button>, "variant" | "size">
+
+type AlertDialogRootProps = React.ComponentProps<typeof AlertDialogPrimitive.Root>
+
+type AlertDialogRootProviderProps = React.ComponentProps<typeof AlertDialogPrimitive.RootProvider>
+
+type AlertDialogCancelProps = React.ComponentProps<typeof AlertDialogPrimitive.CloseTrigger> &
+  Pick<React.ComponentProps<typeof Button>, "variant" | "size">
+
+type AlertDialogContentProps = React.ComponentProps<typeof AlertDialogPrimitive.Content> & {
+  size?: "default" | "sm"
+}
+
+type AlertDialogContextProps = React.ComponentProps<typeof AlertDialogPrimitive.Context>
+
+type AlertDialogDescriptionProps = React.ComponentProps<typeof AlertDialogPrimitive.Description>
+
+type AlertDialogFooterProps = React.ComponentProps<typeof ark.div>
+
+type AlertDialogHeaderProps = React.ComponentProps<typeof ark.div>
+
+type AlertDialogMediaProps = React.ComponentProps<typeof ark.div>
+
+type AlertDialogPortalProps = React.ComponentProps<typeof PortalPrimitive>
+
+type AlertDialogPositionerProps = React.ComponentProps<typeof AlertDialogPrimitive.Positioner>
+
+type AlertDialogTitleProps = React.ComponentProps<typeof AlertDialogPrimitive.Title>
+
+type AlertDialogTriggerProps = React.ComponentProps<typeof AlertDialogPrimitive.Trigger>
+
+const AlertDialog = {
+  Backdrop: AlertDialogBackdrop,
+  CloseTrigger: AlertDialogCloseTrigger,
+  Root: AlertDialogRoot,
+  RootProvider: AlertDialogRootProvider,
+  Cancel: AlertDialogCancel,
+  Content: AlertDialogContent,
+  Context: AlertDialogContext,
+  Description: AlertDialogDescription,
+  Footer: AlertDialogFooter,
+  Header: AlertDialogHeader,
+  Media: AlertDialogMedia,
+  Portal: AlertDialogPortal,
+  Positioner: AlertDialogPositioner,
+  Title: AlertDialogTitle,
+  Trigger: AlertDialogTrigger,
+}
+
 export {
+  useDialog,
+  useDialogContext,
   AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogContext,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogMedia,
-  AlertDialogOverlay,
-  AlertDialogPortal,
-  AlertDialogPositioner,
-  AlertDialogTitle,
-  AlertDialogTrigger,
+  type AlertDialogBackdropProps,
+  type AlertDialogCloseTriggerProps,
+  type AlertDialogRootProps,
+  type AlertDialogRootProviderProps,
+  type AlertDialogCancelProps,
+  type AlertDialogContentProps,
+  type AlertDialogContextProps,
+  type AlertDialogDescriptionProps,
+  type AlertDialogFooterProps,
+  type AlertDialogHeaderProps,
+  type AlertDialogMediaProps,
+  type AlertDialogPortalProps,
+  type AlertDialogPositionerProps,
+  type AlertDialogTitleProps,
+  type AlertDialogTriggerProps,
 }

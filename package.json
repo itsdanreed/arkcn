@@ -1,6 +1,6 @@
 {
   "name": "@multicomma/arkcn",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "description": "arkcn: shadcn/ui-style components ported to Ark UI, plus data-heavy primitives (data grid, kanban, gantt, scheduler, node graph, ...). Tailwind v4. Ships a copy-into-your-project CLI and an MCP server.",
   "type": "module",
   "license": "MIT",
@@ -25,17 +25,19 @@
   },
   "scripts": {
     "typecheck": "tsc -p tsconfig.json --noEmit && tsc -p docs/tsconfig.json --noEmit",
-    "lint": "oxlint --deny-warnings && node scripts/check-quotes.mjs && node scripts/check-ark-parts.mjs && npm run -s format:check",
+    "lint": "oxlint --deny-warnings && node scripts/check-quotes.mjs && node scripts/check-ark-parts.mjs && node scripts/check-polymorphism.mjs && npm run -s format:check",
     "format": "prettier --write \"src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\" \"docs/content/**/*.md\" \"{scripts,cli,bin,mcp}/**/*.mjs\" \"*.{json,md}\"",
     "format:check": "prettier --check \"src/**/*.{ts,tsx,css}\" \"docs/src/**/*.{ts,tsx,css}\" \"docs/content/**/*.md\" \"{scripts,cli,bin,mcp}/**/*.mjs\" \"*.{json,md}\"",
-    "check": "npm run -s build:registry && npm run -s typecheck && npm run -s lint && npm run -s test:cli",
+    "check": "npm run -s build:registry && npm run -s typecheck && npm run -s lint && npm run -s test:contracts && npm run -s test:components && npm run -s test:cli",
+    "test:components": "node scripts/test-components.mjs",
     "build:registry": "node scripts/build-registry.mjs",
     "test:cli": "node scripts/test-cli.mjs",
     "prepublishOnly": "npm run -s check",
     "docs:dev": "vite --config docs/vite.config.ts --port 5180",
     "docs:build": "npm run -s build:registry && vite build --config docs/vite.config.ts && node scripts/docs-routes.mjs",
     "docs:preview": "vite preview --config docs/vite.config.ts --port 5181",
-    "version": "npm run -s docs:build"
+    "version": "npm run -s docs:build",
+    "test:contracts": "node scripts/check-public-contracts.mjs && tsc -p scripts/type-tests/tsconfig.json --noEmit"
   },
   "peerDependencies": {
     "@ark-ui/react": "^5.39.1",

@@ -1,18 +1,45 @@
+import { CheckIcon, MinusIcon } from "lucide-react"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Label } from "@/components/ui/label"
 
 export default function CheckboxExample() {
   return (
     <div className="flex flex-col gap-3">
-      <label className="flex items-center gap-2 text-sm">
-        <Checkbox defaultChecked /> Accept terms and conditions
-      </label>
-      <label className="flex items-center gap-2 text-sm">
-        <Checkbox /> Subscribe to the newsletter
-      </label>
-      <Label className="flex items-center gap-2 text-sm text-muted-foreground">
-        <Checkbox disabled /> Disabled
-      </Label>
+      <Checkbox.Root defaultChecked>
+        <Checkbox.Control>
+          <Checkbox.Indicator>
+            <CheckIcon />
+          </Checkbox.Indicator>
+          <Checkbox.Indicator indeterminate>
+            <MinusIcon />
+          </Checkbox.Indicator>
+        </Checkbox.Control>
+        <Checkbox.Label>Accept terms and conditions</Checkbox.Label>
+        <Checkbox.HiddenInput />
+      </Checkbox.Root>
+      <Checkbox.Root>
+        <Checkbox.Control>
+          <Checkbox.Indicator>
+            <CheckIcon />
+          </Checkbox.Indicator>
+          <Checkbox.Indicator indeterminate>
+            <MinusIcon />
+          </Checkbox.Indicator>
+        </Checkbox.Control>
+        <Checkbox.Label>Subscribe to the newsletter</Checkbox.Label>
+        <Checkbox.HiddenInput />
+      </Checkbox.Root>
+      <Checkbox.Root disabled>
+        <Checkbox.Control>
+          <Checkbox.Indicator>
+            <CheckIcon />
+          </Checkbox.Indicator>
+          <Checkbox.Indicator indeterminate>
+            <MinusIcon />
+          </Checkbox.Indicator>
+        </Checkbox.Control>
+        <Checkbox.Label>Disabled</Checkbox.Label>
+        <Checkbox.HiddenInput />
+      </Checkbox.Root>
     </div>
   )
 }

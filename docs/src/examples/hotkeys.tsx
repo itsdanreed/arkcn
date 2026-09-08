@@ -1,6 +1,6 @@
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
-import { HotkeyKbd, HotkeysDialog, HotkeysProvider, useHotkey, useHotkeysDialog } from "@/components/ui/hotkeys"
+import { Hotkeys, useHotkey, useHotkeysDialog } from "@/components/ui/hotkeys"
 
 function Demo() {
   useHotkey("mod+s", () => toast("Saved"), { label: "Save", group: "File" })
@@ -9,8 +9,8 @@ function Demo() {
   return (
     <div className="flex flex-col items-center gap-3 text-sm">
       <p className="text-muted-foreground">
-        Press <HotkeyKbd hotkey="mod+s" /> or <HotkeyKbd hotkey="g h" />, or <HotkeyKbd hotkey="?" /> for the cheat
-        sheet.
+        Press <Hotkeys.Kbd hotkey="mod+s" /> or <Hotkeys.Kbd hotkey="g h" />, or <Hotkeys.Kbd hotkey="?" /> for the
+        cheat sheet.
       </p>
       <Button variant="outline" onClick={() => setOpen(true)}>
         Show shortcuts
@@ -21,9 +21,9 @@ function Demo() {
 
 export default function HotkeysExample() {
   return (
-    <HotkeysProvider>
+    <Hotkeys.Root>
       <Demo />
-      <HotkeysDialog />
-    </HotkeysProvider>
+      <Hotkeys.Dialog />
+    </Hotkeys.Root>
   )
 }

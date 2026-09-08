@@ -1,3 +1,4 @@
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 
@@ -7,14 +8,14 @@ import { cn } from "@/lib/utils"
  * its buttons, Home/End jump, and Escape calls `onEscape` unless focus is in a
  * nested menu. Renders nothing while `open` is false.
  */
-function FloatingToolbar({
+function FloatingToolbarRoot({
   open = true,
   onEscape,
   className,
   children,
   onKeyDown,
   ...props
-}: React.ComponentProps<"div"> & { open?: boolean; onEscape?: () => void }) {
+}: FloatingToolbarRootProps) {
   const ref = React.useRef<HTMLDivElement>(null)
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     onKeyDown?.(event)
@@ -54,7 +55,7 @@ function FloatingToolbar({
   }
   if (!open) return null
   return (
-    <div
+    <ark.div
       ref={ref}
       role="toolbar"
       data-slot="floating-toolbar"
@@ -66,14 +67,28 @@ function FloatingToolbar({
       )}
       {...props}
     >
-      <div
-        data-slot="floating-toolbar-content"
-        className="flex items-center gap-2 rounded-xl border bg-background/95 p-2 shadow-xl backdrop-blur-lg supports-backdrop-filter:bg-background/60"
-      >
-        {children}
-      </div>
-    </div>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <div
+            data-slot="floating-toolbar-content"
+            className="flex items-center gap-2 rounded-xl border bg-background/95 p-2 shadow-xl backdrop-blur-lg supports-backdrop-filter:bg-background/60"
+          >
+            {children}
+          </div>
+        </>
+      )}
+    </ark.div>
   )
 }
 
-export { FloatingToolbar }
+type FloatingToolbarRootProps = React.ComponentProps<typeof ark.div> & { open?: boolean; onEscape?: () => void }
+
+const FloatingToolbar = {
+  Root: FloatingToolbarRoot,
+}
+
+export { FloatingToolbar, type FloatingToolbarRootProps }

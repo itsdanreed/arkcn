@@ -213,7 +213,7 @@ function useControllable<T>(value: T | undefined, defaultValue: T, onChange?: (v
  * Root
  * ------------------------------------------------------------------------- */
 
-type NodeGraphProps = Omit<React.ComponentProps<"div">, "onSelect"> & {
+type NodeGraphProps = Omit<React.ComponentProps<typeof ark.div>, "onSelect"> & {
   /** Controlled pan and zoom as `{ x, y, zoom }`. */
   viewport?: NodeGraphViewportState
   /** Initial pan and zoom when uncontrolled. */
@@ -261,7 +261,7 @@ type NodeGraphProps = Omit<React.ComponentProps<"div">, "onSelect"> & {
   edgeAt?: (port: NodeGraphPortDetails) => NodeGraphPortDetails | null
 }
 
-function NodeGraph({
+function NodeGraphRoot({
   viewport: viewportProp,
   defaultViewport = { x: 0, y: 0, zoom: 1 },
   onViewportChange,
@@ -286,7 +286,7 @@ function NodeGraph({
   className,
   children,
   ...props
-}: NodeGraphProps) {
+}: NodeGraphRootProps) {
   const store = React.useMemo(() => createLayoutStore(), [])
   const viewportRef = React.useRef<HTMLDivElement>(null)
   const [viewport, setViewportState] = useControllable(viewportProp, defaultViewport, onViewportChange)
@@ -828,7 +828,7 @@ function NodeGraph({
   return (
     <NodeGraphContext.Provider value={ctx}>
       <PanePointerDownContext.Provider value={onPanePointerDown}>
-        <div
+        <ark.div
           data-slot="node-graph"
           data-connecting={connecting ? "" : undefined}
           data-dragging={draggingNodes ? "" : undefined}
@@ -836,9 +836,17 @@ function NodeGraph({
           className={cn("relative flex min-h-0 flex-1 flex-col", className)}
           {...props}
         >
-          {children}
-          <LiveRegion data-slot="node-graph-live-region" message={announcement} />
-        </div>
+          {props.asChild ? (
+            React.isValidElement(children) ? (
+              children
+            ) : null
+          ) : (
+            <>
+              {children}
+              <LiveRegion.Root data-slot="node-graph-live-region" message={announcement} />
+            </>
+          )}
+        </ark.div>
       </PanePointerDownContext.Provider>
     </NodeGraphContext.Provider>
   )
@@ -850,16 +858,7 @@ const PanePointerDownContext = React.createContext<((event: React.PointerEvent) 
  * Viewport
  * ------------------------------------------------------------------------- */
 
-function NodeGraphViewport({
-  className,
-  children,
-  panOnScroll = false,
-  onKeyDown,
-  ...props
-}: React.ComponentProps<"div"> & {
-  /** Plain wheel pans instead of zooming (pinch / ctrl+wheel always zooms). */
-  panOnScroll?: boolean
-}) {
+function NodeGraphViewport({ className, children, panOnScroll = false, onKeyDown, ...props }: NodeGraphViewportProps) {
   const ctx = useNodeGraph()
   const onPanePointerDown = React.useContext(PanePointerDownContext)
   const { viewportRef, setViewport, zoomTo, connecting, panning, spaceHeld } = ctx
@@ -952,7 +951,7 @@ function NodeGraphViewport({
   }
 
   return (
-    <div
+    <ark.div
       ref={viewportRef}
       data-slot="node-graph-viewport"
       tabIndex={0}
@@ -972,7 +971,7 @@ function NodeGraphViewport({
       {...props}
     >
       {children}
-    </div>
+    </ark.div>
   )
 }
 
@@ -980,56 +979,65 @@ function NodeGraphViewport({
  * Background grid
  * ------------------------------------------------------------------------- */
 
-function NodeGraphBackground({
-  className,
-  variant = "dots",
-  gap = 20,
-  ...props
-}: React.ComponentProps<"svg"> & { variant?: "dots" | "lines"; gap?: number }) {
+function NodeGraphBackground({ className, variant = "dots", gap = 20, ...props }: NodeGraphBackgroundProps) {
   const { viewport } = useNodeGraph()
   const id = React.useId()
   const size = gap * viewport.zoom
   const major = size * 5
   return (
-    <svg
+    <ark.svg
       data-slot="node-graph-background"
       aria-hidden
       className={cn("pointer-events-none absolute inset-0 size-full text-foreground/60", className)}
       {...props}
     >
-      <pattern
-        id={`${id}-minor`}
-        x={viewport.x % size}
-        y={viewport.y % size}
-        width={size}
-        height={size}
-        patternUnits="userSpaceOnUse"
-      >
-        {variant === "dots" ? (
-          <circle
-            cx={size / 2}
-            cy={size / 2}
-            r={Math.max(0.6, viewport.zoom * 0.9)}
-            fill="currentColor"
-            opacity={0.28}
-          />
-        ) : (
-          <path d={`M ${size} 0 L 0 0 0 ${size}`} fill="none" stroke="currentColor" strokeWidth={1} opacity={0.08} />
-        )}
-      </pattern>
-      <pattern
-        id={`${id}-major`}
-        x={viewport.x % major}
-        y={viewport.y % major}
-        width={major}
-        height={major}
-        patternUnits="userSpaceOnUse"
-      >
-        <path d={`M ${major} 0 L 0 0 0 ${major}`} fill="none" stroke="currentColor" strokeWidth={1} opacity={0.1} />
-      </pattern>
-      <rect width="100%" height="100%" fill={`url(#${id}-minor)`} />
-      <rect width="100%" height="100%" fill={`url(#${id}-major)`} />
-    </svg>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <pattern
+            id={`${id}-minor`}
+            x={viewport.x % size}
+            y={viewport.y % size}
+            width={size}
+            height={size}
+            patternUnits="userSpaceOnUse"
+          >
+            {variant === "dots" ? (
+              <circle
+                cx={size / 2}
+                cy={size / 2}
+                r={Math.max(0.6, viewport.zoom * 0.9)}
+                fill="currentColor"
+                opacity={0.28}
+              />
+            ) : (
+              <path
+                d={`M ${size} 0 L 0 0 0 ${size}`}
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1}
+                opacity={0.08}
+              />
+            )}
+          </pattern>
+          <pattern
+            id={`${id}-major`}
+            x={viewport.x % major}
+            y={viewport.y % major}
+            width={major}
+            height={major}
+            patternUnits="userSpaceOnUse"
+          >
+            <path d={`M ${major} 0 L 0 0 0 ${major}`} fill="none" stroke="currentColor" strokeWidth={1} opacity={0.1} />
+          </pattern>
+          <rect width="100%" height="100%" fill={`url(#${id}-minor)`} />
+          <rect width="100%" height="100%" fill={`url(#${id}-major)`} />
+        </>
+      )}
+    </ark.svg>
   )
 }
 
@@ -1037,10 +1045,10 @@ function NodeGraphBackground({
  * Surface (transformed layer), edges, connection line, marquee
  * ------------------------------------------------------------------------- */
 
-function NodeGraphSurface({ className, style, ...props }: React.ComponentProps<"div">) {
+function NodeGraphSurface({ className, style, ...props }: NodeGraphSurfaceProps) {
   const { viewport } = useNodeGraph()
   return (
-    <div
+    <ark.div
       data-slot="node-graph-surface"
       className={cn("absolute top-0 left-0 origin-top-left", className)}
       style={{ transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`, ...style }}
@@ -1049,9 +1057,9 @@ function NodeGraphSurface({ className, style, ...props }: React.ComponentProps<"
   )
 }
 
-function NodeGraphEdges({ className, ...props }: React.ComponentProps<"svg">) {
+function NodeGraphEdges({ className, ...props }: NodeGraphEdgesProps) {
   return (
-    <svg
+    <ark.svg
       data-slot="node-graph-edges"
       className={cn("pointer-events-none absolute top-0 left-0 size-px overflow-visible", className)}
       {...props}
@@ -1075,16 +1083,7 @@ function NodeGraphEdge({
   onClick,
   children,
   ...props
-}: Omit<React.ComponentProps<"g">, "children" | "target"> & {
-  value: string
-  /** Output-side port as `{ nodeId, portId }`. */
-  source: NodeGraphPortRef
-  /** Input-side port as `{ nodeId, portId }`. */
-  target: NodeGraphPortRef
-  selected?: boolean
-  /** Render prop for labels; receives the path midpoint. */
-  children?: (details: { midpoint: XY; from: XY; to: XY }) => React.ReactNode
-}) {
+}: NodeGraphEdgeProps) {
   const { store, selection, onEdgeClick } = useNodeGraph()
   useLayoutVersion(store)
   const from = store.getPortPosition(source)
@@ -1095,7 +1094,7 @@ function NodeGraphEdge({
   const midpoint = { x: (from.x + to.x) / 2, y: (from.y + to.y) / 2 }
   const type = store.getPort(source)?.type
   return (
-    <g
+    <ark.g
       data-slot="node-graph-edge"
       data-value={value}
       data-selected={selected ? "" : undefined}
@@ -1107,21 +1106,29 @@ function NodeGraphEdge({
       }}
       {...props}
     >
-      <path d={d} fill="none" stroke="transparent" strokeWidth={14} />
-      <path
-        d={d}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2}
-        className="transition-[stroke-width] group-hover/edge:stroke-3 group-data-selected/edge:stroke-3 group-data-selected/edge:drop-shadow-[0_0_4px_currentColor]"
-      />
-      {children?.({ midpoint, from, to })}
-    </g>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <path d={d} fill="none" stroke="transparent" strokeWidth={14} />
+          <path
+            d={d}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            className="transition-[stroke-width] group-hover/edge:stroke-3 group-data-selected/edge:stroke-3 group-data-selected/edge:drop-shadow-[0_0_4px_currentColor]"
+          />
+          {typeof children === "function" ? children?.({ midpoint, from, to }) : children}
+        </>
+      )}
+    </ark.g>
   )
 }
 
 /** The edge being drawn from a pin. Renders nothing when idle. */
-function NodeGraphConnectionLine({ className, ...props }: React.ComponentProps<"svg">) {
+function NodeGraphConnectionLine({ className, ...props }: NodeGraphConnectionLineProps) {
   const { store, connecting } = useNodeGraph()
   useLayoutVersion(store)
   if (!connecting) return null
@@ -1129,7 +1136,7 @@ function NodeGraphConnectionLine({ className, ...props }: React.ComponentProps<"
   if (!from) return null
   const [a, b] = connecting.source.side === "output" ? [from, connecting.position] : [connecting.position, from]
   return (
-    <svg
+    <ark.svg
       data-slot="node-graph-connection-line"
       data-type={connecting.source.type}
       data-valid={connecting.valid ? "" : undefined}
@@ -1140,24 +1147,32 @@ function NodeGraphConnectionLine({ className, ...props }: React.ComponentProps<"
       )}
       {...props}
     >
-      <path
-        d={getBezierPath(a, b)}
-        fill="none"
-        stroke="currentColor"
-        strokeWidth={2}
-        strokeDasharray={connecting.valid ? undefined : "6 4"}
-      />
-      <circle cx={b.x} cy={b.y} r={3} fill="currentColor" />
-    </svg>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <path
+            d={getBezierPath(a, b)}
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={2}
+            strokeDasharray={connecting.valid ? undefined : "6 4"}
+          />
+          <circle cx={b.x} cy={b.y} r={3} fill="currentColor" />
+        </>
+      )}
+    </ark.svg>
   )
 }
 
 /** Marquee selection rectangle. Renders nothing when idle. */
-function NodeGraphSelectionBox({ className, style, ...props }: React.ComponentProps<"div">) {
+function NodeGraphSelectionBox({ className, style, ...props }: NodeGraphSelectionBoxProps) {
   const { marquee, viewport } = useNodeGraph()
   if (!marquee) return null
   return (
-    <div
+    <ark.div
       data-slot="node-graph-selection-box"
       className={cn("pointer-events-none absolute rounded-sm border border-primary/60 bg-primary/10", className)}
       style={{
@@ -1200,7 +1215,7 @@ function NodeGraphNode({
   onDoubleClick,
   children,
   ...props
-}: React.ComponentProps<"div"> & { value: string; position: XY; selected?: boolean }) {
+}: NodeGraphNodeProps) {
   const graph = useNodeGraph()
   const { store, selection, draggingNodes, startNodeDrag, onNodeClick } = graph
   const ref = React.useRef<HTMLDivElement>(null)
@@ -1270,7 +1285,7 @@ function NodeGraphNode({
 
   return (
     <NodeContext.Provider value={nodeCtx}>
-      <div
+      <ark.div
         ref={ref}
         data-slot="node-graph-node"
         data-value={value}
@@ -1307,15 +1322,15 @@ function NodeGraphNode({
         {...props}
       >
         {children}
-      </div>
+      </ark.div>
     </NodeContext.Provider>
   )
 }
 
 /** Header slot for buttons (menus, run triggers). Revealed on hover/selection; clicks never start a drag. */
-function NodeGraphNodeActions({ className, onPointerDown, ...props }: React.ComponentProps<"div">) {
+function NodeGraphNodeActions({ className, onPointerDown, ...props }: NodeGraphNodeActionsProps) {
   return (
-    <div
+    <ark.div
       data-slot="node-graph-node-actions"
       className={cn(
         "ml-auto flex shrink-0 items-center gap-0.5 opacity-0 transition-opacity group-focus-within/node:opacity-100 group-hover/node:opacity-100 group-data-selected/node:opacity-100",
@@ -1330,9 +1345,9 @@ function NodeGraphNodeActions({ className, onPointerDown, ...props }: React.Comp
   )
 }
 
-function NodeGraphNodeHeader({ className, ...props }: React.ComponentProps<"div">) {
+function NodeGraphNodeHeader({ className, ...props }: NodeGraphNodeHeaderProps) {
   return (
-    <div
+    <ark.div
       data-slot="node-graph-node-header"
       className={cn(
         "flex items-center gap-2 rounded-t-[inherit] border-b bg-muted/60 px-3 py-2 text-sm font-medium [&_svg:not([class*='size-'])]:size-4",
@@ -1343,13 +1358,13 @@ function NodeGraphNodeHeader({ className, ...props }: React.ComponentProps<"div"
   )
 }
 
-function NodeGraphNodeTitle({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="node-graph-node-title" className={cn("truncate leading-tight", className)} {...props} />
+function NodeGraphNodeTitle({ className, ...props }: NodeGraphNodeTitleProps) {
+  return <ark.div data-slot="node-graph-node-title" className={cn("truncate leading-tight", className)} {...props} />
 }
 
-function NodeGraphNodeSubtitle({ className, ...props }: React.ComponentProps<"div">) {
+function NodeGraphNodeSubtitle({ className, ...props }: NodeGraphNodeSubtitleProps) {
   return (
-    <div
+    <ark.div
       data-slot="node-graph-node-subtitle"
       className={cn("truncate text-xs font-normal text-muted-foreground", className)}
       {...props}
@@ -1357,17 +1372,19 @@ function NodeGraphNodeSubtitle({ className, ...props }: React.ComponentProps<"di
   )
 }
 
-function NodeGraphNodeBody({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="node-graph-node-body" className={cn("grid grid-cols-2 gap-x-2 py-2", className)} {...props} />
-}
-
-function NodeGraphNodeInputs({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="node-graph-node-inputs" className={cn("flex flex-col gap-1", className)} {...props} />
-}
-
-function NodeGraphNodeOutputs({ className, ...props }: React.ComponentProps<"div">) {
+function NodeGraphNodeBody({ className, ...props }: NodeGraphNodeBodyProps) {
   return (
-    <div
+    <ark.div data-slot="node-graph-node-body" className={cn("grid grid-cols-2 gap-x-2 py-2", className)} {...props} />
+  )
+}
+
+function NodeGraphNodeInputs({ className, ...props }: NodeGraphNodeInputsProps) {
+  return <ark.div data-slot="node-graph-node-inputs" className={cn("flex flex-col gap-1", className)} {...props} />
+}
+
+function NodeGraphNodeOutputs({ className, ...props }: NodeGraphNodeOutputsProps) {
+  return (
+    <ark.div
       data-slot="node-graph-node-outputs"
       className={cn("col-start-2 flex flex-col items-end gap-1", className)}
       {...props}
@@ -1375,9 +1392,9 @@ function NodeGraphNodeOutputs({ className, ...props }: React.ComponentProps<"div
   )
 }
 
-function NodeGraphNodeFooter({ className, ...props }: React.ComponentProps<"div">) {
+function NodeGraphNodeFooter({ className, ...props }: NodeGraphNodeFooterProps) {
   return (
-    <div
+    <ark.div
       data-slot="node-graph-node-footer"
       className={cn("rounded-b-[inherit] border-t px-3 py-1.5 text-xs text-muted-foreground", className)}
       {...props}
@@ -1392,18 +1409,11 @@ function NodeGraphNodeFooter({ className, ...props }: React.ComponentProps<"div"
 type PortContextValue = { value: string; side: NodeGraphPortSide; type: string; connected: boolean }
 const PortContext = React.createContext<PortContextValue | null>(null)
 
-function NodeGraphPort({
-  value,
-  side,
-  type = "any",
-  connected = false,
-  className,
-  ...props
-}: React.ComponentProps<"div"> & { value: string; side: NodeGraphPortSide; type?: string; connected?: boolean }) {
+function NodeGraphPort({ value, side, type = "any", connected = false, className, ...props }: NodeGraphPortProps) {
   const ctx = React.useMemo(() => ({ value, side, type, connected }), [value, side, type, connected])
   return (
     <PortContext.Provider value={ctx}>
-      <div
+      <ark.div
         data-slot="node-graph-port"
         data-side={side}
         data-type={type}
@@ -1433,12 +1443,7 @@ const pinVariants = cva(
 )
 
 /** The connection handle. Sits on the node's edge: inputs are pulled left, outputs right. */
-function NodeGraphPortPin({
-  className,
-  variant,
-  onPointerDown,
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof pinVariants>) {
+function NodeGraphPortPin({ className, variant, onPointerDown, ...props }: NodeGraphPortPinProps) {
   const graph = useNodeGraph()
   const node = useNodeGraphNode()
   const port = React.useContext(PortContext)
@@ -1453,7 +1458,7 @@ function NodeGraphPortPin({
   const isTarget = connecting?.target?.nodeId === node.value && connecting.target.portId === port.value
   const isSource = connecting?.source.nodeId === node.value && connecting.source.portId === port.value
   return (
-    <div
+    <ark.div
       ref={ref}
       data-slot="node-graph-port-pin"
       data-node-id={node.value}
@@ -1493,17 +1498,17 @@ function NodeGraphPortPin({
   )
 }
 
-function NodeGraphPortLabel({ className, ...props }: React.ComponentProps<"span">) {
-  return <span data-slot="node-graph-port-label" className={cn("truncate", className)} {...props} />
+function NodeGraphPortLabel({ className, ...props }: NodeGraphPortLabelProps) {
+  return <ark.span data-slot="node-graph-port-label" className={cn("truncate", className)} {...props} />
 }
 
 /* ---------------------------------------------------------------------------
  * Controls, minimap, empty
  * ------------------------------------------------------------------------- */
 
-function NodeGraphControls({ className, ...props }: React.ComponentProps<"div">) {
+function NodeGraphControls({ className, ...props }: NodeGraphControlsProps) {
   return (
-    <div
+    <ark.div
       data-slot="node-graph-controls"
       className={cn(
         "absolute bottom-3 left-3 z-20 flex items-center gap-1 rounded-lg border bg-background/90 p-1 shadow-sm backdrop-blur-sm",
@@ -1517,7 +1522,7 @@ function NodeGraphControls({ className, ...props }: React.ComponentProps<"div">)
 
 type ControlTriggerProps = React.ComponentProps<typeof Button>
 
-function NodeGraphZoomInTrigger({ asChild, children, onClick, ...props }: ControlTriggerProps) {
+function NodeGraphZoomInTrigger({ asChild, children, onClick, ...props }: NodeGraphZoomInTriggerProps) {
   const { zoomIn } = useNodeGraph()
   return (
     <Button
@@ -1537,7 +1542,7 @@ function NodeGraphZoomInTrigger({ asChild, children, onClick, ...props }: Contro
   )
 }
 
-function NodeGraphZoomOutTrigger({ asChild, children, onClick, ...props }: ControlTriggerProps) {
+function NodeGraphZoomOutTrigger({ asChild, children, onClick, ...props }: NodeGraphZoomOutTriggerProps) {
   const { zoomOut } = useNodeGraph()
   return (
     <Button
@@ -1557,7 +1562,7 @@ function NodeGraphZoomOutTrigger({ asChild, children, onClick, ...props }: Contr
   )
 }
 
-function NodeGraphFitViewTrigger({ asChild, children, onClick, ...props }: ControlTriggerProps) {
+function NodeGraphFitViewTrigger({ asChild, children, onClick, ...props }: NodeGraphFitViewTriggerProps) {
   const { fitView } = useNodeGraph()
   return (
     <Button
@@ -1578,13 +1583,7 @@ function NodeGraphFitViewTrigger({ asChild, children, onClick, ...props }: Contr
 }
 
 /** Current zoom as a percentage; click resets to 100%. */
-function NodeGraphZoomValue({
-  className,
-  asChild,
-  children,
-  onClick,
-  ...props
-}: React.ComponentProps<typeof ark.button>) {
+function NodeGraphZoomValue({ className, asChild, children, onClick, ...props }: NodeGraphZoomValueProps) {
   const { viewport, zoomTo } = useNodeGraph()
   return (
     <ark.button
@@ -1607,12 +1606,7 @@ function NodeGraphZoomValue({
   )
 }
 
-function NodeGraphMinimap({
-  className,
-  width = 180,
-  height = 120,
-  ...props
-}: React.ComponentProps<"svg"> & { width?: number; height?: number }) {
+function NodeGraphMinimap({ className, width = 180, height = 120, ...props }: NodeGraphMinimapProps) {
   const { store, viewport, size, selection, centerOn } = useNodeGraph()
   useLayoutVersion(store)
   const nodes = [...store.nodes]
@@ -1643,7 +1637,7 @@ function NodeGraphMinimap({
   }
 
   return (
-    <svg
+    <ark.svg
       data-slot="node-graph-minimap"
       viewBox={viewBox}
       width={width}
@@ -1667,35 +1661,43 @@ function NodeGraphMinimap({
       }}
       {...props}
     >
-      {nodes.map(([id, node]) => (
-        <rect
-          key={id}
-          data-slot="node-graph-minimap-node"
-          data-selected={selection.nodes.includes(id) ? "" : undefined}
-          x={node.position.x}
-          y={node.position.y}
-          width={node.width}
-          height={node.height}
-          rx={4 * scale}
-          className="fill-muted-foreground/40 data-selected:fill-primary"
-        />
-      ))}
-      <rect
-        data-slot="node-graph-minimap-viewport"
-        x={view.x}
-        y={view.y}
-        width={view.width}
-        height={view.height}
-        className="fill-primary/10 stroke-primary/60"
-        strokeWidth={scale}
-      />
-    </svg>
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          {nodes.map(([id, node]) => (
+            <rect
+              key={id}
+              data-slot="node-graph-minimap-node"
+              data-selected={selection.nodes.includes(id) ? "" : undefined}
+              x={node.position.x}
+              y={node.position.y}
+              width={node.width}
+              height={node.height}
+              rx={4 * scale}
+              className="fill-muted-foreground/40 data-selected:fill-primary"
+            />
+          ))}
+          <rect
+            data-slot="node-graph-minimap-viewport"
+            x={view.x}
+            y={view.y}
+            width={view.width}
+            height={view.height}
+            className="fill-primary/10 stroke-primary/60"
+            strokeWidth={scale}
+          />
+        </>
+      )}
+    </ark.svg>
   )
 }
 
-function NodeGraphEmpty({ className, ...props }: React.ComponentProps<"div">) {
+function NodeGraphEmpty({ className, ...props }: NodeGraphEmptyProps) {
   return (
-    <div
+    <ark.div
       data-slot="node-graph-empty"
       className={cn(
         "pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1 text-center text-sm text-muted-foreground",
@@ -1706,34 +1708,116 @@ function NodeGraphEmpty({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
+type NodeGraphRootProps = NodeGraphProps
+
+type NodeGraphViewportProps = React.ComponentProps<typeof ark.div> & {
+  /** Plain wheel pans instead of zooming (pinch / ctrl+wheel always zooms). */
+  panOnScroll?: boolean
+}
+
+type NodeGraphBackgroundProps = React.ComponentProps<typeof ark.svg> & {
+  variant?: "dots" | "lines"
+  gap?: number
+}
+
+type NodeGraphSurfaceProps = React.ComponentProps<typeof ark.div>
+
+type NodeGraphEdgesProps = React.ComponentProps<typeof ark.svg>
+
+type NodeGraphEdgeProps = Omit<React.ComponentProps<typeof ark.g>, "children" | "target"> & {
+  value: string
+  /** Output-side port as `{ nodeId, portId }`. */
+  source: NodeGraphPortRef
+  /** Input-side port as `{ nodeId, portId }`. */
+  target: NodeGraphPortRef
+  selected?: boolean
+  /** Render prop for labels; receives the path midpoint. */
+  children?: ((details: { midpoint: XY; from: XY; to: XY }) => React.ReactNode) | React.ReactElement
+}
+
+type NodeGraphConnectionLineProps = React.ComponentProps<typeof ark.svg>
+
+type NodeGraphSelectionBoxProps = React.ComponentProps<typeof ark.div>
+
+type NodeGraphNodeProps = React.ComponentProps<typeof ark.div> & {
+  value: string
+  position: XY
+  selected?: boolean
+}
+
+type NodeGraphNodeHeaderProps = React.ComponentProps<typeof ark.div>
+
+type NodeGraphNodeActionsProps = React.ComponentProps<typeof ark.div>
+
+type NodeGraphNodeTitleProps = React.ComponentProps<typeof ark.div>
+
+type NodeGraphNodeSubtitleProps = React.ComponentProps<typeof ark.div>
+
+type NodeGraphNodeBodyProps = React.ComponentProps<typeof ark.div>
+
+type NodeGraphNodeInputsProps = React.ComponentProps<typeof ark.div>
+
+type NodeGraphNodeOutputsProps = React.ComponentProps<typeof ark.div>
+
+type NodeGraphNodeFooterProps = React.ComponentProps<typeof ark.div>
+
+type NodeGraphPortProps = React.ComponentProps<typeof ark.div> & {
+  value: string
+  side: NodeGraphPortSide
+  type?: string
+  connected?: boolean
+}
+
+type NodeGraphPortPinProps = React.ComponentProps<typeof ark.div> & VariantProps<typeof pinVariants>
+
+type NodeGraphPortLabelProps = React.ComponentProps<typeof ark.span>
+
+type NodeGraphControlsProps = React.ComponentProps<typeof ark.div>
+
+type NodeGraphZoomInTriggerProps = ControlTriggerProps
+
+type NodeGraphZoomOutTriggerProps = ControlTriggerProps
+
+type NodeGraphFitViewTriggerProps = ControlTriggerProps
+
+type NodeGraphZoomValueProps = React.ComponentProps<typeof ark.button>
+
+type NodeGraphMinimapProps = React.ComponentProps<typeof ark.svg> & { width?: number; height?: number }
+
+type NodeGraphEmptyProps = React.ComponentProps<typeof ark.div>
+
+const NodeGraph = {
+  Root: NodeGraphRoot,
+  Viewport: NodeGraphViewport,
+  Background: NodeGraphBackground,
+  Surface: NodeGraphSurface,
+  Edges: NodeGraphEdges,
+  Edge: NodeGraphEdge,
+  ConnectionLine: NodeGraphConnectionLine,
+  SelectionBox: NodeGraphSelectionBox,
+  Node: NodeGraphNode,
+  NodeHeader: NodeGraphNodeHeader,
+  NodeActions: NodeGraphNodeActions,
+  NodeTitle: NodeGraphNodeTitle,
+  NodeSubtitle: NodeGraphNodeSubtitle,
+  NodeBody: NodeGraphNodeBody,
+  NodeInputs: NodeGraphNodeInputs,
+  NodeOutputs: NodeGraphNodeOutputs,
+  NodeFooter: NodeGraphNodeFooter,
+  Port: NodeGraphPort,
+  PortPin: NodeGraphPortPin,
+  PortLabel: NodeGraphPortLabel,
+  Controls: NodeGraphControls,
+  ZoomInTrigger: NodeGraphZoomInTrigger,
+  ZoomOutTrigger: NodeGraphZoomOutTrigger,
+  FitViewTrigger: NodeGraphFitViewTrigger,
+  ZoomValue: NodeGraphZoomValue,
+  Minimap: NodeGraphMinimap,
+  Empty: NodeGraphEmpty,
+}
+
 export {
   NodeGraph,
-  NodeGraphViewport,
-  NodeGraphBackground,
-  NodeGraphSurface,
-  NodeGraphEdges,
-  NodeGraphEdge,
-  NodeGraphConnectionLine,
-  NodeGraphSelectionBox,
-  NodeGraphNode,
-  NodeGraphNodeHeader,
-  NodeGraphNodeActions,
-  NodeGraphNodeTitle,
-  NodeGraphNodeSubtitle,
-  NodeGraphNodeBody,
-  NodeGraphNodeInputs,
-  NodeGraphNodeOutputs,
-  NodeGraphNodeFooter,
-  NodeGraphPort,
-  NodeGraphPortPin,
-  NodeGraphPortLabel,
-  NodeGraphControls,
-  NodeGraphZoomInTrigger,
-  NodeGraphZoomOutTrigger,
-  NodeGraphFitViewTrigger,
-  NodeGraphZoomValue,
-  NodeGraphMinimap,
-  NodeGraphEmpty,
   useNodeGraph,
   getBezierPath,
   type NodeGraphViewportState,
@@ -1743,4 +1827,31 @@ export {
   type NodeGraphConnection,
   type NodeGraphSelection,
   type NodeGraphNodeMove,
+  type NodeGraphRootProps,
+  type NodeGraphViewportProps,
+  type NodeGraphBackgroundProps,
+  type NodeGraphSurfaceProps,
+  type NodeGraphEdgesProps,
+  type NodeGraphEdgeProps,
+  type NodeGraphConnectionLineProps,
+  type NodeGraphSelectionBoxProps,
+  type NodeGraphNodeProps,
+  type NodeGraphNodeHeaderProps,
+  type NodeGraphNodeActionsProps,
+  type NodeGraphNodeTitleProps,
+  type NodeGraphNodeSubtitleProps,
+  type NodeGraphNodeBodyProps,
+  type NodeGraphNodeInputsProps,
+  type NodeGraphNodeOutputsProps,
+  type NodeGraphNodeFooterProps,
+  type NodeGraphPortProps,
+  type NodeGraphPortPinProps,
+  type NodeGraphPortLabelProps,
+  type NodeGraphControlsProps,
+  type NodeGraphZoomInTriggerProps,
+  type NodeGraphZoomOutTriggerProps,
+  type NodeGraphFitViewTriggerProps,
+  type NodeGraphZoomValueProps,
+  type NodeGraphMinimapProps,
+  type NodeGraphEmptyProps,
 }

@@ -4,18 +4,13 @@
   "description": "",
   "ark": "DateInput",
   "exports": [
-    "DateInput",
-    "DateInputContext",
-    "DateInputControl",
-    "DateInputHiddenInput",
-    "DateInputLabel",
-    "DateInputSegment",
-    "DateInputSegmentContext",
-    "DateInputSegmentGroup"
+    "useDateInput",
+    "useDateInputContext",
+    "DateInput"
   ],
   "parts": [
     {
-      "name": "DateInput",
+      "name": "DateInput.Root",
       "props": [
         {
           "name": "allSegments",
@@ -279,7 +274,47 @@
       ]
     },
     {
-      "name": "DateInputContext",
+      "name": "DateInput.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "DateInputApi<PropTypes>",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DateInput.Context",
       "props": [
         {
           "name": "children",
@@ -291,7 +326,7 @@
       ]
     },
     {
-      "name": "DateInputControl",
+      "name": "DateInput.Control",
       "props": [
         {
           "name": "asChild",
@@ -324,7 +359,7 @@
       ]
     },
     {
-      "name": "DateInputHiddenInput",
+      "name": "DateInput.HiddenInput",
       "props": [
         {
           "name": "asChild",
@@ -364,7 +399,7 @@
       ]
     },
     {
-      "name": "DateInputLabel",
+      "name": "DateInput.Label",
       "props": [
         {
           "name": "asChild",
@@ -397,7 +432,7 @@
       ]
     },
     {
-      "name": "DateInputSegment",
+      "name": "DateInput.Segment",
       "props": [
         {
           "name": "segment",
@@ -436,7 +471,7 @@
       ]
     },
     {
-      "name": "DateInputSegmentContext",
+      "name": "DateInput.SegmentContext",
       "props": [
         {
           "name": "children",
@@ -448,7 +483,7 @@
       ]
     },
     {
-      "name": "DateInputSegmentGroup",
+      "name": "DateInput.SegmentGroup",
       "props": [
         {
           "name": "asChild",
@@ -498,7 +533,7 @@
   "files": [
     {
       "path": "components/ui/date-input.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { DateInput as DateInputPrimitive } from \"@ark-ui/react\"\n\nfunction DateInput({ className, children, ...props }: React.ComponentProps<typeof DateInputPrimitive.Root>) {\n  return (\n    <DateInputPrimitive.Root\n      data-slot=\"date-input\"\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    >\n      {children ?? (\n        <DateInputControl>\n          <DateInputSegmentGroup />\n          <DateInputHiddenInput />\n        </DateInputControl>\n      )}\n    </DateInputPrimitive.Root>\n  )\n}\n\nfunction DateInputContext({ ...props }: React.ComponentProps<typeof DateInputPrimitive.Context>) {\n  return <DateInputPrimitive.Context {...props} />\n}\n\nfunction DateInputLabel({ className, ...props }: React.ComponentProps<typeof DateInputPrimitive.Label>) {\n  return (\n    <DateInputPrimitive.Label\n      data-slot=\"date-input-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DateInputControl({ className, ...props }: React.ComponentProps<typeof DateInputPrimitive.Control>) {\n  return (\n    <DateInputPrimitive.Control\n      data-slot=\"date-input-control\"\n      className={cn(\n        \"flex h-8 w-fit items-center rounded-lg border border-input bg-transparent px-2.5 text-sm transition-colors has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 dark:bg-input/30 data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DateInputSegmentGroup({\n  className,\n  children,\n  index = 0,\n  ...props\n}: React.ComponentProps<typeof DateInputPrimitive.SegmentGroup>) {\n  return (\n    <DateInputPrimitive.SegmentGroup\n      data-slot=\"date-input-segment-group\"\n      index={index}\n      className={cn(\"flex items-center\", className)}\n      {...props}\n    >\n      {children ?? (\n        <DateInputPrimitive.Context>\n          {(api) => api.getSegments({ index }).map((segment, i) => <DateInputSegment key={i} segment={segment} />)}\n        </DateInputPrimitive.Context>\n      )}\n    </DateInputPrimitive.SegmentGroup>\n  )\n}\n\nfunction DateInputSegment({ className, ...props }: React.ComponentProps<typeof DateInputPrimitive.Segment>) {\n  return (\n    <DateInputPrimitive.Segment\n      data-slot=\"date-input-segment\"\n      className={cn(\n        \"rounded-sm px-0.5 tabular-nums outline-none data-editable:focus:bg-primary data-editable:focus:text-primary-foreground data-placeholder-shown:text-muted-foreground data-[type=literal]:text-muted-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DateInputSegmentContext({ ...props }: React.ComponentProps<typeof DateInputPrimitive.SegmentContext>) {\n  return <DateInputPrimitive.SegmentContext {...props} />\n}\n\nfunction DateInputHiddenInput({ ...props }: React.ComponentProps<typeof DateInputPrimitive.HiddenInput>) {\n  return <DateInputPrimitive.HiddenInput {...props} />\n}\n\nexport {\n  DateInput,\n  DateInputContext,\n  DateInputControl,\n  DateInputHiddenInput,\n  DateInputLabel,\n  DateInputSegment,\n  DateInputSegmentContext,\n  DateInputSegmentGroup,\n}\n"
+      "content": "\"use client\"\n\nimport { useDateInput, useDateInputContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { DateInput as DateInputPrimitive } from \"@ark-ui/react\"\n\nfunction DateInputRoot({ className, children, ...props }: DateInputRootProps) {\n  return (\n    <DateInputPrimitive.Root\n      data-slot=\"date-input\"\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <DateInputControl>\n              <DateInputSegmentGroup />\n              <DateInputHiddenInput />\n            </DateInputControl>\n          )}\n        </>\n      )}\n    </DateInputPrimitive.Root>\n  )\n}\n\nfunction DateInputContext({ ...props }: DateInputContextProps) {\n  return <DateInputPrimitive.Context {...props} />\n}\n\nfunction DateInputLabel({ className, ...props }: DateInputLabelProps) {\n  return (\n    <DateInputPrimitive.Label\n      data-slot=\"date-input-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DateInputControl({ className, ...props }: DateInputControlProps) {\n  return (\n    <DateInputPrimitive.Control\n      data-slot=\"date-input-control\"\n      className={cn(\n        \"flex h-8 w-fit items-center rounded-lg border border-input bg-transparent px-2.5 text-sm transition-colors has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 dark:bg-input/30 data-disabled:pointer-events-none data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DateInputSegmentGroup({ className, children, index = 0, ...props }: DateInputSegmentGroupProps) {\n  return (\n    <DateInputPrimitive.SegmentGroup\n      data-slot=\"date-input-segment-group\"\n      index={index}\n      className={cn(\"flex items-center\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <DateInputPrimitive.Context>\n              {(api) => api.getSegments({ index }).map((segment, i) => <DateInputSegment key={i} segment={segment} />)}\n            </DateInputPrimitive.Context>\n          )}\n        </>\n      )}\n    </DateInputPrimitive.SegmentGroup>\n  )\n}\n\nfunction DateInputSegment({ className, ...props }: DateInputSegmentProps) {\n  return (\n    <DateInputPrimitive.Segment\n      data-slot=\"date-input-segment\"\n      className={cn(\n        \"rounded-sm px-0.5 tabular-nums outline-none data-editable:focus:bg-primary data-editable:focus:text-primary-foreground data-placeholder-shown:text-muted-foreground data-[type=literal]:text-muted-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction DateInputSegmentContext({ ...props }: DateInputSegmentContextProps) {\n  return <DateInputPrimitive.SegmentContext {...props} />\n}\n\nfunction DateInputHiddenInput({ ...props }: DateInputHiddenInputProps) {\n  return <DateInputPrimitive.HiddenInput {...props} />\n}\n\nfunction DateInputRootProvider({ className, ...props }: DateInputRootProviderProps) {\n  return (\n    <DateInputPrimitive.RootProvider\n      data-slot=\"date-input\"\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\ntype DateInputRootProps = React.ComponentProps<typeof DateInputPrimitive.Root>\n\ntype DateInputRootProviderProps = React.ComponentProps<typeof DateInputPrimitive.RootProvider>\n\ntype DateInputContextProps = React.ComponentProps<typeof DateInputPrimitive.Context>\n\ntype DateInputControlProps = React.ComponentProps<typeof DateInputPrimitive.Control>\n\ntype DateInputHiddenInputProps = React.ComponentProps<typeof DateInputPrimitive.HiddenInput>\n\ntype DateInputLabelProps = React.ComponentProps<typeof DateInputPrimitive.Label>\n\ntype DateInputSegmentProps = React.ComponentProps<typeof DateInputPrimitive.Segment>\n\ntype DateInputSegmentContextProps = React.ComponentProps<typeof DateInputPrimitive.SegmentContext>\n\ntype DateInputSegmentGroupProps = React.ComponentProps<typeof DateInputPrimitive.SegmentGroup>\n\nconst DateInput = {\n  Root: DateInputRoot,\n  RootProvider: DateInputRootProvider,\n  Context: DateInputContext,\n  Control: DateInputControl,\n  HiddenInput: DateInputHiddenInput,\n  Label: DateInputLabel,\n  Segment: DateInputSegment,\n  SegmentContext: DateInputSegmentContext,\n  SegmentGroup: DateInputSegmentGroup,\n}\n\nexport {\n  useDateInput,\n  useDateInputContext,\n  DateInput,\n  type DateInputRootProps,\n  type DateInputRootProviderProps,\n  type DateInputContextProps,\n  type DateInputControlProps,\n  type DateInputHiddenInputProps,\n  type DateInputLabelProps,\n  type DateInputSegmentProps,\n  type DateInputSegmentContextProps,\n  type DateInputSegmentGroupProps,\n}\n"
     }
   ]
 }

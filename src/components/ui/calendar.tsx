@@ -1,5 +1,6 @@
 "use client"
 
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { DayPicker, getDefaultClassNames, type DayButton, type Locale } from "react-day-picker"
@@ -7,7 +8,7 @@ import { DayPicker, getDefaultClassNames, type DayButton, type Locale } from "re
 import { Button, buttonVariants } from "@/components/ui/button"
 import { ChevronLeftIcon, ChevronRightIcon, ChevronDownIcon } from "lucide-react"
 
-function Calendar({
+function CalendarRoot({
   className,
   classNames,
   showOutsideDays = true,
@@ -17,10 +18,7 @@ function Calendar({
   formatters,
   components,
   ...props
-}: React.ComponentProps<typeof DayPicker> & {
-  /** Button variant used for the navigation buttons. */
-  buttonVariant?: React.ComponentProps<typeof Button>["variant"]
-}) {
+}: CalendarRootProps) {
   const defaultClassNames = getDefaultClassNames()
 
   return (
@@ -106,7 +104,7 @@ function Calendar({
       }}
       components={{
         Root: ({ className, rootRef, ...props }) => {
-          return <div data-slot="calendar" ref={rootRef} className={cn(className)} {...props} />
+          return <ark.div data-slot="calendar" ref={rootRef} className={cn(className)} {...props} />
         },
         Chevron: ({ className, orientation, ...props }) => {
           if (orientation === "left") {
@@ -122,9 +120,9 @@ function Calendar({
         DayButton: ({ ...props }) => <CalendarDayButton locale={locale} {...props} />,
         WeekNumber: ({ children, ...props }) => {
           return (
-            <td {...props}>
+            <ark.td {...props}>
               <div className="flex size-(--cell-size) items-center justify-center text-center">{children}</div>
-            </td>
+            </ark.td>
           )
         },
         ...components,
@@ -134,13 +132,7 @@ function Calendar({
   )
 }
 
-function CalendarDayButton({
-  className,
-  day,
-  modifiers,
-  locale,
-  ...props
-}: React.ComponentProps<typeof DayButton> & { locale?: Partial<Locale> }) {
+function CalendarDayButton({ className, day, modifiers, locale, ...props }: CalendarDayButtonProps) {
   const defaultClassNames = getDefaultClassNames()
 
   const ref = React.useRef<HTMLButtonElement>(null)
@@ -170,4 +162,17 @@ function CalendarDayButton({
   )
 }
 
-export { Calendar, CalendarDayButton }
+type CalendarRootProps = React.ComponentProps<typeof DayPicker> & {
+  /** Button variant used for the navigation buttons. */
+  buttonVariant?: React.ComponentProps<typeof Button>["variant"]
+}
+
+type CalendarDayButtonProps = React.ComponentProps<typeof DayButton> &
+  Pick<React.ComponentProps<typeof Button>, "asChild"> & { locale?: Partial<Locale> }
+
+const Calendar = {
+  Root: CalendarRoot,
+  DayButton: CalendarDayButton,
+}
+
+export { Calendar, type CalendarRootProps, type CalendarDayButtonProps }

@@ -4,63 +4,11 @@
   "description": "`src/components/ui/app-shell.tsx` is a compositional, router-agnostic shell built on `sidebar.tsx` (shadcn-admin layout): `AppShell` (context: sidebar variant/collapsible, search open state, `searchShortcut` for cmd/ctrl+K), `AppShellSideba",
   "exports": [
     "AppShell",
-    "AppShellBrand",
-    "AppShellBrandChevron",
-    "AppShellBrandDescription",
-    "AppShellBrandLogo",
-    "AppShellBrandText",
-    "AppShellBrandTitle",
-    "AppShellCommandDialog",
-    "AppShellContent",
-    "AppShellHeader",
-    "AppShellHeaderActions",
-    "AppShellMain",
-    "AppShellNav",
-    "AppShellNavBadge",
-    "AppShellNavCollapsible",
-    "AppShellNavItem",
-    "AppShellNavLabel",
-    "AppShellNavLink",
-    "AppShellNavList",
-    "AppShellNavMenuLink",
-    "AppShellNavSubItem",
-    "AppShellNavSubLink",
-    "AppShellNotificationItem",
-    "AppShellNotificationItemContent",
-    "AppShellNotificationItemDescription",
-    "AppShellNotificationItemIcon",
-    "AppShellNotificationItemIndicator",
-    "AppShellNotificationItemTime",
-    "AppShellNotificationItemTitle",
-    "AppShellNotifications",
-    "AppShellNotificationsActionTrigger",
-    "AppShellNotificationsContent",
-    "AppShellNotificationsEmpty",
-    "AppShellNotificationsFooter",
-    "AppShellNotificationsHeader",
-    "AppShellNotificationsList",
-    "AppShellNotificationsTitle",
-    "AppShellNotificationsTrigger",
-    "AppShellSearch",
-    "AppShellSidebar",
-    "AppShellSkipLink",
-    "AppShellThemeToggle",
-    "AppShellTopNav",
-    "AppShellTopNavLink",
-    "AppShellTopNavMenu",
-    "AppShellUser",
-    "AppShellUserAvatar",
-    "AppShellUserEmail",
-    "AppShellUserName",
-    "AppShellUserText",
-    "AppShellSidebarContent",
-    "AppShellSidebarFooter",
-    "AppShellSidebarHeader",
     "useAppShell"
   ],
   "parts": [
     {
-      "name": "AppShell",
+      "name": "AppShell.Root",
       "props": [
         {
           "name": "children",
@@ -143,6 +91,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "className",
           "type": "string",
           "required": false,
@@ -159,15 +114,8 @@
       ]
     },
     {
-      "name": "AppShellBrand",
+      "name": "AppShell.Brand",
       "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
-        },
         {
           "name": "isActive",
           "type": "boolean",
@@ -197,6 +145,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -220,13 +175,20 @@
       ]
     },
     {
-      "name": "AppShellBrandChevron",
+      "name": "AppShell.BrandChevron",
       "props": [
         {
           "name": "absoluteStrokeWidth",
           "type": "boolean",
           "required": false,
           "from": "lucide-react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -259,8 +221,15 @@
       ]
     },
     {
-      "name": "AppShellBrandDescription",
+      "name": "AppShell.BrandDescription",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -285,8 +254,15 @@
       ]
     },
     {
-      "name": "AppShellBrandLogo",
+      "name": "AppShell.BrandLogo",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -311,8 +287,15 @@
       ]
     },
     {
-      "name": "AppShellBrandText",
+      "name": "AppShell.BrandText",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -337,8 +320,15 @@
       ]
     },
     {
-      "name": "AppShellBrandTitle",
+      "name": "AppShell.BrandTitle",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -363,7 +353,7 @@
       ]
     },
     {
-      "name": "AppShellCommandDialog",
+      "name": "AppShell.CommandDialog",
       "props": [
         {
           "name": "className",
@@ -624,8 +614,15 @@
       ]
     },
     {
-      "name": "AppShellContent",
+      "name": "AppShell.Content",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -650,7 +647,7 @@
       ]
     },
     {
-      "name": "AppShellHeader",
+      "name": "AppShell.Header",
       "props": [
         {
           "name": "fixed",
@@ -661,6 +658,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -684,9 +688,16 @@
       ]
     },
     {
-      "name": "AppShellHeaderActions",
+      "name": "AppShell.HeaderActions",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -710,7 +721,7 @@
       ]
     },
     {
-      "name": "AppShellMain",
+      "name": "AppShell.Main",
       "props": [
         {
           "name": "fixed",
@@ -729,6 +740,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -752,41 +770,41 @@
       ]
     },
     {
-      "name": "AppShellNav",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "AppShellNavBadge",
+      "name": "AppShell.Nav",
       "props": [
         {
           "name": "asChild",
           "type": "boolean",
           "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "AppShell.NavBadge",
+      "props": [
         {
           "name": "variant",
           "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
@@ -795,6 +813,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -818,7 +843,7 @@
       ]
     },
     {
-      "name": "AppShellNavCollapsible",
+      "name": "AppShell.NavCollapsible",
       "props": [
         {
           "name": "trigger",
@@ -857,6 +882,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -880,40 +912,14 @@
       ]
     },
     {
-      "name": "AppShellNavItem",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "AppShellNavLabel",
+      "name": "AppShell.NavItem",
       "props": [
         {
           "name": "asChild",
           "type": "boolean",
           "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -939,7 +945,40 @@
       ]
     },
     {
-      "name": "AppShellNavLink",
+      "name": "AppShell.NavLabel",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "AppShell.NavLink",
       "props": [
         {
           "name": "active",
@@ -947,14 +986,6 @@
           "required": false,
           "default": "false",
           "description": "Whether the part is the active one; sets `data-active`.",
-          "from": "arkcn"
-        },
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "default": "true",
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
           "from": "arkcn"
         },
         {
@@ -979,6 +1010,14 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -1002,9 +1041,16 @@
       ]
     },
     {
-      "name": "AppShellNavList",
+      "name": "AppShell.NavList",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -1028,7 +1074,7 @@
       ]
     },
     {
-      "name": "AppShellNavMenuLink",
+      "name": "AppShell.NavMenuLink",
       "props": [
         {
           "name": "active",
@@ -1119,8 +1165,15 @@
       ]
     },
     {
-      "name": "AppShellNavSubItem",
+      "name": "AppShell.NavSubItem",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -1145,7 +1198,7 @@
       ]
     },
     {
-      "name": "AppShellNavSubLink",
+      "name": "AppShell.NavSubLink",
       "props": [
         {
           "name": "active",
@@ -1156,19 +1209,19 @@
           "from": "arkcn"
         },
         {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "default": "true",
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
-        },
-        {
           "name": "size",
           "type": "\"sm\" | \"md\"",
           "required": false,
           "description": "Size variant; sets a `data-size` attribute.",
           "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -1194,15 +1247,8 @@
       ]
     },
     {
-      "name": "AppShellNotificationItem",
+      "name": "AppShell.NotificationItem",
       "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Render the item's child (e.g. an anchor or button) as the interactive surface.",
-          "from": "arkcn"
-        },
         {
           "name": "unread",
           "type": "boolean",
@@ -1211,6 +1257,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.\nRender the item's child (e.g. an anchor or button) as the interactive surface.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -1234,9 +1287,16 @@
       ]
     },
     {
-      "name": "AppShellNotificationItemContent",
+      "name": "AppShell.NotificationItemContent",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -1260,9 +1320,16 @@
       ]
     },
     {
-      "name": "AppShellNotificationItemDescription",
+      "name": "AppShell.NotificationItemDescription",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -1286,9 +1353,16 @@
       ]
     },
     {
-      "name": "AppShellNotificationItemIcon",
+      "name": "AppShell.NotificationItemIcon",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -1312,9 +1386,16 @@
       ]
     },
     {
-      "name": "AppShellNotificationItemIndicator",
+      "name": "AppShell.NotificationItemIndicator",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -1338,9 +1419,16 @@
       ]
     },
     {
-      "name": "AppShellNotificationItemTime",
+      "name": "AppShell.NotificationItemTime",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -1364,9 +1452,16 @@
       ]
     },
     {
-      "name": "AppShellNotificationItemTitle",
+      "name": "AppShell.NotificationItemTitle",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -1390,7 +1485,7 @@
       ]
     },
     {
-      "name": "AppShellNotifications",
+      "name": "AppShell.Notifications",
       "props": [
         {
           "name": "autoFocus",
@@ -1636,15 +1731,8 @@
       ]
     },
     {
-      "name": "AppShellNotificationsActionTrigger",
+      "name": "AppShell.NotificationsActionTrigger",
       "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
-        },
         {
           "name": "size",
           "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
@@ -1660,6 +1748,13 @@
           "default": "\"link\"",
           "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
           "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -1685,7 +1780,7 @@
       ]
     },
     {
-      "name": "AppShellNotificationsContent",
+      "name": "AppShell.NotificationsContent",
       "props": [
         {
           "name": "asChild",
@@ -1718,145 +1813,173 @@
       ]
     },
     {
-      "name": "AppShellNotificationsEmpty",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "AppShellNotificationsFooter",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "AppShellNotificationsHeader",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "AppShellNotificationsList",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "AppShellNotificationsTitle",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "AppShellNotificationsTrigger",
+      "name": "AppShell.NotificationsEmpty",
       "props": [
         {
           "name": "asChild",
           "type": "boolean",
           "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "AppShell.NotificationsFooter",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "AppShell.NotificationsHeader",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "AppShell.NotificationsList",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "AppShell.NotificationsTitle",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "AppShell.NotificationsTrigger",
+      "props": [
         {
           "name": "count",
           "type": "number",
@@ -1888,6 +2011,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -1911,15 +2041,8 @@
       ]
     },
     {
-      "name": "AppShellSearch",
+      "name": "AppShell.Search",
       "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
-        },
         {
           "name": "placeholder",
           "type": "string",
@@ -1943,6 +2066,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -1966,11 +2096,11 @@
       ]
     },
     {
-      "name": "AppShellSidebar",
+      "name": "AppShell.Sidebar",
       "props": [
         {
           "name": "collapsible",
-          "type": "\"icon\" | \"offcanvas\" | \"none\"",
+          "type": "\"none\" | \"icon\" | \"offcanvas\"",
           "required": false,
           "description": "Collapse mode: `offcanvas`, `icon`, or `none`.",
           "from": "arkcn"
@@ -1990,6 +2120,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -2013,8 +2150,15 @@
       ]
     },
     {
-      "name": "AppShellSkipLink",
+      "name": "AppShell.SkipLink",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -2040,7 +2184,7 @@
       ]
     },
     {
-      "name": "AppShellThemeToggle",
+      "name": "AppShell.ThemeToggle",
       "props": [
         {
           "name": "onThemeChange",
@@ -2054,13 +2198,6 @@
           "type": "Theme",
           "required": true,
           "description": "Current theme: `light`, `dark`, or `system`.",
-          "from": "arkcn"
-        },
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
           "from": "arkcn"
         },
         {
@@ -2078,6 +2215,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -2101,9 +2245,16 @@
       ]
     },
     {
-      "name": "AppShellTopNav",
+      "name": "AppShell.TopNav",
       "props": [
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -2127,7 +2278,7 @@
       ]
     },
     {
-      "name": "AppShellTopNavLink",
+      "name": "AppShell.TopNavLink",
       "props": [
         {
           "name": "active",
@@ -2138,6 +2289,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -2161,7 +2319,7 @@
       ]
     },
     {
-      "name": "AppShellTopNavMenu",
+      "name": "AppShell.TopNavMenu",
       "props": [
         {
           "name": "className",
@@ -2419,15 +2577,8 @@
       ]
     },
     {
-      "name": "AppShellUser",
+      "name": "AppShell.User",
       "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Render the child element instead of the default one, merging props and behaviour onto it.",
-          "from": "arkcn"
-        },
         {
           "name": "isActive",
           "type": "boolean",
@@ -2457,6 +2608,13 @@
           "from": "arkcn"
         },
         {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
           "name": "children",
           "type": "ReactNode",
           "required": false,
@@ -2480,7 +2638,7 @@
       ]
     },
     {
-      "name": "AppShellUserAvatar",
+      "name": "AppShell.UserAvatar",
       "props": [
         {
           "name": "fallback",
@@ -2555,8 +2713,15 @@
       ]
     },
     {
-      "name": "AppShellUserEmail",
+      "name": "AppShell.UserEmail",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -2581,8 +2746,15 @@
       ]
     },
     {
-      "name": "AppShellUserName",
+      "name": "AppShell.UserName",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -2607,86 +2779,15 @@
       ]
     },
     {
-      "name": "AppShellUserText",
+      "name": "AppShell.UserText",
       "props": [
         {
-          "name": "children",
-          "type": "ReactNode",
+          "name": "asChild",
+          "type": "boolean",
           "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "AppShellSidebarContent",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "AppShellSidebarFooter",
-      "props": [
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "AppShellSidebarHeader",
-      "props": [
         {
           "name": "children",
           "type": "ReactNode",
@@ -2712,6 +2813,7 @@
     }
   ],
   "dependencies": {
+    "@ark-ui/react": "^5.39.1",
     "lucide-react": "^1.41.0"
   },
   "registryDependencies": [
@@ -2730,7 +2832,7 @@
   "files": [
     {
       "path": "components/ui/app-shell.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport {\n  BellIcon,\n  CheckIcon,\n  ChevronRightIcon,\n  ChevronsUpDownIcon,\n  MenuIcon,\n  MoonIcon,\n  SearchIcon,\n  SunIcon,\n} from \"lucide-react\"\nimport { cn } from \"@/lib/utils\"\n\nimport { Avatar, AvatarFallback, AvatarImage } from \"@/components/ui/avatar\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Button } from \"@/components/ui/button\"\nimport { Collapsible, CollapsibleContent, CollapsibleTrigger } from \"@/components/ui/collapsible\"\nimport { CommandDialog } from \"@/components/ui/command\"\nimport {\n  DropdownMenu,\n  DropdownMenuContent,\n  DropdownMenuGroup,\n  DropdownMenuItem,\n  DropdownMenuLabel,\n  DropdownMenuSeparator,\n  DropdownMenuTrigger,\n} from \"@/components/ui/dropdown-menu\"\nimport { Kbd } from \"@/components/ui/kbd\"\nimport { Popover, PopoverContent, PopoverTrigger } from \"@/components/ui/popover\"\nimport { Separator } from \"@/components/ui/separator\"\nimport {\n  Sidebar,\n  SidebarContent,\n  SidebarFooter,\n  SidebarGroup,\n  SidebarGroupLabel,\n  SidebarHeader,\n  SidebarInset,\n  SidebarMenu,\n  SidebarMenuButton,\n  SidebarMenuItem,\n  SidebarMenuSub,\n  SidebarMenuSubButton,\n  SidebarMenuSubItem,\n  SidebarProvider,\n  SidebarRail,\n  SidebarTrigger,\n  useSidebar,\n} from \"@/components/ui/sidebar\"\n\n/* -------------------------------------------------------------------------- */\n/*  Root                                                                      */\n/* -------------------------------------------------------------------------- */\n\ntype SidebarVariant = \"sidebar\" | \"floating\" | \"inset\"\ntype SidebarCollapsible = \"offcanvas\" | \"icon\" | \"none\"\n\ntype AppShellContextValue = {\n  variant: SidebarVariant\n  setVariant: (variant: SidebarVariant) => void\n  /** Controlled sidebar collapse mode: `offcanvas`, `icon`, or `none`. */\n  collapsible: SidebarCollapsible\n  setCollapsible: (collapsible: SidebarCollapsible) => void\n  searchOpen: boolean\n  setSearchOpen: React.Dispatch<React.SetStateAction<boolean>>\n}\n\nconst AppShellContext = React.createContext<AppShellContextValue | null>(null)\n\nfunction useAppShell() {\n  const ctx = React.useContext(AppShellContext)\n  if (!ctx) throw new Error(\"useAppShell must be used within <AppShell>\")\n  return ctx\n}\n\n/**\n * Root of the shell. Owns the sidebar open state (via `SidebarProvider`), the\n * sidebar variant and collapse mode, and the global search open state with its\n * Cmd/Ctrl+K shortcut. Routing, theming, and data are the consumer's.\n */\nfunction AppShell({\n  variant: variantProp,\n  defaultVariant = \"inset\",\n  onVariantChange,\n  collapsible: collapsibleProp,\n  defaultCollapsible = \"icon\",\n  onCollapsibleChange,\n  searchShortcut = true,\n  children,\n  ...sidebarProviderProps\n}: Omit<React.ComponentProps<typeof SidebarProvider>, \"children\"> & {\n  variant?: SidebarVariant\n  /** Initial sidebar variant when uncontrolled. */\n  defaultVariant?: SidebarVariant\n  /** Called when the sidebar variant changes. */\n  onVariantChange?: (variant: SidebarVariant) => void\n  /** Controlled sidebar collapse mode: `offcanvas`, `icon`, or `none`. */\n  collapsible?: SidebarCollapsible\n  /** Initial collapse mode when uncontrolled. */\n  defaultCollapsible?: SidebarCollapsible\n  /** Called when the collapse mode changes. */\n  onCollapsibleChange?: (collapsible: SidebarCollapsible) => void\n  /** Toggle the search dialog with Cmd/Ctrl+K. */\n  searchShortcut?: boolean\n  children?: React.ReactNode\n}) {\n  const [variantState, setVariantState] = React.useState(defaultVariant)\n  const [collapsibleState, setCollapsibleState] = React.useState(defaultCollapsible)\n  const [searchOpen, setSearchOpen] = React.useState(false)\n  const variant = variantProp ?? variantState\n  const collapsible = collapsibleProp ?? collapsibleState\n\n  React.useEffect(() => {\n    if (!searchShortcut) return\n    const down = (event: KeyboardEvent) => {\n      if (event.key === \"k\" && (event.metaKey || event.ctrlKey)) {\n        event.preventDefault()\n        setSearchOpen((open) => !open)\n      }\n    }\n    document.addEventListener(\"keydown\", down)\n    return () => document.removeEventListener(\"keydown\", down)\n  }, [searchShortcut])\n\n  const ctx = React.useMemo<AppShellContextValue>(\n    () => ({\n      variant,\n      setVariant: (next) => {\n        if (variantProp === undefined) setVariantState(next)\n        onVariantChange?.(next)\n      },\n      collapsible,\n      setCollapsible: (next) => {\n        if (collapsibleProp === undefined) setCollapsibleState(next)\n        onCollapsibleChange?.(next)\n      },\n      searchOpen,\n      setSearchOpen,\n    }),\n    [variant, variantProp, onVariantChange, collapsible, collapsibleProp, onCollapsibleChange, searchOpen]\n  )\n\n  return (\n    <AppShellContext.Provider value={ctx}>\n      <SidebarProvider {...sidebarProviderProps}>{children}</SidebarProvider>\n    </AppShellContext.Provider>\n  )\n}\n\nfunction AppShellSkipLink({\n  className,\n  href = \"#content\",\n  children = \"Skip to main content\",\n  ...props\n}: React.ComponentProps<\"a\">) {\n  return (\n    <a\n      data-slot=\"app-shell-skip-link\"\n      href={href}\n      className={cn(\n        \"fixed inset-s-44 z-999 -translate-y-52 rounded-md bg-primary px-4 py-2 text-sm font-medium whitespace-nowrap text-primary-foreground opacity-95 shadow-sm transition focus:translate-y-3 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n    </a>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Sidebar                                                                   */\n/* -------------------------------------------------------------------------- */\n\nfunction AppShellSidebar({ variant, collapsible, children, ...props }: React.ComponentProps<typeof Sidebar>) {\n  const shell = useAppShell()\n  return (\n    <Sidebar\n      data-slot=\"app-shell-sidebar\"\n      variant={variant ?? shell.variant}\n      collapsible={collapsible ?? shell.collapsible}\n      {...props}\n    >\n      {children}\n      <SidebarRail />\n    </Sidebar>\n  )\n}\n\n/* Brand / team switcher trigger ------------------------------------------- */\n\nfunction AppShellBrand({ className, ...props }: React.ComponentProps<typeof SidebarMenuButton>) {\n  return (\n    <SidebarMenu>\n      <SidebarMenuItem>\n        <SidebarMenuButton\n          data-slot=\"app-shell-brand\"\n          size=\"lg\"\n          className={cn(\"data-open:bg-sidebar-accent data-open:text-sidebar-accent-foreground\", className)}\n          {...props}\n        />\n      </SidebarMenuItem>\n    </SidebarMenu>\n  )\n}\n\nfunction AppShellBrandLogo({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"app-shell-brand-logo\"\n      className={cn(\n        \"flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground [&_svg]:size-4\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellBrandText({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"app-shell-brand-text\"\n      className={cn(\"grid flex-1 text-start text-sm/tight\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellBrandTitle({ className, ...props }: React.ComponentProps<\"span\">) {\n  return <span data-slot=\"app-shell-brand-title\" className={cn(\"truncate font-semibold\", className)} {...props} />\n}\n\nfunction AppShellBrandDescription({ className, ...props }: React.ComponentProps<\"span\">) {\n  return <span data-slot=\"app-shell-brand-description\" className={cn(\"truncate text-xs\", className)} {...props} />\n}\n\nfunction AppShellBrandChevron({ className, ...props }: React.ComponentProps<typeof ChevronsUpDownIcon>) {\n  return <ChevronsUpDownIcon data-slot=\"app-shell-brand-chevron\" className={cn(\"ms-auto\", className)} {...props} />\n}\n\n/* Navigation --------------------------------------------------------------- */\n\nfunction AppShellNav({ ...props }: React.ComponentProps<typeof SidebarGroup>) {\n  return <SidebarGroup data-slot=\"app-shell-nav\" {...props} />\n}\n\nfunction AppShellNavLabel({ ...props }: React.ComponentProps<typeof SidebarGroupLabel>) {\n  return <SidebarGroupLabel data-slot=\"app-shell-nav-label\" {...props} />\n}\n\nfunction AppShellNavList({ ...props }: React.ComponentProps<typeof SidebarMenu>) {\n  return <SidebarMenu data-slot=\"app-shell-nav-list\" {...props} />\n}\n\nfunction AppShellNavItem({ ...props }: React.ComponentProps<typeof SidebarMenuItem>) {\n  return <SidebarMenuItem data-slot=\"app-shell-nav-item\" {...props} />\n}\n\n/**\n * A top-level navigation link. Pass the link element as the child with\n * `asChild` (default) so any router's link works. `active` marks the current\n * route; `tooltip` shows when the sidebar is collapsed to icons.\n */\nfunction AppShellNavLink({\n  active = false,\n  asChild = true,\n  onClick,\n  ...props\n}: Omit<React.ComponentProps<typeof SidebarMenuButton>, \"isActive\"> & {\n  active?: boolean\n}) {\n  const { setOpenMobile } = useSidebar()\n  return (\n    <SidebarMenuButton\n      data-slot=\"app-shell-nav-link\"\n      asChild={asChild}\n      isActive={active}\n      onClick={(event) => {\n        onClick?.(event)\n        setOpenMobile(false)\n      }}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNavBadge({ className, ...props }: React.ComponentProps<typeof Badge>) {\n  return (\n    <Badge\n      data-slot=\"app-shell-nav-badge\"\n      className={cn(\"ms-auto rounded-full px-1 py-0 text-xs\", className)}\n      {...props}\n    />\n  )\n}\n\n/**\n * A navigation item with children. Expanded sidebar: a collapsible sub-list.\n * Icon-collapsed sidebar on desktop: a flyout menu. Supply `trigger` for the\n * button content and `menu` for the flyout items; `children` is the sub-list.\n */\nfunction AppShellNavCollapsible({\n  active = false,\n  defaultOpen,\n  tooltip,\n  trigger,\n  menu,\n  children,\n  ...props\n}: React.ComponentProps<typeof SidebarMenuItem> & {\n  active?: boolean\n  defaultOpen?: boolean\n  tooltip?: string\n  /** Element rendered as the trigger for the collapsible group. */\n  trigger: React.ReactNode\n  /** Rendered inside the flyout when the sidebar is collapsed to icons. */\n  menu?: React.ReactNode\n}) {\n  const { state, isMobile } = useSidebar()\n\n  if (state === \"collapsed\" && !isMobile) {\n    return (\n      <SidebarMenuItem data-slot=\"app-shell-nav-collapsible\" {...props}>\n        <DropdownMenu positioning={{ placement: \"right-start\", gutter: 4 }}>\n          <DropdownMenuTrigger asChild>\n            <SidebarMenuButton tooltip={tooltip} isActive={active}>\n              {trigger}\n              <ChevronRightIcon className=\"ms-auto\" />\n            </SidebarMenuButton>\n          </DropdownMenuTrigger>\n          <DropdownMenuContent data-slot=\"app-shell-nav-flyout\">\n            <DropdownMenuGroup>\n              {tooltip && (\n                <>\n                  <DropdownMenuLabel>{tooltip}</DropdownMenuLabel>\n                  <DropdownMenuSeparator />\n                </>\n              )}\n              {menu}\n            </DropdownMenuGroup>\n          </DropdownMenuContent>\n        </DropdownMenu>\n      </SidebarMenuItem>\n    )\n  }\n\n  return (\n    <Collapsible\n      defaultOpen={defaultOpen ?? active}\n      className=\"group/collapsible\"\n      unmountOnExit={false}\n      lazyMount={false}\n    >\n      <SidebarMenuItem data-slot=\"app-shell-nav-collapsible\" {...props}>\n        <CollapsibleTrigger asChild>\n          <SidebarMenuButton tooltip={tooltip} isActive={active}>\n            {trigger}\n            <ChevronRightIcon className=\"ms-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 rtl:rotate-180\" />\n          </SidebarMenuButton>\n        </CollapsibleTrigger>\n        <CollapsibleContent>\n          <SidebarMenuSub data-slot=\"app-shell-nav-sublist\">{children}</SidebarMenuSub>\n        </CollapsibleContent>\n      </SidebarMenuItem>\n    </Collapsible>\n  )\n}\n\nfunction AppShellNavSubItem({ ...props }: React.ComponentProps<typeof SidebarMenuSubItem>) {\n  return <SidebarMenuSubItem data-slot=\"app-shell-nav-subitem\" {...props} />\n}\n\nfunction AppShellNavSubLink({\n  active = false,\n  asChild = true,\n  onClick,\n  ...props\n}: Omit<React.ComponentProps<typeof SidebarMenuSubButton>, \"isActive\"> & { active?: boolean }) {\n  const { setOpenMobile } = useSidebar()\n  return (\n    <SidebarMenuSubButton\n      data-slot=\"app-shell-nav-sublink\"\n      asChild={asChild}\n      isActive={active}\n      onClick={(event) => {\n        onClick?.(event)\n        setOpenMobile(false)\n      }}\n      {...props}\n    />\n  )\n}\n\n/** A flyout menu entry for the icon-collapsed state. */\nfunction AppShellNavMenuLink({\n  active = false,\n  className,\n  asChild = true,\n  ...props\n}: React.ComponentProps<typeof DropdownMenuItem> & { active?: boolean }) {\n  return (\n    <DropdownMenuItem\n      data-slot=\"app-shell-nav-menu-link\"\n      asChild={asChild}\n      className={cn(active && \"bg-secondary\", className)}\n      {...props}\n    />\n  )\n}\n\n/* User footer trigger ------------------------------------------------------ */\n\nfunction AppShellUser({ className, ...props }: React.ComponentProps<typeof SidebarMenuButton>) {\n  return (\n    <SidebarMenu>\n      <SidebarMenuItem>\n        <SidebarMenuButton\n          data-slot=\"app-shell-user\"\n          size=\"lg\"\n          className={cn(\"data-open:bg-sidebar-accent data-open:text-sidebar-accent-foreground\", className)}\n          {...props}\n        />\n      </SidebarMenuItem>\n    </SidebarMenu>\n  )\n}\n\nfunction AppShellUserAvatar({\n  src,\n  alt,\n  fallback,\n  className,\n  ...props\n}: React.ComponentProps<typeof Avatar> & { src?: string; alt?: string; fallback: React.ReactNode }) {\n  return (\n    <Avatar data-slot=\"app-shell-user-avatar\" className={cn(\"rounded-lg\", className)} {...props}>\n      {src && <AvatarImage src={src} alt={alt} />}\n      <AvatarFallback className=\"rounded-lg\">{fallback}</AvatarFallback>\n    </Avatar>\n  )\n}\n\nfunction AppShellUserText({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div data-slot=\"app-shell-user-text\" className={cn(\"grid flex-1 text-start text-sm/tight\", className)} {...props} />\n  )\n}\n\nfunction AppShellUserName({ className, ...props }: React.ComponentProps<\"span\">) {\n  return <span data-slot=\"app-shell-user-name\" className={cn(\"truncate font-semibold\", className)} {...props} />\n}\n\nfunction AppShellUserEmail({ className, ...props }: React.ComponentProps<\"span\">) {\n  return <span data-slot=\"app-shell-user-email\" className={cn(\"truncate text-xs\", className)} {...props} />\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Content area: header, main                                                */\n/* -------------------------------------------------------------------------- */\n\nfunction AppShellContent({ className, ...props }: React.ComponentProps<typeof SidebarInset>) {\n  return (\n    <SidebarInset\n      data-slot=\"app-shell-content\"\n      id=\"content\"\n      className={cn(\n        \"@container/content\",\n        \"has-data-[layout=fixed]:h-svh\",\n        \"peer-data-[variant=inset]:has-data-[layout=fixed]:h-[calc(100svh-(var(--spacing)*4))]\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellHeader({\n  className,\n  fixed = false,\n  children,\n  ...props\n}: React.ComponentProps<\"header\"> & { fixed?: boolean }) {\n  const [scrolled, setScrolled] = React.useState(false)\n  React.useEffect(() => {\n    if (!fixed) return\n    const onScroll = () => setScrolled((document.body.scrollTop || document.documentElement.scrollTop) > 10)\n    onScroll()\n    document.addEventListener(\"scroll\", onScroll, { passive: true })\n    return () => document.removeEventListener(\"scroll\", onScroll)\n  }, [fixed])\n  return (\n    <header\n      data-slot=\"app-shell-header\"\n      data-fixed={fixed ? \"\" : undefined}\n      data-scrolled={scrolled ? \"\" : undefined}\n      className={cn(\n        // Solid background; the top corners follow the inset card's radius so the\n        // header never squares off the rounded content area.\n        \"z-50 h-16 rounded-t-[inherit] bg-background\",\n        fixed && \"peer/header sticky top-0 w-[inherit]\",\n        fixed && scrolled ? \"shadow-sm\" : \"shadow-none\",\n        className\n      )}\n      {...props}\n    >\n      <div\n        className={cn(\n          \"relative flex h-full items-center gap-3 p-4 sm:gap-4\",\n          fixed &&\n            scrolled &&\n            \"after:absolute after:inset-0 after:-z-10 after:rounded-[inherit] after:bg-background/60 after:backdrop-blur-lg\"\n        )}\n      >\n        <SidebarTrigger variant=\"outline\" className=\"max-md:scale-125\" />\n        <Separator orientation=\"vertical\" className=\"h-6\" />\n        {children}\n      </div>\n    </header>\n  )\n}\n\nfunction AppShellHeaderActions({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"app-shell-header-actions\"\n      className={cn(\"ms-auto flex items-center gap-3 sm:gap-4\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellMain({\n  className,\n  fixed = false,\n  fluid = false,\n  ...props\n}: React.ComponentProps<\"main\"> & { fixed?: boolean; fluid?: boolean }) {\n  return (\n    <main\n      data-slot=\"app-shell-main\"\n      data-layout={fixed ? \"fixed\" : \"auto\"}\n      className={cn(\n        \"px-4 py-6\",\n        fixed && \"flex grow flex-col overflow-hidden\",\n        !fluid && \"@7xl/content:mx-auto @7xl/content:w-full @7xl/content:max-w-7xl\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/* Top nav (secondary, in the header) --------------------------------------- */\n\nfunction AppShellTopNav({ className, ...props }: React.ComponentProps<\"nav\">) {\n  return (\n    <nav\n      data-slot=\"app-shell-top-nav\"\n      className={cn(\"hidden items-center gap-4 lg:flex xl:gap-6\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellTopNavLink({ active = false, className, ...props }: React.ComponentProps<\"a\"> & { active?: boolean }) {\n  return (\n    <a\n      data-slot=\"app-shell-top-nav-link\"\n      data-active={active ? \"\" : undefined}\n      className={cn(\n        \"text-sm font-medium text-muted-foreground transition-colors hover:text-primary data-active:text-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** The small-screen counterpart of `AppShellTopNav`: the same links in a menu. */\nfunction AppShellTopNavMenu({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof DropdownMenu> & { className?: string }) {\n  return (\n    <DropdownMenu positioning={{ placement: \"bottom-start\" }} {...props}>\n      <DropdownMenuTrigger asChild>\n        <Button\n          data-slot=\"app-shell-top-nav-menu-trigger\"\n          size=\"icon\"\n          variant=\"outline\"\n          className={cn(\"md:size-7 lg:hidden\", className)}\n        >\n          <MenuIcon />\n          <span className=\"sr-only\">Toggle navigation menu</span>\n        </Button>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent>{children}</DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Search and command menu                                                   */\n/* -------------------------------------------------------------------------- */\n\nfunction AppShellSearch({\n  className,\n  placeholder = \"Search\",\n  onClick,\n  asChild,\n  children,\n  ...props\n}: React.ComponentProps<typeof Button> & { placeholder?: string }) {\n  const shell = useAppShell()\n  return (\n    <Button\n      data-slot=\"app-shell-search\"\n      variant=\"outline\"\n      asChild={asChild}\n      className={cn(\n        \"group relative h-8 w-full flex-1 justify-start rounded-md bg-muted/25 text-sm font-normal text-muted-foreground shadow-none hover:bg-accent sm:w-40 sm:pe-12 md:flex-none lg:w-52 xl:w-64\",\n        className\n      )}\n      aria-keyshortcuts=\"Meta+K Control+K\"\n      onClick={(event) => {\n        onClick?.(event)\n        if (!event.defaultPrevented) shell.setSearchOpen(true)\n      }}\n      {...props}\n    >\n      {asChild\n        ? children\n        : (children ?? (\n            <>\n              <SearchIcon aria-hidden className=\"absolute inset-s-1.5 top-1/2 size-4 -translate-y-1/2\" />\n              <span className=\"ms-4\">{placeholder}</span>\n              <Kbd className=\"pointer-events-none absolute inset-e-1.5 top-1.5 hidden sm:flex\">⌘K</Kbd>\n            </>\n          ))}\n    </Button>\n  )\n}\n\n/** A `CommandDialog` bound to the shell's search state. */\nfunction AppShellCommandDialog({\n  ...props\n}: Omit<React.ComponentProps<typeof CommandDialog>, \"open\" | \"onOpenChange\">) {\n  const shell = useAppShell()\n  return <CommandDialog open={shell.searchOpen} onOpenChange={({ open }) => shell.setSearchOpen(open)} {...props} />\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Notifications                                                             */\n/* -------------------------------------------------------------------------- */\n\n/**\n * A header notifications popover. Data-agnostic: the consumer renders the\n * items and owns read state; pass `count` to the trigger for the unread badge.\n */\nfunction AppShellNotifications({ positioning, ...props }: React.ComponentProps<typeof Popover>) {\n  return (\n    <Popover\n      data-slot=\"app-shell-notifications\"\n      positioning={{ placement: \"bottom-end\", gutter: 8, ...positioning }}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationsTrigger({\n  count = 0,\n  max = 99,\n  className,\n  children,\n  asChild,\n  ...props\n}: React.ComponentProps<typeof Button> & {\n  /** Unread count shown as a badge; hidden when 0. */\n  count?: number\n  /** Cap for the badge count; larger counts render as `max+`. */\n  max?: number\n}) {\n  const label = count > max ? `${max}+` : String(count)\n  return (\n    <PopoverTrigger asChild>\n      <Button\n        data-slot=\"app-shell-notifications-trigger\"\n        data-unread={count > 0 ? \"\" : undefined}\n        variant=\"ghost\"\n        size=\"icon-lg\"\n        asChild={asChild}\n        className={cn(\"relative scale-95 rounded-full\", className)}\n        aria-label={count > 0 ? `Notifications, ${label} unread` : \"Notifications\"}\n        {...props}\n      >\n        {asChild ? children : (children ?? <BellIcon className=\"size-[1.2rem]\" />)}\n        {!asChild && count > 0 && (\n          <span\n            data-slot=\"app-shell-notifications-badge\"\n            aria-hidden\n            className=\"absolute inset-e-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[10px] leading-none font-medium text-white ring-2 ring-background\"\n          >\n            {label}\n          </span>\n        )}\n      </Button>\n    </PopoverTrigger>\n  )\n}\n\nfunction AppShellNotificationsContent({ className, ...props }: React.ComponentProps<typeof PopoverContent>) {\n  return (\n    <PopoverContent\n      data-slot=\"app-shell-notifications-content\"\n      className={cn(\"w-80 gap-0 p-0 sm:w-96\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationsHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"app-shell-notifications-header\"\n      className={cn(\"flex items-center justify-between gap-2 border-b px-3.5 py-2.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationsTitle({ className, ...props }: React.ComponentProps<\"h3\">) {\n  return <h3 data-slot=\"app-shell-notifications-title\" className={cn(\"text-sm font-semibold\", className)} {...props} />\n}\n\n/** A small text action for the header or footer, e.g. \"Mark all as read\". */\nfunction AppShellNotificationsActionTrigger({\n  className,\n  variant = \"link\",\n  size = \"sm\",\n  ...props\n}: React.ComponentProps<typeof Button>) {\n  return (\n    <Button\n      data-slot=\"app-shell-notifications-action-trigger\"\n      variant={variant}\n      size={size}\n      className={cn(\"h-auto p-0 text-xs text-muted-foreground hover:text-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationsList({ className, ...props }: React.ComponentProps<\"ul\">) {\n  return (\n    <ul\n      data-slot=\"app-shell-notifications-list\"\n      className={cn(\"no-scrollbar flex max-h-96 flex-col gap-0.5 overflow-y-auto p-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationItem({\n  unread,\n  asChild,\n  className,\n  children,\n  ...props\n}: React.ComponentProps<\"li\"> & {\n  /** Mark the notification unread; sets `data-unread` and shows the indicator. */\n  unread?: boolean\n  /** Render the item's child (e.g. an anchor or button) as the interactive surface. */\n  asChild?: boolean\n}) {\n  const itemClassName = cn(\n    \"group/notification relative flex w-full cursor-default gap-3 rounded-md px-2.5 py-2 text-start text-sm outline-hidden transition-colors select-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground data-unread:bg-primary/5 dark:data-unread:bg-primary/10\",\n    className\n  )\n  const inner =\n    asChild && React.isValidElement(children)\n      ? React.cloneElement(children as React.ReactElement<Record<string, unknown>>, {\n          \"data-slot\": \"app-shell-notification-item-surface\",\n          \"data-unread\": unread ? \"\" : undefined,\n          className: cn(itemClassName, (children as React.ReactElement<{ className?: string }>).props.className),\n        })\n      : children\n  return (\n    <li\n      data-slot=\"app-shell-notification-item\"\n      data-unread={unread ? \"\" : undefined}\n      className={asChild ? \"flex\" : itemClassName}\n      {...props}\n    >\n      {inner}\n    </li>\n  )\n}\n\nfunction AppShellNotificationItemIcon({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"app-shell-notification-item-icon\"\n      className={cn(\n        \"flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground [&_svg]:size-4\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationItemContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"app-shell-notification-item-content\"\n      className={cn(\"flex min-w-0 flex-1 flex-col gap-0.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationItemTitle({ className, ...props }: React.ComponentProps<\"p\">) {\n  return (\n    <p\n      data-slot=\"app-shell-notification-item-title\"\n      className={cn(\"truncate leading-tight font-medium group-data-unread/notification:text-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationItemDescription({ className, ...props }: React.ComponentProps<\"p\">) {\n  return (\n    <p\n      data-slot=\"app-shell-notification-item-description\"\n      className={cn(\"line-clamp-2 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationItemTime({ className, ...props }: React.ComponentProps<\"time\">) {\n  return (\n    <time\n      data-slot=\"app-shell-notification-item-time\"\n      className={cn(\"text-[11px] text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\n/** The unread dot; renders only inside an unread item. */\nfunction AppShellNotificationItemIndicator({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span\n      data-slot=\"app-shell-notification-item-indicator\"\n      aria-hidden\n      className={cn(\n        \"mt-1.5 hidden size-2 shrink-0 rounded-full bg-primary group-data-unread/notification:block\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationsEmpty({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"app-shell-notifications-empty\"\n      className={cn(\n        \"flex flex-col items-center justify-center gap-1 px-4 py-10 text-center text-sm text-muted-foreground [&_svg]:mb-1 [&_svg]:size-6\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationsFooter({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"app-shell-notifications-footer\"\n      className={cn(\"flex items-center justify-center border-t px-3.5 py-2\", className)}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Theme toggle                                                              */\n/* -------------------------------------------------------------------------- */\n\ntype Theme = \"light\" | \"dark\" | \"system\"\n\nfunction AppShellThemeToggle({\n  theme,\n  onThemeChange,\n  className,\n  ...props\n}: Omit<React.ComponentProps<typeof Button>, \"onChange\"> & {\n  /** Current theme: `light`, `dark`, or `system`. */\n  theme: Theme\n  /** Called with the next theme when the toggle is used. */\n  onThemeChange: (theme: Theme) => void\n}) {\n  return (\n    <DropdownMenu positioning={{ placement: \"bottom-end\" }}>\n      <DropdownMenuTrigger asChild>\n        <Button\n          data-slot=\"app-shell-theme-toggle\"\n          variant=\"ghost\"\n          size=\"icon-lg\"\n          className={cn(\"scale-95 rounded-full\", className)}\n          {...props}\n        >\n          <SunIcon className=\"size-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90\" />\n          <MoonIcon className=\"absolute size-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0\" />\n          <span className=\"sr-only\">Toggle theme</span>\n        </Button>\n      </DropdownMenuTrigger>\n      <DropdownMenuContent>\n        {([\"light\", \"dark\", \"system\"] as const).map((option) => (\n          <DropdownMenuItem key={option} value={option} onSelect={() => onThemeChange(option)}>\n            <span className=\"capitalize\">{option}</span>\n            <CheckIcon className={cn(\"ms-auto size-3.5\", theme !== option && \"invisible\")} />\n          </DropdownMenuItem>\n        ))}\n      </DropdownMenuContent>\n    </DropdownMenu>\n  )\n}\n\nexport {\n  AppShell,\n  AppShellBrand,\n  AppShellBrandChevron,\n  AppShellBrandDescription,\n  AppShellBrandLogo,\n  AppShellBrandText,\n  AppShellBrandTitle,\n  AppShellCommandDialog,\n  AppShellContent,\n  AppShellHeader,\n  AppShellHeaderActions,\n  AppShellMain,\n  AppShellNav,\n  AppShellNavBadge,\n  AppShellNavCollapsible,\n  AppShellNavItem,\n  AppShellNavLabel,\n  AppShellNavLink,\n  AppShellNavList,\n  AppShellNavMenuLink,\n  AppShellNavSubItem,\n  AppShellNavSubLink,\n  AppShellNotificationItem,\n  AppShellNotificationItemContent,\n  AppShellNotificationItemDescription,\n  AppShellNotificationItemIcon,\n  AppShellNotificationItemIndicator,\n  AppShellNotificationItemTime,\n  AppShellNotificationItemTitle,\n  AppShellNotifications,\n  AppShellNotificationsActionTrigger,\n  AppShellNotificationsContent,\n  AppShellNotificationsEmpty,\n  AppShellNotificationsFooter,\n  AppShellNotificationsHeader,\n  AppShellNotificationsList,\n  AppShellNotificationsTitle,\n  AppShellNotificationsTrigger,\n  AppShellSearch,\n  AppShellSidebar,\n  AppShellSkipLink,\n  AppShellThemeToggle,\n  AppShellTopNav,\n  AppShellTopNavLink,\n  AppShellTopNavMenu,\n  AppShellUser,\n  AppShellUserAvatar,\n  AppShellUserEmail,\n  AppShellUserName,\n  AppShellUserText,\n  SidebarContent as AppShellSidebarContent,\n  SidebarFooter as AppShellSidebarFooter,\n  SidebarHeader as AppShellSidebarHeader,\n  useAppShell,\n  type SidebarCollapsible,\n  type SidebarVariant,\n  type Theme,\n}\n"
+      "content": "\"use client\"\n\nimport { ark } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport {\n  BellIcon,\n  CheckIcon,\n  ChevronRightIcon,\n  ChevronsUpDownIcon,\n  MenuIcon,\n  MoonIcon,\n  SearchIcon,\n  SunIcon,\n} from \"lucide-react\"\nimport { cn } from \"@/lib/utils\"\n\nimport { Avatar } from \"@/components/ui/avatar\"\nimport { Badge } from \"@/components/ui/badge\"\nimport { Button } from \"@/components/ui/button\"\nimport { Collapsible } from \"@/components/ui/collapsible\"\nimport { Command } from \"@/components/ui/command\"\nimport { DropdownMenu } from \"@/components/ui/dropdown-menu\"\nimport { Kbd } from \"@/components/ui/kbd\"\nimport { Popover } from \"@/components/ui/popover\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Sidebar, useSidebar } from \"@/components/ui/sidebar\"\n\n/* -------------------------------------------------------------------------- */\n/*  Root                                                                      */\n/* -------------------------------------------------------------------------- */\n\ntype SidebarVariant = \"sidebar\" | \"floating\" | \"inset\"\ntype SidebarCollapsible = \"offcanvas\" | \"icon\" | \"none\"\n\ntype AppShellContextValue = {\n  variant: SidebarVariant\n  setVariant: (variant: SidebarVariant) => void\n  /** Controlled sidebar collapse mode: `offcanvas`, `icon`, or `none`. */\n  collapsible: SidebarCollapsible\n  setCollapsible: (collapsible: SidebarCollapsible) => void\n  searchOpen: boolean\n  setSearchOpen: React.Dispatch<React.SetStateAction<boolean>>\n}\n\nconst AppShellContext = React.createContext<AppShellContextValue | null>(null)\n\nfunction useAppShell() {\n  const ctx = React.useContext(AppShellContext)\n  if (!ctx) throw new Error(\"useAppShell must be used within <AppShell>\")\n  return ctx\n}\n\n/**\n * Root of the shell. Owns the sidebar open state (via `SidebarProvider`), the\n * sidebar variant and collapse mode, and the global search open state with its\n * Cmd/Ctrl+K shortcut. Routing, theming, and data are the consumer's.\n */\nfunction AppShellRoot({\n  variant: variantProp,\n  defaultVariant = \"inset\",\n  onVariantChange,\n  collapsible: collapsibleProp,\n  defaultCollapsible = \"icon\",\n  onCollapsibleChange,\n  searchShortcut = true,\n  children,\n  ...sidebarProviderProps\n}: AppShellRootProps) {\n  const [variantState, setVariantState] = React.useState(defaultVariant)\n  const [collapsibleState, setCollapsibleState] = React.useState(defaultCollapsible)\n  const [searchOpen, setSearchOpen] = React.useState(false)\n  const variant = variantProp ?? variantState\n  const collapsible = collapsibleProp ?? collapsibleState\n\n  React.useEffect(() => {\n    if (!searchShortcut) return\n    const down = (event: KeyboardEvent) => {\n      if (event.key === \"k\" && (event.metaKey || event.ctrlKey)) {\n        event.preventDefault()\n        setSearchOpen((open) => !open)\n      }\n    }\n    document.addEventListener(\"keydown\", down)\n    return () => document.removeEventListener(\"keydown\", down)\n  }, [searchShortcut])\n\n  const ctx = React.useMemo<AppShellContextValue>(\n    () => ({\n      variant,\n      setVariant: (next) => {\n        if (variantProp === undefined) setVariantState(next)\n        onVariantChange?.(next)\n      },\n      collapsible,\n      setCollapsible: (next) => {\n        if (collapsibleProp === undefined) setCollapsibleState(next)\n        onCollapsibleChange?.(next)\n      },\n      searchOpen,\n      setSearchOpen,\n    }),\n    [variant, variantProp, onVariantChange, collapsible, collapsibleProp, onCollapsibleChange, searchOpen]\n  )\n\n  return (\n    <AppShellContext.Provider value={ctx}>\n      <Sidebar.Provider {...sidebarProviderProps}>{children}</Sidebar.Provider>\n    </AppShellContext.Provider>\n  )\n}\n\nfunction AppShellSkipLink({\n  className,\n  href = \"#content\",\n  children = \"Skip to main content\",\n  ...props\n}: AppShellSkipLinkProps) {\n  return (\n    <ark.a\n      data-slot=\"app-shell-skip-link\"\n      href={href}\n      className={cn(\n        \"fixed inset-s-44 z-999 -translate-y-52 rounded-md bg-primary px-4 py-2 text-sm font-medium whitespace-nowrap text-primary-foreground opacity-95 shadow-sm transition focus:translate-y-3 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-none\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n    </ark.a>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Sidebar                                                                   */\n/* -------------------------------------------------------------------------- */\n\nfunction AppShellSidebar({ variant, collapsible, children, ...props }: AppShellSidebarProps) {\n  const shell = useAppShell()\n  return (\n    <Sidebar.Root\n      data-slot=\"app-shell-sidebar\"\n      variant={variant ?? shell.variant}\n      collapsible={collapsible ?? shell.collapsible}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children}\n          <Sidebar.Rail />\n        </>\n      )}\n    </Sidebar.Root>\n  )\n}\n\n/* Brand / team switcher trigger ------------------------------------------- */\n\nfunction AppShellBrand({ className, ...props }: AppShellBrandProps) {\n  return (\n    <Sidebar.Menu>\n      <Sidebar.MenuItem>\n        <Sidebar.MenuButton\n          data-slot=\"app-shell-brand\"\n          size=\"lg\"\n          className={cn(\"data-open:bg-sidebar-accent data-open:text-sidebar-accent-foreground\", className)}\n          {...props}\n        />\n      </Sidebar.MenuItem>\n    </Sidebar.Menu>\n  )\n}\n\nfunction AppShellBrandLogo({ className, ...props }: AppShellBrandLogoProps) {\n  return (\n    <ark.div\n      data-slot=\"app-shell-brand-logo\"\n      className={cn(\n        \"flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground [&_svg]:size-4\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellBrandText({ className, ...props }: AppShellBrandTextProps) {\n  return (\n    <ark.div\n      data-slot=\"app-shell-brand-text\"\n      className={cn(\"grid flex-1 text-start text-sm/tight\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellBrandTitle({ className, ...props }: AppShellBrandTitleProps) {\n  return <ark.span data-slot=\"app-shell-brand-title\" className={cn(\"truncate font-semibold\", className)} {...props} />\n}\n\nfunction AppShellBrandDescription({ className, ...props }: AppShellBrandDescriptionProps) {\n  return <ark.span data-slot=\"app-shell-brand-description\" className={cn(\"truncate text-xs\", className)} {...props} />\n}\n\nfunction AppShellBrandChevron({ className, asChild, children, ...props }: AppShellBrandChevronProps) {\n  return (\n    <ark.svg asChild data-slot=\"app-shell-brand-chevron\" className={cn(\"ms-auto\", className)} {...props}>\n      {asChild ? children : <ChevronsUpDownIcon />}\n    </ark.svg>\n  )\n}\n\n/* Navigation --------------------------------------------------------------- */\n\nfunction AppShellNav({ ...props }: AppShellNavProps) {\n  return <Sidebar.Group data-slot=\"app-shell-nav\" {...props} />\n}\n\nfunction AppShellNavLabel({ ...props }: AppShellNavLabelProps) {\n  return <Sidebar.GroupLabel data-slot=\"app-shell-nav-label\" {...props} />\n}\n\nfunction AppShellNavList({ ...props }: AppShellNavListProps) {\n  return <Sidebar.Menu data-slot=\"app-shell-nav-list\" {...props} />\n}\n\nfunction AppShellNavItem({ ...props }: AppShellNavItemProps) {\n  return <Sidebar.MenuItem data-slot=\"app-shell-nav-item\" {...props} />\n}\n\n/**\n * A top-level navigation link. Pass the link element as the child with\n * `asChild` (default) so any router's link works. `active` marks the current\n * route; `tooltip` shows when the sidebar is collapsed to icons.\n */\nfunction AppShellNavLink({ active = false, asChild = true, onClick, ...props }: AppShellNavLinkProps) {\n  const { setOpenMobile } = useSidebar()\n  return (\n    <Sidebar.MenuButton\n      data-slot=\"app-shell-nav-link\"\n      asChild={asChild}\n      isActive={active}\n      onClick={(event) => {\n        onClick?.(event)\n        setOpenMobile(false)\n      }}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNavBadge({ className, ...props }: AppShellNavBadgeProps) {\n  return (\n    <Badge.Root\n      data-slot=\"app-shell-nav-badge\"\n      className={cn(\"ms-auto rounded-full px-1 py-0 text-xs\", className)}\n      {...props}\n    />\n  )\n}\n\n/**\n * A navigation item with children. Expanded sidebar: a collapsible sub-list.\n * Icon-collapsed sidebar on desktop: a flyout menu. Supply `trigger` for the\n * button content and `menu` for the flyout items; `children` is the sub-list.\n */\nfunction AppShellNavCollapsible({\n  active = false,\n  defaultOpen,\n  tooltip,\n  trigger,\n  menu,\n  children,\n  ...props\n}: AppShellNavCollapsibleProps) {\n  const { state, isMobile } = useSidebar()\n\n  if (state === \"collapsed\" && !isMobile) {\n    return (\n      <Sidebar.MenuItem data-slot=\"app-shell-nav-collapsible\" {...props}>\n        <DropdownMenu.Root positioning={{ placement: \"right-start\", gutter: 4 }}>\n          <DropdownMenu.Trigger asChild>\n            <Sidebar.MenuButton tooltip={tooltip} isActive={active}>\n              {trigger}\n              <ChevronRightIcon className=\"ms-auto\" />\n            </Sidebar.MenuButton>\n          </DropdownMenu.Trigger>\n          <DropdownMenu.Content data-slot=\"app-shell-nav-flyout\">\n            <DropdownMenu.ItemGroup>\n              {tooltip && (\n                <>\n                  <DropdownMenu.ItemGroupLabel>{tooltip}</DropdownMenu.ItemGroupLabel>\n                  <DropdownMenu.Separator />\n                </>\n              )}\n              {menu}\n            </DropdownMenu.ItemGroup>\n          </DropdownMenu.Content>\n        </DropdownMenu.Root>\n      </Sidebar.MenuItem>\n    )\n  }\n\n  return (\n    <Collapsible.Root\n      defaultOpen={defaultOpen ?? active}\n      className=\"group/collapsible\"\n      unmountOnExit={false}\n      lazyMount={false}\n    >\n      <Sidebar.MenuItem data-slot=\"app-shell-nav-collapsible\" {...props}>\n        <Collapsible.Trigger asChild>\n          <Sidebar.MenuButton tooltip={tooltip} isActive={active}>\n            {trigger}\n            <ChevronRightIcon className=\"ms-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 rtl:rotate-180\" />\n          </Sidebar.MenuButton>\n        </Collapsible.Trigger>\n        <Collapsible.Content>\n          <Sidebar.MenuSub data-slot=\"app-shell-nav-sublist\">{children}</Sidebar.MenuSub>\n        </Collapsible.Content>\n      </Sidebar.MenuItem>\n    </Collapsible.Root>\n  )\n}\n\nfunction AppShellNavSubItem({ ...props }: AppShellNavSubItemProps) {\n  return <Sidebar.MenuSubItem data-slot=\"app-shell-nav-subitem\" {...props} />\n}\n\nfunction AppShellNavSubLink({ active = false, asChild = true, onClick, ...props }: AppShellNavSubLinkProps) {\n  const { setOpenMobile } = useSidebar()\n  return (\n    <Sidebar.MenuSubButton\n      data-slot=\"app-shell-nav-sublink\"\n      asChild={asChild}\n      isActive={active}\n      onClick={(event) => {\n        onClick?.(event)\n        setOpenMobile(false)\n      }}\n      {...props}\n    />\n  )\n}\n\n/** A flyout menu entry for the icon-collapsed state. */\nfunction AppShellNavMenuLink({ active = false, className, asChild = true, ...props }: AppShellNavMenuLinkProps) {\n  return (\n    <DropdownMenu.Item\n      data-slot=\"app-shell-nav-menu-link\"\n      asChild={asChild}\n      className={cn(active && \"bg-secondary\", className)}\n      {...props}\n    />\n  )\n}\n\n/* User footer trigger ------------------------------------------------------ */\n\nfunction AppShellUser({ className, ...props }: AppShellUserProps) {\n  return (\n    <Sidebar.Menu>\n      <Sidebar.MenuItem>\n        <Sidebar.MenuButton\n          data-slot=\"app-shell-user\"\n          size=\"lg\"\n          className={cn(\"data-open:bg-sidebar-accent data-open:text-sidebar-accent-foreground\", className)}\n          {...props}\n        />\n      </Sidebar.MenuItem>\n    </Sidebar.Menu>\n  )\n}\n\nfunction AppShellUserAvatar({ src, alt, fallback, className, ...props }: AppShellUserAvatarProps) {\n  return (\n    <Avatar.Root data-slot=\"app-shell-user-avatar\" className={cn(\"rounded-lg\", className)} {...props}>\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          {src && <Avatar.Image src={src} alt={alt} />}\n          <Avatar.Fallback className=\"rounded-lg\">{fallback}</Avatar.Fallback>\n        </>\n      )}\n    </Avatar.Root>\n  )\n}\n\nfunction AppShellUserText({ className, ...props }: AppShellUserTextProps) {\n  return (\n    <ark.div\n      data-slot=\"app-shell-user-text\"\n      className={cn(\"grid flex-1 text-start text-sm/tight\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellUserName({ className, ...props }: AppShellUserNameProps) {\n  return <ark.span data-slot=\"app-shell-user-name\" className={cn(\"truncate font-semibold\", className)} {...props} />\n}\n\nfunction AppShellUserEmail({ className, ...props }: AppShellUserEmailProps) {\n  return <ark.span data-slot=\"app-shell-user-email\" className={cn(\"truncate text-xs\", className)} {...props} />\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Content area: header, main                                                */\n/* -------------------------------------------------------------------------- */\n\nfunction AppShellContent({ className, ...props }: AppShellContentProps) {\n  return (\n    <Sidebar.Inset\n      data-slot=\"app-shell-content\"\n      id=\"content\"\n      className={cn(\n        \"@container/content\",\n        \"has-data-[layout=fixed]:h-svh\",\n        \"peer-data-[variant=inset]:has-data-[layout=fixed]:h-[calc(100svh-(var(--spacing)*4))]\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellHeader({ className, fixed = false, children, ...props }: AppShellHeaderProps) {\n  const [scrolled, setScrolled] = React.useState(false)\n  React.useEffect(() => {\n    if (!fixed) return\n    const onScroll = () => setScrolled((document.body.scrollTop || document.documentElement.scrollTop) > 10)\n    onScroll()\n    document.addEventListener(\"scroll\", onScroll, { passive: true })\n    return () => document.removeEventListener(\"scroll\", onScroll)\n  }, [fixed])\n  return (\n    <ark.header\n      data-slot=\"app-shell-header\"\n      data-fixed={fixed ? \"\" : undefined}\n      data-scrolled={scrolled ? \"\" : undefined}\n      className={cn(\n        // Solid background; the top corners follow the inset card's radius so the\n        // header never squares off the rounded content area.\n        \"z-50 h-16 rounded-t-[inherit] bg-background\",\n        fixed && \"peer/header sticky top-0 w-[inherit]\",\n        fixed && scrolled ? \"shadow-sm\" : \"shadow-none\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <div\n            className={cn(\n              \"relative flex h-full items-center gap-3 p-4 sm:gap-4\",\n              fixed &&\n                scrolled &&\n                \"after:absolute after:inset-0 after:-z-10 after:rounded-[inherit] after:bg-background/60 after:backdrop-blur-lg\"\n            )}\n          >\n            <Sidebar.Trigger variant=\"outline\" className=\"max-md:scale-125\" />\n            <Separator.Root orientation=\"vertical\" className=\"h-6\" />\n            {children}\n          </div>\n        </>\n      )}\n    </ark.header>\n  )\n}\n\nfunction AppShellHeaderActions({ className, ...props }: AppShellHeaderActionsProps) {\n  return (\n    <ark.div\n      data-slot=\"app-shell-header-actions\"\n      className={cn(\"ms-auto flex items-center gap-3 sm:gap-4\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellMain({ className, fixed = false, fluid = false, ...props }: AppShellMainProps) {\n  return (\n    <ark.main\n      data-slot=\"app-shell-main\"\n      data-layout={fixed ? \"fixed\" : \"auto\"}\n      className={cn(\n        \"px-4 py-6\",\n        fixed && \"flex grow flex-col overflow-hidden\",\n        !fluid && \"@7xl/content:mx-auto @7xl/content:w-full @7xl/content:max-w-7xl\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/* Top nav (secondary, in the header) --------------------------------------- */\n\nfunction AppShellTopNav({ className, ...props }: AppShellTopNavProps) {\n  return (\n    <ark.nav\n      data-slot=\"app-shell-top-nav\"\n      className={cn(\"hidden items-center gap-4 lg:flex xl:gap-6\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellTopNavLink({ active = false, className, ...props }: AppShellTopNavLinkProps) {\n  return (\n    <ark.a\n      data-slot=\"app-shell-top-nav-link\"\n      data-active={active ? \"\" : undefined}\n      className={cn(\n        \"text-sm font-medium text-muted-foreground transition-colors hover:text-primary data-active:text-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\n/** The small-screen counterpart of `AppShellTopNav`: the same links in a menu. */\nfunction AppShellTopNavMenu({ className, children, ...props }: AppShellTopNavMenuProps) {\n  return (\n    <DropdownMenu.Root positioning={{ placement: \"bottom-start\" }} {...props}>\n      <DropdownMenu.Trigger asChild>\n        <Button\n          data-slot=\"app-shell-top-nav-menu-trigger\"\n          size=\"icon\"\n          variant=\"outline\"\n          className={cn(\"md:size-7 lg:hidden\", className)}\n        >\n          <MenuIcon />\n          <span className=\"sr-only\">Toggle navigation menu</span>\n        </Button>\n      </DropdownMenu.Trigger>\n      <DropdownMenu.Content>{children}</DropdownMenu.Content>\n    </DropdownMenu.Root>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Search and command menu                                                   */\n/* -------------------------------------------------------------------------- */\n\nfunction AppShellSearch({\n  className,\n  placeholder = \"Search\",\n  onClick,\n  asChild,\n  children,\n  ...props\n}: AppShellSearchProps) {\n  const shell = useAppShell()\n  return (\n    <Button\n      data-slot=\"app-shell-search\"\n      variant=\"outline\"\n      asChild={asChild}\n      className={cn(\n        \"group relative h-8 w-full flex-1 justify-start rounded-md bg-muted/25 text-sm font-normal text-muted-foreground shadow-none hover:bg-accent sm:w-40 sm:pe-12 md:flex-none lg:w-52 xl:w-64\",\n        className\n      )}\n      aria-keyshortcuts=\"Meta+K Control+K\"\n      onClick={(event) => {\n        onClick?.(event)\n        if (!event.defaultPrevented) shell.setSearchOpen(true)\n      }}\n      {...props}\n    >\n      {asChild\n        ? children\n        : (children ?? (\n            <>\n              <SearchIcon aria-hidden className=\"absolute inset-s-1.5 top-1/2 size-4 -translate-y-1/2\" />\n              <span className=\"ms-4\">{placeholder}</span>\n              <Kbd.Root className=\"pointer-events-none absolute inset-e-1.5 top-1.5 hidden sm:flex\">⌘K</Kbd.Root>\n            </>\n          ))}\n    </Button>\n  )\n}\n\n/** A `CommandDialog` bound to the shell's search state. */\nfunction AppShellCommandDialog({ ...props }: AppShellCommandDialogProps) {\n  const shell = useAppShell()\n  return <Command.Dialog open={shell.searchOpen} onOpenChange={({ open }) => shell.setSearchOpen(open)} {...props} />\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Notifications                                                             */\n/* -------------------------------------------------------------------------- */\n\n/**\n * A header notifications popover. Data-agnostic: the consumer renders the\n * items and owns read state; pass `count` to the trigger for the unread badge.\n */\nfunction AppShellNotifications({ positioning, ...props }: AppShellNotificationsProps) {\n  return (\n    <Popover.Root\n      data-slot=\"app-shell-notifications\"\n      positioning={{ placement: \"bottom-end\", gutter: 8, ...positioning }}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationsTrigger({\n  count = 0,\n  max = 99,\n  className,\n  children,\n  asChild,\n  ...props\n}: AppShellNotificationsTriggerProps) {\n  const label = count > max ? `${max}+` : String(count)\n  return (\n    <Popover.Trigger asChild>\n      <Button\n        data-slot=\"app-shell-notifications-trigger\"\n        data-unread={count > 0 ? \"\" : undefined}\n        variant=\"ghost\"\n        size=\"icon-lg\"\n        asChild={asChild}\n        className={cn(\"relative scale-95 rounded-full\", className)}\n        aria-label={count > 0 ? `Notifications, ${label} unread` : \"Notifications\"}\n        {...props}\n      >\n        {asChild ? children : (children ?? <BellIcon className=\"size-[1.2rem]\" />)}\n        {!asChild && count > 0 && (\n          <span\n            data-slot=\"app-shell-notifications-badge\"\n            aria-hidden\n            className=\"absolute inset-e-0.5 top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[10px] leading-none font-medium text-white ring-2 ring-background\"\n          >\n            {label}\n          </span>\n        )}\n      </Button>\n    </Popover.Trigger>\n  )\n}\n\nfunction AppShellNotificationsContent({ className, ...props }: AppShellNotificationsContentProps) {\n  return (\n    <Popover.Content\n      data-slot=\"app-shell-notifications-content\"\n      className={cn(\"w-80 gap-0 p-0 sm:w-96\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationsHeader({ className, ...props }: AppShellNotificationsHeaderProps) {\n  return (\n    <ark.div\n      data-slot=\"app-shell-notifications-header\"\n      className={cn(\"flex items-center justify-between gap-2 border-b px-3.5 py-2.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationsTitle({ className, ...props }: AppShellNotificationsTitleProps) {\n  return (\n    <ark.h3 data-slot=\"app-shell-notifications-title\" className={cn(\"text-sm font-semibold\", className)} {...props} />\n  )\n}\n\n/** A small text action for the header or footer, e.g. \"Mark all as read\". */\nfunction AppShellNotificationsActionTrigger({\n  className,\n  variant = \"link\",\n  size = \"sm\",\n  ...props\n}: AppShellNotificationsActionTriggerProps) {\n  return (\n    <Button\n      data-slot=\"app-shell-notifications-action-trigger\"\n      variant={variant}\n      size={size}\n      className={cn(\"h-auto p-0 text-xs text-muted-foreground hover:text-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationsList({ className, ...props }: AppShellNotificationsListProps) {\n  return (\n    <ark.ul\n      data-slot=\"app-shell-notifications-list\"\n      className={cn(\"no-scrollbar flex max-h-96 flex-col gap-0.5 overflow-y-auto p-1\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationItem({ unread, asChild, className, children, ...props }: AppShellNotificationItemProps) {\n  const itemClassName = cn(\n    \"group/notification relative flex w-full cursor-default gap-3 rounded-md px-2.5 py-2 text-start text-sm outline-hidden transition-colors select-none hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:text-accent-foreground data-unread:bg-primary/5 dark:data-unread:bg-primary/10\",\n    className\n  )\n  const inner =\n    asChild && React.isValidElement(children)\n      ? React.cloneElement(children as React.ReactElement<Record<string, unknown>>, {\n          \"data-slot\": \"app-shell-notification-item-surface\",\n          \"data-unread\": unread ? \"\" : undefined,\n          className: cn(itemClassName, (children as React.ReactElement<{ className?: string }>).props.className),\n        })\n      : children\n  return (\n    <ark.li\n      data-slot=\"app-shell-notification-item\"\n      data-unread={unread ? \"\" : undefined}\n      className={asChild ? \"flex\" : itemClassName}\n      {...props}\n    >\n      {inner}\n    </ark.li>\n  )\n}\n\nfunction AppShellNotificationItemIcon({ className, ...props }: AppShellNotificationItemIconProps) {\n  return (\n    <ark.div\n      data-slot=\"app-shell-notification-item-icon\"\n      className={cn(\n        \"flex size-8 shrink-0 items-center justify-center rounded-full bg-muted text-muted-foreground [&_svg]:size-4\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationItemContent({ className, ...props }: AppShellNotificationItemContentProps) {\n  return (\n    <ark.div\n      data-slot=\"app-shell-notification-item-content\"\n      className={cn(\"flex min-w-0 flex-1 flex-col gap-0.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationItemTitle({ className, ...props }: AppShellNotificationItemTitleProps) {\n  return (\n    <ark.p\n      data-slot=\"app-shell-notification-item-title\"\n      className={cn(\"truncate leading-tight font-medium group-data-unread/notification:text-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationItemDescription({ className, ...props }: AppShellNotificationItemDescriptionProps) {\n  return (\n    <ark.p\n      data-slot=\"app-shell-notification-item-description\"\n      className={cn(\"line-clamp-2 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationItemTime({ className, ...props }: AppShellNotificationItemTimeProps) {\n  return (\n    <ark.time\n      data-slot=\"app-shell-notification-item-time\"\n      className={cn(\"text-[11px] text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\n/** The unread dot; renders only inside an unread item. */\nfunction AppShellNotificationItemIndicator({ className, ...props }: AppShellNotificationItemIndicatorProps) {\n  return (\n    <ark.span\n      data-slot=\"app-shell-notification-item-indicator\"\n      aria-hidden\n      className={cn(\n        \"mt-1.5 hidden size-2 shrink-0 rounded-full bg-primary group-data-unread/notification:block\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationsEmpty({ className, ...props }: AppShellNotificationsEmptyProps) {\n  return (\n    <ark.div\n      data-slot=\"app-shell-notifications-empty\"\n      className={cn(\n        \"flex flex-col items-center justify-center gap-1 px-4 py-10 text-center text-sm text-muted-foreground [&_svg]:mb-1 [&_svg]:size-6\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction AppShellNotificationsFooter({ className, ...props }: AppShellNotificationsFooterProps) {\n  return (\n    <ark.div\n      data-slot=\"app-shell-notifications-footer\"\n      className={cn(\"flex items-center justify-center border-t px-3.5 py-2\", className)}\n      {...props}\n    />\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Theme toggle                                                              */\n/* -------------------------------------------------------------------------- */\n\ntype Theme = \"light\" | \"dark\" | \"system\"\n\nfunction AppShellThemeToggle({ theme, onThemeChange, className, ...props }: AppShellThemeToggleProps) {\n  return (\n    <DropdownMenu.Root positioning={{ placement: \"bottom-end\" }}>\n      <DropdownMenu.Trigger asChild>\n        <Button\n          data-slot=\"app-shell-theme-toggle\"\n          variant=\"ghost\"\n          size=\"icon-lg\"\n          className={cn(\"scale-95 rounded-full\", className)}\n          {...props}\n        >\n          {props.asChild ? (\n            React.isValidElement(props.children) ? (\n              props.children\n            ) : null\n          ) : (\n            <>\n              <SunIcon className=\"size-[1.2rem] scale-100 rotate-0 transition-all dark:scale-0 dark:-rotate-90\" />\n              <MoonIcon className=\"absolute size-[1.2rem] scale-0 rotate-90 transition-all dark:scale-100 dark:rotate-0\" />\n              <span className=\"sr-only\">Toggle theme</span>\n            </>\n          )}\n        </Button>\n      </DropdownMenu.Trigger>\n      <DropdownMenu.Content>\n        {([\"light\", \"dark\", \"system\"] as const).map((option) => (\n          <DropdownMenu.Item key={option} value={option} onSelect={() => onThemeChange(option)}>\n            <span className=\"capitalize\">{option}</span>\n            <CheckIcon className={cn(\"ms-auto size-3.5\", theme !== option && \"invisible\")} />\n          </DropdownMenu.Item>\n        ))}\n      </DropdownMenu.Content>\n    </DropdownMenu.Root>\n  )\n}\n\ntype AppShellRootProps = Omit<React.ComponentProps<typeof Sidebar.Provider>, \"children\"> & {\n  variant?: SidebarVariant\n  /** Initial sidebar variant when uncontrolled. */\n  defaultVariant?: SidebarVariant\n  /** Called when the sidebar variant changes. */\n  onVariantChange?: (variant: SidebarVariant) => void\n  /** Controlled sidebar collapse mode: `offcanvas`, `icon`, or `none`. */\n  collapsible?: SidebarCollapsible\n  /** Initial collapse mode when uncontrolled. */\n  defaultCollapsible?: SidebarCollapsible\n  /** Called when the collapse mode changes. */\n  onCollapsibleChange?: (collapsible: SidebarCollapsible) => void\n  /** Toggle the search dialog with Cmd/Ctrl+K. */\n  searchShortcut?: boolean\n  children?: React.ReactNode\n}\n\ntype AppShellBrandProps = React.ComponentProps<typeof Sidebar.MenuButton>\n\ntype AppShellBrandChevronProps = React.ComponentProps<typeof ChevronsUpDownIcon> &\n  Pick<React.ComponentProps<typeof ark.svg>, \"asChild\">\n\ntype AppShellBrandDescriptionProps = React.ComponentProps<typeof ark.span>\n\ntype AppShellBrandLogoProps = React.ComponentProps<typeof ark.div>\n\ntype AppShellBrandTextProps = React.ComponentProps<typeof ark.div>\n\ntype AppShellBrandTitleProps = React.ComponentProps<typeof ark.span>\n\ntype AppShellCommandDialogProps = Omit<React.ComponentProps<typeof Command.Dialog>, \"open\" | \"onOpenChange\">\n\ntype AppShellContentProps = React.ComponentProps<typeof Sidebar.Inset>\n\ntype AppShellHeaderProps = React.ComponentProps<typeof ark.header> & { fixed?: boolean }\n\ntype AppShellHeaderActionsProps = React.ComponentProps<typeof ark.div>\n\ntype AppShellMainProps = React.ComponentProps<typeof ark.main> & { fixed?: boolean; fluid?: boolean }\n\ntype AppShellNavProps = React.ComponentProps<typeof Sidebar.Group>\n\ntype AppShellNavBadgeProps = React.ComponentProps<typeof Badge.Root>\n\ntype AppShellNavCollapsibleProps = React.ComponentProps<typeof Sidebar.MenuItem> & {\n  active?: boolean\n  defaultOpen?: boolean\n  tooltip?: string\n  /** Element rendered as the trigger for the collapsible group. */\n  trigger: React.ReactNode\n  /** Rendered inside the flyout when the sidebar is collapsed to icons. */\n  menu?: React.ReactNode\n}\n\ntype AppShellNavItemProps = React.ComponentProps<typeof Sidebar.MenuItem>\n\ntype AppShellNavLabelProps = React.ComponentProps<typeof Sidebar.GroupLabel>\n\ntype AppShellNavLinkProps = Omit<React.ComponentProps<typeof Sidebar.MenuButton>, \"isActive\"> & {\n  active?: boolean\n}\n\ntype AppShellNavListProps = React.ComponentProps<typeof Sidebar.Menu>\n\ntype AppShellNavMenuLinkProps = React.ComponentProps<typeof DropdownMenu.Item> & { active?: boolean }\n\ntype AppShellNavSubItemProps = React.ComponentProps<typeof Sidebar.MenuSubItem>\n\ntype AppShellNavSubLinkProps = Omit<React.ComponentProps<typeof Sidebar.MenuSubButton>, \"isActive\"> & {\n  active?: boolean\n}\n\ntype AppShellNotificationItemProps = React.ComponentProps<typeof ark.li> & {\n  /** Mark the notification unread; sets `data-unread` and shows the indicator. */\n  unread?: boolean\n  /** Render the item's child (e.g. an anchor or button) as the interactive surface. */\n  asChild?: boolean\n}\n\ntype AppShellNotificationItemContentProps = React.ComponentProps<typeof ark.div>\n\ntype AppShellNotificationItemDescriptionProps = React.ComponentProps<typeof ark.p>\n\ntype AppShellNotificationItemIconProps = React.ComponentProps<typeof ark.div>\n\ntype AppShellNotificationItemIndicatorProps = React.ComponentProps<typeof ark.span>\n\ntype AppShellNotificationItemTimeProps = React.ComponentProps<typeof ark.time>\n\ntype AppShellNotificationItemTitleProps = React.ComponentProps<typeof ark.p>\n\ntype AppShellNotificationsProps = React.ComponentProps<typeof Popover.Root>\n\ntype AppShellNotificationsActionTriggerProps = React.ComponentProps<typeof Button>\n\ntype AppShellNotificationsContentProps = React.ComponentProps<typeof Popover.Content>\n\ntype AppShellNotificationsEmptyProps = React.ComponentProps<typeof ark.div>\n\ntype AppShellNotificationsFooterProps = React.ComponentProps<typeof ark.div>\n\ntype AppShellNotificationsHeaderProps = React.ComponentProps<typeof ark.div>\n\ntype AppShellNotificationsListProps = React.ComponentProps<typeof ark.ul>\n\ntype AppShellNotificationsTitleProps = React.ComponentProps<typeof ark.h3>\n\ntype AppShellNotificationsTriggerProps = React.ComponentProps<typeof Button> & {\n  /** Unread count shown as a badge; hidden when 0. */\n  count?: number\n  /** Cap for the badge count; larger counts render as `max+`. */\n  max?: number\n}\n\ntype AppShellSearchProps = React.ComponentProps<typeof Button> & { placeholder?: string }\n\ntype AppShellSidebarProps = React.ComponentProps<typeof Sidebar.Root>\n\ntype AppShellSkipLinkProps = React.ComponentProps<typeof ark.a>\n\ntype AppShellThemeToggleProps = Omit<React.ComponentProps<typeof Button>, \"onChange\"> & {\n  /** Current theme: `light`, `dark`, or `system`. */\n  theme: Theme\n  /** Called with the next theme when the toggle is used. */\n  onThemeChange: (theme: Theme) => void\n}\n\ntype AppShellTopNavProps = React.ComponentProps<typeof ark.nav>\n\ntype AppShellTopNavLinkProps = React.ComponentProps<typeof ark.a> & { active?: boolean }\n\ntype AppShellTopNavMenuProps = React.ComponentProps<typeof DropdownMenu.Root> & { className?: string }\n\ntype AppShellUserProps = React.ComponentProps<typeof Sidebar.MenuButton>\n\ntype AppShellUserAvatarProps = React.ComponentProps<typeof Avatar.Root> & {\n  src?: string\n  alt?: string\n  fallback: React.ReactNode\n}\n\ntype AppShellUserEmailProps = React.ComponentProps<typeof ark.span>\n\ntype AppShellUserNameProps = React.ComponentProps<typeof ark.span>\n\ntype AppShellUserTextProps = React.ComponentProps<typeof ark.div>\n\nconst AppShell = {\n  Root: AppShellRoot,\n  Brand: AppShellBrand,\n  BrandChevron: AppShellBrandChevron,\n  BrandDescription: AppShellBrandDescription,\n  BrandLogo: AppShellBrandLogo,\n  BrandText: AppShellBrandText,\n  BrandTitle: AppShellBrandTitle,\n  CommandDialog: AppShellCommandDialog,\n  Content: AppShellContent,\n  Header: AppShellHeader,\n  HeaderActions: AppShellHeaderActions,\n  Main: AppShellMain,\n  Nav: AppShellNav,\n  NavBadge: AppShellNavBadge,\n  NavCollapsible: AppShellNavCollapsible,\n  NavItem: AppShellNavItem,\n  NavLabel: AppShellNavLabel,\n  NavLink: AppShellNavLink,\n  NavList: AppShellNavList,\n  NavMenuLink: AppShellNavMenuLink,\n  NavSubItem: AppShellNavSubItem,\n  NavSubLink: AppShellNavSubLink,\n  NotificationItem: AppShellNotificationItem,\n  NotificationItemContent: AppShellNotificationItemContent,\n  NotificationItemDescription: AppShellNotificationItemDescription,\n  NotificationItemIcon: AppShellNotificationItemIcon,\n  NotificationItemIndicator: AppShellNotificationItemIndicator,\n  NotificationItemTime: AppShellNotificationItemTime,\n  NotificationItemTitle: AppShellNotificationItemTitle,\n  Notifications: AppShellNotifications,\n  NotificationsActionTrigger: AppShellNotificationsActionTrigger,\n  NotificationsContent: AppShellNotificationsContent,\n  NotificationsEmpty: AppShellNotificationsEmpty,\n  NotificationsFooter: AppShellNotificationsFooter,\n  NotificationsHeader: AppShellNotificationsHeader,\n  NotificationsList: AppShellNotificationsList,\n  NotificationsTitle: AppShellNotificationsTitle,\n  NotificationsTrigger: AppShellNotificationsTrigger,\n  Search: AppShellSearch,\n  Sidebar: AppShellSidebar,\n  SkipLink: AppShellSkipLink,\n  ThemeToggle: AppShellThemeToggle,\n  TopNav: AppShellTopNav,\n  TopNavLink: AppShellTopNavLink,\n  TopNavMenu: AppShellTopNavMenu,\n  User: AppShellUser,\n  UserAvatar: AppShellUserAvatar,\n  UserEmail: AppShellUserEmail,\n  UserName: AppShellUserName,\n  UserText: AppShellUserText,\n}\n\nexport {\n  AppShell,\n  useAppShell,\n  type SidebarCollapsible,\n  type SidebarVariant,\n  type Theme,\n  type AppShellRootProps,\n  type AppShellBrandProps,\n  type AppShellBrandChevronProps,\n  type AppShellBrandDescriptionProps,\n  type AppShellBrandLogoProps,\n  type AppShellBrandTextProps,\n  type AppShellBrandTitleProps,\n  type AppShellCommandDialogProps,\n  type AppShellContentProps,\n  type AppShellHeaderProps,\n  type AppShellHeaderActionsProps,\n  type AppShellMainProps,\n  type AppShellNavProps,\n  type AppShellNavBadgeProps,\n  type AppShellNavCollapsibleProps,\n  type AppShellNavItemProps,\n  type AppShellNavLabelProps,\n  type AppShellNavLinkProps,\n  type AppShellNavListProps,\n  type AppShellNavMenuLinkProps,\n  type AppShellNavSubItemProps,\n  type AppShellNavSubLinkProps,\n  type AppShellNotificationItemProps,\n  type AppShellNotificationItemContentProps,\n  type AppShellNotificationItemDescriptionProps,\n  type AppShellNotificationItemIconProps,\n  type AppShellNotificationItemIndicatorProps,\n  type AppShellNotificationItemTimeProps,\n  type AppShellNotificationItemTitleProps,\n  type AppShellNotificationsProps,\n  type AppShellNotificationsActionTriggerProps,\n  type AppShellNotificationsContentProps,\n  type AppShellNotificationsEmptyProps,\n  type AppShellNotificationsFooterProps,\n  type AppShellNotificationsHeaderProps,\n  type AppShellNotificationsListProps,\n  type AppShellNotificationsTitleProps,\n  type AppShellNotificationsTriggerProps,\n  type AppShellSearchProps,\n  type AppShellSidebarProps,\n  type AppShellSkipLinkProps,\n  type AppShellThemeToggleProps,\n  type AppShellTopNavProps,\n  type AppShellTopNavLinkProps,\n  type AppShellTopNavMenuProps,\n  type AppShellUserProps,\n  type AppShellUserAvatarProps,\n  type AppShellUserEmailProps,\n  type AppShellUserNameProps,\n  type AppShellUserTextProps,\n}\n"
     }
   ],
   "docs": "## App shell\n`src/components/ui/app-shell.tsx` is a compositional, router-agnostic shell built on\n`sidebar.tsx` (shadcn-admin layout): `AppShell` (context: sidebar variant/collapsible,\nsearch open state, `searchShortcut` for cmd/ctrl+K), `AppShellSidebar` + `AppShellBrand*`,\n`AppShellNav*` (groups, links with `active`, badges, `AppShellNavCollapsible` that becomes\na dropdown flyout when the sidebar is icon-collapsed), `AppShellUser*`, `AppShellContent`,\n`AppShellHeader` (fixed/sticky with scroll shadow, includes the sidebar trigger),\n`AppShellHeaderActions`, `AppShellMain` (`fixed` = viewport-height, `fluid` = full width),\n`AppShellTopNav*`, `AppShellSearch` + `AppShellCommandDialog` (bound to shell search\nstate; nest a `Command` inside), `AppShellNotifications*` (Popover-based bell with a `count`\nbadge on the trigger; header/title/action, list, `AppShellNotificationItem` with `unread` +\n`asChild` surface, icon/content/title/description/time/indicator, empty, footer; data and read\nstate are the consumer's), and `AppShellThemeToggle` (`theme`/`onThemeChange`, no theme\nlibrary assumed). Header icon buttons use `size=\"icon-lg\"` (size-9, `scale-95 rounded-full`)\nand `AppShellHeaderActions` uses the header's `gap-3 sm:gap-4` to match shadcn-admin. Navigation is plain anchors with `asChild` so any router works.\n`src/demo/shell/` is the reference (nav data, hash router, team/user menus, command menu)\nand `src/app.tsx` wraps every demo route in it. `AppShellDemo` takes `headerStart` for\npage-specific header content (the dashboard passes its `AppShellTopNav` + `AppShellTopNavMenu`)."

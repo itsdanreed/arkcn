@@ -1,31 +1,6 @@
 import * as React from "react"
-import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import {
-  Chat,
-  ChatBody,
-  ChatBackTrigger,
-  ChatComposer,
-  ChatComposerField,
-  ChatComposerInput,
-  ChatComposerSendTrigger,
-  ChatConversationInfo,
-  ChatConversationItem,
-  ChatConversationList,
-  ChatConversationName,
-  ChatConversationPreview,
-  ChatHeader,
-  ChatHeaderInfo,
-  ChatHeaderText,
-  ChatHeaderTitle,
-  ChatMessage,
-  ChatMessageTime,
-  ChatMessages,
-  ChatPanel,
-  ChatSidebar,
-  ChatSidebarHeader,
-  ChatSidebarHeading,
-  ChatSidebarTitle,
-} from "@/components/ui/chat"
+import { Avatar } from "@/components/ui/avatar"
+import { Chat } from "@/components/ui/chat"
 
 type Msg = { from: "me" | "them"; text: string; time: string }
 const seed: Record<string, { name: string; initials: string; messages: Msg[] }> = {
@@ -62,62 +37,62 @@ export default function ChatExample() {
     setDraft("")
   }
   return (
-    <Chat value={selected} onValueChange={setSelected} className="h-96 w-full rounded-lg border">
-      <ChatSidebar>
-        <ChatSidebarHeader>
-          <ChatSidebarTitle>
-            <ChatSidebarHeading>Inbox</ChatSidebarHeading>
-          </ChatSidebarTitle>
-        </ChatSidebarHeader>
-        <ChatConversationList>
+    <Chat.Root value={selected} onValueChange={setSelected} className="h-96 w-full rounded-lg border">
+      <Chat.Sidebar>
+        <Chat.SidebarHeader>
+          <Chat.SidebarTitle>
+            <Chat.SidebarHeading>Inbox</Chat.SidebarHeading>
+          </Chat.SidebarTitle>
+        </Chat.SidebarHeader>
+        <Chat.ConversationList>
           {Object.entries(threads).map(([id, t]) => (
-            <ChatConversationItem key={id} value={id}>
-              <Avatar>
-                <AvatarFallback>{t.initials}</AvatarFallback>
-              </Avatar>
-              <ChatConversationInfo>
-                <ChatConversationName>{t.name}</ChatConversationName>
-                <ChatConversationPreview>{t.messages[t.messages.length - 1].text}</ChatConversationPreview>
-              </ChatConversationInfo>
-            </ChatConversationItem>
+            <Chat.ConversationItem key={id} value={id}>
+              <Avatar.Root>
+                <Avatar.Fallback>{t.initials}</Avatar.Fallback>
+              </Avatar.Root>
+              <Chat.ConversationInfo>
+                <Chat.ConversationName>{t.name}</Chat.ConversationName>
+                <Chat.ConversationPreview>{t.messages[t.messages.length - 1].text}</Chat.ConversationPreview>
+              </Chat.ConversationInfo>
+            </Chat.ConversationItem>
           ))}
-        </ChatConversationList>
-      </ChatSidebar>
+        </Chat.ConversationList>
+      </Chat.Sidebar>
       {thread && (
-        <ChatPanel>
-          <ChatHeader>
-            <ChatBackTrigger />
-            <ChatHeaderInfo>
-              <Avatar>
-                <AvatarFallback>{thread.initials}</AvatarFallback>
-              </Avatar>
-              <ChatHeaderText>
-                <ChatHeaderTitle>{thread.name}</ChatHeaderTitle>
-              </ChatHeaderText>
-            </ChatHeaderInfo>
-          </ChatHeader>
-          <ChatBody>
-            <ChatMessages>
+        <Chat.Panel>
+          <Chat.Header>
+            <Chat.BackTrigger />
+            <Chat.HeaderInfo>
+              <Avatar.Root>
+                <Avatar.Fallback>{thread.initials}</Avatar.Fallback>
+              </Avatar.Root>
+              <Chat.HeaderText>
+                <Chat.HeaderTitle>{thread.name}</Chat.HeaderTitle>
+              </Chat.HeaderText>
+            </Chat.HeaderInfo>
+          </Chat.Header>
+          <Chat.Body>
+            <Chat.Messages>
               {[...thread.messages].reverse().map((m, i) => (
-                <ChatMessage key={i} variant={m.from === "me" ? "sent" : "received"}>
+                <Chat.Message key={i} variant={m.from === "me" ? "sent" : "received"}>
                   {m.text}
-                  <ChatMessageTime>{m.time}</ChatMessageTime>
-                </ChatMessage>
+                  <Chat.MessageTime>{m.time}</Chat.MessageTime>
+                </Chat.Message>
               ))}
-            </ChatMessages>
-            <ChatComposer onSubmit={send}>
-              <ChatComposerField>
-                <ChatComposerInput
+            </Chat.Messages>
+            <Chat.Composer onSubmit={send}>
+              <Chat.ComposerField>
+                <Chat.ComposerInput
                   placeholder="Type a message…"
                   value={draft}
                   onChange={(e) => setDraft(e.target.value)}
                 />
-                <ChatComposerSendTrigger />
-              </ChatComposerField>
-            </ChatComposer>
-          </ChatBody>
-        </ChatPanel>
+                <Chat.ComposerSendTrigger />
+              </Chat.ComposerField>
+            </Chat.Composer>
+          </Chat.Body>
+        </Chat.Panel>
       )}
-    </Chat>
+    </Chat.Root>
   )
 }

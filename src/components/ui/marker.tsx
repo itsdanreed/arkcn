@@ -17,15 +17,7 @@ const markerVariants = cva(
   }
 )
 
-function Marker({
-  className,
-  variant = "default",
-  asChild = false,
-  ...props
-}: React.ComponentProps<"div"> &
-  VariantProps<typeof markerVariants> & {
-    asChild?: boolean
-  }) {
+function MarkerRoot({ className, variant = "default", asChild = false, ...props }: MarkerRootProps) {
   const Comp = ark.div
 
   return (
@@ -39,9 +31,9 @@ function Marker({
   )
 }
 
-function MarkerIcon({ className, ...props }: React.ComponentProps<"span">) {
+function MarkerIcon({ className, ...props }: MarkerIconProps) {
   return (
-    <span
+    <ark.span
       data-slot="marker-icon"
       aria-hidden="true"
       className={cn("size-4 shrink-0 [&_svg:not([class*='size-'])]:size-4", className)}
@@ -50,9 +42,9 @@ function MarkerIcon({ className, ...props }: React.ComponentProps<"span">) {
   )
 }
 
-function MarkerContent({ className, ...props }: React.ComponentProps<"span">) {
+function MarkerContent({ className, ...props }: MarkerContentProps) {
   return (
-    <span
+    <ark.span
       data-slot="marker-content"
       className={cn(
         "min-w-0 wrap-break-word group-data-[variant=separator]/marker:flex-none group-data-[variant=separator]/marker:text-center *:[a]:underline *:[a]:underline-offset-3 *:[a]:hover:text-foreground",
@@ -63,4 +55,19 @@ function MarkerContent({ className, ...props }: React.ComponentProps<"span">) {
   )
 }
 
-export { Marker, MarkerIcon, MarkerContent, markerVariants }
+type MarkerRootProps = React.ComponentProps<typeof ark.div> &
+  VariantProps<typeof markerVariants> & {
+    asChild?: boolean
+  }
+
+type MarkerIconProps = React.ComponentProps<typeof ark.span>
+
+type MarkerContentProps = React.ComponentProps<typeof ark.span>
+
+const Marker = {
+  Root: MarkerRoot,
+  Icon: MarkerIcon,
+  Content: MarkerContent,
+}
+
+export { Marker, markerVariants, type MarkerRootProps, type MarkerIconProps, type MarkerContentProps }

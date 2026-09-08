@@ -2,7 +2,7 @@ import * as React from "react"
 import { ArrowRightIcon, ExternalLinkIcon } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs } from "@/components/ui/tabs"
 import { CodeBlock } from "./code"
 import { Markdown, useOutline } from "./markdown"
 import { Outline } from "./layout"
@@ -161,12 +161,12 @@ const wide = new Set([
 function ComponentPreview({ name, example }: { name: string; example: ReturnType<typeof useExample> }) {
   const { Example, source } = example
   return (
-    <Tabs defaultValue="preview" className="mb-8">
-      <TabsList variant="line">
-        <TabsTrigger value="preview">Preview</TabsTrigger>
-        <TabsTrigger value="code">Code</TabsTrigger>
-      </TabsList>
-      <TabsContent value="preview">
+    <Tabs.Root defaultValue="preview" className="mb-8">
+      <Tabs.List variant="line">
+        <Tabs.Trigger value="preview">Preview</Tabs.Trigger>
+        <Tabs.Trigger value="code">Code</Tabs.Trigger>
+      </Tabs.List>
+      <Tabs.Content value="preview">
         <div
           data-slot="docs-preview"
           className={cn(
@@ -176,11 +176,11 @@ function ComponentPreview({ name, example }: { name: string; example: ReturnType
         >
           {Example ? <Example /> : <span className="text-sm text-muted-foreground">Loading…</span>}
         </div>
-      </TabsContent>
-      <TabsContent value="code">
+      </Tabs.Content>
+      <Tabs.Content value="code">
         <CodeBlock code={source} maxHeight={480} />
-      </TabsContent>
-    </Tabs>
+      </Tabs.Content>
+    </Tabs.Root>
   )
 }
 
@@ -215,13 +215,13 @@ export function ComponentPage({ name }: { name: string }) {
               </a>
             </Button>
           )}
-          {item.css && <Badge variant="secondary">ships CSS</Badge>}
+          {item.css && <Badge.Root variant="secondary">ships CSS</Badge.Root>}
           {Object.keys(item.dependencies)
             .filter((d) => !["@ark-ui/react", "lucide-react", "class-variance-authority"].includes(d))
             .map((d) => (
-              <Badge key={d} variant="outline">
+              <Badge.Root key={d} variant="outline">
                 {d}
-              </Badge>
+              </Badge.Root>
             ))}
         </div>
       </PageTitle>
@@ -260,7 +260,7 @@ export function ComponentPage({ name }: { name: string }) {
           Every part is exported on its own and carries a <code>data-slot</code> attribute you can target in CSS.
         </p>
         <div className="not-prose flex flex-wrap gap-1.5">
-          {parts.map((p) => (
+          {(item.parts?.map((part) => part.name) ?? parts).map((p) => (
             <code key={p} className="rounded-md bg-muted px-1.5 py-0.5 font-mono text-xs">
               {p}
             </code>
@@ -368,7 +368,7 @@ export function Home() {
   const count = registry.items.filter((i) => i.type === "ui").length
   return (
     <div className="mx-auto flex max-w-3xl flex-col items-start gap-6 py-10">
-      <Badge variant="secondary">v{registry.version}</Badge>
+      <Badge.Root variant="secondary">v{registry.version}</Badge.Root>
       <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Build with Ark UI. Ship like shadcn.</h1>
       <p className="max-w-xl text-lg text-muted-foreground">
         {count} components ported from shadcn/ui to Ark UI, plus the data-heavy primitives a real product needs: data

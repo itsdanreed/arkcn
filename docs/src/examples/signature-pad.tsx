@@ -1,10 +1,10 @@
-import { SignaturePad, SignaturePadControl, SignaturePadLabel } from "@/components/ui/signature-pad"
+import { SignaturePad } from "@/components/ui/signature-pad"
 
 export default function SignaturePadExample() {
   return (
-    <SignaturePad className="w-80">
-      <SignaturePadLabel>Sign here</SignaturePadLabel>
-      <SignaturePadControl />
-    </SignaturePad>
+    <SignaturePad.Root className="w-80">
+      <SignaturePad.Label>Sign here</SignaturePad.Label>
+      <SignaturePad.Control />
+    </SignaturePad.Root>
   )
 }

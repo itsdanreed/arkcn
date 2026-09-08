@@ -9,7 +9,7 @@ export default function LiveRegionExample() {
         Announce
       </Button>
       <p className="text-sm text-muted-foreground">Screen readers hear: {message || "…"}</p>
-      <LiveRegion message={message} />
+      <LiveRegion.Root message={message} />
     </div>
   )
 }

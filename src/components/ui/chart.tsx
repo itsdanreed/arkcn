@@ -1,5 +1,6 @@
 "use client"
 
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import * as RechartsPrimitive from "recharts"
@@ -36,29 +37,20 @@ function useChart() {
   return context
 }
 
-function ChartContainer({
+function ChartRoot({
   id,
   className,
   children,
   config,
   initialDimension = INITIAL_DIMENSION,
   ...props
-}: React.ComponentProps<"div"> & {
-  /** Series config: label, icon, and color (or theme colors) per data key; exposed as `--color-<key>`. */
-  config: ChartConfig
-  children: React.ComponentProps<typeof RechartsPrimitive.ResponsiveContainer>["children"]
-  /** Width and height used before the container measures itself. */
-  initialDimension?: {
-    width: number
-    height: number
-  }
-}) {
+}: ChartRootProps) {
   const uniqueId = React.useId()
   const chartId = `chart-${id ?? uniqueId.replace(/:/g, "")}`
 
   return (
     <ChartContext.Provider value={{ config }}>
-      <div
+      <ark.div
         data-slot="chart"
         data-chart={chartId}
         className={cn(
@@ -67,16 +59,24 @@ function ChartContainer({
         )}
         {...props}
       >
-        <ChartStyle id={chartId} config={config} />
-        <RechartsPrimitive.ResponsiveContainer initialDimension={initialDimension}>
-          {children}
-        </RechartsPrimitive.ResponsiveContainer>
-      </div>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            <ChartStyle id={chartId} config={config} />
+            <RechartsPrimitive.ResponsiveContainer initialDimension={initialDimension}>
+              {children}
+            </RechartsPrimitive.ResponsiveContainer>
+          </>
+        )}
+      </ark.div>
     </ChartContext.Provider>
   )
 }
 
-const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
+const ChartStyle = ({ id, config }: ChartStyleProps) => {
   const colorConfig = Object.entries(config).filter(([, config]) => config.theme ?? config.color)
 
   if (!colorConfig.length) {
@@ -121,19 +121,7 @@ function ChartTooltipContent({
   color,
   nameKey,
   labelKey,
-}: React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
-  React.ComponentProps<"div"> & {
-    /** Hide the tooltip label. */
-    hideLabel?: boolean
-    /** Hide the color indicator in each row. */
-    hideIndicator?: boolean
-    /** Indicator style: `dot`, `line`, or `dashed`. */
-    indicator?: "line" | "dot" | "dashed"
-    /** Data key used for the series name. */
-    nameKey?: string
-    /** Data key used for the tooltip label. */
-    labelKey?: string
-  } & Omit<RechartsPrimitive.DefaultTooltipContentProps<TooltipValueType, TooltipNameType>, "accessibilityLayer">) {
+}: ChartTooltipContentProps) {
   const { config } = useChart()
 
   const tooltipLabel = React.useMemo(() => {
@@ -245,12 +233,7 @@ function ChartLegendContent({
   payload,
   verticalAlign = "bottom",
   nameKey,
-}: React.ComponentProps<"div"> & {
-  /** Hide the series icon. */
-  hideIcon?: boolean
-  /** Data key used for the series name. */
-  nameKey?: string
-} & RechartsPrimitive.DefaultLegendContentProps) {
+}: ChartLegendContentProps) {
   const { config } = useChart()
 
   if (!payload?.length) {
@@ -310,4 +293,59 @@ function getPayloadConfigFromPayload(config: ChartConfig, payload: unknown, key:
   return configLabelKey in config ? config[configLabelKey] : config[key]
 }
 
-export { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent, ChartStyle }
+type ChartRootProps = React.ComponentProps<typeof ark.div> & {
+  /** Series config: label, icon, and color (or theme colors) per data key; exposed as `--color-<key>`. */
+  config: ChartConfig
+  children: React.ComponentProps<typeof RechartsPrimitive.ResponsiveContainer>["children"]
+  /** Width and height used before the container measures itself. */
+  initialDimension?: {
+    width: number
+    height: number
+  }
+}
+
+type ChartTooltipProps = React.ComponentProps<typeof ChartTooltip>
+
+type ChartTooltipContentProps = React.ComponentProps<typeof RechartsPrimitive.Tooltip> &
+  React.ComponentProps<typeof ark.div> & {
+    /** Hide the tooltip label. */
+    hideLabel?: boolean
+    /** Hide the color indicator in each row. */
+    hideIndicator?: boolean
+    /** Indicator style: `dot`, `line`, or `dashed`. */
+    indicator?: "line" | "dot" | "dashed"
+    /** Data key used for the series name. */
+    nameKey?: string
+    /** Data key used for the tooltip label. */
+    labelKey?: string
+  } & Omit<RechartsPrimitive.DefaultTooltipContentProps<TooltipValueType, TooltipNameType>, "accessibilityLayer">
+
+type ChartLegendProps = React.ComponentProps<typeof ChartLegend>
+
+type ChartLegendContentProps = React.ComponentProps<typeof ark.div> & {
+  /** Hide the series icon. */
+  hideIcon?: boolean
+  /** Data key used for the series name. */
+  nameKey?: string
+} & RechartsPrimitive.DefaultLegendContentProps
+
+type ChartStyleProps = { id: string; config: ChartConfig }
+
+const Chart = {
+  Root: ChartRoot,
+  Tooltip: ChartTooltip,
+  TooltipContent: ChartTooltipContent,
+  Legend: ChartLegend,
+  LegendContent: ChartLegendContent,
+  Style: ChartStyle,
+}
+
+export {
+  Chart,
+  type ChartRootProps,
+  type ChartTooltipProps,
+  type ChartTooltipContentProps,
+  type ChartLegendProps,
+  type ChartLegendContentProps,
+  type ChartStyleProps,
+}

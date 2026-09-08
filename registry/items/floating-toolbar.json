@@ -7,7 +7,7 @@
   ],
   "parts": [
     {
-      "name": "FloatingToolbar",
+      "name": "FloatingToolbar.Root",
       "props": [
         {
           "name": "onEscape",
@@ -23,6 +23,13 @@
           "default": "true",
           "description": "The controlled open state.",
           "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -48,14 +55,16 @@
       ]
     }
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
   "registryDependencies": [
     "lib/utils"
   ],
   "files": [
     {
       "path": "components/ui/floating-toolbar.tsx",
-      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\n/**\n * FloatingToolbar — the snackbar-style action bar that floats over a page\n * (bulk actions on tables, pending edits on grids). Arrow keys move between\n * its buttons, Home/End jump, and Escape calls `onEscape` unless focus is in a\n * nested menu. Renders nothing while `open` is false.\n */\nfunction FloatingToolbar({\n  open = true,\n  onEscape,\n  className,\n  children,\n  onKeyDown,\n  ...props\n}: React.ComponentProps<\"div\"> & { open?: boolean; onEscape?: () => void }) {\n  const ref = React.useRef<HTMLDivElement>(null)\n  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {\n    onKeyDown?.(event)\n    if (event.defaultPrevented) return\n    const list = Array.from(ref.current?.querySelectorAll<HTMLButtonElement>(\"button:not([disabled])\") ?? [])\n    const currentIndex = list.findIndex((b) => b === document.activeElement)\n    switch (event.key) {\n      case \"ArrowRight\":\n        event.preventDefault()\n        list[(currentIndex + 1) % list.length]?.focus()\n        break\n      case \"ArrowLeft\":\n        event.preventDefault()\n        list[currentIndex <= 0 ? list.length - 1 : currentIndex - 1]?.focus()\n        break\n      case \"Home\":\n        event.preventDefault()\n        list[0]?.focus()\n        break\n      case \"End\":\n        event.preventDefault()\n        list[list.length - 1]?.focus()\n        break\n      case \"Escape\": {\n        const target = event.target as HTMLElement\n        const active = document.activeElement as HTMLElement | null\n        const inMenu = [target, active].some(\n          (el) =>\n            el?.closest('[data-slot=\"dropdown-menu-trigger\"]') || el?.closest('[data-slot=\"dropdown-menu-content\"]')\n        )\n        if (inMenu || !onEscape) return\n        event.preventDefault()\n        onEscape()\n        break\n      }\n    }\n  }\n  if (!open) return null\n  return (\n    <div\n      ref={ref}\n      role=\"toolbar\"\n      data-slot=\"floating-toolbar\"\n      tabIndex={-1}\n      onKeyDown={handleKeyDown}\n      className={cn(\n        \"fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-xl transition-all delay-100 duration-300 ease-out hover:scale-105 focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:outline-none\",\n        className\n      )}\n      {...props}\n    >\n      <div\n        data-slot=\"floating-toolbar-content\"\n        className=\"flex items-center gap-2 rounded-xl border bg-background/95 p-2 shadow-xl backdrop-blur-lg supports-backdrop-filter:bg-background/60\"\n      >\n        {children}\n      </div>\n    </div>\n  )\n}\n\nexport { FloatingToolbar }\n"
+      "content": "import { ark } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\n\n/**\n * FloatingToolbar — the snackbar-style action bar that floats over a page\n * (bulk actions on tables, pending edits on grids). Arrow keys move between\n * its buttons, Home/End jump, and Escape calls `onEscape` unless focus is in a\n * nested menu. Renders nothing while `open` is false.\n */\nfunction FloatingToolbarRoot({\n  open = true,\n  onEscape,\n  className,\n  children,\n  onKeyDown,\n  ...props\n}: FloatingToolbarRootProps) {\n  const ref = React.useRef<HTMLDivElement>(null)\n  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {\n    onKeyDown?.(event)\n    if (event.defaultPrevented) return\n    const list = Array.from(ref.current?.querySelectorAll<HTMLButtonElement>(\"button:not([disabled])\") ?? [])\n    const currentIndex = list.findIndex((b) => b === document.activeElement)\n    switch (event.key) {\n      case \"ArrowRight\":\n        event.preventDefault()\n        list[(currentIndex + 1) % list.length]?.focus()\n        break\n      case \"ArrowLeft\":\n        event.preventDefault()\n        list[currentIndex <= 0 ? list.length - 1 : currentIndex - 1]?.focus()\n        break\n      case \"Home\":\n        event.preventDefault()\n        list[0]?.focus()\n        break\n      case \"End\":\n        event.preventDefault()\n        list[list.length - 1]?.focus()\n        break\n      case \"Escape\": {\n        const target = event.target as HTMLElement\n        const active = document.activeElement as HTMLElement | null\n        const inMenu = [target, active].some(\n          (el) =>\n            el?.closest('[data-slot=\"dropdown-menu-trigger\"]') || el?.closest('[data-slot=\"dropdown-menu-content\"]')\n        )\n        if (inMenu || !onEscape) return\n        event.preventDefault()\n        onEscape()\n        break\n      }\n    }\n  }\n  if (!open) return null\n  return (\n    <ark.div\n      ref={ref}\n      role=\"toolbar\"\n      data-slot=\"floating-toolbar\"\n      tabIndex={-1}\n      onKeyDown={handleKeyDown}\n      className={cn(\n        \"fixed bottom-6 left-1/2 z-50 -translate-x-1/2 rounded-xl transition-all delay-100 duration-300 ease-out hover:scale-105 focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:outline-none\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <div\n            data-slot=\"floating-toolbar-content\"\n            className=\"flex items-center gap-2 rounded-xl border bg-background/95 p-2 shadow-xl backdrop-blur-lg supports-backdrop-filter:bg-background/60\"\n          >\n            {children}\n          </div>\n        </>\n      )}\n    </ark.div>\n  )\n}\n\ntype FloatingToolbarRootProps = React.ComponentProps<typeof ark.div> & { open?: boolean; onEscape?: () => void }\n\nconst FloatingToolbar = {\n  Root: FloatingToolbarRoot,\n}\n\nexport { FloatingToolbar, type FloatingToolbarRootProps }\n"
     }
   ],
   "docs": "## Floating toolbar\n`src/components/ui/floating-toolbar.tsx` is the snackbar-style bar that floats at the bottom of a\npage (`open`, `onEscape`, arrow/Home/End roving between its buttons, Escape ignored while focus is\nin a nested menu). `DataTableBulkActions` renders on it; the data grid demo uses it for unsaved\nchanges. Use it for any \"N things pending\" action bar instead of a new fixed div."

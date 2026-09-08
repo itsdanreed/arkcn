@@ -1,0 +1,216 @@
+{
+  "name": "fieldset",
+  "type": "ui",
+  "description": "",
+  "ark": "Fieldset",
+  "exports": [
+    "Fieldset",
+    "useFieldset",
+    "useFieldsetContext"
+  ],
+  "parts": [
+    {
+      "name": "Fieldset.Root",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Indicates whether the fieldset is invalid.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Fieldset.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseFieldsetContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Fieldset.ErrorText",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Fieldset.HelperText",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Fieldset.Legend",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Fieldset.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "{ refs: { rootRef: RefObject<HTMLFieldSetElement | null>; }; ids: { legend: string; errorText: string; helperText: string; }; disabled: boolean; invalid: boo…",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/fieldset.tsx",
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport { Fieldset as FieldsetPrimitive, useFieldset, useFieldsetContext } from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction FieldsetContext(props: FieldsetContextProps) {\n  return <FieldsetPrimitive.Context {...props} />\n}\n\nfunction FieldsetErrorText({ className, ...props }: FieldsetErrorTextProps) {\n  return (\n    <FieldsetPrimitive.ErrorText\n      data-slot=\"fieldset-error-text\"\n      className={cn(\"text-sm text-destructive\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FieldsetHelperText({ className, ...props }: FieldsetHelperTextProps) {\n  return (\n    <FieldsetPrimitive.HelperText\n      data-slot=\"fieldset-helper-text\"\n      className={cn(\"text-sm text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FieldsetLegend({ className, ...props }: FieldsetLegendProps) {\n  return (\n    <FieldsetPrimitive.Legend\n      data-slot=\"fieldset-legend\"\n      className={cn(\"text-sm font-medium data-disabled:opacity-50\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FieldsetRoot({ className, ...props }: FieldsetRootProps) {\n  return (\n    <FieldsetPrimitive.Root data-slot=\"fieldset\" className={cn(\"flex min-w-0 flex-col gap-4\", className)} {...props} />\n  )\n}\n\nfunction FieldsetRootProvider({ className, ...props }: FieldsetRootProviderProps) {\n  return (\n    <FieldsetPrimitive.RootProvider\n      data-slot=\"fieldset-root-provider\"\n      className={cn(\"flex min-w-0 flex-col gap-4\", className)}\n      {...props}\n    />\n  )\n}\n\ntype FieldsetRootProps = React.ComponentProps<typeof FieldsetPrimitive.Root>\n\ntype FieldsetContextProps = React.ComponentProps<typeof FieldsetPrimitive.Context>\n\ntype FieldsetErrorTextProps = React.ComponentProps<typeof FieldsetPrimitive.ErrorText>\n\ntype FieldsetHelperTextProps = React.ComponentProps<typeof FieldsetPrimitive.HelperText>\n\ntype FieldsetLegendProps = React.ComponentProps<typeof FieldsetPrimitive.Legend>\n\ntype FieldsetRootProviderProps = React.ComponentProps<typeof FieldsetPrimitive.RootProvider>\n\nconst Fieldset = {\n  Root: FieldsetRoot,\n  Context: FieldsetContext,\n  ErrorText: FieldsetErrorText,\n  HelperText: FieldsetHelperText,\n  Legend: FieldsetLegend,\n  RootProvider: FieldsetRootProvider,\n}\n\nexport {\n  Fieldset,\n  useFieldset,\n  useFieldsetContext,\n  type FieldsetRootProps,\n  type FieldsetContextProps,\n  type FieldsetErrorTextProps,\n  type FieldsetHelperTextProps,\n  type FieldsetLegendProps,\n  type FieldsetRootProviderProps,\n}\n"
+    }
+  ]
+}

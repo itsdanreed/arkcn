@@ -1,35 +1,26 @@
 import { Button } from "@/components/ui/button"
-import {
-  Drawer,
-  DrawerClose,
-  DrawerContent,
-  DrawerDescription,
-  DrawerFooter,
-  DrawerHeader,
-  DrawerTitle,
-  DrawerTrigger,
-} from "@/components/ui/drawer"
+import { Drawer } from "@/components/ui/drawer"
 
 export default function DrawerExample() {
   return (
-    <Drawer>
-      <DrawerTrigger asChild>
+    <Drawer.Root>
+      <Drawer.Trigger asChild>
         <Button variant="outline">Open drawer</Button>
-      </DrawerTrigger>
-      <DrawerContent>
-        <DrawerHeader>
-          <DrawerTitle>Move goal</DrawerTitle>
-          <DrawerDescription>Set your daily activity goal.</DrawerDescription>
-        </DrawerHeader>
-        <DrawerFooter>
-          <DrawerClose asChild>
+      </Drawer.Trigger>
+      <Drawer.Content>
+        <Drawer.Header>
+          <Drawer.Title>Move goal</Drawer.Title>
+          <Drawer.Description>Set your daily activity goal.</Drawer.Description>
+        </Drawer.Header>
+        <Drawer.Footer>
+          <Drawer.CloseTrigger asChild>
             <Button>Submit</Button>
-          </DrawerClose>
-          <DrawerClose asChild>
+          </Drawer.CloseTrigger>
+          <Drawer.CloseTrigger asChild>
             <Button variant="outline">Cancel</Button>
-          </DrawerClose>
-        </DrawerFooter>
-      </DrawerContent>
-    </Drawer>
+          </Drawer.CloseTrigger>
+        </Drawer.Footer>
+      </Drawer.Content>
+    </Drawer.Root>
   )
 }

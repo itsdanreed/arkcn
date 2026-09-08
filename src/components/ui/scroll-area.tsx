@@ -1,24 +1,33 @@
+import { useScrollArea, useScrollAreaContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { ScrollArea as ScrollAreaPrimitive } from "@ark-ui/react"
 
-function ScrollArea({ className, children, ...props }: React.ComponentProps<typeof ScrollAreaPrimitive.Root>) {
+function ScrollAreaRoot({ className, children, ...props }: ScrollAreaRootProps) {
   return (
     <ScrollAreaPrimitive.Root data-slot="scroll-area" className={cn("relative", className)} {...props}>
-      <ScrollAreaViewport>
-        <ScrollAreaContent>{children}</ScrollAreaContent>
-      </ScrollAreaViewport>
-      <ScrollBar />
-      <ScrollAreaCorner />
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <ScrollAreaViewport>
+            <ScrollAreaContent>{children}</ScrollAreaContent>
+          </ScrollAreaViewport>
+          <ScrollAreaScrollbar />
+          <ScrollAreaCorner />
+        </>
+      )}
     </ScrollAreaPrimitive.Root>
   )
 }
 
-function ScrollAreaContext({ ...props }: React.ComponentProps<typeof ScrollAreaPrimitive.Context>) {
+function ScrollAreaContext({ ...props }: ScrollAreaContextProps) {
   return <ScrollAreaPrimitive.Context {...props} />
 }
 
-function ScrollAreaViewport({ className, ...props }: React.ComponentProps<typeof ScrollAreaPrimitive.Viewport>) {
+function ScrollAreaViewport({ className, ...props }: ScrollAreaViewportProps) {
   return (
     <ScrollAreaPrimitive.Viewport
       data-slot="scroll-area-viewport"
@@ -31,17 +40,13 @@ function ScrollAreaViewport({ className, ...props }: React.ComponentProps<typeof
   )
 }
 
-function ScrollAreaContent({ className, ...props }: React.ComponentProps<typeof ScrollAreaPrimitive.Content>) {
+function ScrollAreaContent({ className, ...props }: ScrollAreaContentProps) {
   return (
     <ScrollAreaPrimitive.Content data-slot="scroll-area-content" className={cn("min-w-full", className)} {...props} />
   )
 }
 
-function ScrollBar({
-  className,
-  orientation = "vertical",
-  ...props
-}: React.ComponentProps<typeof ScrollAreaPrimitive.Scrollbar>) {
+function ScrollAreaScrollbar({ className, orientation = "vertical", ...props }: ScrollAreaScrollbarProps) {
   return (
     <ScrollAreaPrimitive.Scrollbar
       data-slot="scroll-area-scrollbar"
@@ -52,12 +57,20 @@ function ScrollBar({
       )}
       {...props}
     >
-      <ScrollAreaThumb />
+      {props.asChild ? (
+        React.isValidElement(props.children) ? (
+          props.children
+        ) : null
+      ) : (
+        <>
+          <ScrollAreaThumb />
+        </>
+      )}
     </ScrollAreaPrimitive.Scrollbar>
   )
 }
 
-function ScrollAreaThumb({ className, ...props }: React.ComponentProps<typeof ScrollAreaPrimitive.Thumb>) {
+function ScrollAreaThumb({ className, ...props }: ScrollAreaThumbProps) {
   return (
     <ScrollAreaPrimitive.Thumb
       data-slot="scroll-area-thumb"
@@ -67,16 +80,51 @@ function ScrollAreaThumb({ className, ...props }: React.ComponentProps<typeof Sc
   )
 }
 
-function ScrollAreaCorner({ ...props }: React.ComponentProps<typeof ScrollAreaPrimitive.Corner>) {
+function ScrollAreaCorner({ ...props }: ScrollAreaCornerProps) {
   return <ScrollAreaPrimitive.Corner data-slot="scroll-area-corner" {...props} />
 }
 
+function ScrollAreaRootProvider({ className, ...props }: ScrollAreaRootProviderProps) {
+  return <ScrollAreaPrimitive.RootProvider data-slot="scroll-area" className={cn("relative", className)} {...props} />
+}
+
+type ScrollAreaScrollbarProps = React.ComponentProps<typeof ScrollAreaPrimitive.Scrollbar>
+
+type ScrollAreaRootProps = React.ComponentProps<typeof ScrollAreaPrimitive.Root>
+
+type ScrollAreaRootProviderProps = React.ComponentProps<typeof ScrollAreaPrimitive.RootProvider>
+
+type ScrollAreaContentProps = React.ComponentProps<typeof ScrollAreaPrimitive.Content>
+
+type ScrollAreaContextProps = React.ComponentProps<typeof ScrollAreaPrimitive.Context>
+
+type ScrollAreaCornerProps = React.ComponentProps<typeof ScrollAreaPrimitive.Corner>
+
+type ScrollAreaThumbProps = React.ComponentProps<typeof ScrollAreaPrimitive.Thumb>
+
+type ScrollAreaViewportProps = React.ComponentProps<typeof ScrollAreaPrimitive.Viewport>
+
+const ScrollArea = {
+  Scrollbar: ScrollAreaScrollbar,
+  Root: ScrollAreaRoot,
+  RootProvider: ScrollAreaRootProvider,
+  Content: ScrollAreaContent,
+  Context: ScrollAreaContext,
+  Corner: ScrollAreaCorner,
+  Thumb: ScrollAreaThumb,
+  Viewport: ScrollAreaViewport,
+}
+
 export {
+  useScrollArea,
+  useScrollAreaContext,
   ScrollArea,
-  ScrollAreaContent,
-  ScrollAreaContext,
-  ScrollAreaCorner,
-  ScrollAreaThumb,
-  ScrollAreaViewport,
-  ScrollBar,
+  type ScrollAreaScrollbarProps,
+  type ScrollAreaRootProps,
+  type ScrollAreaRootProviderProps,
+  type ScrollAreaContentProps,
+  type ScrollAreaContextProps,
+  type ScrollAreaCornerProps,
+  type ScrollAreaThumbProps,
+  type ScrollAreaViewportProps,
 }

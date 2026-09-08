@@ -1,0 +1,426 @@
+{
+  "name": "pin-input",
+  "type": "ui",
+  "description": "",
+  "ark": "PinInput",
+  "exports": [
+    "PinInput",
+    "usePinInput",
+    "usePinInputContext"
+  ],
+  "parts": [
+    {
+      "name": "PinInput.Root",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "autoFocus",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to auto-focus the first input.",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "autoSubmit",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to auto-submit the owning form when all inputs are filled.",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "blurOnComplete",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to blur the input when the value is complete",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "required": false,
+          "description": "The number of inputs to render to improve SSR aria attributes.\nThis will be required in next major version.",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string[]",
+          "required": false,
+          "description": "The initial value of the the pin input when rendered.\nUse when you don't need to control the value of the pin input.",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the inputs are disabled",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "form",
+          "type": "string",
+          "required": false,
+          "description": "The associate form of the underlying input element.",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the pin input. Useful for composition.",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the pin input is in the invalid state",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "mask",
+          "type": "boolean",
+          "required": false,
+          "description": "If `true`, the input's value will be masked just like `type=password`",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the input element. Useful for form submission.",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function called on input change",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "onValueComplete",
+          "type": "((details: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when all inputs have valid values",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "onValueInvalid",
+          "type": "((details: ValueInvalidDetails) => void)",
+          "required": false,
+          "description": "Function called when an invalid value is entered",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "otp",
+          "type": "boolean",
+          "required": false,
+          "description": "If `true`, the pin input component signals to its fields that they should\nuse `autocomplete=\"one-time-code\"`.",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "pattern",
+          "type": "string",
+          "required": false,
+          "description": "The regular expression that the user-entered input value is checked against.",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "default": "\"○\"",
+          "description": "The placeholder text for the input",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the pin input is in the valid state",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the pin input is required",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "sanitizeValue",
+          "type": "((value: string) => string)",
+          "required": false,
+          "description": "Function to sanitize pasted values before validation.\nUseful for stripping dashes, spaces, or other formatting.",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "selectOnFocus",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to select input value when input is focused",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "translations",
+          "type": "IntlTranslations",
+          "required": false,
+          "description": "Specifies the localized strings that identifies the accessibility elements and their states",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "type",
+          "type": "\"numeric\" | \"alphabetic\" | \"alphanumeric\"",
+          "required": false,
+          "default": "\"numeric\"",
+          "description": "The type of value the pin-input should allow",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "value",
+          "type": "string[]",
+          "required": false,
+          "description": "The controlled value of the the pin input.",
+          "from": "@zag-js/pin-input"
+        }
+      ]
+    },
+    {
+      "name": "PinInput.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UsePinInputContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "PinInput.Control",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "PinInput.HiddenInput",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "PinInput.Input",
+      "props": [
+        {
+          "name": "index",
+          "type": "number",
+          "required": true,
+          "description": "Position of the item in its list.",
+          "from": "@zag-js/pin-input"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "PinInput.Label",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "PinInput.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UsePinInputReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/pin-input.tsx",
+      "content": "\"use client\"\nimport * as React from \"react\"\nimport { PinInput as PinInputPrimitive, usePinInput, usePinInputContext } from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\n\nfunction PinInputContext(props: PinInputContextProps) {\n  return <PinInputPrimitive.Context {...props} />\n}\n\nfunction PinInputControl({ className, ...props }: PinInputControlProps) {\n  return <PinInputPrimitive.Control data-slot=\"pin-input-control\" className={cn(\"flex gap-2\", className)} {...props} />\n}\n\nfunction PinInputHiddenInput({ className, ...props }: PinInputHiddenInputProps) {\n  return <PinInputPrimitive.HiddenInput data-slot=\"pin-input-hidden-input\" className={cn(className)} {...props} />\n}\n\nfunction PinInputInput({ className, ...props }: PinInputInputProps) {\n  return (\n    <PinInputPrimitive.Input\n      data-slot=\"pin-input-input\"\n      className={cn(\n        \"size-9 h-8 min-w-0 rounded-lg border border-input bg-transparent px-0 text-center text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction PinInputLabel({ className, ...props }: PinInputLabelProps) {\n  return (\n    <PinInputPrimitive.Label\n      data-slot=\"pin-input-label\"\n      className={cn(\"text-sm font-medium data-disabled:opacity-50\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction PinInputRoot({ className, ...props }: PinInputRootProps) {\n  return <PinInputPrimitive.Root data-slot=\"pin-input\" className={cn(\"flex flex-col gap-1.5\", className)} {...props} />\n}\n\nfunction PinInputRootProvider({ className, ...props }: PinInputRootProviderProps) {\n  return (\n    <PinInputPrimitive.RootProvider\n      data-slot=\"pin-input-root-provider\"\n      className={cn(\"flex flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\ntype PinInputRootProps = React.ComponentProps<typeof PinInputPrimitive.Root>\n\ntype PinInputContextProps = React.ComponentProps<typeof PinInputPrimitive.Context>\n\ntype PinInputControlProps = React.ComponentProps<typeof PinInputPrimitive.Control>\n\ntype PinInputHiddenInputProps = React.ComponentProps<typeof PinInputPrimitive.HiddenInput>\n\ntype PinInputInputProps = React.ComponentProps<typeof PinInputPrimitive.Input>\n\ntype PinInputLabelProps = React.ComponentProps<typeof PinInputPrimitive.Label>\n\ntype PinInputRootProviderProps = React.ComponentProps<typeof PinInputPrimitive.RootProvider>\n\nconst PinInput = {\n  Root: PinInputRoot,\n  Context: PinInputContext,\n  Control: PinInputControl,\n  HiddenInput: PinInputHiddenInput,\n  Input: PinInputInput,\n  Label: PinInputLabel,\n  RootProvider: PinInputRootProvider,\n}\n\nexport {\n  PinInput,\n  usePinInput,\n  usePinInputContext,\n  type PinInputRootProps,\n  type PinInputContextProps,\n  type PinInputControlProps,\n  type PinInputHiddenInputProps,\n  type PinInputInputProps,\n  type PinInputLabelProps,\n  type PinInputRootProviderProps,\n}\n"
+    }
+  ]
+}

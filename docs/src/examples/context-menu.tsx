@@ -1,26 +1,19 @@
-import {
-  ContextMenu,
-  ContextMenuContent,
-  ContextMenuGroup,
-  ContextMenuItem,
-  ContextMenuSeparator,
-  ContextMenuTrigger,
-} from "@/components/ui/context-menu"
+import { ContextMenu } from "@/components/ui/context-menu"
 
 export default function ContextMenuExample() {
   return (
-    <ContextMenu>
-      <ContextMenuTrigger className="flex h-36 w-72 items-center justify-center rounded-md border border-dashed text-sm">
+    <ContextMenu.Root>
+      <ContextMenu.ContextTrigger className="flex h-36 w-72 items-center justify-center rounded-md border border-dashed text-sm">
         Right click here
-      </ContextMenuTrigger>
-      <ContextMenuContent className="w-48">
-        <ContextMenuGroup>
-          <ContextMenuItem value="back">Back</ContextMenuItem>
-          <ContextMenuItem value="forward">Forward</ContextMenuItem>
-          <ContextMenuSeparator />
-          <ContextMenuItem value="inspect">Inspect</ContextMenuItem>
-        </ContextMenuGroup>
-      </ContextMenuContent>
-    </ContextMenu>
+      </ContextMenu.ContextTrigger>
+      <ContextMenu.Content className="w-48">
+        <ContextMenu.ItemGroup>
+          <ContextMenu.Item value="back">Back</ContextMenu.Item>
+          <ContextMenu.Item value="forward">Forward</ContextMenu.Item>
+          <ContextMenu.Separator />
+          <ContextMenu.Item value="inspect">Inspect</ContextMenu.Item>
+        </ContextMenu.ItemGroup>
+      </ContextMenu.Content>
+    </ContextMenu.Root>
   )
 }

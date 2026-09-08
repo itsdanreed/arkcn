@@ -1,3 +1,5 @@
+import { ark } from "@ark-ui/react"
+import { useDialog, useDialogContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
 import { Dialog as SheetPrimitive, Portal as PortalPrimitive } from "@ark-ui/react"
@@ -5,27 +7,27 @@ import { Dialog as SheetPrimitive, Portal as PortalPrimitive } from "@ark-ui/rea
 import { Button } from "@/components/ui/button"
 import { XIcon } from "lucide-react"
 
-function Sheet({ lazyMount = true, unmountOnExit = true, ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) {
+function SheetRoot({ lazyMount = true, unmountOnExit = true, ...props }: SheetRootProps) {
   return <SheetPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />
 }
 
-function SheetTrigger({ ...props }: React.ComponentProps<typeof SheetPrimitive.Trigger>) {
+function SheetTrigger({ ...props }: SheetTriggerProps) {
   return <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />
 }
 
-function SheetClose({ ...props }: React.ComponentProps<typeof SheetPrimitive.CloseTrigger>) {
+function SheetCloseTrigger({ ...props }: SheetCloseTriggerProps) {
   return <SheetPrimitive.CloseTrigger data-slot="sheet-close" {...props} />
 }
 
-function SheetPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {
+function SheetPortal({ ...props }: SheetPortalProps) {
   return <PortalPrimitive {...props} />
 }
 
-function SheetContext({ ...props }: React.ComponentProps<typeof SheetPrimitive.Context>) {
+function SheetContext({ ...props }: SheetContextProps) {
   return <SheetPrimitive.Context {...props} />
 }
 
-function SheetOverlay({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Backdrop>) {
+function SheetBackdrop({ className, ...props }: SheetBackdropProps) {
   return (
     <SheetPrimitive.Backdrop
       data-slot="sheet-overlay"
@@ -38,7 +40,7 @@ function SheetOverlay({ className, ...props }: React.ComponentProps<typeof Sheet
   )
 }
 
-function SheetPositioner({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Positioner>) {
+function SheetPositioner({ className, ...props }: SheetPositionerProps) {
   return (
     <SheetPrimitive.Positioner
       data-slot="sheet-positioner"
@@ -48,19 +50,10 @@ function SheetPositioner({ className, ...props }: React.ComponentProps<typeof Sh
   )
 }
 
-function SheetContent({
-  className,
-  children,
-  side = "right",
-  showCloseButton = true,
-  ...props
-}: React.ComponentProps<typeof SheetPrimitive.Content> & {
-  side?: "top" | "right" | "bottom" | "left"
-  showCloseButton?: boolean
-}) {
+function SheetContent({ className, children, side = "right", showCloseButton = true, ...props }: SheetContentProps) {
   return (
     <SheetPortal>
-      <SheetOverlay />
+      <SheetBackdrop />
       <SheetPositioner data-side={side}>
         <SheetPrimitive.Content
           data-slot="sheet-content"
@@ -86,15 +79,15 @@ function SheetContent({
   )
 }
 
-function SheetHeader({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="sheet-header" className={cn("flex flex-col gap-0.5 p-4", className)} {...props} />
+function SheetHeader({ className, ...props }: SheetHeaderProps) {
+  return <ark.div data-slot="sheet-header" className={cn("flex flex-col gap-0.5 p-4", className)} {...props} />
 }
 
-function SheetFooter({ className, ...props }: React.ComponentProps<"div">) {
-  return <div data-slot="sheet-footer" className={cn("mt-auto flex flex-col gap-2 p-4", className)} {...props} />
+function SheetFooter({ className, ...props }: SheetFooterProps) {
+  return <ark.div data-slot="sheet-footer" className={cn("mt-auto flex flex-col gap-2 p-4", className)} {...props} />
 }
 
-function SheetTitle({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Title>) {
+function SheetTitle({ className, ...props }: SheetTitleProps) {
   return (
     <SheetPrimitive.Title
       data-slot="sheet-title"
@@ -104,7 +97,7 @@ function SheetTitle({ className, ...props }: React.ComponentProps<typeof SheetPr
   )
 }
 
-function SheetDescription({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Description>) {
+function SheetDescription({ className, ...props }: SheetDescriptionProps) {
   return (
     <SheetPrimitive.Description
       data-slot="sheet-description"
@@ -114,17 +107,70 @@ function SheetDescription({ className, ...props }: React.ComponentProps<typeof S
   )
 }
 
+function SheetRootProvider(props: SheetRootProviderProps) {
+  return <SheetPrimitive.RootProvider {...props} />
+}
+
+type SheetBackdropProps = React.ComponentProps<typeof SheetPrimitive.Backdrop>
+
+type SheetCloseTriggerProps = React.ComponentProps<typeof SheetPrimitive.CloseTrigger>
+
+type SheetRootProps = React.ComponentProps<typeof SheetPrimitive.Root>
+
+type SheetRootProviderProps = React.ComponentProps<typeof SheetPrimitive.RootProvider>
+
+type SheetTriggerProps = React.ComponentProps<typeof SheetPrimitive.Trigger>
+
+type SheetContentProps = React.ComponentProps<typeof SheetPrimitive.Content> & {
+  side?: "top" | "right" | "bottom" | "left"
+  showCloseButton?: boolean
+}
+
+type SheetContextProps = React.ComponentProps<typeof SheetPrimitive.Context>
+
+type SheetHeaderProps = React.ComponentProps<typeof ark.div>
+
+type SheetFooterProps = React.ComponentProps<typeof ark.div>
+
+type SheetPortalProps = React.ComponentProps<typeof PortalPrimitive>
+
+type SheetPositionerProps = React.ComponentProps<typeof SheetPrimitive.Positioner>
+
+type SheetTitleProps = React.ComponentProps<typeof SheetPrimitive.Title>
+
+type SheetDescriptionProps = React.ComponentProps<typeof SheetPrimitive.Description>
+
+const Sheet = {
+  Backdrop: SheetBackdrop,
+  CloseTrigger: SheetCloseTrigger,
+  Root: SheetRoot,
+  RootProvider: SheetRootProvider,
+  Trigger: SheetTrigger,
+  Content: SheetContent,
+  Context: SheetContext,
+  Header: SheetHeader,
+  Footer: SheetFooter,
+  Portal: SheetPortal,
+  Positioner: SheetPositioner,
+  Title: SheetTitle,
+  Description: SheetDescription,
+}
+
 export {
+  useDialog,
+  useDialogContext,
   Sheet,
-  SheetTrigger,
-  SheetClose,
-  SheetContent,
-  SheetContext,
-  SheetHeader,
-  SheetFooter,
-  SheetOverlay,
-  SheetPortal,
-  SheetPositioner,
-  SheetTitle,
-  SheetDescription,
+  type SheetBackdropProps,
+  type SheetCloseTriggerProps,
+  type SheetRootProps,
+  type SheetRootProviderProps,
+  type SheetTriggerProps,
+  type SheetContentProps,
+  type SheetContextProps,
+  type SheetHeaderProps,
+  type SheetFooterProps,
+  type SheetPortalProps,
+  type SheetPositionerProps,
+  type SheetTitleProps,
+  type SheetDescriptionProps,
 }

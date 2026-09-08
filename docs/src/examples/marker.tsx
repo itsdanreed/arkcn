@@ -1,21 +1,21 @@
 import { MapPinIcon } from "lucide-react"
-import { Marker, MarkerContent, MarkerIcon } from "@/components/ui/marker"
+import { Marker } from "@/components/ui/marker"
 
 export default function MarkerExample() {
   return (
     <div className="flex items-end gap-6">
-      <Marker>
-        <MarkerIcon>
+      <Marker.Root>
+        <Marker.Icon>
           <MapPinIcon />
-        </MarkerIcon>
-        <MarkerContent>Office</MarkerContent>
-      </Marker>
-      <Marker variant="border">
-        <MarkerIcon>
+        </Marker.Icon>
+        <Marker.Content>Office</Marker.Content>
+      </Marker.Root>
+      <Marker.Root variant="border">
+        <Marker.Icon>
           <MapPinIcon />
-        </MarkerIcon>
-        <MarkerContent>Warehouse</MarkerContent>
-      </Marker>
+        </Marker.Icon>
+        <Marker.Content>Warehouse</Marker.Content>
+      </Marker.Root>
     </div>
   )
 }

@@ -3,17 +3,19 @@
   "type": "ui",
   "description": "",
   "exports": [
-    "Empty",
-    "EmptyHeader",
-    "EmptyTitle",
-    "EmptyDescription",
-    "EmptyContent",
-    "EmptyMedia"
+    "Empty"
   ],
   "parts": [
     {
-      "name": "Empty",
+      "name": "Empty.Root",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -38,8 +40,15 @@
       ]
     },
     {
-      "name": "EmptyHeader",
+      "name": "Empty.Header",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -64,8 +73,15 @@
       ]
     },
     {
-      "name": "EmptyTitle",
+      "name": "Empty.Title",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -90,8 +106,15 @@
       ]
     },
     {
-      "name": "EmptyDescription",
+      "name": "Empty.Description",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -116,8 +139,15 @@
       ]
     },
     {
-      "name": "EmptyContent",
+      "name": "Empty.Content",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -142,7 +172,7 @@
       ]
     },
     {
-      "name": "EmptyMedia",
+      "name": "Empty.Media",
       "props": [
         {
           "name": "variant",
@@ -151,6 +181,13 @@
           "default": "\"default\"",
           "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
           "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
         },
         {
           "name": "children",
@@ -177,6 +214,7 @@
     }
   ],
   "dependencies": {
+    "@ark-ui/react": "^5.39.1",
     "class-variance-authority": "^0.7.1"
   },
   "registryDependencies": [
@@ -185,7 +223,7 @@
   "files": [
     {
       "path": "components/ui/empty.tsx",
-      "content": "import { cva, type VariantProps } from \"class-variance-authority\"\nimport { cn } from \"@/lib/utils\"\n\nfunction Empty({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"empty\"\n      className={cn(\n        \"flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4 rounded-xl border-dashed p-6 text-center text-balance\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction EmptyHeader({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div data-slot=\"empty-header\" className={cn(\"flex max-w-sm flex-col items-center gap-2\", className)} {...props} />\n  )\n}\n\nconst emptyMediaVariants = cva(\n  \"mb-2 flex shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:shrink-0\",\n  {\n    variants: {\n      variant: {\n        default: \"bg-transparent\",\n        icon: \"flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted text-foreground [&_svg:not([class*='size-'])]:size-4\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  }\n)\n\nfunction EmptyMedia({\n  className,\n  variant = \"default\",\n  ...props\n}: React.ComponentProps<\"div\"> & VariantProps<typeof emptyMediaVariants>) {\n  return (\n    <div\n      data-slot=\"empty-icon\"\n      data-variant={variant}\n      className={cn(emptyMediaVariants({ variant, className }))}\n      {...props}\n    />\n  )\n}\n\nfunction EmptyTitle({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"empty-title\"\n      className={cn(\"font-heading text-sm font-medium tracking-tight\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction EmptyDescription({ className, ...props }: React.ComponentProps<\"p\">) {\n  return (\n    <div\n      data-slot=\"empty-description\"\n      className={cn(\n        \"text-sm/relaxed text-muted-foreground [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction EmptyContent({ className, ...props }: React.ComponentProps<\"div\">) {\n  return (\n    <div\n      data-slot=\"empty-content\"\n      className={cn(\"flex w-full max-w-sm min-w-0 flex-col items-center gap-2.5 text-sm text-balance\", className)}\n      {...props}\n    />\n  )\n}\n\nexport { Empty, EmptyHeader, EmptyTitle, EmptyDescription, EmptyContent, EmptyMedia }\n"
+      "content": "import { ark } from \"@ark-ui/react\"\nimport { cva, type VariantProps } from \"class-variance-authority\"\nimport { cn } from \"@/lib/utils\"\n\nfunction EmptyRoot({ className, ...props }: EmptyRootProps) {\n  return (\n    <ark.div\n      data-slot=\"empty\"\n      className={cn(\n        \"flex w-full min-w-0 flex-1 flex-col items-center justify-center gap-4 rounded-xl border-dashed p-6 text-center text-balance\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction EmptyHeader({ className, ...props }: EmptyHeaderProps) {\n  return (\n    <ark.div\n      data-slot=\"empty-header\"\n      className={cn(\"flex max-w-sm flex-col items-center gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\nconst emptyMediaVariants = cva(\n  \"mb-2 flex shrink-0 items-center justify-center [&_svg]:pointer-events-none [&_svg]:shrink-0\",\n  {\n    variants: {\n      variant: {\n        default: \"bg-transparent\",\n        icon: \"flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted text-foreground [&_svg:not([class*='size-'])]:size-4\",\n      },\n    },\n    defaultVariants: {\n      variant: \"default\",\n    },\n  }\n)\n\nfunction EmptyMedia({ className, variant = \"default\", ...props }: EmptyMediaProps) {\n  return (\n    <ark.div\n      data-slot=\"empty-icon\"\n      data-variant={variant}\n      className={cn(emptyMediaVariants({ variant, className }))}\n      {...props}\n    />\n  )\n}\n\nfunction EmptyTitle({ className, ...props }: EmptyTitleProps) {\n  return (\n    <ark.div\n      data-slot=\"empty-title\"\n      className={cn(\"font-heading text-sm font-medium tracking-tight\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction EmptyDescription({ className, ...props }: EmptyDescriptionProps) {\n  return (\n    <ark.div\n      data-slot=\"empty-description\"\n      className={cn(\n        \"text-sm/relaxed text-muted-foreground [&>a]:underline [&>a]:underline-offset-4 [&>a:hover]:text-primary\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction EmptyContent({ className, ...props }: EmptyContentProps) {\n  return (\n    <ark.div\n      data-slot=\"empty-content\"\n      className={cn(\"flex w-full max-w-sm min-w-0 flex-col items-center gap-2.5 text-sm text-balance\", className)}\n      {...props}\n    />\n  )\n}\n\ntype EmptyRootProps = React.ComponentProps<typeof ark.div>\n\ntype EmptyHeaderProps = React.ComponentProps<typeof ark.div>\n\ntype EmptyTitleProps = React.ComponentProps<typeof ark.div>\n\ntype EmptyDescriptionProps = React.ComponentProps<typeof ark.p>\n\ntype EmptyContentProps = React.ComponentProps<typeof ark.div>\n\ntype EmptyMediaProps = React.ComponentProps<typeof ark.div> & VariantProps<typeof emptyMediaVariants>\n\nconst Empty = {\n  Root: EmptyRoot,\n  Header: EmptyHeader,\n  Title: EmptyTitle,\n  Description: EmptyDescription,\n  Content: EmptyContent,\n  Media: EmptyMedia,\n}\n\nexport {\n  Empty,\n  type EmptyRootProps,\n  type EmptyHeaderProps,\n  type EmptyTitleProps,\n  type EmptyDescriptionProps,\n  type EmptyContentProps,\n  type EmptyMediaProps,\n}\n"
     }
   ]
 }

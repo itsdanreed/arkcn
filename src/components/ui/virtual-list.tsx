@@ -1,5 +1,6 @@
 "use client"
 
+import { ark } from "@ark-ui/react"
 import * as React from "react"
 import { flushSync } from "react-dom"
 import { cn } from "@/lib/utils"
@@ -58,7 +59,7 @@ function findIndex(starts: Float64Array, count: number, offset: number) {
 
 /* ---------------------------------- root --------------------------------- */
 
-type VirtualListProps = Omit<React.ComponentProps<"div">, "children"> & {
+type VirtualListProps = Omit<React.ComponentProps<typeof ark.div>, "children"> & {
   /** Total number of rows. */
   count: number
   /** Row height before measurement (a number, or per index). */
@@ -78,7 +79,7 @@ type VirtualListProps = Omit<React.ComponentProps<"div">, "children"> & {
   children: React.ReactNode
 }
 
-function VirtualList({
+function VirtualListRoot({
   count,
   estimateSize = 36,
   overscan = 6,
@@ -90,7 +91,7 @@ function VirtualList({
   className,
   children,
   ...props
-}: VirtualListProps) {
+}: VirtualListRootProps) {
   const viewportRef = React.useRef<HTMLDivElement | null>(null)
   const sizes = React.useRef(new Map<number, number>())
   const [version, setVersion] = React.useState(0)
@@ -247,9 +248,9 @@ function VirtualList({
   return (
     <VirtualListContext.Provider value={ctx}>
       <VirtualListScroll onScroll={setScrollTop} />
-      <div data-slot="virtual-list" className={cn("flex min-h-0 flex-col", className)} {...props}>
+      <ark.div data-slot="virtual-list" className={cn("flex min-h-0 flex-col", className)} {...props}>
         {children}
-      </div>
+      </ark.div>
     </VirtualListContext.Provider>
   )
 }
@@ -269,10 +270,10 @@ function VirtualListScroll({ onScroll }: { onScroll: (top: number) => void }) {
 
 /* --------------------------------- parts --------------------------------- */
 
-function VirtualListViewport({ className, ref, ...props }: React.ComponentProps<"div">) {
+function VirtualListViewport({ className, ref, ...props }: VirtualListViewportProps) {
   const ctx = useVirtualList()
   return (
-    <div
+    <ark.div
       ref={(el) => {
         ctx.viewportRef.current = el
         if (typeof ref === "function") ref(el)
@@ -286,10 +287,10 @@ function VirtualListViewport({ className, ref, ...props }: React.ComponentProps<
 }
 
 /** Sized to the whole list so the scrollbar is right; rows position inside it. */
-function VirtualListContent({ className, style, ...props }: React.ComponentProps<"div">) {
+function VirtualListContent({ className, style, ...props }: VirtualListContentProps) {
   const ctx = useVirtualList()
   return (
-    <div
+    <ark.div
       data-slot="virtual-list-content"
       className={cn("relative w-full", className)}
       style={{ height: ctx.totalSize, ...style }}
@@ -299,7 +300,7 @@ function VirtualListContent({ className, style, ...props }: React.ComponentProps
 }
 
 /** Renders the visible window. The child renders one row and must return a `VirtualListItem`. */
-function VirtualListItems({ children }: { children: (item: VirtualItem) => React.ReactNode }) {
+function VirtualListItems({ children }: VirtualListItemsProps) {
   const ctx = useVirtualList()
   return (
     <>
@@ -310,7 +311,7 @@ function VirtualListItems({ children }: { children: (item: VirtualItem) => React
   )
 }
 
-function VirtualListItem({ index, className, style, ...props }: React.ComponentProps<"div"> & { index: number }) {
+function VirtualListItem({ index, className, style, ...props }: VirtualListItemProps) {
   const { items, measure } = useVirtualList()
   const item = items.find((i) => i.index === index)
   const ref = React.useCallback(
@@ -326,7 +327,7 @@ function VirtualListItem({ index, className, style, ...props }: React.ComponentP
     [measure, index]
   )
   return (
-    <div
+    <ark.div
       ref={ref}
       data-slot="virtual-list-item"
       data-index={index}
@@ -337,28 +338,49 @@ function VirtualListItem({ index, className, style, ...props }: React.ComponentP
   )
 }
 
-function VirtualListEmpty({ className, children, ...props }: React.ComponentProps<"div">) {
+function VirtualListEmpty({ className, children, ...props }: VirtualListEmptyProps) {
   const ctx = useVirtualList()
   if (ctx.count > 0) return null
   return (
-    <div
+    <ark.div
       data-slot="virtual-list-empty"
       className={cn("flex flex-1 items-center justify-center py-8 text-sm text-muted-foreground", className)}
       {...props}
     >
-      {children ?? "Nothing to show"}
-    </div>
+      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? "Nothing to show"}</>}
+    </ark.div>
   )
+}
+
+type VirtualListRootProps = VirtualListProps
+
+type VirtualListContentProps = React.ComponentProps<typeof ark.div>
+
+type VirtualListEmptyProps = React.ComponentProps<typeof ark.div>
+
+type VirtualListItemProps = React.ComponentProps<typeof ark.div> & { index: number }
+
+type VirtualListItemsProps = { children: (item: VirtualItem) => React.ReactNode }
+
+type VirtualListViewportProps = React.ComponentProps<typeof ark.div>
+
+const VirtualList = {
+  Root: VirtualListRoot,
+  Content: VirtualListContent,
+  Empty: VirtualListEmpty,
+  Item: VirtualListItem,
+  Items: VirtualListItems,
+  Viewport: VirtualListViewport,
 }
 
 export {
   VirtualList,
-  VirtualListContent,
-  VirtualListEmpty,
-  VirtualListItem,
-  VirtualListItems,
-  VirtualListViewport,
   useVirtualList,
   type VirtualItem,
-  type VirtualListProps,
+  type VirtualListRootProps,
+  type VirtualListContentProps,
+  type VirtualListEmptyProps,
+  type VirtualListItemProps,
+  type VirtualListItemsProps,
+  type VirtualListViewportProps,
 }

@@ -10,7 +10,7 @@ export default function FloatingToolbarExample() {
       <Button variant="outline" size="sm" onClick={() => setOpen((o) => !o)}>
         {open ? "Hide" : "Show"} toolbar
       </Button>
-      <FloatingToolbar open={open} onEscape={() => setOpen(false)} className="absolute bottom-4">
+      <FloatingToolbar.Root open={open} onEscape={() => setOpen(false)} className="absolute bottom-4">
         <span className="px-2 text-sm">3 selected</span>
         <Button
           size="sm"
@@ -32,7 +32,7 @@ export default function FloatingToolbarExample() {
         >
           Delete
         </Button>
-      </FloatingToolbar>
+      </FloatingToolbar.Root>
     </div>
   )
 }

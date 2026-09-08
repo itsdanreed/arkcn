@@ -4,17 +4,46 @@
   "description": "",
   "ark": "HoverCard",
   "exports": [
-    "HoverCard",
-    "HoverCardArrow",
-    "HoverCardContent",
-    "HoverCardContext",
-    "HoverCardPortal",
-    "HoverCardPositioner",
-    "HoverCardTrigger"
+    "useHoverCard",
+    "useHoverCardContext",
+    "HoverCard"
   ],
   "parts": [
     {
-      "name": "HoverCard",
+      "name": "HoverCard.ArrowTip",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "HoverCard.Root",
       "props": [
         {
           "name": "children",
@@ -193,7 +222,86 @@
       ]
     },
     {
-      "name": "HoverCardArrow",
+      "name": "HoverCard.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseHoverCardReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "HoverCard.Arrow",
       "props": [
         {
           "name": "asChild",
@@ -226,7 +334,7 @@
       ]
     },
     {
-      "name": "HoverCardContent",
+      "name": "HoverCard.Content",
       "props": [
         {
           "name": "asChild",
@@ -259,7 +367,7 @@
       ]
     },
     {
-      "name": "HoverCardContext",
+      "name": "HoverCard.Context",
       "props": [
         {
           "name": "children",
@@ -271,7 +379,7 @@
       ]
     },
     {
-      "name": "HoverCardPortal",
+      "name": "HoverCard.Portal",
       "props": [
         {
           "name": "children",
@@ -296,7 +404,7 @@
       ]
     },
     {
-      "name": "HoverCardPositioner",
+      "name": "HoverCard.Positioner",
       "props": [
         {
           "name": "asChild",
@@ -329,7 +437,7 @@
       ]
     },
     {
-      "name": "HoverCardTrigger",
+      "name": "HoverCard.Trigger",
       "props": [
         {
           "name": "asChild",
@@ -378,7 +486,7 @@
   "files": [
     {
       "path": "components/ui/hover-card.tsx",
-      "content": "import * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { HoverCard as HoverCardPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\n\nfunction HoverCard({\n  positioning,\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: React.ComponentProps<typeof HoverCardPrimitive.Root>) {\n  return (\n    <HoverCardPrimitive.Root\n      positioning={{ placement: \"bottom\", gutter: 4, ...positioning }}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction HoverCardTrigger({ ...props }: React.ComponentProps<typeof HoverCardPrimitive.Trigger>) {\n  return <HoverCardPrimitive.Trigger data-slot=\"hover-card-trigger\" {...props} />\n}\n\nfunction HoverCardPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction HoverCardContext({ ...props }: React.ComponentProps<typeof HoverCardPrimitive.Context>) {\n  return <HoverCardPrimitive.Context {...props} />\n}\n\nfunction HoverCardPositioner({ className, ...props }: React.ComponentProps<typeof HoverCardPrimitive.Positioner>) {\n  return (\n    <HoverCardPrimitive.Positioner\n      data-slot=\"hover-card-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction HoverCardArrow({ className, ...props }: React.ComponentProps<typeof HoverCardPrimitive.Arrow>) {\n  return (\n    <HoverCardPrimitive.Arrow\n      data-slot=\"hover-card-arrow\"\n      className={cn(\"[--arrow-background:var(--color-popover)] [--arrow-size:0.625rem]\", className)}\n      {...props}\n    >\n      <HoverCardPrimitive.ArrowTip\n        data-slot=\"hover-card-arrow-tip\"\n        className=\"border-t border-l border-foreground/10\"\n      />\n    </HoverCardPrimitive.Arrow>\n  )\n}\n\nfunction HoverCardContent({ className, ...props }: React.ComponentProps<typeof HoverCardPrimitive.Content>) {\n  return (\n    <HoverCardPortal>\n      <HoverCardPositioner>\n        <HoverCardPrimitive.Content\n          data-slot=\"hover-card-content\"\n          className={cn(\n            \"z-50 w-64 origin-(--transform-origin) rounded-lg bg-popover p-2.5 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </HoverCardPositioner>\n    </HoverCardPortal>\n  )\n}\n\nexport {\n  HoverCard,\n  HoverCardArrow,\n  HoverCardContent,\n  HoverCardContext,\n  HoverCardPortal,\n  HoverCardPositioner,\n  HoverCardTrigger,\n}\n"
+      "content": "import { useHoverCard, useHoverCardContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { HoverCard as HoverCardPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\n\nfunction HoverCardRoot({ positioning, lazyMount = true, unmountOnExit = true, ...props }: HoverCardRootProps) {\n  return (\n    <HoverCardPrimitive.Root\n      positioning={{ placement: \"bottom\", gutter: 4, ...positioning }}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction HoverCardTrigger({ ...props }: HoverCardTriggerProps) {\n  return <HoverCardPrimitive.Trigger data-slot=\"hover-card-trigger\" {...props} />\n}\n\nfunction HoverCardPortal({ ...props }: HoverCardPortalProps) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction HoverCardContext({ ...props }: HoverCardContextProps) {\n  return <HoverCardPrimitive.Context {...props} />\n}\n\nfunction HoverCardPositioner({ className, ...props }: HoverCardPositionerProps) {\n  return (\n    <HoverCardPrimitive.Positioner\n      data-slot=\"hover-card-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction HoverCardArrow({ className, ...props }: HoverCardArrowProps) {\n  return (\n    <HoverCardPrimitive.Arrow\n      data-slot=\"hover-card-arrow\"\n      className={cn(\"[--arrow-background:var(--color-popover)] [--arrow-size:0.625rem]\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <HoverCardPrimitive.ArrowTip\n            data-slot=\"hover-card-arrow-tip\"\n            className=\"border-t border-l border-foreground/10\"\n          />\n        </>\n      )}\n    </HoverCardPrimitive.Arrow>\n  )\n}\n\nfunction HoverCardContent({ className, ...props }: HoverCardContentProps) {\n  return (\n    <HoverCardPortal>\n      <HoverCardPositioner>\n        <HoverCardPrimitive.Content\n          data-slot=\"hover-card-content\"\n          className={cn(\n            \"z-50 w-64 origin-(--transform-origin) rounded-lg bg-popover p-2.5 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </HoverCardPositioner>\n    </HoverCardPortal>\n  )\n}\n\nfunction HoverCardRootProvider(props: HoverCardRootProviderProps) {\n  return <HoverCardPrimitive.RootProvider {...props} />\n}\n\nfunction HoverCardArrowTip({ className, ...props }: HoverCardArrowTipProps) {\n  return <HoverCardPrimitive.ArrowTip data-slot=\"hover-card-arrow-tip\" className={cn(className)} {...props} />\n}\n\ntype HoverCardArrowTipProps = React.ComponentProps<typeof HoverCardPrimitive.ArrowTip>\n\ntype HoverCardRootProps = React.ComponentProps<typeof HoverCardPrimitive.Root>\n\ntype HoverCardRootProviderProps = React.ComponentProps<typeof HoverCardPrimitive.RootProvider>\n\ntype HoverCardArrowProps = React.ComponentProps<typeof HoverCardPrimitive.Arrow>\n\ntype HoverCardContentProps = React.ComponentProps<typeof HoverCardPrimitive.Content>\n\ntype HoverCardContextProps = React.ComponentProps<typeof HoverCardPrimitive.Context>\n\ntype HoverCardPortalProps = React.ComponentProps<typeof PortalPrimitive>\n\ntype HoverCardPositionerProps = React.ComponentProps<typeof HoverCardPrimitive.Positioner>\n\ntype HoverCardTriggerProps = React.ComponentProps<typeof HoverCardPrimitive.Trigger>\n\nconst HoverCard = {\n  ArrowTip: HoverCardArrowTip,\n  Root: HoverCardRoot,\n  RootProvider: HoverCardRootProvider,\n  Arrow: HoverCardArrow,\n  Content: HoverCardContent,\n  Context: HoverCardContext,\n  Portal: HoverCardPortal,\n  Positioner: HoverCardPositioner,\n  Trigger: HoverCardTrigger,\n}\n\nexport {\n  useHoverCard,\n  useHoverCardContext,\n  HoverCard,\n  type HoverCardArrowTipProps,\n  type HoverCardRootProps,\n  type HoverCardRootProviderProps,\n  type HoverCardArrowProps,\n  type HoverCardContentProps,\n  type HoverCardContextProps,\n  type HoverCardPortalProps,\n  type HoverCardPositionerProps,\n  type HoverCardTriggerProps,\n}\n"
     }
   ]
 }

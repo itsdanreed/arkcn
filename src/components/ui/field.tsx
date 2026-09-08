@@ -1,15 +1,17 @@
 "use client"
 
+import * as React from "react"
+import { ark } from "@ark-ui/react"
 import { useMemo } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
-import { Label } from "@/components/ui/label"
+import { Field as FieldPrimitive, useField, useFieldContext } from "@ark-ui/react"
 import { Separator } from "@/components/ui/separator"
 
-function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
+function FieldSet({ className, ...props }: FieldSetProps) {
   return (
-    <fieldset
+    <ark.fieldset
       data-slot="field-set"
       className={cn(
         "flex flex-col gap-4 has-[>[data-slot=checkbox-group]]:gap-3 has-[>[data-slot=radio-group]]:gap-3",
@@ -20,13 +22,9 @@ function FieldSet({ className, ...props }: React.ComponentProps<"fieldset">) {
   )
 }
 
-function FieldLegend({
-  className,
-  variant = "legend",
-  ...props
-}: React.ComponentProps<"legend"> & { variant?: "legend" | "label" }) {
+function FieldLegend({ className, variant = "legend", ...props }: FieldLegendProps) {
   return (
-    <legend
+    <ark.legend
       data-slot="field-legend"
       data-variant={variant}
       className={cn("mb-1.5 font-medium data-[variant=label]:text-sm data-[variant=legend]:text-base", className)}
@@ -35,9 +33,9 @@ function FieldLegend({
   )
 }
 
-function FieldGroup({ className, ...props }: React.ComponentProps<"div">) {
+function FieldGroup({ className, ...props }: FieldGroupProps) {
   return (
-    <div
+    <ark.div
       data-slot="field-group"
       className={cn(
         "group/field-group @container/field-group flex w-full flex-col gap-5 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4",
@@ -63,13 +61,9 @@ const fieldVariants = cva("group/field flex w-full gap-2 data-[invalid=true]:tex
   },
 })
 
-function Field({
-  className,
-  orientation = "vertical",
-  ...props
-}: React.ComponentProps<"div"> & VariantProps<typeof fieldVariants>) {
+function FieldRoot({ className, orientation = "vertical", ...props }: FieldRootProps) {
   return (
-    <div
+    <FieldPrimitive.Root
       role="group"
       data-slot="field"
       data-orientation={orientation}
@@ -79,9 +73,9 @@ function Field({
   )
 }
 
-function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
+function FieldContent({ className, ...props }: FieldContentProps) {
   return (
-    <div
+    <ark.div
       data-slot="field-content"
       className={cn("group/field-content flex flex-1 flex-col gap-0.5 leading-snug", className)}
       {...props}
@@ -89,9 +83,9 @@ function FieldContent({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function FieldLabel({ className, ...props }: React.ComponentProps<typeof Label>) {
+function FieldLabel({ className, ...props }: FieldLabelProps) {
   return (
-    <Label
+    <FieldPrimitive.Label
       data-slot="field-label"
       className={cn(
         "group/field-label peer/field-label flex w-fit gap-2 leading-snug group-data-[disabled=true]/field:opacity-50 has-data-checked:border-primary/30 has-data-checked:bg-primary/5 has-[>[data-slot=field]]:rounded-lg has-[>[data-slot=field]]:border has-[>[data-slot=field]]:not-has-[:disabled,[data-disabled]]:hover:bg-muted/50 has-[>[data-slot=field]]:has-focus-visible:border-ring has-[>[data-slot=field]]:has-focus-visible:ring-3 has-[>[data-slot=field]]:has-focus-visible:ring-ring/50 *:data-[slot=field]:p-2.5 dark:has-data-checked:border-primary/20 dark:has-data-checked:bg-primary/10",
@@ -103,9 +97,9 @@ function FieldLabel({ className, ...props }: React.ComponentProps<typeof Label>)
   )
 }
 
-function FieldTitle({ className, ...props }: React.ComponentProps<"div">) {
+function FieldTitle({ className, ...props }: FieldTitleProps) {
   return (
-    <div
+    <ark.div
       data-slot="field-label"
       className={cn(
         "flex w-fit items-center gap-2 text-sm font-medium group-data-[disabled=true]/field:opacity-50",
@@ -116,9 +110,9 @@ function FieldTitle({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
+function FieldHelperText({ className, ...props }: FieldHelperTextProps) {
   return (
-    <p
+    <FieldPrimitive.HelperText
       data-slot="field-description"
       className={cn(
         "text-left text-sm/normal font-normal text-muted-foreground group-has-data-horizontal/field:text-balance [[data-variant=legend]+&]:-mt-1.5",
@@ -131,42 +125,36 @@ function FieldDescription({ className, ...props }: React.ComponentProps<"p">) {
   )
 }
 
-function FieldSeparator({
-  children,
-  className,
-  ...props
-}: React.ComponentProps<"div"> & {
-  children?: React.ReactNode
-}) {
+function FieldSeparator({ children, className, ...props }: FieldSeparatorProps) {
   return (
-    <div
+    <ark.div
       data-slot="field-separator"
       data-content={!!children}
       className={cn("relative -my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2", className)}
       {...props}
     >
-      <Separator className="absolute inset-0 top-1/2" />
-      {children && (
-        <span
-          className="relative mx-auto block w-fit bg-background px-2 text-muted-foreground"
-          data-slot="field-separator-content"
-        >
-          {children}
-        </span>
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          <Separator.Root className="absolute inset-0 top-1/2" />
+          {children && (
+            <span
+              className="relative mx-auto block w-fit bg-background px-2 text-muted-foreground"
+              data-slot="field-separator-content"
+            >
+              {children}
+            </span>
+          )}
+        </>
       )}
-    </div>
+    </ark.div>
   )
 }
 
-function FieldError({
-  className,
-  children,
-  errors,
-  ...props
-}: React.ComponentProps<"div"> & {
-  /** Error messages to render; a string, an array, or an object with a `message`. */
-  errors?: Array<{ message?: string } | undefined>
-}) {
+function FieldErrorText({ className, children, errors, ...props }: FieldErrorTextProps) {
   const content = useMemo(() => {
     if (children) {
       return children
@@ -194,26 +182,150 @@ function FieldError({
   }
 
   return (
-    <div
+    <FieldPrimitive.ErrorText
       role="alert"
       data-slot="field-error"
       className={cn("text-sm font-normal text-destructive", className)}
       {...props}
     >
-      {content}
-    </div>
+      {props.asChild ? React.isValidElement(children) ? children : null : <>{content}</>}
+    </FieldPrimitive.ErrorText>
   )
 }
 
+function FieldContext(props: FieldContextProps) {
+  return <FieldPrimitive.Context {...props} />
+}
+function FieldRootProvider({ className, ...props }: FieldRootProviderProps) {
+  return (
+    <FieldPrimitive.RootProvider
+      data-slot="field-root-provider"
+      className={cn("group/field flex w-full flex-col gap-2", className)}
+      {...props}
+    />
+  )
+}
+function FieldInput({ className, ...props }: FieldInputProps) {
+  return (
+    <FieldPrimitive.Input
+      data-slot="field-input"
+      className={cn(
+        "min-h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive data-disabled:opacity-50",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+function FieldTextarea({ className, ...props }: FieldTextareaProps) {
+  return (
+    <FieldPrimitive.Textarea
+      data-slot="field-textarea"
+      className={cn(
+        "min-h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive data-disabled:opacity-50",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+function FieldSelect({ className, ...props }: FieldSelectProps) {
+  return (
+    <FieldPrimitive.Select
+      data-slot="field-select"
+      className={cn(
+        "min-h-8 w-full rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm outline-none focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive data-disabled:opacity-50",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+function FieldItem(props: FieldItemProps) {
+  return <FieldPrimitive.Item {...props} />
+}
+function FieldRequiredIndicator({ className, ...props }: FieldRequiredIndicatorProps) {
+  return <FieldPrimitive.RequiredIndicator data-slot="field-required-indicator" className={cn(className)} {...props} />
+}
+
+type FieldRootProps = React.ComponentProps<typeof FieldPrimitive.Root> & VariantProps<typeof fieldVariants>
+
+type FieldContextProps = React.ComponentProps<typeof FieldPrimitive.Context>
+
+type FieldRootProviderProps = React.ComponentProps<typeof FieldPrimitive.RootProvider>
+
+type FieldInputProps = React.ComponentProps<typeof FieldPrimitive.Input>
+
+type FieldTextareaProps = React.ComponentProps<typeof FieldPrimitive.Textarea>
+
+type FieldSelectProps = React.ComponentProps<typeof FieldPrimitive.Select>
+
+type FieldItemProps = React.ComponentProps<typeof FieldPrimitive.Item>
+
+type FieldRequiredIndicatorProps = React.ComponentProps<typeof FieldPrimitive.RequiredIndicator>
+
+type FieldLabelProps = React.ComponentProps<typeof FieldPrimitive.Label>
+
+type FieldGroupProps = React.ComponentProps<typeof ark.div>
+
+type FieldLegendProps = React.ComponentProps<typeof ark.legend> & { variant?: "legend" | "label" }
+
+type FieldSeparatorProps = React.ComponentProps<typeof ark.div> & {
+  children?: React.ReactNode
+}
+
+type FieldSetProps = React.ComponentProps<typeof ark.fieldset>
+
+type FieldContentProps = React.ComponentProps<typeof ark.div>
+
+type FieldTitleProps = React.ComponentProps<typeof ark.div>
+
+type FieldHelperTextProps = React.ComponentProps<typeof FieldPrimitive.HelperText>
+
+type FieldErrorTextProps = React.ComponentProps<typeof FieldPrimitive.ErrorText> & {
+  /** Error messages to render; a string, an array, or an object with a `message`. */
+  errors?: Array<{ message?: string } | undefined>
+}
+
+const Field = {
+  Root: FieldRoot,
+  Context: FieldContext,
+  RootProvider: FieldRootProvider,
+  Input: FieldInput,
+  Textarea: FieldTextarea,
+  Select: FieldSelect,
+  Item: FieldItem,
+  RequiredIndicator: FieldRequiredIndicator,
+  Label: FieldLabel,
+  Group: FieldGroup,
+  Legend: FieldLegend,
+  Separator: FieldSeparator,
+  Set: FieldSet,
+  Content: FieldContent,
+  Title: FieldTitle,
+  HelperText: FieldHelperText,
+  ErrorText: FieldErrorText,
+}
+
 export {
+  useField,
+  useFieldContext,
   Field,
-  FieldLabel,
-  FieldDescription,
-  FieldError,
-  FieldGroup,
-  FieldLegend,
-  FieldSeparator,
-  FieldSet,
-  FieldContent,
-  FieldTitle,
+  type FieldRootProps,
+  type FieldContextProps,
+  type FieldRootProviderProps,
+  type FieldInputProps,
+  type FieldTextareaProps,
+  type FieldSelectProps,
+  type FieldItemProps,
+  type FieldRequiredIndicatorProps,
+  type FieldLabelProps,
+  type FieldGroupProps,
+  type FieldLegendProps,
+  type FieldSeparatorProps,
+  type FieldSetProps,
+  type FieldContentProps,
+  type FieldTitleProps,
+  type FieldHelperTextProps,
+  type FieldErrorTextProps,
 }

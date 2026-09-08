@@ -4,87 +4,14 @@
   "description": "Ark UI has no Menubar primitive. `Menubar` composes Ark `Menu` roots and adds the menubar behaviours Radix provides: one open menu at a time, hover switching between triggers once a menu is open, roving tabindex across triggers, and ArrowLe",
   "ark": "Menu",
   "exports": [
-    "Menubar",
-    "MenubarArrow",
-    "MenubarCheckboxItem",
-    "MenubarContent",
-    "MenubarContext",
-    "MenubarGroup",
-    "MenubarItem",
-    "MenubarItemIndicator",
-    "MenubarItemText",
-    "MenubarLabel",
-    "MenubarMenu",
-    "MenubarPortal",
-    "MenubarPositioner",
-    "MenubarRadioGroup",
-    "MenubarRadioItem",
-    "MenubarSeparator",
-    "MenubarShortcut",
-    "MenubarSub",
-    "MenubarSubContent",
-    "MenubarSubTrigger",
-    "MenubarTrigger"
+    "useMenu",
+    "useMenuContext",
+    "useMenuItemContext",
+    "Menubar"
   ],
   "parts": [
     {
-      "name": "Menubar",
-      "props": [
-        {
-          "name": "defaultValue",
-          "type": "string | null",
-          "required": false,
-          "default": "null",
-          "description": "The initial value when uncontrolled.",
-          "from": "arkcn"
-        },
-        {
-          "name": "loop",
-          "type": "boolean",
-          "required": false,
-          "default": "false",
-          "description": "Whether ArrowLeft/ArrowRight wrap around at the ends.",
-          "from": "arkcn"
-        },
-        {
-          "name": "onValueChange",
-          "type": "((value: string | null) => void)",
-          "required": false,
-          "description": "Called with the new value whenever it changes.",
-          "from": "arkcn"
-        },
-        {
-          "name": "value",
-          "type": "string | null",
-          "required": false,
-          "description": "The id of the open menu (controlled).",
-          "from": "arkcn"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "MenubarArrow",
+      "name": "Menubar.ArrowTip",
       "props": [
         {
           "name": "asChild",
@@ -117,7 +44,432 @@
       ]
     },
     {
-      "name": "MenubarCheckboxItem",
+      "name": "Menubar.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: MenuApi<PropTypes>) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Menubar.ItemGroup",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Menubar.ItemGroupLabel",
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false,
+          "description": "Indent the item to align with items that have an indicator.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Menubar.RadioItemGroup",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((e: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Called with the new value whenever it changes.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Menubar.TriggerItem",
+      "props": [
+        {
+          "name": "inset",
+          "type": "boolean",
+          "required": false,
+          "description": "Indent the item to align with items that have an indicator.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Menubar.Root",
+      "props": [
+        {
+          "name": "defaultValue",
+          "type": "string | null",
+          "required": false,
+          "default": "null",
+          "description": "The initial value when uncontrolled.",
+          "from": "arkcn"
+        },
+        {
+          "name": "loop",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether ArrowLeft/ArrowRight wrap around at the ends.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((value: string | null) => void)",
+          "required": false,
+          "description": "Called with the new value whenever it changes.",
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "string | null",
+          "required": false,
+          "description": "The id of the open menu (controlled).",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Menubar.ContextTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Menubar.Indicator",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Menubar.ItemContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseMenuItemContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Menubar.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseMenuReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Menubar.Arrow",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Menubar.CheckboxItem",
       "props": [
         {
           "name": "checked",
@@ -200,7 +552,7 @@
       ]
     },
     {
-      "name": "MenubarContent",
+      "name": "Menubar.Content",
       "props": [
         {
           "name": "asChild",
@@ -233,52 +585,7 @@
       ]
     },
     {
-      "name": "MenubarContext",
-      "props": [
-        {
-          "name": "children",
-          "type": "(context: MenuApi<PropTypes>) => ReactNode",
-          "required": true,
-          "description": "Content rendered inside the part.",
-          "from": "@ark-ui/react"
-        }
-      ]
-    },
-    {
-      "name": "MenubarGroup",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "MenubarItem",
+      "name": "Menubar.Item",
       "props": [
         {
           "name": "inset",
@@ -361,7 +668,7 @@
       ]
     },
     {
-      "name": "MenubarItemIndicator",
+      "name": "Menubar.ItemIndicator",
       "props": [
         {
           "name": "asChild",
@@ -394,7 +701,7 @@
       ]
     },
     {
-      "name": "MenubarItemText",
+      "name": "Menubar.ItemText",
       "props": [
         {
           "name": "asChild",
@@ -427,47 +734,7 @@
       ]
     },
     {
-      "name": "MenubarLabel",
-      "props": [
-        {
-          "name": "inset",
-          "type": "boolean",
-          "required": false,
-          "description": "Indent the item to align with items that have an indicator.",
-          "from": "arkcn"
-        },
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "MenubarMenu",
+      "name": "Menubar.Menu",
       "props": [
         {
           "name": "value",
@@ -711,7 +978,7 @@
       ]
     },
     {
-      "name": "MenubarPortal",
+      "name": "Menubar.Portal",
       "props": [
         {
           "name": "children",
@@ -736,7 +1003,7 @@
       ]
     },
     {
-      "name": "MenubarPositioner",
+      "name": "Menubar.Positioner",
       "props": [
         {
           "name": "asChild",
@@ -769,54 +1036,7 @@
       ]
     },
     {
-      "name": "MenubarRadioGroup",
-      "props": [
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "onValueChange",
-          "type": "((e: ValueChangeDetails) => void)",
-          "required": false,
-          "description": "Called with the new value whenever it changes.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        },
-        {
-          "name": "value",
-          "type": "string",
-          "required": false,
-          "description": "The controlled value.",
-          "from": "@ark-ui/react"
-        }
-      ]
-    },
-    {
-      "name": "MenubarRadioItem",
+      "name": "Menubar.RadioItem",
       "props": [
         {
           "name": "inset",
@@ -884,7 +1104,7 @@
       ]
     },
     {
-      "name": "MenubarSeparator",
+      "name": "Menubar.Separator",
       "props": [
         {
           "name": "asChild",
@@ -917,8 +1137,15 @@
       ]
     },
     {
-      "name": "MenubarShortcut",
+      "name": "Menubar.Shortcut",
       "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
         {
           "name": "children",
           "type": "ReactNode",
@@ -943,7 +1170,7 @@
       ]
     },
     {
-      "name": "MenubarSub",
+      "name": "Menubar.Sub",
       "props": [
         {
           "name": "anchorPoint",
@@ -1194,7 +1421,7 @@
       ]
     },
     {
-      "name": "MenubarSubContent",
+      "name": "Menubar.SubContent",
       "props": [
         {
           "name": "asChild",
@@ -1227,47 +1454,7 @@
       ]
     },
     {
-      "name": "MenubarSubTrigger",
-      "props": [
-        {
-          "name": "inset",
-          "type": "boolean",
-          "required": false,
-          "description": "Indent the item to align with items that have an indicator.",
-          "from": "arkcn"
-        },
-        {
-          "name": "asChild",
-          "type": "boolean",
-          "required": false,
-          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
-          "from": "@ark-ui/react"
-        },
-        {
-          "name": "children",
-          "type": "ReactNode",
-          "required": false,
-          "description": "Content rendered inside the part.",
-          "from": "@types/react"
-        },
-        {
-          "name": "className",
-          "type": "string",
-          "required": false,
-          "description": "Extra classes merged into the part's own classes with `cn`.",
-          "from": "@types/react"
-        },
-        {
-          "name": "style",
-          "type": "CSSProperties",
-          "required": false,
-          "description": "Inline styles applied to the rendered element.",
-          "from": "@types/react"
-        }
-      ]
-    },
-    {
-      "name": "MenubarTrigger",
+      "name": "Menubar.Trigger",
       "props": [
         {
           "name": "asChild",
@@ -1318,7 +1505,7 @@
   "files": [
     {
       "path": "components/ui/menubar.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { useControllable } from \"@/lib/controllable\"\nimport { Menu as MenubarPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\nimport { CheckIcon, ChevronRightIcon } from \"lucide-react\"\n\n/**\n * Ark UI has no Menubar primitive. `Menubar` composes Ark `Menu` roots and adds\n * the menubar behaviours Radix provides: one open menu at a time, hover\n * switching between triggers once a menu is open, roving tabindex across\n * triggers, and ArrowLeft/ArrowRight moving between menus.\n */\n\ntype MenubarContextValue = {\n  value: string | null\n  setValue: (value: string | null) => void\n  loop: boolean\n  register: (id: string) => () => void\n  order: string[]\n  rootRef: React.RefObject<HTMLDivElement | null>\n}\n\nconst MenubarContext = React.createContext<MenubarContextValue | null>(null)\nconst MenubarMenuContext = React.createContext<string | null>(null)\n\nfunction useMenubar(component: string) {\n  const ctx = React.useContext(MenubarContext)\n  if (!ctx) throw new Error(`${component} must be used within <Menubar>`)\n  return ctx\n}\n\nfunction useMenubarMenu(component: string) {\n  const id = React.useContext(MenubarMenuContext)\n  if (!id) throw new Error(`${component} must be used within <MenubarMenu>`)\n  return id\n}\n\nfunction Menubar({\n  className,\n  value: valueProp,\n  defaultValue = null,\n  onValueChange,\n  loop = false,\n  ...props\n}: Omit<React.ComponentProps<\"div\">, \"value\" | \"defaultValue\"> & {\n  /** The id of the open menu (controlled). */\n  value?: string | null\n  defaultValue?: string | null\n  onValueChange?: (value: string | null) => void\n  /** Whether ArrowLeft/ArrowRight wrap around at the ends. */\n  loop?: boolean\n}) {\n  const [value, setValue] = useControllable(valueProp, defaultValue, onValueChange)\n  const [order, setOrder] = React.useState<string[]>([])\n  const register = React.useCallback((id: string) => {\n    setOrder((prev) => (prev.includes(id) ? prev : [...prev, id]))\n    return () => setOrder((prev) => prev.filter((x) => x !== id))\n  }, [])\n  const rootRef = React.useRef<HTMLDivElement>(null)\n  const ctx = React.useMemo(\n    () => ({ value, setValue, loop, register, order, rootRef }),\n    [value, setValue, loop, register, order]\n  )\n  return (\n    <MenubarContext.Provider value={ctx}>\n      <div\n        ref={rootRef}\n        role=\"menubar\"\n        data-slot=\"menubar\"\n        className={cn(\"flex h-8 items-center gap-0.5 rounded-lg border p-0.75\", className)}\n        {...props}\n      />\n    </MenubarContext.Provider>\n  )\n}\n\nfunction useMenubarNavigation() {\n  const ctx = useMenubar(\"MenubarTrigger\")\n  return React.useCallback(\n    (fromId: string, direction: 1 | -1, open: boolean) => {\n      const { order, loop, rootRef, setValue } = ctx\n      const index = order.indexOf(fromId)\n      let next = index + direction\n      if (next < 0) next = loop ? order.length - 1 : 0\n      if (next >= order.length) next = loop ? 0 : order.length - 1\n      const nextId = order[next]\n      if (!nextId || nextId === fromId) return\n      const trigger = rootRef.current?.querySelector<HTMLElement>(\n        `[data-slot=\"menubar-trigger\"][data-menubar-value=\"${nextId}\"]`\n      )\n      trigger?.focus()\n      setValue(open ? nextId : null)\n    },\n    [ctx]\n  )\n}\n\nfunction MenubarMenu({\n  value: valueProp,\n  positioning,\n  lazyMount = true,\n  unmountOnExit = true,\n  onOpenChange,\n  ...props\n}: Omit<React.ComponentProps<typeof MenubarPrimitive.Root>, \"open\" | \"defaultOpen\"> & {\n  /** Identifies this menu within the menubar. Auto-generated when omitted. */\n  value?: string\n}) {\n  const ctx = useMenubar(\"MenubarMenu\")\n  const generated = React.useId()\n  const id = valueProp ?? generated\n  const { register } = ctx\n  React.useEffect(() => register(id), [register, id])\n  return (\n    <MenubarMenuContext.Provider value={id}>\n      <MenubarPrimitive.Root\n        open={ctx.value === id}\n        onOpenChange={(details) => {\n          ctx.setValue(details.open ? id : ctx.value === id ? null : ctx.value)\n          onOpenChange?.(details)\n        }}\n        positioning={{\n          placement: \"bottom-start\",\n          gutter: 8,\n          offset: { crossAxis: -4 },\n          ...positioning,\n        }}\n        lazyMount={lazyMount}\n        unmountOnExit={unmountOnExit}\n        {...props}\n      />\n    </MenubarMenuContext.Provider>\n  )\n}\n\nfunction MenubarTrigger({\n  className,\n  onPointerEnter,\n  onKeyDown,\n  ...props\n}: React.ComponentProps<typeof MenubarPrimitive.Trigger>) {\n  const ctx = useMenubar(\"MenubarTrigger\")\n  const id = useMenubarMenu(\"MenubarTrigger\")\n  const navigate = useMenubarNavigation()\n  const isOpen = ctx.value === id\n  const isFirst = ctx.order[0] === id\n  return (\n    <MenubarPrimitive.Trigger\n      data-slot=\"menubar-trigger\"\n      data-menubar-value={id}\n      tabIndex={isOpen || (ctx.value === null && isFirst) ? 0 : -1}\n      className={cn(\n        \"flex items-center rounded-sm px-1.5 py-0.5 text-sm font-medium outline-hidden select-none hover:bg-muted aria-expanded:bg-muted\",\n        className\n      )}\n      onPointerEnter={(event) => {\n        onPointerEnter?.(event)\n        if (ctx.value !== null && ctx.value !== id) ctx.setValue(id)\n      }}\n      onKeyDown={(event) => {\n        onKeyDown?.(event)\n        if (event.defaultPrevented) return\n        if (event.key === \"ArrowRight\" || event.key === \"ArrowLeft\") {\n          event.preventDefault()\n          navigate(id, event.key === \"ArrowRight\" ? 1 : -1, isOpen)\n        }\n      }}\n      {...props}\n    />\n  )\n}\n\nfunction MenubarPortal({ ...props }: React.ComponentProps<typeof PortalPrimitive>) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction MenubarMenuContext_({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Context>) {\n  return <MenubarPrimitive.Context {...props} />\n}\n\nfunction MenubarPositioner({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Positioner>) {\n  return (\n    <MenubarPrimitive.Positioner\n      data-slot=\"menubar-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction MenubarContent({ className, onKeyDown, ...props }: React.ComponentProps<typeof MenubarPrimitive.Content>) {\n  const id = useMenubarMenu(\"MenubarContent\")\n  const navigate = useMenubarNavigation()\n  return (\n    <MenubarPortal>\n      <MenubarPositioner>\n        <MenubarPrimitive.Content\n          data-slot=\"menubar-content\"\n          className={cn(\n            \"z-50 min-w-36 origin-(--transform-origin) overflow-hidden rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95\",\n            className\n          )}\n          onKeyDown={(event) => {\n            onKeyDown?.(event)\n            if (event.defaultPrevented) return\n            if (event.key !== \"ArrowRight\" && event.key !== \"ArrowLeft\") return\n            const target = event.target as HTMLElement\n            // Inside a submenu, Ark owns ArrowLeft (close) and ArrowRight.\n            if (target.closest('[data-slot=\"menubar-sub-content\"]')) return\n            // On a highlighted sub trigger, ArrowRight opens the submenu.\n            if (\n              event.key === \"ArrowRight\" &&\n              event.currentTarget.querySelector('[data-slot=\"menubar-sub-trigger\"][data-highlighted]')\n            )\n              return\n            event.preventDefault()\n            navigate(id, event.key === \"ArrowRight\" ? 1 : -1, true)\n          }}\n          {...props}\n        />\n      </MenubarPositioner>\n    </MenubarPortal>\n  )\n}\n\nfunction MenubarArrow({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Arrow>) {\n  return (\n    <MenubarPrimitive.Arrow\n      data-slot=\"menubar-arrow\"\n      className={cn(\"[--arrow-background:var(--color-popover)] [--arrow-size:0.625rem]\", className)}\n      {...props}\n    >\n      <MenubarPrimitive.ArrowTip data-slot=\"menubar-arrow-tip\" className=\"border-t border-l border-foreground/10\" />\n    </MenubarPrimitive.Arrow>\n  )\n}\n\nfunction MenubarGroup({ ...props }: React.ComponentProps<typeof MenubarPrimitive.ItemGroup>) {\n  return <MenubarPrimitive.ItemGroup data-slot=\"menubar-group\" {...props} />\n}\n\nfunction MenubarItem({\n  className,\n  inset,\n  variant = \"default\",\n  value,\n  ...props\n}: Omit<React.ComponentProps<typeof MenubarPrimitive.Item>, \"value\"> & {\n  value?: string\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n  variant?: \"default\" | \"destructive\"\n}) {\n  const id = React.useId()\n  return (\n    <MenubarPrimitive.Item\n      data-slot=\"menubar-item\"\n      data-inset={inset}\n      data-variant={variant}\n      value={value ?? id}\n      className={cn(\n        \"group/menubar-item relative flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:data-highlighted:bg-destructive/10 data-[variant=destructive]:data-highlighted:text-destructive dark:data-[variant=destructive]:data-highlighted:bg-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-highlighted:*:[svg]:text-accent-foreground data-[variant=destructive]:*:[svg]:text-destructive\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MenubarItemText({ ...props }: React.ComponentProps<typeof MenubarPrimitive.ItemText>) {\n  return <MenubarPrimitive.ItemText data-slot=\"menubar-item-text\" {...props} />\n}\n\nfunction MenubarItemIndicator({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.ItemIndicator>) {\n  return (\n    <MenubarPrimitive.ItemIndicator\n      data-slot=\"menubar-item-indicator\"\n      className={cn(\"pointer-events-none absolute right-2 flex items-center justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\nconst optionItemClassName =\n  \"relative flex cursor-default items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\"\n\nfunction MenubarCheckboxItem({\n  className,\n  children,\n  checked = false,\n  inset,\n  value,\n  ...props\n}: Omit<React.ComponentProps<typeof MenubarPrimitive.CheckboxItem>, \"checked\" | \"value\"> & {\n  /** Checked state of the item. */\n  checked?: boolean\n  value?: string\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}) {\n  const id = React.useId()\n  return (\n    <MenubarPrimitive.CheckboxItem\n      data-slot=\"menubar-checkbox-item\"\n      data-inset={inset}\n      className={cn(optionItemClassName, className)}\n      checked={checked}\n      value={value ?? id}\n      {...props}\n    >\n      <MenubarItemIndicator data-slot=\"menubar-checkbox-item-indicator\">\n        <CheckIcon />\n      </MenubarItemIndicator>\n      {children}\n    </MenubarPrimitive.CheckboxItem>\n  )\n}\n\nfunction MenubarRadioGroup({ ...props }: React.ComponentProps<typeof MenubarPrimitive.RadioItemGroup>) {\n  return <MenubarPrimitive.RadioItemGroup data-slot=\"menubar-radio-group\" {...props} />\n}\n\nfunction MenubarRadioItem({\n  className,\n  children,\n  inset,\n  ...props\n}: React.ComponentProps<typeof MenubarPrimitive.RadioItem> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}) {\n  return (\n    <MenubarPrimitive.RadioItem\n      data-slot=\"menubar-radio-item\"\n      data-inset={inset}\n      className={cn(optionItemClassName, className)}\n      {...props}\n    >\n      <MenubarItemIndicator data-slot=\"menubar-radio-item-indicator\">\n        <CheckIcon />\n      </MenubarItemIndicator>\n      {children}\n    </MenubarPrimitive.RadioItem>\n  )\n}\n\nfunction MenubarLabel({\n  className,\n  inset,\n  ...props\n}: React.ComponentProps<typeof MenubarPrimitive.ItemGroupLabel> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}) {\n  return (\n    <MenubarPrimitive.ItemGroupLabel\n      data-slot=\"menubar-label\"\n      data-inset={inset}\n      className={cn(\"px-1.5 py-1 text-sm font-medium data-inset:pl-7\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction MenubarSeparator({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Separator>) {\n  return (\n    <MenubarPrimitive.Separator\n      data-slot=\"menubar-separator\"\n      className={cn(\"-mx-1 my-1 h-px bg-border\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction MenubarShortcut({ className, ...props }: React.ComponentProps<\"span\">) {\n  return (\n    <span\n      data-slot=\"menubar-shortcut\"\n      className={cn(\n        \"ml-auto text-xs tracking-widest text-muted-foreground group-data-highlighted/menubar-item:text-accent-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MenubarSub({\n  lazyMount = true,\n  unmountOnExit = true,\n  ...props\n}: React.ComponentProps<typeof MenubarPrimitive.Root>) {\n  return <MenubarPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n}\n\nfunction MenubarSubTrigger({\n  className,\n  inset,\n  children,\n  ...props\n}: React.ComponentProps<typeof MenubarPrimitive.TriggerItem> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}) {\n  return (\n    <MenubarPrimitive.TriggerItem\n      data-slot=\"menubar-sub-trigger\"\n      data-inset={inset}\n      className={cn(\n        \"flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-inset:pl-7 data-open:bg-accent data-open:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {children}\n      <ChevronRightIcon className=\"ml-auto\" />\n    </MenubarPrimitive.TriggerItem>\n  )\n}\n\nfunction MenubarSubContent({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Content>) {\n  return (\n    <MenubarPortal>\n      <MenubarPositioner>\n        <MenubarPrimitive.Content\n          data-slot=\"menubar-sub-content\"\n          className={cn(\n            \"z-50 min-w-32 origin-(--transform-origin) overflow-hidden rounded-lg bg-popover p-1 text-popover-foreground shadow-lg ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </MenubarPositioner>\n    </MenubarPortal>\n  )\n}\n\nexport {\n  Menubar,\n  MenubarArrow,\n  MenubarCheckboxItem,\n  MenubarContent,\n  MenubarMenuContext_ as MenubarContext,\n  MenubarGroup,\n  MenubarItem,\n  MenubarItemIndicator,\n  MenubarItemText,\n  MenubarLabel,\n  MenubarMenu,\n  MenubarPortal,\n  MenubarPositioner,\n  MenubarRadioGroup,\n  MenubarRadioItem,\n  MenubarSeparator,\n  MenubarShortcut,\n  MenubarSub,\n  MenubarSubContent,\n  MenubarSubTrigger,\n  MenubarTrigger,\n}\n"
+      "content": "\"use client\"\n\nimport { ark } from \"@ark-ui/react\"\nimport { useMenu, useMenuContext, useMenuItemContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { useControllable } from \"@/lib/controllable\"\nimport { Menu as MenubarPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\nimport { CheckIcon, ChevronRightIcon } from \"lucide-react\"\n\n/**\n * Ark UI has no Menubar primitive. `Menubar` composes Ark `Menu` roots and adds\n * the menubar behaviours Radix provides: one open menu at a time, hover\n * switching between triggers once a menu is open, roving tabindex across\n * triggers, and ArrowLeft/ArrowRight moving between menus.\n */\n\ntype MenubarContextValue = {\n  value: string | null\n  setValue: (value: string | null) => void\n  loop: boolean\n  register: (id: string) => () => void\n  order: string[]\n  rootRef: React.RefObject<HTMLDivElement | null>\n}\n\nconst MenubarContextStore = React.createContext<MenubarContextValue | null>(null)\nconst MenubarMenuContext = React.createContext<string | null>(null)\n\nfunction useMenubar(component: string) {\n  const ctx = React.useContext(MenubarContextStore)\n  if (!ctx) throw new Error(`${component} must be used within <Menubar>`)\n  return ctx\n}\n\nfunction useMenubarMenu(component: string) {\n  const id = React.useContext(MenubarMenuContext)\n  if (!id) throw new Error(`${component} must be used within <MenubarMenu>`)\n  return id\n}\n\nfunction MenubarRoot({\n  className,\n  value: valueProp,\n  defaultValue = null,\n  onValueChange,\n  loop = false,\n  ...props\n}: MenubarRootProps) {\n  const [value, setValue] = useControllable(valueProp, defaultValue, onValueChange)\n  const [order, setOrder] = React.useState<string[]>([])\n  const register = React.useCallback((id: string) => {\n    setOrder((prev) => (prev.includes(id) ? prev : [...prev, id]))\n    return () => setOrder((prev) => prev.filter((x) => x !== id))\n  }, [])\n  const rootRef = React.useRef<HTMLDivElement>(null)\n  const ctx = React.useMemo(\n    () => ({ value, setValue, loop, register, order, rootRef }),\n    [value, setValue, loop, register, order]\n  )\n  return (\n    <MenubarContextStore.Provider value={ctx}>\n      <ark.div\n        ref={rootRef}\n        role=\"menubar\"\n        data-slot=\"menubar\"\n        className={cn(\"flex h-8 items-center gap-0.5 rounded-lg border p-0.75\", className)}\n        {...props}\n      />\n    </MenubarContextStore.Provider>\n  )\n}\n\nfunction useMenubarNavigation() {\n  const ctx = useMenubar(\"MenubarTrigger\")\n  return React.useCallback(\n    (fromId: string, direction: 1 | -1, open: boolean) => {\n      const { order, loop, rootRef, setValue } = ctx\n      const index = order.indexOf(fromId)\n      let next = index + direction\n      if (next < 0) next = loop ? order.length - 1 : 0\n      if (next >= order.length) next = loop ? 0 : order.length - 1\n      const nextId = order[next]\n      if (!nextId || nextId === fromId) return\n      const trigger = rootRef.current?.querySelector<HTMLElement>(\n        `[data-slot=\"menubar-trigger\"][data-menubar-value=\"${nextId}\"]`\n      )\n      trigger?.focus()\n      setValue(open ? nextId : null)\n    },\n    [ctx]\n  )\n}\n\nfunction MenubarMenu({\n  value: valueProp,\n  positioning,\n  lazyMount = true,\n  unmountOnExit = true,\n  onOpenChange,\n  ...props\n}: MenubarMenuProps) {\n  const ctx = useMenubar(\"MenubarMenu\")\n  const generated = React.useId()\n  const id = valueProp ?? generated\n  const { register } = ctx\n  React.useEffect(() => register(id), [register, id])\n  return (\n    <MenubarMenuContext.Provider value={id}>\n      <MenubarPrimitive.Root\n        open={ctx.value === id}\n        onOpenChange={(details) => {\n          ctx.setValue(details.open ? id : ctx.value === id ? null : ctx.value)\n          onOpenChange?.(details)\n        }}\n        positioning={{\n          placement: \"bottom-start\",\n          gutter: 8,\n          offset: { crossAxis: -4 },\n          ...positioning,\n        }}\n        lazyMount={lazyMount}\n        unmountOnExit={unmountOnExit}\n        {...props}\n      />\n    </MenubarMenuContext.Provider>\n  )\n}\n\nfunction MenubarTrigger({ className, onPointerEnter, onKeyDown, ...props }: MenubarTriggerProps) {\n  const ctx = useMenubar(\"MenubarTrigger\")\n  const id = useMenubarMenu(\"MenubarTrigger\")\n  const navigate = useMenubarNavigation()\n  const isOpen = ctx.value === id\n  const isFirst = ctx.order[0] === id\n  return (\n    <MenubarPrimitive.Trigger\n      data-slot=\"menubar-trigger\"\n      data-menubar-value={id}\n      tabIndex={isOpen || (ctx.value === null && isFirst) ? 0 : -1}\n      className={cn(\n        \"flex items-center rounded-sm px-1.5 py-0.5 text-sm font-medium outline-hidden select-none hover:bg-muted aria-expanded:bg-muted\",\n        className\n      )}\n      onPointerEnter={(event) => {\n        onPointerEnter?.(event)\n        if (ctx.value !== null && ctx.value !== id) ctx.setValue(id)\n      }}\n      onKeyDown={(event) => {\n        onKeyDown?.(event)\n        if (event.defaultPrevented) return\n        if (event.key === \"ArrowRight\" || event.key === \"ArrowLeft\") {\n          event.preventDefault()\n          navigate(id, event.key === \"ArrowRight\" ? 1 : -1, isOpen)\n        }\n      }}\n      {...props}\n    />\n  )\n}\n\nfunction MenubarPortal({ ...props }: MenubarPortalProps) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction MenubarContext({ ...props }: MenubarContextProps) {\n  return <MenubarPrimitive.Context {...props} />\n}\n\nfunction MenubarPositioner({ className, ...props }: MenubarPositionerProps) {\n  return (\n    <MenubarPrimitive.Positioner\n      data-slot=\"menubar-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction MenubarContent({ className, onKeyDown, ...props }: MenubarContentProps) {\n  const id = useMenubarMenu(\"MenubarContent\")\n  const navigate = useMenubarNavigation()\n  return (\n    <MenubarPortal>\n      <MenubarPositioner>\n        <MenubarPrimitive.Content\n          data-slot=\"menubar-content\"\n          className={cn(\n            \"z-50 min-w-36 origin-(--transform-origin) overflow-hidden rounded-lg bg-popover p-1 text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95\",\n            className\n          )}\n          onKeyDown={(event) => {\n            onKeyDown?.(event)\n            if (event.defaultPrevented) return\n            if (event.key !== \"ArrowRight\" && event.key !== \"ArrowLeft\") return\n            const target = event.target as HTMLElement\n            // Inside a submenu, Ark owns ArrowLeft (close) and ArrowRight.\n            if (target.closest('[data-slot=\"menubar-sub-content\"]')) return\n            // On a highlighted sub trigger, ArrowRight opens the submenu.\n            if (\n              event.key === \"ArrowRight\" &&\n              event.currentTarget.querySelector('[data-slot=\"menubar-sub-trigger\"][data-highlighted]')\n            )\n              return\n            event.preventDefault()\n            navigate(id, event.key === \"ArrowRight\" ? 1 : -1, true)\n          }}\n          {...props}\n        />\n      </MenubarPositioner>\n    </MenubarPortal>\n  )\n}\n\nfunction MenubarArrow({ className, ...props }: MenubarArrowProps) {\n  return (\n    <MenubarPrimitive.Arrow\n      data-slot=\"menubar-arrow\"\n      className={cn(\"[--arrow-background:var(--color-popover)] [--arrow-size:0.625rem]\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <MenubarPrimitive.ArrowTip data-slot=\"menubar-arrow-tip\" className=\"border-t border-l border-foreground/10\" />\n        </>\n      )}\n    </MenubarPrimitive.Arrow>\n  )\n}\n\nfunction MenubarItemGroup({ ...props }: MenubarItemGroupProps) {\n  return <MenubarPrimitive.ItemGroup data-slot=\"menubar-group\" {...props} />\n}\n\nfunction MenubarItem({ className, inset, variant = \"default\", value, ...props }: MenubarItemProps) {\n  const id = React.useId()\n  return (\n    <MenubarPrimitive.Item\n      data-slot=\"menubar-item\"\n      data-inset={inset}\n      data-variant={variant}\n      value={value ?? id}\n      className={cn(\n        \"group/menubar-item relative flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-inset:pl-7 data-[variant=destructive]:text-destructive data-[variant=destructive]:data-highlighted:bg-destructive/10 data-[variant=destructive]:data-highlighted:text-destructive dark:data-[variant=destructive]:data-highlighted:bg-destructive/20 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4 data-highlighted:*:[svg]:text-accent-foreground data-[variant=destructive]:*:[svg]:text-destructive\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MenubarItemText({ ...props }: MenubarItemTextProps) {\n  return <MenubarPrimitive.ItemText data-slot=\"menubar-item-text\" {...props} />\n}\n\nfunction MenubarItemIndicator({ className, ...props }: MenubarItemIndicatorProps) {\n  return (\n    <MenubarPrimitive.ItemIndicator\n      data-slot=\"menubar-item-indicator\"\n      className={cn(\"pointer-events-none absolute right-2 flex items-center justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\nconst optionItemClassName =\n  \"relative flex cursor-default items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\"\n\nfunction MenubarCheckboxItem({\n  className,\n  children,\n  checked = false,\n  inset,\n  value,\n  ...props\n}: MenubarCheckboxItemProps) {\n  const id = React.useId()\n  return (\n    <MenubarPrimitive.CheckboxItem\n      data-slot=\"menubar-checkbox-item\"\n      data-inset={inset}\n      className={cn(optionItemClassName, className)}\n      checked={checked}\n      value={value ?? id}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <MenubarItemIndicator data-slot=\"menubar-checkbox-item-indicator\">\n            <CheckIcon />\n          </MenubarItemIndicator>\n          {children}\n        </>\n      )}\n    </MenubarPrimitive.CheckboxItem>\n  )\n}\n\nfunction MenubarRadioItemGroup({ ...props }: MenubarRadioItemGroupProps) {\n  return <MenubarPrimitive.RadioItemGroup data-slot=\"menubar-radio-group\" {...props} />\n}\n\nfunction MenubarRadioItem({ className, children, inset, ...props }: MenubarRadioItemProps) {\n  return (\n    <MenubarPrimitive.RadioItem\n      data-slot=\"menubar-radio-item\"\n      data-inset={inset}\n      className={cn(optionItemClassName, className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <MenubarItemIndicator data-slot=\"menubar-radio-item-indicator\">\n            <CheckIcon />\n          </MenubarItemIndicator>\n          {children}\n        </>\n      )}\n    </MenubarPrimitive.RadioItem>\n  )\n}\n\nfunction MenubarItemGroupLabel({ className, inset, ...props }: MenubarItemGroupLabelProps) {\n  return (\n    <MenubarPrimitive.ItemGroupLabel\n      data-slot=\"menubar-label\"\n      data-inset={inset}\n      className={cn(\"px-1.5 py-1 text-sm font-medium data-inset:pl-7\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction MenubarSeparator({ className, ...props }: MenubarSeparatorProps) {\n  return (\n    <MenubarPrimitive.Separator\n      data-slot=\"menubar-separator\"\n      className={cn(\"-mx-1 my-1 h-px bg-border\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction MenubarShortcut({ className, ...props }: MenubarShortcutProps) {\n  return (\n    <ark.span\n      data-slot=\"menubar-shortcut\"\n      className={cn(\n        \"ml-auto text-xs tracking-widest text-muted-foreground group-data-highlighted/menubar-item:text-accent-foreground\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction MenubarSub({ lazyMount = true, unmountOnExit = true, ...props }: MenubarSubProps) {\n  return <MenubarPrimitive.Root lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n}\n\nfunction MenubarTriggerItem({ className, inset, children, ...props }: MenubarTriggerItemProps) {\n  return (\n    <MenubarPrimitive.TriggerItem\n      data-slot=\"menubar-sub-trigger\"\n      data-inset={inset}\n      className={cn(\n        \"flex cursor-default items-center gap-1.5 rounded-md px-1.5 py-1 text-sm outline-hidden select-none data-highlighted:bg-accent data-highlighted:text-accent-foreground data-inset:pl-7 data-open:bg-accent data-open:text-accent-foreground [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children}\n          <ChevronRightIcon className=\"ml-auto\" />\n        </>\n      )}\n    </MenubarPrimitive.TriggerItem>\n  )\n}\n\nfunction MenubarSubContent({ className, ...props }: MenubarSubContentProps) {\n  return (\n    <MenubarPortal>\n      <MenubarPositioner>\n        <MenubarPrimitive.Content\n          data-slot=\"menubar-sub-content\"\n          className={cn(\n            \"z-50 min-w-32 origin-(--transform-origin) overflow-hidden rounded-lg bg-popover p-1 text-popover-foreground shadow-lg ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </MenubarPositioner>\n    </MenubarPortal>\n  )\n}\n\nfunction MenubarContextTrigger({ className, ...props }: MenubarContextTriggerProps) {\n  return <MenubarPrimitive.ContextTrigger data-slot=\"menubar-context-trigger\" className={cn(className)} {...props} />\n}\nfunction MenubarIndicator({ className, ...props }: MenubarIndicatorProps) {\n  return <MenubarPrimitive.Indicator data-slot=\"menubar-indicator\" className={cn(className)} {...props} />\n}\nfunction MenubarItemContext(props: MenubarItemContextProps) {\n  return <MenubarPrimitive.ItemContext {...props} />\n}\nfunction MenubarRootProvider(props: MenubarRootProviderProps) {\n  return <MenubarPrimitive.RootProvider {...props} />\n}\n\nfunction MenubarArrowTip({ className, ...props }: MenubarArrowTipProps) {\n  return <MenubarPrimitive.ArrowTip data-slot=\"menu-arrow-tip\" className={cn(className)} {...props} />\n}\n\ntype MenubarArrowTipProps = React.ComponentProps<typeof MenubarPrimitive.ArrowTip>\n\ntype MenubarContextProps = React.ComponentProps<typeof MenubarPrimitive.Context>\n\ntype MenubarItemGroupProps = React.ComponentProps<typeof MenubarPrimitive.ItemGroup>\n\ntype MenubarItemGroupLabelProps = React.ComponentProps<typeof MenubarPrimitive.ItemGroupLabel> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}\n\ntype MenubarRadioItemGroupProps = React.ComponentProps<typeof MenubarPrimitive.RadioItemGroup>\n\ntype MenubarTriggerItemProps = React.ComponentProps<typeof MenubarPrimitive.TriggerItem> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}\n\ntype MenubarRootProps = Omit<React.ComponentProps<typeof ark.div>, \"value\" | \"defaultValue\"> & {\n  /** The id of the open menu (controlled). */\n  value?: string | null\n  defaultValue?: string | null\n  onValueChange?: (value: string | null) => void\n  /** Whether ArrowLeft/ArrowRight wrap around at the ends. */\n  loop?: boolean\n}\n\ntype MenubarContextTriggerProps = React.ComponentProps<typeof MenubarPrimitive.ContextTrigger>\n\ntype MenubarIndicatorProps = React.ComponentProps<typeof MenubarPrimitive.Indicator>\n\ntype MenubarItemContextProps = React.ComponentProps<typeof MenubarPrimitive.ItemContext>\n\ntype MenubarRootProviderProps = React.ComponentProps<typeof MenubarPrimitive.RootProvider>\n\ntype MenubarArrowProps = React.ComponentProps<typeof MenubarPrimitive.Arrow>\n\ntype MenubarCheckboxItemProps = Omit<\n  React.ComponentProps<typeof MenubarPrimitive.CheckboxItem>,\n  \"checked\" | \"value\"\n> & {\n  /** Checked state of the item. */\n  checked?: boolean\n  value?: string\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}\n\ntype MenubarContentProps = React.ComponentProps<typeof MenubarPrimitive.Content>\n\ntype MenubarItemProps = Omit<React.ComponentProps<typeof MenubarPrimitive.Item>, \"value\"> & {\n  value?: string\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n  variant?: \"default\" | \"destructive\"\n}\n\ntype MenubarItemIndicatorProps = React.ComponentProps<typeof MenubarPrimitive.ItemIndicator>\n\ntype MenubarItemTextProps = React.ComponentProps<typeof MenubarPrimitive.ItemText>\n\ntype MenubarMenuProps = Omit<React.ComponentProps<typeof MenubarPrimitive.Root>, \"open\" | \"defaultOpen\"> & {\n  /** Identifies this menu within the menubar. Auto-generated when omitted. */\n  value?: string\n}\n\ntype MenubarPortalProps = React.ComponentProps<typeof PortalPrimitive>\n\ntype MenubarPositionerProps = React.ComponentProps<typeof MenubarPrimitive.Positioner>\n\ntype MenubarRadioItemProps = React.ComponentProps<typeof MenubarPrimitive.RadioItem> & {\n  /** Indent the item to align with items that have an indicator. */\n  inset?: boolean\n}\n\ntype MenubarSeparatorProps = React.ComponentProps<typeof MenubarPrimitive.Separator>\n\ntype MenubarShortcutProps = React.ComponentProps<typeof ark.span>\n\ntype MenubarSubProps = React.ComponentProps<typeof MenubarPrimitive.Root>\n\ntype MenubarSubContentProps = React.ComponentProps<typeof MenubarPrimitive.Content>\n\ntype MenubarTriggerProps = React.ComponentProps<typeof MenubarPrimitive.Trigger>\n\nconst Menubar = {\n  ArrowTip: MenubarArrowTip,\n  Context: MenubarContext,\n  ItemGroup: MenubarItemGroup,\n  ItemGroupLabel: MenubarItemGroupLabel,\n  RadioItemGroup: MenubarRadioItemGroup,\n  TriggerItem: MenubarTriggerItem,\n  Root: MenubarRoot,\n  ContextTrigger: MenubarContextTrigger,\n  Indicator: MenubarIndicator,\n  ItemContext: MenubarItemContext,\n  RootProvider: MenubarRootProvider,\n  Arrow: MenubarArrow,\n  CheckboxItem: MenubarCheckboxItem,\n  Content: MenubarContent,\n  Item: MenubarItem,\n  ItemIndicator: MenubarItemIndicator,\n  ItemText: MenubarItemText,\n  Menu: MenubarMenu,\n  Portal: MenubarPortal,\n  Positioner: MenubarPositioner,\n  RadioItem: MenubarRadioItem,\n  Separator: MenubarSeparator,\n  Shortcut: MenubarShortcut,\n  Sub: MenubarSub,\n  SubContent: MenubarSubContent,\n  Trigger: MenubarTrigger,\n}\n\nexport {\n  useMenu,\n  useMenuContext,\n  useMenuItemContext,\n  Menubar,\n  type MenubarArrowTipProps,\n  type MenubarContextProps,\n  type MenubarItemGroupProps,\n  type MenubarItemGroupLabelProps,\n  type MenubarRadioItemGroupProps,\n  type MenubarTriggerItemProps,\n  type MenubarRootProps,\n  type MenubarContextTriggerProps,\n  type MenubarIndicatorProps,\n  type MenubarItemContextProps,\n  type MenubarRootProviderProps,\n  type MenubarArrowProps,\n  type MenubarCheckboxItemProps,\n  type MenubarContentProps,\n  type MenubarItemProps,\n  type MenubarItemIndicatorProps,\n  type MenubarItemTextProps,\n  type MenubarMenuProps,\n  type MenubarPortalProps,\n  type MenubarPositionerProps,\n  type MenubarRadioItemProps,\n  type MenubarSeparatorProps,\n  type MenubarShortcutProps,\n  type MenubarSubProps,\n  type MenubarSubContentProps,\n  type MenubarTriggerProps,\n}\n"
     }
   ]
 }

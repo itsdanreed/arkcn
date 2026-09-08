@@ -4,28 +4,17 @@
   "description": "",
   "ark": "FileUpload",
   "exports": [
-    "FileUpload",
-    "FileUploadClearTrigger",
-    "FileUploadContext",
-    "FileUploadDropzone",
-    "FileUploadHiddenInput",
-    "FileUploadItem",
-    "FileUploadItemDeleteTrigger",
-    "FileUploadItemGroup",
-    "FileUploadItemName",
-    "FileUploadItemPreview",
-    "FileUploadItemPreviewImage",
-    "FileUploadItemSizeText",
-    "FileUploadLabel",
-    "FileUploadTrigger"
+    "useFileUpload",
+    "useFileUploadContext",
+    "FileUpload"
   ],
   "parts": [
     {
-      "name": "FileUpload",
+      "name": "FileUpload.Root",
       "props": [
         {
           "name": "accept",
-          "type": "Record<string, string[]> | FileMimeType | FileMimeType[]",
+          "type": "FileMimeType | Record<string, string[]> | FileMimeType[]",
           "required": false,
           "description": "The accept file types",
           "from": "@zag-js/file-upload"
@@ -221,7 +210,47 @@
       ]
     },
     {
-      "name": "FileUploadClearTrigger",
+      "name": "FileUpload.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseFileUploadReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "FileUpload.ClearTrigger",
       "props": [
         {
           "name": "asChild",
@@ -254,7 +283,7 @@
       ]
     },
     {
-      "name": "FileUploadContext",
+      "name": "FileUpload.Context",
       "props": [
         {
           "name": "children",
@@ -266,7 +295,7 @@
       ]
     },
     {
-      "name": "FileUploadDropzone",
+      "name": "FileUpload.Dropzone",
       "props": [
         {
           "name": "asChild",
@@ -306,7 +335,7 @@
       ]
     },
     {
-      "name": "FileUploadHiddenInput",
+      "name": "FileUpload.HiddenInput",
       "props": [
         {
           "name": "asChild",
@@ -339,7 +368,7 @@
       ]
     },
     {
-      "name": "FileUploadItem",
+      "name": "FileUpload.Item",
       "props": [
         {
           "name": "file",
@@ -378,7 +407,7 @@
       ]
     },
     {
-      "name": "FileUploadItemDeleteTrigger",
+      "name": "FileUpload.ItemDeleteTrigger",
       "props": [
         {
           "name": "asChild",
@@ -411,7 +440,7 @@
       ]
     },
     {
-      "name": "FileUploadItemGroup",
+      "name": "FileUpload.ItemGroup",
       "props": [
         {
           "name": "asChild",
@@ -451,7 +480,7 @@
       ]
     },
     {
-      "name": "FileUploadItemName",
+      "name": "FileUpload.ItemName",
       "props": [
         {
           "name": "asChild",
@@ -484,7 +513,7 @@
       ]
     },
     {
-      "name": "FileUploadItemPreview",
+      "name": "FileUpload.ItemPreview",
       "props": [
         {
           "name": "asChild",
@@ -525,7 +554,7 @@
       ]
     },
     {
-      "name": "FileUploadItemPreviewImage",
+      "name": "FileUpload.ItemPreviewImage",
       "props": [
         {
           "name": "asChild",
@@ -558,7 +587,7 @@
       ]
     },
     {
-      "name": "FileUploadItemSizeText",
+      "name": "FileUpload.ItemSizeText",
       "props": [
         {
           "name": "asChild",
@@ -591,7 +620,7 @@
       ]
     },
     {
-      "name": "FileUploadLabel",
+      "name": "FileUpload.Label",
       "props": [
         {
           "name": "asChild",
@@ -624,7 +653,7 @@
       ]
     },
     {
-      "name": "FileUploadTrigger",
+      "name": "FileUpload.Trigger",
       "props": [
         {
           "name": "asChild",
@@ -668,7 +697,7 @@
   "files": [
     {
       "path": "components/ui/file-upload.tsx",
-      "content": "\"use client\"\n\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { FileUpload as FileUploadPrimitive } from \"@ark-ui/react\"\nimport { FileIcon, UploadIcon, XIcon } from \"lucide-react\"\n\nimport { Button } from \"@/components/ui/button\"\n\nfunction FileUpload({ className, ...props }: React.ComponentProps<typeof FileUploadPrimitive.Root>) {\n  return (\n    <FileUploadPrimitive.Root\n      data-slot=\"file-upload\"\n      className={cn(\"flex w-full flex-col gap-3\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FileUploadContext({ ...props }: React.ComponentProps<typeof FileUploadPrimitive.Context>) {\n  return <FileUploadPrimitive.Context {...props} />\n}\n\nfunction FileUploadLabel({ className, ...props }: React.ComponentProps<typeof FileUploadPrimitive.Label>) {\n  return (\n    <FileUploadPrimitive.Label\n      data-slot=\"file-upload-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FileUploadDropzone({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof FileUploadPrimitive.Dropzone>) {\n  return (\n    <FileUploadPrimitive.Dropzone\n      data-slot=\"file-upload-dropzone\"\n      className={cn(\n        \"flex min-h-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-input bg-transparent p-6 text-center text-sm text-muted-foreground transition-colors outline-none hover:bg-muted/50 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-dragging:border-ring data-dragging:bg-muted/50 data-invalid:border-destructive dark:bg-input/30 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg:not([class*='size-'])]:size-5\",\n        className\n      )}\n      {...props}\n    >\n      {children ?? (\n        <>\n          <UploadIcon />\n          <span>Drag your files here or click to browse</span>\n        </>\n      )}\n    </FileUploadPrimitive.Dropzone>\n  )\n}\n\nfunction FileUploadTrigger({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof FileUploadPrimitive.Trigger>) {\n  return (\n    <FileUploadPrimitive.Trigger data-slot=\"file-upload-trigger\" className={cn(className)} asChild {...props}>\n      <Button variant=\"outline\" size=\"sm\">\n        {children}\n      </Button>\n    </FileUploadPrimitive.Trigger>\n  )\n}\n\nfunction FileUploadClearTrigger({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof FileUploadPrimitive.ClearTrigger>) {\n  return (\n    <FileUploadPrimitive.ClearTrigger\n      data-slot=\"file-upload-clear-trigger\"\n      className={cn(className)}\n      asChild\n      {...props}\n    >\n      <Button variant=\"ghost\" size=\"sm\">\n        {children}\n      </Button>\n    </FileUploadPrimitive.ClearTrigger>\n  )\n}\n\nfunction FileUploadItemGroup({ className, ...props }: React.ComponentProps<typeof FileUploadPrimitive.ItemGroup>) {\n  return (\n    <FileUploadPrimitive.ItemGroup\n      data-slot=\"file-upload-item-group\"\n      className={cn(\"flex flex-col gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FileUploadItem({ className, ...props }: React.ComponentProps<typeof FileUploadPrimitive.Item>) {\n  return (\n    <FileUploadPrimitive.Item\n      data-slot=\"file-upload-item\"\n      className={cn(\"grid grid-cols-[auto_1fr_auto] items-center gap-x-3 rounded-lg border p-2 text-sm\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FileUploadItemPreview({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof FileUploadPrimitive.ItemPreview>) {\n  return (\n    <FileUploadPrimitive.ItemPreview\n      data-slot=\"file-upload-item-preview\"\n      className={cn(\n        \"row-span-2 flex size-10 items-center justify-center overflow-hidden rounded-md bg-muted text-muted-foreground [&_svg]:size-5\",\n        className\n      )}\n      {...props}\n    >\n      {children ?? <FileIcon />}\n    </FileUploadPrimitive.ItemPreview>\n  )\n}\n\nfunction FileUploadItemPreviewImage({\n  className,\n  ...props\n}: React.ComponentProps<typeof FileUploadPrimitive.ItemPreviewImage>) {\n  return (\n    <FileUploadPrimitive.ItemPreviewImage\n      data-slot=\"file-upload-item-preview-image\"\n      className={cn(\"size-full object-cover\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FileUploadItemName({ className, ...props }: React.ComponentProps<typeof FileUploadPrimitive.ItemName>) {\n  return (\n    <FileUploadPrimitive.ItemName\n      data-slot=\"file-upload-item-name\"\n      className={cn(\"truncate font-medium\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FileUploadItemSizeText({\n  className,\n  ...props\n}: React.ComponentProps<typeof FileUploadPrimitive.ItemSizeText>) {\n  return (\n    <FileUploadPrimitive.ItemSizeText\n      data-slot=\"file-upload-item-size-text\"\n      className={cn(\"col-start-2 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FileUploadItemDeleteTrigger({\n  className,\n  children,\n  ...props\n}: React.ComponentProps<typeof FileUploadPrimitive.ItemDeleteTrigger>) {\n  return (\n    <FileUploadPrimitive.ItemDeleteTrigger\n      data-slot=\"file-upload-item-delete-trigger\"\n      className={cn(\"row-span-2\", className)}\n      asChild\n      {...props}\n    >\n      <Button variant=\"ghost\" size=\"icon-sm\">\n        {children ?? <XIcon />}\n      </Button>\n    </FileUploadPrimitive.ItemDeleteTrigger>\n  )\n}\n\nfunction FileUploadHiddenInput({ ...props }: React.ComponentProps<typeof FileUploadPrimitive.HiddenInput>) {\n  return <FileUploadPrimitive.HiddenInput {...props} />\n}\n\nexport {\n  FileUpload,\n  FileUploadClearTrigger,\n  FileUploadContext,\n  FileUploadDropzone,\n  FileUploadHiddenInput,\n  FileUploadItem,\n  FileUploadItemDeleteTrigger,\n  FileUploadItemGroup,\n  FileUploadItemName,\n  FileUploadItemPreview,\n  FileUploadItemPreviewImage,\n  FileUploadItemSizeText,\n  FileUploadLabel,\n  FileUploadTrigger,\n}\n"
+      "content": "\"use client\"\n\nimport { useFileUpload, useFileUploadContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { FileUpload as FileUploadPrimitive } from \"@ark-ui/react\"\nimport { FileIcon, UploadIcon, XIcon } from \"lucide-react\"\n\nimport { Button } from \"@/components/ui/button\"\n\nfunction FileUploadRoot({ className, ...props }: FileUploadRootProps) {\n  return (\n    <FileUploadPrimitive.Root\n      data-slot=\"file-upload\"\n      className={cn(\"flex w-full flex-col gap-3\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FileUploadContext({ ...props }: FileUploadContextProps) {\n  return <FileUploadPrimitive.Context {...props} />\n}\n\nfunction FileUploadLabel({ className, ...props }: FileUploadLabelProps) {\n  return (\n    <FileUploadPrimitive.Label\n      data-slot=\"file-upload-label\"\n      className={cn(\"text-sm font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FileUploadDropzone({ className, children, ...props }: FileUploadDropzoneProps) {\n  return (\n    <FileUploadPrimitive.Dropzone\n      data-slot=\"file-upload-dropzone\"\n      className={cn(\n        \"flex min-h-32 cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border border-dashed border-input bg-transparent p-6 text-center text-sm text-muted-foreground transition-colors outline-none hover:bg-muted/50 focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-dragging:border-ring data-dragging:bg-muted/50 data-invalid:border-destructive dark:bg-input/30 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg:not([class*='size-'])]:size-5\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <>\n              <UploadIcon />\n              <span>Drag your files here or click to browse</span>\n            </>\n          )}\n        </>\n      )}\n    </FileUploadPrimitive.Dropzone>\n  )\n}\n\nfunction FileUploadTrigger({ className, children, ...props }: FileUploadTriggerProps) {\n  return (\n    <FileUploadPrimitive.Trigger data-slot=\"file-upload-trigger\" className={cn(className)} asChild {...props}>\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <Button variant=\"outline\" size=\"sm\">\n            {children}\n          </Button>\n        </>\n      )}\n    </FileUploadPrimitive.Trigger>\n  )\n}\n\nfunction FileUploadClearTrigger({ className, children, ...props }: FileUploadClearTriggerProps) {\n  return (\n    <FileUploadPrimitive.ClearTrigger\n      data-slot=\"file-upload-clear-trigger\"\n      className={cn(className)}\n      asChild\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <Button variant=\"ghost\" size=\"sm\">\n            {children}\n          </Button>\n        </>\n      )}\n    </FileUploadPrimitive.ClearTrigger>\n  )\n}\n\nfunction FileUploadItemGroup({ className, ...props }: FileUploadItemGroupProps) {\n  return (\n    <FileUploadPrimitive.ItemGroup\n      data-slot=\"file-upload-item-group\"\n      className={cn(\"flex flex-col gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FileUploadItem({ className, ...props }: FileUploadItemProps) {\n  return (\n    <FileUploadPrimitive.Item\n      data-slot=\"file-upload-item\"\n      className={cn(\"grid grid-cols-[auto_1fr_auto] items-center gap-x-3 rounded-lg border p-2 text-sm\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FileUploadItemPreview({ className, children, ...props }: FileUploadItemPreviewProps) {\n  return (\n    <FileUploadPrimitive.ItemPreview\n      data-slot=\"file-upload-item-preview\"\n      className={cn(\n        \"row-span-2 flex size-10 items-center justify-center overflow-hidden rounded-md bg-muted text-muted-foreground [&_svg]:size-5\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <FileIcon />}</>}\n    </FileUploadPrimitive.ItemPreview>\n  )\n}\n\nfunction FileUploadItemPreviewImage({ className, ...props }: FileUploadItemPreviewImageProps) {\n  return (\n    <FileUploadPrimitive.ItemPreviewImage\n      data-slot=\"file-upload-item-preview-image\"\n      className={cn(\"size-full object-cover\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FileUploadItemName({ className, ...props }: FileUploadItemNameProps) {\n  return (\n    <FileUploadPrimitive.ItemName\n      data-slot=\"file-upload-item-name\"\n      className={cn(\"truncate font-medium\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FileUploadItemSizeText({ className, ...props }: FileUploadItemSizeTextProps) {\n  return (\n    <FileUploadPrimitive.ItemSizeText\n      data-slot=\"file-upload-item-size-text\"\n      className={cn(\"col-start-2 text-xs text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction FileUploadItemDeleteTrigger({ className, children, ...props }: FileUploadItemDeleteTriggerProps) {\n  return (\n    <FileUploadPrimitive.ItemDeleteTrigger\n      data-slot=\"file-upload-item-delete-trigger\"\n      className={cn(\"row-span-2\", className)}\n      asChild\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <Button variant=\"ghost\" size=\"icon-sm\">\n            {children ?? <XIcon />}\n          </Button>\n        </>\n      )}\n    </FileUploadPrimitive.ItemDeleteTrigger>\n  )\n}\n\nfunction FileUploadHiddenInput({ ...props }: FileUploadHiddenInputProps) {\n  return <FileUploadPrimitive.HiddenInput {...props} />\n}\n\nfunction FileUploadRootProvider({ className, ...props }: FileUploadRootProviderProps) {\n  return (\n    <FileUploadPrimitive.RootProvider\n      data-slot=\"file-upload\"\n      className={cn(\"flex w-full flex-col gap-3\", className)}\n      {...props}\n    />\n  )\n}\n\ntype FileUploadRootProps = React.ComponentProps<typeof FileUploadPrimitive.Root>\n\ntype FileUploadRootProviderProps = React.ComponentProps<typeof FileUploadPrimitive.RootProvider>\n\ntype FileUploadClearTriggerProps = React.ComponentProps<typeof FileUploadPrimitive.ClearTrigger>\n\ntype FileUploadContextProps = React.ComponentProps<typeof FileUploadPrimitive.Context>\n\ntype FileUploadDropzoneProps = React.ComponentProps<typeof FileUploadPrimitive.Dropzone>\n\ntype FileUploadHiddenInputProps = React.ComponentProps<typeof FileUploadPrimitive.HiddenInput>\n\ntype FileUploadItemProps = React.ComponentProps<typeof FileUploadPrimitive.Item>\n\ntype FileUploadItemDeleteTriggerProps = React.ComponentProps<typeof FileUploadPrimitive.ItemDeleteTrigger>\n\ntype FileUploadItemGroupProps = React.ComponentProps<typeof FileUploadPrimitive.ItemGroup>\n\ntype FileUploadItemNameProps = React.ComponentProps<typeof FileUploadPrimitive.ItemName>\n\ntype FileUploadItemPreviewProps = React.ComponentProps<typeof FileUploadPrimitive.ItemPreview>\n\ntype FileUploadItemPreviewImageProps = React.ComponentProps<typeof FileUploadPrimitive.ItemPreviewImage>\n\ntype FileUploadItemSizeTextProps = React.ComponentProps<typeof FileUploadPrimitive.ItemSizeText>\n\ntype FileUploadLabelProps = React.ComponentProps<typeof FileUploadPrimitive.Label>\n\ntype FileUploadTriggerProps = React.ComponentProps<typeof FileUploadPrimitive.Trigger>\n\nconst FileUpload = {\n  Root: FileUploadRoot,\n  RootProvider: FileUploadRootProvider,\n  ClearTrigger: FileUploadClearTrigger,\n  Context: FileUploadContext,\n  Dropzone: FileUploadDropzone,\n  HiddenInput: FileUploadHiddenInput,\n  Item: FileUploadItem,\n  ItemDeleteTrigger: FileUploadItemDeleteTrigger,\n  ItemGroup: FileUploadItemGroup,\n  ItemName: FileUploadItemName,\n  ItemPreview: FileUploadItemPreview,\n  ItemPreviewImage: FileUploadItemPreviewImage,\n  ItemSizeText: FileUploadItemSizeText,\n  Label: FileUploadLabel,\n  Trigger: FileUploadTrigger,\n}\n\nexport {\n  useFileUpload,\n  useFileUploadContext,\n  FileUpload,\n  type FileUploadRootProps,\n  type FileUploadRootProviderProps,\n  type FileUploadClearTriggerProps,\n  type FileUploadContextProps,\n  type FileUploadDropzoneProps,\n  type FileUploadHiddenInputProps,\n  type FileUploadItemProps,\n  type FileUploadItemDeleteTriggerProps,\n  type FileUploadItemGroupProps,\n  type FileUploadItemNameProps,\n  type FileUploadItemPreviewProps,\n  type FileUploadItemPreviewImageProps,\n  type FileUploadItemSizeTextProps,\n  type FileUploadLabelProps,\n  type FileUploadTriggerProps,\n}\n"
     }
   ]
 }

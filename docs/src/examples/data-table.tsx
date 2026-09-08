@@ -1,21 +1,5 @@
 import { Badge } from "@/components/ui/badge"
-import {
-  DataTable,
-  DataTableBody,
-  DataTableCell,
-  DataTableHead,
-  DataTableHeader,
-  DataTablePageInfo,
-  DataTablePageNav,
-  DataTablePagination,
-  DataTableResetFilters,
-  DataTableSearch,
-  DataTableTable,
-  DataTableToolbar,
-  DataTableToolbarGroup,
-  DataTableViewOptions,
-  useDataTable,
-} from "@/components/ui/data-table"
+import { DataTable, useDataTable } from "@/components/ui/data-table"
 import type { ColumnDef } from "@/lib/table"
 
 type Task = { id: string; title: string; status: "todo" | "doing" | "done"; priority: "low" | "medium" | "high" }
@@ -38,44 +22,44 @@ const columns: ColumnDef<Task>[] = [
 export default function DataTableExample() {
   const table = useDataTable({ data: tasks, columns, initialState: { pagination: { pageIndex: 0, pageSize: 5 } } })
   return (
-    <DataTable table={table} className="w-full">
-      <DataTableToolbar>
-        <DataTableToolbarGroup>
-          <DataTableSearch placeholder="Filter tasks…" />
-          <DataTableResetFilters />
-        </DataTableToolbarGroup>
-        <DataTableViewOptions />
-      </DataTableToolbar>
-      <DataTableTable>
-        <DataTableHeader>
-          <DataTableHead column="id">Task</DataTableHead>
-          <DataTableHead column="title">Title</DataTableHead>
-          <DataTableHead column="status">Status</DataTableHead>
-          <DataTableHead column="priority">Priority</DataTableHead>
-        </DataTableHeader>
-        <DataTableBody table={table}>
+    <DataTable.Root table={table} className="w-full">
+      <DataTable.Toolbar>
+        <DataTable.ToolbarGroup>
+          <DataTable.Search placeholder="Filter tasks…" />
+          <DataTable.ResetFilters />
+        </DataTable.ToolbarGroup>
+        <DataTable.ViewOptions />
+      </DataTable.Toolbar>
+      <DataTable.Table>
+        <DataTable.Header>
+          <DataTable.Head column="id">Task</DataTable.Head>
+          <DataTable.Head column="title">Title</DataTable.Head>
+          <DataTable.Head column="status">Status</DataTable.Head>
+          <DataTable.Head column="priority">Priority</DataTable.Head>
+        </DataTable.Header>
+        <DataTable.Body table={table}>
           {(row) => (
             <>
-              <DataTableCell column="id" className="w-28 font-mono text-xs">
+              <DataTable.Cell column="id" className="w-28 font-mono text-xs">
                 {row.original.id}
-              </DataTableCell>
-              <DataTableCell column="title">{row.original.title}</DataTableCell>
-              <DataTableCell column="status">
-                <Badge variant="outline" className="capitalize">
+              </DataTable.Cell>
+              <DataTable.Cell column="title">{row.original.title}</DataTable.Cell>
+              <DataTable.Cell column="status">
+                <Badge.Root variant="outline" className="capitalize">
                   {row.original.status}
-                </Badge>
-              </DataTableCell>
-              <DataTableCell column="priority" className="capitalize">
+                </Badge.Root>
+              </DataTable.Cell>
+              <DataTable.Cell column="priority" className="capitalize">
                 {row.original.priority}
-              </DataTableCell>
+              </DataTable.Cell>
             </>
           )}
-        </DataTableBody>
-      </DataTableTable>
-      <DataTablePagination>
-        <DataTablePageInfo />
-        <DataTablePageNav />
-      </DataTablePagination>
-    </DataTable>
+        </DataTable.Body>
+      </DataTable.Table>
+      <DataTable.Pagination>
+        <DataTable.PageInfo />
+        <DataTable.PageNav />
+      </DataTable.Pagination>
+    </DataTable.Root>
   )
 }
