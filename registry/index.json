@@ -1,6 +1,6 @@
 {
   "name": "@multicomma/arkcn",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "baseDependencies": {
     "@ark-ui/react": "^5.39.1",
     "@tailwindcss/typography": "^0.5.20",

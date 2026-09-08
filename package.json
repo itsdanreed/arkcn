@@ -1,6 +1,6 @@
 {
   "name": "@multicomma/arkcn",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "arkcn: shadcn/ui-style components ported to Ark UI, plus data-heavy primitives (data grid, kanban, gantt, scheduler, node graph, ...). Tailwind v4. Ships a copy-into-your-project CLI and an MCP server.",
   "type": "module",
   "license": "MIT",

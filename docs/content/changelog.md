@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0
+
+- Align private component implementation names with their public parts, such as `CardRoot` and `AccordionItemTrigger`.
+- Export named prop aliases alongside component objects, preserving generic item and row types. Remove merged TypeScript namespaces and keep compositional functions private.
+- Restore default Switch sizing, notification item layout with `asChild`, and spacing below sidebar submenus.
+- Add checks for all 1,202 compositional names and prop exports, plus type-extension regression tests.
+
 ## 0.2.0
 
 - Replace flat component exports with namespace APIs such as `Card.Root` and `Accordion.ItemTrigger`. This is a breaking change; compatibility exports are not provided.
