@@ -2,6 +2,9 @@
 
 import { ark } from "@ark-ui/react"
 import * as React from "react"
+import { combine } from "@atlaskit/pragmatic-drag-and-drop/combine"
+import { draggable, dropTargetForElements } from "@atlaskit/pragmatic-drag-and-drop/element/adapter"
+import { attachClosestEdge, extractClosestEdge } from "@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge"
 import {
   type ColumnDef,
   type ColumnFiltersState,
@@ -30,10 +33,12 @@ import {
   ChevronsUpDownIcon,
   EllipsisIcon,
   EyeOffIcon,
+  GripVerticalIcon,
   PlusCircleIcon,
   Settings2Icon,
   XIcon,
 } from "lucide-react"
+import { cloneDragPreview } from "@/lib/drag-preview"
 import { cn } from "@/lib/utils"
 import { LiveRegion, useLiveRegion } from "@/components/ui/live-region"
 
@@ -79,10 +84,60 @@ function useDataTableContext<TData>(explicit?: DataTableInstance<TData>): DataTa
   return table
 }
 
-function DataTableRoot<TData>({ table, className, ...props }: DataTableRootProps<TData>) {
+/** Where a dragged row was dropped: just above or below `targetId`. */
+type DataTableRowReorderDetails = { rowId: string; targetId: string; edge: "top" | "bottom" }
+
+type ReorderContextValue = {
+  instanceId: string
+  onRowReorder: (details: DataTableRowReorderDetails) => void
+  announce: (message: string) => void
+}
+
+const DataTableReorderContext = React.createContext<ReorderContextValue | null>(null)
+
+type RowContextValue = {
+  rowId: string
+  setHandle: (element: HTMLElement | null) => void
+  grabbed: boolean
+  setGrabbed: (grabbed: boolean) => void
+}
+
+const DataTableRowContext = React.createContext<RowContextValue | null>(null)
+
+/**
+ * Moves `details.rowId` next to `details.targetId` in a list of row ids, for applying
+ * `onRowReorder` to your own ordered data.
+ */
+function reorderRowIds(ids: readonly string[], { rowId, targetId, edge }: DataTableRowReorderDetails): string[] {
+  if (rowId === targetId) return [...ids]
+  const rest = ids.filter((id) => id !== rowId)
+  const index = rest.indexOf(targetId)
+  if (index < 0) return [...ids]
+  rest.splice(edge === "top" ? index : index + 1, 0, rowId)
+  return rest
+}
+
+function DataTableRoot<TData>({ table, onRowReorder, className, children, ...props }: DataTableRootProps<TData>) {
+  const instanceId = React.useId()
+  const { message, announce } = useLiveRegion({ clearAfter: 3000 })
+  const latest = React.useRef(onRowReorder)
+  React.useEffect(() => {
+    latest.current = onRowReorder
+  })
+  const reorder = React.useMemo<ReorderContextValue | null>(
+    () => (onRowReorder ? { instanceId, onRowReorder: (details) => latest.current?.(details), announce } : null),
+    // Only whether reordering is on matters; the latest callback is read through the ref.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [instanceId, announce, Boolean(onRowReorder)]
+  )
   return (
     <DataTableContext.Provider value={table}>
-      <ark.div data-slot="data-table" className={cn("flex flex-1 flex-col gap-4", className)} {...props} />
+      <DataTableReorderContext.Provider value={reorder}>
+        <ark.div data-slot="data-table" className={cn("flex flex-1 flex-col gap-4", className)} {...props}>
+          {children}
+          {reorder && <LiveRegion.Root data-slot="data-table-live-region" message={message} />}
+        </ark.div>
+      </DataTableReorderContext.Provider>
     </DataTableContext.Provider>
   )
 }
@@ -515,15 +570,151 @@ function DataTableHeader({ className, children, ...props }: DataTableHeaderProps
   )
 }
 
-/** A body row bound to a row instance; carries the selected state. */
+/**
+ * A body row bound to a row instance; carries the selected state. When the table has
+ * `onRowReorder`, the row is a drop target and becomes draggable by its `DataTableRowHandle`.
+ */
 function DataTableRow<TData>({ row, className, ...props }: DataTableRowProps<TData>) {
+  const reorder = React.useContext(DataTableReorderContext)
+  const ref = React.useRef<HTMLTableRowElement>(null)
+  const [handle, setHandle] = React.useState<HTMLElement | null>(null)
+  const [edge, setEdge] = React.useState<"top" | "bottom" | null>(null)
+  const [dragging, setDragging] = React.useState(false)
+  const [grabbed, setGrabbed] = React.useState(false)
+  const instanceId = reorder?.instanceId
+
+  React.useEffect(() => {
+    const element = ref.current
+    if (!element || !instanceId) return
+    const cleanups = [
+      dropTargetForElements({
+        element,
+        canDrop: ({ source }) => source.data.instanceId === instanceId && source.data.rowId !== row.id,
+        getData: ({ input }) =>
+          attachClosestEdge({ rowId: row.id }, { element, input, allowedEdges: ["top", "bottom"] }),
+        onDrag: ({ self }) => setEdge(extractClosestEdge(self.data) as "top" | "bottom" | null),
+        onDragLeave: () => setEdge(null),
+        onDrop: ({ source, self }) => {
+          setEdge(null)
+          const dropEdge = extractClosestEdge(self.data)
+          if (dropEdge !== "top" && dropEdge !== "bottom") return
+          reorder?.onRowReorder({ rowId: String(source.data.rowId), targetId: row.id, edge: dropEdge })
+        },
+      }),
+    ]
+    if (handle) {
+      cleanups.push(
+        draggable({
+          element,
+          dragHandle: handle,
+          getInitialData: () => ({ instanceId, rowId: row.id }),
+          onGenerateDragPreview: (args) => cloneDragPreview(args),
+          onDragStart: () => setDragging(true),
+          onDrop: () => setDragging(false),
+        })
+      )
+    }
+    return combine(...cleanups)
+  }, [instanceId, row.id, handle, reorder])
+
+  const rowContext = React.useMemo(() => ({ rowId: row.id, setHandle, grabbed, setGrabbed }), [row.id, grabbed])
   return (
-    <Table.Row
-      data-slot="data-table-row"
-      data-state={row.getIsSelected() ? "selected" : undefined}
-      className={cn("group/row", className)}
+    <DataTableRowContext.Provider value={rowContext}>
+      <Table.Row
+        ref={ref}
+        data-slot="data-table-row"
+        data-state={row.getIsSelected() ? "selected" : undefined}
+        data-dragging={dragging ? "" : undefined}
+        data-grabbed={grabbed ? "" : undefined}
+        data-drop-edge={edge ?? undefined}
+        className={cn(
+          "group/row data-dragging:opacity-40 data-grabbed:bg-muted data-[drop-edge=bottom]:*:shadow-[inset_0_-2px_0_0_var(--color-primary)] data-[drop-edge=top]:*:shadow-[inset_0_2px_0_0_var(--color-primary)]",
+          className
+        )}
+        {...props}
+      />
+    </DataTableRowContext.Provider>
+  )
+}
+
+/**
+ * A grip that drags its row to a new position, for tables with `onRowReorder`. Keyboard: Space
+ * or Enter picks the row up, ArrowUp/ArrowDown move it one place, and Space, Enter, Escape, or
+ * leaving the handle drops it. Moves are announced. Put it in a cell of each row.
+ */
+function DataTableRowHandle<TData>({
+  table: tableProp,
+  label = "Reorder row",
+  className,
+  children,
+  onKeyDown,
+  onBlur,
+  ...props
+}: DataTableRowHandleProps<TData>) {
+  const table = useDataTableContext(tableProp)
+  const reorder = React.useContext(DataTableReorderContext)
+  const row = React.useContext(DataTableRowContext)
+  const element = React.useRef<HTMLButtonElement | null>(null)
+  const rows = table.getRowModel().rows
+  const position = rows.findIndex((candidate) => candidate.id === row?.rowId)
+  // Moving a row can move its DOM node, which drops focus; keep the grabbed handle focused.
+  React.useLayoutEffect(() => {
+    if (row?.grabbed && element.current && document.activeElement !== element.current) element.current.focus()
+  }, [row?.grabbed, position])
+  if (!reorder || !row) return null
+  const release = () => {
+    if (!row.grabbed) return
+    row.setGrabbed(false)
+    reorder.announce(`Dropped at position ${position + 1} of ${rows.length}.`)
+  }
+  return (
+    <ark.button
+      ref={(node: HTMLButtonElement | null) => {
+        element.current = node
+        row.setHandle(node)
+      }}
+      type="button"
+      data-slot="data-table-row-handle"
+      aria-label={label}
+      aria-pressed={row.grabbed}
+      aria-roledescription="sortable handle"
+      onKeyDown={(event) => {
+        onKeyDown?.(event)
+        if (event.defaultPrevented) return
+        if (event.key === " " || event.key === "Enter") {
+          event.preventDefault()
+          if (row.grabbed) release()
+          else {
+            row.setGrabbed(true)
+            reorder.announce(
+              `Picked up row ${position + 1} of ${rows.length}. Use the arrow keys to move it, and Space to drop it.`
+            )
+          }
+        } else if (event.key === "Escape") release()
+        else if (row.grabbed && (event.key === "ArrowUp" || event.key === "ArrowDown")) {
+          event.preventDefault()
+          const up = event.key === "ArrowUp"
+          const neighbour = rows[position + (up ? -1 : 1)]
+          if (!neighbour) return
+          reorder.onRowReorder({ rowId: row.rowId, targetId: neighbour.id, edge: up ? "top" : "bottom" })
+          reorder.announce(`Moved to position ${position + (up ? 0 : 2)} of ${rows.length}.`)
+        }
+      }}
+      onBlur={(event) => {
+        onBlur?.(event)
+        // A blur caused by the row moving is followed by refocusing; only a real exit drops the row.
+        requestAnimationFrame(() => {
+          if (document.activeElement !== element.current) release()
+        })
+      }}
+      className={cn(
+        "inline-flex size-6 cursor-grab items-center justify-center rounded-md text-muted-foreground outline-none hover:bg-muted hover:text-foreground focus-visible:ring-3 focus-visible:ring-ring/50 active:cursor-grabbing aria-pressed:bg-primary aria-pressed:text-primary-foreground [&_svg:not([class*='size-'])]:size-4",
+        className
+      )}
       {...props}
-    />
+    >
+      {children ?? <GripVerticalIcon />}
+    </ark.button>
   )
 }
 
@@ -928,6 +1119,12 @@ function DataTableBulkActionTrigger({
 
 type DataTableRootProps<TData = unknown> = React.ComponentProps<typeof ark.div> & {
   table: DataTableInstance<TData>
+  /**
+   * Turns on row reordering: rows become drop targets and `DataTableRowHandle`s drag them. Called
+   * with the moved row, the row it was dropped next to, and which side; apply it to your data
+   * (for example with `reorderRowIds`). Reorder only an unsorted, unfiltered view.
+   */
+  onRowReorder?: (details: DataTableRowReorderDetails) => void
 }
 
 type DataTableBodyProps<TData = unknown> = Omit<React.ComponentProps<typeof Table.Body>, "children"> & {
@@ -1012,6 +1209,15 @@ type DataTableRowProps<TData = unknown> = React.ComponentProps<typeof Table.Row>
   row: DataTableRowInstance<TData>
 }
 
+type DataTableRowHandleProps<TData = unknown> = React.ComponentProps<typeof ark.button> & {
+  table?: DataTableInstance<TData>
+  /**
+   * Accessible name for the handle.
+   * @default "Reorder row"
+   */
+  label?: string
+}
+
 type DataTableRowActionsProps = React.ComponentProps<typeof DropdownMenu.Root> & {
   className?: string
   /** Replace the default ellipsis button with your own element. */
@@ -1070,6 +1276,7 @@ const DataTable = {
   ResetFilters: DataTableResetFilters,
   Row: DataTableRow,
   RowActions: DataTableRowActions,
+  RowHandle: DataTableRowHandle,
   Search: DataTableSearch,
   SelectAll: DataTableSelectAll,
   SelectRow: DataTableSelectRow,
@@ -1082,6 +1289,7 @@ const DataTable = {
 export {
   DataTable,
   getPageNumbers,
+  reorderRowIds,
   useDataTable,
   useDataTableContext,
   type ColumnDef,
@@ -1115,6 +1323,8 @@ export {
   type DataTableResetFiltersProps,
   type DataTableRowProps,
   type DataTableRowActionsProps,
+  type DataTableRowHandleProps,
+  type DataTableRowReorderDetails,
   type DataTableSearchProps,
   type DataTableSelectAllProps,
   type DataTableSelectRowProps,

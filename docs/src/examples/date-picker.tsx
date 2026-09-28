@@ -6,8 +6,8 @@ export default function DatePickerExample() {
       <DatePicker.Label>Appointment date</DatePicker.Label>
       <DatePicker.Control>
         <DatePicker.Input />
-        <DatePicker.Trigger>Choose date</DatePicker.Trigger>
-        <DatePicker.ClearTrigger aria-label="Clear date">×</DatePicker.ClearTrigger>
+        <DatePicker.Trigger aria-label="Choose date" />
+        <DatePicker.ClearTrigger aria-label="Clear date" />
       </DatePicker.Control>
       <Portal.Root>
         <DatePicker.Positioner>

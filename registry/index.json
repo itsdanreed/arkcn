@@ -564,6 +564,7 @@
       ],
       "registryDependencies": [
         "button",
+        "input-group",
         "lib/utils"
       ],
       "files": [
@@ -712,11 +713,14 @@
       "exports": [
         "DataTable",
         "getPageNumbers",
+        "reorderRowIds",
         "useDataTable",
         "useDataTableContext"
       ],
       "dependencies": [
         "@ark-ui/react",
+        "@atlaskit/pragmatic-drag-and-drop",
+        "@atlaskit/pragmatic-drag-and-drop-hitbox",
         "lucide-react"
       ],
       "registryDependencies": [
@@ -728,6 +732,7 @@
         "floating-toolbar",
         "input",
         "lib/data-table-adapter",
+        "lib/drag-preview",
         "lib/table",
         "lib/utils",
         "live-region",
@@ -775,9 +780,11 @@
         "parseDate"
       ],
       "dependencies": [
-        "@ark-ui/react"
+        "@ark-ui/react",
+        "lucide-react"
       ],
       "registryDependencies": [
+        "input-group",
         "lib/utils"
       ],
       "files": [

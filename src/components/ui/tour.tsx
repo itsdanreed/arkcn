@@ -47,7 +47,7 @@ function TourSpotlight({ className, ...props }: TourSpotlightProps) {
 }
 
 function TourPositioner({ className, ...props }: TourPositionerProps) {
-  return <TourPrimitive.Positioner data-slot="tour-positioner" className={cn("z-50", className)} {...props} />
+  return <TourPrimitive.Positioner data-slot="tour-positioner" className={cn("[--z-index:50]", className)} {...props} />
 }
 
 function TourContent({ className, ...props }: TourContentProps) {

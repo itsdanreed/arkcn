@@ -88,6 +88,20 @@ check`. Add an example for a new component by dropping `docs/src/examples/<name>
   `cn`) are removed. Do not reintroduce them. `cn` is clsx + tailwind-merge in
   `src/lib/utils.ts`. Base variants, keyframes, and utilities live in `src/index.css`
   (keyframes at the end of the `@theme inline` block); there is no `components.json`.
+- `DatePicker.Control` is an `InputGroup`: the input is borderless inside it, and `Trigger` and
+  `ClearTrigger` render as inline icon buttons at the end (calendar and × by default; pass children
+  to override). `ClearTrigger` hides with its addon while there's no value.
+- `ColorPicker.Control` is an `InputGroup` too: the channel input is borderless inside it and
+  `Trigger` is an inline swatch button at the start.
+- `TooltipTrigger` never claims the element's `id`, so it composes with another trigger
+  (`Popover.Trigger`, `Popconfirm.Trigger`, `DropdownMenu.Trigger`, ...) in either nesting order:
+  the other trigger keeps its id and the tooltip adopts it for positioning.
+- `ComboboxInput` takes `icon` (a leading addon, e.g. a search glass). The combobox module exports
+  its own `createListCollection`, which caches the collection's `toString`: zag serializes the
+  collection on every render, so large (virtualized) comboboxes otherwise pay O(items) per render.
+- `DrawerContent` takes `container` (portal into an element and position against it, e.g. a
+  panel over a map), `showBackdrop={false}` (pair with `modal={false}` on the root so the page
+  stays interactive), and `inset` (float a margin from the edges with all corners rounded).
 - `questionnaire.tsx` and `message-scroller.tsx` were removed because they depended on
   the `@shadcn/react` runtime. Rebuild from scratch if they are wanted.
 - Components with no Ark equivalent (calendar, carousel, chart, resizable, input-otp,
@@ -131,7 +145,9 @@ filter, reset, view options, `DataTableTable` > `DataTableHeader` (one `DataTabl
 column="id"` per column; sortable columns get the sort/hide menu with `children` as the title)
 + `DataTableBody` (`children` is `(row) => cells`; wrap in `DataTableRow` or return a fragment
 of `DataTableCell column="id"` cells), `DataTableEmpty`, select-all/select-row cells, row
-actions, pagination pieces, bulk actions. Heads and cells keyed by a hidden column render
+actions, pagination pieces, bulk actions, and row reordering (`onRowReorder` on the root plus a
+`DataTableRowHandle` per row; pragmatic drag-and-drop with keyboard pick-up/move/drop and
+announcements; `reorderRowIds` applies the result). Heads and cells keyed by a hidden column render
 nothing, so visibility toggles need no extra wiring. The toolkit must not know about specific
 table libraries (no TanStack). `src/demo/tasks/` and `src/demo/users/` are the reference
 consumers: `columns.tsx` is pure config, `*-table.tsx` composes the markup.

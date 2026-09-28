@@ -6,7 +6,7 @@ import * as React from "react"
 import {
   Combobox as ComboboxPrimitive,
   Portal as PortalPrimitive,
-  createListCollection,
+  createListCollection as createArkListCollection,
   useComboboxContext,
   useFilter,
   useListCollection,
@@ -18,6 +18,20 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { InputGroup } from "@/components/ui/input-group"
 import { ChevronDownIcon, XIcon, CheckIcon } from "lucide-react"
+
+/**
+ * Ark's `createListCollection` with `toString` cached. The combobox machine serializes its
+ * collection on every render to notice changes, which is linear in the item count; a collection
+ * is immutable once created, so the string is computed at most once per collection. Keeps
+ * comboboxes over tens of thousands of items (virtualized) responsive.
+ */
+function createListCollection<T>(options: Parameters<typeof createArkListCollection<T>>[0]): ListCollection<T> {
+  const collection = createArkListCollection<T>(options)
+  const serialize = collection.toString
+  let serialized: string | undefined
+  collection.toString = () => (serialized ??= serialize())
+  return collection
+}
 
 function ComboboxRoot<T extends CollectionItem>({
   positioning,
@@ -131,20 +145,22 @@ function ComboboxInput({
   disabled = false,
   showTrigger = true,
   showClear = false,
+  icon,
   ...props
 }: ComboboxInputProps) {
   return (
     <ComboboxPrimitive.Control asChild>
       <InputGroup.Root className={cn("w-auto", className)}>
+        {icon && <InputGroup.Addon align="inline-start">{icon}</InputGroup.Addon>}
         <ComboboxPrimitive.Input asChild disabled={disabled} {...props}>
           {props.asChild ? (
             React.isValidElement(children) ? (
               children
             ) : null
           ) : (
-            <>
-              <InputGroup.Input />
-            </>
+            // A single element, not a fragment: asChild merges Ark's input props (placeholder, ARIA,
+            // handlers) into its child, and a fragment would drop them.
+            <InputGroup.Input />
           )}
         </ComboboxPrimitive.Input>
         <InputGroup.Addon align="inline-end">
@@ -424,6 +440,8 @@ type ComboboxInputProps = Omit<React.ComponentProps<typeof ComboboxPrimitive.Inp
   showTrigger?: boolean
   /** Render the clear button in the control. */
   showClear?: boolean
+  /** An icon before the input, such as a search glass. */
+  icon?: React.ReactNode
 }
 
 type ComboboxItemProps = Omit<React.ComponentProps<typeof ComboboxPrimitive.Item>, "item"> & {

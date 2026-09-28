@@ -804,6 +804,7 @@ function QueryBuilderAddRuleTrigger({ asChild, children, onClick, ...props }: Qu
   return (
     <Button
       data-slot="query-builder-add-rule-trigger"
+      type={asChild ? undefined : "button"}
       variant="ghost"
       size="sm"
       asChild={asChild}
@@ -832,6 +833,7 @@ function QueryBuilderAddGroupTrigger({ asChild, children, onClick, ...props }: Q
   return (
     <Button
       data-slot="query-builder-add-group-trigger"
+      type={asChild ? undefined : "button"}
       variant="ghost"
       size="sm"
       asChild={asChild}
@@ -864,6 +866,7 @@ function QueryBuilderRemoveTrigger({
   return (
     <Button
       data-slot="query-builder-remove-trigger"
+      type={asChild ? undefined : "button"}
       variant="ghost"
       size="icon-xs"
       asChild={asChild}

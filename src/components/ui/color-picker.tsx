@@ -3,6 +3,7 @@
 import { useColorPicker, useColorPickerContext } from "@ark-ui/react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
+import { InputGroup } from "@/components/ui/input-group"
 import { ColorPicker as ColorPickerPrimitive, Portal as PortalPrimitive, parseColor } from "@ark-ui/react"
 import { PipetteIcon } from "lucide-react"
 
@@ -41,53 +42,49 @@ function ColorPickerLabel({ className, ...props }: ColorPickerLabelProps) {
   )
 }
 
-function ColorPickerControl({ className, ...props }: ColorPickerControlProps) {
+/** The channel input and the trigger as one bordered field (an `InputGroup`); the swatch trigger sits inside, at the start. */
+function ColorPickerControl({ className, children, ...props }: ColorPickerControlProps) {
   return (
-    <ColorPickerPrimitive.Control
-      data-slot="color-picker-control"
-      className={cn("flex items-center gap-1.5", className)}
-      {...props}
-    />
+    <ColorPickerPrimitive.Control asChild {...props}>
+      <InputGroup.Root className={className}>{children}</InputGroup.Root>
+    </ColorPickerPrimitive.Control>
   )
 }
 
 function ColorPickerChannelInput({ className, ...props }: ColorPickerChannelInputProps) {
   return (
-    <ColorPickerPrimitive.ChannelInput
-      data-slot="color-picker-channel-input"
-      className={cn(
-        "h-8 w-full min-w-0 rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive dark:bg-input/30",
-        className
-      )}
-      {...props}
-    />
+    <ColorPickerPrimitive.ChannelInput asChild {...props}>
+      <InputGroup.Input className={className} />
+    </ColorPickerPrimitive.ChannelInput>
   )
 }
 
 function ColorPickerTrigger({ className, children, ...props }: ColorPickerTriggerProps) {
   return (
-    <ColorPickerPrimitive.Trigger
-      data-slot="color-picker-trigger"
-      className={cn(
-        "flex size-8 shrink-0 items-center justify-center rounded-lg border border-input bg-transparent p-1 outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 dark:bg-input/30 data-disabled:opacity-50",
-        className
-      )}
-      {...props}
-    >
-      {props.asChild ? (
-        React.isValidElement(children) ? (
-          children
-        ) : null
-      ) : (
-        <>
-          {children ?? (
-            <ColorPickerTransparencyGrid className="rounded-sm">
-              <ColorPickerValueSwatch />
-            </ColorPickerTransparencyGrid>
-          )}
-        </>
-      )}
-    </ColorPickerPrimitive.Trigger>
+    <InputGroup.Addon align="inline-start">
+      <ColorPickerPrimitive.Trigger
+        data-slot="color-picker-trigger"
+        className={cn(
+          "flex size-6 shrink-0 items-center justify-center rounded-md p-0.5 outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-disabled:opacity-50",
+          className
+        )}
+        {...props}
+      >
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <>
+            {children ?? (
+              <ColorPickerTransparencyGrid className="rounded-sm">
+                <ColorPickerValueSwatch />
+              </ColorPickerTransparencyGrid>
+            )}
+          </>
+        )}
+      </ColorPickerPrimitive.Trigger>
+    </InputGroup.Addon>
   )
 }
 

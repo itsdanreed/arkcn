@@ -95,15 +95,23 @@ function DrawerGrabber({ className, ...props }: DrawerGrabberProps) {
   )
 }
 
-function DrawerContent({ className, children, ...props }: DrawerContentProps) {
+function DrawerContent({
+  className,
+  children,
+  container,
+  showBackdrop = true,
+  inset = false,
+  ...props
+}: DrawerContentProps) {
   return (
-    <DrawerPortal>
-      <DrawerBackdrop />
-      <DrawerPositioner>
+    <DrawerPortal container={container}>
+      {showBackdrop && <DrawerBackdrop className={container ? "absolute" : undefined} />}
+      <DrawerPositioner className={container ? "absolute" : undefined}>
         <DrawerPrimitive.Content
           data-slot="drawer-content"
+          data-inset={inset ? "" : undefined}
           className={cn(
-            "group/drawer-content absolute flex h-auto flex-col bg-popover text-sm text-popover-foreground outline-hidden transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-[swipe-direction=down]:inset-x-0 data-[swipe-direction=down]:bottom-0 data-[swipe-direction=down]:mt-24 data-[swipe-direction=down]:max-h-[80vh] data-[swipe-direction=down]:rounded-t-xl data-[swipe-direction=down]:border-t data-[swipe-direction=left]:inset-y-0 data-[swipe-direction=left]:left-0 data-[swipe-direction=left]:w-3/4 data-[swipe-direction=left]:rounded-r-xl data-[swipe-direction=left]:border-r data-[swipe-direction=right]:inset-y-0 data-[swipe-direction=right]:right-0 data-[swipe-direction=right]:w-3/4 data-[swipe-direction=right]:rounded-l-xl data-[swipe-direction=right]:border-l data-[swipe-direction=up]:inset-x-0 data-[swipe-direction=up]:top-0 data-[swipe-direction=up]:mb-24 data-[swipe-direction=up]:max-h-[80vh] data-[swipe-direction=up]:rounded-b-xl data-[swipe-direction=up]:border-b data-[swipe-direction=left]:sm:max-w-sm data-[swipe-direction=right]:sm:max-w-sm data-open:animate-in data-[swipe-direction=down]:data-open:slide-in-from-bottom-full data-[swipe-direction=left]:data-open:slide-in-from-left-full data-[swipe-direction=right]:data-open:slide-in-from-right-full data-[swipe-direction=up]:data-open:slide-in-from-top-full data-closed:animate-out data-[swipe-direction=down]:data-closed:slide-out-to-bottom-full data-[swipe-direction=left]:data-closed:slide-out-to-left-full data-[swipe-direction=right]:data-closed:slide-out-to-right-full data-[swipe-direction=up]:data-closed:slide-out-to-top-full",
+            "group/drawer-content absolute flex h-auto flex-col bg-popover text-sm text-popover-foreground outline-hidden transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] data-inset:rounded-xl data-inset:border data-inset:shadow-lg data-[swipe-direction=down]:inset-x-0 data-[swipe-direction=down]:bottom-0 data-[swipe-direction=down]:mt-24 data-[swipe-direction=down]:max-h-[80vh] data-[swipe-direction=down]:rounded-t-xl data-[swipe-direction=down]:border-t data-inset:data-[swipe-direction=down]:inset-x-2 data-inset:data-[swipe-direction=down]:bottom-2 data-[swipe-direction=left]:inset-y-0 data-[swipe-direction=left]:left-0 data-[swipe-direction=left]:w-3/4 data-[swipe-direction=left]:rounded-r-xl data-[swipe-direction=left]:border-r data-inset:data-[swipe-direction=left]:inset-y-2 data-inset:data-[swipe-direction=left]:left-2 data-[swipe-direction=right]:inset-y-0 data-[swipe-direction=right]:right-0 data-[swipe-direction=right]:w-3/4 data-[swipe-direction=right]:rounded-l-xl data-[swipe-direction=right]:border-l data-inset:data-[swipe-direction=right]:inset-y-2 data-inset:data-[swipe-direction=right]:right-2 data-[swipe-direction=up]:inset-x-0 data-[swipe-direction=up]:top-0 data-[swipe-direction=up]:mb-24 data-[swipe-direction=up]:max-h-[80vh] data-[swipe-direction=up]:rounded-b-xl data-[swipe-direction=up]:border-b data-inset:data-[swipe-direction=up]:inset-x-2 data-inset:data-[swipe-direction=up]:top-2 data-[swipe-direction=left]:sm:max-w-sm data-[swipe-direction=right]:sm:max-w-sm data-open:animate-in data-[swipe-direction=down]:data-open:slide-in-from-bottom-full data-[swipe-direction=left]:data-open:slide-in-from-left-full data-[swipe-direction=right]:data-open:slide-in-from-right-full data-[swipe-direction=up]:data-open:slide-in-from-top-full data-closed:animate-out data-[swipe-direction=down]:data-closed:slide-out-to-bottom-full data-[swipe-direction=left]:data-closed:slide-out-to-left-full data-[swipe-direction=right]:data-closed:slide-out-to-right-full data-[swipe-direction=up]:data-closed:slide-out-to-top-full",
             className
           )}
           {...props}
@@ -212,7 +220,14 @@ type DrawerRootProps = React.ComponentProps<typeof DrawerPrimitive.Root> & {
 
 type DrawerRootProviderProps = React.ComponentProps<typeof DrawerPrimitive.RootProvider>
 
-type DrawerContentProps = React.ComponentProps<typeof DrawerPrimitive.Content>
+type DrawerContentProps = React.ComponentProps<typeof DrawerPrimitive.Content> & {
+  /** Renders the drawer inside this element instead of the body, positioned against it rather than the viewport. */
+  container?: React.RefObject<HTMLElement | null>
+  /** Floats the drawer a small margin from the edges with all corners rounded, instead of flush against its side. */
+  inset?: boolean
+  /** Dims what's behind the drawer. Turn it off for a non-modal drawer (`modal={false}` on the root) so the page stays interactive. */
+  showBackdrop?: boolean
+}
 
 type DrawerContextProps = React.ComponentProps<typeof DrawerPrimitive.Context>
 

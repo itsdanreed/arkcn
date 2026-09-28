@@ -2,17 +2,19 @@
 import * as React from "react"
 import { DatePicker as DatePickerPrimitive, useDatePicker, useDatePickerContext, parseDate } from "@ark-ui/react"
 import { cn } from "@/lib/utils"
+import { InputGroup } from "@/components/ui/input-group"
+import { CalendarIcon, XIcon } from "lucide-react"
 
-function DatePickerClearTrigger({ className, ...props }: DatePickerClearTriggerProps) {
+function DatePickerClearTrigger({ className, children, ...props }: DatePickerClearTriggerProps) {
   return (
-    <DatePickerPrimitive.ClearTrigger
-      data-slot="date-picker-clear-trigger"
-      className={cn(
-        "inline-flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-lg px-2.5 text-sm font-medium whitespace-nowrap outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-disabled:pointer-events-none data-disabled:opacity-50",
-        className
-      )}
-      {...props}
-    />
+    // Hidden with its addon while there's no value, so no empty padding is left behind.
+    <InputGroup.Addon align="inline-end" className="has-[>[hidden]]:hidden">
+      <DatePickerPrimitive.ClearTrigger data-slot="date-picker-clear-trigger" asChild {...props}>
+        <InputGroup.Trigger size="icon-xs" className={className}>
+          {children ?? <XIcon />}
+        </InputGroup.Trigger>
+      </DatePickerPrimitive.ClearTrigger>
+    </InputGroup.Addon>
   )
 }
 
@@ -21,7 +23,7 @@ function DatePickerContent({ className, ...props }: DatePickerContentProps) {
     <DatePickerPrimitive.Content
       data-slot="date-picker-content"
       className={cn(
-        "w-fit min-w-64 rounded-lg border bg-popover p-3 text-popover-foreground shadow-md outline-none",
+        "z-50 w-fit min-w-64 rounded-lg border bg-popover p-3 text-popover-foreground shadow-md outline-none",
         className
       )}
       {...props}
@@ -33,26 +35,20 @@ function DatePickerContext(props: DatePickerContextProps) {
   return <DatePickerPrimitive.Context {...props} />
 }
 
-function DatePickerControl({ className, ...props }: DatePickerControlProps) {
+/** The input and its triggers as one bordered field (an `InputGroup`); triggers sit inside, at the end. */
+function DatePickerControl({ className, children, ...props }: DatePickerControlProps) {
   return (
-    <DatePickerPrimitive.Control
-      data-slot="date-picker-control"
-      className={cn("flex items-center gap-2", className)}
-      {...props}
-    />
+    <DatePickerPrimitive.Control asChild {...props}>
+      <InputGroup.Root className={className}>{children}</InputGroup.Root>
+    </DatePickerPrimitive.Control>
   )
 }
 
 function DatePickerInput({ className, ...props }: DatePickerInputProps) {
   return (
-    <DatePickerPrimitive.Input
-      data-slot="date-picker-input"
-      className={cn(
-        "h-8 min-w-0 rounded-lg border border-input bg-transparent px-2.5 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 data-invalid:border-destructive data-disabled:opacity-50",
-        className
-      )}
-      {...props}
-    />
+    <DatePickerPrimitive.Input asChild {...props}>
+      <InputGroup.Input className={className} />
+    </DatePickerPrimitive.Input>
   )
 }
 
@@ -94,7 +90,12 @@ function DatePickerNextTrigger({ className, ...props }: DatePickerNextTriggerPro
 
 function DatePickerPositioner({ className, ...props }: DatePickerPositionerProps) {
   return (
-    <DatePickerPrimitive.Positioner data-slot="date-picker-positioner" className={cn("z-50", className)} {...props} />
+    <DatePickerPrimitive.Positioner
+      data-slot="date-picker-positioner"
+      // zag positions with an inline `z-index: var(--z-index)`, so a z-index class alone has no effect.
+      className={cn("[--z-index:50]", className)}
+      {...props}
+    />
   )
 }
 
@@ -140,9 +141,19 @@ function DatePickerValueText({ className, ...props }: DatePickerValueTextProps) 
   )
 }
 
-function DatePickerRoot({ className, ...props }: DatePickerRootProps) {
+/**
+ * The date picker. Its calendar mounts when opened (like Popover and Select), so it stacks above
+ * a dialog it's inside instead of beneath it.
+ */
+function DatePickerRoot({ className, lazyMount = true, unmountOnExit = true, ...props }: DatePickerRootProps) {
   return (
-    <DatePickerPrimitive.Root data-slot="date-picker" className={cn("flex flex-col gap-1.5", className)} {...props} />
+    <DatePickerPrimitive.Root
+      data-slot="date-picker"
+      className={cn("flex flex-col gap-1.5", className)}
+      lazyMount={lazyMount}
+      unmountOnExit={unmountOnExit}
+      {...props}
+    />
   )
 }
 
@@ -231,16 +242,15 @@ function DatePickerTableRow({ className, ...props }: DatePickerTableRowProps) {
   return <DatePickerPrimitive.TableRow data-slot="date-picker-table-row" className={cn(className)} {...props} />
 }
 
-function DatePickerTrigger({ className, ...props }: DatePickerTriggerProps) {
+function DatePickerTrigger({ className, children, ...props }: DatePickerTriggerProps) {
   return (
-    <DatePickerPrimitive.Trigger
-      data-slot="date-picker-trigger"
-      className={cn(
-        "inline-flex h-8 shrink-0 items-center justify-center gap-1.5 rounded-lg border border-input px-2.5 text-sm font-medium outline-none hover:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 data-disabled:pointer-events-none data-disabled:opacity-50",
-        className
-      )}
-      {...props}
-    />
+    <InputGroup.Addon align="inline-end">
+      <DatePickerPrimitive.Trigger data-slot="date-picker-trigger" asChild {...props}>
+        <InputGroup.Trigger size="icon-xs" className={className}>
+          {children ?? <CalendarIcon />}
+        </InputGroup.Trigger>
+      </DatePickerPrimitive.Trigger>
+    </InputGroup.Addon>
   )
 }
 
