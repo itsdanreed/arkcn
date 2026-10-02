@@ -18,12 +18,14 @@ export default function SelectExample() {
         </Select.Trigger>
       </Select.Control>
       <Select.Content>
-        {fruits.items.map((item) => (
-          <Select.Item key={item.value} item={item}>
-            <Select.ItemText>{item.label}</Select.ItemText>
-            <Select.ItemIndicator />
-          </Select.Item>
-        ))}
+        <Select.ItemGroup>
+          <Select.ItemGroupLabel>Fruits</Select.ItemGroupLabel>
+          {fruits.items.map((item) => (
+            <Select.Item key={item.value} item={item}>
+              {item.label}
+            </Select.Item>
+          ))}
+        </Select.ItemGroup>
       </Select.Content>
     </Select.Root>
   )

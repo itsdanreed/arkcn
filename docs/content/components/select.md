@@ -4,7 +4,9 @@ A select on Ark UI: build a collection with `createListCollection`, pass it to `
 
 ## Parts
 
-`Select.Control` groups `Select.Trigger` (with `SelectValue placeholder=`, and `variant="unstyled"` for hosts that draw their own frame, like a grid cell) and `Select.ClearTrigger`. `Select.Content` renders the portal and positioner, scroll buttons, and `SelectItem item=` rows with `Select.ItemText` and `Select.ItemIndicator`, grouped by `Select.ItemGroup` with `Select.ItemGroupLabel` and split by `Select.Separator`. `Select.HiddenSelect` adds a real form field.
+`Select.Control` groups `Select.Trigger` (with `Select.ValueText placeholder=`, and `variant="unstyled"` for hosts that draw their own frame, like a grid cell) and `Select.ClearTrigger`. `Select.Content` renders the portal and positioner, scroll buttons, and `Select.Item item=` rows, grouped by `Select.ItemGroup` with `Select.ItemGroupLabel` and split by `Select.Separator`. `Select.HiddenSelect` adds a real form field.
+
+`Select.Content` owns the popup’s 4px inset, so grouped and ungrouped options have the same spacing. `Select.ItemGroup` does not add another inset. Pass the option label directly to `Select.Item`; it supplies the text and selected checkmark. For a custom item surface, use `asChild` and compose `Select.ItemText` and `Select.ItemIndicator` inside your element.
 
 ## Notes
 
