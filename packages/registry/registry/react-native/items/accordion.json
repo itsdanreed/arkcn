@@ -1,0 +1,598 @@
+{
+  "name": "accordion",
+  "type": "ui",
+  "description": "Composable disclosure items with a measured 200ms ease-out height animation.",
+  "exports": [
+    "useAccordionContext",
+    "useAccordionItemContext",
+    "useAccordion",
+    "Accordion"
+  ],
+  "parts": [
+    {
+      "name": "Accordion.Root",
+      "props": [
+        {
+          "name": "collapsible",
+          "type": "boolean",
+          "required": false,
+          "description": "Allows closing the only expanded item in single mode.",
+          "from": "arkcn"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string[]",
+          "required": false,
+          "description": "Initial uncontrolled expanded values.",
+          "from": "arkcn"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables every trigger.",
+          "from": "arkcn"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "description": "Defers mounting content until first expanded.",
+          "from": "arkcn"
+        },
+        {
+          "name": "multiple",
+          "type": "boolean",
+          "required": false,
+          "description": "Allows more than one expanded item.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: { value: string[]; }) => void)",
+          "required": false,
+          "description": "Receives the next expanded values.",
+          "from": "arkcn"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "description": "Unmounts content after the closing animation.",
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "string[]",
+          "required": false,
+          "description": "Controlled expanded item values.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Accordion.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "{ value: string[]; setValue: (next: Updater<string[]>) => void; multiple: boolean; collapsible: boolean; disabled: boolean; lazyMount: boolean; unmountOnExit…",
+          "required": true,
+          "description": "State created by useAccordion.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Accordion.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(state: { value: string[]; setValue: (next: Updater<string[]>) => void; multiple: boolean; collapsible: boolean; disabled: boolean; lazyMount: boolean; unmou…",
+          "required": true,
+          "description": "Receives the accordion state.",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "Accordion.Item",
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "Unique value for this item.",
+          "from": "arkcn"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables this item's trigger.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Accordion.ItemContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(state: { value: string; expanded: boolean; disabled: boolean; triggerId: string; contentId: string; }) => ReactNode",
+          "required": true,
+          "description": "Receives this item's state.",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "Accordion.ItemTrigger",
+      "props": [
+        {
+          "name": "backgroundClip",
+          "type": "\"border-box\" | \"padding-box\"",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Displays the validation border and ring.",
+          "from": "arkcn"
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "required": false,
+          "description": "Shows a loading state.",
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\"",
+          "required": false,
+          "description": "Visible control size, matching the web renderer. Native touch areas extend beyond it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Native text styles for a plain button label.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"destructive\" | \"link\"",
+          "required": false,
+          "description": "Visual variant, using the same semantic colors as the web renderer.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode | ((state: Readonly<{ pressed: boolean; }>) => ReactNode)",
+          "required": false,
+          "description": "Either children or a function that receives a boolean reflecting whether\nthe component is currently pressed.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Accordion.ItemContent",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Accordion.ItemIndicator",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "lucide-react-native": "^1.41.0",
+    "react-native-reanimated": ">=4.1.0 <5",
+    "react-native-svg": "^15.0.0",
+    "react-native-worklets": ">=0.5.0 <1"
+  },
+  "registryDependencies": [
+    "button",
+    "lib/context",
+    "lib/controllable",
+    "lib/motion",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/accordion.tsx",
+      "content": "/** Composable disclosure items with a measured 200ms ease-out height animation. */\nimport {\n  Children,\n  createContext,\n  useContext,\n  useEffect,\n  useId,\n  useState,\n  type ComponentPropsWithRef,\n  type ReactNode,\n} from \"react\"\nimport { Text, View } from \"react-native\"\nimport { ChevronDownIcon, ChevronUpIcon } from \"lucide-react-native\"\nimport { Easing, useAnimatedStyle, withTiming } from \"react-native-reanimated\"\nimport { useControllable } from \"@/lib/controllable\"\nimport { createRequiredContext } from \"@/lib/context\"\nimport { AnimatedView, useMotion } from \"@/lib/motion\"\nimport { useNativeTheme } from \"@/lib/theme\"\nimport { Button, type ButtonProps } from \"@/components/ui/button\"\n\nexport type UseAccordionProps = {\n  /** Controlled expanded item values. */\n  value?: string[]\n  /** Initial uncontrolled expanded values. */\n  defaultValue?: string[]\n  /** Receives the next expanded values. */\n  onValueChange?: (details: { value: string[] }) => void\n  /** Allows more than one expanded item. */\n  multiple?: boolean\n  /** Allows closing the only expanded item in single mode. */\n  collapsible?: boolean\n  /** Disables every trigger. */\n  disabled?: boolean\n  /** Defers mounting content until first expanded. */\n  lazyMount?: boolean\n  /** Unmounts content after the closing animation. */\n  unmountOnExit?: boolean\n}\nexport function useAccordion({\n  value,\n  defaultValue = [],\n  onValueChange,\n  multiple = false,\n  collapsible = false,\n  disabled = false,\n  lazyMount = true,\n  unmountOnExit = true,\n}: UseAccordionProps = {}) {\n  const [expanded, setValue] = useControllable(value, defaultValue, (value) => onValueChange?.({ value }))\n  return {\n    value: expanded,\n    setValue,\n    multiple,\n    collapsible,\n    disabled,\n    lazyMount,\n    unmountOnExit,\n    toggleValue(item: string) {\n      if (disabled) return\n      if (expanded.includes(item)) {\n        if (multiple || collapsible) setValue(expanded.filter((value) => value !== item))\n      } else setValue(multiple ? [...expanded, item] : [item])\n    },\n  }\n}\nexport type UseAccordionReturn = ReturnType<typeof useAccordion>\nconst [Provider, useAccordionContext] = createRequiredContext<UseAccordionReturn>(\"Accordion\")\nconst [ItemProvider, useAccordionItemContext] = createRequiredContext<{\n  value: string\n  expanded: boolean\n  disabled: boolean\n  triggerId: string\n  contentId: string\n}>(\"Accordion.Item\")\nconst LastContext = createContext(true)\nexport { useAccordionContext, useAccordionItemContext }\nexport type AccordionRootProviderProps = ComponentPropsWithRef<typeof View> & {\n  /** State created by useAccordion. */\n  value: UseAccordionReturn\n}\nfunction AccordionRootProvider({ value, children, style, ...props }: AccordionRootProviderProps) {\n  const items = Children.toArray(children)\n  return (\n    <Provider value={value}>\n      <View {...props} style={[{ width: \"100%\", flexDirection: \"column\" }, style]}>\n        {items.map((child, index) => (\n          <LastContext.Provider\n            key={typeof child === \"object\" && \"key\" in child ? child.key : index}\n            value={index === items.length - 1}\n          >\n            {child}\n          </LastContext.Provider>\n        ))}\n      </View>\n    </Provider>\n  )\n}\nexport type AccordionRootProps = ComponentPropsWithRef<typeof View> & UseAccordionProps\nfunction AccordionRoot({\n  value,\n  defaultValue,\n  onValueChange,\n  multiple,\n  collapsible,\n  disabled,\n  lazyMount,\n  unmountOnExit,\n  ...props\n}: AccordionRootProps) {\n  const state = useAccordion({\n    value,\n    defaultValue,\n    onValueChange,\n    multiple,\n    collapsible,\n    disabled,\n    lazyMount,\n    unmountOnExit,\n  })\n  return <AccordionRootProvider {...props} value={state} />\n}\nexport type AccordionItemProps = ComponentPropsWithRef<typeof View> & {\n  /** Unique value for this item. */\n  value: string\n  /** Disables this item's trigger. */\n  disabled?: boolean\n}\nfunction AccordionItem({ value, disabled, style, ...props }: AccordionItemProps) {\n  const state = useAccordionContext()\n  const last = useContext(LastContext)\n  const id = useId()\n  const { colors } = useNativeTheme()\n  return (\n    <ItemProvider\n      value={{\n        value,\n        disabled: !!(disabled || state.disabled),\n        expanded: state.value.includes(value),\n        triggerId: `${id}-trigger`,\n        contentId: `${id}-content`,\n      }}\n    >\n      <View {...props} style={[{ borderBottomWidth: last ? 0 : 1, borderColor: colors.border }, style]} />\n    </ItemProvider>\n  )\n}\nexport type AccordionItemTriggerProps = ButtonProps\nfunction AccordionItemTrigger({\n  children,\n  disabled,\n  onPress,\n  onHoverIn,\n  onHoverOut,\n  accessibilityState,\n  style,\n  textStyle,\n  ...props\n}: AccordionItemTriggerProps) {\n  const state = useAccordionContext()\n  const item = useAccordionItemContext()\n  const { colors } = useNativeTheme()\n  const [hovered, setHovered] = useState(false)\n  const blocked = !!(disabled || item.disabled)\n  const Icon = item.expanded ? ChevronUpIcon : ChevronDownIcon\n  return (\n    <Button\n      variant=\"ghost\"\n      {...props}\n      nativeID={item.triggerId}\n      aria-controls={item.contentId}\n      aria-expanded={item.expanded}\n      accessibilityState={{ ...accessibilityState, expanded: item.expanded }}\n      disabled={blocked}\n      onHoverIn={(event) => {\n        setHovered(true)\n        onHoverIn?.(event)\n      }}\n      onHoverOut={(event) => {\n        setHovered(false)\n        onHoverOut?.(event)\n      }}\n      onPress={(event) => {\n        if (blocked) return\n        onPress?.(event)\n        if (!event.defaultPrevented) state.toggleValue(item.value)\n      }}\n      style={(pressState) => [\n        {\n          width: \"100%\",\n          minHeight: 42,\n          paddingHorizontal: 0,\n          paddingVertical: 10,\n          alignItems: \"flex-start\",\n          justifyContent: \"space-between\",\n          backgroundColor: \"transparent\",\n          transform: [{ translateY: 0 }],\n        },\n        typeof style === \"function\" ? style(pressState) : style,\n      ]}\n      textStyle={[{ flexShrink: 1, textDecorationLine: hovered ? \"underline\" : \"none\" }, textStyle]}\n    >\n      {typeof children === \"function\"\n        ? (pressState) => [\n            ...Children.toArray(children(pressState)),\n            <Icon key=\"indicator\" size={16} color={colors.mutedForeground} />,\n          ]\n        : [...Children.toArray(children), <Icon key=\"indicator\" size={16} color={colors.mutedForeground} />]}\n    </Button>\n  )\n}\nexport type AccordionItemContentProps = ComponentPropsWithRef<typeof View>\nfunction AccordionItemContent({ children, style, onLayout, ...props }: AccordionItemContentProps) {\n  const { lazyMount, unmountOnExit } = useAccordionContext()\n  const { expanded, contentId, triggerId } = useAccordionItemContext()\n  const { colors, typography } = useNativeTheme()\n  const { reduced } = useMotion()\n  const [present, setPresent] = useState(expanded || !lazyMount)\n  const [height, setHeight] = useState(0)\n  const duration = reduced ? 0 : 200\n  useEffect(() => {\n    if (expanded || !unmountOnExit) {\n      if (expanded || !lazyMount) setPresent(true)\n      return\n    }\n    if (!duration) {\n      setPresent(false)\n      return\n    }\n    const timer = setTimeout(() => setPresent(false), duration)\n    return () => clearTimeout(timer)\n  }, [expanded, unmountOnExit, lazyMount, duration])\n  const animated = useAnimatedStyle(\n    () => ({ height: withTiming(expanded ? height : 0, { duration, easing: Easing.bezier(0, 0, 0.58, 1) }) }),\n    [expanded, height, duration]\n  )\n  if (!expanded && !present) return null\n  return (\n    <AnimatedView\n      {...props}\n      nativeID={contentId}\n      aria-labelledby={triggerId}\n      accessibilityElementsHidden={!expanded}\n      importantForAccessibility={expanded ? \"auto\" : \"no-hide-descendants\"}\n      pointerEvents={expanded ? \"auto\" : \"none\"}\n      style={[{ overflow: \"hidden\" }, animated]}\n    >\n      <View\n        onLayout={(event) => {\n          setHeight(event.nativeEvent.layout.height)\n          onLayout?.(event)\n        }}\n        style={[{ position: \"absolute\", top: 0, width: \"100%\", paddingBottom: 10 }, style]}\n      >\n        {Children.map(children, (child) =>\n          typeof child === \"string\" || typeof child === \"number\" ? (\n            <Text style={{ ...typography.regular, fontSize: 14, lineHeight: 20, color: colors.foreground }}>\n              {child}\n            </Text>\n          ) : (\n            child\n          )\n        )}\n      </View>\n    </AnimatedView>\n  )\n}\nexport type AccordionItemIndicatorProps = ComponentPropsWithRef<typeof View>\nfunction AccordionItemIndicator({ children, style, ...props }: AccordionItemIndicatorProps) {\n  const { expanded } = useAccordionItemContext()\n  const { transition } = useMotion()\n  return (\n    <AnimatedView\n      accessible={false}\n      {...props}\n      style={[\n        transition([\"transform\"]),\n        {\n          width: 16,\n          height: 16,\n          marginLeft: \"auto\",\n          flexShrink: 0,\n          transform: [{ rotate: expanded ? \"180deg\" : \"0deg\" }],\n        },\n        style,\n      ]}\n    >\n      {children}\n    </AnimatedView>\n  )\n}\nexport type AccordionContextProps = {\n  /** Receives the accordion state. */ children: (state: UseAccordionReturn) => ReactNode\n}\nfunction AccordionContext({ children }: AccordionContextProps) {\n  return children(useAccordionContext())\n}\nexport type AccordionItemContextProps = {\n  /** Receives this item's state. */ children: (state: ReturnType<typeof useAccordionItemContext>) => ReactNode\n}\nfunction AccordionItemContext({ children }: AccordionItemContextProps) {\n  return children(useAccordionItemContext())\n}\n\nexport const Accordion = {\n  Root: AccordionRoot,\n  RootProvider: AccordionRootProvider,\n  Context: AccordionContext,\n  Item: AccordionItem,\n  ItemContext: AccordionItemContext,\n  ItemTrigger: AccordionItemTrigger,\n  ItemContent: AccordionItemContent,\n  ItemIndicator: AccordionItemIndicator,\n}\n"
+    }
+  ],
+  "docs": "## Accordion\n\nCompose Root, Item, ItemTrigger, and ItemContent. Each Item needs a unique `value`. Root accepts `defaultValue`, or\ncontrolled `value` with `onValueChange({ value })`. `multiple` permits several open items; `collapsible` permits\nclosing the selected item in single mode. Root or item `disabled` prevents interaction.\n\nThe trigger uses the same spacing, border, typography, focus ring, and open/closed chevrons as the web component.\nContent measures its natural height and animates on the UI thread for 200 ms with CSS's ease-out curve. Closing\ncontent stays mounted until the animation finishes. Reduced motion removes the animation and exit delay.\n`lazyMount` and `unmountOnExit` both default to true. Set `unmountOnExit={false}` to retain child state while closed.\n\nUse ItemIndicator for an additional custom indicator; it rotates through 180 degrees with the web's 150 ms transition.\nContext and ItemContext, plus their hooks, expose state without adding views. `useAccordion` and RootProvider support\nexternally owned state. Keep Items as direct children for separator styling.\n\nNative triggers announce expanded and disabled states; closed panels are excluded from accessibility and touch input.\nText children receive the default typography; compose nested native Text for styled paragraphs. Browser-specific arrow-key\nroving, DOM prop getters, and `asChild` are not part of this native adapter."
+}

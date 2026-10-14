@@ -1,0 +1,34 @@
+{
+  "name": "@multicomma/arkcn-mcp",
+  "version": "0.3.0",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itsdanreed/arkcn.git",
+    "directory": "packages/mcp"
+  },
+  "description": "Model Context Protocol server for arkcn registries.",
+  "files": [
+    "src",
+    "bin"
+  ],
+  "exports": {
+    ".": "./src/server.mjs",
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "arkcn-mcp": "bin/arkcn-mcp.mjs"
+  },
+  "dependencies": {
+    "@multicomma/arkcn-registry": "0.3.0",
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "zod": "^4.5.4"
+  },
+  "scripts": {
+    "prepublishOnly": "npm --prefix ../.. run check"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

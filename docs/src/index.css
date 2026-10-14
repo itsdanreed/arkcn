@@ -1,10 +1,11 @@
 @import "tailwindcss";
 @import "@fontsource-variable/geist";
-@import "../../src/styles/arkcn.css";
-@source "../../src";
+@import "../../packages/react/src/styles/arkcn.css";
+@source "../../packages/react/src";
+@source "./";
 
 @theme inline {
-  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Geist Variable", sans-serif;
 }
 
 /* Prism tokens on the theme palette */
@@ -76,4 +77,9 @@
   padding: 0.15rem 0.35rem;
   font-size: 0.85em;
   font-weight: 500;
+}
+
+[data-reduced-motion="true"] [data-renderer="react"] * {
+  animation: none !important;
+  transition-duration: 0s !important;
 }

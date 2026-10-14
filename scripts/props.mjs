@@ -9,9 +9,9 @@ import ts from "typescript"
 
 const root = new URL("..", import.meta.url).pathname
 
-export function createPropsExtractor() {
-  const configFile = ts.readConfigFile(join(root, "tsconfig.json"), ts.sys.readFile)
-  const config = ts.parseJsonConfigFileContent(configFile.config, ts.sys, root)
+export function createPropsExtractor(configPath = "packages/react/tsconfig.json") {
+  const configFile = ts.readConfigFile(join(root, configPath), ts.sys.readFile)
+  const config = ts.parseJsonConfigFileContent(configFile.config, ts.sys, join(root, configPath, ".."))
   const program = ts.createProgram(config.fileNames, config.options)
   const checker = program.getTypeChecker()
 
@@ -76,6 +76,46 @@ export function createPropsExtractor() {
     showCloseButton: "Render the close button.",
   }
 
+  const native = configPath.includes("react-native")
+  if (native)
+    Object.assign(common, {
+      variant: "Visual variant, using the same semantic colors as the web renderer.",
+      size: "Visible control size, matching the web renderer. Native touch areas extend beyond it.",
+      style: "Native styles merged after the component defaults.",
+      textStyle: "Native text styles for a plain button label.",
+      checked: "Controlled checked state. Checkbox also accepts indeterminate.",
+      defaultChecked: "Initial checked state when uncontrolled.",
+      onCheckedChange: "Called with { checked } when the user changes the selection.",
+      onPress: "Called when the control is pressed.",
+      onChangeText: "Called with the new text value.",
+      invalid: "Use the destructive border and focus ring; provide an accessible error explanation.",
+    })
+  const nativeProps = new Set([
+    "style",
+    "children",
+    "accessibilityLabel",
+    "accessibilityHint",
+    "accessibilityState",
+    "value",
+    "defaultValue",
+    "placeholder",
+    "editable",
+    "multiline",
+    "onChangeText",
+    "onPress",
+    "onFocus",
+    "onBlur",
+    "disabled",
+    "hitSlop",
+    "size",
+    "color",
+    "animating",
+    "testID",
+    "numberOfLines",
+    "keyboardType",
+    "secureTextEntry",
+  ])
+
   const typeText = (type) => {
     const raw = checker.typeToString(
       type,
@@ -99,7 +139,7 @@ export function createPropsExtractor() {
   }
 
   const origin = (fileName) => {
-    if (fileName.startsWith(join(root, "src"))) return "arkcn"
+    if (fileName.startsWith(join(root, "packages"))) return "arkcn"
     const m = fileName.match(/node_modules\/(@[^/]+\/[^/]+|[^/]+)/)
     return m ? m[1] : "other"
   }
@@ -109,7 +149,7 @@ export function createPropsExtractor() {
 
   return function extract(file) {
     const component = file.replace(/^.*\//, "").replace(/\.tsx?$/, "")
-    const local = overrides[component] ?? {}
+    const local = native ? {} : (overrides[component] ?? {})
     const source = program.getSourceFile(join(root, file))
     if (!source) return []
     const moduleSymbol = checker.getSymbolAtLocation(source)
@@ -147,6 +187,7 @@ export function createPropsExtractor() {
         const propDecl = prop.declarations?.[0]
         const fileName = propDecl?.getSourceFile().fileName ?? ""
         if (prop.name === "ref" || prop.name.startsWith("__")) continue
+        if (native && /node_modules\/react-native\//.test(fileName) && !nativeProps.has(prop.name)) continue
         if (isReactBuiltin(fileName) && !keepFromReact.has(prop.name)) continue
         const docs = ts.displayPartsToString(prop.getDocumentationComment(checker)).trim()
         const tags = prop.getJsDocTags(checker)
@@ -176,6 +217,6 @@ export function createPropsExtractor() {
 
 if (process.argv[1] === new URL(import.meta.url).pathname) {
   const extract = createPropsExtractor()
-  const file = process.argv[2] ?? "src/components/ui/dialog.tsx"
+  const file = process.argv[2] ?? "packages/react/src/components/ui/dialog.tsx"
   console.log(JSON.stringify(extract(file), null, 2).slice(0, 6000))
 }

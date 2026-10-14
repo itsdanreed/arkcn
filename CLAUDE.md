@@ -1,44 +1,27 @@
-# arkcn (@multicomma/arkcn) — shadcn/ui ported to Ark UI (component library)
+# arkcn — multi-framework component workspace
 
-This repository is the **library**: `src/components/ui/` (primitives), `src/lib/` (headless engines
-and hooks), `src/hooks/`, and `src/styles/arkcn.css` (tokens, custom variants, keyframes,
-component CSS; consumers import it after `tailwindcss`). It is published as `@multicomma/arkcn`
-with source exports (`./ui/*`, `./lib/*`, `./hooks/*`, `./styles.css`); there is no build step.
-The demo application (every `src/demo/...` reference below) lives in the sibling
-`arkcn-demo` repository, which consumes this package through a `file:` link and aliases
-`@/components/ui`, `@/lib`, and `@/hooks` to the package source. `npm run check` here runs the
-type check and lint (oxlint with Tailwind rules, quotes, Ark part coverage, Prettier); browser
-tests live in the demo repo, so after changing a primitive run the demo's `npm test` too.
-
-React 19 + TypeScript + Tailwind v4. Baseline is shadcn `radix-nova` style (Radix-backed). Goal: port
-every Radix-backed component to `@ark-ui/react` as its backing primitive, one component at a time.
+See README.md for package boundaries, direct-import migration, development, and release commands.
+The private npm workspace contains `packages/react` (Ark UI/Tailwind web), `packages/react-native`
+(native components), `packages/core` (no React or DOM), `packages/react-shared` (React without DOM),
+`packages/registry` (catalogs and installer helpers), `packages/cli`, and `packages/mcp`.
+`docs/` remains the Vite documentation workspace. No commits or publishing without user authorization.
 
 ## CLI, registry, and MCP
-- `scripts/build-registry.mjs` generates `registry/` (committed, and shipped in the package): one
-  item per `src/components/ui/*.tsx` (type `ui`, bare name), `src/lib/*.ts` (`lib`, named
-  `lib/<file>`), `src/hooks/*.ts` (`hook`, `hooks/<file>`; the prefixes keep `table` the component
-  distinct from `lib/table` the engine)
-  with file contents, `registryDependencies` (imports through `@/`), `dependencies` (external
-  packages, versions from package.json peers; react excluded), a `css` fragment, `docs` (the
-  matching CLAUDE.md section), and a description. `registry/base.css` is the stylesheet minus
-  fragments; `registry/index.json` the manifest with `baseDependencies` (required peers).
-  Component-specific CSS in `src/styles/arkcn.css` must sit between
-  `/* @registry:component <name> */` and `/* @registry:end */` so `add` can merge it. `npm run
-  check` rebuilds the registry first; commit the result.
-- `bin/arkcn.mjs` + `cli/` is the zero-dependency CLI (`init`, `add`, `list`, `diff`) with
-  `arkcn.json` in the target project (`alias`, `srcDir`, `componentsDir`, `libDir`,
-  `hooksDir`, `css`). `cli/registry.mjs` reads the bundled registry, a directory, or a URL
-  (`--registry`, `ARKCN_REGISTRY`); `cli/project.mjs` owns file writing, import rewriting,
-  CSS merging (base and per-component marker blocks), tsconfig alias insertion, package-manager
-  detection and install; `cli/commands.mjs` the commands plus the pure helpers (`writeItem`,
-  `findConflicts`, `missingDependencies`) the MCP reuses. `scripts/test-cli.mjs` runs init, add,
-  diff, overwrite, and a custom alias/dir against a temp project (part of `npm run check`).
-- `arkcn mcp` (`bin/arkcn.mjs` + `mcp/server.mjs`) is the stdio MCP server (`@modelcontextprotocol/sdk`
-  + `zod`, the package's only runtime deps): tools `list_components`, `search_components`,
-  `get_component`, `get_docs`, `plan_install`, `add_components` (writes files and CSS, never runs
-  the package manager) and a `arkcn://registry/index` resource.
-- Publishing: `npm publish --access public` (prepublishOnly runs `check`). The demo repo does not
-  use the CLI; it aliases the package source.
+
+`scripts/build-registry.mjs` generates both framework catalogs in `packages/registry/registry/`.
+Component source uses relative imports and shared package imports. The generator embeds shared modules
+and rewrites local imports to the consumer's `@/` paths. Keep registry closures complete and never
+introduce UI-runtime dependencies into registry/CLI/MCP packages. Native imports must stay DOM-free.
+
+The CLI's package name remains `@multicomma/arkcn`; direct web imports now use `@multicomma/arkcn-react`.
+Framework selection is persisted in `arkcn.json`; legacy configs mean `react`. Native projects use
+`react-native`, no CSS, and theme helpers. Never silently install a web component in a native project.
+The MCP server uses the same catalogs and installation helpers and never invokes a package manager.
+
+`npm run check` runs workspace typechecks, lint/format, registry checks, public web contracts,
+web component tests, web/native CLI integration, packed-package/MCP checks, and native behavior tests.
+The native tests use host doubles; the docs preview uses React Native Web. Device validation remains
+necessary before claiming native platform parity. Keep generated registries up to date.
 
 ## Lint policy
 `npm run lint` runs oxlint with `--deny-warnings`, so any warning fails the check and the publish.
@@ -49,7 +32,7 @@ React Compiler, uses the latest-ref pattern deliberately, and its files export h
 next to components by design.
 
 ## Docs site
-`docs/` is the documentation site (Vite app, base `/arkcn/`, alias `@` → `../src`, `@docs` → `docs/src`),
+`docs/` is the documentation site (Vite app, base `/arkcn/`, alias `@` → `../packages/react/src`, `@docs` → `docs/src`),
 shadcn-style: header with search (⌘K) and theme toggle, sidebar of guides (`docs/content/*.md`,
 listed in `docs/src/nav.ts`) and components grouped by `groups` in `docs/src/registry.ts`, an
 "On this page" outline, and generated component pages (`docs/src/pages.tsx`): live preview from
@@ -65,7 +48,7 @@ skipped, Ark/zag props keep their own docs. Descriptions for our own props come 
 prop (write `/** … */` above every prop in a props type), or from `scripts/prop-docs.json` for
 inline one-line types that cannot carry JSDoc, or from the shared-name fallbacks in `props.mjs`.
 `npm run check` must leave zero undocumented arkcn props (count with the snippet in git history
-of this section, or read `registry/items/*.json` `parts`). The MCP `get_component` returns `parts`. Markdown is
+of this section, or read `packages/registry/registry/react/items/*.json` `parts`). The MCP `get_component` returns `parts`. Markdown is
 `marked` + Prism (`docs/src/markdown.tsx`, `code.tsx`). `npm run docs:build` builds and
 `scripts/docs-routes.mjs` copies `index.html` into every route folder; deploy `docs/dist` to
 multicomma.com/arkcn. The docs type-check (`docs/tsconfig.json`) and lint are part of `npm run
@@ -86,7 +69,7 @@ check`. Add an example for a new component by dropping `docs/src/examples/<name>
 - `command.tsx` runs on Ark's Listbox and `drawer.tsx` on Ark's Drawer; `cmdk`, `vaul`,
   `radix-ui`, `@base-ui/react`, and every shadcn package (`shadcn` CLI, `@shadcn/react`,
   `cn`) are removed. Do not reintroduce them. `cn` is clsx + tailwind-merge in
-  `src/lib/utils.ts`. Base variants, keyframes, and utilities live in `src/index.css`
+  `packages/react/src/lib/utils.ts`. Base variants, keyframes, and utilities live in `src/index.css`
   (keyframes at the end of the `@theme inline` block); there is no `components.json`.
 - `DatePicker.Control` is an `InputGroup`: the input is borderless inside it, and `Trigger` and
   `ClearTrigger` render as inline icon buttons at the end (calendar and × by default; pass children
@@ -107,6 +90,25 @@ check`. Add an example for a new component by dropping `docs/src/examples/<name>
 - Components with no Ark equivalent (calendar, carousel, chart, resizable, input-otp,
   sonner/toast) keep their current libraries. Separator, Label, AspectRatio, Direction
   are plain React.
+
+## State audit before extending native coverage
+
+Keep the existing Nova style baseline linked in README. Before porting another family, review the main controls
+in `/arkcn/state-audit.html` and the full examples in `/arkcn/parity.html`, in light/dark and reduced motion.
+First compare web controls to actual upstream source in `/arkcn/catalog-audit.html` (setup in README).
+Do not use an older arkcn snapshot as evidence of shadcn parity. Keep reference CSS/dependencies isolated;
+adapters may translate example APIs but must not substitute arkcn components or style recipes.
+Exercise keyboard focus, hover/press, disabled, validation, selected/mixed, and expanded states. Check group edge
+styling with hidden fields and text segments. Button Group is for actions; persistent choices use Toggle Group.
+Retain the original transition property list as well as its duration/curve. Validate native changes on the Expo
+consumer, and keep regressions in the component/native checks. Record any unverified runtime explicitly.
+Select intentionally opens below its trigger: the user prefers this to selected-item-over-trigger positioning.
+Keep that behavior when auditing styling against the reference.
+Toast cards intentionally animate their height as well as stack position. Measure intrinsic content independently
+of the animated card height; transitions to/from `auto` jump. Preserve the reduced-motion opt-out.
+Dismiss non-front toast cards by fading at their current transform and height, so they never slide across neighbors.
+Checkbox mixed/indeterminate styling intentionally keeps arkcn's primary surface and minus indicator; the user prefers
+it to shadcn's mixed state. Do not remove it during parity audits.
 
 ## Workflow per component
 1. Read the shadcn original and the matching Ark UI component's anatomy + data attrs.
@@ -135,12 +137,12 @@ element instead of the default ellipsis button.
 `src/app.tsx` is a gallery that mounts all of them.
 
 ## Data table
-`src/lib/table.ts` is a dependency-free headless table engine (columns, sorting, global +
+`packages/react/src/lib/table.ts` is a dependency-free headless table engine (columns, sorting, global +
 column filters with faceted counts, pagination, row selection, visibility). Column config is
 data only: `{ id | accessorKey | accessorFn, label, enableSorting, enableHiding, filterFn,
 sortingFn }`. No render functions and no markup in column definitions.
-`src/components/ui/data-table.tsx` builds compositional parts on the source-agnostic
-`DataTableInstance` contract in `src/lib/data-table-adapter.ts`: toolbar, search, faceted
+`packages/react/src/components/ui/data-table.tsx` builds compositional parts on the source-agnostic
+`DataTableInstance` contract in `packages/react/src/lib/data-table-adapter.ts`: toolbar, search, faceted
 filter, reset, view options, `DataTableTable` > `DataTableHeader` (one `DataTableHead
 column="id"` per column; sortable columns get the sort/hide menu with `children` as the title)
 + `DataTableBody` (`children` is `(row) => cells`; wrap in `DataTableRow` or return a fragment
@@ -153,7 +155,7 @@ table libraries (no TanStack). `src/demo/tasks/` and `src/demo/users/` are the r
 consumers: `columns.tsx` is pure config, `*-table.tsx` composes the markup.
 
 ## Rich text editor
-`src/components/ui/rich-text-editor.tsx` is a compositional editor on **tiptap** (`@tiptap/react`,
+`packages/react/src/components/ui/rich-text-editor.tsx` is a compositional editor on **tiptap** (`@tiptap/react`,
 StarterKit with link/underline, `@tiptap/extensions` Placeholder + CharacterCount, task list,
 highlight, text align, image, TableKit; `extensions` appends more, `editorOptions` is the escape
 hatch). The root owns the tiptap `Editor`: `defaultContent`/`content` (HTML, controlled content
@@ -178,7 +180,7 @@ Other parts: `RichTextEditorToolbar` (role toolbar, arrow-key roving) > `Toolbar
 read-only switch, reset, and an HTML/JSON/Text output card.
 
 ## Data grid
-`src/components/ui/data-grid.tsx` is an editable, keyboard-driven grid on the same source-agnostic
+`packages/react/src/components/ui/data-grid.tsx` is an editable, keyboard-driven grid on the same source-agnostic
 `DataTableInstance` contract as the data table (`useDataTable` with a huge `pageSize` feeds it every
 row; `DataTable` toolbar parts can wrap it). Column behaviour is a separate data-only `columns` prop
 keyed by column id: `{ id, type: text|number|boolean|select|date, editable, options, width, minWidth,
@@ -203,13 +205,13 @@ copy/paste TSV; a live region announces clears/copies. `src/demo/data-grid/` is 
 changes with Undo / Discard / Save in a `FloatingToolbar`.
 
 ## Floating toolbar
-`src/components/ui/floating-toolbar.tsx` is the snackbar-style bar that floats at the bottom of a
+`packages/react/src/components/ui/floating-toolbar.tsx` is the snackbar-style bar that floats at the bottom of a
 page (`open`, `onEscape`, arrow/Home/End roving between its buttons, Escape ignored while focus is
 in a nested menu). `DataTableBulkActions` renders on it; the data grid demo uses it for unsaved
 changes. Use it for any "N things pending" action bar instead of a new fixed div.
 
 ## Chat
-`src/components/ui/chat.tsx` is a compositional, data-agnostic chat layout primitive
+`packages/react/src/components/ui/chat.tsx` is a compositional, data-agnostic chat layout primitive
 (sidebar with search and conversation list, panel with header/messages/composer, empty
 state). `Chat` owns only the selected conversation id (`value`/`onValueChange`) and the
 mobile list-vs-panel state; data, filtering, grouping, and sending are the consumer's.
@@ -218,7 +220,7 @@ bottom. `src/demo/chat/` is the reference implementation (chats page from shadcn
 `src/app.tsx` mounts the chat demo at the `/inbox` hash route inside the app shell.
 
 ## Kanban
-`src/components/ui/kanban.tsx` is a compositional, data-agnostic board on
+`packages/react/src/components/ui/kanban.tsx` is a compositional, data-agnostic board on
 `@atlaskit/pragmatic-drag-and-drop` (+ `-hitbox` closest-edge/reorder index, `-auto-scroll`).
 The consumer owns columns/cards state; `Kanban` only wires dragging and reports intents via
 `onCardMove({ cardId, fromColumnId, toColumnId, fromIndex, toIndex })` and
@@ -240,17 +242,17 @@ Keyboard: cards (and `KanbanCardHandle`/`KanbanColumnHandle`) are focusable; Spa
 picks up (`data-grabbed`, `aria-pressed`), arrows move within/between columns via the same
 `onCardMove`/`onColumnMove` intents, Space/Enter drops, Escape cancels, focus follows the
 moved item, and a visually hidden live region announces each step. Native drag previews are
-crisp clones via `cloneDragPreview` in `src/lib/drag-preview.ts`.
+crisp clones via `cloneDragPreview` in `packages/react/src/lib/drag-preview.ts`.
 `src/demo/kanban/` is the reference (tasks data, route `/projects/board`, `AppShellMain fixed`).
 
 ## Shared hooks
-`src/lib/history.ts` exports `useHistory(initial, limit)` → `{ present, set(next, { commit }),
+`packages/react/src/lib/history.ts` exports `useHistory(initial, limit)` → `{ present, set(next, { commit }),
 checkpoint, undo, redo, reset, canUndo, canRedo }`; the node graph and form builder use it. Never
 add a local copy. There is no native `<select>` component any more (`native-select.tsx` was
 removed); always use `Select`.
 
 ## Forms
-`src/lib/form.ts` exports `useForm(defaultValues, validate, onSubmit, { mode })`: a small,
+`packages/react/src/lib/form.ts` exports `useForm(defaultValues, validate, onSubmit, { mode })`: a small,
 dependency-free hook (values, per-field errors, validating submit) that pairs with the
 `Field*` parts. It is the toolkit's one form approach; do not add react-hook-form/zod. All
 demo forms use it. Shared demo-only helpers live in `src/demo/lib/` (`showSubmittedData`,
@@ -285,7 +287,7 @@ demo forms use it. Shared demo-only helpers live in `src/demo/lib/` (`showSubmit
   notifications menu.
 
 ## Popconfirm
-`src/components/ui/popconfirm.tsx` is an inline confirmation on the Popover (no modal):
+`packages/react/src/components/ui/popconfirm.tsx` is an inline confirmation on the Popover (no modal):
 `Popconfirm` (placement `top`), `PopconfirmTrigger`, `PopconfirmContent` (`role="alertdialog"`,
 arrow by default), `PopconfirmHeader` > `PopconfirmIcon` (destructive triangle by default) +
 `PopconfirmTitle` + `PopconfirmDescription`, `PopconfirmFooter` > `PopconfirmCancelTrigger` (closes)
@@ -293,7 +295,7 @@ arrow by default), `PopconfirmHeader` > `PopconfirmIcon` (destructive triangle b
 `preventDefault`). The form builder uses it for field removal.
 
 ## Canvas
-`src/components/ui/canvas.tsx` is a compositional, data-agnostic drag-and-drop layout surface
+`packages/react/src/components/ui/canvas.tsx` is a compositional, data-agnostic drag-and-drop layout surface
 on Pragmatic drag and drop. `Canvas` owns nothing but drag state; it reports every drop as an
 intent via `onDrop({ source, target })` where `source` is `{ type: "palette", data }` (from a
 `CanvasPaletteItem`, `data` passed back untouched) or `{ type: "node", id }`, and `target` is
@@ -319,13 +321,13 @@ pattern, `width`, `condition: QueryGroup | null`; `applyDrop`, `resizeRow`, `upd
 `conditionFields` mapping other fields to query-builder fields), `form-builder-page.tsx` (Canvas
 with a grouped palette, node actions edit/duplicate/remove, a Drawer inspector with Basics /
 Options editor / Validation (format presets or custom regex) / Visibility built from the
-QueryBuilder parts, Build|Preview `SegmentGroup`, undo/redo on `src/lib/history.ts`, Import
+QueryBuilder parts, Build|Preview `SegmentGroup`, undo/redo on `packages/react/src/lib/history.ts`, Import
 dialog + Export/Copy JSON, problem badges) and `form-renderer.tsx` (renders a schema on the
 toolkit controls with `useForm`, live conditions via the query-builder demo interpreter, hidden
 fields dropped from the submission). Nothing here is use-case specific in `components/ui`.
 
 ## Node graph
-`src/components/ui/node-graph.tsx` is a compositional, data-agnostic node editor (visual
+`packages/react/src/components/ui/node-graph.tsx` is a compositional, data-agnostic node editor (visual
 scripting style). The consumer owns nodes and edges; `NodeGraph` owns only the viewport
 (`viewport`/`onViewportChange`, pan/zoom), the selection (`selection`/`onSelectionChange`,
 `{ nodes, edges }`), and in-flight interactions. Intents: `onNodesMove` (live) +
@@ -359,13 +361,13 @@ palette (click or native drag), add-node Command popover from a dropped connecti
 compatible nodes, auto-connects) or right-click on the pane, DropdownMenu context menus for nodes
 (run from here, duplicate ⌘D, break all links, delete), links (break) and pins (break, reset to
 default) anchored via `positioning.getAnchorRect`, a header "more" button on every node, undo/redo
-history on `src/lib/history.ts`, and a **simulator** (`simulate.ts`: async generator that walks
+history on `packages/react/src/lib/history.ts`, and a **simulator** (`simulate.ts`: async generator that walks
 exec pins from an event node, pulls data pins lazily, pure nodes evaluated on demand) driving
 `data-active` highlights (`--animate-node-graph-flow` dashes on the live edge), per-pin value
 badges, a Delay progress bar, and an Output/Variables panel with Run/Stop and speed.
 
 ## Query builder
-`src/components/ui/query-builder.tsx` is a compositional filter builder designed for low cognitive
+`packages/react/src/components/ui/query-builder.tsx` is a compositional filter builder designed for low cognitive
 load: it reads like a sentence instead of the usual AND/OR toggles per row. One `QueryBuilderMatch`
 ("Match all/any of the following") per group is the only combinator control, each condition reads
 field → plain-language operator → value (`is`, `is not`, `contains`, `is after`, `is any of`,
@@ -394,7 +396,7 @@ reuses these parts for per-field visibility conditions. `src/demo/query-builder/
 live matching-rows table, and SQL/JSON output.
 
 ## Gantt
-`src/components/ui/gantt.tsx` is a compositional, data-agnostic timeline. The consumer owns rows,
+`packages/react/src/components/ui/gantt.tsx` is a compositional, data-agnostic timeline. The consumer owns rows,
 bars and dependency links; the root owns the time scale (`start`/`end` dates, `dayWidth`
 controllable + `onDayWidthChange`, `scale` day|week|month derived from `dayWidth` unless set,
 `rowHeight`, `sidebarWidth`, `editable`), the drag/resize interaction, keyboard moves, and
@@ -416,16 +418,16 @@ summary spans, milestones, dependency arrows toggle, day/week/month `SegmentGrou
 `useHistory`, editable toggle, scroll to today on mount.
 
 ## Activity feed and comments
-`src/components/ui/activity-feed.tsx` is a compositional timeline of events on the WAI-ARIA feed
+`packages/react/src/components/ui/activity-feed.tsx` is a compositional timeline of events on the WAI-ARIA feed
 pattern (`role="feed"`, focusable articles, PageUp/PageDown move, Ctrl+Home/End jump):
 `ActivityFeed` > `ActivityFeedGroup` > `ActivityFeedGroupLabel` + `ActivityFeedItems` (draws the
 connector line) > `ActivityFeedItem value=` > `ActivityFeedItemMarker` (dot by default; pass an
 icon or an Avatar) + `ActivityFeedItemContent` > `ActivityFeedItemHeader` > `ActivityFeedItemActor`,
-`ActivityFeedItemTime date=` (`<time>` with a relative label from `src/lib/time.ts`
+`ActivityFeedItemTime date=` (`<time>` with a relative label from `packages/react/src/lib/time.ts`
 `formatRelativeTime`; full date in the title), `ActivityFeedItemBody`, `ActivityFeedItemActions`;
 plus `ActivityFeedLoadMoreTrigger` and `ActivityFeedEmpty`. Data, grouping and read state are the
 consumer's.
-`src/components/ui/comment-thread.tsx` is compositional comments with replies, reactions and a
+`packages/react/src/components/ui/comment-thread.tsx` is compositional comments with replies, reactions and a
 mentions composer. `CommentThread { people, currentUserId, replyTo/onReplyToChange }` owns only
 which comment is being replied to or edited (`useCommentThread()` → `replyTo`, `editing`, setters).
 Parts: `CommentList` > `Comment value= authorId=` (`data-own/replying/editing/depth`) >
@@ -449,7 +451,7 @@ replies, reactions, edit/delete of own comments (Popconfirm), and posting that a
 feed item.
 
 ## Scheduler (calendar)
-`src/components/ui/scheduler.tsx` is a compositional, data-agnostic calendar. The consumer owns
+`packages/react/src/components/ui/scheduler.tsx` is a compositional, data-agnostic calendar. The consumer owns
 events and renders them with the parts; the root owns the anchor `date` and `view`
 (day|week|month, both controllable), the time-grid geometry (`hourHeight`, `slotMinutes`,
 `minHour`/`maxHour`, `weekStartsOn`), the interactions, and reports `onEventChange({ id, start,
@@ -476,10 +478,10 @@ a live region announces. Event parts spread `props` first so an `asChild` wrappe
 Both live on Ark's `TreeCollection` (`createTreeCollection`, re-exported) and a Popover, and own
 only the open state, the search query, and the value (`value`/`defaultValue`/`onValueChange`,
 always a `string[]`); the trigger is a focusable `div[role=combobox]` via `PopoverTrigger asChild`
-so chips and clear buttons inside it stay real buttons. Both use `src/lib/controllable.ts`
+so chips and clear buttons inside it stay real buttons. Both use `packages/react/src/lib/controllable.ts`
 `useControllable(controlled, default, onChange)` (the shared controllable-state hook; prefer it
 over local copies).
-`src/components/ui/tree-select.tsx`: `TreeSelect { collection, multiple, selectableBranches,
+`packages/react/src/components/ui/tree-select.tsx`: `TreeSelect { collection, multiple, selectableBranches,
 closeOnSelect, expandedValue…, open…, disabled, readOnly, invalid }` > `TreeSelectTrigger`
 (`size`, `variant="unstyled"`; Enter/Space/ArrowDown open, Backspace removes the last chip) >
 `TreeSelectValue` (labels joined, render-prop child gets the nodes) or `TreeSelectChips` >
@@ -491,7 +493,7 @@ customises the row label), `TreeSelectEmpty`; `TreeSelectHiddenInput name=`. Mul
 Ark checkbox semantics: `value` holds leaf values only, a branch toggles all its leaves, and
 `collapseValues(collection, value)` (used by the value/chips) shows a fully selected branch as one
 chip. Single mode ignores branch picks unless `selectableBranches`. `useTreeSelect()` exposes it all.
-`src/components/ui/cascader.tsx`: `Cascader { collection, changeOnSelect, expandTrigger:
+`packages/react/src/components/ui/cascader.tsx`: `Cascader { collection, changeOnSelect, expandTrigger:
 click|hover, open…, disabled, readOnly, invalid }` > `CascaderTrigger` > `CascaderValue`
 (the path as "A / B / C", `separator`, render-prop child gets the path nodes), `CascaderClearTrigger`,
 `CascaderIndicator`; `CascaderContent` (owns the keyboard: ↑/↓ within a column, → opens a branch,
@@ -508,7 +510,7 @@ icons, people/teams multi-select with chips, hover-expanding location cascader w
 change-on-select category cascader.
 
 ## Transfer list
-`src/components/ui/transfer-list.tsx` moves items between two lists. `TransferList { items,
+`packages/react/src/components/ui/transfer-list.tsx` moves items between two lists. `TransferList { items,
 itemToValue, itemToString, itemDisabled, value/defaultValue/onValueChange({ value, items, moved,
 direction }), filter, disabled, titles }` owns the per-side search, selection (ticks), and focus;
 `value` is the target side and is always kept in catalog order (moving never reorders). Parts:
@@ -525,7 +527,7 @@ direction="right"|"left"` (selected items; disabled when nothing is ticked) and
 moves. Disabled items never move. `/access` has the reference (permissions with group badges).
 
 ## Virtual list
-`src/components/ui/virtual-list.tsx` is a dependency-free windowed list. `VirtualList { count,
+`packages/react/src/components/ui/virtual-list.tsx` is a dependency-free windowed list. `VirtualList { count,
 estimateSize (number or per index), overscan, gap, paddingStart/End, getItemKey, onRangeChange }`
 owns scroll offset, viewport size, and measured row heights (prefix sums + binary search; rows
 measure themselves with a ResizeObserver and estimates are replaced as rows appear). Parts:
@@ -541,17 +543,17 @@ contacts listbox in `src/demo/virtual-list/` does (`/audit-log`, "Audit log": a 
 heights and go-to-line, and a 10k-contact listbox with search).
 
 ## Shared infrastructure
-- `src/lib/controllable.ts` `useControllable(controlled, default, onChange)` is the one
+- `packages/react/src/lib/controllable.ts` `useControllable(controlled, default, onChange)` is the one
   controllable-state hook (updater functions accepted; `onChange` fires in both modes, not on
   no-op sets). Every primitive and demo composition uses it (chat, menubar, comment thread, gantt,
   scheduler, data grid, query builder, tree select, cascader, transfer list, the table engine,
   apps view, settings layout). Never hand-roll `valueProp ?? internal` again.
-- `src/components/ui/live-region.tsx`: `useLiveRegion({ clearAfter })` → `{ message, announce }`
+- `packages/react/src/components/ui/live-region.tsx`: `useLiveRegion({ clearAfter })` → `{ message, announce }`
   (re-fires identical text) and `<LiveRegion message= assertive? />` (sr-only `role="status"`).
   Kanban, canvas, gantt, scheduler, node graph, data grid, data table bulk actions, and transfer
   list all announce through it; a primitive renders its own `LiveRegion` (with its `data-slot`)
   so it works without any provider.
-- `src/components/ui/hotkeys.tsx`: `HotkeysProvider` (one document keydown listener; chords like
+- `packages/react/src/components/ui/hotkeys.tsx`: `HotkeysProvider` (one document keydown listener; chords like
   `mod+k` where `mod` is ⌘ on Mac and Ctrl elsewhere, sequences like `g d` with a 1s window,
   ignores typing in inputs unless `allowInInput`, built-in `?` toggles the dialog;
   `dialogHotkey={null}` disables), `useHotkey(hotkey, handler, { label, group, enabled,
@@ -564,7 +566,7 @@ heights and go-to-line, and a 10k-contact listbox with search).
   `useHotkey` and a `group`.
 
 ## App shell
-`src/components/ui/app-shell.tsx` is a compositional, router-agnostic shell built on
+`packages/react/src/components/ui/app-shell.tsx` is a compositional, router-agnostic shell built on
 `sidebar.tsx` (shadcn-admin layout): `AppShell` (context: sidebar variant/collapsible,
 search open state, `searchShortcut` for cmd/ctrl+K), `AppShellSidebar` + `AppShellBrand*`,
 `AppShellNav*` (groups, links with `active`, badges, `AppShellNavCollapsible` that becomes

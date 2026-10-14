@@ -1,7 +1,7 @@
 import * as React from "react"
-import { Scheduler, useScheduler } from "@/components/ui/scheduler"
+import { Scheduler, useScheduler, type SchedulerEventColor } from "@/components/ui/scheduler"
 
-type Event = { id: string; title: string; start: Date; end: Date }
+type Event = { id: string; title: string; start: Date; end: Date; color?: SchedulerEventColor }
 
 const today = new Date()
 const at = (dayOffset: number, hour: number, minutes = 0) => {
@@ -10,10 +10,9 @@ const at = (dayOffset: number, hour: number, minutes = 0) => {
   d.setHours(hour, minutes, 0, 0)
   return d
 }
-const sameDay = (a: Date, b: Date) => a.toDateString() === b.toDateString()
 
 function Week({ events }: { events: Event[] }) {
-  const { days } = useScheduler()
+  const { days, view } = useScheduler()
   return (
     <Scheduler.TimeGrid>
       <Scheduler.TimeGridHeader>
@@ -23,16 +22,19 @@ function Week({ events }: { events: Event[] }) {
         <Scheduler.TimeGutter />
         <Scheduler.DayColumns>
           {days.map((day) => (
-            <Scheduler.DayColumn
-              key={day.toISOString()}
-              date={day}
-              events={events.filter((e) => sameDay(e.start, day))}
-            >
+            <Scheduler.DayColumn key={day.toISOString()} date={day} events={events}>
               {(e) => (
-                <Scheduler.Event value={e.id} start={e.start} end={e.end} className="border-sky-500/40 bg-sky-500/15">
+                <Scheduler.Event value={e.id} start={e.start} end={e.end} color={e.color}>
                   <Scheduler.EventTitle>{e.title}</Scheduler.EventTitle>
                   <Scheduler.EventTime />
-                  <Scheduler.EventResizeHandle />
+                  <Scheduler.EventResizeHandle edge="start" />
+                  <Scheduler.EventResizeHandle edge="end" />
+                  {view === "week" && (
+                    <>
+                      <Scheduler.EventResizeHandle edge="start" axis="time" />
+                      <Scheduler.EventResizeHandle edge="end" axis="time" />
+                    </>
+                  )}
                 </Scheduler.Event>
               )}
             </Scheduler.DayColumn>
@@ -46,10 +48,11 @@ function Week({ events }: { events: Event[] }) {
 
 export default function SchedulerExample() {
   const [events, setEvents] = React.useState<Event[]>([
-    { id: "standup", title: "Standup", start: at(0, 9), end: at(0, 9, 30) },
-    { id: "design", title: "Design review", start: at(0, 11), end: at(0, 12) },
+    { id: "standup", color: "blue", title: "Standup", start: at(0, 9), end: at(0, 9, 30) },
+    { id: "design", color: "violet", title: "Design review", start: at(0, 11), end: at(0, 12) },
     { id: "lunch", title: "Team lunch", start: at(1, 12, 30), end: at(1, 13, 30) },
-    { id: "planning", title: "Sprint planning", start: at(2, 14), end: at(2, 15, 30) },
+    { id: "offsite", color: "green", title: "Team offsite", start: at(0, 16), end: at(2, 10) },
+    { id: "planning", color: "red", title: "Sprint planning", start: at(2, 14), end: at(2, 15, 30) },
   ])
   return (
     <Scheduler.Root

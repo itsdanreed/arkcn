@@ -12,7 +12,7 @@ const problems = []
 let count = 0
 for (const file of program
   .getSourceFiles()
-  .filter((file) => file.fileName.startsWith(path.join(root, "src/components/ui/")))) {
+  .filter((file) => file.fileName.startsWith(path.join(root, "packages/react/src/components/ui/")))) {
   if (file.statements.some((statement) => ts.isModuleDeclaration(statement)))
     problems.push(`${file.fileName}: merged namespaces are not part of the public contract`)
   const declarations = file.statements.flatMap((statement) =>

@@ -1,0 +1,242 @@
+{
+  "name": "button-group",
+  "type": "ui",
+  "description": "Joined buttons, labels, and separators with horizontal or vertical composition.",
+  "exports": [
+    "ButtonGroup"
+  ],
+  "parts": [
+    {
+      "name": "ButtonGroup.Root",
+      "props": [
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "required": false,
+          "default": "\"horizontal\"",
+          "description": "Direction in which controls join.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "ButtonGroup.Text",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "ButtonGroup.Separator",
+      "props": [
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "required": false,
+          "default": "\"vertical\"",
+          "description": "Layout direction of the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "lib/theme",
+    "separator"
+  ],
+  "files": [
+    {
+      "path": "components/ui/button-group.tsx",
+      "content": "/** Joined buttons, labels, and separators with horizontal or vertical composition. */\nimport { Children, cloneElement, isValidElement, type ComponentPropsWithRef, type ReactNode } from \"react\"\nimport { Text, View, type PressableStateCallbackType, type StyleProp, type ViewStyle } from \"react-native\"\nimport { useNativeTheme } from \"@/lib/theme\"\nimport { Separator, type SeparatorRootProps } from \"@/components/ui/separator\"\nexport type ButtonGroupRootProps = ComponentPropsWithRef<typeof View> & {\n  /** Direction in which controls join. */\n  orientation?: \"horizontal\" | \"vertical\"\n}\nfunction ButtonGroupRoot({ orientation = \"horizontal\", children, style, ...props }: ButtonGroupRootProps) {\n  const { radius, spacing } = useNativeTheme()\n  const items = Children.toArray(children)\n  const vertical = orientation === \"vertical\"\n  const nested = items.some((child) => isValidElement(child) && child.type === ButtonGroupRoot)\n  return (\n    <View\n      {...props}\n      style={[\n        {\n          alignSelf: \"flex-start\",\n          flexDirection: vertical ? \"column\" : \"row\",\n          alignItems: \"stretch\",\n          gap: nested ? spacing.sm : 0,\n        },\n        style,\n      ]}\n    >\n      {items.map((child, index) => {\n        if (\n          !isValidElement<{\n            style?: StyleProp<ViewStyle> | ((state: PressableStateCallbackType) => StyleProp<ViewStyle>)\n          }>(child)\n        )\n          return child\n        const first = index === 0,\n          last = index === items.length - 1\n        const joined: ViewStyle = vertical\n          ? {\n              borderRadius: radius.lg,\n              ...(!first && { borderTopLeftRadius: 0, borderTopRightRadius: 0, borderTopWidth: 0 }),\n              ...(!last && { borderBottomLeftRadius: 0, borderBottomRightRadius: 0 }),\n            }\n          : {\n              borderRadius: radius.lg,\n              ...(!first && { borderTopLeftRadius: 0, borderBottomLeftRadius: 0, borderLeftWidth: 0 }),\n              ...(!last && { borderTopRightRadius: 0, borderBottomRightRadius: 0 }),\n            }\n        const childStyle = child.props.style\n        return cloneElement(child, {\n          style:\n            typeof childStyle === \"function\"\n              ? (state: PressableStateCallbackType) => [joined, childStyle(state)]\n              : [joined, childStyle],\n        })\n      })}\n    </View>\n  )\n}\nexport type ButtonGroupTextProps = ComponentPropsWithRef<typeof View>\nfunction ButtonGroupText({ children, style, ...props }: ButtonGroupTextProps) {\n  const { colors, typography, spacing, radius, fontSize, lineHeight } = useNativeTheme()\n  const label = (content: ReactNode) => (\n    <Text style={{ ...typography.medium, fontSize: fontSize.md, lineHeight: lineHeight.md, color: colors.foreground }}>\n      {content}\n    </Text>\n  )\n  const items = Children.toArray(children)\n  return (\n    <View\n      {...props}\n      style={[\n        {\n          flexDirection: \"row\",\n          alignItems: \"center\",\n          gap: spacing.sm,\n          borderRadius: radius.lg,\n          borderWidth: 1,\n          borderColor: colors.border,\n          backgroundColor: colors.muted,\n          paddingHorizontal: spacing.controlX,\n        },\n        style,\n      ]}\n    >\n      {items.every((child) => typeof child === \"string\" || typeof child === \"number\")\n        ? label(children)\n        : Children.map(children, (child) =>\n            typeof child === \"string\" || typeof child === \"number\"\n              ? label(child)\n              : isValidElement<{ size?: number; color?: string }>(child)\n                ? cloneElement(child, { size: child.props.size ?? 16, color: child.props.color ?? colors.foreground })\n                : child\n          )}\n    </View>\n  )\n}\nexport type ButtonGroupSeparatorProps = SeparatorRootProps\nfunction ButtonGroupSeparator({ orientation = \"vertical\", style, ...props }: ButtonGroupSeparatorProps) {\n  const { colors } = useNativeTheme()\n  return (\n    <Separator.Root\n      {...props}\n      orientation={orientation}\n      style={[\n        { backgroundColor: colors.input },\n        orientation === \"vertical\" ? { marginVertical: 1 } : { marginHorizontal: 1 },\n        style,\n      ]}\n    />\n  )\n}\nexport const ButtonGroup = { Root: ButtonGroupRoot, Text: ButtonGroupText, Separator: ButtonGroupSeparator }\n"
+    }
+  ],
+  "docs": "## Button Group\n\nRoot joins its direct children horizontally by default; `orientation=\"vertical\"` stacks them. Compose existing Button\nparts, static Text segments, and Separator. A separator defaults to vertical; use horizontal separators in a vertical group.\nThe outside corners remain rounded and shared borders appear only once. Button backgrounds follow the joined corners,\nincluding while pressed; keyboard focus rises above adjacent controls.\n\nRoot preserves child refs and events and merges the joined styles with their own styles. Custom child components must\nforward `style`; use direct children for edge styling. Selection remains application state, as in the web component.\nFor an interactive set of choices with built-in selection, use Toggle Group."
+}

@@ -1,0 +1,62 @@
+{
+  "name": "@multicomma/arkcn-react-native",
+  "version": "0.3.0",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itsdanreed/arkcn.git",
+    "directory": "packages/react-native"
+  },
+  "description": "Native arkcn components for Expo and React Native.",
+  "sideEffects": false,
+  "files": [
+    "src"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./ui/*": "./src/components/ui/*.tsx",
+    "./lib/*": "./src/lib/*.ts",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm --prefix ../.. run check"
+  },
+  "dependencies": {
+    "@multicomma/arkcn-core": "0.3.0",
+    "@multicomma/arkcn-react-shared": "0.3.0"
+  },
+  "peerDependencies": {
+    "react": ">=19.0.0",
+    "react-native": ">=0.81.0",
+    "react-native-reanimated": ">=4.1.0 <5",
+    "react-native-svg": "^15.0.0",
+    "react-native-worklets": ">=0.5.0 <1",
+    "lucide-react-native": "^1.41.0"
+  },
+  "devDependencies": {
+    "lucide-react-native": "^1.41.0",
+    "react-native": "^0.87.1",
+    "react-native-reanimated": "^4.7.1",
+    "react-native-svg": "^15.15.5",
+    "react-native-worklets": "^0.13.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "peerDependenciesMeta": {
+    "react-native-reanimated": {
+      "optional": true
+    },
+    "react-native-worklets": {
+      "optional": true
+    },
+    "react-native-svg": {
+      "optional": true
+    },
+    "lucide-react-native": {
+      "optional": true
+    }
+  }
+}

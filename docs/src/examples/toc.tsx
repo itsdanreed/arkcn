@@ -11,17 +11,19 @@ const items = [
 
 export default function TocExample() {
   return (
-    <Toc.Root items={items} className="w-56">
-      <Toc.Title>On this page</Toc.Title>
-      <Toc.Content>
-        <Toc.List>
-          {items.map((item) => (
-            <Toc.Item key={item.value} item={item}>
-              <Toc.Link href={`#${item.value}`}>{item.label}</Toc.Link>
-            </Toc.Item>
-          ))}
-        </Toc.List>
-      </Toc.Content>
+    <Toc.Root asChild items={items} className="w-56">
+      <Toc.Nav>
+        <Toc.Title>On this page</Toc.Title>
+        <Toc.Content>
+          <Toc.List>
+            {items.map((item) => (
+              <Toc.Item key={item.value} item={item}>
+                <Toc.Link href={`#${item.value}`}>{item.label}</Toc.Link>
+              </Toc.Item>
+            ))}
+          </Toc.List>
+        </Toc.Content>
+      </Toc.Nav>
     </Toc.Root>
   )
 }

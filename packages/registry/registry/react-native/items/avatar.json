@@ -1,0 +1,437 @@
+{
+  "name": "avatar",
+  "type": "ui",
+  "description": "Circular identity images with loading/error fallbacks and shared small/default/large sizes.",
+  "exports": [
+    "Avatar"
+  ],
+  "parts": [
+    {
+      "name": "Avatar.Root",
+      "props": [
+        {
+          "name": "size",
+          "type": "\"default\" | \"sm\" | \"lg\"",
+          "required": false,
+          "default": "\"default\"",
+          "description": "Visible control size, matching the web renderer. Native touch areas extend beyond it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Avatar.Image",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "The text that's read by the screen reader when the user interacts with\nthe image.",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "undefined",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ImageStyleProp_Internal",
+          "required": false,
+          "description": "Style applied to the `Image` component.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Avatar.Fallback",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Avatar.Badge",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Avatar.Group",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Avatar.GroupCount",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "lib/context",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/avatar.tsx",
+      "content": "import {\n  Children,\n  cloneElement,\n  createContext,\n  isValidElement,\n  useContext,\n  useLayoutEffect,\n  useMemo,\n  useRef,\n  useState,\n  type ComponentPropsWithRef,\n  type ReactNode,\n} from \"react\"\nimport { Image, Text, View, type LayoutRectangle, type LayoutChangeEvent } from \"react-native\"\nimport { createRequiredContext } from \"@/lib/context\"\nimport { useNativeTheme } from \"@/lib/theme\"\n\n/** Circular identity images with loading/error fallbacks and shared small/default/large sizes. */\nexport type AvatarRootProps = ComponentPropsWithRef<typeof View> & { size?: \"sm\" | \"default\" | \"lg\" }\nconst [Provider, useAvatar] = createRequiredContext<{\n  size: \"sm\" | \"default\" | \"lg\"\n  loaded: boolean\n  setLoaded: (loaded: boolean) => void\n}>(\"Avatar\")\nconst GroupContext = createContext<{ size: \"sm\" | \"default\" | \"lg\" } | null>(null)\nfunction AvatarRoot({ size = \"default\", style, children, ...props }: AvatarRootProps) {\n  const [loaded, setLoaded] = useState(false)\n  const group = useContext(GroupContext)\n  const { colors, colorScheme, avatar, radius } = useNativeTheme()\n  return (\n    <Provider value={{ size, loaded, setLoaded }}>\n      <View\n        {...props}\n        style={[\n          {\n            width: avatar[size],\n            height: avatar[size],\n            flexShrink: 0,\n            borderRadius: radius.full,\n            backgroundColor: colors.muted,\n            ...(group ? { boxShadow: [{ offsetX: 0, offsetY: 0, spreadDistance: 2, color: colors.background }] } : {}),\n          },\n          style,\n        ]}\n      >\n        {children}\n        <View\n          pointerEvents=\"none\"\n          accessible={false}\n          style={{\n            position: \"absolute\",\n            inset: 0,\n            borderRadius: radius.full,\n            borderWidth: 1,\n            borderColor: colors.border,\n            mixBlendMode: colorScheme === \"dark\" ? \"lighten\" : \"darken\",\n          }}\n        />\n      </View>\n    </Provider>\n  )\n}\nAvatarRoot.displayName = \"AvatarRoot\"\nexport type AvatarImageProps = ComponentPropsWithRef<typeof Image>\nfunction AvatarImage({ source, src, srcSet, style, onLoad, onError, ...props }: AvatarImageProps) {\n  const { setLoaded } = useAvatar()\n  const { radius } = useNativeTheme()\n  const signature = JSON.stringify({ source, src, srcSet })\n  const generation = useMemo(() => ({ signature }), [signature])\n  const request = useRef<typeof generation | null>(null)\n  useLayoutEffect(() => {\n    request.current = generation\n    setLoaded(false)\n    return () => {\n      request.current = null\n      setLoaded(false)\n    }\n  }, [generation, setLoaded])\n  return (\n    <Image\n      key={signature}\n      accessible={false}\n      resizeMode=\"cover\"\n      {...props}\n      source={source}\n      src={src}\n      srcSet={srcSet}\n      onLoad={(event) => {\n        if (request.current === generation) setLoaded(true)\n        onLoad?.(event)\n      }}\n      onError={(event) => {\n        if (request.current === generation) setLoaded(false)\n        onError?.(event)\n      }}\n      style={[{ position: \"absolute\", inset: 0, width: \"100%\", height: \"100%\", borderRadius: radius.full }, style]}\n    />\n  )\n}\nexport type AvatarFallbackProps = ComponentPropsWithRef<typeof Text>\nfunction AvatarFallback({ style, ...props }: AvatarFallbackProps) {\n  const { loaded, size } = useAvatar()\n  const { colors, avatar, fontSize, typography, radius } = useNativeTheme()\n  if (loaded) return null\n  return (\n    <View\n      pointerEvents=\"none\"\n      style={{\n        position: \"absolute\",\n        inset: 0,\n        borderRadius: radius.full,\n        backgroundColor: colors.muted,\n        alignItems: \"center\",\n        justifyContent: \"center\",\n      }}\n    >\n      <Text\n        {...props}\n        style={[\n          {\n            ...typography.regular,\n            color: colors.mutedForeground,\n            fontSize: size === \"sm\" ? fontSize.sm : fontSize.md,\n            lineHeight: avatar[size],\n            textAlign: \"center\",\n          },\n          style,\n        ]}\n      />\n    </View>\n  )\n}\nexport type AvatarBadgeProps = ComponentPropsWithRef<typeof View>\nfunction AvatarBadge(props: AvatarBadgeProps) {\n  return <AvatarBadgeVisual {...props} size={useAvatar().size} />\n}\nAvatarBadge.displayName = \"AvatarBadge\"\nfunction isAvatarPart(type: unknown, name: string) {\n  return typeof type === \"function\" && \"displayName\" in type && type.displayName === name\n}\nfunction AvatarBadgeVisual({ children, style, size, ...props }: AvatarBadgeProps & { size: \"sm\" | \"default\" | \"lg\" }) {\n  const { colors, radius } = useNativeTheme()\n  const dimension = size === \"sm\" ? 8 : size === \"lg\" ? 12 : 10\n  return (\n    <View\n      {...props}\n      style={[\n        {\n          position: \"absolute\",\n          right: 0,\n          bottom: 0,\n          zIndex: 10,\n          width: dimension,\n          height: dimension,\n          alignItems: \"center\",\n          justifyContent: \"center\",\n          borderRadius: radius.full,\n          backgroundColor: colors.primary,\n          boxShadow: [{ offsetX: 0, offsetY: 0, spreadDistance: 2, color: colors.background }],\n        },\n        style,\n      ]}\n    >\n      {Children.map(children, (child) =>\n        isValidElement<{ size?: number; color?: string }>(child)\n          ? size === \"sm\"\n            ? null\n            : cloneElement(child, { size: 8, color: child.props.color ?? colors.primaryForeground })\n          : child\n      )}\n    </View>\n  )\n}\nexport type AvatarGroupProps = ComponentPropsWithRef<typeof View>\nfunction AvatarGroup({ children, style, ...props }: AvatarGroupProps) {\n  const [layouts, setLayouts] = useState<Record<string, LayoutRectangle>>({})\n  const { avatar } = useNativeTheme()\n  const items = Children.toArray(children)\n  const sizes = items.map((child) => (isValidElement<AvatarRootProps>(child) ? child.props.size : undefined))\n  const size = sizes.includes(\"sm\") ? \"sm\" : sizes.includes(\"lg\") ? \"lg\" : \"default\"\n  const badges: ReactNode[] = []\n  let offset = 0\n  const avatars = items.map((child, index) => {\n    if (!isValidElement<AvatarRootProps>(child)) return child\n    const key = String(child.key ?? index)\n    const avatarSize = isAvatarPart(child.type, \"AvatarRoot\") ? (child.props.size ?? \"default\") : size\n    const dimension = avatar[avatarSize]\n    if (index > 0) offset -= 8\n    const rect = layouts[key] ?? { x: offset, y: 0, width: dimension, height: dimension }\n    offset += rect.width\n    const parts = Children.toArray(child.props.children)\n    const lifted = isAvatarPart(child.type, \"AvatarRoot\")\n      ? parts.filter((part) => isValidElement(part) && isAvatarPart(part.type, \"AvatarBadge\"))\n      : []\n    for (const [badgeIndex, badge] of lifted.entries()) {\n      if (!isValidElement<AvatarBadgeProps>(badge)) continue\n      // Native z-index is scoped to siblings. Lift the badge above later group members.\n      badges.push(\n        <View\n          key={`${key}-badge-${badgeIndex}`}\n          pointerEvents=\"box-none\"\n          style={{\n            position: \"absolute\",\n            left: rect.x,\n            top: rect.y,\n            width: rect.width,\n            height: rect.height,\n            zIndex: 10,\n          }}\n        >\n          <AvatarBadgeVisual {...badge.props} size={avatarSize} />\n        </View>\n      )\n    }\n    return cloneElement(child, {\n      style: [index > 0 && { marginLeft: -8 }, child.props.style],\n      ...(lifted.length\n        ? {\n            children: parts.filter((part) => !lifted.includes(part)),\n            onLayout: (event: LayoutChangeEvent) => {\n              const next = event.nativeEvent.layout\n              setLayouts((current) => {\n                const previous = current[key]\n                return previous &&\n                  previous.x === next.x &&\n                  previous.y === next.y &&\n                  previous.width === next.width &&\n                  previous.height === next.height\n                  ? current\n                  : { ...current, [key]: next }\n              })\n              child.props.onLayout?.(event)\n            },\n          }\n        : {}),\n    })\n  })\n  return (\n    <GroupContext.Provider value={{ size }}>\n      <View {...props} style={[{ flexDirection: \"row\" }, style]}>\n        {avatars}\n        {badges}\n      </View>\n    </GroupContext.Provider>\n  )\n}\nexport type AvatarGroupCountProps = ComponentPropsWithRef<typeof View>\nfunction AvatarGroupCount({ children, style, ...props }: AvatarGroupCountProps) {\n  const size = useContext(GroupContext)?.size ?? \"default\"\n  const { colors, avatar, typography, radius } = useNativeTheme()\n  return (\n    <View\n      {...props}\n      style={[\n        {\n          width: avatar[size],\n          height: avatar[size],\n          flexShrink: 0,\n          borderRadius: radius.full,\n          alignItems: \"center\",\n          justifyContent: \"center\",\n          backgroundColor: colors.muted,\n          boxShadow: [{ offsetX: 0, offsetY: 0, spreadDistance: 2, color: colors.background }],\n        },\n        style,\n      ]}\n    >\n      {Children.toArray(children).every((child) => typeof child === \"string\" || typeof child === \"number\") ? (\n        <Text style={{ ...typography.regular, fontSize: 14, lineHeight: 20, color: colors.mutedForeground }}>\n          {children}\n        </Text>\n      ) : (\n        Children.map(children, (child) =>\n          isValidElement<{ size?: number; color?: string }>(child)\n            ? cloneElement(child, {\n                size: size === \"sm\" ? 12 : size === \"lg\" ? 20 : 16,\n                color: child.props.color ?? colors.mutedForeground,\n              })\n            : child\n        )\n      )}\n    </View>\n  )\n}\nexport const Avatar = {\n  Root: AvatarRoot,\n  Image: AvatarImage,\n  Fallback: AvatarFallback,\n  Badge: AvatarBadge,\n  Group: AvatarGroup,\n  GroupCount: AvatarGroupCount,\n}\n"
+    }
+  ],
+  "docs": "## Avatar\n\nRoot supports `sm` (24), `default` (32), and `lg` (40) sizes. Compose Image and Fallback inside it. Label the\nRoot with `accessible accessibilityLabel=\"Alex Rivera\"` when the avatar conveys identity.\n\nImage uses React Native's `source`, including local assets and `{ uri }`. Fallback renders during image\nloading and after failure; it hides only after the current source loads. Changing the source resets this\nstate. Image forwards `onLoad` and `onError` to the caller. Fallback children render inside native Text.\n\nThe native adapter currently manages image loading inside Root; Ark's external state hook and RootProvider are not yet implemented.\n\n### Badges and groups\n\nPlace Badge inside Root for a status dot with a two-pixel background ring. Its size follows the avatar (8/10/12 pixels);\nicons are eight pixels and hidden for small avatars, matching the web styles.\n\nGroup overlaps its direct children by eight pixels and adds background rings. Add GroupCount for a remaining-person\ncount or icon. Its size follows the avatars in the group; small takes precedence over large in mixed-size groups,\nmatching the web selectors. Use accessibility labels to explain the status or count."
+}

@@ -1,3 +1,6 @@
+import { useFramework, type Framework } from "./framework"
+import { NativeThemeProvider } from "@multicomma/arkcn-react-native/lib/theme"
+import { useTheme } from "next-themes"
 import * as React from "react"
 import { ArrowRightIcon, ExternalLinkIcon } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
@@ -7,12 +10,17 @@ import { CodeBlock } from "./code"
 import { Markdown, useOutline } from "./markdown"
 import { Outline } from "./layout"
 import { guideByPath } from "./nav"
-import { groupedComponents, loadItem, registry, title, type PartDoc, type RegistryItem } from "./registry"
+import { groupedComponents, loadItem, useRegistry, title, type PartDoc, type RegistryItem } from "./registry"
 import { Link } from "./router"
 import { cn } from "@/lib/utils"
 import { descriptions } from "./descriptions"
 
 const guideModules = import.meta.glob<string>("../content/*.md", { query: "?raw", import: "default", eager: true })
+const nativeGuides = import.meta.glob<string>("../content/native/*.md", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+})
 const componentGuides = import.meta.glob<string>("../content/components/*.md", {
   query: "?raw",
   import: "default",
@@ -20,6 +28,9 @@ const componentGuides = import.meta.glob<string>("../content/components/*.md", {
 })
 const exampleModules = import.meta.glob<{ default: React.ComponentType }>("./examples/*.tsx")
 const exampleSources = import.meta.glob<string>("./examples/*.tsx", { query: "?raw", import: "default" })
+const nativeExampleModules = import.meta.glob<{ default: React.ComponentType }>("./native-examples/*.tsx")
+const nativeExampleSources = import.meta.glob<string>("./native-examples/*.tsx", { query: "?raw", import: "default" })
+const NativeShowcase = React.lazy(() => import("./native-showcase"))
 
 export function PageTitle({
   heading,
@@ -42,13 +53,23 @@ export function PageTitle({
 /* -------------------------------- guides -------------------------------- */
 
 export function GuidePage({ path }: { path: string }) {
+  const { framework } = useFramework()
   const guide = guideByPath(path)
-  const source = guide ? guideModules[`../content/${guide.slug}.md`] : undefined
-  const outline = useOutline(path)
+  const source = guide
+    ? ((framework === "react-native"
+        ? nativeGuides[`../content/native/${guide.slug === "installation" ? "introduction" : guide.slug}.md`]
+        : undefined) ?? guideModules[`../content/${guide.slug}.md`])
+    : undefined
+  const outline = useOutline(`${framework}:${path}`)
   if (!guide || !source) return <NotFound />
   return (
     <WithOutline outline={outline}>
       <Markdown source={source} />
+      {guide.slug === "react-native" && (
+        <React.Suspense fallback={<p>Loading native preview…</p>}>
+          <NativeShowcase />
+        </React.Suspense>
+      )}
     </WithOutline>
   )
 }
@@ -76,12 +97,18 @@ function OutlinePortal({ items }: { items: ReturnType<typeof useOutline> }) {
 /* ------------------------------- components ------------------------------ */
 
 export function ComponentsIndex() {
-  const groups = React.useMemo(groupedComponents, [])
+  const { framework } = useFramework()
+  const registry = useRegistry()
+  const groups = React.useMemo(() => groupedComponents(framework), [framework])
   return (
     <>
       <PageTitle
         heading="Components"
-        description={`${registry.items.filter((i) => i.type === "ui").length} components, every part exported, styled through Ark UI's data attributes.`}
+        description={
+          framework === "react-native"
+            ? `${registry.items.filter((i) => i.type === "ui").length} components for Expo and React Native. More ports are on the way.`
+            : `${registry.items.filter((i) => i.type === "ui").length} components, every part exported, styled through Ark UI's data attributes.`
+        }
       />
       <div className="flex flex-col gap-10">
         {groups.map((group) => (
@@ -108,24 +135,26 @@ export function ComponentsIndex() {
   )
 }
 
-function useExample(name: string) {
-  const key = `./examples/${name}.tsx`
+function useExample(name: string, framework: Framework) {
+  const key = `./${framework === "react-native" ? "native-examples" : "examples"}/${name}.tsx`
+  const modules = framework === "react-native" ? nativeExampleModules : exampleModules
+  const sources = framework === "react-native" ? nativeExampleSources : exampleSources
   const [Example, setExample] = React.useState<React.ComponentType | null>(null)
   const [source, setSource] = React.useState<string>("")
   React.useEffect(() => {
     let cancelled = false
-    const load = exampleModules[key]
+    const load = modules[key]
     if (!load) return
-    Promise.all([load(), exampleSources[key]()]).then(([mod, src]) => {
+    Promise.all([load(), sources[key]()]).then(([mod, src]) => {
       if (cancelled) return
       setExample(() => mod.default)
-      setSource(src)
+      setSource(src.replaceAll("@multicomma/arkcn-react-native/ui/", "@/components/ui/"))
     })
     return () => {
       cancelled = true
     }
-  }, [key])
-  return { exists: !!exampleModules[key], Example, source }
+  }, [key, modules, sources])
+  return { exists: !!modules[key], Example, source }
 }
 
 /** Wide, data-heavy components get a taller full-width frame. */
@@ -160,6 +189,8 @@ const wide = new Set([
 
 function ComponentPreview({ name, example }: { name: string; example: ReturnType<typeof useExample> }) {
   const { Example, source } = example
+  const { framework } = useFramework()
+  const { resolvedTheme } = useTheme()
   return (
     <Tabs.Root defaultValue="preview" className="mb-8">
       <Tabs.List variant="line">
@@ -174,7 +205,17 @@ function ComponentPreview({ name, example }: { name: string; example: ReturnType
             wide.has(name) && "min-h-96 p-4 *:min-w-0 *:flex-1"
           )}
         >
-          {Example ? <Example /> : <span className="text-sm text-muted-foreground">Loading…</span>}
+          {Example ? (
+            framework === "react-native" ? (
+              <NativeThemeProvider colorScheme={resolvedTheme === "dark" ? "dark" : "light"}>
+                <Example />
+              </NativeThemeProvider>
+            ) : (
+              <Example />
+            )
+          ) : (
+            <span className="text-sm text-muted-foreground">Loading…</span>
+          )}
         </div>
       </Tabs.Content>
       <Tabs.Content value="code">
@@ -185,29 +226,49 @@ function ComponentPreview({ name, example }: { name: string; example: ReturnType
 }
 
 export function ComponentPage({ name }: { name: string }) {
+  const { framework, setFramework } = useFramework()
+  const registry = useRegistry()
+  const native = framework === "react-native"
   const [item, setItem] = React.useState<RegistryItem | null | undefined>(undefined)
   React.useEffect(() => {
     let cancelled = false
     setItem(undefined)
-    loadItem(name).then((i) => {
+    loadItem(name, framework).then((i) => {
       if (!cancelled) setItem(i)
     })
     return () => {
       cancelled = true
     }
-  }, [name])
-  const example = useExample(name)
+  }, [name, framework])
+  const example = useExample(name, framework)
   const outline = useOutline(item ? `${name}:loaded:${example.source ? 1 : 0}` : name)
   if (item === undefined) return <p className="text-sm text-muted-foreground">Loading…</p>
-  if (!item) return <NotFound />
+  if (!item)
+    return native ? (
+      <>
+        <PageTitle heading={title(name)} description="This component has not been ported to React Native yet." />
+        <div className="flex gap-2">
+          <Button onClick={() => setFramework("react")}>View React component</Button>
+          <Button variant="outline" asChild>
+            <Link to="/docs/components">Browse native components</Link>
+          </Button>
+        </div>
+      </>
+    ) : (
+      <NotFound />
+    )
   const entry = registry.items.find((i) => i.name === name)
   const arkSlug = item.ark ? item.ark.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase() : null
   const parts = item.exports.filter((e) => /^[A-Z]/.test(e))
   const helpers = item.exports.filter((e) => !/^[A-Z]/.test(e))
   return (
     <WithOutline outline={outline}>
-      <PageTitle heading={title(name)} description={descriptions[name] ?? item.description ?? undefined}>
+      <PageTitle
+        heading={title(name)}
+        description={(native ? item.description : (descriptions[name] ?? item.description)) || undefined}
+      >
         <div className="flex flex-wrap items-center gap-2 pt-1">
+          {native && <Badge.Root variant="secondary">Expo / React Native</Badge.Root>}
           {arkSlug && (
             <Button variant="outline" size="xs" asChild>
               <a href={`https://ark-ui.com/docs/components/${arkSlug}`} target="_blank" rel="noreferrer">
@@ -230,7 +291,11 @@ export function ComponentPage({ name }: { name: string }) {
 
       <div className="docs-prose prose max-w-none prose-neutral dark:prose-invert prose-headings:font-semibold prose-headings:tracking-tight">
         <h2 id="installation">Installation</h2>
-        <CodeBlock code={`npx @multicomma/arkcn add ${name}`} lang="bash" className="not-prose" />
+        <CodeBlock
+          code={`npx @multicomma/arkcn init --framework ${framework}\nnpx @multicomma/arkcn add ${name}`}
+          lang="bash"
+          className="not-prose"
+        />
         {item.registryDependencies.length > 0 && (
           <p className="text-sm text-muted-foreground">
             Also installs{" "}
@@ -257,7 +322,16 @@ export function ComponentPage({ name }: { name: string }) {
 
         <h2 id="anatomy">Anatomy</h2>
         <p>
-          Every part is exported on its own and carries a <code>data-slot</code> attribute you can target in CSS.
+          {native ? (
+            <>
+              Parts render React Native primitives and accept native <code>style</code>, events, and accessibility
+              props.
+            </>
+          ) : (
+            <>
+              Every part is exported on its own and carries a <code>data-slot</code> attribute you can target in CSS.
+            </>
+          )}
         </p>
         <div className="not-prose flex flex-wrap gap-1.5">
           {(item.parts?.map((part) => part.name) ?? parts).map((p) => (
@@ -279,7 +353,7 @@ export function ComponentPage({ name }: { name: string }) {
           </>
         )}
 
-        {componentGuides[`../content/components/${name}.md`] ? (
+        {!native && componentGuides[`../content/components/${name}.md`] ? (
           <Markdown source={componentGuides[`../content/components/${name}.md`]} />
         ) : (
           item.docs && (
@@ -294,8 +368,9 @@ export function ComponentPage({ name }: { name: string }) {
           <>
             <h2 id="props">Props</h2>
             <p>
-              Every part also accepts the attributes of the element it renders. Props from Ark UI and zag are shown with
-              their own descriptions; parts without extra props are omitted.
+              {native
+                ? "Parts accept the props of their React Native primitive. Use onPress and onChangeText instead of DOM events."
+                : "Every part also accepts the attributes of the element it renders. Props from Ark UI and zag are shown with their own descriptions; parts without extra props are omitted."}
             </p>
             <div className="not-prose flex flex-col gap-3">
               {item.parts
@@ -365,14 +440,20 @@ function PartProps({ part, open }: { part: PartDoc; open: boolean }) {
 /* --------------------------------- home --------------------------------- */
 
 export function Home() {
+  const { framework } = useFramework()
+  const registry = useRegistry()
+  const native = framework === "react-native"
   const count = registry.items.filter((i) => i.type === "ui").length
   return (
     <div className="mx-auto flex max-w-3xl flex-col items-start gap-6 py-10">
       <Badge.Root variant="secondary">v{registry.version}</Badge.Root>
-      <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Build with Ark UI. Ship like shadcn.</h1>
+      <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+        {native ? "Native components. Yours to compose." : "Build with Ark UI. Ship like shadcn."}
+      </h1>
       <p className="max-w-xl text-lg text-muted-foreground">
-        {count} components ported from shadcn/ui to Ark UI, plus the data-heavy primitives a real product needs: data
-        grid, kanban, gantt, scheduler, node graph, rich text, query builder. Copied into your project, yours to change.
+        {native
+          ? `${count} components for Expo and React Native, with shared logic, native interactions, and light/dark themes. Copied into your project, yours to change.`
+          : `${count} components ported from shadcn/ui to Ark UI, plus the data-heavy primitives a real product needs: data grid, kanban, gantt, scheduler, node graph, rich text, query builder. Copied into your project, yours to change.`}
       </p>
       <div className="flex flex-wrap gap-2">
         <Button asChild>
@@ -385,7 +466,7 @@ export function Home() {
         </Button>
       </div>
       <CodeBlock
-        code={"npx @multicomma/arkcn init\nnpx @multicomma/arkcn add button data-grid kanban"}
+        code={`npx @multicomma/arkcn init --framework ${framework}\nnpx @multicomma/arkcn add ${native ? "button card input" : "button data-grid kanban"}`}
         lang="bash"
         className="w-full"
       />

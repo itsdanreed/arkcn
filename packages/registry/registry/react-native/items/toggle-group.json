@@ -1,0 +1,391 @@
+{
+  "name": "toggle-group",
+  "type": "ui",
+  "description": "Single or multiple selection with spaced or joined controls.",
+  "exports": [
+    "useToggleGroupContext",
+    "useToggleGroup",
+    "ToggleGroup"
+  ],
+  "parts": [
+    {
+      "name": "ToggleGroup.Root",
+      "props": [
+        {
+          "name": "defaultValue",
+          "type": "string[]",
+          "required": false,
+          "description": "Initial uncontrolled selection.",
+          "from": "arkcn"
+        },
+        {
+          "name": "deselectable",
+          "type": "boolean",
+          "required": false,
+          "description": "Allows a selected item to be deselected.",
+          "from": "arkcn"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables every item.",
+          "from": "arkcn"
+        },
+        {
+          "name": "multiple",
+          "type": "boolean",
+          "required": false,
+          "description": "Allows several items to be selected.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: { value: string[]; }) => void)",
+          "required": false,
+          "description": "Receives the next selection.",
+          "from": "arkcn"
+        },
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "required": false,
+          "description": "Direction of the item layout.",
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"sm\" | \"lg\"",
+          "required": false,
+          "description": "Visible size inherited by items.",
+          "from": "arkcn"
+        },
+        {
+          "name": "spacing",
+          "type": "number",
+          "required": false,
+          "description": "Gap in four-pixel spacing units; zero joins the items.",
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "string[]",
+          "required": false,
+          "description": "Controlled selected item values.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"outline\"",
+          "required": false,
+          "description": "Surface treatment inherited by items.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "ToggleGroup.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "{ value: string[]; setValue: (next: Updater<string[]>) => void; disabled: boolean; multiple: boolean; deselectable: boolean; toggleValue(item: string): void; }",
+          "required": true,
+          "description": "State created by useToggleGroup.",
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Composed group items.",
+          "from": "arkcn"
+        },
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "required": false,
+          "default": "\"horizontal\"",
+          "description": "Direction of the item layout.",
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"sm\" | \"lg\"",
+          "required": false,
+          "description": "Visible size inherited by items.",
+          "from": "arkcn"
+        },
+        {
+          "name": "spacing",
+          "type": "number",
+          "required": false,
+          "default": "2",
+          "description": "Gap in four-pixel spacing units; zero joins the items.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"outline\"",
+          "required": false,
+          "description": "Surface treatment inherited by items.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "ToggleGroup.Item",
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "Unique selection value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content of the toggle.",
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"sm\" | \"lg\"",
+          "required": false,
+          "description": "Visible control dimensions.",
+          "from": "arkcn"
+        },
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Overrides the built-in text label style.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"outline\"",
+          "required": false,
+          "description": "Surface treatment.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.\nPrevents interaction.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "ToggleGroup.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(state: { value: string[]; setValue: (next: Updater<string[]>) => void; disabled: boolean; multiple: boolean; deselectable: boolean; toggleValue(item: string…",
+          "required": true,
+          "description": "Receives selection state.",
+          "from": "arkcn"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "lib/context",
+    "lib/controllable",
+    "toggle"
+  ],
+  "files": [
+    {
+      "path": "components/ui/toggle-group.tsx",
+      "content": "/** Single or multiple selection with spaced or joined controls. */\nimport { Children, createContext, useContext, type ComponentPropsWithRef, type ReactNode } from \"react\"\nimport { StyleSheet, View } from \"react-native\"\nimport { useControllable } from \"@/lib/controllable\"\nimport { createRequiredContext } from \"@/lib/context\"\nimport { Toggle, type ToggleRootProps } from \"@/components/ui/toggle\"\n\nexport type UseToggleGroupProps = {\n  /** Controlled selected item values. */\n  value?: string[]\n  /** Initial uncontrolled selection. */\n  defaultValue?: string[]\n  /** Receives the next selection. */\n  onValueChange?: (details: { value: string[] }) => void\n  /** Allows several items to be selected. */\n  multiple?: boolean\n  /** Allows a selected item to be deselected. */\n  deselectable?: boolean\n  /** Disables every item. */\n  disabled?: boolean\n}\nexport function useToggleGroup({\n  value,\n  defaultValue = [],\n  onValueChange,\n  multiple = false,\n  deselectable = true,\n  disabled = false,\n}: UseToggleGroupProps = {}) {\n  const [selected, setValue] = useControllable(value, defaultValue, (value) => onValueChange?.({ value }))\n  return {\n    value: selected,\n    setValue,\n    disabled,\n    multiple,\n    deselectable,\n    toggleValue(item: string) {\n      if (disabled) return\n      const active = selected.includes(item)\n      if (active && !multiple && !deselectable) return\n      setValue(active ? selected.filter((value) => value !== item) : multiple ? [...selected, item] : [item])\n    },\n  }\n}\nexport type UseToggleGroupReturn = ReturnType<typeof useToggleGroup>\nconst [Provider, useToggleGroupContext] = createRequiredContext<UseToggleGroupReturn>(\"ToggleGroup\")\nexport { useToggleGroupContext }\ntype Appearance = {\n  /** Surface treatment inherited by items. */\n  variant?: ToggleRootProps[\"variant\"]\n  /** Visible size inherited by items. */\n  size?: ToggleRootProps[\"size\"]\n  /** Gap in four-pixel spacing units; zero joins the items. */\n  spacing?: number\n  /** Direction of the item layout. */\n  orientation?: \"horizontal\" | \"vertical\"\n}\nconst AppearanceContext = createContext<Appearance>({})\nconst PositionContext = createContext({ first: true, last: true })\nexport type ToggleGroupRootProviderProps = Omit<ComponentPropsWithRef<typeof View>, \"children\"> &\n  Appearance & {\n    /** State created by useToggleGroup. */\n    value: UseToggleGroupReturn\n    /** Composed group items. */\n    children?: ReactNode\n  }\nfunction ToggleGroupRootProvider({\n  value,\n  variant,\n  size,\n  spacing = 2,\n  orientation = \"horizontal\",\n  children,\n  style,\n  ...props\n}: ToggleGroupRootProviderProps) {\n  const items = Children.toArray(children)\n  return (\n    <Provider value={value}>\n      <AppearanceContext.Provider value={{ variant, size, spacing, orientation }}>\n        <View\n          accessibilityRole={value.multiple ? undefined : \"radiogroup\"}\n          {...props}\n          style={[\n            {\n              alignSelf: \"flex-start\",\n              flexDirection: orientation === \"horizontal\" ? \"row\" : \"column\",\n              alignItems: orientation === \"horizontal\" ? \"center\" : \"stretch\",\n              gap: spacing * 4,\n              borderRadius: size === \"sm\" ? 8 : 10,\n            },\n            style,\n          ]}\n        >\n          {items.map((child, index) => (\n            <PositionContext.Provider\n              key={typeof child === \"object\" && \"key\" in child ? child.key : index}\n              value={{ first: index === 0, last: index === items.length - 1 }}\n            >\n              {child}\n            </PositionContext.Provider>\n          ))}\n        </View>\n      </AppearanceContext.Provider>\n    </Provider>\n  )\n}\nexport type ToggleGroupRootProps = ComponentPropsWithRef<typeof View> & Appearance & UseToggleGroupProps\nfunction ToggleGroupRoot({\n  value,\n  defaultValue,\n  onValueChange,\n  multiple,\n  deselectable,\n  disabled,\n  ...props\n}: ToggleGroupRootProps) {\n  const state = useToggleGroup({ value, defaultValue, onValueChange, multiple, deselectable, disabled })\n  return <ToggleGroupRootProvider {...props} value={state} />\n}\nexport type ToggleGroupItemProps = Omit<ToggleRootProps, \"pressed\" | \"defaultPressed\" | \"onPressedChange\"> & {\n  /** Unique selection value. */\n  value: string\n}\nfunction ToggleGroupItem({ value, disabled, variant, size, style, ...props }: ToggleGroupItemProps) {\n  const state = useToggleGroupContext()\n  const appearance = useContext(AppearanceContext)\n  const { first, last } = useContext(PositionContext)\n  const vertical = appearance.orientation === \"vertical\"\n  const joined = appearance.spacing === 0\n  const effectiveVariant = appearance.variant ?? variant\n  return (\n    <Toggle.Root\n      {...props}\n      accessibilityRole={state.multiple ? \"button\" : \"radio\"}\n      disabled={disabled || state.disabled}\n      variant={effectiveVariant}\n      size={appearance.size ?? size}\n      pressed={state.value.includes(value)}\n      onPressedChange={() => state.toggleValue(value)}\n      style={(pressState) => [\n        joined && {\n          paddingHorizontal: 8,\n          borderRadius: 0,\n          borderTopLeftRadius: first ? 10 : 0,\n          borderBottomRightRadius: last ? 10 : 0,\n          borderTopRightRadius: (vertical ? first : last) ? 10 : 0,\n          borderBottomLeftRadius: (vertical ? last : first) ? 10 : 0,\n          ...(effectiveVariant === \"outline\" && !first\n            ? vertical\n              ? { borderTopWidth: 0 }\n              : { borderLeftWidth: 0 }\n            : {}),\n        },\n        StyleSheet.flatten(typeof style === \"function\" ? style(pressState) : style),\n      ]}\n    />\n  )\n}\nexport type ToggleGroupContextProps = {\n  /** Receives selection state. */ children: (state: UseToggleGroupReturn) => ReactNode\n}\nfunction ToggleGroupContext({ children }: ToggleGroupContextProps) {\n  return children(useToggleGroupContext())\n}\n\nexport const ToggleGroup = {\n  Root: ToggleGroupRoot,\n  RootProvider: ToggleGroupRootProvider,\n  Item: ToggleGroupItem,\n  Context: ToggleGroupContext,\n}\n"
+    }
+  ],
+  "docs": "## Toggle Group\n\nCompose `ToggleGroup.Root` and uniquely valued `ToggleGroup.Item` parts. The group defaults to single selection;\nset `multiple` for independent choices and `deselectable={false}` to prevent deselection. Use `defaultValue` or\ncontrolled `value` with `onValueChange({ value })`. Root and item `disabled` states both prevent changes.\n\n`variant` and `size` on Root apply to all items. `spacing` uses four-pixel units; zero joins the controls with shared\nborders and rounded outside corners. `orientation=\"vertical\"` stacks them. Items are native buttons with selected-state\nannouncements. Supply an accessibility label for icon-only items.\n\n`useToggleGroup` with `ToggleGroup.RootProvider` supports externally owned state. `ToggleGroup.Context` and\n`useToggleGroupContext` expose the current selection. Keep items as direct children for joined edge styling.\nNative focus navigation follows the platform; browser arrow-key roving and DOM prop getters are not implemented by this adapter."
+}

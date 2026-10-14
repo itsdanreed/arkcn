@@ -1,0 +1,15 @@
+{
+  "name": "lib/canvas",
+  "type": "lib",
+  "description": "Platform-independent drop intent; each renderer supplies its own gesture handling.",
+  "exports": [],
+  "parts": [],
+  "dependencies": {},
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "lib/canvas.ts",
+      "content": "/** Platform-independent drop intent; each renderer supplies its own gesture handling. */\nexport type CanvasSource = { type: \"palette\"; data: unknown } | { type: \"node\"; id: string }\nexport type CanvasTarget = { type: \"node\"; id: string; edge: \"top\" | \"bottom\" | \"left\" | \"right\" } | { type: \"area\" }\nexport type CanvasDropDetails = { source: CanvasSource; target: CanvasTarget }\n"
+    }
+  ]
+}

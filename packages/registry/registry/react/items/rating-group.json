@@ -1,0 +1,369 @@
+{
+  "name": "rating-group",
+  "type": "ui",
+  "description": "",
+  "ark": "RatingGroup",
+  "exports": [
+    "useRatingGroup",
+    "useRatingGroupContext",
+    "useRatingGroupItemContext",
+    "RatingGroup"
+  ],
+  "parts": [
+    {
+      "name": "RatingGroup.Root",
+      "props": [
+        {
+          "name": "allowHalf",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to allow half stars.",
+          "from": "@zag-js/rating-group"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "autoFocus",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to autofocus the rating.",
+          "from": "@zag-js/rating-group"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "required": false,
+          "default": "5",
+          "description": "The total number of ratings.",
+          "from": "@zag-js/rating-group"
+        },
+        {
+          "name": "defaultValue",
+          "type": "number",
+          "required": false,
+          "description": "The initial value of the rating when rendered.\nUse when you don't need to control the value of the rating.",
+          "from": "@zag-js/rating-group"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the rating is disabled.",
+          "from": "@zag-js/rating-group"
+        },
+        {
+          "name": "form",
+          "type": "string",
+          "required": false,
+          "description": "The associate form of the underlying input element.",
+          "from": "@zag-js/rating-group"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the rating. Useful for composition.",
+          "from": "@zag-js/rating-group"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name attribute of the rating element (used in forms).",
+          "from": "@zag-js/rating-group"
+        },
+        {
+          "name": "onHoverChange",
+          "type": "((details: HoverChangeDetails) => void)",
+          "required": false,
+          "description": "Function to be called when the rating value is hovered.",
+          "from": "@zag-js/rating-group"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function to be called when the rating value changes.",
+          "from": "@zag-js/rating-group"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the rating is readonly.",
+          "from": "@zag-js/rating-group"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the rating is required.",
+          "from": "@zag-js/rating-group"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "translations",
+          "type": "IntlTranslations",
+          "required": false,
+          "description": "Specifies the localized strings that identifies the accessibility elements and their states",
+          "from": "@zag-js/rating-group"
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "required": false,
+          "description": "The controlled value of the rating",
+          "from": "@zag-js/rating-group"
+        }
+      ]
+    },
+    {
+      "name": "RatingGroup.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseRatingGroupReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "RatingGroup.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseRatingGroupContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "RatingGroup.Control",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "RatingGroup.HiddenInput",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "RatingGroup.Item",
+      "props": [
+        {
+          "name": "index",
+          "type": "number",
+          "required": true,
+          "description": "Position of the item in its list.",
+          "from": "@zag-js/rating-group"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "RatingGroup.ItemContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseRatingGroupItemContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "RatingGroup.Label",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1",
+    "lucide-react": "^1.41.0"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/rating-group.tsx",
+      "content": "\"use client\"\n\nimport { useRatingGroup, useRatingGroupContext, useRatingGroupItemContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { RatingGroup as RatingGroupPrimitive } from \"@ark-ui/react\"\nimport { StarIcon, StarHalfIcon } from \"lucide-react\"\n\nfunction RatingGroupRoot({ className, children, ...props }: RatingGroupRootProps) {\n  return (\n    <RatingGroupPrimitive.Root data-slot=\"rating-group\" className={cn(\"flex flex-col gap-1.5\", className)} {...props}>\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <RatingGroupControl>\n              <RatingGroupContext>\n                {({ items }) => items.map((index) => <RatingGroupItem key={index} index={index} />)}\n              </RatingGroupContext>\n              <RatingGroupHiddenInput />\n            </RatingGroupControl>\n          )}\n        </>\n      )}\n    </RatingGroupPrimitive.Root>\n  )\n}\n\nfunction RatingGroupContext({ ...props }: RatingGroupContextProps) {\n  return <RatingGroupPrimitive.Context {...props} />\n}\n\nfunction RatingGroupLabel({ className, ...props }: RatingGroupLabelProps) {\n  return (\n    <RatingGroupPrimitive.Label\n      data-slot=\"rating-group-label\"\n      className={cn(\"flex items-center gap-2 text-sm/none font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction RatingGroupControl({ className, ...props }: RatingGroupControlProps) {\n  return (\n    <RatingGroupPrimitive.Control\n      data-slot=\"rating-group-control\"\n      className={cn(\"inline-flex items-center gap-0.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction RatingGroupItem({ className, children, ...props }: RatingGroupItemProps) {\n  return (\n    <RatingGroupPrimitive.Item\n      data-slot=\"rating-group-item\"\n      className={cn(\n        \"group/rating-group-item inline-flex cursor-pointer rounded-sm text-muted-foreground/40 transition-colors outline-none focus-visible:ring-3 focus-visible:ring-ring/50 data-highlighted:text-primary data-readonly:cursor-default data-disabled:cursor-not-allowed [&_svg]:size-5\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <RatingGroupPrimitive.ItemContext>\n              {({ half, highlighted }) =>\n                half ? (\n                  <StarHalfIcon className=\"fill-current\" />\n                ) : (\n                  <StarIcon className={highlighted ? \"fill-current\" : undefined} />\n                )\n              }\n            </RatingGroupPrimitive.ItemContext>\n          )}\n        </>\n      )}\n    </RatingGroupPrimitive.Item>\n  )\n}\n\nfunction RatingGroupItemContext({ ...props }: RatingGroupItemContextProps) {\n  return <RatingGroupPrimitive.ItemContext {...props} />\n}\n\nfunction RatingGroupHiddenInput({ ...props }: RatingGroupHiddenInputProps) {\n  return <RatingGroupPrimitive.HiddenInput {...props} />\n}\n\nfunction RatingGroupRootProvider({ className, ...props }: RatingGroupRootProviderProps) {\n  return (\n    <RatingGroupPrimitive.RootProvider\n      data-slot=\"rating-group\"\n      className={cn(\"flex flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\ntype RatingGroupRootProps = React.ComponentProps<typeof RatingGroupPrimitive.Root>\n\ntype RatingGroupRootProviderProps = React.ComponentProps<typeof RatingGroupPrimitive.RootProvider>\n\ntype RatingGroupContextProps = React.ComponentProps<typeof RatingGroupPrimitive.Context>\n\ntype RatingGroupControlProps = React.ComponentProps<typeof RatingGroupPrimitive.Control>\n\ntype RatingGroupHiddenInputProps = React.ComponentProps<typeof RatingGroupPrimitive.HiddenInput>\n\ntype RatingGroupItemProps = React.ComponentProps<typeof RatingGroupPrimitive.Item>\n\ntype RatingGroupItemContextProps = React.ComponentProps<typeof RatingGroupPrimitive.ItemContext>\n\ntype RatingGroupLabelProps = React.ComponentProps<typeof RatingGroupPrimitive.Label>\n\nconst RatingGroup = {\n  Root: RatingGroupRoot,\n  RootProvider: RatingGroupRootProvider,\n  Context: RatingGroupContext,\n  Control: RatingGroupControl,\n  HiddenInput: RatingGroupHiddenInput,\n  Item: RatingGroupItem,\n  ItemContext: RatingGroupItemContext,\n  Label: RatingGroupLabel,\n}\n\nexport {\n  useRatingGroup,\n  useRatingGroupContext,\n  useRatingGroupItemContext,\n  RatingGroup,\n  type RatingGroupRootProps,\n  type RatingGroupRootProviderProps,\n  type RatingGroupContextProps,\n  type RatingGroupControlProps,\n  type RatingGroupHiddenInputProps,\n  type RatingGroupItemProps,\n  type RatingGroupItemContextProps,\n  type RatingGroupLabelProps,\n}\n"
+    }
+  ]
+}

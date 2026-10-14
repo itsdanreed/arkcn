@@ -6,9 +6,9 @@ const at = (offset: number) => new Date(Date.now() + offset * day)
 
 export default function GanttExample() {
   const [tasks, setTasks] = React.useState([
-    { id: "research", title: "Research", start: at(-10), end: at(-4), progress: 100 },
-    { id: "design", title: "Design", start: at(-5), end: at(2), progress: 60 },
-    { id: "build", title: "Build", start: at(1), end: at(12), progress: 10 },
+    { id: "research", title: "Research", start: at(-10), end: at(-4), progress: 1 },
+    { id: "design", title: "Design", start: at(-5), end: at(2), progress: 0.6 },
+    { id: "build", title: "Build", start: at(1), end: at(12), progress: 0.1 },
     { id: "launch", title: "Launch", start: at(14), end: at(14), progress: 0, milestone: true },
   ])
   return (

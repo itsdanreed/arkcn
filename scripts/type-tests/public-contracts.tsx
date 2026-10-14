@@ -52,3 +52,15 @@ export const invalidHeader: AlertDialogHeaderProps = {
 // @ts-expect-error Individual implementations must not be available as imports.
 import { AlertDialogHeader } from "@/components/ui/alert-dialog"
 export const privateHeaderMustNotImport = AlertDialogHeader
+
+export const stickyTable = (
+  <DataTable.Table stickyColumns={{ left: ["name"], right: ["actions"] }} ref={React.createRef<HTMLTableElement>()} />
+)
+export const invalidStickyTable = (
+  <DataTable.Table
+    stickyColumns={{
+      // @ts-expect-error Only physical left/right edges are supported.
+      top: ["name"],
+    }}
+  />
+)

@@ -1,0 +1,28 @@
+{
+  "name": "@multicomma/arkcn-registry",
+  "version": "0.3.0",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itsdanreed/arkcn.git",
+    "directory": "packages/registry"
+  },
+  "description": "Framework registries and shared source installation tools.",
+  "files": [
+    "src",
+    "registry"
+  ],
+  "exports": {
+    ".": "./src/registry.mjs",
+    "./project": "./src/project.mjs",
+    "./install": "./src/install.mjs",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "prepublishOnly": "npm --prefix ../.. run check"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

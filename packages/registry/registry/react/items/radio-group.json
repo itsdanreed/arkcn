@@ -1,0 +1,426 @@
+{
+  "name": "radio-group",
+  "type": "ui",
+  "description": "",
+  "ark": "RadioGroup",
+  "exports": [
+    "useRadioGroup",
+    "useRadioGroupContext",
+    "useRadioGroupItemContext",
+    "RadioGroup"
+  ],
+  "parts": [
+    {
+      "name": "RadioGroup.Root",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The initial value of the checked radio when rendered.\nUse when you don't need to control the value of the radio group.",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "If `true`, the radio group will be disabled",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "form",
+          "type": "string",
+          "required": false,
+          "description": "The associate form of the underlying input.",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the radio. Useful for composition.",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "If `true`, the radio group is marked as invalid.",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the input fields in the radio\n(Useful for form submission).",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function called once a radio is checked",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "required": false,
+          "description": "Orientation of the radio group",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the radio group is read-only",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "If `true`, the radio group is marked as required.",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "value",
+          "type": "string | null",
+          "required": false,
+          "description": "The controlled value of the radio group",
+          "from": "@zag-js/radio-group"
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseRadioGroupReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseRadioGroupContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup.Indicator",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup.Item",
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Marks the part invalid for styling and assistive technology.",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup.ItemContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseRadioGroupItemContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup.ItemControl",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup.ItemHiddenInput",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup.ItemText",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup.Label",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/radio-group.tsx",
+      "content": "import { useRadioGroup, useRadioGroupContext, useRadioGroupItemContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { RadioGroup as RadioGroupPrimitive } from \"@ark-ui/react\"\n\nfunction RadioGroupRoot({ className, ...props }: RadioGroupRootProps) {\n  return <RadioGroupPrimitive.Root data-slot=\"radio-group\" className={cn(\"grid w-full gap-2\", className)} {...props} />\n}\n\nfunction RadioGroupContext({ ...props }: RadioGroupContextProps) {\n  return <RadioGroupPrimitive.Context {...props} />\n}\n\nfunction RadioGroupLabel({ className, ...props }: RadioGroupLabelProps) {\n  return (\n    <RadioGroupPrimitive.Label\n      data-slot=\"radio-group-label\"\n      className={cn(\"text-sm font-medium\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction RadioGroupIndicator({ className, ...props }: RadioGroupIndicatorProps) {\n  return (\n    <RadioGroupPrimitive.Indicator\n      data-slot=\"radio-group-indicator\"\n      className={cn(\"rounded-md bg-background shadow-sm\", className)}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction RadioGroupItem({ className, children, ...props }: RadioGroupItemProps) {\n  return (\n    <RadioGroupPrimitive.Item\n      data-slot=\"radio-group-item\"\n      className=\"group/radio-group-item peer inline-flex items-center gap-2\"\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <RadioGroupItemControl className={className} />\n          {children && <RadioGroupItemText>{children}</RadioGroupItemText>}\n          <RadioGroupItemHiddenInput />\n        </>\n      )}\n    </RadioGroupPrimitive.Item>\n  )\n}\n\nfunction RadioGroupItemContext({ ...props }: RadioGroupItemContextProps) {\n  return <RadioGroupPrimitive.ItemContext {...props} />\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction RadioGroupItemControl({ className, children, ...props }: RadioGroupItemControlProps) {\n  return (\n    <RadioGroupPrimitive.ItemControl\n      data-slot=\"radio-group-item-control\"\n      className={cn(\n        \"group/radio-group-item-control relative flex aspect-square size-4 shrink-0 rounded-full border border-input outline-none group-has-focus-visible/field-label:ring-0 group-has-focus-visible/field-label:not-data-checked:border-input after:absolute after:-inset-x-3 after:-inset-y-2 data-focus-visible:border-ring data-focus-visible:ring-3 data-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 dark:bg-input/30 dark:data-invalid:border-destructive/50 dark:data-invalid:ring-destructive/40 data-checked:border-primary data-checked:bg-primary data-checked:text-primary-foreground group-has-focus-visible/field-label:data-checked:border-primary data-invalid:data-checked:border-primary dark:data-checked:bg-primary data-disabled:cursor-not-allowed data-disabled:opacity-50\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <span\n              data-slot=\"radio-group-indicator\"\n              className=\"absolute top-1/2 left-1/2 hidden size-2 -translate-1/2 rounded-full bg-primary-foreground group-data-checked/radio-group-item-control:block\"\n            />\n          )}\n        </>\n      )}\n    </RadioGroupPrimitive.ItemControl>\n  )\n}\n\nfunction RadioGroupItemText({ className, ...props }: RadioGroupItemTextProps) {\n  return (\n    <RadioGroupPrimitive.ItemText\n      data-slot=\"radio-group-item-text\"\n      className={cn(\"text-sm/none select-none data-disabled:opacity-50\", className)}\n      {...props}\n    />\n  )\n}\n\n/** `id` is omitted: set part ids through the root `ids` prop so Ark's internal lookups keep working. */\nfunction RadioGroupItemHiddenInput({ ...props }: RadioGroupItemHiddenInputProps) {\n  return <RadioGroupPrimitive.ItemHiddenInput {...props} />\n}\n\nfunction RadioGroupRootProvider({ className, ...props }: RadioGroupRootProviderProps) {\n  return (\n    <RadioGroupPrimitive.RootProvider\n      data-slot=\"radio-group\"\n      className={cn(\"grid w-full gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\ntype RadioGroupRootProps = React.ComponentProps<typeof RadioGroupPrimitive.Root>\n\ntype RadioGroupRootProviderProps = React.ComponentProps<typeof RadioGroupPrimitive.RootProvider>\n\ntype RadioGroupContextProps = React.ComponentProps<typeof RadioGroupPrimitive.Context>\n\ntype RadioGroupIndicatorProps = React.ComponentProps<typeof RadioGroupPrimitive.Indicator>\n\ntype RadioGroupItemProps = Omit<React.ComponentProps<typeof RadioGroupPrimitive.Item>, \"id\">\n\ntype RadioGroupItemContextProps = React.ComponentProps<typeof RadioGroupPrimitive.ItemContext>\n\ntype RadioGroupItemControlProps = Omit<React.ComponentProps<typeof RadioGroupPrimitive.ItemControl>, \"id\">\n\ntype RadioGroupItemHiddenInputProps = Omit<React.ComponentProps<typeof RadioGroupPrimitive.ItemHiddenInput>, \"id\">\n\ntype RadioGroupItemTextProps = React.ComponentProps<typeof RadioGroupPrimitive.ItemText>\n\ntype RadioGroupLabelProps = React.ComponentProps<typeof RadioGroupPrimitive.Label>\n\nconst RadioGroup = {\n  Root: RadioGroupRoot,\n  RootProvider: RadioGroupRootProvider,\n  Context: RadioGroupContext,\n  Indicator: RadioGroupIndicator,\n  Item: RadioGroupItem,\n  ItemContext: RadioGroupItemContext,\n  ItemControl: RadioGroupItemControl,\n  ItemHiddenInput: RadioGroupItemHiddenInput,\n  ItemText: RadioGroupItemText,\n  Label: RadioGroupLabel,\n}\n\nexport {\n  useRadioGroup,\n  useRadioGroupContext,\n  useRadioGroupItemContext,\n  RadioGroup,\n  type RadioGroupRootProps,\n  type RadioGroupRootProviderProps,\n  type RadioGroupContextProps,\n  type RadioGroupIndicatorProps,\n  type RadioGroupItemProps,\n  type RadioGroupItemContextProps,\n  type RadioGroupItemControlProps,\n  type RadioGroupItemHiddenInputProps,\n  type RadioGroupItemTextProps,\n  type RadioGroupLabelProps,\n}\n"
+    }
+  ]
+}

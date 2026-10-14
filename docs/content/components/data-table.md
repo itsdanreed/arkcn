@@ -4,6 +4,25 @@ The data table is a set of parts on top of a small headless engine in `lib/table
 
 You compose the markup yourself. `DataTableHead column=` renders the sort and hide menu for a sortable column, `DataTable.Body` takes a render function that returns `DataTableCell column=` cells for one row, and the pagination parts read the instance from context. Cells whose column is hidden render nothing, so the view options menu works without any wiring in your row renderer.
 
+## Sticky columns
+
+Pass column IDs to `DataTable.Table` to keep them visible during horizontal scrolling:
+
+```tsx
+<DataTable.Table stickyColumns={{ left: ["select", "name"], right: ["actions"] }}>
+  {/* Matching DataTable.Head and DataTable.Cell parts need column="...". */}
+</DataTable.Table>
+```
+
+Render left-pinned columns first and right-pinned columns last in your header and rows. The table keeps your
+markup order. Offsets use measured header widths and update when columns resize or hide, so multiple sticky
+columns do not overlap. Give the table a minimum width when you want horizontal scrolling in a narrow container.
+`left` and `right` refer to physical edges, including in RTL layouts. Use each column in only one group.
+
+Pinned cells have opaque backgrounds that follow row hover, selection, expansion, and row-drag states. For a
+custom table surface, set `--table-sticky-bg` on the table, header, or row to its opaque background color. Custom
+multi-row/grouped headers and spanning cells need their own layout; automatic offsets expect one header per column.
+
 ## Toolbar
 
 `DataTable.Search` drives the global filter. `DataTableFacetedFilter columnId=` is a multi-select filter with counts per option. `DataTable.ResetFilters` appears when anything is active. `DataTable.ViewOptions` toggles column visibility. Group them with `DataTable.ToolbarGroup`.

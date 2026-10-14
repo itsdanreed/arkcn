@@ -1,0 +1,432 @@
+{
+  "name": "radio-group",
+  "type": "ui",
+  "description": "Single-choice fields with controlled state and accessible, individually disabled options.",
+  "exports": [
+    "RadioGroup"
+  ],
+  "parts": [
+    {
+      "name": "RadioGroup.Root",
+      "props": [
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "default": "\"\"",
+          "description": "The initial value when uncontrolled.",
+          "from": "arkcn"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Disables the part and everything inside it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Use the destructive border and focus ring; provide an accessible error explanation.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: { value: string; }) => void)",
+          "required": false,
+          "description": "Called with the new value whenever it changes.",
+          "from": "arkcn"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Shows the value but prevents changes.",
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup.Item",
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode | ((state: Readonly<{ pressed: boolean; }>) => ReactNode)",
+          "required": false,
+          "description": "Either children or a function that receives a boolean reflecting whether\nthe component is currently pressed.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup.ItemControl",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup.ItemText",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup.Label",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "lib/context",
+    "lib/controllable",
+    "lib/focus",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/radio-group.tsx",
+      "content": "import { isFocusVisible } from \"@/lib/focus\"\nimport { useState, type ComponentPropsWithRef } from \"react\"\nimport { Pressable, Text, View } from \"react-native\"\nimport { useControllable } from \"@/lib/controllable\"\nimport { createRequiredContext } from \"@/lib/context\"\nimport { useNativeTheme, withOpacity } from \"@/lib/theme\"\n\n/** Single-choice fields with controlled state and accessible, individually disabled options. */\nexport type RadioGroupRootProps = ComponentPropsWithRef<typeof View> & {\n  value?: string\n  defaultValue?: string\n  onValueChange?: (details: { value: string }) => void\n  disabled?: boolean\n  readOnly?: boolean\n  invalid?: boolean\n}\nconst [Provider, useGroup] = createRequiredContext<{\n  value: string\n  setValue: (value: string) => void\n  disabled: boolean\n  readOnly: boolean\n  invalid: boolean\n}>(\"RadioGroup\")\nconst [ItemProvider, useItem] = createRequiredContext<{ checked: boolean; focused: boolean; invalid: boolean }>(\n  \"RadioGroup.Item\"\n)\nfunction RadioGroupRoot({\n  value,\n  defaultValue = \"\",\n  onValueChange,\n  disabled = false,\n  readOnly = false,\n  invalid = false,\n  style,\n  ...props\n}: RadioGroupRootProps) {\n  const [selected, setValue] = useControllable(value, defaultValue, (value) => onValueChange?.({ value }))\n  const { spacing } = useNativeTheme()\n  return (\n    <Provider value={{ value: selected, setValue, disabled, readOnly, invalid }}>\n      <View accessibilityRole=\"radiogroup\" {...props} style={[{ width: \"100%\", gap: spacing.sm }, style]} />\n    </Provider>\n  )\n}\nexport type RadioGroupItemProps = ComponentPropsWithRef<typeof Pressable> & { value: string }\nfunction RadioGroupItem({\n  value,\n  disabled,\n  children,\n  onPress,\n  onFocus,\n  onBlur,\n  style,\n  accessibilityState,\n  ...props\n}: RadioGroupItemProps) {\n  const group = useGroup()\n  const [focused, setFocused] = useState(false)\n  const checked = group.value === value\n  const blocked = !!(disabled || group.disabled)\n  const { spacing, opacity, selection, minimumTouchTarget } = useNativeTheme()\n  return (\n    <ItemProvider value={{ checked, focused, invalid: group.invalid }}>\n      <Pressable\n        accessible\n        accessibilityRole=\"radio\"\n        hitSlop={(minimumTouchTarget - selection.size) / 2}\n        {...props}\n        aria-checked={checked}\n        aria-disabled={blocked}\n        disabled={blocked || group.readOnly}\n        accessibilityState={{ ...accessibilityState, checked, disabled: blocked }}\n        onPress={(event) => {\n          if (blocked || group.readOnly) return\n          onPress?.(event)\n          if (!event.defaultPrevented) group.setValue(value)\n        }}\n        onFocus={(event) => {\n          setFocused(isFocusVisible(event))\n          onFocus?.(event)\n        }}\n        onBlur={(event) => {\n          setFocused(false)\n          onBlur?.(event)\n        }}\n        style={(state) => [\n          {\n            flexDirection: \"row\",\n            alignItems: \"center\",\n            gap: spacing.sm,\n            opacity: blocked ? opacity.disabled : 1,\n          },\n          typeof style === \"function\" ? style(state) : style,\n        ]}\n      >\n        {(state) => {\n          const content = typeof children === \"function\" ? children(state) : children\n          return typeof content === \"string\" || typeof content === \"number\" ? (\n            <>\n              <RadioGroupItemControl />\n              <RadioGroupItemText>{content}</RadioGroupItemText>\n            </>\n          ) : (\n            content\n          )\n        }}\n      </Pressable>\n    </ItemProvider>\n  )\n}\nexport type RadioGroupItemControlProps = ComponentPropsWithRef<typeof View>\nfunction RadioGroupItemControl({ children, style, ...props }: RadioGroupItemControlProps) {\n  const { checked, focused, invalid } = useItem()\n  const { colors, colorScheme, selection, radius } = useNativeTheme()\n  return (\n    <View\n      {...props}\n      style={[\n        {\n          width: selection.size,\n          height: selection.size,\n          flexShrink: 0,\n          borderRadius: radius.full,\n          borderWidth: 1,\n          alignItems: \"center\",\n          justifyContent: \"center\",\n          borderColor: invalid\n            ? checked\n              ? colors.primary\n              : colorScheme === \"dark\"\n                ? withOpacity(colors.destructive, 0.5)\n                : colors.destructive\n            : focused\n              ? colors.ring\n              : checked\n                ? colors.primary\n                : colors.input,\n          backgroundColor: checked\n            ? colors.primary\n            : colorScheme === \"dark\"\n              ? withOpacity(colors.input, 0.3)\n              : \"transparent\",\n          boxShadow:\n            invalid || focused\n              ? `0 0 0 3px ${withOpacity(invalid ? colors.destructive : colors.ring, invalid ? (colorScheme === \"dark\" ? 0.4 : 0.2) : 0.5)}`\n              : \"none\",\n        },\n        style,\n      ]}\n    >\n      {children ??\n        (checked && (\n          <View\n            style={{\n              width: selection.dotSize,\n              height: selection.dotSize,\n              borderRadius: radius.full,\n              backgroundColor: colors.primaryForeground,\n            }}\n          />\n        ))}\n    </View>\n  )\n}\nexport type RadioGroupItemTextProps = ComponentPropsWithRef<typeof Text>\nfunction RadioGroupItemText({ style, ...props }: RadioGroupItemTextProps) {\n  const { colors, typography, fontSize } = useNativeTheme()\n  return (\n    <Text\n      {...props}\n      style={[\n        {\n          ...typography.regular,\n          color: colors.foreground,\n          fontSize: fontSize.md,\n          lineHeight: fontSize.md,\n          flexShrink: 1,\n        },\n        style,\n      ]}\n    />\n  )\n}\nexport type RadioGroupLabelProps = ComponentPropsWithRef<typeof Text>\nfunction RadioGroupLabel({ style, ...props }: RadioGroupLabelProps) {\n  const { typography } = useNativeTheme()\n  return <RadioGroupItemText {...props} style={[typography.medium, style]} />\n}\nexport const RadioGroup = {\n  Root: RadioGroupRoot,\n  Item: RadioGroupItem,\n  ItemControl: RadioGroupItemControl,\n  ItemText: RadioGroupItemText,\n  Label: RadioGroupLabel,\n}\n"
+    }
+  ],
+  "docs": "## Radio Group\n\nSet `value` or `defaultValue` on Root and give every Item a unique string `value`.\n`onValueChange={({ value }) => setValue(value)}` fires when a different enabled option is chosen.\n\nA string child on Item renders the circular control and label automatically. For a custom layout, compose\nItemControl and ItemText inside Item. Label the group with `accessibilityLabel`, and label custom items when\ntheir native text does not describe the choice. Root supports `disabled`, `readOnly`, and `invalid`; Item can\nalso be individually disabled. There is no DOM HiddenInput or browser arrow-key navigation in this port."
+}

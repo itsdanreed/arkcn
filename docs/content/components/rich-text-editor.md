@@ -14,3 +14,9 @@ Every toolbar control reads the editor from context and re-renders only when its
 
 - Editor CSS (placeholder, task lists, tables, selection) ships with the component and `add` merges it into your stylesheet.
 - Markdown shortcuts work: `#`, `-`, `[]`, and triple backticks at the start of a line.
+
+## Theme and initialization
+
+Document text, markers, code blocks, and table borders use the shared semantic theme colors. Toolbar dividers are vertically centered within each wrapped toolbar line.
+
+The editor initializes after mounting so server rendering and lazy loading do not create a disposable editor during render. Controlled content changes replace the document before passive editor updates; the initial document does not become an undo entry. Counts and toolbar state are available as soon as the editor mounts.

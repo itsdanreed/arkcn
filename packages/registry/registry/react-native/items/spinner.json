@@ -1,0 +1,112 @@
+{
+  "name": "spinner",
+  "type": "ui",
+  "description": "The web loader's SVG path and one-second linear rotation, with reduced-motion support.",
+  "exports": [
+    "Spinner"
+  ],
+  "parts": [
+    {
+      "name": "Spinner.Root",
+      "props": [
+        {
+          "name": "animating",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "from": "arkcn"
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "number | \"small\" | \"large\"",
+          "required": false,
+          "description": "Visible control size, matching the web renderer. Native touch areas extend beyond it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "lucide-react-native": "^1.41.0",
+    "react-native-svg": "^15.0.0"
+  },
+  "registryDependencies": [
+    "lib/motion",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/spinner.tsx",
+      "content": "import type { ComponentPropsWithRef } from \"react\"\nimport type { View } from \"react-native\"\nimport { LoaderCircle } from \"lucide-react-native\"\nimport { AnimatedView, spinKeyframes, useMotion } from \"@/lib/motion\"\nimport { useNativeTheme } from \"@/lib/theme\"\n\nexport type SpinnerRootProps = ComponentPropsWithRef<typeof View> & {\n  size?: number | \"small\" | \"large\"\n  color?: string\n  animating?: boolean\n}\nfunction SpinnerRoot({ size, color, animating = true, style, accessibilityState, ...props }: SpinnerRootProps) {\n  const { colors, spinnerSize } = useNativeTheme()\n  const { reduced, motion } = useMotion()\n  const dimension = size === \"small\" ? 20 : size === \"large\" ? 36 : (size ?? spinnerSize)\n  return (\n    <AnimatedView\n      accessibilityRole=\"progressbar\"\n      accessibilityLabel=\"Loading\"\n      {...props}\n      aria-busy={accessibilityState?.busy ?? true}\n      accessibilityState={{ busy: true, ...accessibilityState }}\n      style={[\n        {\n          width: dimension,\n          height: dimension,\n          flexShrink: 0,\n          animationName: reduced || !animating ? \"none\" : spinKeyframes,\n          animationDuration: motion.spinDuration,\n          animationTimingFunction: \"linear\",\n          animationIterationCount: \"infinite\",\n        },\n        style,\n      ]}\n    >\n      <LoaderCircle size={dimension} color={color ?? colors.foreground} aria-hidden />\n    </AnimatedView>\n  )\n}\n/** The web loader's SVG path and one-second linear rotation, with reduced-motion support. */\nexport const Spinner = { Root: SpinnerRoot }\n"
+    }
+  ]
+}

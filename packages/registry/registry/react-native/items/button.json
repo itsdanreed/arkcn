@@ -1,0 +1,152 @@
+{
+  "name": "button",
+  "type": "ui",
+  "description": "Displays the validation border and ring.",
+  "exports": [
+    "Button"
+  ],
+  "parts": [
+    {
+      "name": "Button",
+      "props": [
+        {
+          "name": "backgroundClip",
+          "type": "\"border-box\" | \"padding-box\"",
+          "required": false,
+          "default": "\"padding-box\"",
+          "from": "arkcn"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Displays the validation border and ring.",
+          "from": "arkcn"
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Shows a loading state.",
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\"",
+          "required": false,
+          "default": "\"default\"",
+          "description": "Visible control size, matching the web renderer. Native touch areas extend beyond it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Native text styles for a plain button label.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"destructive\" | \"link\"",
+          "required": false,
+          "default": "\"default\"",
+          "description": "Visual variant, using the same semantic colors as the web renderer.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode | ((state: Readonly<{ pressed: boolean; }>) => ReactNode)",
+          "required": false,
+          "description": "Either children or a function that receives a boolean reflecting whether\nthe component is currently pressed.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "lib/focus",
+    "lib/motion",
+    "lib/theme",
+    "spinner"
+  ],
+  "files": [
+    {
+      "path": "components/ui/button.tsx",
+      "content": "import { isFocusVisible } from \"@/lib/focus\"\nimport { AnimatedPressable, AnimatedText, AnimatedView, useMotion, useShadowTransition } from \"@/lib/motion\"\nimport { Children, useState, type ComponentPropsWithRef, type ReactNode } from \"react\"\nimport { Pressable, StyleSheet, type StyleProp, type TextStyle, type ViewStyle } from \"react-native\"\nimport { Spinner } from \"@/components/ui/spinner\"\nimport { useNativeTheme, withOpacity } from \"@/lib/theme\"\n\nexport type ButtonProps = ComponentPropsWithRef<typeof Pressable> & {\n  variant?: \"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"destructive\" | \"link\"\n  size?: \"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\"\n  /** Displays the validation border and ring. */\n  invalid?: boolean\n  loading?: boolean\n  textStyle?: StyleProp<TextStyle>\n  backgroundClip?: \"padding-box\" | \"border-box\"\n}\n\n/** Matches web button variants and visible dimensions, with an expanded native touch area. */\nexport function Button({\n  variant = \"default\",\n  size = \"default\",\n  loading = false,\n  invalid = false,\n  disabled,\n  children,\n  style,\n  textStyle,\n  backgroundClip = \"padding-box\",\n  accessibilityState,\n  onPressIn,\n  onPressOut,\n  onHoverIn,\n  onHoverOut,\n  onFocus,\n  onBlur,\n  ...props\n}: ButtonProps) {\n  const { colors, colorScheme, buttonSizes, controlHeight, minimumTouchTarget, opacity, typography } = useNativeTheme()\n  const { transition } = useMotion()\n  const [pressed, setPressed] = useState(false)\n  const [hovered, setHovered] = useState(false)\n  const [focused, setFocused] = useState(false)\n  const state = { pressed }\n  const resolvedStyle = StyleSheet.flatten(typeof style === \"function\" ? style(state) : style)\n  const animatedShadow = useShadowTransition(\n    resolvedStyle?.boxShadow ?? [\n      {\n        offsetX: 0,\n        offsetY: 0,\n        spreadDistance: invalid || focused ? 3 : 0,\n        color: withOpacity(\n          invalid || variant === \"destructive\" ? colors.destructive : colors.ring,\n          invalid || focused ? (invalid || variant === \"destructive\" ? (colorScheme === \"dark\" ? 0.4 : 0.2) : 0.5) : 0\n        ),\n      },\n    ]\n  )\n  const borderWidth = resolvedStyle?.borderWidth ?? 1\n  const icon = size.startsWith(\"icon\")\n  const scale = (size === \"icon\" ? \"default\" : size.replace(\"icon-\", \"\")) as keyof typeof buttonSizes\n  const metrics = buttonSizes[scale]\n  const borderRadius = resolvedStyle?.borderRadius ?? metrics.radius\n  const innerRadius = (value: ViewStyle[\"borderRadius\"]) =>\n    typeof value === \"number\" ? Math.max(0, value - (backgroundClip === \"padding-box\" ? borderWidth : 0)) : value\n  const backgroundCorners: ViewStyle = {\n    borderTopLeftRadius: innerRadius(resolvedStyle?.borderTopLeftRadius ?? borderRadius),\n    borderTopRightRadius: innerRadius(resolvedStyle?.borderTopRightRadius ?? borderRadius),\n    borderBottomLeftRadius: innerRadius(resolvedStyle?.borderBottomLeftRadius ?? borderRadius),\n    borderBottomRightRadius: innerRadius(resolvedStyle?.borderBottomRightRadius ?? borderRadius),\n  }\n  const height = controlHeight[scale]\n  const color =\n    variant === \"destructive\"\n      ? colors.destructive\n      : variant === \"default\"\n        ? colors.primaryForeground\n        : variant === \"secondary\"\n          ? colors.secondaryForeground\n          : variant === \"link\"\n            ? colors.primary\n            : colors.foreground\n  const expanded = props[\"aria-expanded\"] ?? accessibilityState?.expanded\n  const background = (pressed: boolean) => {\n    if (expanded && !pressed && (variant === \"outline\" || variant === \"ghost\")) return colors.muted\n    if (variant === \"default\") return pressed ? withOpacity(colors.primary, opacity.pressed) : colors.primary\n    if (variant === \"secondary\") return pressed ? colors.secondaryHover : colors.secondary\n    if (variant === \"destructive\")\n      return withOpacity(colors.destructive, (colorScheme === \"dark\" ? 0.2 : 0.1) + (pressed ? 0.1 : 0))\n    if (variant === \"outline\")\n      return colorScheme === \"dark\"\n        ? withOpacity(colors.input, pressed ? 0.5 : 0.3)\n        : pressed\n          ? colors.muted\n          : colors.background\n    if (variant === \"ghost\" && pressed) return colorScheme === \"dark\" ? withOpacity(colors.muted, 0.5) : colors.muted\n    return \"transparent\"\n  }\n  return (\n    <AnimatedPressable\n      accessibilityRole=\"button\"\n      hitSlop={Math.max(0, (minimumTouchTarget - height) / 2)}\n      {...props}\n      disabled={disabled || loading}\n      aria-disabled={!!(disabled || loading)}\n      aria-busy={loading || accessibilityState?.busy}\n      aria-expanded={expanded}\n      accessibilityState={{\n        ...accessibilityState,\n        disabled: !!(disabled || loading),\n        busy: loading || accessibilityState?.busy,\n      }}\n      onPressIn={(event) => {\n        setPressed(true)\n        onPressIn?.(event)\n      }}\n      onPressOut={(event) => {\n        setPressed(false)\n        onPressOut?.(event)\n      }}\n      onHoverIn={(event) => {\n        setHovered(true)\n        onHoverIn?.(event)\n      }}\n      onHoverOut={(event) => {\n        setHovered(false)\n        onHoverOut?.(event)\n      }}\n      onFocus={(event) => {\n        setFocused(isFocusVisible(event))\n        onFocus?.(event)\n      }}\n      onBlur={(event) => {\n        setFocused(false)\n        onBlur?.(event)\n      }}\n      style={[\n        transition(\"all\"),\n        {\n          minHeight: height,\n          ...(icon ? { minWidth: height, width: height } : {}),\n          paddingHorizontal: icon ? 0 : metrics.paddingX,\n          paddingVertical: 0,\n          borderRadius: metrics.radius,\n          alignItems: \"center\",\n          justifyContent: \"center\",\n          flexDirection: \"row\",\n          gap: metrics.gap,\n          backgroundColor: \"transparent\",\n          zIndex: focused ? 10 : 0,\n          borderWidth: 1,\n          borderColor: invalid\n            ? colorScheme === \"dark\"\n              ? withOpacity(colors.destructive, 0.5)\n              : colors.destructive\n            : focused\n              ? variant === \"destructive\"\n                ? withOpacity(colors.destructive, 0.4)\n                : colors.ring\n              : variant === \"outline\"\n                ? colorScheme === \"dark\"\n                  ? colors.input\n                  : colors.border\n                : \"transparent\",\n          opacity: disabled || loading ? opacity.disabled : 1,\n          transform: [{ translateY: state.pressed ? 1 : 0 }],\n        },\n        resolvedStyle,\n        animatedShadow,\n        { backgroundColor: \"transparent\" },\n      ]}\n    >\n      {(state) => {\n        const content = typeof children === \"function\" ? children(state) : children\n        const textOnly = Children.toArray(content).every(\n          (child) => typeof child === \"string\" || typeof child === \"number\"\n        )\n        const label = (text: ReactNode, key?: number) => (\n          <AnimatedText\n            key={key}\n            style={[\n              transition(\"all\"),\n              {\n                ...typography.medium,\n                color,\n                fontSize: metrics.fontSize,\n                lineHeight: metrics.lineHeight,\n                textDecorationLine: variant === \"link\" && (hovered || state.pressed) ? \"underline\" : \"none\",\n              },\n              textStyle,\n            ]}\n          >\n            {text}\n          </AnimatedText>\n        )\n        return (\n          <>\n            <AnimatedView\n              pointerEvents=\"none\"\n              accessible={false}\n              style={[\n                transition([\"backgroundColor\"]),\n                {\n                  position: \"absolute\",\n                  zIndex: -1,\n                  inset: backgroundClip === \"border-box\" ? -borderWidth : 0,\n                  borderRadius:\n                    typeof borderRadius === \"number\"\n                      ? borderRadius - (backgroundClip === \"padding-box\" ? borderWidth : 0)\n                      : borderRadius,\n                  ...backgroundCorners,\n                  backgroundColor: resolvedStyle?.backgroundColor ?? background(hovered || pressed),\n                },\n              ]}\n            />\n            {loading && <Spinner.Root color={color} accessible={false} />}\n            {textOnly\n              ? label(content)\n              : Children.map(content, (child, index) =>\n                  typeof child === \"string\" || typeof child === \"number\" ? label(child, index) : child\n                )}\n          </>\n        )\n      }}\n    </AnimatedPressable>\n  )\n}\n"
+    }
+  ]
+}

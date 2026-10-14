@@ -1,0 +1,18 @@
+{
+  "name": "lib/time",
+  "type": "lib",
+  "description": "\"3 minutes ago\", \"yesterday\", \"in 2 weeks\"; \"just now\" under a minute.",
+  "exports": [
+    "formatRelativeTime",
+    "formatCompactAge"
+  ],
+  "parts": [],
+  "dependencies": {},
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "lib/time.ts",
+      "content": "const units: [Intl.RelativeTimeFormatUnit, number][] = [\n  [\"year\", 365 * 86_400_000],\n  [\"month\", 30 * 86_400_000],\n  [\"week\", 7 * 86_400_000],\n  [\"day\", 86_400_000],\n  [\"hour\", 3_600_000],\n  [\"minute\", 60_000],\n]\n\n/** \"3 minutes ago\", \"yesterday\", \"in 2 weeks\"; \"just now\" under a minute. */\nexport function formatRelativeTime(date: Date, options: { now?: Date; locale?: string } = {}) {\n  const now = options.now ?? new Date()\n  const diff = date.getTime() - now.getTime()\n  if (Math.abs(diff) < 60_000) return \"just now\"\n  const rtf = new Intl.RelativeTimeFormat(options.locale, { numeric: \"auto\" })\n  for (const [unit, ms] of units) {\n    if (Math.abs(diff) >= ms) return rtf.format(Math.round(diff / ms), unit)\n  }\n  return \"just now\"\n}\n\n/** Compact past-only form for dense lists: \"now\", \"5m\", \"3h\", \"2d\", \"4w\", \"3mo\", \"1y\". */\nexport function formatCompactAge(date: Date, now = new Date()) {\n  const s = Math.max(0, Math.round((now.getTime() - date.getTime()) / 1000))\n  if (s < 60) return \"now\"\n  const m = Math.round(s / 60)\n  if (m < 60) return `${m}m`\n  const h = Math.round(m / 60)\n  if (h < 24) return `${h}h`\n  const d = Math.round(h / 24)\n  if (d < 7) return `${d}d`\n  const w = Math.round(d / 7)\n  if (w < 5) return `${w}w`\n  const mo = Math.round(d / 30)\n  if (mo < 12) return `${mo}mo`\n  return `${Math.round(d / 365)}y`\n}\n"
+    }
+  ]
+}

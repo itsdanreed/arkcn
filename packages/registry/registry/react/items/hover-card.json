@@ -1,0 +1,492 @@
+{
+  "name": "hover-card",
+  "type": "ui",
+  "description": "",
+  "ark": "HoverCard",
+  "exports": [
+    "useHoverCard",
+    "useHoverCardContext",
+    "HoverCard"
+  ],
+  "parts": [
+    {
+      "name": "HoverCard.ArrowTip",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "HoverCard.Root",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "closeDelay",
+          "type": "number",
+          "required": false,
+          "default": "300",
+          "description": "The duration from when the mouse leaves the trigger or content until the hover card closes.",
+          "from": "@zag-js/hover-card"
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "description": "The initial open state of the hover card when rendered.\nUse when you don't need to control the open state of the hover card.",
+          "from": "@zag-js/hover-card"
+        },
+        {
+          "name": "defaultTriggerValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The initial trigger value when rendered.\nUse when you don't need to control the trigger value.",
+          "from": "@zag-js/hover-card"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the hover card is disabled",
+          "from": "@zag-js/hover-card"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the popover. Useful for composition.",
+          "from": "@zag-js/hover-card"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onFocusOutside",
+          "type": "((event: FocusOutsideEvent) => void)",
+          "required": false,
+          "description": "Function called when the focus is moved outside the component",
+          "from": "@zag-js/interact-outside"
+        },
+        {
+          "name": "onInteractOutside",
+          "type": "((event: InteractOutsideEvent) => void)",
+          "required": false,
+          "description": "Function called when an interaction happens outside the component",
+          "from": "@zag-js/interact-outside"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "((details: OpenChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the hover card opens or closes.",
+          "from": "@zag-js/hover-card"
+        },
+        {
+          "name": "onPointerDownOutside",
+          "type": "((event: PointerDownOutsideEvent) => void)",
+          "required": false,
+          "description": "Function called when the pointer is pressed down outside the component",
+          "from": "@zag-js/interact-outside"
+        },
+        {
+          "name": "onTriggerValueChange",
+          "type": "((details: TriggerValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the trigger value changes.",
+          "from": "@zag-js/hover-card"
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "description": "The controlled open state of the hover card",
+          "from": "@zag-js/hover-card"
+        },
+        {
+          "name": "openDelay",
+          "type": "number",
+          "required": false,
+          "default": "600",
+          "description": "The duration from when the mouse enters the trigger until the hover card opens.",
+          "from": "@zag-js/hover-card"
+        },
+        {
+          "name": "positioning",
+          "type": "PositioningOptions",
+          "required": false,
+          "description": "The user provided options used to position the popover content",
+          "from": "@zag-js/hover-card"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "triggerValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The controlled trigger value",
+          "from": "@zag-js/hover-card"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "HoverCard.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseHoverCardReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "HoverCard.Arrow",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "HoverCard.Content",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "HoverCard.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseHoverCardContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "HoverCard.Portal",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "container",
+          "type": "RefObject<HTMLElement | null>",
+          "required": false,
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "HoverCard.Positioner",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "HoverCard.Trigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value that identifies this specific trigger",
+          "from": "@zag-js/hover-card"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/hover-card.tsx",
+      "content": "import { useHoverCard, useHoverCardContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { HoverCard as HoverCardPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\n\nfunction HoverCardRoot({ positioning, lazyMount = true, unmountOnExit = true, ...props }: HoverCardRootProps) {\n  return (\n    <HoverCardPrimitive.Root\n      positioning={{ placement: \"bottom\", gutter: 4, offset: { crossAxis: 4 }, ...positioning }}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction HoverCardTrigger({ ...props }: HoverCardTriggerProps) {\n  return <HoverCardPrimitive.Trigger data-slot=\"hover-card-trigger\" {...props} />\n}\n\nfunction HoverCardPortal({ ...props }: HoverCardPortalProps) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction HoverCardContext({ ...props }: HoverCardContextProps) {\n  return <HoverCardPrimitive.Context {...props} />\n}\n\nfunction HoverCardPositioner({ className, ...props }: HoverCardPositionerProps) {\n  return (\n    <HoverCardPrimitive.Positioner\n      data-slot=\"hover-card-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction HoverCardArrow({ className, ...props }: HoverCardArrowProps) {\n  return (\n    <HoverCardPrimitive.Arrow\n      data-slot=\"hover-card-arrow\"\n      className={cn(\"[--arrow-background:var(--color-popover)] [--arrow-size:0.625rem]\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <HoverCardPrimitive.ArrowTip\n            data-slot=\"hover-card-arrow-tip\"\n            className=\"border-t border-l border-foreground/10\"\n          />\n        </>\n      )}\n    </HoverCardPrimitive.Arrow>\n  )\n}\n\nfunction HoverCardContent({ className, ...props }: HoverCardContentProps) {\n  return (\n    <HoverCardPortal>\n      <HoverCardPositioner>\n        <HoverCardPrimitive.Content\n          data-slot=\"hover-card-content\"\n          className={cn(\n            \"z-50 w-64 origin-(--transform-origin) rounded-lg bg-popover p-2.5 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </HoverCardPositioner>\n    </HoverCardPortal>\n  )\n}\n\nfunction HoverCardRootProvider(props: HoverCardRootProviderProps) {\n  return <HoverCardPrimitive.RootProvider {...props} />\n}\n\nfunction HoverCardArrowTip({ className, ...props }: HoverCardArrowTipProps) {\n  return <HoverCardPrimitive.ArrowTip data-slot=\"hover-card-arrow-tip\" className={cn(className)} {...props} />\n}\n\ntype HoverCardArrowTipProps = React.ComponentProps<typeof HoverCardPrimitive.ArrowTip>\n\ntype HoverCardRootProps = React.ComponentProps<typeof HoverCardPrimitive.Root>\n\ntype HoverCardRootProviderProps = React.ComponentProps<typeof HoverCardPrimitive.RootProvider>\n\ntype HoverCardArrowProps = React.ComponentProps<typeof HoverCardPrimitive.Arrow>\n\ntype HoverCardContentProps = React.ComponentProps<typeof HoverCardPrimitive.Content>\n\ntype HoverCardContextProps = React.ComponentProps<typeof HoverCardPrimitive.Context>\n\ntype HoverCardPortalProps = React.ComponentProps<typeof PortalPrimitive>\n\ntype HoverCardPositionerProps = React.ComponentProps<typeof HoverCardPrimitive.Positioner>\n\ntype HoverCardTriggerProps = React.ComponentProps<typeof HoverCardPrimitive.Trigger>\n\nconst HoverCard = {\n  ArrowTip: HoverCardArrowTip,\n  Root: HoverCardRoot,\n  RootProvider: HoverCardRootProvider,\n  Arrow: HoverCardArrow,\n  Content: HoverCardContent,\n  Context: HoverCardContext,\n  Portal: HoverCardPortal,\n  Positioner: HoverCardPositioner,\n  Trigger: HoverCardTrigger,\n}\n\nexport {\n  useHoverCard,\n  useHoverCardContext,\n  HoverCard,\n  type HoverCardArrowTipProps,\n  type HoverCardRootProps,\n  type HoverCardRootProviderProps,\n  type HoverCardArrowProps,\n  type HoverCardContentProps,\n  type HoverCardContextProps,\n  type HoverCardPortalProps,\n  type HoverCardPositionerProps,\n  type HoverCardTriggerProps,\n}\n"
+    }
+  ]
+}

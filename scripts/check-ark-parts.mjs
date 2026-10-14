@@ -19,7 +19,7 @@ for (const [, family] of index.matchAll(/export \* from '\.\/(.*?)\/index\.js'/g
     problems.push(`${family}: component family is not covered`)
     continue
   }
-  const source = program.getSourceFile(path.join(root, `src/components/ui/${entry.module}.tsx`))
+  const source = program.getSourceFile(path.join(root, `packages/react/src/components/ui/${entry.module}.tsx`))
   const module = source && checker.getSymbolAtLocation(source)
   let exported = module && checker.getExportsOfModule(module).find((item) => item.name === entry.namespace)
   if (!exported) {

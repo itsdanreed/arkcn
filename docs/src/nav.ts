@@ -1,6 +1,7 @@
 export const guides = [
   { slug: "introduction", title: "Introduction", path: "/docs" },
   { slug: "installation", title: "Installation", path: "/docs/installation" },
+  { slug: "react-native", title: "Expo / React Native", path: "/docs/react-native" },
   { slug: "cli", title: "CLI", path: "/docs/cli" },
   { slug: "mcp", title: "MCP server", path: "/docs/mcp" },
   { slug: "theming", title: "Theming", path: "/docs/theming" },

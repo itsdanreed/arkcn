@@ -10,9 +10,11 @@ While dragging, a `Kanban.DropSlot` shows where the card will land, sized like t
 
 ## Keyboard
 
-Cards and handles are focusable. Space or Enter picks a card up, arrow keys move it within and between columns, Space or Enter drops it, Escape cancels, and focus follows the card. A live region announces each step.
+Cards and handles are focusable. Space or Enter picks a card up, arrow keys move it within and between columns, Space, Enter, or Escape releases it, and focus follows the card. Moves apply immediately; Escape does not undo prior moves. A live region announces each step.
 
 ## Notes
 
 - Drag previews are crisp clones of the card, not the browser's blurred default.
 - Native drag is Chrome's, so a collapsed source card keeps zero height instead of `display: none`, which would cancel the drag.
+
+Set `draggable={false}` on a card or column to disable its pointer dragging and explicit keyboard handle. Disable separate add/action controls when composing a read-only board.

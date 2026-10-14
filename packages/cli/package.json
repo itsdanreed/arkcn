@@ -1,0 +1,29 @@
+{
+  "name": "@multicomma/arkcn",
+  "version": "0.3.0",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itsdanreed/arkcn.git",
+    "directory": "packages/cli"
+  },
+  "description": "Copy arkcn components into React and React Native projects.",
+  "files": [
+    "src",
+    "bin"
+  ],
+  "bin": {
+    "arkcn": "bin/arkcn.mjs"
+  },
+  "dependencies": {
+    "@multicomma/arkcn-registry": "0.3.0",
+    "@multicomma/arkcn-mcp": "0.3.0"
+  },
+  "scripts": {
+    "prepublishOnly": "npm --prefix ../.. run check"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

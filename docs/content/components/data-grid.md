@@ -21,3 +21,10 @@ Arrow keys move the focused cell, Shift plus arrows extend a range, Home and End
 - Pinned columns are sticky with computed offsets; the header sits above them.
 - Column widths are controllable through `columnSizing` and `onColumnSizingChange`.
 - Give the grid a bounded height; it scrolls inside its container.
+
+## Resize handles
+
+`DataGrid.HeadWithResize` uses the same 1px divider and centered 4 × 24px rounded grip as `Resizable.Handle`.
+Drag to resize, double-click or press Home to restore the configured width. A focused handle also supports Left/Right
+arrows (1px) and Shift+Left/Right (10px). `DataGrid.ResizeHandle withHandle={false}` hides the visible grip when
+composing a custom header.

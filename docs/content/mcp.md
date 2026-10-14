@@ -1,5 +1,11 @@
 # MCP server
 
+Use `--framework react` or `--framework react-native` to select a renderer. CLI init auto-detects Expo / React Native
+and persists the choice in `arkcn.json`; later commands use that choice. The standalone MCP server defaults to React;
+pass `--framework react-native` to `arkcn mcp`, or set `ARKCN_FRAMEWORK` for `arkcn-mcp`.
+Native installs use theme helpers and skip web CSS and dependencies. The examples below describe the web setup.
+
+
 arkcn ships a [Model Context Protocol](https://modelcontextprotocol.io) server so coding agents can browse the registry, read component source and documentation, plan an install, and copy components into your project.
 
 ## Setup

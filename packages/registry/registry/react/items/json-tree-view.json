@@ -1,0 +1,424 @@
+{
+  "name": "json-tree-view",
+  "type": "ui",
+  "description": "",
+  "ark": "JsonTreeView",
+  "exports": [
+    "useJsonTreeView",
+    "JsonTreeView"
+  ],
+  "parts": [
+    {
+      "name": "JsonTreeView.Root",
+      "props": [
+        {
+          "name": "data",
+          "type": "unknown",
+          "required": true,
+          "description": "The data to display in the tree.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "canRename",
+          "type": "((node: JsonNode<any>, indexPath: IndexPath) => boolean)",
+          "required": false,
+          "description": "Function to determine if a node can be renamed",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "checkedValue",
+          "type": "string[]",
+          "required": false,
+          "description": "The controlled checked node value",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "collapseStringsAfterLength",
+          "type": "number",
+          "required": false,
+          "from": "@zag-js/json-tree-utils"
+        },
+        {
+          "name": "defaultCheckedValue",
+          "type": "string[]",
+          "required": false,
+          "description": "The initial checked node value when rendered.\nUse when you don't need to control the checked node value.",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "defaultExpandedDepth",
+          "type": "number",
+          "required": false,
+          "description": "The default expand level.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "defaultExpandedValue",
+          "type": "string[]",
+          "required": false,
+          "description": "The initial expanded node ids when rendered.\nUse when you don't need to control the expanded node value.",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "defaultFocusedValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The initial focused node value when rendered.\nUse when you don't need to control the focused node value.",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "defaultSelectedValue",
+          "type": "string[]",
+          "required": false,
+          "description": "The initial selected node value when rendered.\nUse when you don't need to control the selected node value.",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "expandedValue",
+          "type": "string[]",
+          "required": false,
+          "description": "The controlled expanded node ids",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "expandOnClick",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether clicking on a branch should open it or not",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "focusedValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The value of the focused node",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "groupArraysAfterLength",
+          "type": "number",
+          "required": false,
+          "from": "@zag-js/json-tree-utils"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the tree elements. Useful for composition.",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "loadChildren",
+          "type": "((details: LoadChildrenDetails<JsonNode<any>>) => Promise<JsonNode<any>[]>)",
+          "required": false,
+          "description": "Function to load children for a node asynchronously.\nWhen provided, branches will wait for this promise to resolve before expanding.",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "maxPreviewItems",
+          "type": "number",
+          "required": false,
+          "from": "@zag-js/json-tree-utils"
+        },
+        {
+          "name": "onBeforeRename",
+          "type": "((details: RenameCompleteDetails) => boolean)",
+          "required": false,
+          "description": "Called before a rename is completed. Return false to prevent the rename.",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onCheckedChange",
+          "type": "((details: CheckedChangeDetails) => void)",
+          "required": false,
+          "description": "Called when the checked value changes",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onExpandedChange",
+          "type": "((details: ExpandedChangeDetails<JsonNode<any>>) => void)",
+          "required": false,
+          "description": "Called when the tree is opened or closed",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onFocusChange",
+          "type": "((details: FocusChangeDetails<JsonNode<any>>) => void)",
+          "required": false,
+          "description": "Called when the focused node changes",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onLoadChildrenComplete",
+          "type": "((details: LoadChildrenCompleteDetails<JsonNode<any>>) => void)",
+          "required": false,
+          "description": "Called when a node finishes loading children",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onLoadChildrenError",
+          "type": "((details: LoadChildrenErrorDetails<JsonNode<any>>) => void)",
+          "required": false,
+          "description": "Called when loading children fails for one or more nodes",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onRenameComplete",
+          "type": "((details: RenameCompleteDetails) => void)",
+          "required": false,
+          "description": "Called when a node label rename is completed",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onRenameStart",
+          "type": "((details: RenameStartDetails<JsonNode<any>>) => void)",
+          "required": false,
+          "description": "Called when a node starts being renamed",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "onSelectionChange",
+          "type": "((details: SelectionChangeDetails<JsonNode<any>>) => void)",
+          "required": false,
+          "description": "Called when the selection changes",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "quotesOnKeys",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to show quotes on the keys.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "scrollToIndexFn",
+          "type": "((details: ScrollToIndexDetails<JsonNode<any>>) => void)",
+          "required": false,
+          "description": "Function to scroll to a specific index.\nUseful for virtualized tree views.",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "selectedValue",
+          "type": "string[]",
+          "required": false,
+          "description": "The controlled selected node value",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "selectionMode",
+          "type": "\"multiple\" | \"single\"",
+          "required": false,
+          "default": "\"single\"",
+          "description": "Whether the tree supports multiple selection\n- \"single\": only one node can be selected\n- \"multiple\": multiple nodes can be selected",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "showNonenumerable",
+          "type": "boolean",
+          "required": false,
+          "from": "@zag-js/json-tree-utils"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "translations",
+          "type": "IntlTranslations",
+          "required": false,
+          "description": "Specifies the localized strings that identifies the accessibility elements and their states",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "typeahead",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether the tree supports typeahead search",
+          "from": "@zag-js/tree-view"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "JsonTreeView.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseJsonTreeViewReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "JsonTreeView.Tree",
+      "props": [
+        {
+          "name": "arrow",
+          "type": "ReactElement<unknown, string | JSXElementConstructor<any>>",
+          "required": false,
+          "default": "<ChevronRightIcon />",
+          "description": "The icon to use for the arrow.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "indentGuide",
+          "type": "boolean | ReactElement<unknown, string | JSXElementConstructor<any>>",
+          "required": false,
+          "description": "The indent guide to use for the tree.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "renderValue",
+          "type": "((node: JsonNodeHastElement) => ReactNode)",
+          "required": false,
+          "description": "The function to render the value of the node.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1",
+    "lucide-react": "^1.41.0"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/json-tree-view.tsx",
+      "content": "\"use client\"\n\nimport { useJsonTreeView } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { ChevronRightIcon } from \"lucide-react\"\nimport { cn } from \"@/lib/utils\"\nimport { JsonTreeView as JsonTreeViewPrimitive } from \"@ark-ui/react\"\n\nfunction JsonTreeViewRoot({ className, ...props }: JsonTreeViewRootProps) {\n  return (\n    <JsonTreeViewPrimitive.Root\n      data-slot=\"json-tree-view\"\n      className={cn(\"w-full font-mono text-xs\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction JsonTreeViewTree({ className, arrow = <ChevronRightIcon />, ...props }: JsonTreeViewTreeProps) {\n  return (\n    <JsonTreeViewPrimitive.Tree\n      data-slot=\"json-tree-view-tree\"\n      arrow={arrow}\n      className={cn(\n        \"flex flex-col gap-px outline-none\",\n        \"**:data-[part=branch-control]:flex **:data-[part=branch-control]:h-7 **:data-[part=branch-control]:cursor-default **:data-[part=branch-control]:items-center **:data-[part=branch-control]:gap-1 **:data-[part=branch-control]:rounded-md **:data-[part=branch-control]:ps-[calc(var(--depth)*(--spacing(4)))] **:data-[part=branch-control]:pe-2 **:data-[part=branch-control]:outline-none **:data-[part=branch-control]:hover:bg-muted **:data-[part=branch-control]:focus-visible:ring-2 **:data-[part=branch-control]:focus-visible:ring-ring **:data-[part=branch-control]:data-selected:bg-muted\",\n        \"**:data-[part=item]:flex **:data-[part=item]:h-7 **:data-[part=item]:cursor-default **:data-[part=item]:items-center **:data-[part=item]:gap-1 **:data-[part=item]:rounded-md **:data-[part=item]:ps-[calc(var(--depth)*(--spacing(4))+(--spacing(4)))] **:data-[part=item]:pe-2 **:data-[part=item]:outline-none **:data-[part=item]:hover:bg-muted **:data-[part=item]:focus-visible:ring-2 **:data-[part=item]:focus-visible:ring-ring **:data-[part=item]:data-selected:bg-muted\",\n        \"**:data-[part=branch-indicator]:shrink-0 **:data-[part=branch-indicator]:text-foreground **:data-[part=branch-indicator]:transition-transform **:data-[part=branch-indicator]:data-[state=open]:rotate-90 motion-reduce:**:data-[part=branch-indicator]:transition-none rtl:**:data-[part=branch-indicator]:rotate-180 rtl:**:data-[part=branch-indicator]:data-[state=open]:rotate-90 **:data-[part=branch-indicator]:[&_svg]:size-4\",\n        \"**:data-[part=branch-indent-guide]:absolute **:data-[part=branch-indent-guide]:inset-y-0 **:data-[part=branch-indent-guide]:inset-s-[calc(var(--depth)*(--spacing(4))+(--spacing(1.5)))] **:data-[part=branch-indent-guide]:w-px **:data-[part=branch-indent-guide]:bg-border\",\n        \"**:data-[part=branch-content]:relative **:data-[part=branch-content]:flex **:data-[part=branch-content]:flex-col **:data-[part=branch-content]:gap-px\",\n        \"**:data-[part=branch-text]:min-w-0 **:data-[part=branch-text]:truncate **:data-[part=item-text]:min-w-0 **:data-[part=item-text]:truncate\",\n        \"**:data-[kind=colon]:text-muted-foreground **:data-[kind=key]:text-foreground\",\n        \"**:data-[type=boolean]:text-amber-600 **:data-[type=null]:text-muted-foreground **:data-[type=number]:text-sky-600 **:data-[type=string]:text-emerald-600 **:data-[type=undefined]:text-muted-foreground dark:**:data-[type=boolean]:text-amber-400 dark:**:data-[type=number]:text-sky-400 dark:**:data-[type=string]:text-emerald-400\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction JsonTreeViewRootProvider({ className, ...props }: JsonTreeViewRootProviderProps) {\n  return (\n    <JsonTreeViewPrimitive.RootProvider\n      data-slot=\"json-tree-view\"\n      className={cn(\"w-full font-mono text-xs\", className)}\n      {...props}\n    />\n  )\n}\n\ntype JsonTreeViewRootProps = React.ComponentProps<typeof JsonTreeViewPrimitive.Root>\n\ntype JsonTreeViewRootProviderProps = React.ComponentProps<typeof JsonTreeViewPrimitive.RootProvider>\n\ntype JsonTreeViewTreeProps = React.ComponentProps<typeof JsonTreeViewPrimitive.Tree>\n\nconst JsonTreeView = {\n  Root: JsonTreeViewRoot,\n  RootProvider: JsonTreeViewRootProvider,\n  Tree: JsonTreeViewTree,\n}\n\nexport {\n  useJsonTreeView,\n  JsonTreeView,\n  type JsonTreeViewRootProps,\n  type JsonTreeViewRootProviderProps,\n  type JsonTreeViewTreeProps,\n}\n"
+    }
+  ]
+}

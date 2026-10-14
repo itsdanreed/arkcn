@@ -1,0 +1,175 @@
+{
+  "name": "input",
+  "type": "ui",
+  "description": "Native text entry using value/onChangeText; label with accessibilityLabel.",
+  "exports": [
+    "Input"
+  ],
+  "parts": [
+    {
+      "name": "Input.Root",
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Disables the part and everything inside it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Use the destructive border and focus ring; provide an accessible error explanation.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "description": "Provides an initial value that will change when the user starts typing.\nUseful for simple use-cases where you do not want to deal with listening\nto events and updating the value prop to keep the controlled state in sync.",
+          "from": "react-native"
+        },
+        {
+          "name": "editable",
+          "type": "boolean",
+          "required": false,
+          "description": "If `false`, text is not editable. The default value is `true`.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "keyboardType",
+          "type": "KeyboardTypeOptions",
+          "required": false,
+          "description": "Determines which keyboard to open, e.g.`numeric`.\n\nThe following values work across platforms:\n\n- `default`\n- `numeric`\n- `number-pad`\n- `decimal-pad`\n- `email-address`\n- `phone-pad`\n- `url`\n\n*iOS Only*\n\nThe following values work on iOS only:\n\n- `ascii-capable`\n- `numbers-and-punctuation`\n- `name-phone-pad`\n- `twitter`\n- `web-search`\n\n*Android Only*\n\nThe following values work on Android only:\n\n- `visible-password`",
+          "from": "react-native"
+        },
+        {
+          "name": "multiline",
+          "type": "boolean",
+          "required": false,
+          "description": "If `true`, the text input can be multiple lines.\nThe default value is `false`.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "description": "Sets the number of lines for a `TextInput`. Use it with multiline set to\n`true` to be able to fill the lines.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((e: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | undefi…",
+          "required": false,
+          "description": "Callback that is called when the text input is blurred.",
+          "from": "react-native"
+        },
+        {
+          "name": "onChangeText",
+          "type": "((text: string) => unknown)",
+          "required": false,
+          "description": "Callback that is called when the text input's text changes.\nChanged text is passed as an argument to the callback handler.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((e: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | undefi…",
+          "required": false,
+          "description": "Callback that is called when the text input is focused.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called when a single tap gesture is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "The string that will be rendered before text input has been entered.",
+          "from": "react-native"
+        },
+        {
+          "name": "secureTextEntry",
+          "type": "boolean",
+          "required": false,
+          "description": "If `true`, the text input obscures the text entered so that sensitive text\nlike passwords stay secure. The default value is `false`. Does not work with 'multiline={true}'.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Note that not all Text styles are supported, an incomplete list of what is not supported includes:\n\n- `borderLeftWidth`\n- `borderTopWidth`\n- `borderRightWidth`\n- `borderBottomWidth`\n- `borderTopLeftRadius`\n- `borderTopRightRadius`\n- `borderBottomRightRadius`\n- `borderBottomLeftRadius`\n\nsee [Issue#7070](https://github.com/facebook/react-native/issues/7070)\nfor more detail.\n\n[Styles](docs/style.html)",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value to show for the text input. `TextInput` is a controlled\ncomponent, which means the native value will be forced to match this\nvalue prop if provided. For most uses, this works great, but in some\ncases this may cause flickering - one common cause is preventing edits\nby keeping value the same. In addition to simply setting the same value,\neither set `editable={false}`, or set/update `maxLength` to prevent\nunwanted edits without flicker.",
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "lib/motion",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/input.tsx",
+      "content": "import { useState, type ComponentPropsWithRef } from \"react\"\nimport { AnimatedTextInput, useMotion } from \"@/lib/motion\"\nimport { TextInput, useWindowDimensions } from \"react-native\"\nimport { useNativeTheme, withOpacity } from \"@/lib/theme\"\n\nexport type InputRootProps = ComponentPropsWithRef<typeof TextInput> & { disabled?: boolean; invalid?: boolean }\n\nfunction InputRoot({\n  style,\n  disabled = false,\n  invalid = false,\n  editable,\n  onFocus,\n  onBlur,\n  accessibilityState,\n  ...props\n}: InputRootProps) {\n  const { transition } = useMotion()\n  const { width } = useWindowDimensions()\n  const [focused, setFocused] = useState(false)\n  const { colors, colorScheme, spacing, radius, fontSize, lineHeight, controlHeight, opacity, typography } =\n    useNativeTheme()\n  const ringColor = withOpacity(\n    invalid ? colors.destructive : colors.ring,\n    invalid ? (colorScheme === \"dark\" ? 0.4 : 0.2) : focused ? 0.5 : 0\n  )\n  const ringVisible = invalid || focused\n  const ring = { boxShadow: ringVisible ? `0px 0px 0px 3px ${ringColor}` : \"none\" }\n  return (\n    <AnimatedTextInput\n      underlineColorAndroid=\"transparent\"\n      placeholderTextColor={colors.mutedForeground}\n      selectionColor={colors.ring}\n      {...props}\n      editable={!disabled && editable !== false}\n      accessibilityState={{ ...accessibilityState, disabled: disabled || accessibilityState?.disabled }}\n      onFocus={(event) => {\n        setFocused(true)\n        onFocus?.(event)\n      }}\n      onBlur={(event) => {\n        setFocused(false)\n        onBlur?.(event)\n      }}\n      style={[\n        transition([\"borderColor\", \"backgroundColor\"]),\n        {\n          minHeight: controlHeight.default,\n          ...(!props.multiline ? { height: controlHeight.default } : {}),\n          paddingHorizontal: spacing.controlX,\n          paddingVertical: spacing.xs,\n          backgroundColor: disabled\n            ? withOpacity(colors.input, colorScheme === \"dark\" ? 0.8 : 0.5)\n            : colorScheme === \"dark\"\n              ? withOpacity(colors.input, 0.3)\n              : \"transparent\",\n          color: colors.foreground,\n          borderWidth: 1,\n          borderColor: invalid\n            ? colorScheme === \"dark\"\n              ? withOpacity(colors.destructive, 0.5)\n              : colors.destructive\n            : focused\n              ? colors.ring\n              : colors.input,\n          borderRadius: radius.lg,\n          ...typography.regular,\n          fontSize: width < 768 ? fontSize.body : fontSize.md,\n          lineHeight: width < 768 ? lineHeight.body : lineHeight.md,\n          includeFontPadding: false,\n          opacity: disabled ? opacity.disabled : 1,\n        },\n        ring,\n        style,\n      ]}\n    />\n  )\n}\n/** Native text entry using value/onChangeText; label with accessibilityLabel. */\nexport const Input = { Root: InputRoot }\n"
+    }
+  ]
+}

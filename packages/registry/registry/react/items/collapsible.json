@@ -1,0 +1,289 @@
+{
+  "name": "collapsible",
+  "type": "ui",
+  "description": "",
+  "ark": "Collapsible",
+  "exports": [
+    "useCollapsible",
+    "useCollapsibleContext",
+    "Collapsible"
+  ],
+  "parts": [
+    {
+      "name": "Collapsible.Root",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "collapsedHeight",
+          "type": "string | number",
+          "required": false,
+          "description": "The height of the content when collapsed.",
+          "from": "@zag-js/collapsible"
+        },
+        {
+          "name": "collapsedWidth",
+          "type": "string | number",
+          "required": false,
+          "description": "The width of the content when collapsed.",
+          "from": "@zag-js/collapsible"
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "description": "The initial open state of the collapsible when rendered.\nUse when you don't need to control the open state of the collapsible.",
+          "from": "@zag-js/collapsible"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the collapsible is disabled.",
+          "from": "@zag-js/collapsible"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the collapsible. Useful for composition.",
+          "from": "@zag-js/collapsible"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "The callback invoked when the exit animation completes.",
+          "from": "@zag-js/collapsible"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "((details: OpenChangeDetails) => void)",
+          "required": false,
+          "description": "The callback invoked when the open state changes.",
+          "from": "@zag-js/collapsible"
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "description": "The controlled open state of the collapsible.",
+          "from": "@zag-js/collapsible"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Collapsible.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseCollapsibleReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Collapsible.Content",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Collapsible.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseCollapsibleContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Collapsible.Indicator",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Collapsible.Trigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/collapsible.tsx",
+      "content": "\"use client\"\n\nimport { cn } from \"@/lib/utils\"\n\nimport { useCollapsible, useCollapsibleContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { Collapsible as CollapsiblePrimitive } from \"@ark-ui/react\"\n\nfunction CollapsibleRoot({ lazyMount = true, unmountOnExit = true, ...props }: CollapsibleRootProps) {\n  return (\n    <CollapsiblePrimitive.Root data-slot=\"collapsible\" lazyMount={lazyMount} unmountOnExit={unmountOnExit} {...props} />\n  )\n}\n\nfunction CollapsibleContext({ ...props }: CollapsibleContextProps) {\n  return <CollapsiblePrimitive.Context {...props} />\n}\n\nfunction CollapsibleTrigger({ ...props }: CollapsibleTriggerProps) {\n  const api = useCollapsibleContext()\n  return (\n    <CollapsiblePrimitive.Trigger\n      data-slot=\"collapsible-trigger\"\n      aria-disabled={api.disabled || undefined}\n      {...props}\n    />\n  )\n}\n\nfunction CollapsibleIndicator({ ...props }: CollapsibleIndicatorProps) {\n  return <CollapsiblePrimitive.Indicator data-slot=\"collapsible-indicator\" {...props} />\n}\n\nfunction CollapsibleContent({ ...props }: CollapsibleContentProps) {\n  return <CollapsiblePrimitive.Content data-slot=\"collapsible-content\" {...props} />\n}\n\nfunction CollapsibleRootProvider({ className, ...props }: CollapsibleRootProviderProps) {\n  return <CollapsiblePrimitive.RootProvider data-slot=\"collapsible\" className={cn(className)} {...props} />\n}\n\ntype CollapsibleRootProps = React.ComponentProps<typeof CollapsiblePrimitive.Root>\n\ntype CollapsibleRootProviderProps = React.ComponentProps<typeof CollapsiblePrimitive.RootProvider>\n\ntype CollapsibleContentProps = React.ComponentProps<typeof CollapsiblePrimitive.Content>\n\ntype CollapsibleContextProps = React.ComponentProps<typeof CollapsiblePrimitive.Context>\n\ntype CollapsibleIndicatorProps = React.ComponentProps<typeof CollapsiblePrimitive.Indicator>\n\ntype CollapsibleTriggerProps = React.ComponentProps<typeof CollapsiblePrimitive.Trigger>\n\nconst Collapsible = {\n  Root: CollapsibleRoot,\n  RootProvider: CollapsibleRootProvider,\n  Content: CollapsibleContent,\n  Context: CollapsibleContext,\n  Indicator: CollapsibleIndicator,\n  Trigger: CollapsibleTrigger,\n}\n\nexport {\n  useCollapsible,\n  useCollapsibleContext,\n  Collapsible,\n  type CollapsibleRootProps,\n  type CollapsibleRootProviderProps,\n  type CollapsibleContentProps,\n  type CollapsibleContextProps,\n  type CollapsibleIndicatorProps,\n  type CollapsibleTriggerProps,\n}\n"
+    }
+  ]
+}

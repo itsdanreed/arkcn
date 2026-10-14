@@ -17,8 +17,9 @@
     "types": ["vite/client"],
     "paths": {
       "@docs/*": ["./src/*"],
-      "@/*": ["../src/*"]
+      "@/*": ["../packages/react/src/*"]
     }
   },
-  "include": ["src", "../src"]
+  "include": ["src", "../packages/react/src"],
+  "extends": "../tsconfig.base.json"
 }

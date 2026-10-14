@@ -1,0 +1,97 @@
+{
+  "name": "label",
+  "type": "ui",
+  "description": "Text labels with the web typography and explicit native control activation.",
+  "exports": [
+    "Label"
+  ],
+  "parts": [
+    {
+      "name": "Label.Root",
+      "props": [
+        {
+          "name": "controlRef",
+          "type": "RefObject<{ focus: () => void; } | null>",
+          "required": false,
+          "description": "Input to focus when the label is pressed. Use onPress for selection controls.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Specifies the disabled state of the text view for testing purposes.\nPrevents activation and dims the label.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/label.tsx",
+      "content": "/** Text labels with the web typography and explicit native control activation. */\nimport type { ComponentPropsWithRef, RefObject } from \"react\"\nimport { Text } from \"react-native\"\nimport { useNativeTheme } from \"@/lib/theme\"\nexport type LabelRootProps = ComponentPropsWithRef<typeof Text> & {\n  /** Prevents activation and dims the label. */\n  disabled?: boolean\n  /** Input to focus when the label is pressed. Use onPress for selection controls. */\n  controlRef?: RefObject<{ focus: () => void } | null>\n}\nfunction LabelRoot({ disabled = false, controlRef, onPress, style, ...props }: LabelRootProps) {\n  const { colors, typography, fontSize, opacity } = useNativeTheme()\n  return (\n    <Text\n      selectable={false}\n      {...props}\n      disabled={disabled}\n      onPress={\n        controlRef || onPress\n          ? (event) => {\n              if (disabled) return\n              onPress?.(event)\n              if (!event.defaultPrevented) controlRef?.current?.focus()\n            }\n          : undefined\n      }\n      style={[\n        {\n          ...typography.medium,\n          fontSize: fontSize.md,\n          lineHeight: fontSize.md,\n          color: colors.foreground,\n          opacity: disabled ? opacity.disabled : 1,\n        },\n        style,\n      ]}\n    />\n  )\n}\nexport const Label = { Root: LabelRoot }\n"
+    }
+  ],
+  "docs": "## Label\n\n`Label.Root` uses the web label's 14-pixel medium typography and tight line height. `disabled` dims it and prevents\nactivation. Native labels use `controlRef` to focus a TextInput, or `onPress` to activate another control; they do not\nuse DOM `htmlFor`. Supply a matching `accessibilityLabel` on the control so its purpose is announced independently.\n\nThe label forwards native Text props and merges `style` after its defaults. A prevented press does not focus the input."
+}

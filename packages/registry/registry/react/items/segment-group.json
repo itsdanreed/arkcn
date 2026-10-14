@@ -1,0 +1,427 @@
+{
+  "name": "segment-group",
+  "type": "ui",
+  "description": "",
+  "ark": "SegmentGroup",
+  "exports": [
+    "useSegmentGroup",
+    "useSegmentGroupContext",
+    "useSegmentGroupItemContext",
+    "SegmentGroup"
+  ],
+  "parts": [
+    {
+      "name": "SegmentGroup.Root",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The initial value of the checked radio when rendered.\nUse when you don't need to control the value of the radio group.",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "If `true`, the radio group will be disabled",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "form",
+          "type": "string",
+          "required": false,
+          "description": "The associate form of the underlying input.",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the radio. Useful for composition.",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "If `true`, the radio group is marked as invalid.",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the input fields in the radio\n(Useful for form submission).",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function called once a radio is checked",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "required": false,
+          "default": "\"horizontal\"",
+          "description": "Orientation of the radio group",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the radio group is read-only",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "If `true`, the radio group is marked as required.",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "value",
+          "type": "string | null",
+          "required": false,
+          "description": "The controlled value of the radio group",
+          "from": "@zag-js/radio-group"
+        }
+      ]
+    },
+    {
+      "name": "SegmentGroup.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseSegmentGroupReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SegmentGroup.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseSegmentGroupContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "SegmentGroup.Indicator",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SegmentGroup.Item",
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Marks the part invalid for styling and assistive technology.",
+          "from": "@zag-js/radio-group"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SegmentGroup.ItemContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseSegmentGroupItemContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "SegmentGroup.ItemControl",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SegmentGroup.ItemHiddenInput",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SegmentGroup.ItemText",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SegmentGroup.Label",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/segment-group.tsx",
+      "content": "\"use client\"\n\nimport {\n  useSegmentGroup,\n  useSegmentGroupContext,\n  useSegmentGroupItemContext,\n  useEnvironmentContext,\n} from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { SegmentGroup as SegmentGroupPrimitive } from \"@ark-ui/react\"\n\nfunction SegmentGroupRoot({ className, orientation = \"horizontal\", ...props }: SegmentGroupRootProps) {\n  return (\n    <SegmentGroupPrimitive.Root\n      data-slot=\"segment-group\"\n      orientation={orientation}\n      className={cn(\n        \"relative inline-flex h-8 w-fit items-center justify-center rounded-lg bg-muted p-0.75 text-muted-foreground data-vertical:h-auto data-vertical:flex-col data-vertical:items-stretch\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SegmentGroupContext({ ...props }: SegmentGroupContextProps) {\n  return <SegmentGroupPrimitive.Context {...props} />\n}\n\nfunction SegmentGroupLabel({ className, ...props }: SegmentGroupLabelProps) {\n  return (\n    <SegmentGroupPrimitive.Label\n      data-slot=\"segment-group-label\"\n      className={cn(\"text-sm/none font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SegmentGroupIndicator({ className, style, ...props }: SegmentGroupIndicatorProps) {\n  const api = useSegmentGroupContext()\n  const { getRootNode } = useEnvironmentContext()\n  const rootId = api.getRootProps().id\n  const itemId = api.value == null ? undefined : api.getItemProps({ value: api.value }).id\n  const [rect, setRect] = React.useState<React.CSSProperties>({})\n\n  // Zag's offset measurements round to whole pixels. Preserve fractional bounds\n  // while leaving its indicator visibility and animation lifecycle in charge.\n  React.useLayoutEffect(() => {\n    const scope = getRootNode() as Document | ShadowRoot\n    if (!(\"getElementById\" in scope)) return\n    const root = rootId ? scope.getElementById(rootId) : null\n    const item = itemId ? scope.getElementById(itemId) : null\n    if (!root || !item) return\n    const measure = () => {\n      const bounds = root.getBoundingClientRect()\n      const selected = item.getBoundingClientRect()\n      const css = root.ownerDocument.defaultView!.getComputedStyle(root)\n      const number = (property: string) => parseFloat(css.getPropertyValue(property)) || 0\n      const borderBox = (style: CSSStyleDeclaration, dimension: \"width\" | \"height\") => {\n        const sides = dimension === \"width\" ? [\"left\", \"right\"] : [\"top\", \"bottom\"]\n        return (\n          parseFloat(style[dimension]) +\n          (style.boxSizing === \"border-box\"\n            ? 0\n            : sides.reduce(\n                (total, side) =>\n                  total +\n                  (parseFloat(style.getPropertyValue(`padding-${side}`)) || 0) +\n                  (parseFloat(style.getPropertyValue(`border-${side}-width`)) || 0),\n                0\n              ))\n        )\n      }\n      const width = borderBox(css, \"width\")\n      const height = borderBox(css, \"height\")\n      const selectedCss = root.ownerDocument.defaultView!.getComputedStyle(item)\n      if (!width || !height || !bounds.width || !bounds.height) return\n      const scaleX = bounds.width / width\n      const scaleY = bounds.height / height\n      const next = {\n        \"--left\": `${(selected.left - bounds.left) / scaleX - number(\"border-left-width\") + root.scrollLeft}px`,\n        \"--top\": `${(selected.top - bounds.top) / scaleY - number(\"border-top-width\") + root.scrollTop}px`,\n        \"--width\": `${borderBox(selectedCss, \"width\")}px`,\n        \"--height\": `${borderBox(selectedCss, \"height\")}px`,\n      } as React.CSSProperties\n      setRect((previous) => (JSON.stringify(previous) === JSON.stringify(next) ? previous : next))\n    }\n    measure()\n    const observer = new ResizeObserver(measure)\n    observer.observe(root)\n    // An earlier sibling changing width also moves the selected item.\n    for (const child of root.querySelectorAll('[data-scope=\"segment-group\"][data-part=\"item\"]')) observer.observe(child)\n    return () => observer.disconnect()\n  }, [getRootNode, rootId, itemId])\n\n  return (\n    <SegmentGroupPrimitive.Indicator\n      data-slot=\"segment-group-indicator\"\n      style={{ ...rect, ...style }}\n      className={cn(\n        \"top-(--top) left-(--left) z-0 h-(--height) w-(--width) rounded-md border border-transparent bg-background shadow-sm [--transition-duration:150ms] [--transition-timing-function:cubic-bezier(0.4,0,0.2,1)] motion-reduce:transition-none! dark:border-input dark:bg-input/30\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SegmentGroupItem({ className, children, ...props }: SegmentGroupItemProps) {\n  return (\n    <SegmentGroupPrimitive.Item\n      data-slot=\"segment-group-item\"\n      className={cn(\n        \"relative z-10 inline-flex h-[calc(100%-1px)] flex-1 cursor-pointer items-center justify-center gap-1.5 rounded-md border border-transparent px-1.5 py-0.5 text-sm font-medium whitespace-nowrap text-foreground/60 transition-all select-none hover:text-foreground data-focus-visible:border-ring data-focus-visible:ring-3 data-focus-visible:ring-ring/50 data-focus-visible:outline-1 data-focus-visible:outline-ring dark:text-muted-foreground dark:hover:text-foreground data-checked:text-foreground dark:data-checked:text-foreground data-disabled:pointer-events-none data-disabled:opacity-50 data-vertical:w-full data-vertical:justify-start [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <SegmentGroupItemText>{children}</SegmentGroupItemText>\n          <SegmentGroupItemControl />\n          <SegmentGroupItemHiddenInput />\n        </>\n      )}\n    </SegmentGroupPrimitive.Item>\n  )\n}\n\nfunction SegmentGroupItemContext({ ...props }: SegmentGroupItemContextProps) {\n  return <SegmentGroupPrimitive.ItemContext {...props} />\n}\n\nfunction SegmentGroupItemText({ ...props }: SegmentGroupItemTextProps) {\n  return <SegmentGroupPrimitive.ItemText data-slot=\"segment-group-item-text\" {...props} />\n}\n\nfunction SegmentGroupItemControl({ className, ...props }: SegmentGroupItemControlProps) {\n  return (\n    <SegmentGroupPrimitive.ItemControl\n      data-slot=\"segment-group-item-control\"\n      className={cn(\"hidden\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SegmentGroupItemHiddenInput({ ...props }: SegmentGroupItemHiddenInputProps) {\n  return <SegmentGroupPrimitive.ItemHiddenInput {...props} />\n}\n\nfunction SegmentGroupRootProvider({ className, ...props }: SegmentGroupRootProviderProps) {\n  return (\n    <SegmentGroupPrimitive.RootProvider\n      data-slot=\"segment-group\"\n      className={cn(\n        \"relative inline-flex h-8 w-fit items-center justify-center rounded-lg bg-muted p-0.75 text-muted-foreground data-vertical:h-auto data-vertical:flex-col data-vertical:items-stretch\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype SegmentGroupRootProps = React.ComponentProps<typeof SegmentGroupPrimitive.Root>\n\ntype SegmentGroupRootProviderProps = React.ComponentProps<typeof SegmentGroupPrimitive.RootProvider>\n\ntype SegmentGroupContextProps = React.ComponentProps<typeof SegmentGroupPrimitive.Context>\n\ntype SegmentGroupIndicatorProps = React.ComponentProps<typeof SegmentGroupPrimitive.Indicator>\n\ntype SegmentGroupItemProps = React.ComponentProps<typeof SegmentGroupPrimitive.Item>\n\ntype SegmentGroupItemContextProps = React.ComponentProps<typeof SegmentGroupPrimitive.ItemContext>\n\ntype SegmentGroupItemControlProps = React.ComponentProps<typeof SegmentGroupPrimitive.ItemControl>\n\ntype SegmentGroupItemHiddenInputProps = React.ComponentProps<typeof SegmentGroupPrimitive.ItemHiddenInput>\n\ntype SegmentGroupItemTextProps = React.ComponentProps<typeof SegmentGroupPrimitive.ItemText>\n\ntype SegmentGroupLabelProps = React.ComponentProps<typeof SegmentGroupPrimitive.Label>\n\nconst SegmentGroup = {\n  Root: SegmentGroupRoot,\n  RootProvider: SegmentGroupRootProvider,\n  Context: SegmentGroupContext,\n  Indicator: SegmentGroupIndicator,\n  Item: SegmentGroupItem,\n  ItemContext: SegmentGroupItemContext,\n  ItemControl: SegmentGroupItemControl,\n  ItemHiddenInput: SegmentGroupItemHiddenInput,\n  ItemText: SegmentGroupItemText,\n  Label: SegmentGroupLabel,\n}\n\nexport {\n  useSegmentGroup,\n  useSegmentGroupContext,\n  useSegmentGroupItemContext,\n  SegmentGroup,\n  type SegmentGroupRootProps,\n  type SegmentGroupRootProviderProps,\n  type SegmentGroupContextProps,\n  type SegmentGroupIndicatorProps,\n  type SegmentGroupItemProps,\n  type SegmentGroupItemContextProps,\n  type SegmentGroupItemControlProps,\n  type SegmentGroupItemHiddenInputProps,\n  type SegmentGroupItemTextProps,\n  type SegmentGroupLabelProps,\n}\n"
+    }
+  ]
+}

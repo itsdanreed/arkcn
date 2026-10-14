@@ -1,0 +1,1548 @@
+{
+  "name": "data-table",
+  "type": "ui",
+  "description": "`packages/react/src/lib/table.ts` is a dependency-free headless table engine (columns, sorting, global + column filters with faceted counts, pagination, row selection, visibility).",
+  "exports": [
+    "DataTable",
+    "getPageNumbers",
+    "reorderRowIds",
+    "useDataTable",
+    "useDataTableContext"
+  ],
+  "parts": [
+    {
+      "name": "DataTable.Root",
+      "props": [
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": true,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onRowReorder",
+          "type": "((details: DataTableRowReorderDetails) => void)",
+          "required": false,
+          "description": "Turns on row reordering: rows become drop targets and `DataTableRowHandle`s drag them. Called\nwith the moved row, the row it was dropped next to, and which side; apply it to your data\n(for example with `reorderRowIds`). Reorder only an unsorted, unfiltered view.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.Body",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactElement<unknown, string | JSXElementConstructor<any>> | ((row: DataTableRow<TData>) => ReactNode)",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "empty",
+          "type": "ReactNode",
+          "required": false,
+          "default": "\"No results.\"",
+          "description": "Content shown when there are no rows.",
+          "from": "arkcn"
+        },
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": false,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.BulkActionTrigger",
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": true,
+          "description": "Accessible label.",
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
+          "required": false,
+          "description": "Size variant; sets a `data-size` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
+          "required": false,
+          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.BulkActions",
+      "props": [
+        {
+          "name": "entityName",
+          "type": "string",
+          "required": false,
+          "default": "\"row\"",
+          "description": "Noun used in the selection announcement, e.g. `task`.",
+          "from": "arkcn"
+        },
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": false,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.BulkActionsClear",
+      "props": [
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
+          "required": false,
+          "description": "Size variant; sets a `data-size` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": false,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
+          "required": false,
+          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.BulkActionsCount",
+      "props": [
+        {
+          "name": "entityName",
+          "type": "string",
+          "required": false,
+          "default": "\"row\"",
+          "description": "Noun used in the selection announcement, e.g. `task`.",
+          "from": "arkcn"
+        },
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": false,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.Cell",
+      "props": [
+        {
+          "name": "column",
+          "type": "string",
+          "required": false,
+          "description": "Id of the column this part belongs to.",
+          "from": "arkcn"
+        },
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": false,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.Head",
+      "props": [
+        {
+          "name": "column",
+          "type": "string",
+          "required": false,
+          "description": "Id of the column this part belongs to.",
+          "from": "arkcn"
+        },
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": false,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.Container",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.Empty",
+      "props": [
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": false,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.FacetedFilter",
+      "props": [
+        {
+          "name": "options",
+          "type": "FacetOption[]",
+          "required": true,
+          "description": "Facet options as `{ value, label, icon? }`.",
+          "from": "arkcn"
+        },
+        {
+          "name": "column",
+          "type": "DataTableColumn<TData, TValue>",
+          "required": false,
+          "description": "Id of the column this part belongs to.",
+          "from": "arkcn"
+        },
+        {
+          "name": "columnId",
+          "type": "string",
+          "required": false,
+          "description": "Id of the column this filter applies to.",
+          "from": "arkcn"
+        },
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": false,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "description": "Title text.",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.Header",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.PageInfo",
+      "props": [
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": false,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.PageNav",
+      "props": [
+        {
+          "name": "showEdges",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Show the first and last page buttons.",
+          "from": "arkcn"
+        },
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": false,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.PageSize",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "arkcn"
+        },
+        {
+          "name": "pageSizes",
+          "type": "number[]",
+          "required": false,
+          "default": "defaultPageSizes",
+          "description": "Choices offered in the page size select.",
+          "from": "arkcn"
+        },
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": false,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.Pagination",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.ResetFilters",
+      "props": [
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\" | null",
+          "required": false,
+          "description": "Size variant; sets a `data-size` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": false,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"link\" | \"default\" | \"outline\" | \"secondary\" | \"ghost\" | \"destructive\" | null",
+          "required": false,
+          "description": "Visual variant, styled with `cva`; sets a `data-variant` attribute.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.Row",
+      "props": [
+        {
+          "name": "row",
+          "type": "DataTableRow<TData>",
+          "required": true,
+          "description": "The row this part belongs to.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.RowActions",
+      "props": [
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "arkcn"
+        },
+        {
+          "name": "trigger",
+          "type": "ReactElement<unknown, string | JSXElementConstructor<any>>",
+          "required": false,
+          "description": "Replace the default ellipsis button with your own element.",
+          "from": "arkcn"
+        },
+        {
+          "name": "anchorPoint",
+          "type": "Point | null",
+          "required": false,
+          "description": "The positioning point for the menu. Can be set by the context menu trigger or the button trigger.",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false,
+          "description": "The accessibility label for the menu",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "closeOnSelect",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to close the menu when an option is selected",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "composite",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether the menu is a composed with other composite widgets like a combobox or tabs",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "defaultHighlightedValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The initial highlighted value of the menu item when rendered.\nUse when you don't need to control the highlighted value of the menu item.",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "description": "The initial open state of the menu when rendered.\nUse when you don't need to control the open state of the menu.",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "defaultTriggerValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The initial trigger value when rendered.\nUse when you don't need to control the trigger value.",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "highlightedValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The controlled highlighted value of the menu item.",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the menu. Useful for composition.",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "loopFocus",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to loop the keyboard navigation.",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "navigate",
+          "type": "((details: NavigateDetails) => void) | null",
+          "required": false,
+          "description": "Function to navigate to the selected item if it's an anchor element",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onEscapeKeyDown",
+          "type": "((event: KeyboardEvent) => void)",
+          "required": false,
+          "description": "Function called when the escape key is pressed",
+          "from": "@zag-js/dismissable"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onFocusOutside",
+          "type": "((event: FocusOutsideEvent) => void)",
+          "required": false,
+          "description": "Function called when the focus is moved outside the component",
+          "from": "@zag-js/interact-outside"
+        },
+        {
+          "name": "onHighlightChange",
+          "type": "((details: HighlightChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the highlighted menu item changes.",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "onInteractOutside",
+          "type": "((event: InteractOutsideEvent) => void)",
+          "required": false,
+          "description": "Function called when an interaction happens outside the component",
+          "from": "@zag-js/interact-outside"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "((details: OpenChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the menu opens or closes",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "onPointerDownOutside",
+          "type": "((event: PointerDownOutsideEvent) => void)",
+          "required": false,
+          "description": "Function called when the pointer is pressed down outside the component",
+          "from": "@zag-js/interact-outside"
+        },
+        {
+          "name": "onRequestDismiss",
+          "type": "((event: LayerDismissEvent) => void)",
+          "required": false,
+          "description": "Function called when this layer is closed due to a parent layer being closed",
+          "from": "@zag-js/dismissable"
+        },
+        {
+          "name": "onSelect",
+          "type": "((details: SelectionDetails) => void)",
+          "required": false,
+          "description": "Function called when a menu item is selected.",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "onTriggerValueChange",
+          "type": "((details: TriggerValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the trigger value changes.",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "description": "The controlled open state of the menu",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "positioning",
+          "type": "PositioningOptions",
+          "required": false,
+          "description": "The options used to dynamically position the menu",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "triggerValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The controlled trigger value",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "typeahead",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether the pressing printable characters should trigger typeahead navigation",
+          "from": "@zag-js/menu"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.RowHandle",
+      "props": [
+        {
+          "name": "label",
+          "type": "string",
+          "required": false,
+          "default": "\"Reorder row\"",
+          "description": "Accessible name for the handle.",
+          "from": "arkcn"
+        },
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": false,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.Search",
+      "props": [
+        {
+          "name": "columnId",
+          "type": "string",
+          "required": false,
+          "description": "Filter a single column instead of the global filter.",
+          "from": "arkcn"
+        },
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": false,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.SelectAll",
+      "props": [
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": true,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultChecked",
+          "type": "CheckedState",
+          "required": false,
+          "description": "The initial checked state of the checkbox when rendered.\nUse when you don't need to control the checked state of the checkbox.",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the checkbox is disabled",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "form",
+          "type": "string",
+          "required": false,
+          "description": "The id of the form that the checkbox belongs to.",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the checkbox. Useful for composition.",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the checkbox is invalid",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the input field in a checkbox.\nUseful for form submission.",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the checkbox is read-only",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the checkbox is required",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "default": "\"on\"",
+          "description": "The value of checkbox input. Useful for form submission.",
+          "from": "@zag-js/checkbox"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.SelectRow",
+      "props": [
+        {
+          "name": "row",
+          "type": "DataTableRow<TData>",
+          "required": true,
+          "description": "The row this part belongs to.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultChecked",
+          "type": "CheckedState",
+          "required": false,
+          "description": "The initial checked state of the checkbox when rendered.\nUse when you don't need to control the checked state of the checkbox.",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the checkbox is disabled",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "form",
+          "type": "string",
+          "required": false,
+          "description": "The id of the form that the checkbox belongs to.",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the checkbox. Useful for composition.",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the checkbox is invalid",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the input field in a checkbox.\nUseful for form submission.",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the checkbox is read-only",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the checkbox is required",
+          "from": "@zag-js/checkbox"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "default": "\"on\"",
+          "description": "The value of checkbox input. Useful for form submission.",
+          "from": "@zag-js/checkbox"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.Table",
+      "props": [
+        {
+          "name": "stickyColumns",
+          "type": "{ left?: string[] | undefined; right?: string[] | undefined; }",
+          "required": false,
+          "description": "IDs of columns to keep at the physical left/right edges. Render each group at its corresponding edge.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.Toolbar",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.ToolbarGroup",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "DataTable.ViewOptions",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "arkcn"
+        },
+        {
+          "name": "table",
+          "type": "DataTableInstance<TData>",
+          "required": false,
+          "description": "The table instance, when not read from context.",
+          "from": "arkcn"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1",
+    "@atlaskit/pragmatic-drag-and-drop": "^3.1.0",
+    "@atlaskit/pragmatic-drag-and-drop-hitbox": "^2.2.0",
+    "lucide-react": "^1.41.0"
+  },
+  "registryDependencies": [
+    "badge",
+    "button",
+    "checkbox",
+    "command",
+    "dropdown-menu",
+    "floating-toolbar",
+    "input",
+    "lib/data-table-adapter",
+    "lib/drag-preview",
+    "lib/table",
+    "lib/utils",
+    "live-region",
+    "popover",
+    "select",
+    "separator",
+    "table",
+    "tooltip"
+  ],
+  "files": [
+    {
+      "path": "components/ui/data-table.tsx",
+      "content": "\"use client\"\n\nimport { ark } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { combine } from \"@atlaskit/pragmatic-drag-and-drop/combine\"\nimport { draggable, dropTargetForElements } from \"@atlaskit/pragmatic-drag-and-drop/element/adapter\"\nimport { attachClosestEdge, extractClosestEdge } from \"@atlaskit/pragmatic-drag-and-drop-hitbox/closest-edge\"\nimport {\n  type ColumnDef,\n  type ColumnFiltersState,\n  type PaginationState,\n  type Row,\n  type RowSelectionState,\n  type SortingState,\n  type TableOptions,\n  type VisibilityState,\n  useTable,\n} from \"@/lib/table\"\nimport {\n  type DataTableColumn,\n  type DataTableInstance,\n  type DataTableRow as DataTableRowInstance,\n} from \"@/lib/data-table-adapter\"\nimport {\n  MinusIcon,\n  ArrowDownIcon,\n  ArrowUpIcon,\n  CheckIcon,\n  ChevronLeftIcon,\n  ChevronRightIcon,\n  ChevronsLeftIcon,\n  ChevronsRightIcon,\n  ChevronsUpDownIcon,\n  EllipsisIcon,\n  EyeOffIcon,\n  GripVerticalIcon,\n  PlusCircleIcon,\n  Settings2Icon,\n  XIcon,\n} from \"lucide-react\"\nimport { cloneDragPreview } from \"@/lib/drag-preview\"\nimport { cn } from \"@/lib/utils\"\nimport { LiveRegion, useLiveRegion } from \"@/components/ui/live-region\"\n\nimport { Badge } from \"@/components/ui/badge\"\nimport { Button } from \"@/components/ui/button\"\nimport { Checkbox } from \"@/components/ui/checkbox\"\nimport { Command, useFilter } from \"@/components/ui/command\"\nimport { DropdownMenu } from \"@/components/ui/dropdown-menu\"\nimport { Input } from \"@/components/ui/input\"\nimport { Popover } from \"@/components/ui/popover\"\nimport { Select, createListCollection } from \"@/components/ui/select\"\nimport { FloatingToolbar } from \"@/components/ui/floating-toolbar\"\nimport { Separator } from \"@/components/ui/separator\"\nimport { Table } from \"@/components/ui/table\"\nimport { Tooltip } from \"@/components/ui/tooltip\"\n\n/* -------------------------------------------------------------------------- */\n/*  Hook                                                                      */\n/* -------------------------------------------------------------------------- */\n\n/**\n * The built-in adapter: the dependency-free engine from `@/lib/table`. Its\n * instance satisfies `DataTableInstance`, so it can be passed to `<DataTable>`\n * directly. Any other object implementing `DataTableInstance` works the same way.\n */\nfunction useDataTable<TData>(options: TableOptions<TData>) {\n  return useTable<TData>(options)\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Context                                                                   */\n/* -------------------------------------------------------------------------- */\n\n// eslint-disable-next-line @typescript-eslint/no-explicit-any\nconst DataTableContext = React.createContext<DataTableInstance<any> | null>(null)\n\nfunction useDataTableContext<TData>(explicit?: DataTableInstance<TData>): DataTableInstance<TData> {\n  const fromContext = React.useContext(DataTableContext)\n  const table = explicit ?? fromContext\n  if (!table) {\n    throw new Error(\"Data table parts must be rendered inside <DataTable> or receive a `table` prop.\")\n  }\n  return table\n}\n\ntype StickyColumnLayout = Record<string, { side: \"left\" | \"right\"; offset: number; edge: boolean }>\nconst DataTableStickyContext = React.createContext<StickyColumnLayout>({})\n\nfunction useStickyColumn(column?: string, header = false) {\n  const layout = React.useContext(DataTableStickyContext)\n  const pinned = column ? layout[column] : undefined\n  return {\n    \"data-pinned\": pinned?.side,\n    className: pinned\n      ? cn(\n          \"sticky transition-colors\",\n          header\n            ? \"z-20 bg-(--table-sticky-bg,var(--background)) group-hover/header:bg-[color-mix(in_oklch,var(--muted)_50%,var(--table-sticky-bg,var(--background)))]\"\n            : \"z-10 bg-(--table-sticky-bg,var(--background)) group-hover/row:bg-[color-mix(in_oklch,var(--muted)_50%,var(--table-sticky-bg,var(--background)))] group-has-aria-expanded/row:bg-[color-mix(in_oklch,var(--muted)_50%,var(--table-sticky-bg,var(--background)))] group-data-grabbed/row:bg-muted group-data-[state=selected]/row:bg-muted\",\n          pinned.edge &&\n            (pinned.side === \"left\" ? \"shadow-[inset_-1px_0_0_var(--border)]\" : \"shadow-[inset_1px_0_0_var(--border)]\")\n        )\n      : undefined,\n    style: pinned ? ({ [pinned.side]: pinned.offset } as React.CSSProperties) : undefined,\n  }\n}\n\n/** Where a dragged row was dropped: just above or below `targetId`. */\ntype DataTableRowReorderDetails = { rowId: string; targetId: string; edge: \"top\" | \"bottom\" }\n\ntype ReorderContextValue = {\n  instanceId: string\n  onRowReorder: (details: DataTableRowReorderDetails) => void\n  announce: (message: string) => void\n}\n\nconst DataTableReorderContext = React.createContext<ReorderContextValue | null>(null)\n\ntype RowContextValue = {\n  rowId: string\n  setHandle: (element: HTMLElement | null) => void\n  grabbed: boolean\n  setGrabbed: (grabbed: boolean) => void\n}\n\nconst DataTableRowContext = React.createContext<RowContextValue | null>(null)\n\n/**\n * Moves `details.rowId` next to `details.targetId` in a list of row ids, for applying\n * `onRowReorder` to your own ordered data.\n */\nfunction reorderRowIds(ids: readonly string[], { rowId, targetId, edge }: DataTableRowReorderDetails): string[] {\n  if (rowId === targetId) return [...ids]\n  const rest = ids.filter((id) => id !== rowId)\n  const index = rest.indexOf(targetId)\n  if (index < 0) return [...ids]\n  rest.splice(edge === \"top\" ? index : index + 1, 0, rowId)\n  return rest\n}\n\nfunction DataTableRoot<TData>({ table, onRowReorder, className, children, ...props }: DataTableRootProps<TData>) {\n  const instanceId = React.useId()\n  const { message, announce } = useLiveRegion({ clearAfter: 3000 })\n  const latest = React.useRef(onRowReorder)\n  React.useEffect(() => {\n    latest.current = onRowReorder\n  })\n  const reorder = React.useMemo<ReorderContextValue | null>(\n    () => (onRowReorder ? { instanceId, onRowReorder: (details) => latest.current?.(details), announce } : null),\n    // Only whether reordering is on matters; the latest callback is read through the ref.\n    // eslint-disable-next-line react-hooks/exhaustive-deps\n    [instanceId, announce, Boolean(onRowReorder)]\n  )\n  return (\n    <DataTableContext.Provider value={table}>\n      <DataTableReorderContext.Provider value={reorder}>\n        <ark.div data-slot=\"data-table\" className={cn(\"flex flex-1 flex-col gap-4\", className)} {...props}>\n          {children}\n          {reorder && <LiveRegion.Root data-slot=\"data-table-live-region\" message={message} />}\n        </ark.div>\n      </DataTableReorderContext.Provider>\n    </DataTableContext.Provider>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Toolbar                                                                   */\n/* -------------------------------------------------------------------------- */\n\nfunction DataTableToolbar({ className, ...props }: DataTableToolbarProps) {\n  return (\n    <ark.div\n      data-slot=\"data-table-toolbar\"\n      className={cn(\"flex items-center justify-between gap-2\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DataTableToolbarGroup({ className, ...props }: DataTableToolbarGroupProps) {\n  return (\n    <ark.div\n      data-slot=\"data-table-toolbar-group\"\n      className={cn(\"flex flex-1 flex-col-reverse items-start gap-2 sm:flex-row sm:items-center\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DataTableSearch<TData>({ table: tableProp, columnId, className, ...props }: DataTableSearchProps<TData>) {\n  const table = useDataTableContext(tableProp)\n  const column = columnId ? table.getColumn(columnId) : undefined\n  const value = columnId\n    ? ((column?.getFilterValue() as string) ?? \"\")\n    : ((table.getState().globalFilter as string) ?? \"\")\n  return (\n    <Input.Root\n      data-slot=\"data-table-search\"\n      value={value}\n      onChange={(event) =>\n        columnId ? column?.setFilterValue(event.target.value) : table.setGlobalFilter(event.target.value)\n      }\n      className={cn(\"h-8 w-37.5 lg:w-62.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction DataTableResetFilters<TData>({\n  table: tableProp,\n  className,\n  children,\n  asChild,\n  ...props\n}: DataTableResetFiltersProps<TData>) {\n  const table = useDataTableContext(tableProp)\n  const isFiltered = table.getState().columnFilters.length > 0 || !!table.getState().globalFilter\n  if (!isFiltered) return null\n  return (\n    <Button\n      data-slot=\"data-table-reset-filters\"\n      variant=\"ghost\"\n      size=\"sm\"\n      asChild={asChild}\n      onClick={() => {\n        table.resetColumnFilters()\n        table.setGlobalFilter(\"\")\n      }}\n      className={className}\n      {...props}\n    >\n      {asChild\n        ? children\n        : (children ?? (\n            <>\n              Reset\n              <XIcon />\n            </>\n          ))}\n    </Button>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Faceted filter                                                            */\n/* -------------------------------------------------------------------------- */\n\ntype FacetOption = {\n  label: string\n  value: string\n  icon?: React.ComponentType<{ className?: string }>\n}\n\nfunction DataTableFacetedFilter<TData, TValue>({\n  table: tableProp,\n  columnId,\n  column: columnProp,\n  title,\n  options,\n}: DataTableFacetedFilterProps<TData, TValue>) {\n  const table = useDataTableContext(tableProp)\n  const column = columnProp ?? (columnId ? table.getColumn(columnId) : undefined)\n  const facets = column?.getFacetedUniqueValues()\n  const selectedValues = new Set((column?.getFilterValue() as string[]) ?? [])\n\n  const { contains } = useFilter({ sensitivity: \"base\" })\n  const [query, setQuery] = React.useState(\"\")\n  const clearValue = React.useMemo(() => {\n    let value = \"__clear__\"\n    while (options.some((option) => option.value === value)) value += \"_\"\n    return value\n  }, [options])\n  const showClear = selectedValues.size > 0 && contains(\"Clear filters\", query)\n  const collection = React.useMemo(\n    () =>\n      createListCollection<FacetOption>({\n        items: [\n          ...options.filter((option) => contains(option.label, query)),\n          ...(showClear ? [{ label: \"Clear filters\", value: clearValue }] : []),\n        ],\n        itemToString: (item) => item.label,\n        itemToValue: (item) => item.value,\n      }),\n    [options, contains, query, showClear, clearValue]\n  )\n\n  const toggle = (value: string) => {\n    const next = new Set(selectedValues)\n    if (next.has(value)) next.delete(value)\n    else next.add(value)\n    const values = Array.from(next)\n    column?.setFilterValue(values.length ? values : undefined)\n  }\n\n  return (\n    <Popover.Root\n      positioning={{ placement: \"bottom-start\" }}\n      onOpenChange={({ open }) => {\n        if (open) setQuery(\"\")\n      }}\n    >\n      <Popover.Trigger asChild>\n        <Button data-slot=\"data-table-faceted-filter-trigger\" variant=\"outline\" size=\"sm\" className=\"h-8 border-dashed\">\n          <PlusCircleIcon />\n          {title}\n          {selectedValues.size > 0 && (\n            <>\n              <Separator.Root orientation=\"vertical\" className=\"mx-2 h-4\" />\n              <Badge.Root variant=\"secondary\" className=\"rounded-sm px-1 font-normal lg:hidden\">\n                {selectedValues.size}\n              </Badge.Root>\n              <div className=\"hidden gap-1 lg:flex\">\n                {selectedValues.size > 2 ? (\n                  <Badge.Root variant=\"secondary\" className=\"rounded-sm px-1 font-normal\">\n                    {selectedValues.size} selected\n                  </Badge.Root>\n                ) : (\n                  options\n                    .filter((option) => selectedValues.has(option.value))\n                    .map((option) => (\n                      <Badge.Root key={option.value} variant=\"secondary\" className=\"rounded-sm px-1 font-normal\">\n                        {option.label}\n                      </Badge.Root>\n                    ))\n                )}\n              </div>\n            </>\n          )}\n        </Button>\n      </Popover.Trigger>\n      <Popover.Content data-slot=\"data-table-faceted-filter-content\" className=\"w-50 p-0\">\n        <Command.Root\n          collection={collection}\n          value={[]}\n          onSelect={({ value }) => {\n            if (value === clearValue) column?.setFilterValue(undefined)\n            else toggle(value)\n          }}\n        >\n          <Command.Input placeholder={title} value={query} onValueChange={setQuery} />\n          <Command.Content>\n            <Command.Empty>No results found.</Command.Empty>\n            <Command.ItemGroup>\n              {collection.items\n                .filter((option) => option.value !== clearValue)\n                .map((option) => {\n                  const isSelected = selectedValues.has(option.value)\n                  return (\n                    <Command.Item\n                      key={option.value}\n                      item={option}\n                      className=\"**:data-[slot=command-item-indicator]:hidden\"\n                    >\n                      <div\n                        className={cn(\n                          \"flex size-4 items-center justify-center rounded-[4px] border\",\n                          isSelected\n                            ? \"border-primary bg-primary text-primary-foreground\"\n                            : \"border-input [&_svg]:invisible\"\n                        )}\n                      >\n                        <CheckIcon className=\"size-3.5 text-primary-foreground\" />\n                      </div>\n                      {option.icon && <option.icon className=\"size-4 text-muted-foreground\" />}\n                      <span>{option.label}</span>\n                      {facets?.get(option.value) ? (\n                        <span className=\"ml-auto flex size-4 items-center justify-center font-mono text-xs text-muted-foreground\">\n                          {facets.get(option.value)}\n                        </span>\n                      ) : null}\n                      {/* Nova Command items reserve a trailing indicator even for unchecked items. */}\n                      <span aria-hidden className=\"ml-auto size-4 shrink-0\" />\n                    </Command.Item>\n                  )\n                })}\n            </Command.ItemGroup>\n            {showClear && (\n              <>\n                <Command.Separator />\n                <Command.ItemGroup>\n                  <Command.Item\n                    item={{ label: \"Clear filters\", value: clearValue }}\n                    className=\"justify-center text-center **:data-[slot=command-item-indicator]:hidden\"\n                  >\n                    Clear filters\n                    <span aria-hidden className=\"ml-auto size-4 shrink-0\" />\n                  </Command.Item>\n                </Command.ItemGroup>\n              </>\n            )}\n          </Command.Content>\n        </Command.Root>\n      </Popover.Content>\n    </Popover.Root>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  View options                                                              */\n/* -------------------------------------------------------------------------- */\n\nfunction DataTableViewOptions<TData>({ table: tableProp, className, children }: DataTableViewOptionsProps<TData>) {\n  const table = useDataTableContext(tableProp)\n  return (\n    <DropdownMenu.Root positioning={{ placement: \"bottom-end\" }}>\n      <DropdownMenu.Trigger asChild>\n        <Button\n          data-slot=\"data-table-view-options-trigger\"\n          variant=\"outline\"\n          size=\"sm\"\n          className={cn(\"ml-auto hidden h-8 lg:flex\", className)}\n        >\n          <Settings2Icon />\n          {children ?? \"View\"}\n        </Button>\n      </DropdownMenu.Trigger>\n      <DropdownMenu.Content data-slot=\"data-table-view-options-content\" className=\"w-37.5\">\n        <DropdownMenu.ItemGroup>\n          <DropdownMenu.ItemGroupLabel>Toggle columns</DropdownMenu.ItemGroupLabel>\n          <DropdownMenu.Separator />\n          {table\n            .getAllColumns()\n            .filter((column) => typeof column.accessorFn !== \"undefined\" && column.getCanHide())\n            .map((column) => (\n              <DropdownMenu.CheckboxItem\n                key={column.id}\n                value={column.id}\n                className=\"capitalize\"\n                checked={column.getIsVisible()}\n                onCheckedChange={(value) => column.toggleVisibility(!!value)}\n                closeOnSelect={false}\n              >\n                {column.label ?? column.id}\n              </DropdownMenu.CheckboxItem>\n            ))}\n        </DropdownMenu.ItemGroup>\n      </DropdownMenu.Content>\n    </DropdownMenu.Root>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Column header                                                             */\n/* -------------------------------------------------------------------------- */\n\n/**\n * A header cell bound to a column id. Sortable columns get the sort/hide menu\n * with `children` as the title; hidden columns render nothing.\n */\nfunction DataTableHead<TData>({\n  column: columnId,\n  table: tableProp,\n  className,\n  children,\n  style,\n  ...props\n}: DataTableHeadProps<TData>) {\n  const sticky = useStickyColumn(columnId, true)\n  const table = useDataTableContext(tableProp)\n  const column = columnId ? table.getColumn(columnId) : undefined\n  if (column && !column.getIsVisible()) return null\n  if (!column?.getCanSort()) {\n    return (\n      <Table.Head\n        data-slot=\"data-table-head\"\n        data-column={columnId}\n        {...sticky}\n        className={cn(sticky.className, className)}\n        style={{ ...sticky.style, ...style }}\n        {...props}\n      >\n        {children}\n      </Table.Head>\n    )\n  }\n  const sorted = column.getIsSorted()\n  return (\n    <Table.Head\n      data-slot=\"data-table-head\"\n      data-column={columnId}\n      {...sticky}\n      className={cn(sticky.className, className)}\n      style={{ ...sticky.style, ...style }}\n      {...props}\n    >\n      <DropdownMenu.Root positioning={{ placement: \"bottom-start\" }}>\n        <DropdownMenu.Trigger asChild>\n          <Button variant=\"ghost\" size=\"sm\" className=\"-ml-3 h-8 data-open:bg-accent\">\n            <span>{children}</span>\n            {sorted === \"desc\" ? <ArrowDownIcon /> : sorted === \"asc\" ? <ArrowUpIcon /> : <ChevronsUpDownIcon />}\n          </Button>\n        </DropdownMenu.Trigger>\n        <DropdownMenu.Content>\n          <DropdownMenu.Item value=\"asc\" onSelect={() => column.toggleSorting(false)}>\n            <ArrowUpIcon />\n            Asc\n          </DropdownMenu.Item>\n          <DropdownMenu.Item value=\"desc\" onSelect={() => column.toggleSorting(true)}>\n            <ArrowDownIcon />\n            Desc\n          </DropdownMenu.Item>\n          {column.getCanHide() && (\n            <>\n              <DropdownMenu.Separator />\n              <DropdownMenu.Item value=\"hide\" onSelect={() => column.toggleVisibility(false)}>\n                <EyeOffIcon />\n                Hide\n              </DropdownMenu.Item>\n            </>\n          )}\n        </DropdownMenu.Content>\n      </DropdownMenu.Root>\n    </Table.Head>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Selection cells                                                           */\n/* -------------------------------------------------------------------------- */\n\nfunction DataTableSelectAll<TData>({ table, className, ...props }: DataTableSelectAllProps<TData>) {\n  return (\n    <Checkbox.Root\n      data-slot=\"data-table-select-all\"\n      checked={table.getIsAllPageRowsSelected() || (table.getIsSomePageRowsSelected() && \"indeterminate\")}\n      onCheckedChange={({ checked }) => table.toggleAllPageRowsSelected(checked === true)}\n      aria-label=\"Select all\"\n      className={className}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <Checkbox.Control>\n            <Checkbox.Indicator>\n              <CheckIcon />\n            </Checkbox.Indicator>\n            <Checkbox.Indicator indeterminate>\n              <MinusIcon />\n            </Checkbox.Indicator>\n          </Checkbox.Control>\n          <Checkbox.HiddenInput />\n        </>\n      )}\n    </Checkbox.Root>\n  )\n}\n\nfunction DataTableSelectRow<TData>({ row, className, ...props }: DataTableSelectRowProps<TData>) {\n  return (\n    <Checkbox.Root\n      data-slot=\"data-table-select-row\"\n      checked={row.getIsSelected()}\n      onCheckedChange={({ checked }) => row.toggleSelected(checked === true)}\n      aria-label=\"Select row\"\n      className={className}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <Checkbox.Control>\n            <Checkbox.Indicator>\n              <CheckIcon />\n            </Checkbox.Indicator>\n            <Checkbox.Indicator indeterminate>\n              <MinusIcon />\n            </Checkbox.Indicator>\n          </Checkbox.Control>\n          <Checkbox.HiddenInput />\n        </>\n      )}\n    </Checkbox.Root>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Row actions                                                               */\n/* -------------------------------------------------------------------------- */\n\nfunction DataTableRowActions({ children, className, trigger, ...props }: DataTableRowActionsProps) {\n  return (\n    <DropdownMenu.Root positioning={{ placement: \"bottom-end\" }} {...props}>\n      <DropdownMenu.Trigger asChild>\n        {trigger ?? (\n          <Button\n            data-slot=\"data-table-row-actions-trigger\"\n            variant=\"ghost\"\n            size=\"icon\"\n            className={cn(\"size-8 data-open:bg-muted\", className)}\n          >\n            <EllipsisIcon />\n            <span className=\"sr-only\">Open menu</span>\n          </Button>\n        )}\n      </DropdownMenu.Trigger>\n      <DropdownMenu.Content data-slot=\"data-table-row-actions-content\" className=\"w-40\">\n        {children}\n      </DropdownMenu.Content>\n    </DropdownMenu.Root>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Table rendering                                                           */\n/* -------------------------------------------------------------------------- */\n\nfunction DataTableContainer({ className, ...props }: DataTableContainerProps) {\n  return (\n    <ark.div\n      data-slot=\"data-table-container\"\n      className={cn(\"overflow-hidden rounded-md border\", className)}\n      {...props}\n    />\n  )\n}\n\n/** The header row. Put `DataTableHead` cells inside, one per column, in display order. */\nfunction DataTableHeader({ className, children, ...props }: DataTableHeaderProps) {\n  return (\n    <Table.Header data-slot=\"data-table-header\" className={className} {...props}>\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          <Table.Row className=\"group/header\">{children}</Table.Row>\n        </>\n      )}\n    </Table.Header>\n  )\n}\n\n/**\n * A body row bound to a row instance; carries the selected state. When the table has\n * `onRowReorder`, the row is a drop target and becomes draggable by its `DataTableRowHandle`.\n */\nfunction DataTableRow<TData>({ row, className, ...props }: DataTableRowProps<TData>) {\n  const reorder = React.useContext(DataTableReorderContext)\n  const ref = React.useRef<HTMLTableRowElement>(null)\n  const [handle, setHandle] = React.useState<HTMLElement | null>(null)\n  const [edge, setEdge] = React.useState<\"top\" | \"bottom\" | null>(null)\n  const [dragging, setDragging] = React.useState(false)\n  const [grabbed, setGrabbed] = React.useState(false)\n  const instanceId = reorder?.instanceId\n\n  React.useEffect(() => {\n    const element = ref.current\n    if (!element || !instanceId) return\n    const cleanups = [\n      dropTargetForElements({\n        element,\n        canDrop: ({ source }) => source.data.instanceId === instanceId && source.data.rowId !== row.id,\n        getData: ({ input }) =>\n          attachClosestEdge({ rowId: row.id }, { element, input, allowedEdges: [\"top\", \"bottom\"] }),\n        onDrag: ({ self }) => setEdge(extractClosestEdge(self.data) as \"top\" | \"bottom\" | null),\n        onDragLeave: () => setEdge(null),\n        onDrop: ({ source, self }) => {\n          setEdge(null)\n          const dropEdge = extractClosestEdge(self.data)\n          if (dropEdge !== \"top\" && dropEdge !== \"bottom\") return\n          reorder?.onRowReorder({ rowId: String(source.data.rowId), targetId: row.id, edge: dropEdge })\n        },\n      }),\n    ]\n    if (handle) {\n      cleanups.push(\n        draggable({\n          element,\n          dragHandle: handle,\n          getInitialData: () => ({ instanceId, rowId: row.id }),\n          onGenerateDragPreview: (args) => cloneDragPreview(args),\n          onDragStart: () => setDragging(true),\n          onDrop: () => setDragging(false),\n        })\n      )\n    }\n    return combine(...cleanups)\n  }, [instanceId, row.id, handle, reorder])\n\n  const rowContext = React.useMemo(() => ({ rowId: row.id, setHandle, grabbed, setGrabbed }), [row.id, grabbed])\n  return (\n    <DataTableRowContext.Provider value={rowContext}>\n      <Table.Row\n        ref={ref}\n        data-slot=\"data-table-row\"\n        data-state={row.getIsSelected() ? \"selected\" : undefined}\n        data-dragging={dragging ? \"\" : undefined}\n        data-grabbed={grabbed ? \"\" : undefined}\n        data-drop-edge={edge ?? undefined}\n        className={cn(\n          \"group/row data-dragging:opacity-40 data-grabbed:bg-muted data-[drop-edge=bottom]:*:shadow-[inset_0_-2px_0_0_var(--color-primary)] data-[drop-edge=top]:*:shadow-[inset_0_2px_0_0_var(--color-primary)]\",\n          className\n        )}\n        {...props}\n      />\n    </DataTableRowContext.Provider>\n  )\n}\n\n/**\n * A grip that drags its row to a new position, for tables with `onRowReorder`. Keyboard: Space\n * or Enter picks the row up, ArrowUp/ArrowDown move it one place, and Space, Enter, Escape, or\n * leaving the handle drops it. Moves are announced. Put it in a cell of each row.\n */\nfunction DataTableRowHandle<TData>({\n  table: tableProp,\n  label = \"Reorder row\",\n  className,\n  children,\n  onKeyDown,\n  onBlur,\n  ...props\n}: DataTableRowHandleProps<TData>) {\n  const table = useDataTableContext(tableProp)\n  const reorder = React.useContext(DataTableReorderContext)\n  const row = React.useContext(DataTableRowContext)\n  const element = React.useRef<HTMLButtonElement | null>(null)\n  const rows = table.getRowModel().rows\n  const position = rows.findIndex((candidate) => candidate.id === row?.rowId)\n  // Moving a row can move its DOM node, which drops focus; keep the grabbed handle focused.\n  React.useLayoutEffect(() => {\n    if (row?.grabbed && element.current && document.activeElement !== element.current) element.current.focus()\n  }, [row?.grabbed, position])\n  if (!reorder || !row) return null\n  const release = () => {\n    if (!row.grabbed) return\n    row.setGrabbed(false)\n    reorder.announce(`Dropped at position ${position + 1} of ${rows.length}.`)\n  }\n  return (\n    <Button\n      variant=\"ghost\"\n      size=\"icon\"\n      ref={(node: HTMLButtonElement | null) => {\n        element.current = node\n        row.setHandle(node)\n      }}\n      type=\"button\"\n      data-slot=\"data-table-row-handle\"\n      aria-label={label}\n      aria-pressed={row.grabbed}\n      aria-roledescription=\"sortable handle\"\n      onKeyDown={(event) => {\n        onKeyDown?.(event)\n        if (event.defaultPrevented) return\n        if (event.key === \" \" || event.key === \"Enter\") {\n          event.preventDefault()\n          if (row.grabbed) release()\n          else {\n            row.setGrabbed(true)\n            reorder.announce(\n              `Picked up row ${position + 1} of ${rows.length}. Use the arrow keys to move it, and Space to drop it.`\n            )\n          }\n        } else if (event.key === \"Escape\") release()\n        else if (row.grabbed && (event.key === \"ArrowUp\" || event.key === \"ArrowDown\")) {\n          event.preventDefault()\n          const up = event.key === \"ArrowUp\"\n          const neighbour = rows[position + (up ? -1 : 1)]\n          if (!neighbour) return\n          reorder.onRowReorder({ rowId: row.rowId, targetId: neighbour.id, edge: up ? \"top\" : \"bottom\" })\n          reorder.announce(`Moved to position ${position + (up ? 0 : 2)} of ${rows.length}.`)\n        }\n      }}\n      onBlur={(event) => {\n        onBlur?.(event)\n        // A blur caused by the row moving is followed by refocusing; only a real exit drops the row.\n        requestAnimationFrame(() => {\n          if (document.activeElement !== element.current) release()\n        })\n      }}\n      className={cn(\n        \"size-7 cursor-grab text-muted-foreground hover:bg-transparent active:cursor-grabbing aria-pressed:bg-accent aria-pressed:text-accent-foreground [&_svg:not([class*='size-'])]:size-3\",\n        className\n      )}\n      {...props}\n    >\n      {children ?? <GripVerticalIcon />}\n    </Button>\n  )\n}\n\n/** A body cell bound to a column id; hidden columns render nothing. */\nfunction DataTableCell<TData>({\n  column: columnId,\n  table: tableProp,\n  className,\n  style,\n  ...props\n}: DataTableCellProps<TData>) {\n  const sticky = useStickyColumn(columnId)\n  const table = useDataTableContext(tableProp)\n  const column = columnId ? table.getColumn(columnId) : undefined\n  if (column && !column.getIsVisible()) return null\n  return (\n    <Table.Cell\n      data-slot=\"data-table-cell\"\n      data-column={columnId}\n      {...sticky}\n      className={cn(sticky.className, className)}\n      style={{ ...sticky.style, ...style }}\n      {...props}\n    />\n  )\n}\n\n/**\n * Renders the current page of rows. `children` receives each row and returns\n * its cells (wrap them in `DataTableRow`, or return a fragment of cells to get\n * a default row). Shows `empty` when there are no rows.\n */\nfunction DataTableBody<TData>({\n  table: tableProp,\n  empty = \"No results.\",\n  children,\n  ...props\n}: DataTableBodyProps<TData>) {\n  const table = useDataTableContext(tableProp)\n  const rows = table.getRowModel().rows\n  return (\n    <Table.Body data-slot=\"data-table-body\" {...props}>\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {rows.length ? (\n            rows.map((row) => {\n              const content = typeof children === \"function\" ? children(row) : children\n              return React.isValidElement(content) && content.type === DataTableRow ? (\n                <React.Fragment key={row.id}>{content}</React.Fragment>\n              ) : (\n                <DataTableRow key={row.id} row={row}>\n                  {content}\n                </DataTableRow>\n              )\n            })\n          ) : (\n            <DataTableEmpty table={table}>{empty}</DataTableEmpty>\n          )}\n        </>\n      )}\n    </Table.Body>\n  )\n}\n\n/** A single full-width row for the empty state; spans the visible columns. */\nfunction DataTableEmpty<TData>({ table: tableProp, colSpan, className, ...props }: DataTableEmptyProps<TData>) {\n  const table = useDataTableContext(tableProp)\n  const span = colSpan ?? Math.max(1, table.getAllColumns().filter((c) => c.getIsVisible()).length)\n  return (\n    <Table.Row data-slot=\"data-table-empty\">\n      <Table.Cell colSpan={span} className={cn(\"h-24 text-center\", className)} {...props} />\n    </Table.Row>\n  )\n}\n\n/** The scrolling, bordered table. Compose `DataTableHeader` and `DataTableBody` inside. */\nfunction DataTableTable({ className, stickyColumns, ref, ...props }: DataTableTableProps) {\n  const tableRef = React.useRef<HTMLTableElement>(null)\n  React.useImperativeHandle(ref, () => tableRef.current!, [])\n  const [layout, setLayout] = React.useState<StickyColumnLayout>({})\n  const stickyKey = JSON.stringify(stickyColumns ?? {})\n  React.useLayoutEffect(() => {\n    const table = tableRef.current\n    if (!table) return\n    const config = JSON.parse(stickyKey) as NonNullable<DataTableTableProps[\"stickyColumns\"]>\n    if (!config.left?.length && !config.right?.length) {\n      setLayout((previous) => (Object.keys(previous).length ? {} : previous))\n      return\n    }\n    const measure = () => {\n      const heads = Array.from(table.querySelectorAll<HTMLElement>(\"thead [data-slot='data-table-head'][data-column]\"))\n      const next: StickyColumnLayout = {}\n      for (const side of [\"left\", \"right\"] as const) {\n        const cells = heads.filter((head) => config[side]?.includes(head.dataset.column!))\n        if (side === \"right\") cells.reverse()\n        let offset = 0\n        cells.forEach((head, index) => {\n          next[head.dataset.column!] = { side, offset, edge: index === cells.length - 1 }\n          offset += head.getBoundingClientRect().width\n        })\n      }\n      setLayout((previous) => (JSON.stringify(previous) === JSON.stringify(next) ? previous : next))\n    }\n    const resize = new ResizeObserver(measure)\n    const observe = () => {\n      resize.disconnect()\n      resize.observe(table)\n      table.querySelectorAll(\"thead th\").forEach((head) => resize.observe(head))\n      measure()\n    }\n    const mutations = new MutationObserver(observe)\n    mutations.observe(table, {\n      childList: true,\n      subtree: true,\n      attributes: true,\n      attributeFilter: [\"data-column\", \"colspan\"],\n    })\n    observe()\n    return () => {\n      resize.disconnect()\n      mutations.disconnect()\n    }\n  }, [stickyKey])\n  return (\n    <DataTableStickyContext.Provider value={layout}>\n      <DataTableContainer>\n        <Table.Root ref={tableRef} data-slot=\"data-table-table\" className={className} {...props} />\n      </DataTableContainer>\n    </DataTableStickyContext.Provider>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Pagination                                                                */\n/* -------------------------------------------------------------------------- */\n\nfunction getPageNumbers(currentPage: number, totalPages: number) {\n  const maxVisiblePages = 5\n  const range: Array<number | \"...\"> = []\n  if (totalPages <= maxVisiblePages) {\n    for (let i = 1; i <= totalPages; i++) range.push(i)\n  } else {\n    range.push(1)\n    if (currentPage <= 3) {\n      for (let i = 2; i <= 4; i++) range.push(i)\n      range.push(\"...\", totalPages)\n    } else if (currentPage >= totalPages - 2) {\n      range.push(\"...\")\n      for (let i = totalPages - 3; i <= totalPages; i++) range.push(i)\n    } else {\n      range.push(\"...\")\n      for (let i = currentPage - 1; i <= currentPage + 1; i++) range.push(i)\n      range.push(\"...\", totalPages)\n    }\n  }\n  return range\n}\n\nfunction DataTablePagination({ className, ...props }: DataTablePaginationProps) {\n  return (\n    <ark.div\n      data-slot=\"data-table-pagination\"\n      className={cn(\"flex flex-col-reverse items-center justify-between gap-4 px-2 md:flex-row\", className)}\n      {...props}\n    />\n  )\n}\n\nconst defaultPageSizes = [10, 20, 30, 40, 50]\n\nfunction DataTablePageSize<TData>({\n  table: tableProp,\n  pageSizes = defaultPageSizes,\n  className,\n  children,\n}: DataTablePageSizeProps<TData>) {\n  const table = useDataTableContext(tableProp)\n  const collection = React.useMemo(() => createListCollection({ items: pageSizes.map(String) }), [pageSizes])\n  const pageSize = table.getState().pagination.pageSize\n  const labelId = React.useId()\n  return (\n    <div data-slot=\"data-table-page-size\" className={cn(\"flex items-center gap-2\", className)}>\n      <p id={labelId} className=\"text-sm font-medium\">\n        {children ?? \"Rows per page\"}\n      </p>\n      <Select.Root\n        collection={collection}\n        value={[String(pageSize)]}\n        onValueChange={({ value }) => table.setPageSize(Number(value[0]))}\n        positioning={{ placement: \"top\", sameWidth: true }}\n      >\n        <Select.Control>\n          <Select.Trigger className=\"h-8 w-17.5\" aria-labelledby={labelId}>\n            <Select.ValueText placeholder={String(pageSize)} />\n          </Select.Trigger>\n        </Select.Control>\n        <Select.Content className=\"min-w-0\">\n          {collection.items.map((size) => (\n            <Select.Item key={size} item={size}>\n              {size}\n            </Select.Item>\n          ))}\n        </Select.Content>\n      </Select.Root>\n    </div>\n  )\n}\n\nfunction DataTablePageInfo<TData>({ table: tableProp, className, ...props }: DataTablePageInfoProps<TData>) {\n  const table = useDataTableContext(tableProp)\n  const currentPage = table.getState().pagination.pageIndex + 1\n  const totalPages = Math.max(table.getPageCount(), 1)\n  return (\n    <ark.div\n      data-slot=\"data-table-page-info\"\n      className={cn(\"flex w-25 items-center justify-center text-sm font-medium\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          Page {currentPage} of {totalPages}\n        </>\n      )}\n    </ark.div>\n  )\n}\n\nfunction DataTablePageNav<TData>({\n  table: tableProp,\n  className,\n  showEdges = true,\n  ...props\n}: DataTablePageNavProps<TData>) {\n  const table = useDataTableContext(tableProp)\n  const currentPage = table.getState().pagination.pageIndex + 1\n  const totalPages = table.getPageCount()\n  const pageNumbers = getPageNumbers(currentPage, totalPages)\n  return (\n    <ark.div data-slot=\"data-table-page-nav\" className={cn(\"flex items-center gap-2\", className)} {...props}>\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          {showEdges && (\n            <Button\n              variant=\"outline\"\n              size=\"icon\"\n              className=\"hidden size-8 md:inline-flex\"\n              onClick={() => table.setPageIndex(0)}\n              disabled={!table.getCanPreviousPage()}\n            >\n              <span className=\"sr-only\">Go to first page</span>\n              <ChevronsLeftIcon />\n            </Button>\n          )}\n          <Button\n            variant=\"outline\"\n            size=\"icon\"\n            className=\"size-8\"\n            onClick={() => table.previousPage()}\n            disabled={!table.getCanPreviousPage()}\n          >\n            <span className=\"sr-only\">Go to previous page</span>\n            <ChevronLeftIcon />\n          </Button>\n          {pageNumbers.map((pageNumber, index) =>\n            pageNumber === \"...\" ? (\n              <span key={`ellipsis-${index}`} className=\"px-1 text-sm text-muted-foreground\">\n                ...\n              </span>\n            ) : (\n              <Button\n                key={pageNumber}\n                variant={currentPage === pageNumber ? \"default\" : \"outline\"}\n                size=\"sm\"\n                className=\"h-8 min-w-8 px-2\"\n                onClick={() => table.setPageIndex(pageNumber - 1)}\n                aria-current={currentPage === pageNumber ? \"page\" : undefined}\n              >\n                <span className=\"sr-only\">Go to page </span>\n                {pageNumber}\n              </Button>\n            )\n          )}\n          <Button\n            variant=\"outline\"\n            size=\"icon\"\n            className=\"size-8\"\n            onClick={() => table.nextPage()}\n            disabled={!table.getCanNextPage()}\n          >\n            <span className=\"sr-only\">Go to next page</span>\n            <ChevronRightIcon />\n          </Button>\n          {showEdges && (\n            <Button\n              variant=\"outline\"\n              size=\"icon\"\n              className=\"hidden size-8 md:inline-flex\"\n              onClick={() => table.setPageIndex(table.getPageCount() - 1)}\n              disabled={!table.getCanNextPage()}\n            >\n              <span className=\"sr-only\">Go to last page</span>\n              <ChevronsRightIcon />\n            </Button>\n          )}\n        </>\n      )}\n    </ark.div>\n  )\n}\n\n/* -------------------------------------------------------------------------- */\n/*  Bulk actions                                                              */\n/* -------------------------------------------------------------------------- */\n\nfunction DataTableBulkActions<TData>({\n  table: tableProp,\n  entityName = \"row\",\n  className,\n  children,\n  ...props\n}: DataTableBulkActionsProps<TData>) {\n  const table = useDataTableContext(tableProp)\n  const selectedCount = table.getFilteredSelectedRowModel().rows.length\n  const { message: announcement, announce } = useLiveRegion({ clearAfter: 3000 })\n  const plural = selectedCount > 1 ? \"s\" : \"\"\n\n  React.useEffect(() => {\n    if (selectedCount === 0) return\n    announce(`${selectedCount} ${entityName}${plural} selected. Bulk actions toolbar is available.`)\n  }, [selectedCount, entityName, plural, announce])\n\n  return (\n    <>\n      <LiveRegion.Root data-slot=\"data-table-live-region\" message={announcement} />\n      <FloatingToolbar.Root\n        open={selectedCount > 0}\n        data-slot=\"data-table-bulk-actions\"\n        aria-label={`Bulk actions for ${selectedCount} selected ${entityName}${plural}`}\n        onEscape={() => table.resetRowSelection()}\n        className={className}\n        {...props}\n      >\n        {props.asChild ? (\n          React.isValidElement(children) ? (\n            children\n          ) : null\n        ) : (\n          <>\n            <DataTableBulkActionsClear table={table} />\n            <Separator.Root orientation=\"vertical\" className=\"h-5 data-vertical:self-center\" aria-hidden />\n            <DataTableBulkActionsCount table={table} entityName={entityName} />\n            <Separator.Root orientation=\"vertical\" className=\"h-5 data-vertical:self-center\" aria-hidden />\n            {children}\n          </>\n        )}\n      </FloatingToolbar.Root>\n    </>\n  )\n}\n\nfunction DataTableBulkActionsClear<TData>({\n  table: tableProp,\n  className,\n  asChild,\n  children,\n  ...props\n}: DataTableBulkActionsClearProps<TData>) {\n  const table = useDataTableContext(tableProp)\n  return (\n    <Tooltip.Root>\n      <Tooltip.Trigger asChild>\n        <Button\n          data-slot=\"data-table-bulk-actions-clear\"\n          variant=\"outline\"\n          size=\"icon\"\n          asChild={asChild}\n          onClick={() => table.resetRowSelection()}\n          className={cn(\"size-6 rounded-full\", className)}\n          aria-label=\"Clear selection\"\n          {...props}\n        >\n          {asChild ? children : (children ?? <XIcon />)}\n        </Button>\n      </Tooltip.Trigger>\n      <Tooltip.Content>Clear selection (Escape)</Tooltip.Content>\n    </Tooltip.Root>\n  )\n}\n\nfunction DataTableBulkActionsCount<TData>({\n  table: tableProp,\n  entityName = \"row\",\n  className,\n  ...props\n}: DataTableBulkActionsCountProps<TData>) {\n  const table = useDataTableContext(tableProp)\n  const count = table.getFilteredSelectedRowModel().rows.length\n  return (\n    <ark.div\n      data-slot=\"data-table-bulk-actions-count\"\n      className={cn(\"flex items-center gap-1 text-sm\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <Badge.Root className=\"min-w-8 justify-center rounded-lg\" aria-label={`${count} selected`}>\n            {count}\n          </Badge.Root>\n          <span>\n            <span className=\"hidden sm:inline\">\n              {entityName}\n              {count > 1 ? \"s\" : \"\"}{\" \"}\n            </span>\n            selected\n          </span>\n        </>\n      )}\n    </ark.div>\n  )\n}\n\nfunction DataTableBulkActionTrigger({\n  label,\n  className,\n  children,\n  asChild,\n  ...props\n}: DataTableBulkActionTriggerProps) {\n  return (\n    <Tooltip.Root>\n      <Tooltip.Trigger asChild>\n        <Button\n          data-slot=\"data-table-bulk-action-trigger\"\n          variant=\"outline\"\n          size=\"icon\"\n          asChild={asChild}\n          className={cn(\"size-8\", className)}\n          aria-label={label}\n          {...props}\n        >\n          {asChild ? (\n            children\n          ) : (\n            <>\n              {children}\n              <span className=\"sr-only\">{label}</span>\n            </>\n          )}\n        </Button>\n      </Tooltip.Trigger>\n      <Tooltip.Content>{label}</Tooltip.Content>\n    </Tooltip.Root>\n  )\n}\n\ntype DataTableRootProps<TData = unknown> = React.ComponentProps<typeof ark.div> & {\n  table: DataTableInstance<TData>\n  /**\n   * Turns on row reordering: rows become drop targets and `DataTableRowHandle`s drag them. Called\n   * with the moved row, the row it was dropped next to, and which side; apply it to your data\n   * (for example with `reorderRowIds`). Reorder only an unsorted, unfiltered view.\n   */\n  onRowReorder?: (details: DataTableRowReorderDetails) => void\n}\n\ntype DataTableBodyProps<TData = unknown> = Omit<React.ComponentProps<typeof Table.Body>, \"children\"> & {\n  table?: DataTableInstance<TData>\n  /** Content shown when there are no rows. */\n  empty?: React.ReactNode\n  children: ((row: DataTableRowInstance<TData>) => React.ReactNode) | React.ReactElement\n}\n\ntype DataTableBulkActionTriggerProps = React.ComponentProps<typeof Button> & { label: string }\n\ntype DataTableBulkActionsProps<TData = unknown> = React.ComponentProps<typeof ark.div> & {\n  table?: DataTableInstance<TData>\n  /** Noun used in the selection announcement, e.g. `task`. */\n  entityName?: string\n}\n\ntype DataTableBulkActionsClearProps<TData = unknown> = React.ComponentProps<typeof Button> & {\n  table?: DataTableInstance<TData>\n}\n\ntype DataTableBulkActionsCountProps<TData = unknown> = React.ComponentProps<typeof ark.div> & {\n  table?: DataTableInstance<TData>\n  /** Noun used in the selection announcement, e.g. `task`. */\n  entityName?: string\n}\n\ntype DataTableCellProps<TData = unknown> = React.ComponentProps<typeof Table.Cell> & {\n  column?: string\n  table?: DataTableInstance<TData>\n}\n\ntype DataTableHeadProps<TData = unknown> = React.ComponentProps<typeof Table.Head> & {\n  column?: string\n  table?: DataTableInstance<TData>\n}\n\ntype DataTableContainerProps = React.ComponentProps<typeof ark.div>\n\ntype DataTableEmptyProps<TData = unknown> = React.ComponentProps<typeof Table.Cell> & {\n  table?: DataTableInstance<TData>\n  colSpan?: number\n}\n\ntype DataTableFacetedFilterProps<TData = unknown, TValue = unknown> = {\n  table?: DataTableInstance<TData>\n  /** Id of the column this filter applies to. */\n  columnId?: string\n  column?: DataTableColumn<TData, TValue>\n  title?: string\n  /** Facet options as `{ value, label, icon? }`. */\n  options: FacetOption[]\n}\n\ntype DataTableHeaderProps = React.ComponentProps<typeof Table.Header>\n\ntype DataTablePageInfoProps<TData = unknown> = React.ComponentProps<typeof ark.div> & {\n  table?: DataTableInstance<TData>\n}\n\ntype DataTablePageNavProps<TData = unknown> = React.ComponentProps<typeof ark.div> & {\n  table?: DataTableInstance<TData>\n  /** Show the first and last page buttons. */\n  showEdges?: boolean\n}\n\ntype DataTablePageSizeProps<TData = unknown> = {\n  table?: DataTableInstance<TData>\n  /** Choices offered in the page size select. */\n  pageSizes?: number[]\n  className?: string\n  children?: React.ReactNode\n}\n\ntype DataTablePaginationProps = React.ComponentProps<typeof ark.div>\n\ntype DataTableResetFiltersProps<TData = unknown> = React.ComponentProps<typeof Button> & {\n  table?: DataTableInstance<TData>\n}\n\ntype DataTableRowProps<TData = unknown> = React.ComponentProps<typeof Table.Row> & {\n  row: DataTableRowInstance<TData>\n}\n\ntype DataTableRowHandleProps<TData = unknown> = React.ComponentProps<typeof ark.button> & {\n  table?: DataTableInstance<TData>\n  /**\n   * Accessible name for the handle.\n   * @default \"Reorder row\"\n   */\n  label?: string\n}\n\ntype DataTableRowActionsProps = React.ComponentProps<typeof DropdownMenu.Root> & {\n  className?: string\n  /** Replace the default ellipsis button with your own element. */\n  trigger?: React.ReactElement\n}\n\ntype DataTableSearchProps<TData = unknown> = Omit<React.ComponentProps<typeof Input.Root>, \"value\" | \"onChange\"> & {\n  table?: DataTableInstance<TData>\n  /** Filter a single column instead of the global filter. */\n  columnId?: string\n}\n\ntype DataTableSelectAllProps<TData = unknown> = Omit<\n  React.ComponentProps<typeof Checkbox.Root>,\n  \"checked\" | \"onCheckedChange\"\n> & {\n  table: DataTableInstance<TData>\n}\n\ntype DataTableSelectRowProps<TData = unknown> = Omit<\n  React.ComponentProps<typeof Checkbox.Root>,\n  \"checked\" | \"onCheckedChange\"\n> & {\n  row: DataTableRowInstance<TData>\n}\n\ntype DataTableTableProps = React.ComponentProps<typeof Table.Root> & {\n  /** IDs of columns to keep at the physical left/right edges. Render each group at its corresponding edge. */\n  stickyColumns?: { left?: string[]; right?: string[] }\n}\n\ntype DataTableToolbarProps = React.ComponentProps<typeof ark.div>\n\ntype DataTableToolbarGroupProps = React.ComponentProps<typeof ark.div>\n\ntype DataTableViewOptionsProps<TData = unknown> = {\n  table?: DataTableInstance<TData>\n  className?: string\n  children?: React.ReactNode\n}\n\nconst DataTable = {\n  Root: DataTableRoot,\n  Body: DataTableBody,\n  BulkActionTrigger: DataTableBulkActionTrigger,\n  BulkActions: DataTableBulkActions,\n  BulkActionsClear: DataTableBulkActionsClear,\n  BulkActionsCount: DataTableBulkActionsCount,\n  Cell: DataTableCell,\n  Head: DataTableHead,\n  Container: DataTableContainer,\n  Empty: DataTableEmpty,\n  FacetedFilter: DataTableFacetedFilter,\n  Header: DataTableHeader,\n  PageInfo: DataTablePageInfo,\n  PageNav: DataTablePageNav,\n  PageSize: DataTablePageSize,\n  Pagination: DataTablePagination,\n  ResetFilters: DataTableResetFilters,\n  Row: DataTableRow,\n  RowActions: DataTableRowActions,\n  RowHandle: DataTableRowHandle,\n  Search: DataTableSearch,\n  SelectAll: DataTableSelectAll,\n  SelectRow: DataTableSelectRow,\n  Table: DataTableTable,\n  Toolbar: DataTableToolbar,\n  ToolbarGroup: DataTableToolbarGroup,\n  ViewOptions: DataTableViewOptions,\n}\n\nexport {\n  DataTable,\n  getPageNumbers,\n  reorderRowIds,\n  useDataTable,\n  useDataTableContext,\n  type ColumnDef,\n  type ColumnFiltersState,\n  type FacetOption,\n  type PaginationState,\n  type Row,\n  type RowSelectionState,\n  type SortingState,\n  type DataTableColumn,\n  type DataTableInstance,\n  type DataTableRowInstance,\n  type TableOptions,\n  type VisibilityState,\n  type DataTableRootProps,\n  type DataTableBodyProps,\n  type DataTableBulkActionTriggerProps,\n  type DataTableBulkActionsProps,\n  type DataTableBulkActionsClearProps,\n  type DataTableBulkActionsCountProps,\n  type DataTableCellProps,\n  type DataTableHeadProps,\n  type DataTableContainerProps,\n  type DataTableEmptyProps,\n  type DataTableFacetedFilterProps,\n  type DataTableHeaderProps,\n  type DataTablePageInfoProps,\n  type DataTablePageNavProps,\n  type DataTablePageSizeProps,\n  type DataTablePaginationProps,\n  type DataTableResetFiltersProps,\n  type DataTableRowProps,\n  type DataTableRowActionsProps,\n  type DataTableRowHandleProps,\n  type DataTableRowReorderDetails,\n  type DataTableSearchProps,\n  type DataTableSelectAllProps,\n  type DataTableSelectRowProps,\n  type DataTableTableProps,\n  type DataTableToolbarProps,\n  type DataTableToolbarGroupProps,\n  type DataTableViewOptionsProps,\n}\n"
+    }
+  ],
+  "docs": "## Data table\n`packages/react/src/lib/table.ts` is a dependency-free headless table engine (columns, sorting, global +\ncolumn filters with faceted counts, pagination, row selection, visibility). Column config is\ndata only: `{ id | accessorKey | accessorFn, label, enableSorting, enableHiding, filterFn,\nsortingFn }`. No render functions and no markup in column definitions.\n`packages/react/src/components/ui/data-table.tsx` builds compositional parts on the source-agnostic\n`DataTableInstance` contract in `packages/react/src/lib/data-table-adapter.ts`: toolbar, search, faceted\nfilter, reset, view options, `DataTableTable` > `DataTableHeader` (one `DataTableHead\ncolumn=\"id\"` per column; sortable columns get the sort/hide menu with `children` as the title)\n+ `DataTableBody` (`children` is `(row) => cells`; wrap in `DataTableRow` or return a fragment\nof `DataTableCell column=\"id\"` cells), `DataTableEmpty`, select-all/select-row cells, row\nactions, pagination pieces, bulk actions, and row reordering (`onRowReorder` on the root plus a\n`DataTableRowHandle` per row; pragmatic drag-and-drop with keyboard pick-up/move/drop and\nannouncements; `reorderRowIds` applies the result). Heads and cells keyed by a hidden column render\nnothing, so visibility toggles need no extra wiring. The toolkit must not know about specific\ntable libraries (no TanStack). `src/demo/tasks/` and `src/demo/users/` are the reference\nconsumers: `columns.tsx` is pure config, `*-table.tsx` composes the markup."
+}

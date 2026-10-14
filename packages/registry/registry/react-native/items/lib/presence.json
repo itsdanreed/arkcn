@@ -1,0 +1,17 @@
+{
+  "name": "lib/presence",
+  "type": "lib",
+  "description": "Mount hidden panels only after first use, and optionally preserve their local state.",
+  "exports": [
+    "usePanelPresence"
+  ],
+  "parts": [],
+  "dependencies": {},
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "lib/presence.ts",
+      "content": "import { useEffect, useState } from \"react\"\n\n/** Mount hidden panels only after first use, and optionally preserve their local state. */\nexport function usePanelPresence(active: boolean, lazyMount: boolean, unmountOnExit: boolean) {\n  const [visited, setVisited] = useState(active)\n  useEffect(() => {\n    if (active) setVisited(true)\n  }, [active])\n  return active || (!unmountOnExit && (!lazyMount || visited))\n}\n"
+    }
+  ]
+}

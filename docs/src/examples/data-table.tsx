@@ -30,7 +30,7 @@ export default function DataTableExample() {
         </DataTable.ToolbarGroup>
         <DataTable.ViewOptions />
       </DataTable.Toolbar>
-      <DataTable.Table>
+      <DataTable.Table className="min-w-[640px]" stickyColumns={{ left: ["id"], right: ["priority"] }}>
         <DataTable.Header>
           <DataTable.Head column="id">Task</DataTable.Head>
           <DataTable.Head column="title">Title</DataTable.Head>

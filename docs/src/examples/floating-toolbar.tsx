@@ -11,7 +11,7 @@ export default function FloatingToolbarExample() {
         {open ? "Hide" : "Show"} toolbar
       </Button>
       <FloatingToolbar.Root open={open} onEscape={() => setOpen(false)} className="absolute bottom-4">
-        <span className="px-2 text-sm">3 selected</span>
+        <span className="border border-transparent px-2.5 text-sm">3 selected</span>
         <Button
           size="sm"
           variant="ghost"

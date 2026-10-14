@@ -9,3 +9,7 @@ A drag-and-drop layout surface for rows and columns, the model behind the form b
 ## Keyboard
 
 Nodes and handles pick up with Space or Enter. Up and down drop on the row above or below (or pull the node out into its own row when it has siblings), left and right drop beside the neighbour. Palette items are focusable and Enter or Space drops them on the area. A live region announces each move.
+
+## Appearance
+
+Nodes and the drop surface are transparent by default, with a subtle dashed border around the canvas area. Drag and resize handles and node actions stay visible; selection and keyboard pick-up use inset rings, and dragging over the open surface adds a subtle tint. Add borders, backgrounds, or content previews through `className` and children when your layout needs them.

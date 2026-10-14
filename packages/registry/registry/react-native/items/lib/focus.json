@@ -1,0 +1,17 @@
+{
+  "name": "lib/focus",
+  "type": "lib",
+  "description": "Pointer focus on the web must not show a keyboard focus ring.",
+  "exports": [
+    "isFocusVisible"
+  ],
+  "parts": [],
+  "dependencies": {},
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "lib/focus.ts",
+      "content": "import { Platform, type NativeSyntheticEvent, type TargetedEvent } from \"react-native\"\n\n/** Pointer focus on the web must not show a keyboard focus ring. */\nexport function isFocusVisible(event: NativeSyntheticEvent<TargetedEvent>) {\n  if (Platform.OS !== \"web\") return true\n  const target = event.currentTarget as unknown as { matches?: (selector: string) => boolean }\n  return target?.matches?.(\":focus-visible\") ?? false\n}\n"
+    }
+  ]
+}

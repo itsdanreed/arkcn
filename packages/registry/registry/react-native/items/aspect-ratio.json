@@ -1,0 +1,95 @@
+{
+  "name": "aspect-ratio",
+  "type": "ui",
+  "description": "A full-width box that preserves its width-to-height ratio as its parent resizes.",
+  "exports": [
+    "AspectRatio"
+  ],
+  "parts": [
+    {
+      "name": "AspectRatio.Root",
+      "props": [
+        {
+          "name": "ratio",
+          "type": "number",
+          "required": false,
+          "default": "1",
+          "description": "Width divided by height; defaults to a square. Must be finite and positive.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/aspect-ratio.tsx",
+      "content": "/** A full-width box that preserves its width-to-height ratio as its parent resizes. */\nimport type { ComponentPropsWithRef } from \"react\"\nimport { View } from \"react-native\"\nexport type AspectRatioRootProps = ComponentPropsWithRef<typeof View> & {\n  /** Width divided by height; defaults to a square. Must be finite and positive. */\n  ratio?: number\n}\nfunction AspectRatioRoot({ ratio = 1, style, ...props }: AspectRatioRootProps) {\n  if (!Number.isFinite(ratio) || ratio <= 0) throw new Error(\"AspectRatio requires a finite positive ratio\")\n  return (\n    <View style={{ width: \"100%\", aspectRatio: ratio }}>\n      <View {...props} style={[{ position: \"absolute\", inset: 0 }, style]} />\n    </View>\n  )\n}\nexport const AspectRatio = { Root: AspectRatioRoot }\n"
+    }
+  ],
+  "docs": "## Aspect Ratio\n\nRoot fills its parent's width and reserves height using `ratio` (width divided by height). The default is a square.\nRatios must be finite and greater than zero. Put the desired width on a parent View; its width can change without\nmeasuring or updating the ratio in JavaScript.\n\nChildren and native View props, including `ref`, apply to the inner content box. Styles merge after absolute-fill\npositioning, matching the web part. Put image, video, or other content inside Root and style it explicitly."
+}

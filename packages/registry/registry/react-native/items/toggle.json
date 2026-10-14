@@ -1,0 +1,241 @@
+{
+  "name": "toggle",
+  "type": "ui",
+  "description": "A persistent pressed button, with web-matched sizes, colors, and 150ms transitions.",
+  "exports": [
+    "useToggleContext",
+    "useToggle",
+    "Toggle"
+  ],
+  "parts": [
+    {
+      "name": "Toggle.Root",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content of the toggle.",
+          "from": "arkcn"
+        },
+        {
+          "name": "defaultPressed",
+          "type": "boolean",
+          "required": false,
+          "description": "Initial uncontrolled pressed state.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onPressedChange",
+          "type": "((pressed: boolean) => void)",
+          "required": false,
+          "description": "Receives the next pressed state, matching Ark's Toggle callback.",
+          "from": "arkcn"
+        },
+        {
+          "name": "pressed",
+          "type": "boolean",
+          "required": false,
+          "description": "Controlled pressed state.",
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"sm\" | \"lg\"",
+          "required": false,
+          "default": "\"default\"",
+          "description": "Visible control dimensions.",
+          "from": "arkcn"
+        },
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Overrides the built-in text label style.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"outline\"",
+          "required": false,
+          "default": "\"default\"",
+          "description": "Surface treatment.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.\nPrevents interaction.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Toggle.Indicator",
+      "props": [
+        {
+          "name": "fallback",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content shown when the toggle is off.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Toggle.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(state: { pressed: boolean; setPressed: (next: Updater<boolean>) => void; disabled: boolean; }) => ReactNode",
+          "required": true,
+          "description": "Receives the current toggle state.",
+          "from": "arkcn"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "lib/context",
+    "lib/controllable",
+    "lib/focus",
+    "lib/motion",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/toggle.tsx",
+      "content": "/** A persistent pressed button, with web-matched sizes, colors, and 150ms transitions. */\nimport { Children, cloneElement, isValidElement, useState, type ComponentPropsWithRef, type ReactNode } from \"react\"\nimport { Pressable, StyleSheet, View, type StyleProp, type TextStyle } from \"react-native\"\nimport { useControllable } from \"@/lib/controllable\"\nimport { createRequiredContext } from \"@/lib/context\"\nimport { isFocusVisible } from \"@/lib/focus\"\nimport { AnimatedPressable, AnimatedText, useMotion, useShadowTransition } from \"@/lib/motion\"\nimport { useNativeTheme, withOpacity } from \"@/lib/theme\"\n\nexport type UseToggleProps = {\n  /** Controlled pressed state. */\n  pressed?: boolean\n  /** Initial uncontrolled pressed state. */\n  defaultPressed?: boolean\n  /** Receives the next pressed state, matching Ark's Toggle callback. */\n  onPressedChange?: (pressed: boolean) => void\n  /** Prevents interaction. */\n  disabled?: boolean\n}\nexport function useToggle({ pressed, defaultPressed = false, onPressedChange, disabled = false }: UseToggleProps = {}) {\n  const [value, setPressed] = useControllable(pressed, defaultPressed, onPressedChange)\n  return { pressed: value, setPressed, disabled }\n}\nexport type UseToggleReturn = ReturnType<typeof useToggle>\nconst [Provider, useToggleContext] = createRequiredContext<UseToggleReturn & { size?: \"sm\" | \"default\" | \"lg\" }>(\n  \"Toggle\"\n)\nexport { useToggleContext }\nexport type ToggleRootProps = Omit<ComponentPropsWithRef<typeof Pressable>, \"children\"> &\n  UseToggleProps & {\n    /** Surface treatment. */\n    variant?: \"default\" | \"outline\"\n    /** Visible control dimensions. */\n    size?: \"sm\" | \"default\" | \"lg\"\n    /** Content of the toggle. */\n    children?: ReactNode\n    /** Overrides the built-in text label style. */\n    textStyle?: StyleProp<TextStyle>\n  }\nfunction ToggleRoot({\n  pressed,\n  defaultPressed,\n  onPressedChange,\n  disabled,\n  variant = \"default\",\n  size = \"default\",\n  children,\n  style,\n  textStyle,\n  onPress,\n  onHoverIn,\n  onHoverOut,\n  onFocus,\n  onBlur,\n  accessibilityState,\n  ...props\n}: ToggleRootProps) {\n  const state = useToggle({ pressed, defaultPressed, onPressedChange, disabled })\n  const { colors, typography, minimumTouchTarget } = useNativeTheme()\n  const { transition } = useMotion()\n  const [hovered, setHovered] = useState(false)\n  const [focused, setFocused] = useState(false)\n  const [touching, setTouching] = useState(false)\n  const content = Children.toArray(children).reduce<ReactNode[]>((items, child) => {\n    const last = items[items.length - 1]\n    if (\n      (typeof child === \"string\" || typeof child === \"number\") &&\n      (typeof last === \"string\" || typeof last === \"number\")\n    )\n      items[items.length - 1] = String(last) + String(child)\n    else items.push(child)\n    return items\n  }, [])\n  const height = size === \"sm\" ? 28 : size === \"lg\" ? 36 : 32\n  const resolvedStyle = StyleSheet.flatten(typeof style === \"function\" ? style({ pressed: touching }) : style)\n  const shadow = useShadowTransition(\n    resolvedStyle?.boxShadow ?? [\n      { offsetX: 0, offsetY: 0, spreadDistance: focused ? 3 : 0, color: withOpacity(colors.ring, focused ? 0.5 : 0) },\n    ]\n  )\n  return (\n    <Provider value={{ ...state, size }}>\n      <AnimatedPressable\n        accessibilityRole=\"button\"\n        hitSlop={Math.max(0, (minimumTouchTarget - height) / 2)}\n        {...props}\n        {...{ \"aria-pressed\": props.accessibilityRole === \"radio\" ? undefined : state.pressed }}\n        aria-checked={props.accessibilityRole === \"radio\" ? state.pressed : undefined}\n        disabled={disabled}\n        aria-disabled={!!disabled}\n        accessibilityState={{\n          ...accessibilityState,\n          ...(props.accessibilityRole === \"radio\" ? { checked: state.pressed } : { selected: state.pressed }),\n          disabled: !!disabled,\n        }}\n        onPressIn={(event) => {\n          setTouching(true)\n          props.onPressIn?.(event)\n        }}\n        onPressOut={(event) => {\n          setTouching(false)\n          props.onPressOut?.(event)\n        }}\n        onHoverIn={(event) => {\n          setHovered(true)\n          onHoverIn?.(event)\n        }}\n        onHoverOut={(event) => {\n          setHovered(false)\n          onHoverOut?.(event)\n        }}\n        onFocus={(event) => {\n          setFocused(isFocusVisible(event))\n          onFocus?.(event)\n        }}\n        onBlur={(event) => {\n          setFocused(false)\n          onBlur?.(event)\n        }}\n        onPress={(event) => {\n          if (disabled) return\n          onPress?.(event)\n          if (!event.defaultPrevented) state.setPressed(!state.pressed)\n        }}\n        style={[\n          transition(\"all\"),\n          {\n            height,\n            minWidth: height,\n            flexShrink: 0,\n            paddingHorizontal: 10,\n            flexDirection: \"row\",\n            alignItems: \"center\",\n            justifyContent: \"center\",\n            gap: 4,\n            borderRadius: size === \"sm\" ? 8 : 10,\n            borderWidth: variant === \"outline\" ? 1 : 0,\n            borderColor: focused ? colors.ring : colors.input,\n            backgroundColor: state.pressed || hovered ? colors.muted : \"transparent\",\n            opacity: disabled ? 0.5 : 1,\n            zIndex: focused ? 10 : 0,\n          },\n          resolvedStyle,\n          shadow,\n        ]}\n      >\n        {Children.map(content, (child) =>\n          typeof child === \"string\" || typeof child === \"number\" ? (\n            <AnimatedText\n              style={[\n                transition(\"all\"),\n                { ...typography.medium, fontSize: size === \"sm\" ? 12.8 : 14, lineHeight: 20, color: colors.foreground },\n                textStyle,\n              ]}\n            >\n              {typeof child === \"string\" ? child.trim() : child}\n            </AnimatedText>\n          ) : isValidElement<{ size?: number; color?: string }>(child) ? (\n            cloneElement(child, {\n              size: child.props.size ?? (size === \"sm\" ? 14 : 16),\n              color: child.props.color ?? colors.foreground,\n            })\n          ) : (\n            child\n          )\n        )}\n      </AnimatedPressable>\n    </Provider>\n  )\n}\nexport type ToggleIndicatorProps = ComponentPropsWithRef<typeof View> & {\n  /** Content shown when the toggle is off. */\n  fallback?: ReactNode\n}\nfunction ToggleIndicator({ children, fallback, ...props }: ToggleIndicatorProps) {\n  const { pressed, size } = useToggleContext()\n  const { colors, typography } = useNativeTheme()\n  const content = pressed ? children : fallback\n  return (\n    <View {...props}>\n      {Children.map(content, (child) =>\n        typeof child === \"string\" || typeof child === \"number\" ? (\n          <AnimatedText\n            style={{\n              ...typography.medium,\n              fontSize: size === \"sm\" ? 12.8 : 14,\n              lineHeight: 20,\n              color: colors.foreground,\n            }}\n          >\n            {child}\n          </AnimatedText>\n        ) : isValidElement<{ size?: number; color?: string }>(child) ? (\n          cloneElement(child, {\n            size: child.props.size ?? (size === \"sm\" ? 14 : 16),\n            color: child.props.color ?? colors.foreground,\n          })\n        ) : (\n          child\n        )\n      )}\n    </View>\n  )\n}\nexport type ToggleContextProps = {\n  /** Receives the current toggle state. */ children: (state: UseToggleReturn) => ReactNode\n}\nfunction ToggleContext({ children }: ToggleContextProps) {\n  return children(useToggleContext())\n}\n\nexport const Toggle = { Root: ToggleRoot, Indicator: ToggleIndicator, Context: ToggleContext }\n"
+    }
+  ],
+  "docs": "## Toggle\n\nCompose `Toggle.Root` with text or an icon. The `default` and `outline` variants and `sm`, `default`, and `lg`\nsizes use the web dimensions, colors, radii, and 150 ms transitions. Supply an accessibility label for icon-only controls.\n\nUse `defaultPressed` for local state, or `pressed` and `onPressedChange` to control it. The callback receives a\nboolean, matching Ark's Toggle API. `disabled` prevents interaction. `onPress` can cancel the change with\n`event.preventDefault()`.\n\n`Toggle.Indicator` renders its children when pressed and its `fallback` otherwise. `Toggle.Context` and\n`useToggleContext` expose the state; `useToggle` provides standalone state. Native style props replace CSS classes.\nThe native button announces its selected state. Browser-specific form and DOM prop getters are not part of the native hook."
+}

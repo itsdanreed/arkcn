@@ -1,0 +1,654 @@
+{
+  "name": "@multicomma/arkcn-react-native",
+  "framework": "react-native",
+  "initItems": [
+    "lib/theme"
+  ],
+  "version": "0.3.0",
+  "baseDependencies": {},
+  "items": [
+    {
+      "name": "accordion",
+      "type": "ui",
+      "description": "Composable disclosure items with a measured 200ms ease-out height animation.",
+      "exports": [
+        "useAccordionContext",
+        "useAccordionItemContext",
+        "useAccordion",
+        "Accordion"
+      ],
+      "dependencies": [
+        "lucide-react-native",
+        "react-native-reanimated",
+        "react-native-svg",
+        "react-native-worklets"
+      ],
+      "registryDependencies": [
+        "button",
+        "lib/context",
+        "lib/controllable",
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/accordion.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "alert",
+      "type": "ui",
+      "description": "Inline status messages with shared card surfaces and default/destructive variants.",
+      "exports": [
+        "Alert"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/alert.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "aspect-ratio",
+      "type": "ui",
+      "description": "A full-width box that preserves its width-to-height ratio as its parent resizes.",
+      "exports": [
+        "AspectRatio"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "components/ui/aspect-ratio.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "avatar",
+      "type": "ui",
+      "description": "Circular identity images with loading/error fallbacks and shared small/default/large sizes.",
+      "exports": [
+        "Avatar"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/context",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/avatar.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "badge",
+      "type": "ui",
+      "description": "The same compact label and six visual variants as the web badge.",
+      "exports": [
+        "Badge"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/badge.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "button-group",
+      "type": "ui",
+      "description": "Joined buttons, labels, and separators with horizontal or vertical composition.",
+      "exports": [
+        "ButtonGroup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/theme",
+        "separator"
+      ],
+      "files": [
+        "components/ui/button-group.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "button",
+      "type": "ui",
+      "description": "Displays the validation border and ring.",
+      "exports": [
+        "Button"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/focus",
+        "lib/motion",
+        "lib/theme",
+        "spinner"
+      ],
+      "files": [
+        "components/ui/button.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "card",
+      "type": "ui",
+      "description": "Card surfaces, spacing, title typography, and footer treatment match the web renderer.",
+      "exports": [
+        "Card"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/card.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "checkbox",
+      "type": "ui",
+      "description": "A composable checkbox with checked, unchecked, and indeterminate states.",
+      "exports": [
+        "Checkbox"
+      ],
+      "dependencies": [
+        "lucide-react-native",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "lib/context",
+        "lib/controllable",
+        "lib/focus",
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/checkbox.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "collapsible",
+      "type": "ui",
+      "description": "Expandable content with controlled/uncontrolled state and accessible expanded-state announcements.",
+      "exports": [
+        "Collapsible"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "button",
+        "lib/context",
+        "lib/controllable",
+        "lib/presence",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/collapsible.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "input-group",
+      "type": "ui",
+      "description": "Text entry with composable addons, actions, and one shared focus/validation outline.",
+      "exports": [
+        "InputGroup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "button",
+        "input",
+        "lib/context",
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/input-group.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "input",
+      "type": "ui",
+      "description": "Native text entry using value/onChangeText; label with accessibilityLabel.",
+      "exports": [
+        "Input"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/input.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "label",
+      "type": "ui",
+      "description": "Text labels with the web typography and explicit native control activation.",
+      "exports": [
+        "Label"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/label.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "progress",
+      "type": "ui",
+      "description": "Linear and circular progress with clamped values and an indeterminate state.",
+      "exports": [
+        "Progress"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-svg",
+        "react-native-worklets"
+      ],
+      "registryDependencies": [
+        "lib/context",
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/progress.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "radio-group",
+      "type": "ui",
+      "description": "Single-choice fields with controlled state and accessible, individually disabled options.",
+      "exports": [
+        "RadioGroup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/context",
+        "lib/controllable",
+        "lib/focus",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/radio-group.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "separator",
+      "type": "ui",
+      "description": "Decorative hairline divider; use a parent with height for vertical separators.",
+      "exports": [
+        "Separator"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/separator.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "skeleton",
+      "type": "ui",
+      "description": "Loading placeholder using the web two-second opacity pulse; reduced motion disables the pulse.",
+      "exports": [
+        "Skeleton"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-worklets"
+      ],
+      "registryDependencies": [
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/skeleton.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "spinner",
+      "type": "ui",
+      "description": "The web loader's SVG path and one-second linear rotation, with reduced-motion support.",
+      "exports": [
+        "Spinner"
+      ],
+      "dependencies": [
+        "lucide-react-native",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/spinner.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "switch",
+      "type": "ui",
+      "description": "Compact switches with the same track, thumb, and checked colors as the web renderer.",
+      "exports": [
+        "Switch"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/context",
+        "lib/controllable",
+        "lib/focus",
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/switch.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "tabs",
+      "type": "ui",
+      "description": "Content tabs with selected-state styling, horizontal/vertical layouts, and optional panel preservation.",
+      "exports": [
+        "Tabs"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "button",
+        "lib/context",
+        "lib/controllable",
+        "lib/focus",
+        "lib/motion",
+        "lib/presence",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/tabs.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "textarea",
+      "type": "ui",
+      "description": "Multiline native input with the same validation and focus treatment as Input.",
+      "exports": [
+        "Textarea"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "input",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/textarea.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "toggle-group",
+      "type": "ui",
+      "description": "Single or multiple selection with spaced or joined controls.",
+      "exports": [
+        "useToggleGroupContext",
+        "useToggleGroup",
+        "ToggleGroup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/context",
+        "lib/controllable",
+        "toggle"
+      ],
+      "files": [
+        "components/ui/toggle-group.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "toggle",
+      "type": "ui",
+      "description": "A persistent pressed button, with web-matched sizes, colors, and 150ms transitions.",
+      "exports": [
+        "useToggleContext",
+        "useToggle",
+        "Toggle"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/context",
+        "lib/controllable",
+        "lib/focus",
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/toggle.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/canvas",
+      "type": "lib",
+      "description": "Platform-independent drop intent; each renderer supplies its own gesture handling.",
+      "exports": [],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/canvas.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/context",
+      "type": "lib",
+      "description": "Contexts for compound native components fail clearly outside their root.",
+      "exports": [
+        "createRequiredContext"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/context.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/controllable",
+      "type": "lib",
+      "description": "Controlled-or-uncontrolled state. Pass the controlled value (or `undefined`), the uncontrolled default, and an optional change callback that fires in both modes.",
+      "exports": [
+        "useControllable"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/controllable.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/data-table-adapter",
+      "type": "lib",
+      "description": "The contract the data table parts render against. `<DataTable>` accepts any object that satisfies it, so the parts are independent of where the rows, sorting, filtering, and paging come from. The built-in engine in `@/lib/table` satisfies it directly and is the default adapter. To drive the parts from another source (a server-side query, a different table library, a store), implement this interface over that source and pass the result to `<DataTable table={...}>`. Columns are data only: the adapter exposes ids, labels, sorting, visibility, and filtering. Headers and cells are composed in JSX on the page with `DataTableHead` / `DataTableCell`, keyed by column id.",
+      "exports": [],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/data-table-adapter.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/focus",
+      "type": "lib",
+      "description": "Pointer focus on the web must not show a keyboard focus ring.",
+      "exports": [
+        "isFocusVisible"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/focus.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/history",
+      "type": "lib",
+      "description": "Undo/redo state for any immutable value. `set` records a history entry unless `{ commit: false }` is passed (live drags, typing); `checkpoint` snapshots the present before such a sequence so one undo restores it.",
+      "exports": [
+        "useHistory"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/history.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/motion",
+      "type": "lib",
+      "description": "Expo SDKs before CSS boxShadow support still animate shadows on the UI thread.",
+      "exports": [
+        "AnimatedView",
+        "AnimatedText",
+        "AnimatedPressable",
+        "AnimatedTextInput",
+        "useShadowTransition",
+        "useMotion",
+        "spinKeyframes",
+        "pulseKeyframes"
+      ],
+      "dependencies": [
+        "react-native-reanimated",
+        "react-native-worklets"
+      ],
+      "registryDependencies": [
+        "lib/theme"
+      ],
+      "files": [
+        "lib/motion.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/presence",
+      "type": "lib",
+      "description": "Mount hidden panels only after first use, and optionally preserve their local state.",
+      "exports": [
+        "usePanelPresence"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/presence.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/row-layout",
+      "type": "lib",
+      "description": "Rows-and-columns layout helpers for the Canvas primitive. A layout is `Row[]`, each row a list of items with a `width` (flex-grow weight). Drops above/below an item create a row, beside it a column; the resize handle shifts width between neighbours. Shared by the form builder and the widgets page.",
+      "exports": [
+        "applyRowDrop",
+        "resizeRowItems",
+        "removeRowItem"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/canvas"
+      ],
+      "files": [
+        "lib/row-layout.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/table",
+      "type": "lib",
+      "description": "A small headless table engine: column definitions, sorting, global and per-column filtering with faceted counts, pagination, row selection, and column visibility. No external dependencies.",
+      "exports": [
+        "useTable"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/controllable"
+      ],
+      "files": [
+        "lib/table.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/theme",
+      "type": "lib",
+      "description": "Multiply alpha just as Tailwind's color/opacity utilities do.",
+      "exports": [
+        "nativeTokens",
+        "nativeColors",
+        "withOpacity",
+        "NativeThemeProvider",
+        "useNativeTheme"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/tokens"
+      ],
+      "files": [
+        "lib/theme.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/time",
+      "type": "lib",
+      "description": "\"3 minutes ago\", \"yesterday\", \"in 2 weeks\"; \"just now\" under a minute.",
+      "exports": [
+        "formatRelativeTime",
+        "formatCompactAge"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/time.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/tokens",
+      "type": "lib",
+      "description": "Canonical design values shared by the web stylesheet and the native renderer. Colors remain in OKLCH for CSS; native receives their sRGB equivalents.",
+      "exports": [
+        "palettes",
+        "designTokens",
+        "cssColor",
+        "nativeColor"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/tokens.ts"
+      ],
+      "css": false
+    }
+  ]
+}

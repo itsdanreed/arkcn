@@ -14,3 +14,5 @@ Wheel zooms; `panOnScroll` flips plain wheel to pan. Middle, right, or Alt drag,
 
 - `useNodeGraph()` exposes `screenToGraph`, `fitView`, `zoomTo`, and `centerOn`.
 - Extra `data-*` props on a node pass through, which is how a simulation can highlight the active node.
+
+Zoom controls disable at `minZoom` and `maxZoom`. `ZoomValue` resets to 100% (clamped to those limits). Input and output pins sit inside their respective node edges regardless of their order beside `PortLabel`. Data pins use compact circles; `PortPin variant="exec"` uses a right-pointing execution arrow. Both are hollow when disconnected and filled when connected, with a 16px pointer target around the smaller visible shape.

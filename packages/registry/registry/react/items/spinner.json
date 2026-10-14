@@ -1,0 +1,56 @@
+{
+  "name": "spinner",
+  "type": "ui",
+  "description": "",
+  "exports": [
+    "Spinner"
+  ],
+  "parts": [
+    {
+      "name": "Spinner.Root",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1",
+    "lucide-react": "^1.41.0"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/spinner.tsx",
+      "content": "import { ark } from \"@ark-ui/react\"\nimport { cn } from \"@/lib/utils\"\nimport { Loader2Icon } from \"lucide-react\"\n\nfunction SpinnerRoot({ className, ...props }: SpinnerRootProps) {\n  return (\n    <Loader2Icon\n      data-slot=\"spinner\"\n      role=\"status\"\n      aria-label=\"Loading\"\n      className={cn(\"size-4 animate-spin motion-reduce:animate-none\", className)}\n      {...props}\n    />\n  )\n}\n\ntype SpinnerRootProps = React.ComponentProps<typeof ark.svg>\n\nconst Spinner = {\n  Root: SpinnerRoot,\n}\n\nexport { Spinner, type SpinnerRootProps }\n"
+    }
+  ]
+}

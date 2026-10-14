@@ -31,3 +31,6 @@ playwright-report/
 test-results
 playwright-report
 docs/dist
+
+# Generated shadcn component reference for the styling audit
+docs/.style-audit/

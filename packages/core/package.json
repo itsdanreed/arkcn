@@ -1,0 +1,27 @@
+{
+  "name": "@multicomma/arkcn-core",
+  "version": "0.3.0",
+  "type": "module",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itsdanreed/arkcn.git",
+    "directory": "packages/core"
+  },
+  "sideEffects": false,
+  "files": [
+    "src"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts",
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm --prefix ../.. run check"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

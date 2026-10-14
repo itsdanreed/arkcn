@@ -1,3 +1,5 @@
+import { frameworkLabels, isFramework, useFramework } from "./framework"
+import { Select, createListCollection } from "@/components/ui/select"
 import * as React from "react"
 import { useTheme } from "next-themes"
 import { MenuIcon, MoonIcon, SearchIcon, SunIcon } from "lucide-react"
@@ -8,7 +10,7 @@ import { Kbd } from "@/components/ui/kbd"
 import { Sheet } from "@/components/ui/sheet"
 import { cn } from "@/lib/utils"
 import { guides } from "./nav"
-import { groupedComponents, title, version } from "./registry"
+import { groupedComponents, registries, title, version } from "./registry"
 import { Link, useRouter } from "./router"
 
 function GithubIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -26,14 +28,17 @@ function Brand() {
         a
       </span>
       arkcn
-      <span className="rounded-md border px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground">v{version}</span>
+      <span className="hidden rounded-md border px-1.5 py-0.5 text-[10px] font-medium text-muted-foreground sm:inline">
+        v{version}
+      </span>
     </Link>
   )
 }
 
 function SidebarNav({ onNavigate }: { onNavigate?: () => void }) {
   const { path } = useRouter()
-  const groups = React.useMemo(groupedComponents, [])
+  const { framework } = useFramework()
+  const groups = React.useMemo(() => groupedComponents(framework), [framework])
   const link = (to: string, label: string) => (
     <Link
       key={to}
@@ -67,8 +72,9 @@ function SearchDialog() {
   const [open, setOpen] = React.useState(false)
   const [query, setQuery] = React.useState("")
   const { navigate } = useRouter()
+  const { framework } = useFramework()
   const entries = React.useMemo(() => {
-    const items = groupedComponents().flatMap((g) =>
+    const items = groupedComponents(framework).flatMap((g) =>
       g.items.map((i) => ({
         label: title(i.name),
         hint: g.title,
@@ -77,7 +83,7 @@ function SearchDialog() {
       }))
     )
     return [...guides.map((g) => ({ label: g.title, hint: "Guide", to: g.path, text: "" })), ...items]
-  }, [])
+  }, [framework])
   const q = query.trim().toLowerCase()
   const hits = (q ? entries.filter((e) => `${e.label} ${e.text}`.toLowerCase().includes(q)) : entries).slice(0, 12)
   const [active, setActive] = React.useState(0)
@@ -152,6 +158,49 @@ function SearchDialog() {
   )
 }
 
+const frameworkCollection = createListCollection({
+  items: [
+    { label: frameworkLabels.react, value: "react" },
+    { label: frameworkLabels["react-native"], value: "react-native" },
+  ],
+})
+
+function FrameworkSelect() {
+  const { framework, setFramework } = useFramework()
+  const { path } = useRouter()
+  return (
+    <Select.Root
+      collection={frameworkCollection}
+      value={[framework]}
+      positioning={{ placement: "bottom-end" }}
+      onValueChange={({ value }) => {
+        const next = value[0]
+        if (!isFramework(next) || next === framework) return
+        setFramework(next)
+        const component = path.match(/^\/docs\/components\/([^/]+)$/)?.[1]
+        if (component && !registries[next].items.some((item) => item.type === "ui" && item.name === component)) {
+          const base = import.meta.env.BASE_URL.replace(/\/$/, "")
+          window.history.replaceState(null, "", `${base}/docs/components?framework=${next}`)
+          window.dispatchEvent(new PopStateEvent("popstate"))
+        }
+      }}
+    >
+      <Select.Control>
+        <Select.Trigger aria-label="Select framework" className="h-8 w-28 text-xs sm:w-32 sm:text-sm">
+          <Select.ValueText />
+        </Select.Trigger>
+      </Select.Control>
+      <Select.Content className="min-w-40">
+        {frameworkCollection.items.map((item) => (
+          <Select.Item key={item.value} item={item}>
+            {item.label}
+          </Select.Item>
+        ))}
+      </Select.Content>
+    </Select.Root>
+  )
+}
+
 function ThemeToggle() {
   const { resolvedTheme, setTheme } = useTheme()
   return (
@@ -173,7 +222,7 @@ export function Layout({ children, outline }: { children: React.ReactNode; outli
   return (
     <div className="min-h-svh bg-background text-foreground">
       <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur-sm">
-        <div className="mx-auto flex h-14 max-w-screen-2xl items-center gap-4 px-4 md:px-6">
+        <div className="mx-auto flex h-14 max-w-screen-2xl items-center gap-2 px-3 sm:gap-4 sm:px-4 md:px-6">
           <Sheet.Root open={menuOpen} onOpenChange={({ open }) => setMenuOpen(open)}>
             <Sheet.Trigger asChild>
               <Button variant="ghost" size="icon-sm" className="md:hidden" aria-label="Open menu">
@@ -211,12 +260,13 @@ export function Layout({ children, outline }: { children: React.ReactNode; outli
           </nav>
           <div className="ml-auto flex items-center gap-2">
             <SearchDialog />
-            <Button variant="ghost" size="icon-sm" asChild aria-label="GitHub">
+            <Button variant="ghost" size="icon-sm" asChild aria-label="GitHub" className="hidden sm:inline-flex">
               <a href="https://github.com/itsdanreed/arkcn" target="_blank" rel="noreferrer">
                 <GithubIcon />
               </a>
             </Button>
             <ThemeToggle />
+            <FrameworkSelect />
           </div>
         </div>
       </header>

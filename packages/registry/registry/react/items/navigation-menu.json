@@ -1,0 +1,651 @@
+{
+  "name": "navigation-menu",
+  "type": "ui",
+  "description": "",
+  "ark": "NavigationMenu",
+  "exports": [
+    "useNavigationMenu",
+    "useNavigationMenuContext",
+    "NavigationMenu",
+    "navigationMenuTriggerStyle"
+  ],
+  "parts": [
+    {
+      "name": "NavigationMenu.Root",
+      "props": [
+        {
+          "name": "viewport",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Render content in the shared viewport instead of inline.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "closeDelay",
+          "type": "number",
+          "required": false,
+          "default": "300",
+          "description": "The delay before the menu closes",
+          "from": "@zag-js/navigation-menu"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "description": "The default value of the navigation menu.\nUse when you don't want to control the value of the menu.",
+          "from": "@zag-js/navigation-menu"
+        },
+        {
+          "name": "disableClickTrigger",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to disable the click trigger",
+          "from": "@zag-js/navigation-menu"
+        },
+        {
+          "name": "disableHoverTrigger",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to disable the hover trigger",
+          "from": "@zag-js/navigation-menu"
+        },
+        {
+          "name": "disablePointerLeaveClose",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to disable the pointer leave close",
+          "from": "@zag-js/navigation-menu"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the machine.",
+          "from": "@zag-js/navigation-menu"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: ValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the value of the menu changes",
+          "from": "@zag-js/navigation-menu"
+        },
+        {
+          "name": "openDelay",
+          "type": "number",
+          "required": false,
+          "default": "200",
+          "description": "The delay before the menu opens",
+          "from": "@zag-js/navigation-menu"
+        },
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "required": false,
+          "default": "\"horizontal\"",
+          "description": "The orientation of the element.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "translations",
+          "type": "IntlTranslations",
+          "required": false,
+          "description": "Specifies the localized strings that identifies the accessibility elements and their states",
+          "from": "@zag-js/navigation-menu"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The controlled value of the navigation menu",
+          "from": "@zag-js/navigation-menu"
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenu.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseNavigationMenuReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenu.Arrow",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenu.Content",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the item this content belongs to",
+          "from": "@zag-js/navigation-menu"
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenu.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseNavigationMenuContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenu.Indicator",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenu.Item",
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "Identifies the item. Auto-generated when omitted.",
+          "from": "arkcn"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the item is disabled",
+          "from": "@zag-js/navigation-menu"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenu.Link",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "closeOnClick",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to close the navigation menu when the link is clicked.",
+          "from": "@zag-js/navigation-menu"
+        },
+        {
+          "name": "current",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the link is the current link",
+          "from": "@zag-js/navigation-menu"
+        },
+        {
+          "name": "onSelect",
+          "type": "((event: CustomEvent<any>) => void)",
+          "required": false,
+          "description": "Function called when the link is selected",
+          "from": "@zag-js/navigation-menu"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value of the item this link belongs to",
+          "from": "@zag-js/navigation-menu"
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenu.List",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenu.Trigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the item is disabled",
+          "from": "@zag-js/navigation-menu"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenu.Viewport",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenu.ViewportPositioner",
+      "props": [
+        {
+          "name": "align",
+          "type": "\"center\" | \"start\" | \"end\"",
+          "required": false,
+          "default": "\"start\"",
+          "description": "Placement of the viewport for css variables `(--viewport-x, --viewport-y)`.",
+          "from": "@zag-js/navigation-menu"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "NavigationMenu.ItemIndicator",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1",
+    "class-variance-authority": "^0.7.1",
+    "lucide-react": "^1.41.0"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/navigation-menu.tsx",
+      "content": "import { useNavigationMenu, useNavigationMenuContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cva } from \"class-variance-authority\"\nimport { cn } from \"@/lib/utils\"\nimport { NavigationMenu as NavigationMenuPrimitive } from \"@ark-ui/react\"\nimport { ChevronDownIcon } from \"lucide-react\"\n\nfunction NavigationMenuRoot({ className, children, viewport = true, ...props }: NavigationMenuRootProps) {\n  return (\n    <NavigationMenuPrimitive.Root\n      data-slot=\"navigation-menu\"\n      data-viewport={viewport}\n      className={cn(\"group/navigation-menu relative flex max-w-max flex-1 items-center justify-center\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children}\n          {viewport && (\n            <NavigationMenuViewportPositioner>\n              <NavigationMenuViewport />\n            </NavigationMenuViewportPositioner>\n          )}\n        </>\n      )}\n    </NavigationMenuPrimitive.Root>\n  )\n}\n\nfunction NavigationMenuContext({ ...props }: NavigationMenuContextProps) {\n  return <NavigationMenuPrimitive.Context {...props} />\n}\n\nfunction NavigationMenuList({ className, ...props }: NavigationMenuListProps) {\n  return (\n    <NavigationMenuPrimitive.List\n      data-slot=\"navigation-menu-list\"\n      className={cn(\"group flex flex-1 list-none items-center justify-center gap-0\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction NavigationMenuItem({ className, value, ...props }: NavigationMenuItemProps) {\n  const id = React.useId()\n  return (\n    <NavigationMenuPrimitive.Item\n      data-slot=\"navigation-menu-item\"\n      value={value ?? id}\n      className={cn(\n        // Ark measures the trigger via offsetLeft for the indicator, so the\n        // item must not be the offset parent while a viewport is rendered.\n        \"group-data-[viewport=false]/navigation-menu:relative\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nconst navigationMenuTriggerStyle = cva(\n  \"group/navigation-menu-trigger inline-flex h-9 w-max items-center justify-center rounded-lg px-2.5 py-1.5 text-sm font-medium transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1 disabled:pointer-events-none disabled:opacity-50 data-open:bg-muted/50 data-open:hover:bg-muted data-open:focus:bg-muted\"\n)\n\nfunction NavigationMenuTrigger({ className, children, onKeyDown, ...props }: NavigationMenuTriggerProps) {\n  const navigationMenu = useNavigationMenuContext()\n  return (\n    <NavigationMenuPrimitive.Trigger\n      data-slot=\"navigation-menu-trigger\"\n      onKeyDown={(event) => {\n        onKeyDown?.(event)\n        // An initially open portal can precede Ark's dismissable-layer setup.\n        if (event.key === \"Escape\" && navigationMenu.open && !event.defaultPrevented) {\n          navigationMenu.setValue(\"\")\n          event.preventDefault()\n          event.stopPropagation()\n        }\n      }}\n      className={cn(navigationMenuTriggerStyle(), \"group\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children}{\" \"}\n          <ChevronDownIcon\n            className=\"relative top-px ml-1 size-3 transition duration-300 group-data-open/navigation-menu-trigger:rotate-180\"\n            aria-hidden=\"true\"\n          />\n        </>\n      )}\n    </NavigationMenuPrimitive.Trigger>\n  )\n}\n\nfunction NavigationMenuContent({ className, ...props }: NavigationMenuContentProps) {\n  return (\n    <NavigationMenuPrimitive.Content\n      data-slot=\"navigation-menu-content\"\n      className={cn(\n        \"relative top-0 left-0 w-max p-1 duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] group-data-[viewport=false]/navigation-menu:absolute group-data-[viewport=false]/navigation-menu:top-full group-data-[viewport=false]/navigation-menu:mt-1.5 group-data-[viewport=false]/navigation-menu:overflow-hidden group-data-[viewport=false]/navigation-menu:rounded-lg group-data-[viewport=false]/navigation-menu:bg-popover group-data-[viewport=false]/navigation-menu:text-popover-foreground group-data-[viewport=false]/navigation-menu:shadow-sm group-data-[viewport=false]/navigation-menu:ring-1 group-data-[viewport=false]/navigation-menu:ring-foreground/10 group-data-[viewport=false]/navigation-menu:duration-300 **:data-[slot=navigation-menu-link]:focus-visible:ring-0 **:data-[slot=navigation-menu-link]:focus-visible:outline-none motion-reduce:animate-none! data-open:animate-in data-open:fade-in group-data-[viewport=false]/navigation-menu:data-open:animate-in group-data-[viewport=false]/navigation-menu:data-open:zoom-in-95 group-data-[viewport=false]/navigation-menu:data-open:fade-in data-closed:absolute data-closed:animate-out data-closed:fade-out group-data-[viewport=false]/navigation-menu:data-closed:animate-out group-data-[viewport=false]/navigation-menu:data-closed:zoom-out-95 group-data-[viewport=false]/navigation-menu:data-closed:fade-out\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction NavigationMenuViewportPositioner({\n  className,\n  align = \"start\",\n  ...props\n}: NavigationMenuViewportPositionerProps) {\n  return (\n    <NavigationMenuPrimitive.ViewportPositioner\n      data-slot=\"navigation-menu-viewport-positioner\"\n      align={align}\n      className={cn(\"absolute top-full left-0 isolate z-50 w-full\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction NavigationMenuViewport({ className, ref, style, ...props }: NavigationMenuViewportProps) {\n  const [node, setNode] = React.useState<HTMLDivElement | null>(null)\n  const setRef = React.useCallback(\n    (element: HTMLDivElement | null) => {\n      setNode(element)\n      if (typeof ref === \"function\") ref(element)\n      else if (ref) ref.current = element\n    },\n    [ref]\n  )\n  React.useLayoutEffect(() => {\n    if (!node) return\n    // Measure size and placement together: Ark schedules them in separate frames.\n    // Keep fractional trigger positions instead of rounding the viewport to pixels.\n    let content: HTMLElement | null = null\n    const measure = () => {\n      if (!content || node.dataset.state !== \"open\" || content.offsetWidth === 0) return\n      const trigger = node.ownerDocument.getElementById(content.getAttribute(\"aria-labelledby\") ?? \"\")\n      const root = node.closest<HTMLElement>('[data-slot=\"navigation-menu\"]')\n      if (trigger && root) {\n        const rootRect = root.getBoundingClientRect()\n        const triggerRect = trigger.getBoundingClientRect()\n        const width = content.offsetWidth\n        const start = triggerRect.left - rootRect.left\n        const align = node.dataset.align ?? \"start\"\n        const rtl = node.dir === \"rtl\"\n        const end = align === (rtl ? \"start\" : \"end\")\n        const desired =\n          align === \"center\" ? start + (triggerRect.width - width) / 2 : end ? start + triggerRect.width - width : start\n        const min = 10 - rootRect.left\n        const max = node.ownerDocument.documentElement.clientWidth - 10 - rootRect.left - width\n        node.style.setProperty(\"--arkcn-viewport-x\", `${Math.max(min, Math.min(desired, max))}px`)\n        node.style.setProperty(\"--arkcn-trigger-center\", `${start + triggerRect.width / 2}px`)\n      }\n      node.style.setProperty(\"--arkcn-viewport-width\", `${content.offsetWidth}px`)\n      node.style.setProperty(\"--arkcn-viewport-height\", `${content.offsetHeight}px`)\n    }\n    const resize = new ResizeObserver(measure)\n    const observe = () => {\n      const next = node.querySelector<HTMLElement>('[data-part=\"content\"][data-state=\"open\"]')\n      if (next === content) return\n      resize.disconnect()\n      content = next\n      if (content) {\n        resize.observe(content)\n        const trigger = node.ownerDocument.getElementById(content.getAttribute(\"aria-labelledby\") ?? \"\")\n        if (trigger) resize.observe(trigger)\n      }\n      const root = node.closest('[data-slot=\"navigation-menu\"]')\n      if (root) resize.observe(root)\n      measure()\n    }\n    const mutation = new MutationObserver(observe)\n    mutation.observe(node, { childList: true, subtree: true, attributes: true, attributeFilter: [\"data-state\"] })\n    observe()\n    const win = node.ownerDocument.defaultView\n    win?.addEventListener(\"resize\", measure)\n    win?.addEventListener(\"scroll\", measure, true)\n    return () => {\n      win?.removeEventListener(\"resize\", measure)\n      win?.removeEventListener(\"scroll\", measure, true)\n      resize.disconnect()\n      mutation.disconnect()\n    }\n  }, [node])\n  return (\n    <NavigationMenuPrimitive.Viewport\n      ref={setRef}\n      // Ark clears previousValue after content exit, which otherwise resets an\n      // in-flight viewport transition to none before its 350ms resize finishes.\n      style={{\n        transition:\n          \"left 350ms cubic-bezier(0.22,1,0.36,1), width 350ms cubic-bezier(0.22,1,0.36,1), height 350ms cubic-bezier(0.22,1,0.36,1)\",\n        ...style,\n      }}\n      data-slot=\"navigation-menu-viewport\"\n      className={cn(\n        \"relative left-(--arkcn-viewport-x,0px) mt-2 h-(--arkcn-viewport-height,auto) w-(--arkcn-viewport-width,max-content) max-w-[calc(100vw-20px)] origin-[calc(var(--arkcn-trigger-center,50%)-var(--arkcn-viewport-x,0px))_-8px] overflow-hidden rounded-lg bg-popover text-popover-foreground shadow-sm ring-1 ring-foreground/10 transition-[left,width,height] duration-350 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:animate-none! motion-reduce:transition-none! data-open:animate-in data-open:fade-in-0 data-open:zoom-in-90 data-closed:animate-out data-closed:duration-150 data-closed:fade-out-0 data-closed:zoom-out-90\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction NavigationMenuLink({ className, ...props }: NavigationMenuLinkProps) {\n  return (\n    <NavigationMenuPrimitive.Link\n      data-slot=\"navigation-menu-link\"\n      className={cn(\n        \"flex items-center gap-2 rounded-lg p-2 text-sm transition-all outline-none hover:bg-muted focus:bg-muted focus-visible:ring-3 focus-visible:ring-ring/50 focus-visible:outline-1 in-data-[slot=navigation-menu-content]:rounded-md data-current:bg-muted/50 data-current:hover:bg-muted data-current:focus:bg-muted [&_svg:not([class*='size-'])]:size-4\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction NavigationMenuIndicator({ className, ...props }: NavigationMenuIndicatorProps) {\n  return (\n    <NavigationMenuPrimitive.Indicator\n      data-slot=\"navigation-menu-indicator\"\n      className={cn(\n        \"absolute top-full left-0 z-1 flex h-1.5 w-(--trigger-width) translate-x-(--trigger-x) items-end justify-center overflow-hidden transition-[width,transform] duration-200 data-open:animate-in data-open:fade-in data-closed:animate-out data-closed:fade-out\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <div className=\"relative top-[60%] size-2 rotate-45 rounded-tl-sm bg-border shadow-md\" />\n        </>\n      )}\n    </NavigationMenuPrimitive.Indicator>\n  )\n}\n\nfunction NavigationMenuArrow({ className, ...props }: NavigationMenuArrowProps) {\n  return <NavigationMenuPrimitive.Arrow data-slot=\"navigation-menu-arrow\" className={cn(className)} {...props} />\n}\n\n/** Marks the active item inside `NavigationMenuIndicator` (the sliding pointer). */\nfunction NavigationMenuItemIndicator({ className, children, ...props }: NavigationMenuItemIndicatorProps) {\n  return (\n    <NavigationMenuPrimitive.ItemIndicator\n      data-slot=\"navigation-menu-item-indicator\"\n      className={cn(\"inline-flex items-center justify-center\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>{children ?? <span className=\"size-2 rotate-45 rounded-tl-sm bg-border\" />}</>\n      )}\n    </NavigationMenuPrimitive.ItemIndicator>\n  )\n}\n\nfunction NavigationMenuRootProvider({ className, ...props }: NavigationMenuRootProviderProps) {\n  return (\n    <NavigationMenuPrimitive.RootProvider\n      data-slot=\"navigation-menu\"\n      className={cn(\"group/navigation-menu relative flex max-w-max flex-1 items-center justify-center\", className)}\n      {...props}\n    />\n  )\n}\n\ntype NavigationMenuRootProps = React.ComponentProps<typeof NavigationMenuPrimitive.Root> & {\n  /** Render content in the shared viewport instead of inline. */\n  viewport?: boolean\n}\n\ntype NavigationMenuRootProviderProps = React.ComponentProps<typeof NavigationMenuPrimitive.RootProvider>\n\ntype NavigationMenuArrowProps = React.ComponentProps<typeof NavigationMenuPrimitive.Arrow>\n\ntype NavigationMenuContentProps = React.ComponentProps<typeof NavigationMenuPrimitive.Content>\n\ntype NavigationMenuContextProps = React.ComponentProps<typeof NavigationMenuPrimitive.Context>\n\ntype NavigationMenuIndicatorProps = React.ComponentProps<typeof NavigationMenuPrimitive.Indicator>\n\ntype NavigationMenuItemProps = Omit<React.ComponentProps<typeof NavigationMenuPrimitive.Item>, \"value\"> & {\n  /** Identifies the item. Auto-generated when omitted. */\n  value?: string\n}\n\ntype NavigationMenuLinkProps = React.ComponentProps<typeof NavigationMenuPrimitive.Link>\n\ntype NavigationMenuListProps = React.ComponentProps<typeof NavigationMenuPrimitive.List>\n\ntype NavigationMenuTriggerProps = React.ComponentProps<typeof NavigationMenuPrimitive.Trigger>\n\ntype NavigationMenuViewportProps = React.ComponentProps<typeof NavigationMenuPrimitive.Viewport>\n\ntype NavigationMenuViewportPositionerProps = React.ComponentProps<typeof NavigationMenuPrimitive.ViewportPositioner>\n\ntype NavigationMenuItemIndicatorProps = React.ComponentProps<typeof NavigationMenuPrimitive.ItemIndicator>\n\nconst NavigationMenu = {\n  Root: NavigationMenuRoot,\n  RootProvider: NavigationMenuRootProvider,\n  Arrow: NavigationMenuArrow,\n  Content: NavigationMenuContent,\n  Context: NavigationMenuContext,\n  Indicator: NavigationMenuIndicator,\n  Item: NavigationMenuItem,\n  Link: NavigationMenuLink,\n  List: NavigationMenuList,\n  Trigger: NavigationMenuTrigger,\n  Viewport: NavigationMenuViewport,\n  ViewportPositioner: NavigationMenuViewportPositioner,\n  ItemIndicator: NavigationMenuItemIndicator,\n}\n\nexport {\n  useNavigationMenu,\n  useNavigationMenuContext,\n  NavigationMenu,\n  navigationMenuTriggerStyle,\n  type NavigationMenuRootProps,\n  type NavigationMenuRootProviderProps,\n  type NavigationMenuArrowProps,\n  type NavigationMenuContentProps,\n  type NavigationMenuContextProps,\n  type NavigationMenuIndicatorProps,\n  type NavigationMenuItemProps,\n  type NavigationMenuLinkProps,\n  type NavigationMenuListProps,\n  type NavigationMenuTriggerProps,\n  type NavigationMenuViewportProps,\n  type NavigationMenuViewportPositionerProps,\n  type NavigationMenuItemIndicatorProps,\n}\n"
+    }
+  ]
+}

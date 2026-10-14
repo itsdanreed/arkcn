@@ -1,0 +1,23 @@
+{
+  "name": "lib/theme",
+  "type": "lib",
+  "description": "Multiply alpha just as Tailwind's color/opacity utilities do.",
+  "exports": [
+    "nativeTokens",
+    "nativeColors",
+    "withOpacity",
+    "NativeThemeProvider",
+    "useNativeTheme"
+  ],
+  "parts": [],
+  "dependencies": {},
+  "registryDependencies": [
+    "lib/tokens"
+  ],
+  "files": [
+    {
+      "path": "lib/theme.ts",
+      "content": "import { createContext, createElement, useContext, type ReactNode } from \"react\"\nimport { Platform, processColor, useColorScheme } from \"react-native\"\nimport { cssColor, designTokens, nativeColor, palettes } from \"@/lib/tokens\"\n\nexport const nativeTokens = designTokens\nconst convertPalette = (scheme: \"light\" | \"dark\", web = false) => {\n  // RN Web quantizes rgba alpha to two decimals. CSS variable fallbacks preserve\n  // the source OKLCH colors and fractional opacity in browser previews.\n  const color = (value: Parameters<typeof nativeColor>[0]) =>\n    web ? `var(--arkcn-native-color, ${cssColor(value)})` : nativeColor(value)\n  const p = palettes[scheme]\n  return {\n    background: color(p.background),\n    foreground: color(p.foreground),\n    card: color(p.card),\n    cardForeground: color(p[\"card-foreground\"]),\n    primary: color(p.primary),\n    primaryForeground: color(p[\"primary-foreground\"]),\n    secondary: color(p.secondary),\n    secondaryHover: color([p.secondary[0] * 0.95 + p.foreground[0] * 0.05, 0, 0]),\n    secondaryForeground: color(p[\"secondary-foreground\"]),\n    muted: color(p.muted),\n    mutedForeground: color(p[\"muted-foreground\"]),\n    accent: color(p.accent),\n    accentForeground: color(p[\"accent-foreground\"]),\n    destructive: color(p.destructive),\n    border: color(p.border),\n    input: color(p.input),\n    ring: color(p.ring),\n  }\n}\nexport type NativeColors = ReturnType<typeof convertPalette>\nexport const nativeColors = { light: convertPalette(\"light\"), dark: convertPalette(\"dark\") }\nconst browserColors = { light: convertPalette(\"light\", true), dark: convertPalette(\"dark\", true) }\n\n/** Multiply alpha just as Tailwind's color/opacity utilities do. */\nexport function withOpacity(color: string, opacity: number) {\n  if (Platform.OS === \"web\")\n    return `var(--arkcn-native-color, color-mix(in oklab, ${color} ${opacity * 100}%, transparent))`\n  const rgba = color.match(/^rgba?\\(\\s*([\\d.]+)[, ]+([\\d.]+)[, ]+([\\d.]+)(?:[, /]+([\\d.]+))?\\s*\\)$/)\n  if (rgba) return `rgba(${rgba[1]}, ${rgba[2]}, ${rgba[3]}, ${Number(rgba[4] ?? 1) * opacity})`\n  const value = processColor(color)\n  if (typeof value !== \"number\") return color\n  return `rgba(${(value >>> 16) & 255}, ${(value >>> 8) & 255}, ${value & 255}, ${((value >>> 24) / 255) * opacity})`\n}\n\nexport type NativeThemeProviderProps = {\n  children: ReactNode\n  colorScheme?: \"light\" | \"dark\"\n  colors?: Partial<NativeColors>\n  /** Override the system motion preference, for example in a preview or accessibility setting. */\n  reducedMotion?: boolean\n  /** Register matching Geist font files in your app for identical typography on devices. */\n  fonts?: { regular: string; medium: string }\n}\nconst ThemeContext = createContext<Omit<NativeThemeProviderProps, \"children\">>({})\nexport function NativeThemeProvider({ children, ...theme }: NativeThemeProviderProps) {\n  return createElement(ThemeContext.Provider, { value: theme }, children)\n}\nexport function useNativeTheme() {\n  const deviceScheme = useColorScheme()\n  const theme = useContext(ThemeContext)\n  const colorScheme = theme.colorScheme ?? (deviceScheme === \"dark\" ? \"dark\" : \"light\")\n  const webFont = Platform.OS === \"web\" ? \"Geist Variable\" : undefined\n  return {\n    ...nativeTokens,\n    colorScheme,\n    reducedMotion: theme.reducedMotion,\n    colors: { ...(Platform.OS === \"web\" ? browserColors : nativeColors)[colorScheme], ...theme.colors },\n    typography: {\n      regular: { includeFontPadding: false, fontFamily: theme.fonts?.regular ?? webFont, fontWeight: \"400\" as const },\n      medium: {\n        includeFontPadding: false,\n        fontFamily: theme.fonts?.medium ?? webFont,\n        fontWeight: (theme.fonts?.medium ? \"400\" : \"500\") as \"400\" | \"500\",\n      },\n    },\n  }\n}\n"
+    }
+  ]
+}

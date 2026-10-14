@@ -1,0 +1,170 @@
+{
+  "name": "swap",
+  "type": "ui",
+  "description": "",
+  "ark": "Swap",
+  "exports": [
+    "useSwap",
+    "useSwapContext",
+    "Swap"
+  ],
+  "parts": [
+    {
+      "name": "Swap.Root",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "swap",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether the swap is in the \"on\" state.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Swap.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseSwapReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Swap.Indicator",
+      "props": [
+        {
+          "name": "type",
+          "type": "\"off\" | \"on\"",
+          "required": true,
+          "description": "Type of the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/swap.tsx",
+      "content": "\"use client\"\n\nimport { useSwap, useSwapContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Swap as SwapPrimitive } from \"@ark-ui/react\"\n\nfunction SwapRoot({ className, ...props }: SwapRootProps) {\n  return (\n    <SwapPrimitive.Root\n      data-slot=\"swap\"\n      className={cn(\n        \"relative inline-grid cursor-pointer place-items-center select-none *:col-start-1 *:row-start-1\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SwapIndicator({ className, ...props }: SwapIndicatorProps) {\n  return (\n    <SwapPrimitive.Indicator\n      data-slot=\"swap-indicator\"\n      className={cn(\n        \"transition-none duration-200 ease-in-out motion-reduce:animate-none! data-open:animate-in data-open:fade-in-0 data-open:zoom-in-75 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-75\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\nfunction SwapRootProvider({ className, ...props }: SwapRootProviderProps) {\n  return (\n    <SwapPrimitive.RootProvider\n      data-slot=\"swap\"\n      className={cn(\n        \"relative inline-grid cursor-pointer place-items-center select-none *:col-start-1 *:row-start-1\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype SwapRootProps = React.ComponentProps<typeof SwapPrimitive.Root>\n\ntype SwapRootProviderProps = React.ComponentProps<typeof SwapPrimitive.RootProvider>\n\ntype SwapIndicatorProps = React.ComponentProps<typeof SwapPrimitive.Indicator>\n\nconst Swap = {\n  Root: SwapRoot,\n  RootProvider: SwapRootProvider,\n  Indicator: SwapIndicator,\n}\n\nexport { useSwap, useSwapContext, Swap, type SwapRootProps, type SwapRootProviderProps, type SwapIndicatorProps }\n"
+    }
+  ]
+}

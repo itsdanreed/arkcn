@@ -14,3 +14,17 @@ On a focused bar: Space or Enter picks it up, left and right move it a day, Shif
 
 - `useGantt()` exposes `xOf`, `dateAt`, and `scrollToDate` for custom overlays and a scroll-to-today on mount.
 - Bars register by timestamp, not by `Date` identity, so re-created dates do not re-register.
+
+## Progress and zoom
+
+`Gantt.Bar` takes a `progress` fraction between `0` and `1` (for example, `0.6` for 60%). The zoom controls disable automatically at `minDayWidth` and `maxDayWidth`. Read-only timelines remove bar focus and resize handles while keeping navigation available.
+
+## Header
+
+`Gantt.Header` labels the sticky column “Task” by default; use `label` to customize it. The current date or period uses a muted background in the header, with the exact date in its tooltip, so it does not cover task bars. For a custom marker date, pass the same date to `Gantt.Header today` and `Gantt.Today date`. The header and row borders fill the viewport even when the date range is narrower than the available space.
+
+The month/year tier is 40px tall with 16px medium text. Its label stays beside the sticky task column while scrolling and moves out when the next period arrives. Date headings remain 14px in their own 40px tier.
+
+## Empty state
+
+Render `Gantt.Empty` when there are no rows, inside `Gantt.Rows` or `Gantt.Body`. Its width follows the visible viewport and it stays pinned horizontally, so the message remains visible at any timeline zoom or scroll position.

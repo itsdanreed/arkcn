@@ -5,7 +5,7 @@ import { join } from "node:path"
 
 const root = new URL("..", import.meta.url).pathname
 const dist = join(root, "docs/dist")
-const index = JSON.parse(readFileSync(join(root, "registry/index.json"), "utf8"))
+const index = JSON.parse(readFileSync(join(root, "packages/registry/registry/react/index.json"), "utf8"))
 const nav = readFileSync(join(root, "docs/src/nav.ts"), "utf8")
 const guidePaths = [...nav.matchAll(/path: "([^"]+)"/g)].map((m) => m[1])
 const routes = [

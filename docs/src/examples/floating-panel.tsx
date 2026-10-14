@@ -7,20 +7,18 @@ export default function FloatingPanelExample() {
       <FloatingPanel.Trigger asChild>
         <Button variant="outline">Open panel</Button>
       </FloatingPanel.Trigger>
-      <FloatingPanel.Positioner>
-        <FloatingPanel.Content>
+      <FloatingPanel.Content>
+        <FloatingPanel.Header>
           <FloatingPanel.DragTrigger>
-            <FloatingPanel.Header>
-              <FloatingPanel.Title>Inspector</FloatingPanel.Title>
-              <FloatingPanel.Control />
-            </FloatingPanel.Header>
+            <FloatingPanel.Title>Inspector</FloatingPanel.Title>
           </FloatingPanel.DragTrigger>
-          <FloatingPanel.Body className="text-sm text-muted-foreground">
-            Drag the header, resize from the edges.
-          </FloatingPanel.Body>
-          <FloatingPanel.ResizeTrigger axis="se" />
-        </FloatingPanel.Content>
-      </FloatingPanel.Positioner>
+          <FloatingPanel.Control />
+        </FloatingPanel.Header>
+        <FloatingPanel.Body className="text-sm text-muted-foreground">
+          Drag the header, resize from the edges.
+        </FloatingPanel.Body>
+        <FloatingPanel.ResizeTrigger axis="se" />
+      </FloatingPanel.Content>
     </FloatingPanel.Root>
   )
 }

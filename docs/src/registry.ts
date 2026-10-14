@@ -1,4 +1,6 @@
-import index from "../../registry/index.json"
+import index from "../../packages/registry/registry/react/index.json"
+import nativeIndex from "../../packages/registry/registry/react-native/index.json"
+import { useFramework, type Framework } from "./framework"
 
 export type RegistryEntry = {
   name: string
@@ -28,18 +30,25 @@ export type RegistryItem = Omit<RegistryEntry, "files" | "dependencies" | "css">
   docs?: string
 }
 
-export const registry = index as unknown as {
+export type Registry = {
   name: string
   version: string
   baseDependencies: Record<string, string>
   items: RegistryEntry[]
 }
-export const version = registry.version
+export const registries: Record<Framework, Registry> = {
+  react: index as Registry,
+  "react-native": nativeIndex as Registry,
+}
+export const version = index.version
+export function useRegistry() {
+  return registries[useFramework().framework]
+}
 
-const itemModules = import.meta.glob<{ default: RegistryItem }>("../../registry/items/**/*.json")
+const itemModules = import.meta.glob<{ default: RegistryItem }>("../../packages/registry/registry/*/items/**/*.json")
 
-export async function loadItem(name: string): Promise<RegistryItem | null> {
-  const loader = itemModules[`../../registry/items/${name}.json`]
+export async function loadItem(name: string, framework: Framework): Promise<RegistryItem | null> {
+  const loader = itemModules[`../../packages/registry/registry/${framework}/items/${name}.json`]
   if (!loader) return null
   return (await loader()).default
 }
@@ -193,7 +202,8 @@ export const groups: { title: string; names: string[] }[] = [
   },
 ]
 
-export function groupedComponents() {
+export function groupedComponents(framework: Framework) {
+  const registry = registries[framework]
   const ui = registry.items.filter((i) => i.type === "ui")
   const placed = new Set<string>()
   const out = groups.map((g) => ({

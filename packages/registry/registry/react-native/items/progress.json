@@ -1,0 +1,1653 @@
+{
+  "name": "progress",
+  "type": "ui",
+  "description": "Linear and circular progress with clamped values and an indeterminate state.",
+  "exports": [
+    "Progress"
+  ],
+  "parts": [
+    {
+      "name": "Progress.Root",
+      "props": [
+        {
+          "name": "value",
+          "type": "number | null",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false,
+          "default": "100",
+          "from": "arkcn"
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Progress.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(state: { percent: number; indeterminate: boolean; state: \"indeterminate\" | \"loading\" | \"complete\"; }) => ReactNode",
+          "required": true,
+          "description": "Receives normalized progress and its state.",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "Progress.View",
+      "props": [
+        {
+          "name": "state",
+          "type": "\"indeterminate\" | \"loading\" | \"complete\"",
+          "required": true,
+          "description": "State in which to render this content.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Progress.Circle",
+      "props": [
+        {
+          "name": "size",
+          "type": "number",
+          "required": false,
+          "default": "40",
+          "description": "Circle diameter, in logical pixels.",
+          "from": "arkcn"
+        },
+        {
+          "name": "thickness",
+          "type": "number",
+          "required": false,
+          "default": "3",
+          "description": "Stroke thickness, in logical pixels.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "accessible",
+          "type": "boolean",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native-svg"
+        },
+        {
+          "name": "clipPath",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "clipRule",
+          "type": "FillRule",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "color",
+          "type": "____ColorValue_Internal",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "delayLongPress",
+          "type": "number",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "delayPressIn",
+          "type": "number",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "delayPressOut",
+          "type": "number",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fill",
+          "type": "____ColorValue_Internal",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fillOpacity",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fillRule",
+          "type": "FillRule",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "filter",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "font",
+          "type": "FontObject",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fontFamily",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fontFeatureSettings",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fontSize",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fontStretch",
+          "type": "FontStretch",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fontStyle",
+          "type": "FontStyle",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fontVariant",
+          "type": "FontVariant",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fontVariantLigatures",
+          "type": "FontVariantLigatures",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fontVariationSettings",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fontWeight",
+          "type": "FontWeight",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "height",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "hitSlop",
+          "type": "number | Readonly<{ bottom?: number | undefined; left?: number | undefined; right?: number | undefined; top?: number | undefined; }>",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "kerning",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "letterSpacing",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "marker",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "markerEnd",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "markerMid",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "markerStart",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "mask",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onLayout",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "onLongPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called when the control is pressed.",
+          "from": "react-native-svg"
+        },
+        {
+          "name": "onPressIn",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "onPressOut",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "opacity",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "origin",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "originX",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "originY",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "pointerEvents",
+          "type": "\"none\" | \"auto\" | \"box-none\" | \"box-only\"",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "preserveAspectRatio",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "rotation",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "scale",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "scaleX",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "scaleY",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "skew",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "skewX",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "skewY",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "stroke",
+          "type": "____ColorValue_Internal",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeDasharray",
+          "type": "NumberProp | readonly NumberProp[]",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeDashoffset",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeLinecap",
+          "type": "Linecap",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeLinejoin",
+          "type": "Linejoin",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeMiterlimit",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeOpacity",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeWidth",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "textAnchor",
+          "type": "TextAnchor",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "textDecoration",
+          "type": "TextDecoration",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "title",
+          "type": "string",
+          "required": false,
+          "description": "Title text.",
+          "from": "react-native-svg"
+        },
+        {
+          "name": "transform",
+          "type": "string | readonly Readonly<MaximumOneOf<MergeUnion<{ readonly perspective: number | AnimatedNode; } | { readonly rotate: string | AnimatedNode; } | { readonl…",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "translate",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "translateX",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "translateY",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "vectorEffect",
+          "type": "VectorEffect",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "viewBox",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "width",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "wordSpacing",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "x",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "y",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        }
+      ]
+    },
+    {
+      "name": "Progress.CircleTrack",
+      "props": [
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "accessible",
+          "type": "boolean",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "clipPath",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "clipRule",
+          "type": "FillRule",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "color",
+          "type": "____ColorValue_Internal",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "cx",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "cy",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "delayLongPress",
+          "type": "number",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "delayPressIn",
+          "type": "number",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "delayPressOut",
+          "type": "number",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fill",
+          "type": "____ColorValue_Internal",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fillOpacity",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fillRule",
+          "type": "FillRule",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "filter",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "marker",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "markerEnd",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "markerMid",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "markerStart",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "mask",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "onLayout",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "onLongPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called when the control is pressed.",
+          "from": "react-native-svg"
+        },
+        {
+          "name": "onPressIn",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "onPressOut",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "opacity",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "origin",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "originX",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "originY",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "pointerEvents",
+          "type": "\"none\" | \"auto\" | \"box-none\" | \"box-only\"",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "r",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "rotation",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "scale",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "scaleX",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "scaleY",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "skew",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "skewX",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "skewY",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "stroke",
+          "type": "____ColorValue_Internal",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeDasharray",
+          "type": "NumberProp | readonly NumberProp[]",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeDashoffset",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeLinecap",
+          "type": "Linecap",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeLinejoin",
+          "type": "Linejoin",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeMiterlimit",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeOpacity",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeWidth",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "transform",
+          "type": "string | readonly Readonly<MaximumOneOf<MergeUnion<{ readonly perspective: number | AnimatedNode; } | { readonly rotate: string | AnimatedNode; } | { readonl…",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "translate",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "translateX",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "translateY",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "vectorEffect",
+          "type": "VectorEffect",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "x",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "y",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        }
+      ]
+    },
+    {
+      "name": "Progress.CircleRange",
+      "props": [
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "accessible",
+          "type": "boolean",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "clipPath",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "clipRule",
+          "type": "FillRule",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "color",
+          "type": "____ColorValue_Internal",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "cx",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "cy",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "delayLongPress",
+          "type": "number",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "delayPressIn",
+          "type": "number",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "delayPressOut",
+          "type": "number",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fill",
+          "type": "____ColorValue_Internal",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fillOpacity",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "fillRule",
+          "type": "FillRule",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "filter",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "marker",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "markerEnd",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "markerMid",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "markerStart",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "mask",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "onLayout",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "onLongPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called when the control is pressed.",
+          "from": "react-native-svg"
+        },
+        {
+          "name": "onPressIn",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "onPressOut",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "opacity",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "origin",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "originX",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "originY",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "pointerEvents",
+          "type": "\"none\" | \"auto\" | \"box-none\" | \"box-only\"",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "r",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "rotation",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "scale",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "scaleX",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "scaleY",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "skew",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "skewX",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "skewY",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "stroke",
+          "type": "____ColorValue_Internal",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeDasharray",
+          "type": "NumberProp | readonly NumberProp[]",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeDashoffset",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeLinecap",
+          "type": "Linecap",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeLinejoin",
+          "type": "Linejoin",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeMiterlimit",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeOpacity",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "strokeWidth",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "transform",
+          "type": "string | readonly Readonly<MaximumOneOf<MergeUnion<{ readonly perspective: number | AnimatedNode; } | { readonly rotate: string | AnimatedNode; } | { readonl…",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "translate",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "translateX",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "translateY",
+          "type": "NumberProp",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "vectorEffect",
+          "type": "VectorEffect",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "x",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        },
+        {
+          "name": "y",
+          "type": "NumberArray",
+          "required": false,
+          "from": "react-native-svg"
+        }
+      ]
+    },
+    {
+      "name": "Progress.Track",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Progress.Range",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Progress.Label",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Progress.ValueText",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "react-native-reanimated": ">=4.1.0 <5",
+    "react-native-svg": "^15.0.0",
+    "react-native-worklets": ">=0.5.0 <1"
+  },
+  "registryDependencies": [
+    "lib/context",
+    "lib/motion",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/progress.tsx",
+      "content": "import { AnimatedView, pulseKeyframes, useMotion } from \"@/lib/motion\"\nimport type { ComponentPropsWithRef, ReactNode } from \"react\"\nimport { Text, View } from \"react-native\"\nimport Svg, { Circle } from \"react-native-svg\"\nimport Animated, { Easing, useAnimatedProps, withTiming } from \"react-native-reanimated\"\nimport { createRequiredContext } from \"@/lib/context\"\nimport { useNativeTheme } from \"@/lib/theme\"\n\n/** Linear and circular progress with clamped values and an indeterminate state. */\nexport type ProgressRootProps = ComponentPropsWithRef<typeof View> & {\n  value: number | null\n  min?: number\n  max?: number\n}\nconst [Provider, useProgress] = createRequiredContext<{\n  percent: number\n  indeterminate: boolean\n  state: \"loading\" | \"complete\" | \"indeterminate\"\n}>(\"Progress\")\nfunction ProgressRoot({ value, min = 0, max = 100, style, accessibilityValue, ...props }: ProgressRootProps) {\n  if (!Number.isFinite(min) || !Number.isFinite(max) || max <= min)\n    throw new Error(\"Progress requires finite min < max\")\n  const now = value !== null && Number.isFinite(value) ? Math.min(max, Math.max(min, value)) : min\n  const percent = ((now - min) / (max - min)) * 100\n  const { spacing } = useNativeTheme()\n  return (\n    <Provider\n      value={{\n        percent,\n        indeterminate: value === null,\n        state: value === null ? \"indeterminate\" : now === max ? \"complete\" : \"loading\",\n      }}\n    >\n      <View\n        accessible\n        accessibilityRole=\"progressbar\"\n        {...props}\n        aria-valuemin={accessibilityValue?.min ?? min}\n        aria-valuemax={accessibilityValue?.max ?? max}\n        aria-valuenow={value === null ? undefined : (accessibilityValue?.now ?? now)}\n        aria-valuetext={accessibilityValue?.text}\n        accessibilityValue={{\n          min,\n          max,\n          ...accessibilityValue,\n          now: value === null ? undefined : (accessibilityValue?.now ?? now),\n        }}\n        accessibilityState={{ ...props.accessibilityState, busy: value === null }}\n        style={[{ width: \"100%\", flexDirection: \"row\", flexWrap: \"wrap\", gap: spacing.md }, style]}\n      />\n    </Provider>\n  )\n}\nexport type ProgressTrackProps = ComponentPropsWithRef<typeof View>\nfunction ProgressTrack({ style, ...props }: ProgressTrackProps) {\n  const { colors, progress, radius } = useNativeTheme()\n  return (\n    <View\n      {...props}\n      style={[\n        {\n          width: \"100%\",\n          height: progress.height,\n          overflow: \"hidden\",\n          borderRadius: radius.full,\n          backgroundColor: colors.muted,\n        },\n        style,\n      ]}\n    />\n  )\n}\nexport type ProgressRangeProps = ComponentPropsWithRef<typeof View>\nfunction ProgressRange({ style, ...props }: ProgressRangeProps) {\n  const { percent, indeterminate } = useProgress()\n  const { colors } = useNativeTheme()\n  const { transition, reduced, motion, easing } = useMotion()\n  return (\n    <AnimatedView\n      {...props}\n      style={[\n        transition([\"width\"]),\n        {\n          position: \"absolute\",\n          left: 0,\n          top: 0,\n          width: indeterminate ? \"33.333333%\" : `${percent}%`,\n          animationName: indeterminate && !reduced ? pulseKeyframes : \"none\",\n          animationDuration: motion.pulseDuration,\n          animationTimingFunction: easing,\n          animationIterationCount: \"infinite\",\n          height: \"100%\",\n          backgroundColor: colors.primary,\n        },\n        style,\n      ]}\n    />\n  )\n}\nexport type ProgressLabelProps = ComponentPropsWithRef<typeof Text>\nfunction ProgressLabel({ style, ...props }: ProgressLabelProps) {\n  const { colors, typography, fontSize, lineHeight } = useNativeTheme()\n  return (\n    <Text\n      {...props}\n      style={[\n        { ...typography.medium, fontSize: fontSize.md, lineHeight: lineHeight.md, color: colors.foreground },\n        style,\n      ]}\n    />\n  )\n}\nexport type ProgressValueTextProps = ComponentPropsWithRef<typeof Text>\nfunction ProgressValueText({ style, children, ...props }: ProgressValueTextProps) {\n  const { percent, indeterminate } = useProgress()\n  const { colors, typography, fontSize, lineHeight } = useNativeTheme()\n  return (\n    <Text\n      {...props}\n      style={[\n        {\n          ...typography.regular,\n          fontSize: fontSize.md,\n          lineHeight: lineHeight.md,\n          color: colors.mutedForeground,\n          marginLeft: \"auto\",\n          fontVariant: [\"tabular-nums\"],\n        },\n        style,\n      ]}\n    >\n      {children ?? (indeterminate ? \"loading...\" : `${Math.round(percent)}%`)}\n    </Text>\n  )\n}\nconst [CircleProvider, useCircle] = createRequiredContext<{ size: number; thickness: number }>(\"Progress.Circle\")\nexport type ProgressCircleProps = ComponentPropsWithRef<typeof Svg> & {\n  /** Circle diameter, in logical pixels. */\n  size?: number\n  /** Stroke thickness, in logical pixels. */\n  thickness?: number\n}\nfunction ProgressCircle({ size = 40, thickness = 3, ...props }: ProgressCircleProps) {\n  if (!Number.isFinite(size) || !Number.isFinite(thickness) || size <= 0 || thickness <= 0 || thickness > size)\n    throw new Error(\"Progress.Circle requires 0 < thickness <= size\")\n  return (\n    <CircleProvider value={{ size, thickness }}>\n      <Svg width={size} height={size} {...props} />\n    </CircleProvider>\n  )\n}\nexport type ProgressCircleTrackProps = ComponentPropsWithRef<typeof Circle>\nfunction ProgressCircleTrack(props: ProgressCircleTrackProps) {\n  const { size, thickness } = useCircle()\n  const { colors } = useNativeTheme()\n  return (\n    <Circle\n      cx={size / 2}\n      cy={size / 2}\n      r={(size - thickness) / 2}\n      fill=\"transparent\"\n      stroke={colors.muted}\n      strokeWidth={thickness}\n      {...props}\n    />\n  )\n}\nconst AnimatedCircle = Animated.createAnimatedComponent(Circle)\nexport type ProgressCircleRangeProps = ComponentPropsWithRef<typeof Circle>\nfunction ProgressCircleRange(props: ProgressCircleRangeProps) {\n  const { size, thickness } = useCircle()\n  const { percent, indeterminate } = useProgress()\n  const { colors } = useNativeTheme()\n  const { reduced, motion } = useMotion()\n  // Match the circumference constant used by Ark's circle geometry.\n  const circumference = 2 * 3.14159 * ((size - thickness) / 2)\n  const animatedProps = useAnimatedProps(\n    () => ({\n      strokeDashoffset: withTiming(circumference * (1 - percent / 100), {\n        duration: reduced ? 0 : motion.duration,\n        easing: Easing.bezier(...motion.easing),\n      }),\n      opacity: withTiming(!indeterminate && percent === 0 ? 0 : 1, {\n        duration: reduced ? 0 : motion.duration,\n        easing: Easing.bezier(...motion.easing),\n      }),\n    }),\n    [circumference, percent, reduced, motion.duration, motion.easing, indeterminate]\n  )\n  return (\n    <AnimatedCircle\n      cx={size / 2}\n      cy={size / 2}\n      r={(size - thickness) / 2}\n      fill=\"transparent\"\n      stroke={colors.primary}\n      strokeWidth={thickness}\n      strokeDasharray={indeterminate ? undefined : circumference}\n      transform={`rotate(-90 ${size / 2} ${size / 2})`}\n      animatedProps={animatedProps}\n      {...props}\n    />\n  )\n}\nexport type ProgressViewProps = ComponentPropsWithRef<typeof View> & {\n  /** State in which to render this content. */\n  state: \"loading\" | \"complete\" | \"indeterminate\"\n}\nfunction ProgressView({ state, ...props }: ProgressViewProps) {\n  return useProgress().state === state ? <View {...props} /> : null\n}\nexport type ProgressContextProps = {\n  /** Receives normalized progress and its state. */ children: (state: ReturnType<typeof useProgress>) => ReactNode\n}\nfunction ProgressContext({ children }: ProgressContextProps) {\n  return children(useProgress())\n}\nexport const Progress = {\n  Root: ProgressRoot,\n  Context: ProgressContext,\n  View: ProgressView,\n  Circle: ProgressCircle,\n  CircleTrack: ProgressCircleTrack,\n  CircleRange: ProgressCircleRange,\n  Track: ProgressTrack,\n  Range: ProgressRange,\n  Label: ProgressLabel,\n  ValueText: ProgressValueText,\n}\n"
+    }
+  ],
+  "docs": "## Progress\n\nCompose Root, Label, ValueText, Track, and Range for a linear bar. Pass a numeric `value` with optional `min`/`max`\n(0/100 by default). Values are clamped; bounds must be finite with `max > min`. ValueText displays the normalized\npercentage, or your supplied children. Give Root an `accessibilityLabel` describing the task.\n\nFor circular progress, compose Circle, CircleTrack, and CircleRange. The default diameter is 40 pixels and stroke\nthickness is 3 pixels, matching the web component. Circle accepts `size` and `thickness`. Value changes animate the\nstroke offset over 150 ms using the shared easing curve.\n\nSet `value={null}` for indeterminate progress. The linear range occupies one third of the track and pulses every two\nseconds, exactly as the web component. An indeterminate circle is a full ring, matching the web circle. Reduced motion\ndisables the pulse and transitions. An unknown value omits the current accessibility range value.\n\n`Progress.View state=\"loading\"`, `\"complete\"`, or `\"indeterminate\"` conditionally renders content. Context exposes\nnormalized percentage, indeterminate status, and state. The current native Root takes an externally supplied value;\nArk's uncontrolled state hook and RootProvider are not yet implemented."
+}

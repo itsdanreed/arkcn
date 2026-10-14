@@ -58,7 +58,7 @@ export default function DatePickerExample() {
                       </DatePicker.ViewTrigger>
                       <DatePicker.NextTrigger aria-label="Next year">›</DatePicker.NextTrigger>
                     </DatePicker.ViewControl>
-                    <DatePicker.Table>
+                    <DatePicker.Table columns={3}>
                       <DatePicker.TableBody>
                         {api.getMonthsGrid({ columns: 3, format: "short" }).map((months, index) => (
                           <DatePicker.TableRow key={index}>
@@ -86,7 +86,7 @@ export default function DatePickerExample() {
                       </DatePicker.ViewTrigger>
                       <DatePicker.NextTrigger aria-label="Next decade">›</DatePicker.NextTrigger>
                     </DatePicker.ViewControl>
-                    <DatePicker.Table>
+                    <DatePicker.Table columns={3}>
                       <DatePicker.TableBody>
                         {api.getYearsGrid({ columns: 3 }).map((years, index) => (
                           <DatePicker.TableRow key={index}>

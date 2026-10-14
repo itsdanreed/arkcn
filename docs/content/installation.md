@@ -40,7 +40,7 @@ Components that use browser APIs carry `"use client"` where needed.
 
 ## Manual
 
-If you would rather not run the CLI, copy the files from the [registry](https://github.com/itsdanreed/arkcn/tree/main/registry) on GitHub. Each `registry/items/<name>.json` lists its files, the components it imports, its packages, and an optional CSS block. `registry/base.css` is what `init` merges into your stylesheet.
+If you would rather not run the CLI, copy the files from the [registry](https://github.com/itsdanreed/arkcn/tree/main/packages/registry/registry/react) on GitHub. Each `registry/items/<name>.json` lists its files, the components it imports, its packages, and an optional CSS block. `registry/base.css` is what `init` merges into your stylesheet.
 
 ## Options
 

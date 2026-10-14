@@ -10,6 +10,15 @@ export default function ButtonExample() {
       <Button variant="ghost">Ghost</Button>
       <Button variant="destructive">Destructive</Button>
       <Button variant="link">Link</Button>
+      <Button variant="outline" disabled>
+        Disabled
+      </Button>
+      <Button variant="outline" aria-invalid>
+        Invalid
+      </Button>
+      <Button variant="outline" aria-expanded>
+        Expanded
+      </Button>
       <Button size="sm">
         <MailIcon /> Email
       </Button>

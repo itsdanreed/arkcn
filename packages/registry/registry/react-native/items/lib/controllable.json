@@ -1,0 +1,17 @@
+{
+  "name": "lib/controllable",
+  "type": "lib",
+  "description": "Controlled-or-uncontrolled state. Pass the controlled value (or `undefined`), the uncontrolled default, and an optional change callback that fires in both modes.",
+  "exports": [
+    "useControllable"
+  ],
+  "parts": [],
+  "dependencies": {},
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "lib/controllable.ts",
+      "content": "import * as React from \"react\"\n\ntype Updater<T> = T | ((prev: T) => T)\n\n/**\n * Controlled-or-uncontrolled state. Pass the controlled value (or `undefined`), the\n * uncontrolled default, and an optional change callback that fires in both modes.\n */\nexport function useControllable<T>(\n  controlled: T | undefined,\n  defaultValue: T,\n  onChange?: (value: T) => void\n): [T, (next: Updater<T>) => void] {\n  const [internal, setInternal] = React.useState<T>(defaultValue)\n  const isControlled = controlled !== undefined\n  const value = isControlled ? (controlled as T) : internal\n  const valueRef = React.useRef(value)\n  valueRef.current = value\n  const onChangeRef = React.useRef(onChange)\n  onChangeRef.current = onChange\n  const set = React.useCallback(\n    (updater: Updater<T>) => {\n      const next = typeof updater === \"function\" ? (updater as (prev: T) => T)(valueRef.current) : updater\n      if (Object.is(next, valueRef.current)) return\n      if (!isControlled) setInternal(next)\n      onChangeRef.current?.(next)\n    },\n    [isControlled]\n  )\n  return [value, set]\n}\n"
+    }
+  ]
+}

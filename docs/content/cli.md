@@ -1,5 +1,11 @@
 # CLI
 
+Use `--framework react` or `--framework react-native` to select a renderer. CLI init auto-detects Expo / React Native
+and persists the choice in `arkcn.json`; later commands use that choice. The standalone MCP server defaults to React;
+pass `--framework react-native` to `arkcn mcp`, or set `ARKCN_FRAMEWORK` for `arkcn-mcp`.
+Native installs use theme helpers and skip web CSS and dependencies. The examples below describe the web setup.
+
+
 Run it with `npx @multicomma/arkcn <command>`. The registry is bundled inside the package, so every CLI version installs a matching set of components and works offline.
 
 ## init
@@ -54,8 +60,8 @@ Starts the [MCP server](/arkcn/docs/mcp) over stdio.
 The same registry is committed to the GitHub repository. Pass a URL or directory to read components newer than your CLI:
 
 ```bash
-npx @multicomma/arkcn add kanban --registry https://raw.githubusercontent.com/itsdanreed/arkcn/main/registry
-export ARKCN_REGISTRY=https://raw.githubusercontent.com/itsdanreed/arkcn/main/registry
+npx @multicomma/arkcn add kanban --registry https://raw.githubusercontent.com/itsdanreed/arkcn/main/packages/registry/registry/react
+export ARKCN_REGISTRY=https://raw.githubusercontent.com/itsdanreed/arkcn/main/packages/registry/registry/react
 ```
 
 ## Configuration

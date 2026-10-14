@@ -1,0 +1,96 @@
+{
+  "name": "badge",
+  "type": "ui",
+  "description": "The same compact label and six visual variants as the web badge.",
+  "exports": [
+    "Badge"
+  ],
+  "parts": [
+    {
+      "name": "Badge.Root",
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"destructive\" | \"link\"",
+          "required": false,
+          "default": "\"default\"",
+          "description": "Visual variant, using the same semantic colors as the web renderer.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/badge.tsx",
+      "content": "import type { ComponentPropsWithRef } from \"react\"\nimport { Text } from \"react-native\"\nimport { useNativeTheme, withOpacity } from \"@/lib/theme\"\n\nexport type BadgeRootProps = ComponentPropsWithRef<typeof Text> & {\n  variant?: \"default\" | \"secondary\" | \"outline\" | \"destructive\" | \"ghost\" | \"link\"\n}\nfunction BadgeRoot({ variant = \"default\", style, ...props }: BadgeRootProps) {\n  const { colors, colorScheme, badge, fontSize, typography } = useNativeTheme()\n  const color =\n    variant === \"default\"\n      ? colors.primaryForeground\n      : variant === \"destructive\"\n        ? colors.destructive\n        : variant === \"secondary\"\n          ? colors.secondaryForeground\n          : variant === \"link\"\n            ? colors.primary\n            : colors.foreground\n  const backgroundColor =\n    variant === \"default\"\n      ? colors.primary\n      : variant === \"destructive\"\n        ? withOpacity(colors.destructive, colorScheme === \"dark\" ? 0.2 : 0.1)\n        : variant === \"secondary\"\n          ? colors.secondary\n          : \"transparent\"\n  return (\n    <Text\n      {...props}\n      style={[\n        {\n          ...typography.medium,\n          color,\n          backgroundColor,\n          alignSelf: \"flex-start\",\n          overflow: \"hidden\",\n          borderRadius: badge.radius,\n          paddingHorizontal: badge.paddingX,\n          paddingVertical: badge.paddingY,\n          borderWidth: 1,\n          borderColor: variant === \"outline\" ? colors.border : \"transparent\",\n          fontSize: fontSize.sm,\n          lineHeight: badge.height - 2 * badge.paddingY - 2,\n          includeFontPadding: false,\n        },\n        style,\n      ]}\n    />\n  )\n}\n/** The same compact label and six visual variants as the web badge. */\nexport const Badge = { Root: BadgeRoot }\n"
+    }
+  ]
+}

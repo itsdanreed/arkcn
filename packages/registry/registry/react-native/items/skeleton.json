@@ -1,0 +1,92 @@
+{
+  "name": "skeleton",
+  "type": "ui",
+  "description": "Loading placeholder using the web two-second opacity pulse; reduced motion disables the pulse.",
+  "exports": [
+    "Skeleton"
+  ],
+  "parts": [
+    {
+      "name": "Skeleton.Root",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "react-native-reanimated": ">=4.1.0 <5",
+    "react-native-worklets": ">=0.5.0 <1"
+  },
+  "registryDependencies": [
+    "lib/motion",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/skeleton.tsx",
+      "content": "import type { ComponentPropsWithRef } from \"react\"\nimport type { View } from \"react-native\"\nimport { cubicBezier } from \"react-native-reanimated\"\nimport { AnimatedView, pulseKeyframes, useMotion } from \"@/lib/motion\"\nimport { useNativeTheme } from \"@/lib/theme\"\n\nexport type SkeletonRootProps = ComponentPropsWithRef<typeof View>\nfunction SkeletonRoot({ style, ...props }: SkeletonRootProps) {\n  const { colors, radius } = useNativeTheme()\n  const { reduced, motion } = useMotion()\n  return (\n    <AnimatedView\n      accessible={false}\n      accessibilityElementsHidden\n      importantForAccessibility=\"no-hide-descendants\"\n      {...props}\n      style={[\n        {\n          backgroundColor: colors.muted,\n          borderRadius: radius.md,\n          animationName: reduced ? \"none\" : pulseKeyframes,\n          animationDuration: motion.pulseDuration,\n          animationTimingFunction: cubicBezier(...motion.pulseEasing),\n          animationIterationCount: \"infinite\",\n        },\n        style,\n      ]}\n    />\n  )\n}\n/** Loading placeholder using the web two-second opacity pulse; reduced motion disables the pulse. */\nexport const Skeleton = { Root: SkeletonRoot }\n"
+    }
+  ]
+}

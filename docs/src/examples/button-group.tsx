@@ -1,36 +1,29 @@
-import * as React from "react"
 import { Button } from "@/components/ui/button"
 import { ButtonGroup } from "@/components/ui/button-group"
-
 export default function ButtonGroupExample() {
-  const [view, setView] = React.useState("Week")
   return (
-    <ButtonGroup.Root>
-      <Button
-        variant={view === "Day" ? "secondary" : "outline"}
-        aria-pressed={view === "Day"}
-        onClick={() => setView("Day")}
-      >
-        {" "}
-        Day{" "}
-      </Button>
-      <Button
-        variant={view === "Week" ? "secondary" : "outline"}
-        aria-pressed={view === "Week"}
-        onClick={() => setView("Week")}
-      >
-        {" "}
-        Week{" "}
-      </Button>
-      <ButtonGroup.Separator />
-      <Button
-        variant={view === "Month" ? "secondary" : "outline"}
-        aria-pressed={view === "Month"}
-        onClick={() => setView("Month")}
-      >
-        {" "}
-        Month{" "}
-      </Button>
-    </ButtonGroup.Root>
+    <div className="flex flex-col items-center gap-4">
+      <ButtonGroup.Root aria-label="Actions">
+        <Button variant="outline">Archive</Button>
+        <Button variant="outline">Report</Button>
+        <Button variant="outline" disabled>
+          Snooze
+        </Button>
+      </ButtonGroup.Root>
+      <ButtonGroup.Root aria-label="Clipboard">
+        <Button variant="secondary">Copy</Button>
+        <ButtonGroup.Separator />
+        <Button variant="secondary">Paste</Button>
+      </ButtonGroup.Root>
+      <ButtonGroup.Root aria-label="Export formats">
+        <ButtonGroup.Text>Export</ButtonGroup.Text>
+        <Button variant="outline">CSV</Button>
+        <Button variant="outline">JSON</Button>
+      </ButtonGroup.Root>
+      <ButtonGroup.Root orientation="vertical" aria-label="Reorder">
+        <Button variant="outline">Move up</Button>
+        <Button variant="outline">Move down</Button>
+      </ButtonGroup.Root>
+    </div>
   )
 }

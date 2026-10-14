@@ -1,0 +1,17 @@
+{
+  "name": "lib/context",
+  "type": "lib",
+  "description": "Contexts for compound native components fail clearly outside their root.",
+  "exports": [
+    "createRequiredContext"
+  ],
+  "parts": [],
+  "dependencies": {},
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "lib/context.ts",
+      "content": "import { createContext, useContext } from \"react\"\n\n/** Contexts for compound native components fail clearly outside their root. */\nexport function createRequiredContext<T>(name: string) {\n  const Context = createContext<T | null>(null)\n  function useRequiredContext() {\n    const value = useContext(Context)\n    if (value === null) throw new Error(`${name} parts must be inside ${name}.Root`)\n    return value\n  }\n  return [Context.Provider, useRequiredContext] as const\n}\n"
+    }
+  ]
+}

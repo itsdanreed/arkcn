@@ -1,0 +1,758 @@
+{
+  "name": "popover",
+  "type": "ui",
+  "description": "",
+  "ark": "Popover",
+  "exports": [
+    "usePopover",
+    "usePopoverContext",
+    "Popover"
+  ],
+  "parts": [
+    {
+      "name": "Popover.ArrowTip",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Popover.CloseTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Popover.Root",
+      "props": [
+        {
+          "name": "autoFocus",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to automatically set focus on the first focusable\ncontent within the popover when opened.",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "closeOnEscape",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to close the popover when the escape key is pressed.",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "closeOnInteractOutside",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to close the popover when the user clicks outside of the popover.",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "description": "The initial open state of the popover when rendered.\nUse when you don't need to control the open state of the popover.",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "defaultTriggerValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The initial trigger value when rendered.\nUse when you don't need to control the trigger value.",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "finalFocusEl",
+          "type": "(() => MaybeElement)",
+          "required": false,
+          "description": "Element to receive focus when the popover is closed.",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the popover. Useful for composition.",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "initialFocusEl",
+          "type": "(() => HTMLElement | null)",
+          "required": false,
+          "description": "The element to focus on when the popover is opened.",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "modal",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether the popover should be modal. When set to `true`:\n- interaction with outside elements will be disabled\n- only popover content will be visible to screen readers\n- scrolling is blocked\n- focus is trapped within the popover",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onEscapeKeyDown",
+          "type": "((event: KeyboardEvent) => void)",
+          "required": false,
+          "description": "Function called when the escape key is pressed",
+          "from": "@zag-js/dismissable"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onFocusOutside",
+          "type": "((event: FocusOutsideEvent) => void)",
+          "required": false,
+          "description": "Function called when the focus is moved outside the component",
+          "from": "@zag-js/interact-outside"
+        },
+        {
+          "name": "onInteractOutside",
+          "type": "((event: InteractOutsideEvent) => void)",
+          "required": false,
+          "description": "Function called when an interaction happens outside the component",
+          "from": "@zag-js/interact-outside"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "((details: OpenChangeDetails) => void)",
+          "required": false,
+          "description": "Function invoked when the popover opens or closes",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "onPointerDownOutside",
+          "type": "((event: PointerDownOutsideEvent) => void)",
+          "required": false,
+          "description": "Function called when the pointer is pressed down outside the component",
+          "from": "@zag-js/interact-outside"
+        },
+        {
+          "name": "onRequestDismiss",
+          "type": "((event: LayerDismissEvent) => void)",
+          "required": false,
+          "description": "Function called when this layer is closed due to a parent layer being closed",
+          "from": "@zag-js/dismissable"
+        },
+        {
+          "name": "onTriggerValueChange",
+          "type": "((details: TriggerValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the trigger value changes.",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "description": "The controlled open state of the popover",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "persistentElements",
+          "type": "(() => Element | null)[]",
+          "required": false,
+          "description": "Returns the persistent elements that:\n- should not have pointer-events disabled\n- should not trigger the dismiss event",
+          "from": "@zag-js/dismissable"
+        },
+        {
+          "name": "portalled",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether the popover is portalled. This will proxy the tabbing behavior regardless of the DOM position\nof the popover content.",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "positioning",
+          "type": "PositioningOptions",
+          "required": false,
+          "description": "The user provided options used to position the popover content",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "restoreFocus",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to restore focus to the element that had focus before the popover was opened.",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "translations",
+          "type": "IntlTranslations",
+          "required": false,
+          "description": "Specifies the localized strings that identifies the accessibility elements and their states",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "triggerValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The controlled trigger value",
+          "from": "@zag-js/popover"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Popover.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UsePopoverReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Popover.Anchor",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Popover.Arrow",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Popover.Content",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Popover.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UsePopoverContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Popover.Description",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Popover.Header",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Popover.Portal",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "container",
+          "type": "RefObject<HTMLElement | null>",
+          "required": false,
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Popover.Positioner",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Popover.Title",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Popover.Trigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value that identifies this specific trigger",
+          "from": "@zag-js/popover"
+        }
+      ]
+    },
+    {
+      "name": "Popover.Indicator",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1",
+    "lucide-react": "^1.41.0"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/popover.tsx",
+      "content": "import { ark } from \"@ark-ui/react\"\nimport { usePopover, usePopoverContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { ChevronDownIcon } from \"lucide-react\"\nimport { Popover as PopoverPrimitive, Portal as PortalPrimitive } from \"@ark-ui/react\"\n\nfunction PopoverRoot({ positioning, lazyMount = true, unmountOnExit = true, ...props }: PopoverRootProps) {\n  return (\n    <PopoverPrimitive.Root\n      positioning={{ placement: \"bottom\", gutter: 4, ...positioning }}\n      lazyMount={lazyMount}\n      unmountOnExit={unmountOnExit}\n      {...props}\n    />\n  )\n}\n\nfunction PopoverTrigger({ ...props }: PopoverTriggerProps) {\n  return <PopoverPrimitive.Trigger data-slot=\"popover-trigger\" {...props} />\n}\n\nfunction PopoverPortal({ ...props }: PopoverPortalProps) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction PopoverContext({ ...props }: PopoverContextProps) {\n  return <PopoverPrimitive.Context {...props} />\n}\n\nfunction PopoverPositioner({ className, ...props }: PopoverPositionerProps) {\n  return (\n    <PopoverPrimitive.Positioner\n      data-slot=\"popover-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction PopoverContent({ className, ...props }: PopoverContentProps) {\n  return (\n    <PopoverPortal>\n      <PopoverPositioner>\n        <PopoverPrimitive.Content\n          data-slot=\"popover-content\"\n          className={cn(\n            \"z-50 flex w-72 origin-(--transform-origin) flex-col gap-2.5 rounded-lg bg-popover p-2.5 text-sm text-popover-foreground shadow-md ring-1 ring-foreground/10 outline-hidden transition-none duration-100 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        />\n      </PopoverPositioner>\n    </PopoverPortal>\n  )\n}\n\nfunction PopoverAnchor({ ...props }: PopoverAnchorProps) {\n  return <PopoverPrimitive.Anchor data-slot=\"popover-anchor\" {...props} />\n}\n\nfunction PopoverArrow({ className, ...props }: PopoverArrowProps) {\n  return (\n    <PopoverPrimitive.Arrow\n      data-slot=\"popover-arrow\"\n      className={cn(\"[--arrow-background:var(--color-popover)] [--arrow-size:0.625rem]\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <PopoverPrimitive.ArrowTip data-slot=\"popover-arrow-tip\" className=\"border-t border-l border-foreground/10\" />\n        </>\n      )}\n    </PopoverPrimitive.Arrow>\n  )\n}\n\nfunction PopoverCloseTrigger({ ...props }: PopoverCloseTriggerProps) {\n  return <PopoverPrimitive.CloseTrigger data-slot=\"popover-close\" {...props} />\n}\n\nfunction PopoverHeader({ className, ...props }: PopoverHeaderProps) {\n  return <ark.div data-slot=\"popover-header\" className={cn(\"flex flex-col gap-0.5 text-sm\", className)} {...props} />\n}\n\nfunction PopoverTitle({ className, ...props }: PopoverTitleProps) {\n  return <PopoverPrimitive.Title data-slot=\"popover-title\" className={cn(\"font-medium\", className)} {...props} />\n}\n\nfunction PopoverDescription({ className, ...props }: PopoverDescriptionProps) {\n  return (\n    <PopoverPrimitive.Description\n      data-slot=\"popover-description\"\n      className={cn(\"text-muted-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\n/** Open-state indicator for a trigger; rotates when open. */\nfunction PopoverIndicator({ className, children, ...props }: PopoverIndicatorProps) {\n  return (\n    <PopoverPrimitive.Indicator\n      data-slot=\"popover-indicator\"\n      className={cn(\"inline-flex transition-transform data-[state=open]:rotate-180 [&_svg]:size-4\", className)}\n      {...props}\n    >\n      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? <ChevronDownIcon />}</>}\n    </PopoverPrimitive.Indicator>\n  )\n}\n\nfunction PopoverRootProvider(props: PopoverRootProviderProps) {\n  return <PopoverPrimitive.RootProvider {...props} />\n}\n\nfunction PopoverArrowTip({ className, ...props }: PopoverArrowTipProps) {\n  return <PopoverPrimitive.ArrowTip data-slot=\"popover-arrow-tip\" className={cn(className)} {...props} />\n}\n\ntype PopoverArrowTipProps = React.ComponentProps<typeof PopoverPrimitive.ArrowTip>\n\ntype PopoverCloseTriggerProps = React.ComponentProps<typeof PopoverPrimitive.CloseTrigger>\n\ntype PopoverRootProps = React.ComponentProps<typeof PopoverPrimitive.Root>\n\ntype PopoverRootProviderProps = React.ComponentProps<typeof PopoverPrimitive.RootProvider>\n\ntype PopoverAnchorProps = React.ComponentProps<typeof PopoverPrimitive.Anchor>\n\ntype PopoverArrowProps = React.ComponentProps<typeof PopoverPrimitive.Arrow>\n\ntype PopoverContentProps = React.ComponentProps<typeof PopoverPrimitive.Content>\n\ntype PopoverContextProps = React.ComponentProps<typeof PopoverPrimitive.Context>\n\ntype PopoverDescriptionProps = React.ComponentProps<typeof PopoverPrimitive.Description>\n\ntype PopoverHeaderProps = React.ComponentProps<typeof ark.div>\n\ntype PopoverPortalProps = React.ComponentProps<typeof PortalPrimitive>\n\ntype PopoverPositionerProps = React.ComponentProps<typeof PopoverPrimitive.Positioner>\n\ntype PopoverTitleProps = React.ComponentProps<typeof PopoverPrimitive.Title>\n\ntype PopoverTriggerProps = React.ComponentProps<typeof PopoverPrimitive.Trigger>\n\ntype PopoverIndicatorProps = React.ComponentProps<typeof PopoverPrimitive.Indicator>\n\nconst Popover = {\n  ArrowTip: PopoverArrowTip,\n  CloseTrigger: PopoverCloseTrigger,\n  Root: PopoverRoot,\n  RootProvider: PopoverRootProvider,\n  Anchor: PopoverAnchor,\n  Arrow: PopoverArrow,\n  Content: PopoverContent,\n  Context: PopoverContext,\n  Description: PopoverDescription,\n  Header: PopoverHeader,\n  Portal: PopoverPortal,\n  Positioner: PopoverPositioner,\n  Title: PopoverTitle,\n  Trigger: PopoverTrigger,\n  Indicator: PopoverIndicator,\n}\n\nexport {\n  usePopover,\n  usePopoverContext,\n  Popover,\n  type PopoverArrowTipProps,\n  type PopoverCloseTriggerProps,\n  type PopoverRootProps,\n  type PopoverRootProviderProps,\n  type PopoverAnchorProps,\n  type PopoverArrowProps,\n  type PopoverContentProps,\n  type PopoverContextProps,\n  type PopoverDescriptionProps,\n  type PopoverHeaderProps,\n  type PopoverPortalProps,\n  type PopoverPositionerProps,\n  type PopoverTitleProps,\n  type PopoverTriggerProps,\n  type PopoverIndicatorProps,\n}\n"
+    }
+  ]
+}

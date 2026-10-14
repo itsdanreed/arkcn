@@ -1,0 +1,29 @@
+{
+  "name": "lib/motion",
+  "type": "lib",
+  "description": "Expo SDKs before CSS boxShadow support still animate shadows on the UI thread.",
+  "exports": [
+    "AnimatedView",
+    "AnimatedText",
+    "AnimatedPressable",
+    "AnimatedTextInput",
+    "useShadowTransition",
+    "useMotion",
+    "spinKeyframes",
+    "pulseKeyframes"
+  ],
+  "parts": [],
+  "dependencies": {
+    "react-native-reanimated": ">=4.1.0 <5",
+    "react-native-worklets": ">=0.5.0 <1"
+  },
+  "registryDependencies": [
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "lib/motion.ts",
+      "content": "import { useEffect, useState } from \"react\"\nimport { AccessibilityInfo, Platform, Pressable, TextInput, type ViewStyle } from \"react-native\"\nimport Animated, {\n  cubicBezier,\n  Easing,\n  useAnimatedStyle,\n  useReducedMotion,\n  withTiming,\n  type CSSAnimationKeyframes,\n  type CSSTransitionProperties,\n} from \"react-native-reanimated\"\nimport { useNativeTheme } from \"@/lib/theme\"\n\nexport const AnimatedView = Animated.View\nexport const AnimatedText = Animated.Text\nexport const AnimatedPressable = Animated.createAnimatedComponent(Pressable)\nexport const AnimatedTextInput = Animated.createAnimatedComponent(TextInput)\n\n/** Expo SDKs before CSS boxShadow support still animate shadows on the UI thread. */\nexport function useShadowTransition(shadow: ViewStyle[\"boxShadow\"]) {\n  const { reduced, motion } = useMotion()\n  // Keep all four lengths explicit: the web animation serializer omits absent fields.\n  const length = (value: number | string | undefined) => (typeof value === \"number\" ? `${value}px` : (value ?? \"0px\"))\n  const webShadow =\n    typeof shadow === \"string\"\n      ? shadow\n      : shadow\n          ?.map(\n            (layer) =>\n              `${layer.inset ? \"inset \" : \"\"}${length(layer.offsetX)} ${length(layer.offsetY)} ${length(layer.blurRadius)} ${length(layer.spreadDistance)} ${String(layer.color ?? \"black\")}`\n          )\n          .join(\", \") || \"none\"\n  const animated = useAnimatedStyle(() => {\n    if (Platform.OS === \"web\") return {}\n    if (typeof shadow === \"string\") return { boxShadow: shadow }\n    const timing = { duration: reduced ? 0 : motion.duration, easing: Easing.bezier(...motion.easing) }\n    const layers = [...(shadow ?? [])]\n    // Keep empty layers while fading to/from no shadow, including the two-layer tab shadow.\n    while (layers.length < 2) layers.push({ offsetX: 0, offsetY: 0, color: \"transparent\" })\n    return {\n      boxShadow: layers.map((layer) => ({\n        offsetX: withTiming(layer.offsetX ?? 0, timing),\n        offsetY: withTiming(layer.offsetY ?? 0, timing),\n        blurRadius: withTiming(layer.blurRadius ?? 0, timing),\n        spreadDistance: withTiming(layer.spreadDistance ?? 0, timing),\n        color: withTiming(String(layer.color ?? \"black\"), timing),\n        inset: layer.inset,\n      })),\n    }\n  }, [shadow, webShadow, reduced, motion.duration, motion.easing])\n  return Platform.OS === \"web\" ? { boxShadow: webShadow } : animated\n}\n\n/** Shared web/native timing, including changes to the system's reduced-motion preference. */\nexport function useMotion() {\n  const initial = useReducedMotion()\n  const [systemReduced, setSystemReduced] = useState(initial)\n  const { motion, reducedMotion } = useNativeTheme()\n  useEffect(() => {\n    const listener = AccessibilityInfo.addEventListener(\"reduceMotionChanged\", setSystemReduced)\n    return () => listener.remove()\n  }, [])\n  const reduced = reducedMotion ?? systemReduced\n  const easing = cubicBezier(...motion.easing)\n  const transition = (transitionProperty: CSSTransitionProperties[\"transitionProperty\"]): CSSTransitionProperties => ({\n    transitionProperty,\n    transitionDuration: reduced ? 0 : motion.duration,\n    transitionTimingFunction: easing,\n  })\n  return { reduced, motion, easing, transition }\n}\nexport const spinKeyframes: CSSAnimationKeyframes = {\n  from: { transform: [{ rotate: \"0deg\" }] },\n  to: { transform: [{ rotate: \"360deg\" }] },\n}\nexport const pulseKeyframes: CSSAnimationKeyframes = { \"0%, 100%\": { opacity: 1 }, \"50%\": { opacity: 0.5 } }\n"
+    }
+  ]
+}

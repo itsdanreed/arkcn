@@ -1,0 +1,552 @@
+{
+  "name": "tooltip",
+  "type": "ui",
+  "description": "",
+  "ark": "Portal",
+  "exports": [
+    "useTooltip",
+    "useTooltipContext",
+    "Tooltip"
+  ],
+  "parts": [
+    {
+      "name": "Tooltip.ArrowTip",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Tooltip.Root",
+      "props": [
+        {
+          "name": "aria-label",
+          "type": "string",
+          "required": false,
+          "description": "Custom label for the tooltip.",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "closeDelay",
+          "type": "number",
+          "required": false,
+          "default": "150",
+          "description": "The close delay of the tooltip.",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "closeOnClick",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether the tooltip should close on click",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "closeOnEscape",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to close the tooltip when the Escape key is pressed.",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "closeOnPointerDown",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to close the tooltip on pointerdown.",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "closeOnScroll",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether the tooltip should close on scroll",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "description": "The initial open state of the tooltip when rendered.\nUse when you don't need to control the open state of the tooltip.",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "defaultTriggerValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The initial trigger value when rendered.\nUse when you don't need to control the trigger value.",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the tooltip is disabled",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "id",
+          "type": "string",
+          "required": false,
+          "description": "The unique identifier of the machine.",
+          "from": "@zag-js/types"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the elements in the tooltip. Useful for composition.",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "interactive",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether the tooltip's content is interactive.\nIn this mode, the tooltip will remain open when user hovers over the content.",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "((details: OpenChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the tooltip is opened.",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "onTriggerValueChange",
+          "type": "((details: TriggerValueChangeDetails) => void)",
+          "required": false,
+          "description": "Function called when the trigger value changes.",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "description": "The controlled open state of the tooltip",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "openDelay",
+          "type": "number",
+          "required": false,
+          "default": "400",
+          "description": "The open delay of the tooltip.",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "positioning",
+          "type": "PositioningOptions",
+          "required": false,
+          "description": "The user provided options used to position the popover content",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "triggerValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The controlled trigger value",
+          "from": "@zag-js/tooltip"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Tooltip.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseTooltipReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "hideMode",
+          "type": "HideMode",
+          "required": false,
+          "default": "'display-none'",
+          "description": "How to hide content when mounted but not present.\n- `'display-none'`: HTML `hidden` attribute. Effects stay alive.\n- `'activity'`: React 19 `<Activity mode=\"hidden\">`. Effects pause. Requires React 19+.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "immediate",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to synchronize the present change immediately or defer it to the next frame",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "lazyMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to enable lazy mounting",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "onEnterComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the open state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "onExitComplete",
+          "type": "VoidFunction",
+          "required": false,
+          "description": "Function called when the animation ends in the closed state",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "present",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the node is present (controlled by the user)",
+          "from": "@zag-js/presence"
+        },
+        {
+          "name": "skipAnimationOnMount",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to allow the initial presence animation.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "unmountOnExit",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether to unmount on exit.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Tooltip.Arrow",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Tooltip.Content",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Tooltip.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseTooltipContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Tooltip.Portal",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "container",
+          "type": "RefObject<HTMLElement | null>",
+          "required": false,
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "Tooltip.Positioner",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "Tooltip.Provider",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "closeDelay",
+          "type": "number",
+          "required": false,
+          "description": "Delay before the tooltip closes, in ms. Maps to Ark's `closeDelay`.",
+          "from": "arkcn"
+        },
+        {
+          "name": "delayDuration",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "description": "Delay before the tooltip opens, in ms. Maps to Ark's `openDelay`.",
+          "from": "arkcn"
+        },
+        {
+          "name": "disableHoverableContent",
+          "type": "boolean",
+          "required": false,
+          "description": "When true the content cannot be hovered. Maps to Ark's `interactive: false`.",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "Tooltip.Trigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value that identifies this specific trigger",
+          "from": "@zag-js/tooltip"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1"
+  },
+  "registryDependencies": [
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/tooltip.tsx",
+      "content": "\"use client\"\n\nimport { ark, mergeProps, useTooltip, useTooltipContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { Portal as PortalPrimitive, Tooltip as TooltipPrimitive } from \"@ark-ui/react\"\n\ntype TooltipProviderProps = {\n  /** Delay before the tooltip opens, in ms. Maps to Ark's `openDelay`. */\n  delayDuration?: number\n  /** Delay before the tooltip closes, in ms. Maps to Ark's `closeDelay`. */\n  closeDelay?: number\n  /** When true the content cannot be hovered. Maps to Ark's `interactive: false`. */\n  disableHoverableContent?: boolean\n  children?: React.ReactNode\n}\n\nconst TooltipProviderContext = React.createContext<Omit<TooltipProviderProps, \"children\">>({})\n\nfunction TooltipProvider({ delayDuration = 0, closeDelay, disableHoverableContent, children }: TooltipProviderProps) {\n  const value = React.useMemo(\n    () => ({ delayDuration, closeDelay, disableHoverableContent }),\n    [delayDuration, closeDelay, disableHoverableContent]\n  )\n  return <TooltipProviderContext.Provider value={value}>{children}</TooltipProviderContext.Provider>\n}\n\n/** Lets the trigger tell its tooltip which element id to position against (see `TooltipTrigger`). */\nconst TooltipTriggerIdContext = React.createContext<(id: string) => void>(() => {})\n\nfunction TooltipRoot({\n  openDelay,\n  closeDelay,\n  interactive,\n  positioning,\n  lazyMount = true,\n  unmountOnExit = true,\n  ids,\n  ...props\n}: TooltipRootProps) {\n  const provider = React.useContext(TooltipProviderContext)\n  const [triggerId, setTriggerId] = React.useState<string>()\n  return (\n    <TooltipTriggerIdContext.Provider value={setTriggerId}>\n      <TooltipPrimitive.Root\n        openDelay={openDelay ?? provider.delayDuration ?? 0}\n        closeDelay={closeDelay ?? provider.closeDelay}\n        interactive={interactive ?? !provider.disableHoverableContent}\n        // Ark adds half the 10px arrow to the gutter; the popup's total gap is 4px.\n        positioning={{ placement: \"top\", gutter: -1, ...positioning }}\n        lazyMount={lazyMount}\n        unmountOnExit={unmountOnExit}\n        ids={triggerId ? { ...ids, trigger: triggerId } : ids}\n        {...props}\n      />\n    </TooltipTriggerIdContext.Provider>\n  )\n}\n\n/**\n * The tooltip's anchor. It never claims the element's `id` or `data-state`: when it shares the element with\n * another trigger (`Popover.Trigger`, `Popconfirm.Trigger`, `DropdownMenu.Trigger`, ... in either\n * nesting order), that trigger's id stays, so its machine still recognises its own trigger, and\n * the tooltip adopts the id to position against. A trigger on its own gets the tooltip's id.\n */\nfunction TooltipTrigger({ ref, ...props }: TooltipTriggerProps) {\n  const tooltip = useTooltipContext()\n  const adopt = React.useContext(TooltipTriggerIdContext)\n  // Neither `id` nor `data-state` is claimed; another trigger on the element keeps its own.\n  const {\n    id: tooltipId,\n    \"data-state\": _state,\n    ...triggerProps\n  } = tooltip.getTriggerProps() as React.ComponentProps<\"button\"> & { \"data-state\"?: string }\n  const setRef = (element: HTMLButtonElement | null) => {\n    if (element) {\n      // An id no one else set is left unmanaged by React, so setting it here is stable.\n      if (!element.id && tooltipId) element.id = tooltipId\n      if (element.id) adopt(element.id)\n    }\n    if (typeof ref === \"function\") ref(element)\n    else if (ref) ref.current = element\n  }\n  return <ark.button data-slot=\"tooltip-trigger\" {...mergeProps(triggerProps, props)} ref={setRef} />\n}\n\nfunction TooltipPortal({ ...props }: TooltipPortalProps) {\n  return <PortalPrimitive {...props} />\n}\n\nfunction TooltipContext({ ...props }: TooltipContextProps) {\n  return <TooltipPrimitive.Context {...props} />\n}\n\nfunction TooltipPositioner({ className, ...props }: TooltipPositionerProps) {\n  return (\n    <TooltipPrimitive.Positioner\n      data-slot=\"tooltip-positioner\"\n      className={cn(\"[--z-index:50]\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction TooltipArrow({ className, ...props }: TooltipArrowProps) {\n  return (\n    <TooltipPrimitive.Arrow\n      data-slot=\"tooltip-arrow\"\n      className={cn(\"z-50 [--arrow-background:var(--color-foreground)] [--arrow-size:0.625rem]\", className)}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(props.children) ? (\n          props.children\n        ) : null\n      ) : (\n        <>\n          <TooltipArrowTip />\n        </>\n      )}\n    </TooltipPrimitive.Arrow>\n  )\n}\n\nfunction TooltipContent({ className, children, ...props }: TooltipContentProps) {\n  return (\n    <TooltipPortal>\n      <TooltipPositioner>\n        <TooltipPrimitive.Content\n          data-slot=\"tooltip-content\"\n          className={cn(\n            \"z-50 inline-flex w-fit max-w-xs origin-(--transform-origin) items-center gap-1.5 rounded-md bg-foreground px-3 py-1.5 text-xs text-background has-data-[slot=kbd]:pr-1.5 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 **:data-[slot=kbd]:relative **:data-[slot=kbd]:isolate **:data-[slot=kbd]:z-50 **:data-[slot=kbd]:rounded-sm data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95\",\n            className\n          )}\n          {...props}\n        >\n          {props.asChild ? (\n            React.isValidElement(children) ? (\n              children\n            ) : null\n          ) : (\n            <>\n              {children}\n              <TooltipArrow />\n            </>\n          )}\n        </TooltipPrimitive.Content>\n      </TooltipPositioner>\n    </TooltipPortal>\n  )\n}\n\nfunction TooltipRootProvider(props: TooltipRootProviderProps) {\n  return <TooltipPrimitive.RootProvider {...props} />\n}\n\nfunction TooltipArrowTip({ className, ...props }: TooltipArrowTipProps) {\n  return (\n    <TooltipPrimitive.ArrowTip\n      data-slot=\"tooltip-arrow-tip\"\n      className={cn(\n        \"rounded-xs in-data-[side=bottom]:translate-y-0.5 in-data-[side=left]:-translate-x-px in-data-[side=right]:translate-x-px in-data-[side=top]:-translate-y-0.5\",\n        className\n      )}\n      {...props}\n    />\n  )\n}\n\ntype TooltipArrowTipProps = React.ComponentProps<typeof TooltipPrimitive.ArrowTip>\n\ntype TooltipRootProps = React.ComponentProps<typeof TooltipPrimitive.Root>\n\ntype TooltipRootProviderProps = React.ComponentProps<typeof TooltipPrimitive.RootProvider>\n\ntype TooltipArrowProps = React.ComponentProps<typeof TooltipPrimitive.Arrow>\n\ntype TooltipContentProps = React.ComponentProps<typeof TooltipPrimitive.Content>\n\ntype TooltipContextProps = React.ComponentProps<typeof TooltipPrimitive.Context>\n\ntype TooltipPortalProps = React.ComponentProps<typeof PortalPrimitive>\n\ntype TooltipPositionerProps = React.ComponentProps<typeof TooltipPrimitive.Positioner>\n\ntype TooltipTriggerProps = React.ComponentProps<typeof TooltipPrimitive.Trigger>\n\nconst Tooltip = {\n  ArrowTip: TooltipArrowTip,\n  Root: TooltipRoot,\n  RootProvider: TooltipRootProvider,\n  Arrow: TooltipArrow,\n  Content: TooltipContent,\n  Context: TooltipContext,\n  Portal: TooltipPortal,\n  Positioner: TooltipPositioner,\n  Provider: TooltipProvider,\n  Trigger: TooltipTrigger,\n}\n\nexport {\n  useTooltip,\n  useTooltipContext,\n  Tooltip,\n  type TooltipArrowTipProps,\n  type TooltipRootProps,\n  type TooltipRootProviderProps,\n  type TooltipArrowProps,\n  type TooltipContentProps,\n  type TooltipContextProps,\n  type TooltipPortalProps,\n  type TooltipPositionerProps,\n  type TooltipProviderProps,\n  type TooltipTriggerProps,\n}\n"
+    }
+  ]
+}

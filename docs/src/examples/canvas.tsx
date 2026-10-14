@@ -66,7 +66,6 @@ export default function CanvasExample() {
                       </Button>
                     </Canvas.NodeActions>
                   </Canvas.NodeHeader>
-                  <div className="h-12 rounded-b-md bg-muted/40" />
                 </Canvas.Node>
               </React.Fragment>
             ))}

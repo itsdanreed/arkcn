@@ -8,10 +8,23 @@ export default function ProgressExample() {
     return () => clearInterval(t)
   }, [])
   return (
-    <Progress.Root value={value} className="w-80">
-      <Progress.Track>
-        <Progress.Range />
-      </Progress.Track>
-    </Progress.Root>
+    <div className="flex w-80 max-w-full flex-col gap-4">
+      <Progress.Root value={value} className="w-full">
+        <Progress.Track>
+          <Progress.Range />
+        </Progress.Track>
+      </Progress.Root>
+      <Progress.Root value={value}>
+        <Progress.Circle>
+          <Progress.CircleTrack />
+          <Progress.CircleRange />
+        </Progress.Circle>
+      </Progress.Root>
+      <Progress.Root value={null}>
+        <Progress.Track>
+          <Progress.Range />
+        </Progress.Track>
+      </Progress.Root>
+    </div>
   )
 }

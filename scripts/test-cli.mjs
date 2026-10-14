@@ -1,11 +1,12 @@
 // End-to-end check of the CLI against a throwaway project: init, add, diff, overwrite.
-import { execFileSync } from "node:child_process"
-import { existsSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs"
+import { execFileSync, spawnSync } from "node:child_process"
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs"
 import { tmpdir } from "node:os"
 import { join } from "node:path"
+import { expoDependencies } from "../packages/registry/src/project.mjs"
 
 const root = new URL("..", import.meta.url).pathname
-const bin = join(root, "bin/arkcn.mjs")
+const bin = join(root, "packages/cli/bin/arkcn.mjs")
 const cwd = mkdtempSync(join(tmpdir(), "arkcn-cli-"))
 const run = (...args) =>
   execFileSync("node", [bin, ...args, "--cwd", cwd], { encoding: "utf8", env: { ...process.env, NO_COLOR: "1" } })
@@ -101,6 +102,93 @@ try {
   const button = readFileSync(join(cwd2, "app/components/ui/button.tsx"), "utf8")
   assert(button.includes('from "~/lib/utils"'), "add rewrites the alias and directories")
   rmSync(cwd2, { recursive: true, force: true })
+
+  const native = mkdtempSync(join(tmpdir(), "arkcn-native-cli-"))
+  try {
+    writeFileSync(
+      join(native, "package.json"),
+      JSON.stringify({
+        name: "native-app",
+        dependencies: {
+          expo: "^56.0.0",
+          react: "^19.2.0",
+          "react-native": "^0.85.0",
+        },
+      })
+    )
+    writeFileSync(join(native, "tsconfig.json"), JSON.stringify({ extends: "expo/tsconfig.base", compilerOptions: {} }))
+    mkdirSync(join(native, "node_modules/expo"), { recursive: true })
+    writeFileSync(
+      join(native, "node_modules/expo/bundledNativeModules.json"),
+      JSON.stringify({
+        "react-native-reanimated": "4.5.1",
+        "react-native-worklets": "0.10.1",
+        "@expo/vector-icons": "^15.0.2",
+      })
+    )
+    assert(
+      JSON.stringify(
+        expoDependencies(native, [
+          "react-native-reanimated@>=4.1.0 <5",
+          "react-native-worklets@>=0.5.0 <1",
+          "@expo/vector-icons@^15",
+          "lucide-react-native@^1.41.0",
+          "react-native-svg",
+        ])
+      ) ===
+        JSON.stringify([
+          "react-native-reanimated",
+          "react-native-worklets",
+          "@expo/vector-icons",
+          "lucide-react-native@^1.41.0",
+          "react-native-svg",
+        ]),
+      "Expo chooses SDK versions for bundled modules and preserves other dependency ranges"
+    )
+    const nativeRun = (...args) => execFileSync(process.execPath, [bin, ...args, "--cwd", native], { encoding: "utf8" })
+    const output = nativeRun("init", "--yes", "--no-install", "--alias", "~", "--dir", "app-ui")
+    const config = JSON.parse(readFileSync(join(native, "arkcn.json"), "utf8"))
+    assert(config.framework === "react-native", "Expo is detected and persisted")
+    assert(config.css === null, "native projects have no stylesheet")
+    assert(!existsSync(join(native, "src/index.css")), "native init never writes CSS")
+    assert(!/tailwind|@ark-ui|lucide-react/.test(output), "native init does not install web packages")
+    assert(existsSync(join(native, "app-ui/lib/theme.ts")), "native init copies theme")
+    nativeRun("add", "--all", "--no-install")
+    const button = readFileSync(join(native, "app-ui/components/ui/button.tsx"), "utf8")
+    assert(button.includes('from "~/lib/theme"'), "native imports use custom alias and directories")
+    assert(button.includes('from "react-native"'), "native button uses native controls")
+    nativeRun("add", "lib/table", "lib/row-layout", "--no-install")
+    const table = readFileSync(join(native, "app-ui/lib/table.ts"), "utf8")
+    assert(table.includes('from "~/lib/controllable"'), "shared engine is embedded with local imports")
+    assert(!table.includes("@multicomma/arkcn"), "copied helpers do not depend on published packages")
+    assert(existsSync(join(native, "app-ui/lib/canvas.ts")), "row layout installs shared drop contracts")
+    assert(/match/.test(nativeRun("diff")), "native diff matches source")
+    const input = join(native, "app-ui/components/ui/input.tsx")
+    writeFileSync(input, readFileSync(input, "utf8") + "\n// local change\n")
+    assert(/changed/.test(nativeRun("diff", "input")), "native diff sees local edits")
+    nativeRun("add", "input", "--overwrite", "--no-install")
+    const mismatch = spawnSync(process.execPath, [bin, "add", "dialog", "--framework", "react", "--cwd", native], {
+      encoding: "utf8",
+    })
+    assert(
+      mismatch.status !== 0 && /cannot install/.test(mismatch.stderr),
+      "mixed-framework installs fail before writing"
+    )
+    const wrongRegistry = spawnSync(
+      process.execPath,
+      [bin, "add", "button", "--registry", join(root, "packages/registry/registry/react"), "--cwd", native],
+      { encoding: "utf8" }
+    )
+    assert(
+      wrongRegistry.status !== 0 && /Registry is for react/.test(wrongRegistry.stderr),
+      "custom registries must match the project"
+    )
+    const unsupported = spawnSync(process.execPath, [bin, "add", "dialog", "--cwd", native], { encoding: "utf8" })
+    assert(unsupported.status !== 0, "unported components are not silently replaced with web components")
+    assert(!existsSync(join(native, "app-ui/components/ui/dialog.tsx")), "no unsupported component is written")
+  } finally {
+    rmSync(native, { recursive: true, force: true })
+  }
 
   console.log("test-cli: ok")
 } finally {

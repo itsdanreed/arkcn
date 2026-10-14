@@ -10,8 +10,10 @@ const exceptions = JSON.parse(fs.readFileSync(path.join(root, "scripts/polymorph
 const problems = []
 let count = 0
 const used = new Set()
-for (const file of fs.readdirSync(path.join(root, "src/components/ui")).filter((file) => file.endsWith(".tsx"))) {
-  for (const part of extract(`src/components/ui/${file}`)) {
+for (const file of fs
+  .readdirSync(path.join(root, "packages/react/src/components/ui"))
+  .filter((file) => file.endsWith(".tsx"))) {
+  for (const part of extract(`packages/react/src/components/ui/${file}`)) {
     const key = `${file}:${part.name}`
     const props = new Set(part.props.map((prop) => prop.name))
     if (props.has("asChild")) {

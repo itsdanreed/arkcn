@@ -1,0 +1,22 @@
+@import "tailwindcss" source(none);
+@import "@fontsource-variable/geist";
+@import "../../packages/react/src/styles/arkcn.css";
+@source "../../packages/react/src";
+@source "./examples";
+@source "./audit-examples";
+@source "./catalog-audit.tsx";
+[data-reduced-motion="true"] *,
+[data-reduced-motion="true"] *::before,
+[data-reduced-motion="true"] *::after {
+  animation: none !important;
+  transition-duration: 0s !important;
+}
+
+/* Marquee layout effects of the simulated reduced-motion preference. */
+[data-reduced-motion="true"] [data-slot="marquee-viewport"] {
+  overflow: auto;
+}
+[data-reduced-motion="true"] [data-slot="marquee-content"][data-clone],
+[data-reduced-motion="true"] [data-slot="marquee-edge"] {
+  display: none !important;
+}

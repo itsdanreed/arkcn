@@ -4,13 +4,14 @@ import { readdirSync, readFileSync, statSync } from "node:fs"
 import { join, relative } from "node:path"
 import ts from "typescript"
 
-const roots = ["src", "scripts", "cli", "bin", "mcp"]
+const roots = ["packages", "scripts"]
 const offenders = []
 
 function walk(path) {
   const stat = statSync(path, { throwIfNoEntry: false })
   if (!stat) return
   if (stat.isDirectory()) {
+    if (/(?:^|\/)(node_modules|registry|dist)$/.test(path) && path !== "packages/registry") return
     for (const entry of readdirSync(path)) walk(join(path, entry))
     return
   }

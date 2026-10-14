@@ -1,0 +1,395 @@
+{
+  "name": "signature-pad",
+  "type": "ui",
+  "description": "",
+  "ark": "SignaturePad",
+  "exports": [
+    "useSignaturePad",
+    "useSignaturePadContext",
+    "SignaturePad"
+  ],
+  "parts": [
+    {
+      "name": "SignaturePad.Root",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "defaultPaths",
+          "type": "string[]",
+          "required": false,
+          "description": "The default paths of the signature pad.\nUse when you don't need to control the paths of the signature pad.",
+          "from": "@zag-js/signature-pad"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the signature pad is disabled.",
+          "from": "@zag-js/signature-pad"
+        },
+        {
+          "name": "drawing",
+          "type": "DrawingOptions",
+          "required": false,
+          "default": "'{ size: 2, simulatePressure: true }'",
+          "description": "The drawing options.",
+          "from": "@zag-js/signature-pad"
+        },
+        {
+          "name": "ids",
+          "type": "ElementIds",
+          "required": false,
+          "description": "The ids of the signature pad elements. Useful for composition.",
+          "from": "@zag-js/signature-pad"
+        },
+        {
+          "name": "name",
+          "type": "string",
+          "required": false,
+          "description": "The name of the signature pad. Useful for form submission.",
+          "from": "@zag-js/signature-pad"
+        },
+        {
+          "name": "onDraw",
+          "type": "((details: DrawDetails) => void)",
+          "required": false,
+          "description": "Callback when the signature pad is drawing or the committed paths change.\n`paths` contains only committed strokes; use `currentPath` for the in-progress stroke.",
+          "from": "@zag-js/signature-pad"
+        },
+        {
+          "name": "onDrawEnd",
+          "type": "((details: DrawEndDetails) => void)",
+          "required": false,
+          "description": "Callback when the signature pad is done drawing.",
+          "from": "@zag-js/signature-pad"
+        },
+        {
+          "name": "paths",
+          "type": "string[]",
+          "required": false,
+          "description": "The controlled paths of the signature pad.",
+          "from": "@zag-js/signature-pad"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the signature pad is read-only.",
+          "from": "@zag-js/signature-pad"
+        },
+        {
+          "name": "required",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether the signature pad is required.",
+          "from": "@zag-js/signature-pad"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        },
+        {
+          "name": "translations",
+          "type": "IntlTranslations",
+          "required": false,
+          "description": "The translations of the signature pad. Useful for internationalization.",
+          "from": "@zag-js/signature-pad"
+        }
+      ]
+    },
+    {
+      "name": "SignaturePad.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "UseSignaturePadReturn",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SignaturePad.ClearTrigger",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SignaturePad.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: UseSignaturePadContext) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "@ark-ui/react"
+        }
+      ]
+    },
+    {
+      "name": "SignaturePad.Control",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SignaturePad.Guide",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SignaturePad.HiddenInput",
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "@zag-js/signature-pad"
+        },
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SignaturePad.Label",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    },
+    {
+      "name": "SignaturePad.Segment",
+      "props": [
+        {
+          "name": "asChild",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the provided child element as the default rendered element, combining their props and behavior.",
+          "from": "@ark-ui/react"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "@types/react"
+        },
+        {
+          "name": "className",
+          "type": "string",
+          "required": false,
+          "description": "Extra classes merged into the part's own classes with `cn`.",
+          "from": "@types/react"
+        },
+        {
+          "name": "style",
+          "type": "CSSProperties",
+          "required": false,
+          "description": "Inline styles applied to the rendered element.",
+          "from": "@types/react"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@ark-ui/react": "^5.39.1",
+    "lucide-react": "^1.41.0"
+  },
+  "registryDependencies": [
+    "button",
+    "lib/utils"
+  ],
+  "files": [
+    {
+      "path": "components/ui/signature-pad.tsx",
+      "content": "\"use client\"\n\nimport { useFieldContext, useSignaturePad as useArkSignaturePad, useSignaturePadContext } from \"@ark-ui/react\"\nimport * as React from \"react\"\nimport { cn } from \"@/lib/utils\"\nimport { SignaturePad as SignaturePadPrimitive } from \"@ark-ui/react\"\nimport { XIcon } from \"lucide-react\"\n\nimport { Button } from \"@/components/ui/button\"\n\nfunction useSignaturePad(props: Parameters<typeof useArkSignaturePad>[0] = {}) {\n  const field = useFieldContext()\n  const readOnly = props.readOnly ?? field?.readOnly\n  const disabled = props.disabled ?? field?.disabled\n  // Omitted options must not overwrite Ark's generated ids or inherited Field defaults.\n  const definedProps = Object.fromEntries(Object.entries(props).filter(([, value]) => value !== undefined))\n  const api = useArkSignaturePad({ ...definedProps, readOnly, disabled })\n  const blocked = !!(readOnly || disabled)\n  return {\n    ...api,\n    clear() {\n      if (!blocked) api.clear()\n    },\n    getClearTriggerProps() {\n      const trigger = api.getClearTriggerProps()\n      return {\n        ...trigger,\n        disabled: blocked,\n        onClick: (event: React.MouseEvent<HTMLElement>) => {\n          if (!blocked) trigger.onClick?.(event)\n        },\n      }\n    },\n  }\n}\n\nfunction SignaturePadRoot({\n  className,\n  id,\n  ids,\n  defaultPaths,\n  drawing,\n  disabled,\n  readOnly,\n  name,\n  onDraw,\n  onDrawEnd,\n  paths,\n  required,\n  translations,\n  ...props\n}: SignaturePadRootProps) {\n  const value = useSignaturePad({\n    id,\n    ids,\n    defaultPaths,\n    drawing,\n    disabled,\n    readOnly,\n    name,\n    onDraw,\n    onDrawEnd,\n    paths,\n    required,\n    translations,\n  })\n  return (\n    <SignaturePadPrimitive.RootProvider\n      value={value}\n      data-slot=\"signature-pad\"\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SignaturePadContext({ ...props }: SignaturePadContextProps) {\n  return <SignaturePadPrimitive.Context {...props} />\n}\n\nfunction SignaturePadLabel({ className, ...props }: SignaturePadLabelProps) {\n  return (\n    <SignaturePadPrimitive.Label\n      data-slot=\"signature-pad-label\"\n      className={cn(\"flex items-center gap-2 text-sm/none font-medium select-none\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SignaturePadControl({ className, children, ...props }: SignaturePadControlProps) {\n  return (\n    <SignaturePadPrimitive.Control\n      data-slot=\"signature-pad-control\"\n      className={cn(\n        \"relative h-40 w-full touch-none overflow-hidden rounded-lg border border-input bg-transparent transition-colors outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:bg-input/30 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 data-disabled:pointer-events-none data-disabled:bg-input/50 data-disabled:opacity-50 dark:data-disabled:bg-input/80\",\n        className\n      )}\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <>\n          {children ?? (\n            <>\n              <SignaturePadSegment />\n              <SignaturePadGuide />\n              <SignaturePadClearTrigger />\n            </>\n          )}\n        </>\n      )}\n    </SignaturePadPrimitive.Control>\n  )\n}\n\nfunction SignaturePadSegment({ className, ...props }: SignaturePadSegmentProps) {\n  return (\n    <SignaturePadPrimitive.Segment\n      data-slot=\"signature-pad-segment\"\n      className={cn(\"fill-foreground\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SignaturePadGuide({ className, ...props }: SignaturePadGuideProps) {\n  return (\n    <SignaturePadPrimitive.Guide\n      data-slot=\"signature-pad-guide\"\n      className={cn(\"pointer-events-none absolute inset-x-4 bottom-8 border-b border-dashed border-border\", className)}\n      {...props}\n    />\n  )\n}\n\nfunction SignaturePadClearTrigger({ className, children, ...props }: SignaturePadClearTriggerProps) {\n  return (\n    <SignaturePadPrimitive.ClearTrigger\n      data-slot=\"signature-pad-clear-trigger\"\n      className={cn(\n        \"absolute top-2 right-2 [[data-slot=signature-pad-control][data-disabled]_&]:opacity-100\",\n        className\n      )}\n      asChild\n      {...props}\n    >\n      {props.asChild ? (\n        React.isValidElement(children) ? (\n          children\n        ) : null\n      ) : (\n        <Button variant=\"ghost\" size=\"icon-sm\">\n          {children ?? <XIcon />}\n          <span className=\"sr-only\">Clear</span>\n        </Button>\n      )}\n    </SignaturePadPrimitive.ClearTrigger>\n  )\n}\n\nfunction SignaturePadHiddenInput({ ...props }: SignaturePadHiddenInputProps) {\n  return <SignaturePadPrimitive.HiddenInput {...props} />\n}\n\nfunction SignaturePadRootProvider({ className, ...props }: SignaturePadRootProviderProps) {\n  return (\n    <SignaturePadPrimitive.RootProvider\n      data-slot=\"signature-pad\"\n      className={cn(\"flex w-full flex-col gap-1.5\", className)}\n      {...props}\n    />\n  )\n}\n\ntype SignaturePadRootProps = React.ComponentProps<typeof SignaturePadPrimitive.Root>\n\ntype SignaturePadRootProviderProps = React.ComponentProps<typeof SignaturePadPrimitive.RootProvider>\n\ntype SignaturePadClearTriggerProps = React.ComponentProps<typeof SignaturePadPrimitive.ClearTrigger>\n\ntype SignaturePadContextProps = React.ComponentProps<typeof SignaturePadPrimitive.Context>\n\ntype SignaturePadControlProps = React.ComponentProps<typeof SignaturePadPrimitive.Control>\n\ntype SignaturePadGuideProps = React.ComponentProps<typeof SignaturePadPrimitive.Guide>\n\ntype SignaturePadHiddenInputProps = React.ComponentProps<typeof SignaturePadPrimitive.HiddenInput>\n\ntype SignaturePadLabelProps = React.ComponentProps<typeof SignaturePadPrimitive.Label>\n\ntype SignaturePadSegmentProps = React.ComponentProps<typeof SignaturePadPrimitive.Segment>\n\nconst SignaturePad = {\n  Root: SignaturePadRoot,\n  RootProvider: SignaturePadRootProvider,\n  ClearTrigger: SignaturePadClearTrigger,\n  Context: SignaturePadContext,\n  Control: SignaturePadControl,\n  Guide: SignaturePadGuide,\n  HiddenInput: SignaturePadHiddenInput,\n  Label: SignaturePadLabel,\n  Segment: SignaturePadSegment,\n}\n\nexport {\n  useSignaturePad,\n  useSignaturePadContext,\n  SignaturePad,\n  type SignaturePadRootProps,\n  type SignaturePadRootProviderProps,\n  type SignaturePadClearTriggerProps,\n  type SignaturePadContextProps,\n  type SignaturePadControlProps,\n  type SignaturePadGuideProps,\n  type SignaturePadHiddenInputProps,\n  type SignaturePadLabelProps,\n  type SignaturePadSegmentProps,\n}\n"
+    }
+  ]
+}
