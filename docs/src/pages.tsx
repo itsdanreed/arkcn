@@ -161,6 +161,7 @@ function useExample(name: string, framework: Framework) {
 const wide = new Set([
   "data-table",
   "data-grid",
+  "spreadsheet",
   "kanban",
   "gantt",
   "scheduler",

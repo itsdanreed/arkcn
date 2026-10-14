@@ -33,6 +33,7 @@ export const descriptions: Record<string, string> = {
   command: "Fast, composable command menu on Ark UI's Listbox.",
   "context-menu": "Displays a menu at the pointer, triggered by a right click.",
   "data-grid": "An editable, keyboard-driven grid with ranges, copy and paste, and per-type editors.",
+  spreadsheet: "A virtualized sheet with ranges, a fill handle, frozen panes, undo, and formulas.",
   "data-table":
     "Compositional table parts on a dependency-free headless engine: sorting, filters, pagination, selection.",
   dialog: "A window overlaid on the primary window, rendering the content underneath inert.",

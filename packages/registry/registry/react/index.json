@@ -2000,7 +2000,7 @@
     {
       "name": "select",
       "type": "ui",
-      "description": "`packages/react/src/lib/history.ts` exports `useHistory(initial, limit)` → `{ present, set(next, { commit }), checkpoint, undo, redo, reset, canUndo, canRedo }`; the node graph and form builder use it. Never add a local copy.",
+      "description": "",
       "ark": "Select",
       "exports": [
         "useSelect",
@@ -2209,6 +2209,32 @@
       ],
       "files": [
         "components/ui/splitter.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "spreadsheet",
+      "type": "ui",
+      "description": "`packages/react/src/components/ui/spreadsheet.tsx` is a compositional, data-agnostic sheet (column letters, row numbers), not a record table.",
+      "exports": [
+        "Spreadsheet",
+        "useSpreadsheet",
+        "cellName",
+        "columnLabel"
+      ],
+      "dependencies": [
+        "@ark-ui/react"
+      ],
+      "registryDependencies": [
+        "input",
+        "lib/controllable",
+        "lib/formula",
+        "lib/history",
+        "lib/utils",
+        "live-region"
+      ],
+      "files": [
+        "components/ui/spreadsheet.tsx"
       ],
       "css": false
     },
@@ -2682,6 +2708,31 @@
       "registryDependencies": [],
       "files": [
         "lib/form.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/formula",
+      "type": "lib",
+      "description": "Dependency-free spreadsheet formula layer. A cell whose text starts with `=` is a formula: cell references (`A1`, `$B$2`), ranges (`A1:B3`), `+ - * /`, parentheses, unary minus, numbers, quoted strings, and the functions SUM, AVERAGE, MIN, ",
+      "exports": [
+        "columnLabel",
+        "columnIndex",
+        "cellName",
+        "parseCellName",
+        "isFormula",
+        "isFormulaError",
+        "parseFormula",
+        "formulaFunctions",
+        "createFormulaEvaluator",
+        "formatFormulaValue",
+        "shiftFormula",
+        "toFormulaValue"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/formula.ts"
       ],
       "css": false
     },

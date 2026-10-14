@@ -172,6 +172,7 @@ export const groups: { title: string; names: string[] }[] = [
     names: [
       "data-table",
       "data-grid",
+      "spreadsheet",
       "kanban",
       "gantt",
       "scheduler",

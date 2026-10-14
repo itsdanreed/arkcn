@@ -204,6 +204,39 @@ copy/paste TSV; a live region announces clears/copies. `src/demo/data-grid/` is 
 (`/contacts`, "Contacts"): 500 users, pinned select + username, per-type editors, and tracked
 changes with Undo / Discard / Save in a `FloatingToolbar`.
 
+## Spreadsheet
+`packages/react/src/components/ui/spreadsheet.tsx` is a compositional, data-agnostic sheet (column letters,
+row numbers), not a record table. The consumer owns the cells (`data: SpreadsheetValue[][]`, values
+`string | number | boolean | null`, `rowCount`/`columnCount` optional overrides); the root owns the
+selection (`selection`/`defaultSelection`/`onSelectionChange`, `{ anchor, focus }` cells, controllable via
+`useControllable`), the editing draft, column widths (`columnWidths`/`onColumnWidthsChange`, `columnWidth`
+default 100, `minColumnWidth`), the virtual window (fixed `rowHeight` 32, `overscan`), and an undo stack
+of intents on `useHistory` (present = number of applied batches; undo/redo replay inverse batches). Every
+edit, paste, clear, fill, undo, and redo is one intent batch `onCellsChange([{ row, column, value,
+previous }])`; the consumer applies it and replaces `data`. Formulas live in `packages/react/src/lib/formula.ts`
+(`createFormulaEvaluator`, memoized per `data`, lazy per visible cell): `=` prefix, refs `A1`/`$B$2`,
+ranges `A1:B3`, `+ - * / ^`, parentheses, unary minus, strings, SUM/AVERAGE/MIN/MAX/COUNT (`functions`
+prop extends by upper-case name); errors `#REF!` (outside the sheet), `#CYCLE!`, `#NAME?`, `#ERROR!`,
+`#VALUE!`, `#DIV/0!`; `shiftFormula` moves relative refs for the fill handle. Parts: `FormulaBar` >
+`NameBox` (stock `Input`, read-only, "B3" or "A1:C4", width only) + `FormulaInput` (stock `Input` bound
+to the draft; typing starts an edit `via: "bar"`, Enter commits down, Tab right, Escape cancels) +
+`UndoTrigger`/`RedoTrigger` (`ark.button`, polymorphic); `Container` (scroll viewport, `role="grid"`,
+`tabIndex=0` with `aria-activedescendant` on the focused cell so DOM focus survives virtualization;
+owns the keyboard and the copy/cut/paste events) > `Header` (sticky; the `HeaderRow` of `Corner` +
+`ColumnHeader column=` with a `ResizeHandle` each, then the `frozenRows` rendered as rows) + `Body`
+(windowed rows after the frozen ones; the editing row stays mounted; `children: (row) => node` overrides
+the default `Row` > `RowHeader` + `Cell column=` per column) + `Empty`. `Cell` exposes `data-type`
+(text/number/boolean/error), `data-formula`, `data-error`, `data-focused`, `data-selected`, `data-range`,
+`data-editing`, `data-fill-preview`, `data-frozen`; the in-cell editor is the stock `Input` (no recipe
+overrides; the cell drops its padding). `FillHandle` renders on the bottom-right cell of the range: drag
+extends down/up/right/left, numeric series with a constant step continue, other lines tile, formulas
+shift. Header/row-number clicks select lines (Shift extends), the corner selects all. Keyboard: arrows,
+Shift+arrows, ⌘+arrows to edges, Home/End, ⌘Home/End, PageUp/Down, Enter/F2/typing edit, Enter commits
+down, Tab right, Escape cancels, Delete/Backspace clear, ⌘C/⌘X/⌘V TSV (single value fills the selection),
+⌘Z/⇧⌘Z/⌘Y, ⌘A, Shift+Space row, Ctrl+Space column. Drag-select and fill auto-scroll at the edges via
+`elementFromPoint`. Frozen columns are sticky after the row gutter; frozen rows live in the sticky header.
+`docs/src/examples/spreadsheet.tsx` is the reference: a 10k-row budget with totals and summary formulas.
+
 ## Floating toolbar
 `packages/react/src/components/ui/floating-toolbar.tsx` is the snackbar-style bar that floats at the bottom of a
 page (`open`, `onEscape`, arrow/Home/End roving between its buttons, Escape ignored while focus is

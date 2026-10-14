@@ -79,7 +79,8 @@ function buildRegistry(framework) {
       if (heading === pretty || heading.startsWith(pretty + " ") || heading.includes(`\`${name}`)) return text
     }
     // Sections that mention the file explicitly.
-    for (const [, text] of docSections) if (text.includes(`${name}.tsx`) || text.includes(`${name}.ts\``)) return text
+    const file = new RegExp(`(?<![\\w-])${name}\\.tsx?\\b`)
+    for (const [, text] of docSections) if (file.test(text)) return text
     return undefined
   }
 
