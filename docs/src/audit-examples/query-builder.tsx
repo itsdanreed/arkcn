@@ -30,7 +30,7 @@ const fields: QueryField[] = [
 
 function GroupRemove() {
   const { depth } = useQueryBuilderGroup()
-  return depth === 0 ? null : <QueryBuilder.RemoveTrigger className="ms-auto" />
+  return depth === 0 ? null : <QueryBuilder.RemoveTrigger />
 }
 
 // The consumer renders groups recursively from the parts; the root applies edits.

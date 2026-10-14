@@ -27,7 +27,7 @@ const fields: QueryField[] = [
 
 function GroupRemove() {
   const { depth } = useQueryBuilderGroup()
-  return depth === 0 ? null : <QueryBuilder.RemoveTrigger className="ms-auto" />
+  return depth === 0 ? null : <QueryBuilder.RemoveTrigger />
 }
 
 // The consumer renders groups recursively from the parts; the root applies edits.
@@ -73,7 +73,7 @@ export default function QueryBuilderExample() {
     <div className="flex w-full flex-col gap-4">
       <QueryBuilder.Root fields={fields} value={query} onValueChange={setQuery}>
         <Group group={query} />
-        <QueryBuilder.Summary className="text-sm text-muted-foreground" />
+        <QueryBuilder.Summary />
       </QueryBuilder.Root>
     </div>
   )

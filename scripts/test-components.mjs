@@ -404,7 +404,8 @@ const pendingSummary = render(QueryBuilder.Root, { fields: queryFields, value: p
 assert.match(pendingSummary, /No complete conditions yet/)
 assert.doesNotMatch(pendingSummary, /Showing everything/)
 
-// Date cells keep incomplete/reversed ranges editable without Intl throwing.
+// Date values use the toolkit DatePicker (two separate pickers for a range) and keep
+// incomplete/reversed/invalid ranges editable without Intl throwing.
 for (const value of [[], ["2026-10-01"], ["2026-10-14", "2026-10-01"], ["invalid", "2026-10-01"]]) {
   const rule = { id: "date", field: "date", operator: "between", value }
   const markup = render(
@@ -412,8 +413,10 @@ for (const value of [[], ["2026-10-01"], ["2026-10-14", "2026-10-01"], ["invalid
     { fields: [{ name: "date", label: "Date", type: "date" }] },
     h(QueryBuilder.Rule, { rule }, h(QueryBuilder.ValueEditor))
   )
-  assert.match(markup, /aria-label="Edit date range"/)
-  assert.doesNotMatch(markup, /Invalid Date/)
+  assert.equal((markup.match(/data-slot="date-picker"/g) ?? []).length, 2)
+  assert.match(markup, /aria-label="From"/)
+  assert.match(markup, /aria-label="To"/)
+  assert.doesNotMatch(markup, /type="date"|Invalid Date/)
 }
 
 const datedQuery = {

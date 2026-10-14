@@ -1,8 +1,11 @@
 import * as React from "react"
 import { ark } from "@ark-ui/react"
 import { createListCollection } from "@ark-ui/react/collection"
-import { PlusIcon, XIcon } from "lucide-react"
+import { ChevronLeftIcon, ChevronRightIcon, PlusIcon, Trash2Icon } from "lucide-react"
 import { Button } from "./button"
+import { DatePicker, parseDate } from "./date-picker"
+import type { DateValue } from "@ark-ui/react"
+import { Portal } from "./portal"
 import { Input } from "./input"
 import { Select } from "./select"
 import { cn } from "../../lib/utils"
@@ -161,37 +164,104 @@ function insertNode(root: QueryGroup, groupId: string, node: QueryNode): QueryGr
 
 type DescribeOptions = { fields: QueryField[]; operators?: QueryOperator[] }
 
-function valueLabel(rule: QueryRule, field: QueryField | undefined): string {
-  const label = (v: unknown) => field?.options?.find((o) => o.value === String(v))?.label ?? String(v)
-  if (Array.isArray(rule.value)) {
-    const values = rule.value.map(label)
-    if (rule.operator === "between") return `${values[0]} and ${values[1]}`
-    if (values.length <= 3) return values.join(", ")
-    return `${values.slice(0, 2).join(", ")} and ${values.length - 2} more`
+/** A piece of the summary sentence; `value` segments are the user's values, rendered emphasised. */
+type QuerySegment = { text: string; value?: boolean }
+
+const dateFormat = new Intl.DateTimeFormat(undefined, { year: "numeric", month: "short", day: "numeric" })
+
+/** One value as the sentence shows it: text and options quoted, numbers bare, dates in a readable form. */
+function formatValue(v: unknown, field: QueryField | undefined): string {
+  const type = field?.type ?? "text"
+  if (type === "date") {
+    // Date-only strings are local calendar days (as the date input gives them), not UTC instants.
+    const ymd = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(v))
+    const date = ymd ? new Date(Number(ymd[1]), Number(ymd[2]) - 1, Number(ymd[3])) : new Date(String(v))
+    return Number.isNaN(date.getTime()) ? String(v) : dateFormat.format(date)
   }
-  return label(rule.value)
+  if (type === "number" || type === "boolean") return String(v)
+  const label = field?.options?.find((o) => o.value === String(v))?.label ?? String(v)
+  return `“${label}”`
 }
 
-/** Natural-language sentence, e.g. "Status is Active and Created is after 2026-01-01". */
-function describeQuery(
-  /** The group node this part renders. */
+function valueSegments(rule: QueryRule, field: QueryField | undefined): QuerySegment[] {
+  const value = (v: unknown): QuerySegment => ({ text: formatValue(v, field), value: true })
+  if (Array.isArray(rule.value)) {
+    const values = rule.value.map(value)
+    if (rule.operator === "between") return [values[0], { text: " and " }, values[1]]
+    const shown = values.length <= 3 ? values : values.slice(0, 2)
+    const out: QuerySegment[] = []
+    shown.forEach((segment, i) => {
+      if (i > 0) out.push({ text: i === shown.length - 1 && values.length <= 3 ? " or " : ", " })
+      out.push(segment)
+    })
+    if (values.length > 3) out.push({ text: ` or ${values.length - 2} more` })
+    return out
+  }
+  return [value(rule.value)]
+}
+
+/**
+ * The query as sentence segments: "Name contains “Ada” and either (Plan is “Pro”, or Seats is at
+ * least 10)". Any-groups read "either A, or B"; nested groups with more than one part are
+ * parenthesised. Incomplete rules are skipped (the Summary counts them separately).
+ */
+function describeQuerySegments(
   group: QueryGroup,
   { fields, operators = defaultOperators }: DescribeOptions,
   depth = 0
-): string {
+): QuerySegment[] {
   const parts = group.rules
-    .map((n) => {
-      if (isGroup(n)) return describeQuery(n, { fields, operators }, depth + 1)
-      if (!isComplete(n, operators)) return ""
+    .map((n): QuerySegment[] => {
+      if (isGroup(n)) return describeQuerySegments(n, { fields, operators }, depth + 1)
+      if (!isComplete(n, operators)) return []
       const field = fields.find((f) => f.name === n.field)
       const operator = operators.find((o) => o.name === n.operator)
-      const value = operator?.arity === "none" ? "" : ` ${valueLabel(n, field)}`
-      return `${field?.label ?? n.field} ${operator?.label ?? n.operator}${value}`
+      // List operators read as "Plan is “Free” or “Pro”" rather than "is any of Free, Pro".
+      const verb =
+        operator?.name === "anyOf" ? "is" : operator?.name === "noneOf" ? "is not" : (operator?.label ?? n.operator)
+      const head: QuerySegment = { text: `${field?.label ?? n.field} ${verb}` }
+      if (operator?.arity === "none") return [head]
+      return [head, { text: " " }, ...valueSegments(n, field)]
     })
-    .filter(Boolean)
-  if (!parts.length) return ""
-  const joined = parts.join(group.match === "all" ? " and " : " or ")
-  return depth > 0 && parts.length > 1 ? `(${joined})` : joined
+    .filter((segments) => segments.length > 0)
+  if (!parts.length) return []
+  const any = group.match === "any" && parts.length > 1
+  const out: QuerySegment[] = []
+  parts.forEach((segments, i) => {
+    // Two parts: "A and B" / "either A, or B". More: "A, B, and C" / "either A, B, or C".
+    if (i > 0) {
+      const last = i === parts.length - 1
+      out.push({ text: any ? (last ? ", or " : ", ") : parts.length > 2 ? (last ? ", and " : ", ") : " and " })
+    }
+    out.push(...segments)
+  })
+  if (any) out.unshift({ text: "either " })
+  if (depth > 0 && parts.length > 1) {
+    const open = any ? 1 : 0
+    out.splice(open, 0, { text: "(" })
+    out.push({ text: ")" })
+  }
+  return out
+}
+
+/** Natural-language sentence, e.g. "Status is “Active” and Created is after Jan 1, 2026". */
+function describeQuery(
+  /** The group node this part renders. */
+  group: QueryGroup,
+  options: DescribeOptions,
+  depth = 0
+): string {
+  return describeQuerySegments(group, options, depth)
+    .map((s) => s.text)
+    .join("")
+}
+
+/** How many rules `pruneQuery` would drop: shown by the summary so a half-built filter is not mistaken for a complete one. */
+function countIncomplete(group: QueryGroup, operators = defaultOperators): number {
+  return group.rules.reduce(
+    (n, node) => n + (isGroup(node) ? countIncomplete(node, operators) : isComplete(node, operators) ? 0 : 1),
+    0
+  )
 }
 
 /** The tree without incomplete rules and empty groups: what an interpreter should consume. */
@@ -354,11 +424,11 @@ function QueryBuilderGroup({ group, className, children, ...props }: QueryBuilde
         data-match={group.match}
         data-depth={depth}
         data-empty={group.rules.length === 0 ? "" : undefined}
-        className={cn(
-          "group/query-group flex flex-col gap-2",
-          depth > 0 && "rounded-lg border border-dashed bg-muted/30 p-3",
-          className
-        )}
+        // Every depth gets the same treatment: a header sentence, then one continuous thread line
+        // running from under the header past the conditions to the add row (body and footer each
+        // draw their segment, flush, so it reads as one line). No cards; nested groups get extra
+        // room above and below so each block stands apart.
+        className={cn("group/query-group col-span-full flex flex-col", depth > 0 && "my-2", className)}
         {...props}
       >
         {children}
@@ -388,8 +458,8 @@ function QueryBuilderMatch({ className, before, after = "of the following", ...p
   const { setMatch, disabled } = useQueryBuilder()
   const { group, depth } = useQueryBuilderGroup()
   return (
-    <span data-slot="query-builder-match" className="inline-flex flex-wrap items-center gap-1.5">
-      <span className="text-muted-foreground">{before ?? (depth === 0 ? "Match" : "Where")}</span>
+    <span data-slot="query-builder-match" className="inline-flex flex-wrap items-center gap-1.5 font-medium">
+      <span>{before ?? (depth === 0 ? "Match" : "Where")}</span>
       <Select.Root
         collection={matchCollection}
         value={[group.match]}
@@ -405,6 +475,7 @@ function QueryBuilderMatch({ className, before, after = "of the following", ...p
         ) : (
           <>
             <Select.Control>
+              {/* The header is a label, not a field: smaller and medium so it reads apart from the rows. */}
               <Select.Trigger size="sm" className={cn("font-medium", className)} aria-label="Match all or any">
                 <Select.ValueText>{group.match}</Select.ValueText>
               </Select.Trigger>
@@ -420,12 +491,16 @@ function QueryBuilderMatch({ className, before, after = "of the following", ...p
           </>
         )}
       </Select.Root>
-      <span className="text-muted-foreground">{after}</span>
+      <span>{after}</span>
     </span>
   )
 }
 
-/** Indented list of conditions with a guide line. */
+/**
+ * Indented list of conditions. It is a four-column grid (field, operator, value, actions) and each `QueryBuilderRule`
+ * is a subgrid row, so the columns line up across the group and the value
+ * editor takes the remaining width instead of wrapping under the field.
+ */
 function QueryBuilderGroupBody({ className, ...props }: QueryBuilderGroupBodyProps) {
   const { group } = useQueryBuilderGroup()
   return (
@@ -433,7 +508,7 @@ function QueryBuilderGroupBody({ className, ...props }: QueryBuilderGroupBodyPro
       data-slot="query-builder-group-body"
       data-empty={group.rules.length === 0 ? "" : undefined}
       className={cn(
-        "relative flex flex-col gap-2 ps-4 before:absolute before:inset-y-1 before:inset-s-1 before:w-px before:bg-border",
+        "@container/query-body ms-2.5 mt-2.5 grid grid-cols-[max-content_max-content_minmax(6rem,1fr)_auto] gap-2.5 border-s ps-3.5 pb-2.5",
         className
       )}
       {...props}
@@ -445,7 +520,8 @@ function QueryBuilderGroupFooter({ className, ...props }: QueryBuilderGroupFoote
   return (
     <ark.div
       data-slot="query-builder-group-footer"
-      className={cn("flex flex-wrap items-center gap-1 ps-4", className)}
+      // Continues the body's thread line; ps-1 + the ghost button's 10px padding aligns the plus with the rows.
+      className={cn("ms-2.5 flex flex-wrap items-center gap-1 border-s ps-1", className)}
       {...props}
     />
   )
@@ -464,8 +540,9 @@ function QueryBuilderRule({ rule, className, children, ...props }: QueryBuilderR
       <ark.div
         data-slot="query-builder-rule"
         data-incomplete={complete ? undefined : ""}
+        // Below ~28rem the row wraps instead: field, operator and trash on one line, the value below.
         className={cn(
-          "group/query-rule -ms-1 flex flex-wrap items-center gap-1.5 rounded-lg py-0.5 ps-1 pe-1 hover:bg-muted/40 has-focus-visible:bg-muted/40",
+          "group/query-rule col-span-full grid grid-cols-subgrid items-start @max-md/query-body:flex @max-md/query-body:flex-wrap @max-md/query-body:gap-2",
           className
         )}
         {...props}
@@ -502,12 +579,7 @@ function QueryBuilderFieldSelect({ className, ...props }: QueryBuilderFieldSelec
       ) : (
         <>
           <Select.Control>
-            <Select.Trigger
-              size="sm"
-              className={cn("font-medium", className)}
-              data-slot="query-builder-field-select"
-              aria-label="Field"
-            >
+            <Select.Trigger className={className} data-query-builder-part="field-select" aria-label="Field">
               <Select.ValueText placeholder="Field">{field?.label}</Select.ValueText>
             </Select.Trigger>
           </Select.Control>
@@ -551,12 +623,7 @@ function QueryBuilderOperatorSelect({ className, ...props }: QueryBuilderOperato
       ) : (
         <>
           <Select.Control>
-            <Select.Trigger
-              size="sm"
-              className={cn("text-muted-foreground", className)}
-              data-slot="query-builder-operator-select"
-              aria-label="Operator"
-            >
+            <Select.Trigger className={className} data-query-builder-part="operator-select" aria-label="Operator">
               <Select.ValueText placeholder="Operator">{current?.label}</Select.ValueText>
             </Select.Trigger>
           </Select.Control>
@@ -603,7 +670,71 @@ function QueryBuilderValueEditor({ className, children, ...props }: QueryBuilder
   if (!operator || operator.arity === "none") return null
   const type = field?.type ?? "text"
   const inputType = type === "number" ? "number" : type === "date" ? "date" : "text"
-  const inputClass = cn("h-7 w-40 text-sm md:text-sm", type === "number" && "w-24", type === "date" && "w-36")
+  // Only constrain layout; Input owns its height, typography, and state styles. Editors fill
+  // the value column (so rows stay aligned) up to a width that suits the type.
+  const inputClass = cn("w-full max-w-72", type === "number" && "max-w-32", type === "date" && "max-w-44")
+  const placeholder =
+    field?.placeholder ?? (type === "number" ? "Enter a number" : type === "text" ? "Enter a value" : undefined)
+
+  const editorClass = cn("col-start-3 flex min-w-0", narrowEditor)
+
+  if (type === "date") {
+    // Dates use the toolkit DatePicker (typed input + calendar) rather than the native control.
+    // "Between" is two separate pickers, each with its own calendar, joined by "and".
+    if (operator.arity === "two") {
+      const pair = Array.isArray(rule.value) ? (rule.value as unknown[]) : [undefined, undefined]
+      const set = (index: 0 | 1, v: string | undefined) => {
+        const next = [...pair]
+        next[index] = v
+        setValue(next)
+      }
+      return (
+        <ark.div
+          data-slot="query-builder-value-editor"
+          // Two pickers that wrap as a pair when the column is narrow, rather than clipping.
+          className={cn("col-start-3 flex max-w-md min-w-0 flex-wrap items-center gap-2", narrowEditor, className)}
+          {...props}
+        >
+          {props.asChild ? (
+            React.isValidElement(children) ? (
+              children
+            ) : null
+          ) : (
+            <>
+              <QueryDatePicker
+                value={pair[0]}
+                disabled={disabled}
+                label="From"
+                className="min-w-28 flex-1"
+                onChange={(v) => set(0, v)}
+              />
+              <span className="flex min-w-0 flex-1 items-center gap-2">
+                <span className="text-muted-foreground">and</span>
+                <QueryDatePicker
+                  value={pair[1]}
+                  disabled={disabled}
+                  label="To"
+                  className="min-w-28 flex-1"
+                  onChange={(v) => set(1, v)}
+                />
+              </span>
+            </>
+          )}
+        </ark.div>
+      )
+    }
+    return (
+      <ark.div data-slot="query-builder-value-editor" className={cn(editorClass, "max-w-56", className)} {...props}>
+        {props.asChild ? (
+          React.isValidElement(children) ? (
+            children
+          ) : null
+        ) : (
+          <QueryDatePicker value={rule.value} disabled={disabled} label="Date" onChange={setValue} />
+        )}
+      </ark.div>
+    )
+  }
 
   if (operator.arity === "two") {
     const pair = Array.isArray(rule.value) ? (rule.value as unknown[]) : [undefined, undefined]
@@ -615,7 +746,12 @@ function QueryBuilderValueEditor({ className, children, ...props }: QueryBuilder
     return (
       <ark.div
         data-slot="query-builder-value-editor"
-        className={cn("inline-flex items-center gap-1.5", className)}
+        // The pair shares the value column as one unit, so it shrinks instead of wrapping.
+        className={cn(
+          "col-start-3 grid max-w-md min-w-0 grid-cols-[1fr_auto_1fr] items-center gap-2",
+          narrowEditor,
+          className
+        )}
         {...props}
       >
         {props.asChild ? (
@@ -628,18 +764,20 @@ function QueryBuilderValueEditor({ className, children, ...props }: QueryBuilder
               type={inputType}
               value={String(pair[0] ?? "")}
               onChange={(e) => set(0, e.target.value)}
+              placeholder={placeholder}
               disabled={disabled}
               aria-label="From"
-              className={inputClass}
+              className="w-full"
             />
             <span className="text-muted-foreground">and</span>
             <Input.Root
               type={inputType}
               value={String(pair[1] ?? "")}
               onChange={(e) => set(1, e.target.value)}
+              placeholder={placeholder}
               disabled={disabled}
               aria-label="To"
-              className={inputClass}
+              className="w-full"
             />
           </>
         )}
@@ -651,7 +789,7 @@ function QueryBuilderValueEditor({ className, children, ...props }: QueryBuilder
     const many = operator.arity === "many"
     const selected = many ? ((rule.value as string[] | undefined) ?? []) : rule.value ? [String(rule.value)] : []
     return (
-      <ark.div data-slot="query-builder-value-editor" className={cn("inline-flex", className)} {...props}>
+      <ark.div data-slot="query-builder-value-editor" className={cn(editorClass, className)} {...props}>
         {props.asChild ? (
           React.isValidElement(children) ? (
             children
@@ -663,7 +801,7 @@ function QueryBuilderValueEditor({ className, children, ...props }: QueryBuilder
               value={selected}
               multiple={many}
               disabled={disabled}
-              placeholder="Choose…"
+              placeholder={field.placeholder ?? "Choose a value…"}
               onChange={(values) => setValue(many ? values : values[0])}
             />
           </>
@@ -676,7 +814,7 @@ function QueryBuilderValueEditor({ className, children, ...props }: QueryBuilder
     // Free-text lists: comma separated, shown as-is.
     const list = Array.isArray(rule.value) ? (rule.value as string[]) : []
     return (
-      <ark.div data-slot="query-builder-value-editor" className={cn("inline-flex", className)} {...props}>
+      <ark.div data-slot="query-builder-value-editor" className={cn(editorClass, className)} {...props}>
         {props.asChild ? (
           React.isValidElement(children) ? (
             children
@@ -693,10 +831,10 @@ function QueryBuilderValueEditor({ className, children, ...props }: QueryBuilder
                     .filter(Boolean)
                 )
               }
-              placeholder={field?.placeholder ?? "Comma separated"}
+              placeholder={field?.placeholder ?? "Comma separated values"}
               disabled={disabled}
               aria-label="Values"
-              className={cn(inputClass, "w-56")}
+              className="w-full max-w-md"
             />
           </>
         )}
@@ -705,7 +843,7 @@ function QueryBuilderValueEditor({ className, children, ...props }: QueryBuilder
   }
 
   return (
-    <ark.div data-slot="query-builder-value-editor" className={cn("inline-flex", className)} {...props}>
+    <ark.div data-slot="query-builder-value-editor" className={cn(editorClass, className)} {...props}>
       {props.asChild ? (
         React.isValidElement(children) ? (
           children
@@ -716,7 +854,7 @@ function QueryBuilderValueEditor({ className, children, ...props }: QueryBuilder
             type={inputType}
             value={String(rule.value ?? "")}
             onChange={(e) => setValue(e.target.value)}
-            placeholder={field?.placeholder ?? (type === "text" ? "Value" : undefined)}
+            placeholder={placeholder}
             disabled={disabled}
             aria-label="Value"
             className={inputClass}
@@ -724,6 +862,166 @@ function QueryBuilderValueEditor({ className, children, ...props }: QueryBuilder
         </>
       )}
     </ark.div>
+  )
+}
+
+/** In the wrapped (narrow) row layout the value editor drops to its own full-width line, after the trash. */
+const narrowEditor = "@max-md/query-body:order-last @max-md/query-body:basis-full"
+
+/** Converts a stored ISO day string to a calendar value; anything unparsable is an empty picker. */
+function toDateValue(value: unknown): DateValue[] {
+  if (value == null || value === "") return []
+  try {
+    return ([] as DateValue[]).concat(parseDate(String(value)))
+  } catch {
+    // Not a date yet (half-typed or foreign input): show an empty picker rather than throw.
+    return []
+  }
+}
+
+/**
+ * The toolkit DatePicker composed for one date value: a typed input with calendar
+ * and clear triggers in a Control, and day/month/year views in a portal.
+ */
+function QueryDatePicker({
+  value,
+  disabled,
+  label,
+  className,
+  onChange,
+}: {
+  value: unknown
+  disabled: boolean
+  label: string
+  className?: string
+  onChange: (value: string | undefined) => void
+}) {
+  const dates = React.useMemo(() => toDateValue(value), [value])
+  return (
+    <DatePicker.Root
+      value={dates}
+      // Store the calendar value's own ISO day ("2026-10-01"), not `valueAsString`, which is the
+      // locale display format and would not parse back.
+      onValueChange={({ value }) => onChange(value[0]?.toString())}
+      disabled={disabled}
+      positioning={{ sameWidth: false }}
+      className={cn("w-full", className)}
+    >
+      <DatePicker.Control>
+        <DatePicker.Input aria-label={label} />
+        <DatePicker.Trigger aria-label="Open calendar" />
+        <DatePicker.ClearTrigger aria-label="Clear" />
+      </DatePicker.Control>
+      <Portal.Root>
+        <DatePicker.Positioner>
+          <DatePicker.Content>
+            <DatePicker.View view="day">
+              <DatePicker.Context>
+                {(api) => (
+                  <>
+                    <DatePicker.ViewControl>
+                      <DatePicker.PrevTrigger aria-label="Previous month">
+                        <ChevronLeftIcon />
+                      </DatePicker.PrevTrigger>
+                      <DatePicker.ViewTrigger>
+                        <DatePicker.RangeText />
+                      </DatePicker.ViewTrigger>
+                      <DatePicker.NextTrigger aria-label="Next month">
+                        <ChevronRightIcon />
+                      </DatePicker.NextTrigger>
+                    </DatePicker.ViewControl>
+                    <DatePicker.Table>
+                      <DatePicker.TableHead>
+                        <DatePicker.TableRow>
+                          {api.weekDays.map((day, index) => (
+                            <DatePicker.TableHeader key={index}>{day.short}</DatePicker.TableHeader>
+                          ))}
+                        </DatePicker.TableRow>
+                      </DatePicker.TableHead>
+                      <DatePicker.TableBody>
+                        {api.weeks.map((week, index) => (
+                          <DatePicker.TableRow key={index}>
+                            {week.map((day) => (
+                              <DatePicker.TableCell key={day.toString()} value={day}>
+                                <DatePicker.TableCellTrigger>{day.day}</DatePicker.TableCellTrigger>
+                              </DatePicker.TableCell>
+                            ))}
+                          </DatePicker.TableRow>
+                        ))}
+                      </DatePicker.TableBody>
+                    </DatePicker.Table>
+                  </>
+                )}
+              </DatePicker.Context>
+            </DatePicker.View>
+            <DatePicker.View view="month">
+              <DatePicker.Context>
+                {(api) => (
+                  <>
+                    <DatePicker.ViewControl>
+                      <DatePicker.PrevTrigger aria-label="Previous year">
+                        <ChevronLeftIcon />
+                      </DatePicker.PrevTrigger>
+                      <DatePicker.ViewTrigger>
+                        <DatePicker.RangeText />
+                      </DatePicker.ViewTrigger>
+                      <DatePicker.NextTrigger aria-label="Next year">
+                        <ChevronRightIcon />
+                      </DatePicker.NextTrigger>
+                    </DatePicker.ViewControl>
+                    <DatePicker.Table columns={3}>
+                      <DatePicker.TableBody>
+                        {api.getMonthsGrid({ columns: 3, format: "short" }).map((months, index) => (
+                          <DatePicker.TableRow key={index}>
+                            {months.map((month) => (
+                              <DatePicker.TableCell key={month.value} value={month.value}>
+                                <DatePicker.TableCellTrigger>{month.label}</DatePicker.TableCellTrigger>
+                              </DatePicker.TableCell>
+                            ))}
+                          </DatePicker.TableRow>
+                        ))}
+                      </DatePicker.TableBody>
+                    </DatePicker.Table>
+                  </>
+                )}
+              </DatePicker.Context>
+            </DatePicker.View>
+            <DatePicker.View view="year">
+              <DatePicker.Context>
+                {(api) => (
+                  <>
+                    <DatePicker.ViewControl>
+                      <DatePicker.PrevTrigger aria-label="Previous decade">
+                        <ChevronLeftIcon />
+                      </DatePicker.PrevTrigger>
+                      <DatePicker.ViewTrigger>
+                        <DatePicker.RangeText />
+                      </DatePicker.ViewTrigger>
+                      <DatePicker.NextTrigger aria-label="Next decade">
+                        <ChevronRightIcon />
+                      </DatePicker.NextTrigger>
+                    </DatePicker.ViewControl>
+                    <DatePicker.Table columns={3}>
+                      <DatePicker.TableBody>
+                        {api.getYearsGrid({ columns: 3 }).map((years, index) => (
+                          <DatePicker.TableRow key={index}>
+                            {years.map((year) => (
+                              <DatePicker.TableCell key={year.value} value={year.value}>
+                                <DatePicker.TableCellTrigger>{year.label}</DatePicker.TableCellTrigger>
+                              </DatePicker.TableCell>
+                            ))}
+                          </DatePicker.TableRow>
+                        ))}
+                      </DatePicker.TableBody>
+                    </DatePicker.Table>
+                  </>
+                )}
+              </DatePicker.Context>
+            </DatePicker.View>
+          </DatePicker.Content>
+        </DatePicker.Positioner>
+      </Portal.Root>
+    </DatePicker.Root>
   )
 }
 
@@ -758,7 +1056,7 @@ function OptionPicker({
       positioning={{ sameWidth: false }}
     >
       <Select.Control>
-        <Select.Trigger size="sm" className="max-w-64" aria-label="Value">
+        <Select.Trigger className="max-w-64" aria-label="Value">
           <Select.ValueText placeholder={placeholder}>
             {labels.length
               ? labels.length > 3
@@ -780,13 +1078,13 @@ function OptionPicker({
   )
 }
 
-/** Hover-revealed slot at the end of a rule row (remove trigger, extras). */
+/** Trailing column of a rule row (remove trigger, extras): sits right after the value so it reads as the row's own, always visible. */
 function QueryBuilderRuleActions({ className, ...props }: QueryBuilderRuleActionsProps) {
   return (
     <ark.div
       data-slot="query-builder-rule-actions"
       className={cn(
-        "ms-auto inline-flex items-center gap-0.5 opacity-0 transition-opacity group-focus-within/query-rule:opacity-100 group-hover/query-rule:opacity-100",
+        "col-start-4 inline-flex h-8 items-center gap-0.5 justify-self-start @max-md/query-body:ms-auto",
         className
       )}
       {...props}
@@ -826,7 +1124,13 @@ function QueryBuilderAddRuleTrigger({ asChild, children, onClick, ...props }: Qu
   )
 }
 
-function QueryBuilderAddGroupTrigger({ asChild, children, onClick, ...props }: QueryBuilderAddGroupTriggerProps) {
+function QueryBuilderAddGroupTrigger({
+  asChild,
+  children,
+  onClick,
+  className,
+  ...props
+}: QueryBuilderAddGroupTriggerProps) {
   const { addGroup, disabled, maxDepth } = useQueryBuilder()
   const { group, depth } = useQueryBuilderGroup()
   if (depth >= maxDepth) return null
@@ -838,14 +1142,15 @@ function QueryBuilderAddGroupTrigger({ asChild, children, onClick, ...props }: Q
       size="sm"
       asChild={asChild}
       disabled={disabled}
-      className="text-muted-foreground"
+      // Quieter than "Add condition": one visual weight per footer keeps deep trees readable.
+      className={cn("text-muted-foreground", className)}
       onClick={(event) => {
         onClick?.(event)
         if (!event.defaultPrevented) addGroup(group.id)
       }}
       {...props}
     >
-      {asChild ? children : (children ?? <>Add a nested group</>)}
+      {asChild ? children : (children ?? <>Add group</>)}
     </Button>
   )
 }
@@ -872,14 +1177,15 @@ function QueryBuilderRemoveTrigger({
       asChild={asChild}
       disabled={disabled}
       aria-label={label}
-      className={cn("text-muted-foreground hover:text-destructive", className)}
+      // Visible at rest (muted) so it is discoverable on touch; hover and focus bring it forward.
+      className={cn("text-muted-foreground hover:text-foreground focus-visible:text-foreground", className)}
       onClick={(event) => {
         onClick?.(event)
         if (!event.defaultPrevented && target) remove(target)
       }}
       {...props}
     >
-      {asChild ? children : (children ?? <XIcon />)}
+      {asChild ? children : (children ?? <Trash2Icon />)}
     </Button>
   )
 }
@@ -896,12 +1202,16 @@ function QueryBuilderSummary({
   ...props
 }: QueryBuilderSummaryProps) {
   const { value, fields, operators } = useQueryBuilder()
-  const text = describeQuery(value, { fields, operators })
+  const segments = describeQuerySegments(value, { fields, operators })
+  const text = segments.length > 0
+  const incomplete = countIncomplete(value, operators)
   return (
     <ark.p
       data-slot="query-builder-summary"
       data-empty={text ? undefined : ""}
-      className={cn("text-sm", className)}
+      data-incomplete={incomplete ? incomplete : undefined}
+      // A footer under the rows, not a second copy of them: hairline above, muted sentence.
+      className={cn("border-t pt-3 text-sm text-muted-foreground", className)}
       {...props}
     >
       {props.asChild ? (
@@ -912,14 +1222,34 @@ function QueryBuilderSummary({
         <>
           {text ? (
             <>
-              <span className="text-muted-foreground">{prefix}</span>
-              <span className="font-medium">{text}</span>
+              {prefix}
+              <span className="text-foreground">
+                {segments.map((s, i) =>
+                  s.value ? (
+                    // Values are emphasised and kept on one line so a date or quoted name never breaks mid-value.
+                    <strong key={i} className="font-medium whitespace-nowrap">
+                      {s.text}
+                    </strong>
+                  ) : (
+                    <React.Fragment key={i}>{s.text}</React.Fragment>
+                  )
+                )}
+              </span>
+              {incomplete ? "." : null}
             </>
+          ) : incomplete ? (
+            "No complete conditions yet."
           ) : (
-            (children ?? (
-              <span className="text-muted-foreground">Showing everything. Add a condition to narrow it down.</span>
-            ))
+            (children ?? "Showing everything. Add a condition to narrow it down.")
           )}
+          {incomplete ? (
+            <span data-slot="query-builder-summary-incomplete">
+              {" "}
+              {incomplete === 1
+                ? "1 incomplete condition not applied."
+                : `${incomplete} incomplete conditions not applied.`}
+            </span>
+          ) : null}
         </>
       )}
     </ark.p>
@@ -930,7 +1260,7 @@ function QueryBuilderEmpty({ className, ...props }: QueryBuilderEmptyProps) {
   return (
     <ark.div
       data-slot="query-builder-empty"
-      className={cn("rounded-lg border border-dashed px-3 py-2 text-sm text-muted-foreground", className)}
+      className={cn("col-span-full py-1 text-sm text-muted-foreground", className)}
       {...props}
     />
   )
@@ -1020,7 +1350,10 @@ export {
   operatorsFor,
   defaultOperators,
   describeQuery,
+  describeQuerySegments,
+  type QuerySegment,
   pruneQuery,
+  countIncomplete,
   type QueryField,
   type QueryFieldType,
   type QueryOption,

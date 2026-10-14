@@ -1802,7 +1802,9 @@
         "operatorsFor",
         "defaultOperators",
         "describeQuery",
-        "pruneQuery"
+        "describeQuerySegments",
+        "pruneQuery",
+        "countIncomplete"
       ],
       "dependencies": [
         "@ark-ui/react",
@@ -1810,9 +1812,11 @@
       ],
       "registryDependencies": [
         "button",
+        "date-picker",
         "input",
         "lib/controllable",
         "lib/utils",
+        "portal",
         "select"
       ],
       "files": [

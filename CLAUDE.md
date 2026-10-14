@@ -380,17 +380,26 @@ and in-memory evaluation are the consumer's job (the demo's `interpret.ts` has `
 recursively; the root applies edits. Fields are data (`{ name, label, type: text|number|date|
 boolean|select, options, operators, placeholder }`); operators are `{ name, label, arity:
 none|one|two|many, types }` with `defaultOperators` exported. Parts: `QueryBuilderGroup` (`group`,
-`data-match`/`data-depth`, nested groups get a dashed panel), `GroupHeader` > `QueryBuilderMatch`
-(`before`/`after` text) + `QueryBuilderRemoveTrigger` (removes the enclosing rule, or group when
-used in a header), `GroupBody` (guide line), `QueryBuilderRule` (`rule`) > `FieldSelect`
+`data-match`/`data-depth`, no cards; one continuous thread line per group from under the header
+through body and footer, nested groups indented 24px with extra vertical room), `GroupHeader` > `QueryBuilderMatch` (`before`/`after` text; small medium-weight select
+so the header reads as a label) + `QueryBuilderRemoveTrigger` (trash icon, never an ×, so it is
+distinct from picker clear buttons; removes the enclosing rule, or group when used in a header;
+visible at rest, muted, right after the value / header sentence), `GroupBody` (thread line + 24px indent; a
+four-column grid field/operator/value/actions with each rule a `grid-cols-subgrid` row so columns
+align), `QueryBuilderRule` (`rule`; the Input/Select controls inside keep their own recipes, the
+builder only constrains widths) > `FieldSelect`
 (changing the field resets operator/value) + `OperatorSelect` (keeps the value when the arity
-matches) + `ValueEditor` (by type/arity: text/number/date inputs, two inputs for "between",
+matches) + `ValueEditor` (by type/arity: text/number inputs, the toolkit `DatePicker` for dates
+(two separate pickers for "between"),
 single/multiple Select for select fields, comma list for free-text lists; render-prop child
-overrides, return `undefined` to fall back) + `RuleActions` (hover-revealed), `GroupFooter` >
-`AddRuleTrigger` / `AddGroupTrigger` (hidden past `maxDepth`; a new nested group starts with the
-opposite match), `QueryBuilderSummary` (natural-language sentence; `prefix` prop, default
-"Showing results where "), `QueryBuilderEmpty`. Helpers: `createRule`, `createGroup`, `isGroup`,
-`isComplete`, `operatorsFor`, `describeQuery(tree, { fields })`, `pruneQuery`. The form builder
+overrides, return `undefined` to fall back; the "between" pair shares the value column as one
+unit) + `RuleActions` (trailing column, always visible), `GroupFooter` > `AddRuleTrigger` /
+`AddGroupTrigger` (muted "Add group"; hidden past `maxDepth`; a new nested group starts with the
+opposite match), `QueryBuilderSummary` (footer with a hairline above; muted sentence, values
+emphasised and quoted, dates "Oct 1, 2026", "A, B, and C" / "either A, or B"; `prefix` prop,
+default "Showing results where "; appends "N incomplete conditions not applied"), `QueryBuilderEmpty`.
+Helpers: `createRule`, `createGroup`, `isGroup`, `isComplete`, `operatorsFor`,
+`describeQuery(tree, { fields })`, `pruneQuery`, `countIncomplete`. The form builder
 reuses these parts for per-field visibility conditions. `src/demo/query-builder/` is the reference
 (`/segments`): filters the users dataset with quick-start presets, the sentence summary, a
 live matching-rows table, and SQL/JSON output.
