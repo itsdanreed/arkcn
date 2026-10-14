@@ -41,3 +41,5 @@ For four-edge resizing in week view, render both axes for each endpoint:
 Week and month event backgrounds use 60% opacity in both themes, including hover states, so grid lines remain visible beneath them. Labels, borders, and resize handles stay fully opaque. Day events retain their solid surfaces.
 
 Below a 40rem calendar width, month view uses matching square weekday headers and date cells with event indicators instead of squeezed event bars. Each date announces its event count and opens day view when selected. Weekday labels shorten visually while retaining their full accessible names. The toolbar places the view selector on its own row and abbreviates the month title; wide calendars retain the spanning bars.
+
+Month view sizes itself to all calendar rows and event lanes, without an internal scrollbar on desktop or mobile. The root uses automatic height in month view; day and week retain their bounded, scrollable time grids.

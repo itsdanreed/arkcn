@@ -541,8 +541,10 @@ function QueryBuilderRule({ rule, className, children, ...props }: QueryBuilderR
         data-slot="query-builder-rule"
         data-incomplete={complete ? undefined : ""}
         // Below ~28rem the row wraps instead: field, operator and trash on one line, the value below.
+        // Hover and keyboard focus tint the row (a pseudo-element behind it, so the grid tracks stay
+        // put), which shows which condition the trash and editors belong to.
         className={cn(
-          "group/query-rule col-span-full grid grid-cols-subgrid items-start @max-md/query-body:flex @max-md/query-body:flex-wrap @max-md/query-body:gap-2",
+          "group/query-rule relative isolate col-span-full grid grid-cols-subgrid items-start before:absolute before:-inset-x-2 before:-inset-y-1 before:-z-10 before:rounded-lg before:transition-colors hover:before:bg-muted/50 has-focus-visible:before:bg-muted/50 @max-md/query-body:flex @max-md/query-body:flex-wrap @max-md/query-body:gap-2",
           className
         )}
         {...props}

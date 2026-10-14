@@ -745,7 +745,7 @@ function CommentThreadComposerInput({
       }
       data-placeholder={placeholder}
       className={cn(
-        "min-h-16 px-2.5 py-2 text-base wrap-break-word whitespace-pre-wrap transition-colors outline-none motion-reduce:transition-none md:text-sm",
+        "min-h-16 px-2.5 py-2 text-sm wrap-break-word whitespace-pre-wrap transition-colors outline-none motion-reduce:transition-none",
         "empty:before:pointer-events-none empty:before:text-muted-foreground empty:before:content-[attr(data-placeholder)]",
         className
       )}

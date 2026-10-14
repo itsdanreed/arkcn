@@ -65,7 +65,7 @@ function PasswordInputInput({ className, ...props }: PasswordInputInputProps) {
     <PasswordInputPrimitive.Input
       data-slot="password-input-input"
       className={cn(
-        "h-8 min-w-0 flex-1 bg-transparent py-1 pr-1.5 pl-2.5 text-base outline-none placeholder:text-muted-foreground disabled:opacity-50 md:text-sm",
+        "h-8 min-w-0 flex-1 bg-transparent py-1 pr-1.5 pl-2.5 text-sm outline-none placeholder:text-muted-foreground disabled:opacity-50",
         className
       )}
       {...props}

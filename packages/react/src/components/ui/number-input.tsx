@@ -65,7 +65,7 @@ function NumberInputInput({ className, ...props }: NumberInputInputProps) {
     <NumberInputPrimitive.Input
       data-slot="number-input-input"
       className={cn(
-        "min-w-0 flex-1 bg-transparent px-2.5 py-1 text-base outline-none placeholder:text-muted-foreground md:text-sm",
+        "min-w-0 flex-1 bg-transparent px-2.5 py-1 text-sm outline-none placeholder:text-muted-foreground",
         className
       )}
       {...props}

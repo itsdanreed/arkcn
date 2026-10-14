@@ -628,7 +628,10 @@ function SchedulerRoot({
         data-slot="scheduler"
         data-view={view}
         data-interacting={interaction?.type ?? (creating ? "create" : undefined)}
-        className={cn("@container/scheduler flex min-h-0 flex-1 flex-col gap-3", className)}
+        className={cn(
+          "@container/scheduler flex min-h-0 flex-1 flex-col gap-3 data-[view=month]:h-auto data-[view=month]:flex-none",
+          className
+        )}
         {...props}
       >
         {props.asChild ? (
@@ -1530,7 +1533,7 @@ function SchedulerMonthGrid({ className, ...props }: SchedulerMonthGridProps) {
     <ark.div
       data-slot="scheduler-month-grid"
       className={cn(
-        "@container/month flex min-h-0 flex-initial flex-col overflow-hidden rounded-xl border bg-background @min-[40rem]/scheduler:flex-1",
+        "@container/month flex flex-none flex-col overflow-hidden rounded-xl border bg-background",
         className
       )}
       {...props}
@@ -1573,20 +1576,11 @@ function SchedulerMonthHeader({ className, ...props }: SchedulerMonthHeaderProps
 }
 
 function SchedulerMonthBody({ className, children, events, ...props }: SchedulerMonthBodyProps) {
-  const { days } = useScheduler()
   return (
     <MonthEventsContext.Provider value={events ?? null}>
       <ark.div
         data-slot="scheduler-month-body"
-        className={cn(
-          "grid min-h-0 flex-1 grid-cols-7 content-start overflow-y-auto @min-[40rem]/month:grid-rows-(--scheduler-month-rows) @min-[40rem]/month:content-normal",
-          className
-        )}
-        style={
-          {
-            "--scheduler-month-rows": `repeat(${Math.ceil(days.length / 7)}, minmax(max-content, 1fr))`,
-          } as React.CSSProperties
-        }
+        className={cn("grid flex-none auto-rows-max grid-cols-7", className)}
         {...props}
       >
         {children}

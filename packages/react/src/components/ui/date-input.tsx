@@ -49,7 +49,7 @@ function DateInputControl({ className, ...props }: DateInputControlProps) {
     <DateInputPrimitive.Control
       data-slot="date-input-control"
       className={cn(
-        "flex h-8 w-fit items-center rounded-lg border border-input bg-transparent px-2.5 py-1 text-base transition-colors has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 md:text-sm dark:bg-input/30 dark:data-invalid:border-destructive/50 dark:data-invalid:ring-destructive/40 data-disabled:pointer-events-none data-disabled:bg-input/50 data-disabled:opacity-50 dark:data-disabled:bg-input/80",
+        "flex h-8 w-fit items-center rounded-lg border border-input bg-transparent px-2.5 py-1 text-sm transition-colors has-focus-visible:border-ring has-focus-visible:ring-3 has-focus-visible:ring-ring/50 data-invalid:border-destructive data-invalid:ring-3 data-invalid:ring-destructive/20 dark:bg-input/30 dark:data-invalid:border-destructive/50 dark:data-invalid:ring-destructive/40 data-disabled:pointer-events-none data-disabled:bg-input/50 data-disabled:opacity-50 dark:data-disabled:bg-input/80",
         className
       )}
       {...props}
