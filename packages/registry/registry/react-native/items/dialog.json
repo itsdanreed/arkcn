@@ -1,0 +1,918 @@
+{
+  "name": "dialog",
+  "type": "ui",
+  "description": "Also governs Android Back and the screen reader escape gesture.",
+  "exports": [
+    "useDialogContext",
+    "useDialog",
+    "DialogSurface",
+    "Dialog"
+  ],
+  "parts": [
+    {
+      "name": "DialogSurface",
+      "props": [
+        {
+          "name": "backdrop",
+          "type": "ReactNode",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "maxWidth",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "description": "Render the close button.",
+          "from": "arkcn"
+        },
+        {
+          "name": "side",
+          "type": "\"bottom\" | \"left\" | \"right\" | \"top\"",
+          "required": false,
+          "description": "Which side of the anchor or container the part sits on.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Dialog.Root",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "blurTarget",
+          "type": "RefObject<((props: Omit<ViewProps, \"ref\"> & { ref?: Ref<ReactNativeElement> | undefined; }) => ReactNode) | null>",
+          "required": false,
+          "description": "Android blur requires a reference to a BlurTargetView around the app surface.",
+          "from": "arkcn"
+        },
+        {
+          "name": "closeOnEscape",
+          "type": "boolean",
+          "required": false,
+          "description": "Also governs Android Back and the screen reader escape gesture.",
+          "from": "arkcn"
+        },
+        {
+          "name": "closeOnInteractOutside",
+          "type": "boolean",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "defaultOpen",
+          "type": "boolean",
+          "required": false,
+          "description": "The initial open state when uncontrolled.",
+          "from": "arkcn"
+        },
+        {
+          "name": "finalFocusRef",
+          "type": "RefObject<FocusTarget | null>",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "initialFocusRef",
+          "type": "RefObject<FocusTarget | null>",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "onOpenChange",
+          "type": "((details: { open: boolean; }) => void)",
+          "required": false,
+          "description": "Called when the open state changes.",
+          "from": "arkcn"
+        },
+        {
+          "name": "open",
+          "type": "boolean",
+          "required": false,
+          "description": "The controlled open state.",
+          "from": "arkcn"
+        },
+        {
+          "name": "role",
+          "type": "\"dialog\" | \"alertdialog\"",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "safeAreaInsets",
+          "type": "Insets",
+          "required": false,
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "Dialog.RootProvider",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "{ open: boolean; setOpen: (next: Updater<boolean>) => void; closeOnInteractOutside: boolean; closeOnEscape: boolean; triggerRef: RefObject<ReactNativeElement…",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "Dialog.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(api: { open: boolean; setOpen: (next: Updater<boolean>) => void; closeOnInteractOutside: boolean; closeOnEscape: boolean; triggerRef: RefObject<ReactNativeE…",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "Dialog.Trigger",
+      "props": [
+        {
+          "name": "backgroundClip",
+          "type": "\"border-box\" | \"padding-box\"",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Displays the validation border and ring.",
+          "from": "arkcn"
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "required": false,
+          "description": "Shows a loading state.",
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\"",
+          "required": false,
+          "description": "Visible control size, matching the web renderer. Native touch areas extend beyond it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Native text styles for a plain button label.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"destructive\" | \"link\"",
+          "required": false,
+          "description": "Visual variant, using the same semantic colors as the web renderer.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode | ((state: Readonly<{ pressed: boolean; }>) => ReactNode)",
+          "required": false,
+          "description": "Either children or a function that receives a boolean reflecting whether\nthe component is currently pressed.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Dialog.CloseTrigger",
+      "props": [
+        {
+          "name": "backgroundClip",
+          "type": "\"border-box\" | \"padding-box\"",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Displays the validation border and ring.",
+          "from": "arkcn"
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "required": false,
+          "description": "Shows a loading state.",
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\"",
+          "required": false,
+          "description": "Visible control size, matching the web renderer. Native touch areas extend beyond it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Native text styles for a plain button label.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"destructive\" | \"link\"",
+          "required": false,
+          "description": "Visual variant, using the same semantic colors as the web renderer.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode | ((state: Readonly<{ pressed: boolean; }>) => ReactNode)",
+          "required": false,
+          "description": "Either children or a function that receives a boolean reflecting whether\nthe component is currently pressed.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Dialog.Content",
+      "props": [
+        {
+          "name": "backdrop",
+          "type": "ReactNode",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "maxWidth",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "required": false,
+          "description": "Render the close button.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Dialog.Backdrop",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Dialog.Header",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Dialog.Title",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Dialog.Description",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Dialog.Footer",
+      "props": [
+        {
+          "name": "showCloseButton",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Render the close button.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "expo-blur": ">=55.0.0 <58",
+    "lucide-react-native": "^1.41.0",
+    "react-native-svg": "^15.0.0"
+  },
+  "registryDependencies": [
+    "button",
+    "lib/context",
+    "lib/controllable",
+    "lib/motion",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/dialog.tsx",
+      "content": "import {\n  createContext,\n  useContext,\n  useEffect,\n  useId,\n  useRef,\n  useState,\n  type ComponentProps,\n  type ComponentRef,\n  type ReactNode,\n  type RefObject,\n} from \"react\"\nimport {\n  AccessibilityInfo,\n  KeyboardAvoidingView,\n  Modal,\n  Platform,\n  Pressable,\n  ScrollView,\n  Text,\n  View,\n  useWindowDimensions,\n  TextInput,\n} from \"react-native\"\nimport { BlurView, type BlurViewProps } from \"expo-blur\"\nimport { X } from \"lucide-react-native\"\nimport { Button, type ButtonProps } from \"@/components/ui/button\"\nimport { createRequiredContext } from \"@/lib/context\"\nimport { useControllable } from \"@/lib/controllable\"\nimport { AnimatedView, useMotion } from \"@/lib/motion\"\nimport { useNativeTheme, withOpacity } from \"@/lib/theme\"\n\ntype FocusTarget = ComponentRef<typeof View> | ComponentRef<typeof Text> | ComponentRef<typeof TextInput>\ntype Insets = { top: number; right: number; bottom: number; left: number }\nexport type UseDialogProps = {\n  open?: boolean\n  defaultOpen?: boolean\n  onOpenChange?: (details: { open: boolean }) => void\n  closeOnInteractOutside?: boolean\n  /** Also governs Android Back and the screen reader escape gesture. */\n  closeOnEscape?: boolean\n  initialFocusRef?: RefObject<FocusTarget | null>\n  finalFocusRef?: RefObject<FocusTarget | null>\n  safeAreaInsets?: Insets\n  /** Android blur requires a reference to a BlurTargetView around the app surface. */\n  blurTarget?: BlurViewProps[\"blurTarget\"]\n  role?: \"dialog\" | \"alertdialog\"\n}\nfunction focus(target: FocusTarget | null | undefined, keyboard = false) {\n  if (!target) return\n  if (Platform.OS === \"web\" || keyboard) target.focus?.()\n  if (Platform.OS !== \"web\") AccessibilityInfo.sendAccessibilityEvent(target, \"focus\")\n}\nexport function useDialog({\n  open,\n  defaultOpen = false,\n  onOpenChange,\n  closeOnInteractOutside = true,\n  closeOnEscape = true,\n  ...options\n}: UseDialogProps = {}) {\n  const [value, setOpen] = useControllable(open, defaultOpen, (open) => onOpenChange?.({ open }))\n  const triggerRef = useRef<ComponentRef<typeof View>>(null)\n  const titleRef = useRef<ComponentRef<typeof Text>>(null)\n  const cancelRef = useRef<ComponentRef<typeof View>>(null)\n  const id = useId()\n  return {\n    ...options,\n    open: value,\n    setOpen,\n    closeOnInteractOutside,\n    closeOnEscape,\n    triggerRef,\n    titleRef,\n    cancelRef,\n    titleId: `${id}-title`,\n    descriptionId: `${id}-description`,\n  }\n}\nexport type DialogApi = ReturnType<typeof useDialog>\nconst [Provider, useDialogContext] = createRequiredContext<DialogApi>(\"Dialog\")\nexport { useDialogContext }\nexport type DialogRootProps = UseDialogProps & { children: ReactNode }\nfunction Root({ children, ...options }: DialogRootProps) {\n  const value = useDialog(options)\n  return <Provider value={value}>{children}</Provider>\n}\nfunction RootProvider({ value, children }: { value: DialogApi; children: ReactNode }) {\n  return <Provider value={value}>{children}</Provider>\n}\nfunction Context({ children }: { children: (api: DialogApi) => ReactNode }) {\n  return children(useDialogContext())\n}\nfunction Trigger({ onPress, ...props }: ButtonProps) {\n  const api = useDialogContext()\n  return (\n    <Button\n      variant=\"outline\"\n      ref={api.triggerRef}\n      accessibilityState={{ expanded: api.open }}\n      {...props}\n      onPress={(event) => {\n        onPress?.(event)\n        if (!event.defaultPrevented) api.setOpen(true)\n      }}\n    />\n  )\n}\nfunction CloseTrigger({ onPress, ...props }: ButtonProps) {\n  const api = useDialogContext()\n  return (\n    <Button\n      {...props}\n      onPress={(event) => {\n        onPress?.(event)\n        if (!event.defaultPrevented) api.setOpen(false)\n      }}\n    />\n  )\n}\nconst Presence = createContext({ visible: false, backdropDuration: 100 })\nexport type DialogBackdropProps = ComponentProps<typeof View>\nfunction Backdrop({ style, ...props }: DialogBackdropProps) {\n  const api = useDialogContext()\n  const { visible, backdropDuration } = useContext(Presence)\n  const { transition, reduced } = useMotion()\n  return (\n    <AnimatedView\n      {...props}\n      style={[\n        {\n          position: \"absolute\",\n          inset: 0,\n          opacity: visible ? 1 : 0,\n          ...transition(\"opacity\"),\n          transitionDuration: reduced ? 0 : backdropDuration,\n        },\n        style,\n      ]}\n    >\n      {Platform.OS === \"web\" ? (\n        <View\n          pointerEvents=\"none\"\n          style={{\n            position: \"absolute\",\n            inset: 0,\n            ...{ backdropFilter: \"blur(4px)\", WebkitBackdropFilter: \"blur(4px)\" },\n          }}\n        />\n      ) : (\n        <BlurView\n          pointerEvents=\"none\"\n          style={{ position: \"absolute\", inset: 0 }}\n          tint=\"default\"\n          intensity={20}\n          blurTarget={api.blurTarget}\n          blurMethod={api.blurTarget ? \"dimezisBlurViewSdk31Plus\" : \"none\"}\n        />\n      )}\n      <Pressable\n        accessible={false}\n        importantForAccessibility=\"no\"\n        onPress={() => {\n          if (api.closeOnInteractOutside) api.setOpen(false)\n        }}\n        style={{ flex: 1, backgroundColor: \"rgba(0,0,0,0.1)\" }}\n      />\n    </AnimatedView>\n  )\n}\nexport type DialogContentProps = ComponentProps<typeof View> & {\n  showCloseButton?: boolean\n  maxWidth?: number\n  backdrop?: ReactNode\n}\n/** Shared modal surface; Sheet supplies its edge placement without changing Dialog defaults. */\nexport function DialogSurface({\n  children,\n  showCloseButton = true,\n  maxWidth,\n  backdrop,\n  style,\n  side,\n  ...props\n}: DialogContentProps & { side?: \"top\" | \"right\" | \"bottom\" | \"left\" }) {\n  const api = useDialogContext()\n  const { width, height } = useWindowDimensions()\n  const { colors } = useNativeTheme()\n  const { transition, reduced } = useMotion()\n  const horizontal = side === \"left\" || side === \"right\"\n  const duration = side ? 200 : 100\n  const [present, setPresent] = useState(api.open)\n  const [visible, setVisible] = useState(false)\n  const latest = useRef(api)\n  latest.current = api\n  const wasOpen = useRef(api.open)\n  useEffect(() => {\n    if (api.open) {\n      setPresent(true)\n      wasOpen.current = true\n    }\n    const enter = setTimeout(() => setVisible(api.open), api.open ? 16 : 0)\n    const exit =\n      !api.open && wasOpen.current\n        ? setTimeout(\n            () => {\n              setPresent(false)\n              wasOpen.current = false\n              // iOS restores accessibility focus after Modal's native dismissal; other hosts do it here.\n              if (Platform.OS !== \"ios\")\n                focus(latest.current.finalFocusRef?.current ?? latest.current.triggerRef.current)\n            },\n            reduced ? 0 : duration + 20\n          )\n        : undefined\n    return () => {\n      clearTimeout(enter)\n      clearTimeout(exit)\n    }\n  }, [api.open, reduced, duration])\n  const insets = api.safeAreaInsets ?? { top: 0, right: 0, bottom: 0, left: 0 }\n  const escape = () => {\n    if (api.closeOnEscape) api.setOpen(false)\n  }\n  return (\n    <Modal\n      transparent\n      visible={api.open || present}\n      animationType=\"none\"\n      statusBarTranslucent\n      navigationBarTranslucent\n      supportedOrientations={[\"portrait\", \"landscape\"]}\n      onRequestClose={escape}\n      onShow={() => {\n        const target =\n          api.initialFocusRef?.current ?? (api.role === \"alertdialog\" ? api.cancelRef.current : api.titleRef.current)\n        focus(target, !!api.initialFocusRef?.current)\n      }}\n      onDismiss={() => {\n        if (!latest.current.open) focus(latest.current.finalFocusRef?.current ?? latest.current.triggerRef.current)\n      }}\n    >\n      <Presence.Provider value={{ visible, backdropDuration: side ? 150 : 100 }}>\n        <KeyboardAvoidingView behavior={Platform.OS === \"ios\" ? \"padding\" : undefined} style={{ flex: 1 }}>\n          <View\n            style={{\n              flex: 1,\n              paddingTop: side ? 0 : insets.top + 16,\n              paddingBottom: side ? 0 : insets.bottom + 16,\n              paddingLeft: side ? 0 : insets.left + 16,\n              paddingRight: side ? 0 : insets.right + 16,\n              alignItems: side === \"left\" ? \"flex-start\" : side === \"right\" ? \"flex-end\" : \"center\",\n              justifyContent: side === \"top\" ? \"flex-start\" : side === \"bottom\" ? \"flex-end\" : \"center\",\n            }}\n          >\n            {backdrop ?? <Backdrop />}\n            <AnimatedView\n              {...props}\n              role={api.role ?? \"dialog\"}\n              aria-labelledby={api.titleId}\n              aria-describedby={api.descriptionId}\n              accessibilityViewIsModal\n              onAccessibilityEscape={escape}\n              style={[\n                {\n                  width: horizontal ? \"75%\" : \"100%\",\n                  maxWidth:\n                    maxWidth ??\n                    (side ? (horizontal && width >= 640 ? 384 : undefined) : width >= 640 ? 384 : width - 32),\n                  height: horizontal ? \"100%\" : undefined,\n                  maxHeight: \"100%\",\n                  minHeight: 0,\n                  borderRadius: side ? 0 : 12,\n                  borderColor: colors.border,\n                  borderLeftWidth: side === \"right\" ? 1 : 0,\n                  borderRightWidth: side === \"left\" ? 1 : 0,\n                  borderTopWidth: side === \"bottom\" ? 1 : 0,\n                  borderBottomWidth: side === \"top\" ? 1 : 0,\n                  paddingTop: side && side !== \"bottom\" ? insets.top : 0,\n                  paddingBottom: side && side !== \"top\" ? insets.bottom : 0,\n                  paddingLeft: side ? insets.left : 0,\n                  paddingRight: side ? insets.right : 0,\n                  backgroundColor: colors.popover,\n                  boxShadow: side\n                    ? [\n                        { offsetX: 0, offsetY: 10, blurRadius: 15, spreadDistance: -3, color: \"rgba(0,0,0,0.1)\" },\n                        { offsetX: 0, offsetY: 4, blurRadius: 6, spreadDistance: -4, color: \"rgba(0,0,0,0.1)\" },\n                      ]\n                    : [{ offsetX: 0, offsetY: 0, spreadDistance: 1, color: withOpacity(colors.foreground, 0.1) }],\n                  opacity: visible ? 1 : 0,\n                  transform: side\n                    ? horizontal\n                      ? [{ translateX: visible ? 0 : side === \"left\" ? -40 : 40 }]\n                      : [{ translateY: visible ? 0 : side === \"top\" ? -40 : 40 }]\n                    : [{ scale: visible ? 1 : 0.95 }],\n                  ...transition([\"opacity\", \"transform\"]),\n                  transitionDuration: reduced ? 0 : duration,\n                },\n                style,\n              ]}\n            >\n              <ScrollView\n                keyboardShouldPersistTaps=\"handled\"\n                bounces={false}\n                style={{\n                  flexShrink: 1,\n                  flexGrow: horizontal ? 1 : 0,\n                  maxHeight: side ? undefined : height - insets.top - insets.bottom - 32,\n                }}\n                contentContainerStyle={{ padding: side ? 0 : 16, gap: 16, flexGrow: horizontal ? 1 : 0 }}\n              >\n                {children}\n              </ScrollView>\n              {showCloseButton && (\n                <CloseTrigger\n                  variant=\"ghost\"\n                  size=\"icon-sm\"\n                  accessibilityLabel={side ? \"Close sheet\" : \"Close dialog\"}\n                  style={{\n                    position: \"absolute\",\n                    top: side ? 12 + (side === \"bottom\" ? 0 : insets.top) : 8,\n                    right: side ? 12 + insets.right : 8,\n                  }}\n                >\n                  <X size={16} color={colors.popoverForeground} />\n                </CloseTrigger>\n              )}\n            </AnimatedView>\n          </View>\n        </KeyboardAvoidingView>\n      </Presence.Provider>\n    </Modal>\n  )\n}\nfunction Content(props: DialogContentProps) {\n  return <DialogSurface {...props} />\n}\nfunction Header({ style, ...props }: ComponentProps<typeof View>) {\n  return <View {...props} style={[{ gap: 8 }, style]} />\n}\nfunction Title({ style, ...props }: ComponentProps<typeof Text>) {\n  const api = useDialogContext()\n  const { colors, typography } = useNativeTheme()\n  return (\n    <Text\n      ref={api.titleRef}\n      nativeID={api.titleId}\n      {...(Platform.OS === \"web\" ? { tabIndex: -1 } : {})}\n      accessibilityRole=\"header\"\n      {...props}\n      style={[{ ...typography.medium, color: colors.popoverForeground, fontSize: 16, lineHeight: 16 }, style]}\n    />\n  )\n}\nfunction Description({ style, ...props }: ComponentProps<typeof Text>) {\n  const api = useDialogContext()\n  const { colors, typography } = useNativeTheme()\n  return (\n    <Text\n      nativeID={api.descriptionId}\n      {...props}\n      style={[{ ...typography.regular, color: colors.mutedForeground, fontSize: 14, lineHeight: 20 }, style]}\n    />\n  )\n}\nfunction Footer({\n  style,\n  children,\n  showCloseButton = false,\n  ...props\n}: ComponentProps<typeof View> & { showCloseButton?: boolean }) {\n  const { width } = useWindowDimensions()\n  const { colors } = useNativeTheme()\n  return (\n    <View\n      {...props}\n      style={[\n        {\n          marginHorizontal: -16,\n          marginBottom: -16,\n          padding: 16,\n          gap: 8,\n          borderTopWidth: 1,\n          borderColor: colors.border,\n          borderBottomLeftRadius: 12,\n          borderBottomRightRadius: 12,\n          backgroundColor: withOpacity(colors.muted, 0.5),\n          flexDirection: width >= 640 ? \"row\" : \"column-reverse\",\n          justifyContent: \"flex-end\",\n        },\n        style,\n      ]}\n    >\n      {children}\n      {showCloseButton && <CloseTrigger variant=\"outline\">Close</CloseTrigger>}\n    </View>\n  )\n}\nexport const Dialog = {\n  Root,\n  RootProvider,\n  Context,\n  Trigger,\n  CloseTrigger,\n  Content,\n  Backdrop,\n  Header,\n  Title,\n  Description,\n  Footer,\n}\n"
+    }
+  ],
+  "docs": "## How it works\n\n`Dialog.Content` owns a native Modal, backdrop, keyboard avoidance, and a scrollable content area for long forms. No Portal or Positioner is needed. Use `defaultOpen`, or control `open` with `onOpenChange({ open })`. `useDialog`, `RootProvider`, and `Context` support external composition.\n\nOutside presses close a Dialog by default. `closeOnInteractOutside={false}` disables that behavior. `closeOnEscape={false}` disables Android Back, Escape on web, and the accessibility escape gesture. `showCloseButton={false}` hides the corner close button. Prevent a trigger's press event to keep it from opening or closing.\n\nPass `initialFocusRef` to focus an input on opening, and `finalFocusRef` to choose where focus returns; otherwise the title receives accessibility focus and the trigger is restored on dismissal. Pass safe-area insets from your app through `safeAreaInsets` for edge-to-edge layouts.\n\nThe surface uses shared light/dark colors, typography, spacing, a 100 ms fade/scale transition, and the reduced-motion preference. Install `expo-blur` with `npx expo install expo-blur`. On Android, wrap the app surface in `BlurTargetView` and pass its ref as `blurTarget`; without it the backdrop uses tint/dimming. Native blur is platform-rendered and may differ slightly from the web blur."
+}

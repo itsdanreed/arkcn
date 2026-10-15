@@ -36,6 +36,48 @@
       "css": false
     },
     {
+      "name": "activity-feed",
+      "type": "ui",
+      "description": "Composable activity timeline with inline details, solid connectors, and shared relative-time formatting.",
+      "exports": [
+        "ActivityFeed"
+      ],
+      "dependencies": [
+        "@formatjs/intl-pluralrules",
+        "@formatjs/intl-relativetimeformat"
+      ],
+      "registryDependencies": [
+        "button",
+        "empty",
+        "lib/focus",
+        "lib/motion",
+        "lib/theme",
+        "lib/time"
+      ],
+      "files": [
+        "components/ui/activity-feed.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "alert-dialog",
+      "type": "ui",
+      "description": "",
+      "exports": [
+        "AlertDialog"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "button",
+        "dialog",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/alert-dialog.tsx"
+      ],
+      "css": false
+    },
+    {
       "name": "alert",
       "type": "ui",
       "description": "Inline status messages with shared card surfaces and default/destructive variants.",
@@ -52,6 +94,32 @@
       "css": false
     },
     {
+      "name": "app-shell",
+      "type": "ui",
+      "description": "Insets used by full-screen overlays. Pad the root with SafeAreaView separately.",
+      "exports": [
+        "useAppShell",
+        "AppShell"
+      ],
+      "dependencies": [
+        "lucide-react-native",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "avatar",
+        "badge",
+        "button",
+        "lib/context",
+        "lib/controllable",
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/app-shell.tsx"
+      ],
+      "css": false
+    },
+    {
       "name": "aspect-ratio",
       "type": "ui",
       "description": "A full-width box that preserves its width-to-height ratio as its parent resizes.",
@@ -62,6 +130,29 @@
       "registryDependencies": [],
       "files": [
         "components/ui/aspect-ratio.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "attachment",
+      "type": "ui",
+      "description": "File attachments with native actions, image previews, and upload-state shimmer.",
+      "exports": [
+        "Attachment"
+      ],
+      "dependencies": [
+        "@expo/ui",
+        "react-native-reanimated",
+        "react-native-worklets"
+      ],
+      "registryDependencies": [
+        "button",
+        "lib/focus",
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/attachment.tsx"
       ],
       "css": false
     },
@@ -95,6 +186,46 @@
       ],
       "files": [
         "components/ui/badge.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "breadcrumb",
+      "type": "ui",
+      "description": "",
+      "exports": [
+        "Breadcrumb"
+      ],
+      "dependencies": [
+        "lucide-react-native",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/breadcrumb.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "bubble",
+      "type": "ui",
+      "description": "Conversation bubbles with all web surfaces and measured reaction placement.",
+      "exports": [
+        "Bubble"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/bubble-color",
+        "lib/focus",
+        "lib/message-layout",
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/bubble.tsx"
       ],
       "css": false
     },
@@ -174,6 +305,34 @@
       "css": false
     },
     {
+      "name": "clipboard",
+      "type": "ui",
+      "description": "Copyable text with standard arkcn controls and confirmed native clipboard feedback.",
+      "exports": [
+        "useClipboardContext",
+        "useClipboard",
+        "Clipboard"
+      ],
+      "dependencies": [
+        "expo-clipboard",
+        "lucide-react-native",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "button",
+        "fieldset",
+        "input",
+        "label",
+        "lib/context",
+        "lib/controllable",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/clipboard.tsx"
+      ],
+      "css": false
+    },
+    {
       "name": "collapsible",
       "type": "ui",
       "description": "Expandable content with controlled/uncontrolled state and accessible expanded-state announcements.",
@@ -190,6 +349,150 @@
       ],
       "files": [
         "components/ui/collapsible.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "dialog",
+      "type": "ui",
+      "description": "Also governs Android Back and the screen reader escape gesture.",
+      "exports": [
+        "useDialogContext",
+        "useDialog",
+        "DialogSurface",
+        "Dialog"
+      ],
+      "dependencies": [
+        "expo-blur",
+        "lucide-react-native",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "button",
+        "lib/context",
+        "lib/controllable",
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/dialog.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "editable",
+      "type": "ui",
+      "description": "Inline editing composed from the standard native Input.",
+      "exports": [
+        "useEditableContext",
+        "Editable"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "button",
+        "fieldset",
+        "input",
+        "lib/context",
+        "lib/controllable",
+        "lib/focus",
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/editable.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "empty",
+      "type": "ui",
+      "description": "",
+      "exports": [
+        "Empty"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/empty.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "field",
+      "type": "ui",
+      "description": "Native field composition with shared input styles, label focus, and validation.",
+      "exports": [
+        "useFieldContext",
+        "Field"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "fieldset",
+        "input",
+        "label",
+        "lib/context",
+        "lib/theme",
+        "separator"
+      ],
+      "files": [
+        "components/ui/field.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "fieldset",
+      "type": "ui",
+      "description": "Groups related fields with a legend, description, and inherited disabled state.",
+      "exports": [
+        "useFieldsetContext",
+        "Fieldset"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/fieldset.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "format",
+      "type": "ui",
+      "description": "Formatting helpers return text. Place them inside native Text, just like ordinary string content.",
+      "exports": [
+        "Format"
+      ],
+      "dependencies": [
+        "@formatjs/intl-pluralrules",
+        "@formatjs/intl-relativetimeformat",
+        "@zag-js/i18n-utils"
+      ],
+      "registryDependencies": [],
+      "files": [
+        "components/ui/format.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "highlight",
+      "type": "ui",
+      "description": "Uses the same literal matching and word-boundary rules as the web renderer.",
+      "exports": [
+        "useHighlight",
+        "Highlight"
+      ],
+      "dependencies": [
+        "@zag-js/highlight-word"
+      ],
+      "registryDependencies": [
+        "lib/highlight-layout",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/highlight.tsx"
       ],
       "css": false
     },
@@ -231,6 +534,39 @@
       "css": false
     },
     {
+      "name": "item",
+      "type": "ui",
+      "description": "Compound list-row layout with the web Item's sizes and surfaces.",
+      "exports": [
+        "Item"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/theme",
+        "separator"
+      ],
+      "files": [
+        "components/ui/item.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "kbd",
+      "type": "ui",
+      "description": "Use inside an inverse tooltip surface. No tooltip is created by this component.",
+      "exports": [
+        "Kbd"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/kbd.tsx"
+      ],
+      "css": false
+    },
+    {
       "name": "label",
       "type": "ui",
       "description": "Text labels with the web typography and explicit native control activation.",
@@ -243,6 +579,142 @@
       ],
       "files": [
         "components/ui/label.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "marker",
+      "type": "ui",
+      "description": "Muted icon labels and conversation dividers, matching the web Marker.",
+      "exports": [
+        "Marker"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/focus",
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/marker.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "message",
+      "type": "ui",
+      "description": "Sender-aligned conversation layout with optional avatar, header, and footer.",
+      "exports": [
+        "Message"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "bubble",
+        "lib/message-layout",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/message.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "number-input",
+      "type": "ui",
+      "description": "Numeric entry with bounded decimal stepping, native editing, and shared control styling.",
+      "exports": [
+        "useNumberInputContext",
+        "NumberInput"
+      ],
+      "dependencies": [
+        "lucide-react-native",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "fieldset",
+        "input",
+        "label",
+        "lib/context",
+        "lib/controllable",
+        "lib/focus",
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/number-input.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "pagination",
+      "type": "ui",
+      "description": "Native pagination state, without DOM or routing dependencies.",
+      "exports": [
+        "usePaginationContext",
+        "usePagination",
+        "Pagination"
+      ],
+      "dependencies": [
+        "lucide-react-native",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "button",
+        "fieldset",
+        "lib/context",
+        "lib/controllable",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/pagination.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "password-input",
+      "type": "ui",
+      "description": "Secure native text entry with the audited input styling and a visibility action.",
+      "exports": [
+        "usePasswordInputContext",
+        "usePasswordInput",
+        "PasswordInput"
+      ],
+      "dependencies": [
+        "lucide-react-native",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "fieldset",
+        "input-group",
+        "label",
+        "lib/context",
+        "lib/controllable",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/password-input.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "pin-input",
+      "type": "ui",
+      "description": "Segmented native code entry, composed from the standard Input.",
+      "exports": [
+        "usePinInputContext",
+        "usePinInput",
+        "PinInput"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "fieldset",
+        "input",
+        "label",
+        "lib/context",
+        "lib/controllable"
+      ],
+      "files": [
+        "components/ui/pin-input.tsx"
       ],
       "css": false
     },
@@ -288,6 +760,78 @@
       "css": false
     },
     {
+      "name": "rating-group",
+      "type": "ui",
+      "description": "Star ratings with half-value selection, shared colors, and an adjustable native accessibility control.",
+      "exports": [
+        "useRatingGroupContext",
+        "useRatingGroupItemContext",
+        "RatingGroup"
+      ],
+      "dependencies": [
+        "lucide-react-native",
+        "react-native-reanimated",
+        "react-native-svg",
+        "react-native-worklets"
+      ],
+      "registryDependencies": [
+        "fieldset",
+        "lib/context",
+        "lib/controllable",
+        "lib/focus",
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/rating-group.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "scroll-area",
+      "type": "ui",
+      "description": "Native scrolling with arkcn's slim, draggable, theme-aware scrollbar.",
+      "exports": [
+        "useScrollArea",
+        "useScrollAreaContext",
+        "ScrollArea"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/motion",
+        "lib/scroll-area",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/scroll-area.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "segment-group",
+      "type": "ui",
+      "description": "",
+      "exports": [
+        "useSegmentGroupContext",
+        "useSegmentGroupItemContext",
+        "useSegmentGroup",
+        "SegmentGroup"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "fieldset",
+        "lib/context",
+        "lib/controllable",
+        "lib/focus",
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/segment-group.tsx"
+      ],
+      "css": false
+    },
+    {
       "name": "separator",
       "type": "ui",
       "description": "Decorative hairline divider; use a parent with height for vertical separators.",
@@ -300,6 +844,25 @@
       ],
       "files": [
         "components/ui/separator.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "sheet",
+      "type": "ui",
+      "description": "Edge panels with the web Sheet's four placements and 200 ms slide/fade motion.",
+      "exports": [
+        "useDialog",
+        "useDialogContext",
+        "Sheet"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "dialog",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/sheet.tsx"
       ],
       "css": false
     },
@@ -324,6 +887,30 @@
       "css": false
     },
     {
+      "name": "slider",
+      "type": "ui",
+      "description": "Composable single/range slider with contained thumbs and native adjustable actions.",
+      "exports": [
+        "useSliderContext",
+        "useSlider",
+        "Slider"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "fieldset",
+        "lib/context",
+        "lib/controllable",
+        "lib/focus",
+        "lib/motion",
+        "lib/slider",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/slider.tsx"
+      ],
+      "css": false
+    },
+    {
       "name": "spinner",
       "type": "ui",
       "description": "The web loader's SVG path and one-second linear rotation, with reduced-motion support.",
@@ -344,6 +931,66 @@
       "css": false
     },
     {
+      "name": "spreadsheet",
+      "type": "ui",
+      "description": "Native, virtualized spreadsheet with shared formulas, frozen panes, editing, and intent-based history.",
+      "exports": [
+        "cellName",
+        "columnLabel",
+        "useSpreadsheet",
+        "Spreadsheet"
+      ],
+      "dependencies": [
+        "expo-clipboard",
+        "react-native-gesture-handler",
+        "react-native-reanimated",
+        "react-native-worklets"
+      ],
+      "registryDependencies": [
+        "button",
+        "input",
+        "lib/context",
+        "lib/controllable",
+        "lib/formula",
+        "lib/motion",
+        "lib/spreadsheet",
+        "lib/spreadsheet-layout",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/spreadsheet.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "steps",
+      "type": "ui",
+      "description": "",
+      "exports": [
+        "useStepsContext",
+        "useStepsItemContext",
+        "useSteps",
+        "Steps"
+      ],
+      "dependencies": [
+        "lucide-react-native",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "button",
+        "lib/context",
+        "lib/controllable",
+        "lib/focus",
+        "lib/motion",
+        "lib/presence",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/steps.tsx"
+      ],
+      "css": false
+    },
+    {
       "name": "switch",
       "type": "ui",
       "description": "Compact switches with the same track, thumb, and checked colors as the web renderer.",
@@ -360,6 +1007,23 @@
       ],
       "files": [
         "components/ui/switch.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "table",
+      "type": "ui",
+      "description": "Native tables with shared column sizing and the audited web table styling.",
+      "exports": [
+        "Table"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/table.tsx"
       ],
       "css": false
     },
@@ -386,6 +1050,34 @@
       "css": false
     },
     {
+      "name": "tags-input",
+      "type": "ui",
+      "description": "",
+      "exports": [
+        "useTagsInputContext",
+        "useTagsInputItemContext",
+        "useTagsInput",
+        "TagsInput"
+      ],
+      "dependencies": [
+        "lucide-react-native",
+        "react-native-svg"
+      ],
+      "registryDependencies": [
+        "button",
+        "fieldset",
+        "label",
+        "lib/context",
+        "lib/controllable",
+        "lib/motion",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/tags-input.tsx"
+      ],
+      "css": false
+    },
+    {
       "name": "textarea",
       "type": "ui",
       "description": "Multiline native input with the same validation and focus treatment as Input.",
@@ -399,6 +1091,26 @@
       ],
       "files": [
         "components/ui/textarea.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "timer",
+      "type": "ui",
+      "description": "Countdown and elapsed-time display with native lifecycle handling and the web Timer's controls.",
+      "exports": [
+        "useTimerContext",
+        "useTimer",
+        "Timer"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "button",
+        "lib/context",
+        "lib/theme"
+      ],
+      "files": [
+        "components/ui/timer.tsx"
       ],
       "css": false
     },
@@ -441,6 +1153,22 @@
       ],
       "files": [
         "components/ui/toggle.tsx"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/bubble-color",
+      "type": "lib",
+      "description": "Web's relative OKLCH tint, preserving the primary hue for custom native palettes.",
+      "exports": [
+        "bubbleTint"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/tokens"
+      ],
+      "files": [
+        "lib/bubble-color.ts"
       ],
       "css": false
     },
@@ -511,6 +1239,45 @@
       "css": false
     },
     {
+      "name": "lib/formula",
+      "type": "lib",
+      "description": "Dependency-free spreadsheet formula layer. A cell whose text starts with `=` is a formula: cell references (`A1`, `$B$2`), ranges (`A1:B3`), `+ - * /`, parentheses, unary minus, numbers, quoted strings, and the functions SUM, AVERAGE, MIN, MAX, and COUNT (extend them through `functions`). Evaluation is lazy and memoized per evaluator; cycles report `#CYCLE!`, references outside the sheet `#REF!`, unknown names `#NAME?`, bad syntax `#ERROR!`, text in arithmetic `#VALUE!`, and division by zero `#DIV/0!`.",
+      "exports": [
+        "columnLabel",
+        "columnIndex",
+        "cellName",
+        "parseCellName",
+        "isFormula",
+        "isFormulaError",
+        "parseFormula",
+        "formulaFunctions",
+        "createFormulaEvaluator",
+        "formatFormulaValue",
+        "shiftFormula",
+        "toFormulaValue"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/formula.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/highlight-layout",
+      "type": "lib",
+      "description": "Intersect matching character ranges with native text's already-wrapped lines.",
+      "exports": [
+        "getHighlightSegments"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/highlight-layout.ts"
+      ],
+      "css": false
+    },
+    {
       "name": "lib/history",
       "type": "lib",
       "description": "Undo/redo state for any immutable value. `set` records a history entry unless `{ commit: false }` is passed (live drags, typing); `checkpoint` snapshots the present before such a sequence so one undo restores it.",
@@ -521,6 +1288,22 @@
       "registryDependencies": [],
       "files": [
         "lib/history.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/message-layout",
+      "type": "lib",
+      "description": "Inspect composition without rendering arbitrary user components.",
+      "exports": [
+        "MessageLayout",
+        "hasMessagePart",
+        "messageText"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/message-layout.ts"
       ],
       "css": false
     },
@@ -579,6 +1362,72 @@
       ],
       "files": [
         "lib/row-layout.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/scroll-area",
+      "type": "lib",
+      "description": "Clamp overscroll and preserve proportional thumbs as content and viewport resize.",
+      "exports": [
+        "scrollGeometry"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/scroll-area.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/slider",
+      "type": "lib",
+      "description": "Shared slider arithmetic. Thumb centers stay six pixels inside the track ends.",
+      "exports": [
+        "snapSliderValue",
+        "sliderCenter",
+        "sliderValueAt"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/slider.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/spreadsheet-layout",
+      "type": "lib",
+      "description": "Prefix offsets keep variable-height row virtualization and frozen panes consistent.",
+      "exports": [
+        "rowMetrics",
+        "rowAtOffset"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/spreadsheet-layout.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/spreadsheet",
+      "type": "lib",
+      "description": "",
+      "exports": [
+        "sameCell",
+        "boundsOf",
+        "rawText",
+        "parseInput",
+        "fillTarget",
+        "fillChanges"
+      ],
+      "dependencies": [],
+      "registryDependencies": [
+        "lib/formula"
+      ],
+      "files": [
+        "lib/spreadsheet.ts"
       ],
       "css": false
     },

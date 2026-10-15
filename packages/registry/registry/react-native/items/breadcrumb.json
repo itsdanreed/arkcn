@@ -1,0 +1,530 @@
+{
+  "name": "breadcrumb",
+  "type": "ui",
+  "description": "",
+  "exports": [
+    "Breadcrumb"
+  ],
+  "parts": [
+    {
+      "name": "Breadcrumb.Root",
+      "props": [
+        {
+          "name": "dir",
+          "type": "\"ltr\" | \"rtl\"",
+          "required": false,
+          "default": "I18nManager.isRTL ? \"rtl\" : \"ltr\"",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Breadcrumb.List",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Breadcrumb.Item",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Breadcrumb.Link",
+      "props": [
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Native text styles for a plain button label.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode | ((state: Readonly<{ pressed: boolean; }>) => ReactNode)",
+          "required": false,
+          "description": "Either children or a function that receives a boolean reflecting whether\nthe component is currently pressed.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Breadcrumb.Page",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Breadcrumb.Separator",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Breadcrumb.Ellipsis",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "lucide-react-native": "^1.41.0",
+    "react-native-svg": "^15.0.0"
+  },
+  "registryDependencies": [
+    "lib/motion",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/breadcrumb.tsx",
+      "content": "import { Children, createContext, useContext, useState, type ComponentPropsWithRef } from \"react\"\nimport { I18nManager, Pressable, StyleSheet, Text, View, type StyleProp, type TextStyle } from \"react-native\"\nimport { ChevronLeft, ChevronRight, Ellipsis } from \"lucide-react-native\"\nimport { AnimatedPressable, AnimatedText, useMotion } from \"@/lib/motion\"\nimport { useNativeTheme } from \"@/lib/theme\"\n\nconst DirectionContext = createContext<\"ltr\" | \"rtl\" | undefined>(undefined)\nfunction useDirection() {\n  return useContext(DirectionContext) ?? (I18nManager.isRTL ? \"rtl\" : \"ltr\")\n}\nexport type BreadcrumbRootProps = ComponentPropsWithRef<typeof View> & { dir?: \"ltr\" | \"rtl\" }\nfunction BreadcrumbRoot({ dir = I18nManager.isRTL ? \"rtl\" : \"ltr\", ...props }: BreadcrumbRootProps) {\n  return (\n    <DirectionContext.Provider value={dir}>\n      <View accessibilityLabel=\"Breadcrumb\" {...props} />\n    </DirectionContext.Provider>\n  )\n}\nexport type BreadcrumbListProps = ComponentPropsWithRef<typeof View>\nfunction BreadcrumbList({ style, ...props }: BreadcrumbListProps) {\n  const dir = useDirection()\n  return (\n    <View\n      {...props}\n      style={[\n        { flexDirection: dir === \"rtl\" ? \"row-reverse\" : \"row\", flexWrap: \"wrap\", alignItems: \"center\", gap: 6 },\n        style,\n      ]}\n    />\n  )\n}\nexport type BreadcrumbItemProps = ComponentPropsWithRef<typeof View>\nfunction BreadcrumbItem({ style, ...props }: BreadcrumbItemProps) {\n  const dir = useDirection()\n  return (\n    <View\n      {...props}\n      style={[\n        {\n          flexDirection: dir === \"rtl\" ? \"row-reverse\" : \"row\",\n          alignItems: \"center\",\n          gap: 4,\n          maxWidth: \"100%\",\n          flexShrink: 1,\n        },\n        style,\n      ]}\n    />\n  )\n}\nexport type BreadcrumbLinkProps = ComponentPropsWithRef<typeof Pressable> & { textStyle?: StyleProp<TextStyle> }\nfunction BreadcrumbLink({\n  children,\n  style,\n  textStyle,\n  disabled,\n  onPress,\n  onPressIn,\n  onPressOut,\n  onHoverIn,\n  onHoverOut,\n  accessibilityState,\n  ...props\n}: BreadcrumbLinkProps) {\n  const { colors, typography } = useNativeTheme()\n  const { transition } = useMotion()\n  const [hovered, setHovered] = useState(false)\n  const [pressed, setPressed] = useState(false)\n  const dir = useDirection()\n  return (\n    <AnimatedPressable\n      accessibilityRole=\"link\"\n      hitSlop={{ top: 12, bottom: 12, left: 0, right: 0 }}\n      {...props}\n      disabled={disabled}\n      accessibilityState={{ ...accessibilityState, disabled: !!disabled }}\n      onPress={(event) => {\n        if (!disabled) onPress?.(event)\n      }}\n      onPressIn={(event) => {\n        setPressed(true)\n        onPressIn?.(event)\n      }}\n      onPressOut={(event) => {\n        setPressed(false)\n        onPressOut?.(event)\n      }}\n      onHoverIn={(event) => {\n        setHovered(true)\n        onHoverIn?.(event)\n      }}\n      onHoverOut={(event) => {\n        setHovered(false)\n        onHoverOut?.(event)\n      }}\n      style={[\n        {\n          flexShrink: 1,\n          flexDirection: dir === \"rtl\" ? \"row-reverse\" : \"row\",\n          alignItems: \"center\",\n          gap: 4,\n          opacity: disabled ? 0.5 : 1,\n        },\n        StyleSheet.flatten(typeof style === \"function\" ? style({ pressed }) : style),\n      ]}\n    >\n      {(state) =>\n        Children.map(typeof children === \"function\" ? children(state) : children, (child) =>\n          typeof child === \"string\" || typeof child === \"number\" ? (\n            <AnimatedText\n              style={[\n                transition(\"all\"),\n                {\n                  ...typography.regular,\n                  fontSize: 14,\n                  lineHeight: 20,\n                  flexShrink: 1,\n                  color: !disabled && (hovered || pressed) ? colors.foreground : colors.mutedForeground,\n                },\n                textStyle,\n              ]}\n            >\n              {child}\n            </AnimatedText>\n          ) : (\n            child\n          )\n        )\n      }\n    </AnimatedPressable>\n  )\n}\nexport type BreadcrumbPageProps = ComponentPropsWithRef<typeof Text>\nfunction BreadcrumbPage({ style, accessibilityState, ...props }: BreadcrumbPageProps) {\n  const { colors, typography } = useNativeTheme()\n  return (\n    <Text\n      accessibilityRole=\"link\"\n      accessibilityHint=\"Current page\"\n      {...props}\n      disabled\n      accessibilityState={{ ...accessibilityState, disabled: true, selected: true }}\n      style={[{ ...typography.regular, fontSize: 14, lineHeight: 20, color: colors.foreground, flexShrink: 1 }, style]}\n    />\n  )\n}\nexport type BreadcrumbSeparatorProps = ComponentPropsWithRef<typeof View>\nfunction BreadcrumbSeparator({ children, style, ...props }: BreadcrumbSeparatorProps) {\n  const { colors, typography } = useNativeTheme()\n  const Icon = useDirection() === \"rtl\" ? ChevronLeft : ChevronRight\n  return (\n    <View\n      {...props}\n      accessible={false}\n      accessibilityElementsHidden\n      importantForAccessibility=\"no-hide-descendants\"\n      style={[{ alignItems: \"center\", justifyContent: \"center\", flexShrink: 0 }, style]}\n    >\n      {children == null ? (\n        <Icon size={14} color={colors.mutedForeground} accessible={false} />\n      ) : typeof children === \"string\" || typeof children === \"number\" ? (\n        <Text style={{ ...typography.regular, fontSize: 14, lineHeight: 20, color: colors.mutedForeground }}>\n          {children}\n        </Text>\n      ) : (\n        children\n      )}\n    </View>\n  )\n}\nexport type BreadcrumbEllipsisProps = ComponentPropsWithRef<typeof View>\nfunction BreadcrumbEllipsis({ children, style, ...props }: BreadcrumbEllipsisProps) {\n  const { colors } = useNativeTheme()\n  return (\n    <View\n      {...props}\n      accessible={false}\n      accessibilityElementsHidden\n      importantForAccessibility=\"no-hide-descendants\"\n      style={[{ width: 20, height: 20, alignItems: \"center\", justifyContent: \"center\", flexShrink: 0 }, style]}\n    >\n      {children ?? <Ellipsis size={16} color={colors.mutedForeground} accessible={false} />}\n    </View>\n  )\n}\nexport const Breadcrumb = {\n  Root: BreadcrumbRoot,\n  List: BreadcrumbList,\n  Item: BreadcrumbItem,\n  Link: BreadcrumbLink,\n  Page: BreadcrumbPage,\n  Separator: BreadcrumbSeparator,\n  Ellipsis: BreadcrumbEllipsis,\n}\n"
+    }
+  ],
+  "docs": "## How it works\n\nCompose `Breadcrumb.Root`, `List`, `Item`, `Link`, `Page`, and `Separator`. `Page` marks the current location; `Link` accepts `onPress` for your Expo Router, React Navigation, or application navigation callback. The example keeps its destination in local state so it can be tried without leaving the docs.\n\nThe native parts use the web control's regular 14px text, muted ancestor links, foreground current page, 6px list spacing, 4px item spacing, and 14px chevrons. Link hover/press feedback uses the shared color transition and honors reduced motion. Light/dark colors follow `NativeThemeProvider` or system appearance. Native font scaling stays enabled.\n\nThe list wraps at the available width; long labels can wrap within an item. `dir=\"rtl\"` reverses the path and chevrons. Separators and ellipses are decorative and hidden from assistive technology. Links expose the native link role, while Page exposes a disabled, selected link with a current-page hint. Override accessibility labels/hints for localization.\n\n`Ellipsis` supplies a 20px decorative container with a 16px more icon. To make omitted ancestors interactive, place it inside a Link with an explicit `accessibilityLabel` and an `onPress` that opens your own menu or navigation view. It does not open a menu by itself.\n\nUse `style` for native layout and `textStyle` on Link for its automatic text labels. Compose explicit Text and icons for richer labels. There is no DOM navigation landmark, browser `href`, list numbering, or `asChild` API. The component does not own routing or launch URLs; the application handles navigation through `onPress`."
+}

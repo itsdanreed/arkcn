@@ -127,7 +127,7 @@ function buildRegistry(framework) {
     })
     const registryDependencies = new Set()
     const dependencies = new Set()
-    for (const m of content.matchAll(/from\s+"([^"]+)"/g)) {
+    for (const m of content.matchAll(/(?:from\s+|import\s*)"([^"]+)"/g)) {
       const spec = m[1]
       if (spec.startsWith("@/")) {
         const target = spec.replace(/^@\//, "").replace(/^components\/ui\//, "")

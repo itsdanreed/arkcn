@@ -1,0 +1,18 @@
+{
+  "name": "lib/spreadsheet-layout",
+  "type": "lib",
+  "description": "Prefix offsets keep variable-height row virtualization and frozen panes consistent.",
+  "exports": [
+    "rowMetrics",
+    "rowAtOffset"
+  ],
+  "parts": [],
+  "dependencies": {},
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "lib/spreadsheet-layout.ts",
+      "content": "/** Prefix offsets keep variable-height row virtualization and frozen panes consistent. */\nexport function rowMetrics(count: number, defaultHeight: number, minHeight: number, sizes: Record<number, number>) {\n  const heights = Array.from({ length: count }, (_, row) =>\n    Math.max(minHeight, Number.isFinite(sizes[row]) ? sizes[row] : defaultHeight)\n  )\n  const offsets = [0]\n  for (const height of heights) offsets.push(offsets[offsets.length - 1] + height)\n  return { heights, offsets }\n}\n/** Index containing an offset; returns count at/past the end. */\nexport function rowAtOffset(offsets: readonly number[], offset: number) {\n  let low = 0,\n    high = offsets.length - 1\n  while (low < high) {\n    const mid = Math.floor((low + high + 1) / 2)\n    if (offsets[mid] <= offset) low = mid\n    else high = mid - 1\n  }\n  return low\n}\n"
+    }
+  ]
+}

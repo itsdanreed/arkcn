@@ -1,0 +1,128 @@
+{
+  "name": "highlight",
+  "type": "ui",
+  "description": "Uses the same literal matching and word-boundary rules as the web renderer.",
+  "exports": [
+    "useHighlight",
+    "Highlight"
+  ],
+  "parts": [
+    {
+      "name": "Highlight.Root",
+      "props": [
+        {
+          "name": "highlightStyle",
+          "type": "StyleProp<Pick<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue …",
+          "required": false,
+          "description": "Applied to matching spans only. `style` controls the surrounding text.",
+          "from": "arkcn"
+        },
+        {
+          "name": "query",
+          "type": "string | string[]",
+          "required": true,
+          "description": "The query to highlight in the text",
+          "from": "@zag-js/highlight-word"
+        },
+        {
+          "name": "text",
+          "type": "string",
+          "required": true,
+          "description": "The text to highlight",
+          "from": "@zag-js/highlight-word"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "exactMatch",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to match whole words only",
+          "from": "@zag-js/highlight-word"
+        },
+        {
+          "name": "ignoreCase",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to ignore case while matching",
+          "from": "@zag-js/highlight-word"
+        },
+        {
+          "name": "matchAll",
+          "type": "boolean",
+          "required": false,
+          "description": "Whether to match multiple instances of the query",
+          "from": "@zag-js/highlight-word"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@zag-js/highlight-word": "^1.43.3"
+  },
+  "registryDependencies": [
+    "lib/highlight-layout",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/highlight.tsx",
+      "content": "import { useMemo, useState, type ComponentPropsWithRef } from \"react\"\nimport {\n  I18nManager,\n  Platform,\n  StyleSheet,\n  Text,\n  View,\n  useWindowDimensions,\n  type StyleProp,\n  type TextStyle,\n} from \"react-native\"\nimport { getHighlightSegments, type HighlightLine } from \"@/lib/highlight-layout\"\nimport { highlightWord, type HighlightWordProps } from \"@zag-js/highlight-word\"\nimport { useNativeTheme, withOpacity } from \"@/lib/theme\"\n\nexport type UseHighlightProps = HighlightWordProps\n/** Uses the same literal matching and word-boundary rules as the web renderer. */\nexport function useHighlight({ text, query, ignoreCase, matchAll, exactMatch }: UseHighlightProps) {\n  return useMemo(\n    () => highlightWord({ text, query, ignoreCase, matchAll, exactMatch }),\n    [text, query, ignoreCase, matchAll, exactMatch]\n  )\n}\nexport type HighlightRootProps = Omit<ComponentPropsWithRef<typeof Text>, \"children\"> &\n  UseHighlightProps & {\n    /** Applied to matching spans only. `style` controls the surrounding text. */\n    highlightStyle?: StyleProp<Pick<TextStyle, \"backgroundColor\" | \"color\" | \"borderRadius\">>\n  }\nfunction HighlightRoot({\n  text,\n  query,\n  ignoreCase,\n  matchAll,\n  exactMatch,\n  style,\n  highlightStyle,\n  onTextLayout,\n  ...props\n}: HighlightRootProps) {\n  const chunks = useHighlight({ text, query, ignoreCase, matchAll, exactMatch })\n  const { colors, typography, radius } = useNativeTheme()\n  const textStyle: TextStyle =\n    StyleSheet.flatten([{ ...typography.regular, fontSize: 14, lineHeight: 20, color: colors.foreground }, style]) ?? {}\n  const markStyle: TextStyle =\n    StyleSheet.flatten([\n      { borderRadius: radius.sm, backgroundColor: withOpacity(colors.primary, 0.15), color: colors.foreground },\n      highlightStyle,\n    ]) ?? {}\n  const { fontScale } = useWindowDimensions()\n  const layoutKey = text\n  const measurementKey = JSON.stringify([\n    text,\n    textStyle.fontFamily,\n    textStyle.fontSize,\n    textStyle.fontWeight,\n    textStyle.fontStyle,\n    textStyle.fontVariant,\n    textStyle.letterSpacing,\n    textStyle.textTransform,\n    fontScale,\n    props.numberOfLines,\n    props.allowFontScaling,\n    props.maxFontSizeMultiplier,\n  ])\n  const [layout, setLayout] = useState<{ key: string; lines: HighlightLine[] }>({ key: \"\", lines: [] })\n  const [origin, setOrigin] = useState({ x: 0, y: 0 })\n  const content = chunks.map((chunk, index) =>\n    chunk.match ? (\n      <Text key={index} style={Platform.OS === \"web\" ? markStyle : { color: markStyle.color }}>\n        {chunk.text}\n      </Text>\n    ) : (\n      chunk.text\n    )\n  )\n  if (Platform.OS === \"web\")\n    return (\n      <Text {...props} onTextLayout={onTextLayout} style={textStyle}>\n        {content}\n      </Text>\n    )\n  const segments = getHighlightSegments(chunks, layout.key === layoutKey ? layout.lines : [])\n  return (\n    <View style={{ position: \"relative\" }}>\n      {segments.map(({ key, ...segment }) => (\n        <HighlightBackground\n          key={`${measurementKey}:${key}`}\n          {...segment}\n          origin={origin}\n          textStyle={textStyle}\n          markStyle={markStyle}\n          allowFontScaling={props.allowFontScaling}\n          maxFontSizeMultiplier={props.maxFontSizeMultiplier}\n        />\n      ))}\n      <Text\n        {...props}\n        style={textStyle}\n        onLayout={(event) => {\n          const { x, y } = event.nativeEvent.layout\n          setOrigin((previous) => (previous.x === x && previous.y === y ? previous : { x, y }))\n          props.onLayout?.(event)\n        }}\n        onTextLayout={(event) => {\n          const lines = event.nativeEvent.lines\n          setLayout((previous) =>\n            previous.key === layoutKey && JSON.stringify(previous.lines) === JSON.stringify(lines)\n              ? previous\n              : { key: layoutKey, lines }\n          )\n          onTextLayout?.(event)\n        }}\n      >\n        {content}\n      </Text>\n    </View>\n  )\n}\n\n// Native attributed text ignores borderRadius. Paint measured rectangles behind\n// the unchanged Text so wrapping, selection, and accessibility remain native.\nfunction HighlightBackground({\n  line,\n  before,\n  through,\n  origin,\n  textStyle,\n  markStyle,\n  allowFontScaling,\n  maxFontSizeMultiplier,\n}: ReturnType<typeof getHighlightSegments>[number] & {\n  origin: { x: number; y: number }\n  textStyle: TextStyle\n  markStyle: TextStyle\n  allowFontScaling?: boolean\n  maxFontSizeMultiplier?: number | null\n}) {\n  const [widths, setWidths] = useState<{ before?: number; through?: number }>({})\n  const rtl = textStyle.writingDirection === \"rtl\" || (textStyle.writingDirection !== \"ltr\" && I18nManager.isRTL)\n  const start = before ? widths.before : 0\n  const end = widths.through\n  const measureStyle: TextStyle = {\n    fontFamily: textStyle.fontFamily,\n    fontSize: textStyle.fontSize,\n    fontWeight: textStyle.fontWeight,\n    fontStyle: textStyle.fontStyle,\n    fontVariant: textStyle.fontVariant,\n    letterSpacing: textStyle.letterSpacing,\n    textTransform: textStyle.textTransform,\n    includeFontPadding: false,\n  }\n  const height = line.ascender + line.descender\n  return (\n    <View\n      pointerEvents=\"none\"\n      accessible={false}\n      accessibilityElementsHidden\n      importantForAccessibility=\"no-hide-descendants\"\n      style={StyleSheet.absoluteFill}\n    >\n      {start !== undefined && end !== undefined && end > start && (\n        <View\n          style={{\n            position: \"absolute\",\n            left: origin.x + line.x + (rtl ? line.width - end : start),\n            top: origin.y + line.y + (line.height - height) / 2,\n            width: end - start,\n            height,\n            backgroundColor: markStyle.backgroundColor,\n            borderRadius: markStyle.borderRadius,\n          }}\n        />\n      )}\n      {([\"before\", \"through\"] as const).map((part) => {\n        const value = part === \"before\" ? before : through\n        if (!value) return null\n        return (\n          <Text\n            key={part}\n            allowFontScaling={allowFontScaling}\n            maxFontSizeMultiplier={maxFontSizeMultiplier ?? undefined}\n            style={[measureStyle, { position: \"absolute\", width: 100000, opacity: 0 }]}\n            onTextLayout={(event) => {\n              const width = event.nativeEvent.lines[0]?.width ?? 0\n              setWidths((previous) => (previous[part] === width ? previous : { ...previous, [part]: width }))\n            }}\n          >\n            {value}\n          </Text>\n        )\n      })}\n    </View>\n  )\n}\nexport const Highlight = { Root: HighlightRoot }\n"
+    }
+  ],
+  "docs": "## How it works\n\n`Highlight.Root` renders a standalone native text block with matching spans colored using the shared primary color at 15% opacity. Its default typography is 14px/20px, and colors follow the native light/dark theme. `style` customizes the surrounding text; `highlightStyle` customizes the matching spans’ foreground, background, and corner radius. Native Text props such as `selectable`, `numberOfLines`, and accessibility labels are supported.\n\nPass `text` and a literal `query`. As on the web, a single query matches its first occurrence by default; set `matchAll` to highlight every occurrence. An array of queries defaults to matching all occurrences. `ignoreCase` enables case-insensitive matching and `exactMatch` uses word boundaries. Regex punctuation is treated literally. Empty or unmatched queries leave the text unchanged.\n\n`useHighlight` returns `{ text, match }` chunks for custom rendering. Both renderers use the same `@zag-js/highlight-word` utility, keeping matching behavior aligned without loading Ark UI or a browser runtime. The native registry installs this dependency with the component.\n\nNative attributed text ignores corner radii, so Highlight measures each matched segment and draws rounded backgrounds behind the text. Wrapped matches are split at native line boundaries; the readable text remains a single accessible, selectable Text. Place the component in a View rather than inside another Text. Use `useHighlight` for custom inline rendering. Mixed-direction text and automatic font shrinking have not yet been visually verified."
+}

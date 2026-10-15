@@ -13,6 +13,8 @@ const convertPalette = (scheme: "light" | "dark", web = false) => {
     background: color(p.background),
     foreground: color(p.foreground),
     card: color(p.card),
+    popover: color(p.popover),
+    popoverForeground: color(p["popover-foreground"]),
     cardForeground: color(p["card-foreground"]),
     primary: color(p.primary),
     primaryForeground: color(p["primary-foreground"]),
@@ -27,6 +29,12 @@ const convertPalette = (scheme: "light" | "dark", web = false) => {
     border: color(p.border),
     input: color(p.input),
     ring: color(p.ring),
+    sidebar: color(p["sidebar"]),
+    sidebarForeground: color(p["sidebar-foreground"]),
+    sidebarPrimary: color(p["sidebar-primary"]),
+    sidebarPrimaryForeground: color(p["sidebar-primary-foreground"]),
+    sidebarAccent: color(p["sidebar-accent"]),
+    sidebarBorder: color(p["sidebar-border"]),
   }
 }
 export type NativeColors = ReturnType<typeof convertPalette>

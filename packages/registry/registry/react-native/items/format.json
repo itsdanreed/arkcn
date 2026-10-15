@@ -1,0 +1,183 @@
+{
+  "name": "format",
+  "type": "ui",
+  "description": "Formatting helpers return text. Place them inside native Text, just like ordinary string content.",
+  "exports": [
+    "Format"
+  ],
+  "parts": [
+    {
+      "name": "Format.Number",
+      "props": [
+        {
+          "name": "value",
+          "type": "number",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "style",
+          "type": "keyof NumberFormatOptionsStyleRegistry",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "typescript"
+        }
+      ]
+    },
+    {
+      "name": "Format.Byte",
+      "props": [
+        {
+          "name": "value",
+          "type": "number",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "precision",
+          "type": "number",
+          "required": false,
+          "default": "3",
+          "description": "The number of significant digits to include in the formatted output.",
+          "from": "@zag-js/i18n-utils"
+        },
+        {
+          "name": "unit",
+          "type": "\"bit\" | \"byte\"",
+          "required": false,
+          "default": "\"byte\"",
+          "description": "The type of unit to format the value as.\n- \"bit\": Format as bits (b)\n- \"byte\": Format as bytes (B)",
+          "from": "@zag-js/i18n-utils"
+        },
+        {
+          "name": "unitDisplay",
+          "type": "\"long\" | \"short\" | \"narrow\"",
+          "required": false,
+          "default": "\"short\"",
+          "description": "The display style for the unit.\n- \"long\": Full unit name (e.g., \"kilobytes\")\n- \"short\": Abbreviated unit (e.g., \"KB\")\n- \"narrow\": Compact unit (e.g., \"K\")",
+          "from": "@zag-js/i18n-utils"
+        },
+        {
+          "name": "unitSystem",
+          "type": "\"decimal\" | \"binary\"",
+          "required": false,
+          "default": "\"decimal\"",
+          "description": "The unit system to use for calculations.\n- \"binary\": Uses 1024 as the base (e.g., 1 KiB = 1024 bytes)\n- \"decimal\": Uses 1000 as the base (e.g., 1 KB = 1000 bytes)",
+          "from": "@zag-js/i18n-utils"
+        }
+      ]
+    },
+    {
+      "name": "Format.Time",
+      "props": [
+        {
+          "name": "value",
+          "type": "string | Date",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "amLabel",
+          "type": "string",
+          "required": false,
+          "from": "@zag-js/i18n-utils"
+        },
+        {
+          "name": "format",
+          "type": "TimeFormat",
+          "required": false,
+          "from": "@zag-js/i18n-utils"
+        },
+        {
+          "name": "pmLabel",
+          "type": "string",
+          "required": false,
+          "from": "@zag-js/i18n-utils"
+        },
+        {
+          "name": "withSeconds",
+          "type": "boolean",
+          "required": false,
+          "from": "@zag-js/i18n-utils"
+        }
+      ]
+    },
+    {
+      "name": "Format.RelativeTime",
+      "props": [
+        {
+          "name": "value",
+          "type": "Date",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "style",
+          "type": "RelativeTimeFormatStyle",
+          "required": false,
+          "description": "The length of the internationalized message.",
+          "from": "typescript"
+        }
+      ]
+    },
+    {
+      "name": "Format.LocaleProvider",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "locale",
+          "type": "string",
+          "required": true,
+          "from": "arkcn"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@formatjs/intl-pluralrules": "^6.3.15",
+    "@formatjs/intl-relativetimeformat": "^12.3.15",
+    "@zag-js/i18n-utils": "^1.43.3"
+  },
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "components/ui/format.tsx",
+      "content": "import \"@formatjs/intl-pluralrules/polyfill.js\"\nimport \"@formatjs/intl-pluralrules/locale-data/en.js\"\nimport \"@formatjs/intl-relativetimeformat/polyfill.js\"\nimport \"@formatjs/intl-relativetimeformat/locale-data/en.js\"\nimport { createContext, useContext, type ReactNode } from \"react\"\nimport {\n  formatBytes,\n  formatNumber,\n  formatTime,\n  type FormatBytesOptions,\n  type FormatTimeOptions,\n} from \"@zag-js/i18n-utils\"\n\nconst LocaleContext = createContext<string | undefined>(undefined)\nexport type FormatLocaleProviderProps = { locale: string; children: ReactNode }\nfunction FormatLocaleProvider({ locale, children }: FormatLocaleProviderProps) {\n  return <LocaleContext.Provider value={locale}>{children}</LocaleContext.Provider>\n}\nfunction useFormatLocale(locale?: string) {\n  const provided = useContext(LocaleContext)\n  return locale ?? provided ?? Intl.NumberFormat().resolvedOptions().locale\n}\n/** Formatting helpers return text. Place them inside native Text, just like ordinary string content. */\nexport type FormatNumberProps = Intl.NumberFormatOptions & { value: number; locale?: string }\nfunction FormatNumber({ value, locale, ...options }: FormatNumberProps) {\n  return <>{formatNumber(value, useFormatLocale(locale), options)}</>\n}\nexport type FormatByteProps = FormatBytesOptions & { value: number; locale?: string }\nfunction FormatByte({ value, locale, ...options }: FormatByteProps) {\n  const resolvedLocale = useFormatLocale(locale)\n  const formatted = formatBytes(value, resolvedLocale, options)\n  // iOS ICU omits the English short-unit separator that browser ICU includes.\n  // Narrow units intentionally omit spaces; other locales retain their own rules.\n  const shortEnglish =\n    resolvedLocale.split(\"-\")[0].toLowerCase() === \"en\" && (options.unitDisplay ?? \"short\") === \"short\"\n  return <>{shortEnglish ? formatted.replace(/([0-9∞])(?=[A-Za-z])/u, \"$1 \") : formatted}</>\n}\nexport type FormatTimeProps = FormatTimeOptions & { value: string | Date; locale?: string }\nfunction FormatTime({ value, locale, ...options }: FormatTimeProps) {\n  return <>{formatTime(value, useFormatLocale(locale), options)}</>\n}\nexport type FormatRelativeTimeProps = Intl.RelativeTimeFormatOptions & { value: Date; locale?: string }\nfunction FormatRelativeTime({ value, locale, ...options }: FormatRelativeTimeProps) {\n  const formatter = new Intl.RelativeTimeFormat(useFormatLocale(locale), options)\n  const difference = value.getTime() - Date.now()\n  // Match Zag's fixed-duration, largest-unit rounding. Read Intl at render time:\n  // another library may have imported Zag before the Hermes polyfill was installed.\n  const units: [Intl.RelativeTimeFormatUnit, number][] = [\n    [\"year\", 365 * 86400000],\n    [\"month\", 30 * 86400000],\n    [\"week\", 7 * 86400000],\n    [\"day\", 86400000],\n    [\"hour\", 3600000],\n    [\"minute\", 60000],\n    [\"second\", 1000],\n  ]\n  const [unit, duration] = units.find(([, duration]) => Math.abs(difference) >= duration) ?? units[6]\n  return <>{formatter.format(Math.floor(Math.abs(difference) / duration) * Math.sign(difference), unit)}</>\n}\nexport const Format = {\n  Number: FormatNumber,\n  Byte: FormatByte,\n  Time: FormatTime,\n  RelativeTime: FormatRelativeTime,\n  LocaleProvider: FormatLocaleProvider,\n}\n"
+    }
+  ],
+  "docs": "## How it works\n\n`Format.Number`, `Format.Byte`, `Format.Time`, and `Format.RelativeTime` return formatted text. Place them inside a native Text so they inherit its typography and light/dark color. The helpers do not add a wrapper or override text styling. `style` on Number or RelativeTime is the Intl formatting option, not a React Native style.\n\nEach helper accepts `locale`. `Format.LocaleProvider` provides a shared locale; a helper's explicit locale takes precedence. Without either, formatting uses the runtime's default locale. Specify a locale when output must be identical across devices.\n\nNumber accepts Intl number options, including currency, percent, and fraction digits. Byte accepts `unitSystem=\"decimal\" | \"binary\"`, `precision`, `unit=\"byte\" | \"bit\"`, and `unitDisplay`. Binary changes the calculation base to 1024; unit labels follow the web formatter's Intl labels.\n\nTime accepts a Date or `HH:mm[:ss]` string, `format=\"24h\" | \"12h\"`, `withSeconds`, and optional `amLabel` / `pmLabel`. It formats the local time; invalid values render nothing. RelativeTime accepts a Date and Intl relative-time options such as `numeric=\"auto\"` and `style=\"short\"`. It computes the distance at render time, like the web component; consumers control any periodic refresh.\n\nNumber, Byte, and Time use the same `@zag-js/i18n-utils` formatters as the web renderer. RelativeTime follows the same largest-unit rounding. Format includes feature-detected FormatJS relative-time and plural-rules polyfills with English data for Hermes. Existing supported Intl implementations remain in place. For additional languages on Hermes, load both locale data modules in your app entry before rendering:\n\n```ts\nimport \"@formatjs/intl-pluralrules/locale-data/de.js\"\nimport \"@formatjs/intl-relativetimeformat/locale-data/de.js\"\n```\n\nThe registry installs these dependencies. Number and clock formatting use the runtime's Intl support. Relative-time locale data is opt-in to avoid bundling every language.\n\nEnglish short byte units normalize the separator to match the web (`1.45 MB`), including on iOS. Narrow units and other locales retain their own Intl spacing. Other locale details can still vary with the host Intl/ICU version."
+}

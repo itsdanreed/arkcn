@@ -3,6 +3,8 @@ import { lazy, Suspense, useState } from "react"
 import { createRoot } from "react-dom/client"
 import { NativeThemeProvider } from "@multicomma/arkcn-react-native/lib/theme"
 import "./index.css"
+import { RouterProvider } from "./router"
+import { FrameworkProvider } from "./framework"
 const names = [
   "spinner",
   "switch",
@@ -25,6 +27,38 @@ const names = [
   "button-group",
   "label",
   "aspect-ratio",
+  "field",
+  "fieldset",
+  "number-input",
+  "rating-group",
+  "editable",
+  "pagination",
+  "segment-group",
+  "breadcrumb",
+  "empty",
+  "kbd",
+  "pin-input",
+  "item",
+  "steps",
+  "highlight",
+  "format",
+  "tags-input",
+  "app-shell",
+  "dialog",
+  "alert-dialog",
+  "sheet",
+  "clipboard",
+  "activity-feed",
+  "timer",
+  "message",
+  "bubble",
+  "marker",
+  "attachment",
+  "table",
+  "password-input",
+  "scroll-area",
+  "slider",
+  "spreadsheet",
   "separator",
   "collapsible",
 ]
@@ -66,7 +100,9 @@ function Parity() {
                 className="flex min-h-24 items-center justify-center rounded-lg border p-6"
               >
                 <Suspense fallback="Loading…">
-                  <Web />
+                  <RouterProvider value={{ path: "/parity", navigate: () => {} }}>
+                    <Web />
+                  </RouterProvider>
                 </Suspense>
               </div>
               <div
@@ -89,5 +125,9 @@ function Parity() {
   )
 }
 const root = createRoot(document.getElementById("root")!)
-root.render(<Parity />)
+root.render(
+  <FrameworkProvider>
+    <Parity />
+  </FrameworkProvider>
+)
 import.meta.hot?.dispose(() => root.unmount())

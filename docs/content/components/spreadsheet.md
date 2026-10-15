@@ -1,6 +1,6 @@
 ## How it works
 
-The spreadsheet is a sheet of cells with column letters and row numbers, not a table of records. You hand `Spreadsheet.Root` the cells as rows of values (`string`, `number`, `boolean`, or `null`) and it owns everything that is not data: the selection, the editing draft, column widths, the scroll window, and an undo stack. Rows are virtualized at a fixed `rowHeight`, so ten thousand rows cost the same as thirty.
+The spreadsheet is a sheet of cells with column letters and row numbers, not a table of records. You hand `Spreadsheet.Root` the cells as rows of values (`string`, `number`, `boolean`, or `null`) and it owns everything that is not data: the selection, the editing draft, column widths, the scroll window, and an undo stack. Rows and columns are virtualized using their individual heights and widths; only the visible range plus `overscan` (six rows and columns on each side by default) renders. Frozen panes and the active editor remain mounted while scrolling. `rowHeight` sets the default height and the column-letter header height.
 
 The sheet never mutates your data. Every edit, paste, clear, fill, undo, and redo arrives as one batch through `onCellsChange([{ row, column, value, previous }])`, and you apply it. Replace the `data` array (and the changed rows) so the sheet notices; formulas are re-evaluated lazily from the new data.
 
@@ -24,11 +24,12 @@ The small square at the bottom-right of the selection is the fill handle. Drag i
 
 ## Parts
 
-`Spreadsheet.Container` is the scroll viewport and the keyboard target (a `role="grid"` with `aria-activedescendant`). `Spreadsheet.Header` is the sticky block holding `Spreadsheet.HeaderRow` (the corner and one `Spreadsheet.ColumnHeader` per column, each with a `Spreadsheet.ResizeHandle`: drag to resize, double-click to reset) and any `frozenRows`. `Spreadsheet.Body` renders the windowed rows; by default each is a `Spreadsheet.Row` with a `Spreadsheet.RowHeader` and a `Spreadsheet.Cell` per column, and a render function child replaces that. `Spreadsheet.Empty` shows when there are no rows or columns.
+`Spreadsheet.Container` is the scroll viewport and the keyboard target (a `role="grid"` with `aria-activedescendant`). `Spreadsheet.Header` is the sticky block holding `Spreadsheet.HeaderRow` (the corner and one `Spreadsheet.ColumnHeader` per column, each with a `Spreadsheet.ResizeHandle`: drag to resize, double-click to reset) and any `frozenRows`. `Spreadsheet.Body` renders the windowed rows; by default each is a `Spreadsheet.Row` with a `Spreadsheet.RowHeader` and a `Spreadsheet.Cell` per visible column, and a render function child replaces that. `Spreadsheet.Empty` shows when there are no rows or columns.
 
 ## Notes
 
 - `frozenRows` and `frozenColumns` stay in view while scrolling; the row-number gutter is always sticky.
 - Give the sheet a bounded height; it scrolls inside its container.
+- Drag the bottom edge of a row number to resize it. Double-click resets its height; Arrow Up/Down adjusts a focused resize handle, Shift uses 10px steps, and Home resets. `rowHeights`, `defaultRowHeights`, and `onRowHeightsChange` control per-row sizes; `minRowHeight` defaults to 24px. Frozen rows, scroll positioning, and virtualization use the same measured offsets.
 - Column widths are controllable through `columnWidths` and `onColumnWidthsChange`; the selection through `selection` and `onSelectionChange`.
 - `readOnly` keeps navigation, selection, and copy but disables editing, clearing, pasting, and the fill handle.

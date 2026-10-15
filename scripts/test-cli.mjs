@@ -183,9 +183,9 @@ try {
       wrongRegistry.status !== 0 && /Registry is for react/.test(wrongRegistry.stderr),
       "custom registries must match the project"
     )
-    const unsupported = spawnSync(process.execPath, [bin, "add", "dialog", "--cwd", native], { encoding: "utf8" })
+    const unsupported = spawnSync(process.execPath, [bin, "add", "scheduler", "--cwd", native], { encoding: "utf8" })
     assert(unsupported.status !== 0, "unported components are not silently replaced with web components")
-    assert(!existsSync(join(native, "app-ui/components/ui/dialog.tsx")), "no unsupported component is written")
+    assert(!existsSync(join(native, "app-ui/components/ui/scheduler.tsx")), "no unsupported component is written")
   } finally {
     rmSync(native, { recursive: true, force: true })
   }

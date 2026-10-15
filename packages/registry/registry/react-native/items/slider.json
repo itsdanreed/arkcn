@@ -1,0 +1,900 @@
+{
+  "name": "slider",
+  "type": "ui",
+  "description": "Composable single/range slider with contained thumbs and native adjustable actions.",
+  "exports": [
+    "useSliderContext",
+    "useSlider",
+    "Slider"
+  ],
+  "parts": [
+    {
+      "name": "Slider.Root",
+      "props": [
+        {
+          "name": "defaultValue",
+          "type": "number[]",
+          "required": false,
+          "description": "The initial value when uncontrolled.",
+          "from": "arkcn"
+        },
+        {
+          "name": "dir",
+          "type": "\"ltr\" | \"rtl\"",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "getValueText",
+          "type": "((value: number, index: number) => string)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "max",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "min",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "minStepsBetweenThumbs",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: { value: number[]; }) => void)",
+          "required": false,
+          "description": "Called with the new value whenever it changes.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onValueChangeEnd",
+          "type": "((details: { value: number[]; }) => void)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "required": false,
+          "description": "Layout direction of the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "origin",
+          "type": "\"end\" | \"start\" | \"center\"",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Shows the value but prevents changes.",
+          "from": "arkcn"
+        },
+        {
+          "name": "step",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "number[]",
+          "required": false,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Slider.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "{ value: number[]; min: number; max: number; step: number; orientation: \"horizontal\" | \"vertical\"; vertical: boolean; origin: \"end\" | \"start\" | \"center\"; dir…",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Slider.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(api: { value: number[]; min: number; max: number; step: number; orientation: \"horizontal\" | \"vertical\"; vertical: boolean; origin: \"end\" | \"start\" | \"center…",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "Slider.Label",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Slider.ValueText",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Slider.Control",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Slider.Track",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Slider.Range",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Slider.Thumb",
+      "props": [
+        {
+          "name": "index",
+          "type": "number",
+          "required": true,
+          "description": "Position of the item in its list.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Slider.DraggingIndicator",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Slider.MarkerGroup",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Slider.Marker",
+      "props": [
+        {
+          "name": "value",
+          "type": "number",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "fieldset",
+    "lib/context",
+    "lib/controllable",
+    "lib/focus",
+    "lib/motion",
+    "lib/slider",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/slider.tsx",
+      "content": "/** Composable single/range slider with contained thumbs and native adjustable actions. */\nimport {\n  createContext,\n  useContext,\n  useLayoutEffect,\n  useRef,\n  useState,\n  type ComponentPropsWithRef,\n  type ComponentRef,\n  type ReactNode,\n} from \"react\"\nimport { I18nManager, Platform, Text, View, type ViewStyle } from \"react-native\"\nimport { useControllable } from \"@/lib/controllable\"\nimport { createRequiredContext } from \"@/lib/context\"\nimport { isFocusVisible } from \"@/lib/focus\"\nimport { AnimatedView, useShadowTransition } from \"@/lib/motion\"\nimport { sliderCenter, sliderValueAt, snapSliderValue } from \"@/lib/slider\"\nimport { useNativeTheme, withOpacity } from \"@/lib/theme\"\nimport { useFieldsetContext } from \"@/components/ui/fieldset\"\n\ntype ViewProps = ComponentPropsWithRef<typeof View>\ntype TextProps = ComponentPropsWithRef<typeof Text>\nexport type UseSliderProps = {\n  value?: number[]\n  defaultValue?: number[]\n  min?: number\n  max?: number\n  step?: number\n  minStepsBetweenThumbs?: number\n  orientation?: \"horizontal\" | \"vertical\"\n  origin?: \"start\" | \"center\" | \"end\"\n  dir?: \"ltr\" | \"rtl\"\n  disabled?: boolean\n  readOnly?: boolean\n  onValueChange?: (details: { value: number[] }) => void\n  onValueChangeEnd?: (details: { value: number[] }) => void\n  getValueText?: (value: number, index: number) => string\n}\nexport function useSlider({\n  value,\n  defaultValue = [0],\n  min = 0,\n  max = 100,\n  step = 1,\n  minStepsBetweenThumbs = 0,\n  orientation = \"horizontal\",\n  origin = \"start\",\n  dir = I18nManager.isRTL ? \"rtl\" : \"ltr\",\n  disabled = false,\n  readOnly = false,\n  onValueChange,\n  onValueChangeEnd,\n  getValueText = String,\n}: UseSliderProps = {}) {\n  if (\n    !Number.isFinite(min) ||\n    !Number.isFinite(max) ||\n    max <= min ||\n    !Number.isFinite(step) ||\n    step <= 0 ||\n    !Number.isInteger(minStepsBetweenThumbs) ||\n    minStepsBetweenThumbs < 0\n  )\n    throw new RangeError(\n      \"Slider requires finite min < max, a positive step, and nonnegative integer minStepsBetweenThumbs\"\n    )\n  const [raw, update] = useControllable(value, defaultValue, (value) => onValueChange?.({ value }))\n  if (!raw.length || raw.some((n) => !Number.isFinite(n)))\n    throw new RangeError(\"Slider value must contain finite numbers\")\n  const gap = step * minStepsBetweenThumbs\n  if (gap * (raw.length - 1) > max - min) throw new RangeError(\"Slider thumb spacing exceeds the available range\")\n  const values = raw.map((n) => snapSliderValue(n, min, max, step)).sort((a, b) => a - b)\n  for (let i = 0; i < values.length; i++)\n    values[i] = Math.min(\n      max - gap * (values.length - i - 1),\n      Math.max(min + gap * i, values[i], i ? values[i - 1] + gap : min)\n    )\n  const latest = useRef(values)\n  latest.current = values\n  const parent = useFieldsetContext()\n  const blocked = disabled || parent.disabled\n  const [size, setSize] = useState(0)\n  const [label, setLabel] = useState(\"\")\n  const [draggingIndex, setDraggingIndex] = useState<number | null>(null)\n  const vertical = orientation === \"vertical\"\n  const reverse = vertical || dir === \"rtl\"\n  const bounds = (index: number) => ({\n    min: index > 0 ? latest.current[index - 1] + gap : min,\n    max: index < latest.current.length - 1 ? latest.current[index + 1] - gap : max,\n  })\n  const setThumbValue = (index: number, next: number, commit = false) => {\n    if (blocked || readOnly || index < 0 || index >= latest.current.length) return\n    const limits = bounds(index)\n    const normalized = Math.max(limits.min, Math.min(limits.max, snapSliderValue(next, min, max, step)))\n    const changed = normalized !== latest.current[index]\n    const result = latest.current.map((n, i) => (i === index ? normalized : n))\n    latest.current = result\n    if (changed) update(result)\n    if (commit) onValueChangeEnd?.({ value: [...result] })\n  }\n  return {\n    value: values,\n    min,\n    max,\n    step,\n    orientation,\n    vertical,\n    origin,\n    dir,\n    reverse,\n    disabled: blocked,\n    readOnly,\n    size,\n    setSize,\n    label,\n    setLabel,\n    draggingIndex,\n    setDraggingIndex,\n    getValueText,\n    bounds,\n    setThumbValue,\n    getThumbPercent: (index: number) => (values[index] - min) / (max - min),\n    center: (n: number) => sliderCenter(n, min, max, size, reverse),\n    end: () => {\n      if (!blocked && !readOnly) onValueChangeEnd?.({ value: [...latest.current] })\n      setDraggingIndex(null)\n    },\n  }\n}\ntype SliderApi = ReturnType<typeof useSlider>\nconst [Provider, useSliderContext] = createRequiredContext<SliderApi>(\"Slider\")\nexport { useSliderContext }\nexport type SliderRootProviderProps = ViewProps & { value: SliderApi }\nfunction RootProvider({ value, style, ...props }: SliderRootProviderProps) {\n  return (\n    <Provider value={value}>\n      <View\n        {...props}\n        style={[\n          {\n            gap: 8,\n            opacity: value.disabled ? 0.5 : 1,\n            width: value.vertical ? undefined : \"100%\",\n            minHeight: value.vertical ? 160 : undefined,\n            direction: value.dir,\n          },\n          style,\n        ]}\n      />\n    </Provider>\n  )\n}\nexport type SliderRootProps = ViewProps & UseSliderProps\nfunction Root({\n  value,\n  defaultValue,\n  min,\n  max,\n  step,\n  minStepsBetweenThumbs,\n  orientation,\n  origin,\n  dir,\n  disabled,\n  readOnly,\n  onValueChange,\n  onValueChangeEnd,\n  getValueText,\n  children,\n  ...props\n}: SliderRootProps) {\n  const api = useSlider({\n    value,\n    defaultValue,\n    min,\n    max,\n    step,\n    minStepsBetweenThumbs,\n    orientation,\n    origin,\n    dir,\n    disabled,\n    readOnly,\n    onValueChange,\n    onValueChangeEnd,\n    getValueText,\n  })\n  return (\n    <RootProvider value={api} {...props}>\n      {children ?? (\n        <Control>\n          <Track>\n            <Range />\n          </Track>\n          {api.value.map((_, index) => (\n            <Thumb key={index} index={index} />\n          ))}\n        </Control>\n      )}\n    </RootProvider>\n  )\n}\nexport type SliderContextProps = { children: (api: SliderApi) => ReactNode }\nfunction Context({ children }: SliderContextProps) {\n  return children(useSliderContext())\n}\nexport type SliderLabelProps = TextProps\nfunction Label({ children, style, ...props }: SliderLabelProps) {\n  const { setLabel } = useSliderContext()\n  const { colors, typography } = useNativeTheme()\n  useLayoutEffect(() => {\n    setLabel(typeof children === \"string\" ? children : \"\")\n  }, [children, setLabel])\n  return (\n    <Text {...props} style={[{ ...typography.medium, fontSize: 14, lineHeight: 20, color: colors.foreground }, style]}>\n      {children}\n    </Text>\n  )\n}\nexport type SliderValueTextProps = TextProps\nfunction ValueText({ children, style, ...props }: SliderValueTextProps) {\n  const api = useSliderContext()\n  const { colors, typography } = useNativeTheme()\n  return (\n    <Text\n      {...props}\n      style={[{ ...typography.regular, fontSize: 14, lineHeight: 20, color: colors.mutedForeground }, style]}\n    >\n      {children ?? api.value.map(api.getValueText).join(\", \")}\n    </Text>\n  )\n}\nexport type SliderControlProps = ViewProps\nfunction Control({ style, onLayout, ref, ...props }: SliderControlProps) {\n  const api = useSliderContext()\n  const latest = useRef(api)\n  latest.current = api\n  const control = useRef<ComponentRef<typeof View>>(null)\n  const gesture = useRef<{ point: number; origin?: number; index?: number; released: boolean } | null>(null)\n  useLayoutEffect(\n    () => () => {\n      gesture.current = null\n    },\n    []\n  )\n  const move = () => {\n    const drag = gesture.current\n    const current = latest.current\n    if (!drag || drag.origin === undefined || current.disabled || current.readOnly) return\n    const next = sliderValueAt(\n      drag.point - drag.origin,\n      current.size,\n      current.min,\n      current.max,\n      current.step,\n      current.reverse\n    )\n    if (drag.index === undefined) {\n      drag.index = current.value.reduce(\n        (nearest, n, index) => (Math.abs(n - next) <= Math.abs(current.value[nearest] - next) ? index : nearest),\n        0\n      )\n      current.setDraggingIndex(drag.index)\n    }\n    current.setThumbValue(drag.index, next)\n    if (drag.released) {\n      current.end()\n      gesture.current = null\n    }\n  }\n  return (\n    <View\n      {...props}\n      ref={(node) => {\n        control.current = node\n        if (typeof ref === \"function\") return ref(node)\n        if (ref) ref.current = node\n      }}\n      hitSlop={20}\n      onLayout={(event) => {\n        api.setSize(api.vertical ? event.nativeEvent.layout.height : event.nativeEvent.layout.width)\n        onLayout?.(event)\n      }}\n      onStartShouldSetResponder={() => !api.disabled && !api.readOnly}\n      onMoveShouldSetResponder={() => !api.disabled && !api.readOnly}\n      onResponderTerminationRequest={() => false}\n      onResponderGrant={(event) => {\n        const drag = { point: api.vertical ? event.nativeEvent.pageY : event.nativeEvent.pageX, released: false }\n        gesture.current = drag\n        control.current?.measure((_x, _y, _w, _h, x, y) => {\n          if (gesture.current !== drag) return\n          gesture.current.origin = latest.current.vertical ? y : x\n          move()\n        })\n      }}\n      onResponderMove={(event) => {\n        if (gesture.current) {\n          gesture.current.point = api.vertical ? event.nativeEvent.pageY : event.nativeEvent.pageX\n          move()\n        }\n      }}\n      onResponderRelease={() => {\n        if (gesture.current) {\n          gesture.current.released = true\n          move()\n        }\n      }}\n      onResponderTerminate={() => {\n        gesture.current = null\n        api.setDraggingIndex(null)\n      }}\n      style={[\n        {\n          position: \"relative\",\n          justifyContent: \"center\",\n          alignItems: \"center\",\n          height: api.vertical ? undefined : 4,\n          width: api.vertical ? 4 : \"100%\",\n          flexGrow: api.vertical ? 1 : 0,\n          flexBasis: api.vertical ? 0 : undefined,\n          flexShrink: api.vertical ? 1 : 0,\n          minHeight: api.vertical ? 160 : undefined,\n        },\n        Platform.OS === \"web\" && ({ touchAction: \"none\", userSelect: \"none\" } as ViewStyle),\n        style,\n      ]}\n    />\n  )\n}\nexport type SliderTrackProps = ViewProps\nfunction Track({ style, ...props }: SliderTrackProps) {\n  const { vertical } = useSliderContext()\n  const { colors, radius } = useNativeTheme()\n  return (\n    <View\n      pointerEvents=\"none\"\n      {...props}\n      style={[\n        {\n          position: \"relative\",\n          overflow: \"hidden\",\n          borderRadius: radius.full,\n          backgroundColor: colors.muted,\n          width: vertical ? 4 : \"100%\",\n          height: vertical ? undefined : 4,\n          ...(vertical && { position: \"absolute\", top: 0, bottom: 0 }),\n        },\n        style,\n      ]}\n    />\n  )\n}\nexport type SliderRangeProps = ViewProps\nfunction Range({ style, ...props }: SliderRangeProps) {\n  const api = useSliderContext()\n  const { colors } = useNativeTheme()\n  const positions = api.value.map(api.center)\n  if (positions.length === 1)\n    positions.push(api.origin === \"center\" ? api.size / 2 : (api.origin === \"end\") !== api.reverse ? api.size : 0)\n  const start = Math.min(...positions)\n  const length = Math.max(...positions) - start\n  return (\n    <View\n      pointerEvents=\"none\"\n      {...props}\n      style={[\n        { position: \"absolute\", backgroundColor: colors.primary },\n        api.vertical ? { top: start, height: length, width: \"100%\" } : { left: start, width: length, height: \"100%\" },\n        style,\n      ]}\n    />\n  )\n}\nconst ThumbIndex = createContext(0)\nexport type SliderThumbProps = ViewProps & { index: number }\nfunction Thumb({\n  index,\n  style,\n  onFocus,\n  onBlur,\n  onPointerEnter,\n  onPointerLeave,\n  onAccessibilityAction,\n  accessibilityLabel,\n  children,\n  ...props\n}: SliderThumbProps) {\n  const api = useSliderContext()\n  const { colors, radius } = useNativeTheme()\n  const [focused, setFocused] = useState(false)\n  const [hovered, setHovered] = useState(false)\n  const blocked = api.disabled || api.readOnly\n  const active = !api.disabled && (focused || hovered || api.draggingIndex === index)\n  const shadow = useShadowTransition([\n    {\n      offsetX: 0,\n      offsetY: 0,\n      blurRadius: 0,\n      spreadDistance: active ? 3 : 0,\n      color: withOpacity(colors.ring, active ? 0.5 : 0),\n    },\n  ])\n  if (index < 0 || index >= api.value.length || !Number.isInteger(index))\n    throw new RangeError(\"Slider.Thumb index is outside the value array\")\n  const limits = api.bounds(index)\n  return (\n    <ThumbIndex.Provider value={index}>\n      <AnimatedView\n        {...props}\n        accessible\n        accessibilityRole=\"adjustable\"\n        accessibilityLabel={\n          accessibilityLabel ?? `${api.label || \"Value\"}${api.value.length > 1 ? ` ${index + 1}` : \"\"}`\n        }\n        accessibilityValue={{\n          min: limits.min,\n          max: limits.max,\n          now: api.value[index],\n          text: api.getValueText(api.value[index], index),\n        }}\n        accessibilityState={{ ...props.accessibilityState, disabled: api.disabled }}\n        accessibilityHint={api.readOnly ? \"Read only\" : props.accessibilityHint}\n        accessibilityActions={blocked ? [] : [{ name: \"increment\" }, { name: \"decrement\" }]}\n        onAccessibilityAction={(event) => {\n          onAccessibilityAction?.(event)\n          if (event.defaultPrevented || blocked) return\n          const action = event.nativeEvent.actionName\n          if (action === \"increment\" || action === \"decrement\")\n            api.setThumbValue(index, api.value[index] + (action === \"increment\" ? api.step : -api.step), true)\n        }}\n        {...(Platform.OS === \"web\" && {\n          tabIndex: api.disabled ? -1 : 0,\n          \"aria-orientation\": api.orientation,\n          \"aria-readonly\": api.readOnly,\n          onKeyDown: (event: { nativeEvent: { key: string }; preventDefault: () => void }) => {\n            if (blocked) return\n            const key = event.nativeEvent.key\n            const delta =\n              key === \"ArrowUp\" ||\n              (key === \"ArrowRight\" && api.dir !== \"rtl\") ||\n              (key === \"ArrowLeft\" && api.dir === \"rtl\")\n                ? api.step\n                : key === \"ArrowDown\" || key === \"ArrowLeft\" || key === \"ArrowRight\"\n                  ? -api.step\n                  : key === \"PageUp\"\n                    ? api.step * 10\n                    : key === \"PageDown\"\n                      ? -api.step * 10\n                      : 0\n            if (!delta && key !== \"Home\" && key !== \"End\") return\n            event.preventDefault()\n            api.setThumbValue(\n              index,\n              key === \"Home\" ? limits.min : key === \"End\" ? limits.max : api.value[index] + delta,\n              true\n            )\n          },\n        })}\n        onFocus={(event) => {\n          setFocused(isFocusVisible(event))\n          onFocus?.(event)\n        }}\n        onBlur={(event) => {\n          setFocused(false)\n          onBlur?.(event)\n        }}\n        onPointerEnter={(event) => {\n          if (event.nativeEvent.pointerType !== \"touch\") setHovered(true)\n          onPointerEnter?.(event)\n        }}\n        onPointerLeave={(event) => {\n          setHovered(false)\n          onPointerLeave?.(event)\n        }}\n        style={[\n          {\n            position: \"absolute\",\n            width: 12,\n            height: 12,\n            borderRadius: radius.full,\n            borderWidth: 1,\n            borderColor: colors.ring,\n            backgroundColor: \"#ffffff\",\n            zIndex: active ? 2 : 1,\n          },\n          api.vertical\n            ? { top: api.center(api.value[index]) - 6, left: -4 }\n            : { left: api.center(api.value[index]) - 6, top: -4 },\n          shadow,\n          Platform.OS === \"web\" && { outlineWidth: 0 },\n          style,\n        ]}\n      >\n        {children}\n      </AnimatedView>\n    </ThumbIndex.Provider>\n  )\n}\nexport type SliderDraggingIndicatorProps = TextProps\nfunction DraggingIndicator({ children, style, ...props }: SliderDraggingIndicatorProps) {\n  const api = useSliderContext()\n  const index = useContext(ThumbIndex)\n  const { colors, typography, radius } = useNativeTheme()\n  if (api.draggingIndex !== index) return null\n  return (\n    <Text\n      pointerEvents=\"none\"\n      {...props}\n      style={[\n        {\n          position: \"absolute\",\n          bottom: 20,\n          alignSelf: \"center\",\n          ...typography.medium,\n          fontSize: 12,\n          lineHeight: 16,\n          paddingHorizontal: 6,\n          paddingVertical: 2,\n          borderRadius: radius.md,\n          backgroundColor: colors.primary,\n          color: colors.primaryForeground,\n          minWidth: 28,\n          textAlign: \"center\",\n        },\n        style,\n      ]}\n    >\n      {children ?? api.getValueText(api.value[index], index)}\n    </Text>\n  )\n}\nexport type SliderMarkerGroupProps = ViewProps\nfunction MarkerGroup({ style, ...props }: SliderMarkerGroupProps) {\n  return <View {...props} style={[{ position: \"relative\", height: 16 }, style]} />\n}\nexport type SliderMarkerProps = TextProps & { value: number }\nfunction Marker({ value, style, onLayout, ...props }: SliderMarkerProps) {\n  const api = useSliderContext()\n  const { colors, typography } = useNativeTheme()\n  const [width, setWidth] = useState(0)\n  return (\n    <Text\n      {...props}\n      onLayout={(event) => {\n        setWidth(event.nativeEvent.layout.width)\n        onLayout?.(event)\n      }}\n      style={[\n        {\n          position: \"absolute\",\n          left: api.center(value) - width / 2,\n          ...typography.regular,\n          color: colors.mutedForeground,\n          fontSize: 12,\n          lineHeight: 16,\n        },\n        style,\n      ]}\n    />\n  )\n}\nexport const Slider = {\n  Root,\n  RootProvider,\n  Context,\n  Label,\n  ValueText,\n  Control,\n  Track,\n  Range,\n  Thumb,\n  DraggingIndicator,\n  MarkerGroup,\n  Marker,\n}\n"
+    }
+  ],
+  "docs": "## How it works\n\nSlider uses the desktop component’s 4px muted track, primary range, and 12px white thumb with a ring-color border. Its focus, hover, and drag ring follows the shared motion settings and respects reduced motion. Colors follow the native theme in light and dark modes.\n\nCompose Root, Label, ValueText, Control, Track, Range, and one Thumb per value. Root also supplies the control automatically when no children are passed. Each Thumb takes an index. RootProvider accepts useSlider(), and Context exposes its state and setThumbValue(index, value, commit).\n\nUse value / onValueChange for controlled arrays or defaultValue for uncontrolled values. onValueChangeEnd fires when a gesture finishes or an accessibility/keyboard adjustment commits. min, max, step, and minStepsBetweenThumbs constrain values. Thumbs cannot cross. Track presses select the nearest thumb; dragging continues outside the control until release. disabled and readOnly block changes, and a disabled Fieldset is inherited.\n\norientation=\"vertical\" places the minimum at the bottom. dir=\"rtl\" reverses horizontal sliders. origin=\"center\" or \"end\" changes the single-value range fill. Thumb centers remain inside both ends of the track. Horizontal MarkerGroup / Marker display ticks, and DraggingIndicator inside a Thumb displays its value while dragging.\n\nEach thumb is an adjustable accessibility control. Provide individual accessibilityLabel values for range thumbs and getValueText for units or localization. Browser keyboard support includes arrows, Home/End, and PageUp/PageDown. Native forms use the value callback; there is no HiddenInput. The native implementation uses React Native responders to preserve arkcn’s exact custom track and range styling. It does not use a platform-styled single-value slider."
+}

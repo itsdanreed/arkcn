@@ -1,6 +1,8 @@
 # Native validation app
 
-An Expo SDK 57 consumer of the arkcn React Native registry. It runs the same 23 examples as the docs, with Geist regular/medium fonts, light/dark themes, and a reduced-motion toggle.
+An Expo SDK 57 consumer of the arkcn React Native registry. It runs the same 55 examples as the docs, with Geist regular/medium fonts, light/dark themes, and a reduced-motion toggle.
+
+The app starts in a full-screen App Shell demo. Use its sidebar or search to navigate, change theme with the sun/moon button, and open Settings to compare sidebar/inset/floating layouts and icon/offcanvas/none behavior. Rotate to landscape to see the persistent sidebar (the demo uses a 700px breakpoint to account for the phone's landscape safe-area insets). “Component gallery” returns to the full catalog.
 
 This app has its own dependency lockfile because Expo pins React Native, Reanimated, and Worklets to compatible versions. It intentionally sits outside the library workspaces so the latest library development dependencies cannot replace Expo's runtime.
 

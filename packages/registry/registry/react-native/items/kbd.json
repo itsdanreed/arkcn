@@ -1,0 +1,172 @@
+{
+  "name": "kbd",
+  "type": "ui",
+  "description": "Use inside an inverse tooltip surface. No tooltip is created by this component.",
+  "exports": [
+    "Kbd"
+  ],
+  "parts": [
+    {
+      "name": "Kbd.Root",
+      "props": [
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Native text styles for a plain button label.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"tooltip\"",
+          "required": false,
+          "default": "\"default\"",
+          "description": "Use inside an inverse tooltip surface. No tooltip is created by this component.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Kbd.Group",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/kbd.tsx",
+      "content": "import { Children, cloneElement, isValidElement, type ComponentPropsWithRef } from \"react\"\nimport { I18nManager, Text, View, type StyleProp, type TextStyle } from \"react-native\"\nimport { useNativeTheme, withOpacity } from \"@/lib/theme\"\n\nexport type KbdRootProps = ComponentPropsWithRef<typeof View> & {\n  /** Use inside an inverse tooltip surface. No tooltip is created by this component. */\n  variant?: \"default\" | \"tooltip\"\n  textStyle?: StyleProp<TextStyle>\n}\nfunction KbdRoot({ variant = \"default\", children, style, textStyle, ...props }: KbdRootProps) {\n  const { colors, colorScheme, typography, radius } = useNativeTheme()\n  const color = variant === \"tooltip\" ? colors.background : colors.mutedForeground\n  return (\n    <View\n      {...props}\n      pointerEvents=\"none\"\n      style={[\n        {\n          minHeight: 20,\n          minWidth: 20,\n          alignSelf: \"flex-start\",\n          flexDirection: \"row\",\n          alignItems: \"center\",\n          justifyContent: \"center\",\n          gap: 4,\n          paddingHorizontal: 4,\n          borderRadius: radius.sm,\n          backgroundColor:\n            variant === \"tooltip\" ? withOpacity(colors.background, colorScheme === \"dark\" ? 0.1 : 0.2) : colors.muted,\n        },\n        style,\n      ]}\n    >\n      {Children.map(children, (child) =>\n        typeof child === \"string\" || typeof child === \"number\" ? (\n          <Text selectable={false} style={[{ ...typography.medium, fontSize: 12, lineHeight: 16, color }, textStyle]}>\n            {child}\n          </Text>\n        ) : isValidElement<{ size?: number; color?: string }>(child) ? (\n          cloneElement(child, { size: child.props.size ?? 12, color: child.props.color ?? color })\n        ) : (\n          child\n        )\n      )}\n    </View>\n  )\n}\nexport type KbdGroupProps = ComponentPropsWithRef<typeof View>\nfunction KbdGroup({ style, ...props }: KbdGroupProps) {\n  return (\n    <View\n      {...props}\n      style={[{ flexDirection: I18nManager.isRTL ? \"row-reverse\" : \"row\", alignItems: \"center\", gap: 4 }, style]}\n    />\n  )\n}\nexport const Kbd = { Root: KbdRoot, Group: KbdGroup }\n"
+    }
+  ],
+  "docs": "## How it works\n\nUse `Kbd.Root` for a shortcut key and `Kbd.Group` for a chord. The labels use the web component's 20px minimum dimensions, 12px medium text, muted background, 6px radius, and 4px internal/group gaps. Direct icons default to 12px and the label color; explicit size/color props are preserved.\n\nKbd is a non-interactive label and does not register keyboard shortcuts. It can describe hardware-keyboard commands in an Expo app. Supply an accessible group label such as `accessibilityLabel=\"Command K\"` with `accessible` when symbols should be announced as a single phrase.\n\nLight/dark colors follow NativeThemeProvider or system appearance. Text scaling stays enabled and the label can grow taller. `variant=\"tooltip\"` selects the web tooltip's inverted colors; the native caller sets this explicitly because there are no ancestor CSS selectors. This does not create or require a Tooltip component.\n\nUse native `style` on either part and `textStyle` on Root. Compose Text and icons for custom labels; there is no HTML kbd element or `asChild` API."
+}

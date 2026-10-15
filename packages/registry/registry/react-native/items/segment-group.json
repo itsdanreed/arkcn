@@ -1,0 +1,545 @@
+{
+  "name": "segment-group",
+  "type": "ui",
+  "description": "",
+  "exports": [
+    "useSegmentGroupContext",
+    "useSegmentGroupItemContext",
+    "useSegmentGroup",
+    "SegmentGroup"
+  ],
+  "parts": [
+    {
+      "name": "SegmentGroup.Root",
+      "props": [
+        {
+          "name": "defaultValue",
+          "type": "string | null",
+          "required": false,
+          "description": "The initial value when uncontrolled.",
+          "from": "arkcn"
+        },
+        {
+          "name": "dir",
+          "type": "\"ltr\" | \"rtl\"",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: { value: string | null; }) => void)",
+          "required": false,
+          "description": "Called with the new value whenever it changes.",
+          "from": "arkcn"
+        },
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "required": false,
+          "description": "Layout direction of the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Shows the value but prevents changes.",
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "string | null",
+          "required": false,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "SegmentGroup.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "{ value: string | null; disabled: boolean; readOnly: boolean; orientation: \"horizontal\" | \"vertical\"; dir: \"ltr\" | \"rtl\"; setValue(value: string | null): voi…",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "SegmentGroup.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(value: { value: string | null; disabled: boolean; readOnly: boolean; orientation: \"horizontal\" | \"vertical\"; dir: \"ltr\" | \"rtl\"; setValue(value: string | nu…",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "SegmentGroup.Indicator",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "SegmentGroup.Item",
+      "props": [
+        {
+          "name": "value",
+          "type": "string",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Native text styles for a plain button label.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode | ((state: Readonly<{ pressed: boolean; }>) => ReactNode)",
+          "required": false,
+          "description": "Either children or a function that receives a boolean reflecting whether\nthe component is currently pressed.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "SegmentGroup.ItemText",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "SegmentGroup.ItemContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(value: { value: string; checked: boolean; disabled: boolean; focused: boolean; highlighted: boolean; }) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "SegmentGroup.Label",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "fieldset",
+    "lib/context",
+    "lib/controllable",
+    "lib/focus",
+    "lib/motion",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/segment-group.tsx",
+      "content": "import { Children, useCallback, useEffect, useState, type ComponentPropsWithRef, type ReactNode } from \"react\"\nimport {\n  I18nManager,\n  useWindowDimensions,\n  Pressable,\n  StyleSheet,\n  Text,\n  View,\n  type LayoutRectangle,\n  type StyleProp,\n  type TextStyle,\n} from \"react-native\"\nimport { useControllable } from \"@/lib/controllable\"\nimport { createRequiredContext } from \"@/lib/context\"\nimport { isFocusVisible } from \"@/lib/focus\"\nimport { AnimatedPressable, AnimatedText, AnimatedView, useMotion, useShadowTransition } from \"@/lib/motion\"\nimport { useNativeTheme, withOpacity } from \"@/lib/theme\"\nimport { useFieldsetContext } from \"@/components/ui/fieldset\"\n\nexport type UseSegmentGroupProps = {\n  value?: string | null\n  defaultValue?: string | null\n  onValueChange?: (details: { value: string | null }) => void\n  disabled?: boolean\n  readOnly?: boolean\n  orientation?: \"horizontal\" | \"vertical\"\n  dir?: \"ltr\" | \"rtl\"\n}\nexport function useSegmentGroup({\n  value,\n  defaultValue = null,\n  onValueChange,\n  disabled = false,\n  readOnly = false,\n  orientation = \"horizontal\",\n  dir = I18nManager.isRTL ? \"rtl\" : \"ltr\",\n}: UseSegmentGroupProps = {}) {\n  const fieldset = useFieldsetContext()\n  const [selected, updateValue] = useControllable(value, defaultValue, (value) => onValueChange?.({ value }))\n  const blocked = disabled || fieldset.disabled\n  return {\n    value: selected,\n    disabled: blocked,\n    readOnly,\n    orientation,\n    dir,\n    setValue(value: string | null) {\n      if (!blocked && !readOnly) updateValue(value)\n    },\n    clearValue() {\n      if (!blocked && !readOnly) updateValue(null)\n    },\n  }\n}\nexport type UseSegmentGroupReturn = ReturnType<typeof useSegmentGroup>\nconst [Provider, useSegmentGroupContext] = createRequiredContext<UseSegmentGroupReturn>(\"SegmentGroup\")\nconst [LayoutProvider, useLayouts] = createRequiredContext<{\n  layouts: Map<string, LayoutRectangle>\n  setLayout: (value: string, layout: LayoutRectangle | null) => void\n}>(\"SegmentGroup\")\nconst [ItemProvider, useSegmentGroupItemContext] = createRequiredContext<{\n  value: string\n  checked: boolean\n  disabled: boolean\n  focused: boolean\n  highlighted: boolean\n}>(\"SegmentGroup.Item\")\nexport { useSegmentGroupContext, useSegmentGroupItemContext }\nexport type SegmentGroupRootProviderProps = ComponentPropsWithRef<typeof View> & { value: UseSegmentGroupReturn }\nfunction SegmentGroupRootProvider({ value, style, ...props }: SegmentGroupRootProviderProps) {\n  const { colors, tabs, radius } = useNativeTheme()\n  const [layouts, setLayouts] = useState(() => new Map<string, LayoutRectangle>())\n  const setLayout = useCallback((key: string, rect: LayoutRectangle | null) => {\n    setLayouts((previous) => {\n      const old = previous.get(key)\n      if (\n        rect\n          ? old && old.x === rect.x && old.y === rect.y && old.width === rect.width && old.height === rect.height\n          : !old\n      )\n        return previous\n      const next = new Map(previous)\n      if (rect) next.set(key, rect)\n      else next.delete(key)\n      return next\n    })\n  }, [])\n  const vertical = value.orientation === \"vertical\"\n  return (\n    <Provider value={value}>\n      <LayoutProvider value={{ layouts, setLayout }}>\n        <View\n          accessibilityRole=\"radiogroup\"\n          {...props}\n          style={[\n            {\n              position: \"relative\",\n              alignSelf: \"flex-start\",\n              flexDirection: vertical ? \"column\" : value.dir === \"rtl\" ? \"row-reverse\" : \"row\",\n              alignItems: vertical ? \"stretch\" : \"center\",\n              justifyContent: \"center\",\n              padding: tabs.padding,\n              minHeight: 32,\n              borderRadius: radius.lg,\n              backgroundColor: colors.muted,\n            },\n            style,\n          ]}\n        />\n      </LayoutProvider>\n    </Provider>\n  )\n}\nexport type SegmentGroupRootProps = ComponentPropsWithRef<typeof View> & UseSegmentGroupProps\nfunction SegmentGroupRoot({\n  value,\n  defaultValue,\n  onValueChange,\n  disabled,\n  readOnly,\n  orientation,\n  dir,\n  ...props\n}: SegmentGroupRootProps) {\n  const state = useSegmentGroup({ value, defaultValue, onValueChange, disabled, readOnly, orientation, dir })\n  return <SegmentGroupRootProvider {...props} value={state} />\n}\nexport type SegmentGroupContextProps = { children: (value: UseSegmentGroupReturn) => ReactNode }\nfunction SegmentGroupContext({ children }: SegmentGroupContextProps) {\n  return children(useSegmentGroupContext())\n}\nexport type SegmentGroupItemContextProps = {\n  children: (value: ReturnType<typeof useSegmentGroupItemContext>) => ReactNode\n}\nfunction SegmentGroupItemContext({ children }: SegmentGroupItemContextProps) {\n  return children(useSegmentGroupItemContext())\n}\nexport type SegmentGroupIndicatorProps = ComponentPropsWithRef<typeof View>\nfunction SegmentGroupIndicator({ style, ...props }: SegmentGroupIndicatorProps) {\n  const { value } = useSegmentGroupContext()\n  const { layouts } = useLayouts()\n  const { transition } = useMotion()\n  const { colors, colorScheme, radius } = useNativeTheme()\n  const rect = value === null ? undefined : layouts.get(value)\n  // Mount at the first measured position; never fly in from the origin.\n  if (!rect || rect.width <= 0 || rect.height <= 0) return null\n  return (\n    <AnimatedView\n      {...props}\n      pointerEvents=\"none\"\n      accessible={false}\n      style={[\n        transition([\"transform\", \"width\", \"height\", \"backgroundColor\", \"borderColor\"]),\n        {\n          position: \"absolute\",\n          top: 0,\n          left: 0,\n          transform: [{ translateX: rect.x }, { translateY: rect.y }],\n          width: rect.width,\n          height: rect.height,\n          borderRadius: radius.md,\n          borderWidth: 1,\n          borderColor: colorScheme === \"dark\" ? colors.input : \"transparent\",\n          backgroundColor: colorScheme === \"dark\" ? withOpacity(colors.input, 0.3) : colors.background,\n          boxShadow: [\n            { offsetX: 0, offsetY: 1, blurRadius: 3, color: \"rgba(0, 0, 0, 0.1)\" },\n            { offsetX: 0, offsetY: 1, blurRadius: 2, spreadDistance: -1, color: \"rgba(0, 0, 0, 0.1)\" },\n          ],\n        },\n        style,\n      ]}\n    />\n  )\n}\nexport type SegmentGroupItemProps = ComponentPropsWithRef<typeof Pressable> & {\n  value: string\n  textStyle?: StyleProp<TextStyle>\n}\nfunction SegmentGroupItem({\n  value,\n  disabled,\n  style,\n  textStyle,\n  children,\n  onLayout,\n  onPress,\n  onPressIn,\n  onPressOut,\n  onHoverIn,\n  onHoverOut,\n  onFocus,\n  onBlur,\n  accessibilityState,\n  ...props\n}: SegmentGroupItemProps) {\n  const group = useSegmentGroupContext()\n  const { setLayout } = useLayouts()\n  const { colors, radius, tabs } = useNativeTheme()\n  const { transition } = useMotion()\n  const [focused, setFocused] = useState(false)\n  const [hovered, setHovered] = useState(false)\n  const [pressed, setPressed] = useState(false)\n  const blocked = !!(disabled || group.disabled)\n  const checked = group.value === value\n  const vertical = group.orientation === \"vertical\"\n  const { fontScale } = useWindowDimensions()\n  const resolvedStyle = StyleSheet.flatten(typeof style === \"function\" ? style({ pressed }) : style)\n  const shadow = useShadowTransition(\n    resolvedStyle?.boxShadow ?? [\n      { offsetX: 0, offsetY: 0, spreadDistance: focused ? 3 : 0, color: withOpacity(colors.ring, focused ? 0.5 : 0) },\n    ]\n  )\n  useEffect(() => () => setLayout(value, null), [value, setLayout])\n  return (\n    <ItemProvider value={{ value, checked, disabled: blocked, focused, highlighted: hovered || pressed }}>\n      <AnimatedPressable\n        accessible\n        accessibilityRole=\"radio\"\n        hitSlop={vertical ? { left: 6, right: 6 } : { top: 9, bottom: 9 }}\n        {...props}\n        disabled={blocked || group.readOnly}\n        aria-checked={checked}\n        aria-disabled={blocked}\n        accessibilityState={{ ...accessibilityState, checked, disabled: blocked }}\n        onLayout={(event) => {\n          setLayout(value, event.nativeEvent.layout)\n          onLayout?.(event)\n        }}\n        onPress={(event) => {\n          if (blocked || group.readOnly) return\n          onPress?.(event)\n          if (!event.defaultPrevented) group.setValue(value)\n        }}\n        onPressIn={(event) => {\n          setPressed(true)\n          onPressIn?.(event)\n        }}\n        onPressOut={(event) => {\n          setPressed(false)\n          onPressOut?.(event)\n        }}\n        onHoverIn={(event) => {\n          setHovered(true)\n          onHoverIn?.(event)\n        }}\n        onHoverOut={(event) => {\n          setHovered(false)\n          onHoverOut?.(event)\n        }}\n        onFocus={(event) => {\n          setFocused(isFocusVisible(event))\n          onFocus?.(event)\n        }}\n        onBlur={(event) => {\n          setFocused(false)\n          onBlur?.(event)\n        }}\n        style={[\n          transition([\"borderColor\", \"opacity\"]),\n          {\n            minHeight: tabs.triggerHeight,\n            height: vertical ? undefined : tabs.triggerHeight * Math.max(1, fontScale),\n            flexGrow: 0,\n            flexBasis: \"auto\",\n            paddingHorizontal: 6,\n            paddingVertical: 2,\n            flexDirection: \"row\",\n            alignItems: \"center\",\n            justifyContent: vertical ? \"flex-start\" : \"center\",\n            gap: 6,\n            borderWidth: 1,\n            borderColor: focused ? colors.ring : \"transparent\",\n            borderRadius: radius.md,\n            zIndex: 1,\n            opacity: blocked ? 0.5 : 1,\n          },\n          resolvedStyle,\n          shadow,\n        ]}\n      >\n        {(state) =>\n          Children.map(typeof children === \"function\" ? children(state) : children, (child) =>\n            typeof child === \"string\" || typeof child === \"number\" ? (\n              <SegmentGroupItemText style={textStyle}>{child}</SegmentGroupItemText>\n            ) : (\n              child\n            )\n          )\n        }\n      </AnimatedPressable>\n    </ItemProvider>\n  )\n}\nexport type SegmentGroupItemTextProps = ComponentPropsWithRef<typeof Text>\nfunction SegmentGroupItemText({ style, ...props }: SegmentGroupItemTextProps) {\n  const item = useSegmentGroupItemContext()\n  const { colors, colorScheme, typography } = useNativeTheme()\n  const { transition } = useMotion()\n  return (\n    <AnimatedText\n      {...props}\n      style={[\n        transition(\"all\"),\n        {\n          ...typography.medium,\n          fontSize: 14,\n          lineHeight: 20,\n          color:\n            item.checked || item.highlighted\n              ? colors.foreground\n              : colorScheme === \"dark\"\n                ? colors.mutedForeground\n                : withOpacity(colors.foreground, 0.6),\n        },\n        style,\n      ]}\n    />\n  )\n}\nexport type SegmentGroupLabelProps = ComponentPropsWithRef<typeof Text>\nfunction SegmentGroupLabel({ style, ...props }: SegmentGroupLabelProps) {\n  const { colors, typography } = useNativeTheme()\n  return (\n    <Text\n      {...props}\n      style={[{ ...typography.medium, color: colors.mutedForeground, fontSize: 14, lineHeight: 14 }, style]}\n    />\n  )\n}\nexport const SegmentGroup = {\n  Root: SegmentGroupRoot,\n  RootProvider: SegmentGroupRootProvider,\n  Context: SegmentGroupContext,\n  Indicator: SegmentGroupIndicator,\n  Item: SegmentGroupItem,\n  ItemText: SegmentGroupItemText,\n  ItemContext: SegmentGroupItemContext,\n  Label: SegmentGroupLabel,\n}\n"
+    }
+  ],
+  "docs": "## How it works\n\nCompose `SegmentGroup.Root`, `Indicator`, and one `Item` per choice. The group selects one value; pressing the selected item keeps it selected. Use `value` / `defaultValue` and `onValueChange({ value })` for controlled or uncontrolled selection. A `null` value clears selection and hides the indicator.\n\nThe native control matches the web group's muted track, typography, padding, radii, and selected surface in both themes. The single indicator measures each item's layout and slides between those bounds with the shared 150ms curve. It mounts at its first measured position, follows changed item dimensions, and disappears if the selected item is removed. Reduced motion makes the transition immediate. Native font scaling is retained.\n\nSet `orientation=\"vertical\"` for a column, `dir=\"rtl\"` to reverse a horizontal group, and `disabled` or `readOnly` to block selection. Disabled Fieldsets also disable the group. Individual items can be disabled. Pass `accessibilityLabel` to Root to name the radio group; items expose their checked and disabled states.\n\n`useSegmentGroup`, `RootProvider`, `Context`, and `useSegmentGroupContext` expose `value`, `setValue`, and `clearValue`. `ItemText` supports composed labels; `ItemContext` and `useSegmentGroupItemContext` expose checked, disabled, focused, and highlighted state. Use explicit native icon colors and sizes when composing icon labels. `Label` is available for visible labels.\n\nKeep items as direct native children of Root (React fragments and context providers are fine), so their measured coordinates share the indicator's coordinate space. Use `style`, `textStyle`, and native press/focus handlers. There are no hidden DOM inputs, form serialization, `asChild`, or browser roving-tabindex APIs; selection is accessible through native radio semantics and touch/assistive-technology activation."
+}

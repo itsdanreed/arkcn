@@ -4,14 +4,25 @@ import tailwindcss from "@tailwindcss/vite"
 import react from "@vitejs/plugin-react"
 import { defineConfig } from "vite"
 
+// Expo's global shim contains only ambient declarations. Rolldown otherwise
+// retains its type imports as runtime exports when bundling Expo modules for web.
+const expoGlobalTypes = () => ({
+  name: "expo-global-types",
+  enforce: "pre" as const,
+  transform(_source: string, id: string) {
+    if (id.split("?")[0].endsWith("/expo-modules-core/src/ts-declarations/global.ts"))
+      return { code: "export {}", map: null }
+  },
+})
+
 // Docs site, served from multicomma.com/arkcn. Components come straight from ../packages/react/src.
 export default defineConfig(({ command }) => ({
-  define: { global: "globalThis", __DEV__: JSON.stringify(command === "serve") },
+  define: { global: "globalThis", __DEV__: JSON.stringify(command === "serve"), "process.env.EXPO_OS": '"web"' },
   root: __dirname,
   base: "/arkcn/",
-  plugins: [react(), tailwindcss()],
+  plugins: [expoGlobalTypes(), react(), tailwindcss()],
   resolve: {
-    dedupe: ["react", "react-dom"],
+    dedupe: ["react", "react-dom", "expo-modules-core"],
     extensions: [".web.tsx", ".web.ts", ".web.jsx", ".web.js", ".mjs", ".js", ".ts", ".tsx", ".json"],
     alias: {
       "@react-native/assets-registry/registry": "react-native-web/dist/modules/AssetRegistry",
@@ -31,9 +42,12 @@ export default defineConfig(({ command }) => ({
       ...(existsSync(path.resolve(__dirname, ".style-audit/reference.css")) ? ["shadcn-reference.html"] : []),
     ],
     rolldownOptions: {
+      plugins: [expoGlobalTypes()],
       resolve: { extensions: [".web.tsx", ".web.ts", ".web.jsx", ".web.js", ".mjs", ".js", ".ts", ".tsx", ".json"] },
     },
     include: [
+      "expo-clipboard",
+      "expo-modules-core",
       "react-day-picker",
       "input-otp",
       "recharts",

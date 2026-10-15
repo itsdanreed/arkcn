@@ -1,0 +1,535 @@
+{
+  "name": "pin-input",
+  "type": "ui",
+  "description": "Segmented native code entry, composed from the standard Input.",
+  "exports": [
+    "usePinInputContext",
+    "usePinInput",
+    "PinInput"
+  ],
+  "parts": [
+    {
+      "name": "PinInput.Root",
+      "props": [
+        {
+          "name": "blurOnComplete",
+          "type": "boolean",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "required": false,
+          "description": "Number of cells. Render one Input for each index from 0 to count - 1.",
+          "from": "arkcn"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string[]",
+          "required": false,
+          "description": "The initial value when uncontrolled.",
+          "from": "arkcn"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the destructive border and focus ring; provide an accessible error explanation.",
+          "from": "arkcn"
+        },
+        {
+          "name": "mask",
+          "type": "boolean",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: ValueDetails) => void)",
+          "required": false,
+          "description": "Called with the new value whenever it changes.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onValueComplete",
+          "type": "((details: ValueDetails) => void)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "onValueInvalid",
+          "type": "((details: { value: string; index: number; }) => void)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "otp",
+          "type": "boolean",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "Text shown while there is no value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Shows the value but prevents changes.",
+          "from": "arkcn"
+        },
+        {
+          "name": "type",
+          "type": "PinType",
+          "required": false,
+          "description": "Type of the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "string[]",
+          "required": false,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "PinInput.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "{ value: string[]; valueAsString: string; count: number; type: PinType; disabled: boolean; readOnly: boolean; invalid: boolean; otp: boolean; mask: boolean; …",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "PinInput.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(state: { value: string[]; valueAsString: string; count: number; type: PinType; disabled: boolean; readOnly: boolean; invalid: boolean; otp: boolean; mask: b…",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "PinInput.Control",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "PinInput.Input",
+      "props": [
+        {
+          "name": "index",
+          "type": "number",
+          "required": true,
+          "description": "Position of the item in its list.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "editable",
+          "type": "boolean",
+          "required": false,
+          "description": "If `false`, text is not editable. The default value is `true`.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "keyboardType",
+          "type": "KeyboardTypeOptions",
+          "required": false,
+          "description": "Determines which keyboard to open, e.g.`numeric`.\n\nThe following values work across platforms:\n\n- `default`\n- `numeric`\n- `number-pad`\n- `decimal-pad`\n- `email-address`\n- `phone-pad`\n- `url`\n\n*iOS Only*\n\nThe following values work on iOS only:\n\n- `ascii-capable`\n- `numbers-and-punctuation`\n- `name-phone-pad`\n- `twitter`\n- `web-search`\n\n*Android Only*\n\nThe following values work on Android only:\n\n- `visible-password`",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "description": "Sets the number of lines for a `TextInput`. Use it with multiline set to\n`true` to be able to fill the lines.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((e: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | undefi…",
+          "required": false,
+          "description": "Callback that is called when the text input is blurred.",
+          "from": "react-native"
+        },
+        {
+          "name": "onChangeText",
+          "type": "((text: string) => unknown)",
+          "required": false,
+          "description": "Callback that is called when the text input's text changes.\nChanged text is passed as an argument to the callback handler.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((e: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | undefi…",
+          "required": false,
+          "description": "Callback that is called when the text input is focused.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called when a single tap gesture is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "The string that will be rendered before text input has been entered.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Note that not all Text styles are supported, an incomplete list of what is not supported includes:\n\n- `borderLeftWidth`\n- `borderTopWidth`\n- `borderRightWidth`\n- `borderBottomWidth`\n- `borderTopLeftRadius`\n- `borderTopRightRadius`\n- `borderBottomRightRadius`\n- `borderBottomLeftRadius`\n\nsee [Issue#7070](https://github.com/facebook/react-native/issues/7070)\nfor more detail.\n\n[Styles](docs/style.html)",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "PinInput.Label",
+      "props": [
+        {
+          "name": "controlRef",
+          "type": "RefObject<{ focus: () => void; } | null>",
+          "required": false,
+          "description": "Input to focus when the label is pressed. Use onPress for selection controls.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.\nPrevents activation and dims the label.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "fieldset",
+    "input",
+    "label",
+    "lib/context",
+    "lib/controllable"
+  ],
+  "files": [
+    {
+      "path": "components/ui/pin-input.tsx",
+      "content": "/** Segmented native code entry, composed from the standard Input. */\nimport { useEffect, useRef, useState, type ComponentPropsWithRef, type ComponentRef, type ReactNode } from \"react\"\nimport { I18nManager, TextInput, View } from \"react-native\"\nimport { useControllable } from \"@/lib/controllable\"\nimport { createRequiredContext } from \"@/lib/context\"\nimport { Input, type InputRootProps } from \"@/components/ui/input\"\nimport { Label, type LabelRootProps } from \"@/components/ui/label\"\nimport { useFieldsetContext } from \"@/components/ui/fieldset\"\n\ntype ValueDetails = { value: string[]; valueAsString: string }\ntype PinType = \"numeric\" | \"alphabetic\" | \"alphanumeric\"\nexport type UsePinInputProps = {\n  /** Number of cells. Render one Input for each index from 0 to count - 1. */\n  count?: number\n  value?: string[]\n  defaultValue?: string[]\n  onValueChange?: (details: ValueDetails) => void\n  onValueComplete?: (details: ValueDetails) => void\n  onValueInvalid?: (details: { value: string; index: number }) => void\n  type?: PinType\n  disabled?: boolean\n  readOnly?: boolean\n  invalid?: boolean\n  otp?: boolean\n  mask?: boolean\n  placeholder?: string\n  blurOnComplete?: boolean\n}\nconst pattern = { numeric: /^[0-9]$/, alphabetic: /^[a-z]$/i, alphanumeric: /^[a-z0-9]$/i }\n\nexport function usePinInput({\n  count: requestedCount = 6,\n  value: controlled,\n  defaultValue = [],\n  onValueChange,\n  onValueComplete,\n  onValueInvalid,\n  type = \"numeric\",\n  disabled = false,\n  readOnly = false,\n  invalid = false,\n  otp = false,\n  mask = false,\n  placeholder = \"○\",\n  blurOnComplete = false,\n}: UsePinInputProps = {}) {\n  const count = Number.isFinite(requestedCount) ? Math.max(1, Math.trunc(requestedCount)) : 6\n  const [raw, update] = useControllable(controlled, defaultValue, (value) =>\n    onValueChange?.({ value, valueAsString: value.join(\"\") })\n  )\n  const value = Array.from({ length: count }, (_, index) => Array.from(raw[index] ?? \"\")[0] ?? \"\")\n  const inputs = useRef(new Map<number, ComponentRef<typeof TextInput>>())\n  const frame = useRef<ReturnType<typeof requestAnimationFrame> | undefined>(undefined)\n  const [label, setLabel] = useState(\"\")\n  const blocked = disabled || readOnly\n  useEffect(\n    () => () => {\n      if (frame.current !== undefined) cancelAnimationFrame(frame.current)\n    },\n    []\n  )\n  const focus = (index = 0) => {\n    if (blocked) return\n    if (frame.current !== undefined) cancelAnimationFrame(frame.current)\n    const target = Math.min(count - 1, Math.max(0, index))\n    inputs.current.get(target)?.focus()\n    frame.current = requestAnimationFrame(() => inputs.current.get(target)?.setSelection(0, 1))\n  }\n  const write = (next: string[]) => {\n    if (blocked || next.every((cell, index) => cell === value[index])) return\n    update(next)\n    if (next.every((cell) => pattern[type].test(cell))) {\n      onValueComplete?.({ value: next, valueAsString: next.join(\"\") })\n      if (blurOnComplete) inputs.current.forEach((input) => input.blur())\n    }\n  }\n  const change = (index: number, text: string) => {\n    if (blocked || index < 0 || index >= count) return\n    // Formatted codes may contain spaces or dashes. Reject other characters\n    // instead of silently accepting an incorrect verification code.\n    const characters = Array.from(text.replace(/[\\s-]/g, \"\"))\n    if (characters.some((character) => !pattern[type].test(character))) {\n      onValueInvalid?.({ value: text, index })\n      return\n    }\n    const next = [...value]\n    if (!characters.length) {\n      next[index] = \"\"\n      write(next)\n      focus(index - 1)\n      return\n    }\n    // OS one-time-code autofill can target whichever cell currently has focus.\n    const start = characters.length >= count ? 0 : index\n    characters.slice(0, count - start).forEach((character, offset) => {\n      next[start + offset] = character\n    })\n    write(next)\n    if (!(blurOnComplete && next.every(Boolean))) focus(Math.min(start + characters.length, count - 1))\n  }\n  return {\n    value,\n    valueAsString: value.join(\"\"),\n    count,\n    type,\n    disabled,\n    readOnly,\n    invalid,\n    otp,\n    mask,\n    placeholder,\n    complete: value.every((cell) => pattern[type].test(cell)),\n    label,\n    setLabel,\n    inputs,\n    focus,\n    change,\n    clearValue: () => write(Array(count).fill(\"\")),\n    setValue: (next: string[]) =>\n      write(Array.from({ length: count }, (_, index) => Array.from(next[index] ?? \"\")[0] ?? \"\")),\n    backspace: (index: number) => {\n      if (blocked || value[index]) return\n      const previous = Math.max(0, index - 1)\n      const next = [...value]\n      next[previous] = \"\"\n      write(next)\n      focus(previous)\n    },\n  }\n}\nexport type UsePinInputReturn = ReturnType<typeof usePinInput>\nconst [Provider, usePinInputContext] = createRequiredContext<UsePinInputReturn>(\"PinInput\")\nexport { usePinInputContext }\nexport type PinInputRootProps = ComponentPropsWithRef<typeof View> & UsePinInputProps\nfunction PinInputRoot({\n  count,\n  value,\n  defaultValue,\n  onValueChange,\n  onValueComplete,\n  onValueInvalid,\n  type,\n  disabled,\n  readOnly,\n  invalid,\n  otp,\n  mask,\n  placeholder,\n  blurOnComplete,\n  ...props\n}: PinInputRootProps) {\n  const parent = useFieldsetContext()\n  const state = usePinInput({\n    count,\n    value,\n    defaultValue,\n    onValueChange,\n    onValueComplete,\n    onValueInvalid,\n    type,\n    disabled: disabled || parent.disabled,\n    readOnly,\n    invalid: invalid || parent.invalid,\n    otp,\n    mask,\n    placeholder,\n    blurOnComplete,\n  })\n  return <PinInputRootProvider {...props} value={state} />\n}\nexport type PinInputRootProviderProps = ComponentPropsWithRef<typeof View> & { value: UsePinInputReturn }\nfunction PinInputRootProvider({ value, style, ...props }: PinInputRootProviderProps) {\n  return (\n    <Provider value={value}>\n      <View {...props} style={[{ gap: 6 }, style]} />\n    </Provider>\n  )\n}\nexport type PinInputContextProps = { children: (state: UsePinInputReturn) => ReactNode }\nfunction PinInputContext({ children }: PinInputContextProps) {\n  return children(usePinInputContext())\n}\nexport type PinInputControlProps = ComponentPropsWithRef<typeof View>\nfunction PinInputControl({ style, ...props }: PinInputControlProps) {\n  return <View {...props} style={[{ flexDirection: \"row\", gap: 8 }, style]} />\n}\nexport type PinInputLabelProps = LabelRootProps\nfunction PinInputLabel({ children, onPress, ...props }: PinInputLabelProps) {\n  const state = usePinInputContext()\n  const { setLabel } = state\n  useEffect(() => {\n    if (typeof children === \"string\") setLabel(children)\n  }, [children, setLabel])\n  return (\n    <Label.Root\n      {...props}\n      disabled={state.disabled}\n      onPress={(event) => {\n        onPress?.(event)\n        if (!event.defaultPrevented) state.focus()\n      }}\n    >\n      {children}\n    </Label.Root>\n  )\n}\nexport type PinInputInputProps = Omit<\n  InputRootProps,\n  \"value\" | \"defaultValue\" | \"disabled\" | \"invalid\" | \"multiline\" | \"secureTextEntry\" | \"maxLength\"\n> & { index: number }\nfunction PinInputInput({\n  index,\n  ref,\n  style,\n  onChangeText,\n  onKeyPress,\n  onFocus,\n  editable,\n  accessibilityLabel,\n  ...props\n}: PinInputInputProps) {\n  const state = usePinInputContext()\n  if (!Number.isInteger(index) || index < 0 || index >= state.count)\n    throw new Error(\"PinInput.Input index must be within Root's count\")\n  return (\n    <Input.Root\n      autoCorrect={false}\n      autoCapitalize=\"none\"\n      keyboardType={state.type === \"numeric\" ? \"number-pad\" : \"default\"}\n      autoComplete={state.otp ? \"one-time-code\" : \"off\"}\n      textContentType={state.otp ? \"oneTimeCode\" : \"none\"}\n      selectTextOnFocus\n      caretHidden\n      placeholder={state.placeholder}\n      accessibilityLabel={accessibilityLabel ?? `${state.label || \"Code\"}, character ${index + 1} of ${state.count}`}\n      accessibilityHint={state.invalid ? \"Invalid code\" : undefined}\n      {...props}\n      ref={(node) => {\n        if (node) state.inputs.current.set(index, node)\n        else state.inputs.current.delete(index)\n        if (typeof ref === \"function\") return ref(node)\n        if (ref) ref.current = node\n      }}\n      value={state.value[index]}\n      disabled={state.disabled}\n      invalid={state.invalid}\n      editable={!state.readOnly && editable !== false}\n      secureTextEntry={state.mask}\n      maxLength={Math.max(state.count, 32)}\n      onChangeText={(text) => {\n        state.change(index, text)\n        onChangeText?.(text)\n      }}\n      onFocus={(event) => {\n        state.focus(index)\n        onFocus?.(event)\n      }}\n      onKeyPress={(event) => {\n        onKeyPress?.(event)\n        if (event.defaultPrevented) return\n        const key = event.nativeEvent.key\n        if (key === \"Backspace\" && !state.value[index]) {\n          event.preventDefault()\n          state.backspace(index)\n        }\n        if (key === \"ArrowLeft\" || key === \"ArrowRight\") {\n          event.preventDefault()\n          state.focus(index + ((key === \"ArrowRight\") !== I18nManager.isRTL ? 1 : -1))\n        }\n      }}\n      style={[{ width: 32, paddingHorizontal: 0, textAlign: \"center\" }, style]}\n    />\n  )\n}\n/** Native forms consume value/onValueChange directly; no DOM HiddenInput is needed. */\nexport const PinInput = {\n  Root: PinInputRoot,\n  RootProvider: PinInputRootProvider,\n  Context: PinInputContext,\n  Control: PinInputControl,\n  Input: PinInputInput,\n  Label: PinInputLabel,\n}\n"
+    }
+  ],
+  "docs": "## How it works\n\nCompose `PinInput.Root`, `Label`, `Control`, and one `Input index={index}` for each cell. `count` defaults to six; set it explicitly for other lengths. Cells use the standard native Input's 32px height, 14px typography, focus ring, validation colors, disabled treatment, and reduced-motion transitions. The control keeps the web component's 8px spacing and empty-circle placeholders.\n\nUse `value`/`defaultValue` as a string array. `onValueChange` and `onValueComplete` receive `{ value, valueAsString }`. `PinInput.Context` exposes the current value, completion state, `clearValue()`, `setValue()`, and `focus(index)`. `usePinInput` with `RootProvider` supports externally owned state. Native forms consume these values directly; there is no DOM HiddenInput.\n\nEntry advances focus. Deleting a filled cell clears it and moves back; deleting an empty cell clears the previous cell. Focusing a cell selects its character for replacement. Paste distributes characters from the selected cell; a full-length code fills from the beginning, including when an OS autofill suggestion targets a later cell. Spaces and dashes in formatted codes are ignored. Other invalid characters are rejected through `onValueInvalid`. The default `type` is numeric; alphabetic and alphanumeric codes are also supported.\n\n`otp` enables the native one-time-code autofill hints. Availability depends on the operating system and incoming message format; simulator typing/paste checks do not establish real SMS delivery. `mask` uses native secure text entry; do not toggle it while editing. `blurOnComplete` optionally dismisses the keyboard. `disabled`, `readOnly`, and `invalid` apply across the cells, and Root inherits disabled/invalid state from Fieldset.\n\nA plain-text Label supplies each cell's accessible name and position. Supply `accessibilityLabel` on each Input for rich labels or localized position wording. Keyboard arrow navigation follows layout direction. Keep the complete code within the available width; longer codes can use a caller-provided layout or smaller spacing."
+}

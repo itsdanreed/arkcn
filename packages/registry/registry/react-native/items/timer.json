@@ -1,0 +1,637 @@
+{
+  "name": "timer",
+  "type": "ui",
+  "description": "Countdown and elapsed-time display with native lifecycle handling and the web Timer's controls.",
+  "exports": [
+    "useTimerContext",
+    "useTimer",
+    "Timer"
+  ],
+  "parts": [
+    {
+      "name": "Timer.Root",
+      "props": [
+        {
+          "name": "autoStart",
+          "type": "boolean",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "countdown",
+          "type": "boolean",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "interval",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "onComplete",
+          "type": "(() => void)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "onTick",
+          "type": "((details: TimerTickDetails) => void)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "startMs",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "targetMs",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "translations",
+          "type": "{ areaLabel?: ((time: TimerTime, formattedTime: TimerFormattedTime) => string) | undefined; }",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Timer.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "{ running: boolean; paused: boolean; progressPercent: number; start: () => void; pause: () => void; resume: () => void; reset: () => void; restart: () => voi…",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Timer.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(api: { running: boolean; paused: boolean; progressPercent: number; start: () => void; pause: () => void; resume: () => void; reset: () => void; restart: () …",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "Timer.Area",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Timer.Item",
+      "props": [
+        {
+          "name": "type",
+          "type": "keyof TimerTime",
+          "required": true,
+          "description": "Type of the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Timer.Separator",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Timer.Control",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Timer.ActionTrigger",
+      "props": [
+        {
+          "name": "action",
+          "type": "TimerAction",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "backgroundClip",
+          "type": "\"border-box\" | \"padding-box\"",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Displays the validation border and ring.",
+          "from": "arkcn"
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "required": false,
+          "description": "Shows a loading state.",
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\"",
+          "required": false,
+          "description": "Visible control size, matching the web renderer. Native touch areas extend beyond it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Native text styles for a plain button label.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"destructive\" | \"link\"",
+          "required": false,
+          "description": "Visual variant, using the same semantic colors as the web renderer.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode | ((state: Readonly<{ pressed: boolean; }>) => ReactNode)",
+          "required": false,
+          "description": "Either children or a function that receives a boolean reflecting whether\nthe component is currently pressed.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "button",
+    "lib/context",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/timer.tsx",
+      "content": "/** Countdown and elapsed-time display with native lifecycle handling and the web Timer's controls. */\nimport { useEffect, useRef, useState, type ComponentPropsWithRef, type ReactNode } from \"react\"\nimport { AppState, Platform, Text, View } from \"react-native\"\nimport { createRequiredContext } from \"@/lib/context\"\nimport { useNativeTheme } from \"@/lib/theme\"\nimport { Button, type ButtonProps } from \"@/components/ui/button\"\n\nexport type TimerTime = { days: number; hours: number; minutes: number; seconds: number; milliseconds: number }\nexport type TimerFormattedTime = { [K in keyof TimerTime]: string }\nexport type TimerAction = \"start\" | \"pause\" | \"resume\" | \"reset\" | \"restart\"\nexport type TimerTickDetails = { value: number; time: TimerTime; formattedTime: TimerFormattedTime }\nexport type UseTimerProps = {\n  startMs?: number\n  targetMs?: number\n  countdown?: boolean\n  autoStart?: boolean\n  interval?: number\n  onTick?: (details: TimerTickDetails) => void\n  onComplete?: () => void\n  translations?: { areaLabel?: (time: TimerTime, formattedTime: TimerFormattedTime) => string }\n}\nfunction parts(value: number) {\n  const ms = Math.max(0, Math.floor(value))\n  const time: TimerTime = {\n    days: Math.floor(ms / 86400000),\n    hours: Math.floor(ms / 3600000) % 24,\n    minutes: Math.floor(ms / 60000) % 60,\n    seconds: Math.floor(ms / 1000) % 60,\n    milliseconds: ms % 1000,\n  }\n  const formattedTime = Object.fromEntries(\n    Object.entries(time).map(([key, value]) => [key, String(value).padStart(key === \"milliseconds\" ? 3 : 2, \"0\")])\n  ) as TimerFormattedTime\n  return { value, time, formattedTime }\n}\ntype Mode = \"idle\" | \"running\" | \"paused\"\nexport function useTimer({\n  startMs = 0,\n  targetMs,\n  countdown = false,\n  autoStart = false,\n  interval = 1000,\n  ...options\n}: UseTimerProps = {}) {\n  if (\n    !Number.isFinite(startMs) ||\n    startMs < 0 ||\n    (targetMs !== undefined && (!Number.isFinite(targetMs) || targetMs < 0))\n  )\n    throw new RangeError(\"Timer values must be finite, non-negative milliseconds\")\n  if (!Number.isFinite(interval) || interval <= 0) throw new RangeError(\"Timer interval must be positive\")\n  const target = targetMs ?? (countdown ? 0 : undefined)\n  if (target !== undefined && (countdown ? target > startMs : target < startMs))\n    throw new RangeError(\"Timer target must be in the counting direction\")\n  const [state, setState] = useState({ mode: autoStart ? (\"running\" as Mode) : (\"idle\" as Mode), value: startMs })\n  const current = useRef({ ...state, base: startMs, since: Date.now() })\n  const mounted = useRef(false)\n  const latest = useRef({ startMs, target, countdown, interval, ...options })\n  latest.current = { startMs, target, countdown, interval, ...options }\n  const commit = (mode: Mode, value: number) => {\n    current.current.mode = mode\n    current.current.value = value\n    if (mounted.current) setState({ mode, value })\n  }\n  const tick = (exact = false) => {\n    const c = current.current\n    if (!mounted.current || c.mode !== \"running\") return\n    const p = latest.current\n    const elapsed = Math.max(0, Date.now() - c.since)\n    const delta = exact ? elapsed : Math.floor(elapsed / p.interval) * p.interval\n    const measured = c.base + (p.countdown ? -delta : delta)\n    // A changed display interval must not move the timer backwards.\n    const next = p.countdown ? Math.min(c.value, measured) : Math.max(c.value, measured)\n    const reached = p.target !== undefined && (p.countdown ? next <= p.target : next >= p.target)\n    const value = reached ? p.target! : Math.max(0, next)\n    const changed = value !== c.value\n    // Commit before callbacks so completion cannot fire twice or undo a callback's restart.\n    commit(reached ? \"idle\" : \"running\", value)\n    if (changed) p.onTick?.(parts(value))\n    if (reached) p.onComplete?.()\n  }\n  const begin = (value: number) => {\n    if (!mounted.current) return\n    current.current.base = value\n    current.current.since = Date.now()\n    commit(\"running\", value)\n    tick()\n  }\n  const start = () => {\n    if (current.current.mode === \"idle\") begin(current.current.value)\n  }\n  const resume = () => {\n    if (current.current.mode === \"paused\") begin(current.current.value)\n  }\n  const pause = () => {\n    if (!mounted.current || current.current.mode !== \"running\") return\n    tick(true)\n    if (current.current.mode === \"running\") commit(\"paused\", current.current.value)\n  }\n  const reset = () => {\n    if (!mounted.current) return\n    if (current.current.mode === \"running\") begin(latest.current.startMs)\n    else commit(\"idle\", latest.current.startMs)\n  }\n  const restart = () => begin(latest.current.startMs)\n  const actions = useRef({ tick, restart })\n  actions.current = { tick, restart }\n  useEffect(() => {\n    mounted.current = true\n    return () => {\n      mounted.current = false\n    }\n  }, [])\n  const previous = useRef({ startMs, target, countdown })\n  useEffect(() => {\n    const old = previous.current\n    previous.current = { startMs, target, countdown }\n    if (old.startMs !== startMs || old.target !== target || old.countdown !== countdown) actions.current.restart()\n  }, [startMs, target, countdown])\n  useEffect(() => {\n    if (state.mode !== \"running\") return\n    const update = () => actions.current.tick()\n    const id = setInterval(update, interval)\n    const subscription = AppState.addEventListener(\"change\", (next) => {\n      if (next === \"active\") update()\n    })\n    update()\n    return () => {\n      clearInterval(id)\n      subscription.remove()\n    }\n  }, [state.mode, interval])\n  const details = parts(state.value)\n  const range = target === undefined ? 0 : Math.abs(startMs - target)\n  const progressPercent =\n    range === 0\n      ? 0\n      : Math.min(1, Math.max(0, countdown ? (state.value - target!) / range : (state.value - startMs) / range))\n  return {\n    ...details,\n    running: state.mode === \"running\",\n    paused: state.mode === \"paused\",\n    progressPercent,\n    start,\n    pause,\n    resume,\n    reset,\n    restart,\n    translations: options.translations,\n  }\n}\nexport type TimerApi = ReturnType<typeof useTimer>\nconst [Provider, useTimerContext] = createRequiredContext<TimerApi>(\"Timer\")\nexport { useTimerContext }\nexport type TimerRootProps = ComponentPropsWithRef<typeof View> & UseTimerProps\nfunction Root({\n  startMs,\n  targetMs,\n  countdown,\n  autoStart,\n  interval,\n  onTick,\n  onComplete,\n  translations,\n  ...props\n}: TimerRootProps) {\n  const api = useTimer({ startMs, targetMs, countdown, autoStart, interval, onTick, onComplete, translations })\n  return <RootProvider {...props} value={api} />\n}\nexport type TimerRootProviderProps = ComponentPropsWithRef<typeof View> & { value: TimerApi }\nfunction RootProvider({ value, style, ...props }: TimerRootProviderProps) {\n  return (\n    <Provider value={value}>\n      <View {...props} style={[{ alignItems: \"center\", gap: 12 }, style]} />\n    </Provider>\n  )\n}\nexport type TimerContextProps = { children: (api: TimerApi) => ReactNode }\nfunction Context({ children }: TimerContextProps) {\n  return children(useTimerContext())\n}\nconst mono =\n  Platform.OS === \"web\"\n    ? 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace'\n    : Platform.OS === \"ios\"\n      ? \"Menlo\"\n      : \"monospace\"\nconst digitStyle = {\n  fontFamily: mono,\n  fontSize: 24,\n  lineHeight: 32,\n  fontWeight: \"500\" as const,\n  fontVariant: [\"tabular-nums\" as const],\n  includeFontPadding: false,\n}\nexport type TimerAreaProps = ComponentPropsWithRef<typeof View>\nfunction Area({ style, ...props }: TimerAreaProps) {\n  const api = useTimerContext()\n  const label =\n    api.translations?.areaLabel?.(api.time, api.formattedTime) ??\n    `${api.time.days} days ${api.formattedTime.hours}:${api.formattedTime.minutes}:${api.formattedTime.seconds}`\n  return (\n    <View\n      accessible\n      role=\"timer\"\n      accessibilityLabel={label}\n      accessibilityLiveRegion=\"none\"\n      {...props}\n      style={[{ flexDirection: \"row\", alignItems: \"center\", gap: 4 }, style]}\n    />\n  )\n}\nexport type TimerItemProps = ComponentPropsWithRef<typeof Text> & { type: keyof TimerTime }\nfunction Item({ type, children, style, ...props }: TimerItemProps) {\n  const api = useTimerContext()\n  const { colors, radius } = useNativeTheme()\n  return (\n    <Text\n      accessible={false}\n      {...props}\n      style={[\n        digitStyle,\n        {\n          minWidth: 40,\n          textAlign: \"center\",\n          borderRadius: radius.lg,\n          overflow: \"hidden\",\n          paddingHorizontal: 8,\n          paddingVertical: 4,\n          backgroundColor: colors.muted,\n          color: colors.foreground,\n        },\n        style,\n      ]}\n    >\n      {children ?? api.formattedTime[type]}\n    </Text>\n  )\n}\nexport type TimerSeparatorProps = ComponentPropsWithRef<typeof Text>\nfunction Separator({ children, style, ...props }: TimerSeparatorProps) {\n  const { colors } = useNativeTheme()\n  return (\n    <Text\n      accessible={false}\n      accessibilityElementsHidden\n      importantForAccessibility=\"no\"\n      {...props}\n      style={[digitStyle, { color: colors.mutedForeground }, style]}\n    >\n      {children ?? \":\"}\n    </Text>\n  )\n}\nexport type TimerControlProps = ComponentPropsWithRef<typeof View>\nfunction Control({ style, ...props }: TimerControlProps) {\n  return <View {...props} style={[{ flexDirection: \"row\", alignItems: \"center\", gap: 8 }, style]} />\n}\nexport type TimerActionTriggerProps = ButtonProps & { action: TimerAction }\nfunction ActionTrigger({ action, children, onPress, ...props }: TimerActionTriggerProps) {\n  const api = useTimerContext()\n  const hidden =\n    action === \"start\"\n      ? api.running || api.paused\n      : action === \"pause\"\n        ? !api.running\n        : action === \"resume\"\n          ? !api.paused\n          : action === \"reset\"\n            ? !api.running && !api.paused\n            : false\n  if (hidden) return null\n  return (\n    <Button\n      variant=\"outline\"\n      size=\"sm\"\n      {...props}\n      onPress={(event) => {\n        onPress?.(event)\n        if (!event.defaultPrevented) api[action]()\n      }}\n    >\n      {children ?? action[0].toUpperCase() + action.slice(1)}\n    </Button>\n  )\n}\nexport const Timer = { Root, RootProvider, Context, Area, Item, Separator, Control, ActionTrigger }\n"
+    }
+  ],
+  "docs": "## How it works\n\nTimer renders the same muted number blocks, monospace typography, spacing, and standard Button controls as the web component. It supports count-up and countdown modes, `startMs`, `targetMs`, `autoStart`, `interval`, `onTick`, and `onComplete`.\n\n`useTimer` exposes `value`, `time`, `formattedTime`, `running`, `paused`, `progressPercent`, and `start`, `pause`, `resume`, `reset`, and `restart`. Use `RootProvider` with this API or `Root` for internal state. `Context` provides render access. `progressPercent` is a fraction from 0 to 1, decreasing for countdowns. An unbounded count-up has no progress target.\n\n`Item type` accepts `days`, `hours`, `minutes`, `seconds`, or `milliseconds`. Days/hours/minutes/seconds are padded to two digits; milliseconds use three. `Area` exposes one accessible timer label, customizable through `translations.areaLabel`; it does not announce every tick. `Separator` is decorative.\n\n`ActionTrigger` hides actions that do not apply: Start while running/paused, Pause while stopped, Resume unless paused, and Reset while idle. Restart is always available. It takes native Button props directly, including `variant`, `size`, `disabled`, and `onPress`; no `asChild` is needed. Reset while running restarts the interval from `startMs` and keeps running, matching web. Reset while paused returns to idle. Changing start, target, or counting direction restarts the timer.\n\nElapsed time comes from a wall-clock anchor, so delayed JavaScript callbacks do not accumulate drift. A foreground lifecycle event catches up after suspension and reports completion once. Pausing captures the exact elapsed duration between display ticks. Completion is reported at the first update that reaches the target, including the final clamped `onTick`. This is a display timer, not a background alarm: callbacks are not guaranteed while the app is suspended, and state is not persisted after termination.\n\nBoth themes use shared tokens. Digits swap directly, matching the web component; Button feedback follows the reduced-motion preference. Native platform monospace fonts are used. Screen-reader behavior and Android visuals still need device verification."
+}

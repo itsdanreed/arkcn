@@ -37,6 +37,10 @@ for (const framework of ["react", "react-native"]) {
   const index = await registry.index()
   assert(index.items.length > 0)
   if (framework === "react-native") {
+    const format = index.items.find((item) => item.name === "format")
+    for (const dependency of ["@formatjs/intl-pluralrules", "@formatjs/intl-relativetimeformat"]) {
+      assert(format.dependencies.includes(dependency), `format registry includes side-effect dependency ${dependency}`)
+    }
     for (const [name, namespace, hook] of [
       ["toggle", "Toggle", "useToggle"],
       ["toggle-group", "ToggleGroup", "useToggleGroup"],
@@ -98,7 +102,8 @@ try {
   const run = (...args) => execFileSync(process.execPath, [bin, ...args], { cwd: temp, encoding: "utf8" })
   assert.match(run("list", "dialog"), /dialog/)
   assert.match(run("list", "button", "--framework", "react-native"), /lib\/theme/)
-  assert.doesNotMatch(run("list", "--framework", "react-native"), /dialog|@ark-ui/)
+  assert.match(run("list", "--framework", "react-native"), /alert-dialog/)
+  assert.doesNotMatch(run("list", "--framework", "react-native"), /@ark-ui/)
 
   // Only MCP's declared external dependencies are made available to this isolated package tree.
   for (const name of ["@modelcontextprotocol/sdk", "zod"]) {

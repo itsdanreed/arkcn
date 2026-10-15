@@ -2230,6 +2230,7 @@
         "lib/controllable",
         "lib/formula",
         "lib/history",
+        "lib/spreadsheet-layout",
         "lib/utils",
         "live-region"
       ],
@@ -2765,6 +2766,21 @@
       ],
       "files": [
         "lib/row-layout.ts"
+      ],
+      "css": false
+    },
+    {
+      "name": "lib/spreadsheet-layout",
+      "type": "lib",
+      "description": "Prefix offsets keep variable-height row virtualization and frozen panes consistent.",
+      "exports": [
+        "rowMetrics",
+        "rowAtOffset"
+      ],
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [
+        "lib/spreadsheet-layout.ts"
       ],
       "css": false
     },

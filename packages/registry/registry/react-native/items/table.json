@@ -1,0 +1,654 @@
+{
+  "name": "table",
+  "type": "ui",
+  "description": "Native tables with shared column sizing and the audited web table styling.",
+  "exports": [
+    "Table"
+  ],
+  "parts": [
+    {
+      "name": "Table.Root",
+      "props": [
+        {
+          "name": "columnWidths",
+          "type": "readonly number[]",
+          "required": false,
+          "description": "Fixed logical-pixel widths, useful for custom cell content. Otherwise text is measured across all rows.",
+          "from": "arkcn"
+        },
+        {
+          "name": "minWidth",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "description": "Minimum table width; narrow viewports scroll horizontally.",
+          "from": "arkcn"
+        },
+        {
+          "name": "scrollViewProps",
+          "type": "Omit<Omit<ScrollViewProps, \"ref\"> & { ref?: Ref<ScrollViewInstance> | undefined; }, \"children\" | \"horizontal\">",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Table.Header",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Table.Body",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Table.Footer",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Table.Row",
+      "props": [
+        {
+          "name": "expanded",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "from": "arkcn"
+        },
+        {
+          "name": "selected",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Whether the part is selected; sets `data-selected`.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Table.Head",
+      "props": [
+        {
+          "name": "align",
+          "type": "\"end\" | \"start\" | \"center\"",
+          "required": false,
+          "description": "Alignment along the side.",
+          "from": "arkcn"
+        },
+        {
+          "name": "checkbox",
+          "type": "boolean",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "colSpan",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Native text styles for a plain button label.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Table.Cell",
+      "props": [
+        {
+          "name": "align",
+          "type": "\"end\" | \"start\" | \"center\"",
+          "required": false,
+          "description": "Alignment along the side.",
+          "from": "arkcn"
+        },
+        {
+          "name": "checkbox",
+          "type": "boolean",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "colSpan",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Native text styles for a plain button label.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Table.Caption",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "lib/motion",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/table.tsx",
+      "content": "/** Native tables with shared column sizing and the audited web table styling. */\nimport {\n  Children,\n  Fragment,\n  createContext,\n  isValidElement,\n  useContext,\n  useState,\n  type ComponentPropsWithRef,\n  type ReactNode,\n} from \"react\"\nimport { ScrollView, Text, View, type StyleProp, type TextStyle } from \"react-native\"\nimport { AnimatedView, useMotion } from \"@/lib/motion\"\nimport { useNativeTheme, withOpacity } from \"@/lib/theme\"\n\ntype ViewProps = ComponentPropsWithRef<typeof View>\ntype CellProps = ViewProps & {\n  colSpan?: number\n  align?: \"start\" | \"center\" | \"end\"\n  textStyle?: StyleProp<TextStyle>\n  checkbox?: boolean\n}\nconst Layout = createContext<readonly number[]>([])\nconst Section = createContext({ footer: false })\nconst Position = createContext({ column: 0, last: false })\nfunction parts(children: ReactNode): ReactNode[] {\n  return Children.toArray(children).flatMap((child) =>\n    isValidElement<{ children?: ReactNode }>(child) && child.type === Fragment ? parts(child.props.children) : [child]\n  )\n}\nfunction plain(children: ReactNode): string {\n  return Children.toArray(children)\n    .map((child) =>\n      typeof child === \"string\" || typeof child === \"number\"\n        ? String(child)\n        : isValidElement<{ children?: ReactNode }>(child)\n          ? plain(child.props.children)\n          : \"\"\n    )\n    .join(\"\")\n}\nfunction measurements(\n  children: ReactNode,\n  footer = false,\n  prefix = \"\"\n): { key: string; column: number; span: number; text: string; medium: boolean; style?: StyleProp<TextStyle> }[] {\n  return parts(children).flatMap((child, index) => {\n    if (!isValidElement<CellProps>(child)) return []\n    const key = `${prefix}/${child.key ?? index}`\n    if (child.type === Row) {\n      let column = 0\n      return parts(child.props.children).flatMap((cell, i) => {\n        if (!isValidElement<CellProps>(cell)) return []\n        const span = Math.max(1, cell.props.colSpan ?? 1)\n        const item = {\n          key: `${key}/${cell.key ?? i}`,\n          column,\n          span,\n          text: plain(cell.props.children),\n          medium: footer || cell.type === Head,\n          style: cell.props.textStyle,\n        }\n        column += span\n        return [item]\n      })\n    }\n    if (child.type === Caption) return []\n    return measurements(child.props.children, footer || child.type === Footer, key)\n  })\n}\nexport type TableRootProps = ViewProps & {\n  /** Fixed logical-pixel widths, useful for custom cell content. Otherwise text is measured across all rows. */\n  columnWidths?: readonly number[]\n  /** Minimum table width; narrow viewports scroll horizontally. */\n  minWidth?: number\n  scrollViewProps?: Omit<ComponentPropsWithRef<typeof ScrollView>, \"children\" | \"horizontal\">\n}\nfunction Root({ columnWidths, minWidth = 0, scrollViewProps, children, style, onLayout, ...props }: TableRootProps) {\n  const { typography } = useNativeTheme()\n  const [viewport, setViewport] = useState(0)\n  const [measured, setMeasured] = useState<Record<string, number>>({})\n  const entries = measurements(children)\n  const count = Math.max(0, ...entries.map((item) => item.column + item.span))\n  const minimums = Array.from({ length: count }, () => 16)\n  for (const item of entries) {\n    if (item.span === 1) minimums[item.column] = Math.max(minimums[item.column], (measured[item.key] ?? 0) + 16)\n  }\n  for (const item of entries.filter((item) => item.span > 1)) {\n    const occupied = minimums.slice(item.column, item.column + item.span).reduce((a, b) => a + b, 0)\n    const extra = Math.max(0, (measured[item.key] ?? 0) + 16 - occupied) / item.span\n    for (let i = item.column; i < item.column + item.span; i++) minimums[i] += extra\n  }\n  const intrinsic = minimums.reduce((a, b) => a + b, 0)\n  const widths =\n    columnWidths ?? minimums.map((width) => width * Math.max(1, Math.max(viewport, minWidth) / (intrinsic || 1)))\n  const tableWidth = Math.max(\n    minWidth,\n    widths.reduce((a, b) => a + b, 0),\n    columnWidths ? 0 : viewport\n  )\n  const all = parts(children)\n  const captions = all.filter((child) => isValidElement(child) && child.type === Caption)\n  return (\n    <View\n      {...props}\n      onLayout={(event) => {\n        setViewport(event.nativeEvent.layout.width)\n        onLayout?.(event)\n      }}\n      style={[{ width: \"100%\", minWidth: 0 }, style]}\n    >\n      {!columnWidths && (\n        <View\n          pointerEvents=\"none\"\n          accessible={false}\n          aria-hidden\n          accessibilityElementsHidden\n          importantForAccessibility=\"no-hide-descendants\"\n          style={{ position: \"absolute\", width: 100000, height: 0, overflow: \"hidden\", opacity: 0 }}\n        >\n          {entries.map((item) => (\n            <View key={item.key} style={{ flexDirection: \"row\" }}>\n              <Text\n                accessible={false}\n                numberOfLines={1}\n                style={[\n                  item.medium ? typography.medium : typography.regular,\n                  { fontSize: 14, lineHeight: 20 },\n                  item.style,\n                ]}\n                onLayout={(event) => {\n                  const width = event.nativeEvent.layout.width\n                  setMeasured((previous) =>\n                    previous[item.key] === width ? previous : { ...previous, [item.key]: width }\n                  )\n                }}\n              >\n                {item.text}\n              </Text>\n            </View>\n          ))}\n        </View>\n      )}\n      <ScrollView horizontal {...scrollViewProps} style={[{ flexGrow: 0 }, scrollViewProps?.style]}>\n        <Layout.Provider value={widths}>\n          <View role=\"table\" style={{ width: tableWidth }}>\n            {all.filter((child) => !isValidElement(child) || child.type !== Caption)}\n            {captions}\n          </View>\n        </Layout.Provider>\n      </ScrollView>\n    </View>\n  )\n}\nexport type TableHeaderProps = ViewProps\nexport type TableBodyProps = ViewProps\nexport type TableFooterProps = ViewProps\nfunction Group({\n  footer = false,\n  header = false,\n  children,\n  style,\n  ...props\n}: ViewProps & { footer?: boolean; header?: boolean }) {\n  const { colors } = useNativeTheme()\n  const rows = parts(children)\n  return (\n    <Section.Provider value={{ footer }}>\n      <View\n        role=\"rowgroup\"\n        {...props}\n        style={[\n          footer && { borderTopWidth: 1, borderColor: colors.border, backgroundColor: withOpacity(colors.muted, 0.5) },\n          style,\n        ]}\n      >\n        {rows.map((child, index) => (\n          <Position.Provider\n            key={isValidElement(child) ? (child.key ?? index) : index}\n            value={{ column: 0, last: !header && index === rows.length - 1 }}\n          >\n            {child}\n          </Position.Provider>\n        ))}\n      </View>\n    </Section.Provider>\n  )\n}\nfunction Header(props: TableHeaderProps) {\n  return <Group {...props} header />\n}\nfunction Body(props: TableBodyProps) {\n  return <Group {...props} />\n}\nfunction Footer(props: TableFooterProps) {\n  return <Group {...props} footer />\n}\nexport type TableRowProps = ViewProps & { selected?: boolean; expanded?: boolean }\nfunction Row({\n  selected = false,\n  expanded = false,\n  style,\n  children,\n  onPointerEnter,\n  onPointerLeave,\n  accessibilityState,\n  ...props\n}: TableRowProps) {\n  const { colors } = useNativeTheme()\n  const { transition } = useMotion()\n  const { last } = useContext(Position)\n  const [hovered, setHovered] = useState(false)\n  let column = 0\n  return (\n    <AnimatedView\n      role=\"row\"\n      {...props}\n      accessibilityState={{ ...accessibilityState, selected }}\n      onPointerEnter={(event) => {\n        setHovered(true)\n        onPointerEnter?.(event)\n      }}\n      onPointerLeave={(event) => {\n        setHovered(false)\n        onPointerLeave?.(event)\n      }}\n      style={[\n        transition([\"backgroundColor\"]),\n        {\n          flexDirection: \"row\",\n          borderBottomWidth: last ? 0 : 1,\n          borderColor: colors.border,\n          backgroundColor: selected\n            ? colors.muted\n            : hovered || expanded\n              ? withOpacity(colors.muted, 0.5)\n              : \"transparent\",\n        },\n        style,\n      ]}\n    >\n      {parts(children).map((child, index) => {\n        const start = column\n        column += isValidElement<CellProps>(child) ? Math.max(1, child.props.colSpan ?? 1) : 1\n        return (\n          <Position.Provider key={isValidElement(child) ? (child.key ?? index) : index} value={{ column: start, last }}>\n            {child}\n          </Position.Provider>\n        )\n      })}\n    </AnimatedView>\n  )\n}\nexport type TableCellProps = CellProps\nexport type TableHeadProps = CellProps\nfunction Entry({\n  heading = false,\n  colSpan = 1,\n  align = \"start\",\n  checkbox = false,\n  style,\n  textStyle,\n  children,\n  ...props\n}: CellProps & { heading?: boolean }) {\n  const widths = useContext(Layout)\n  const { column } = useContext(Position)\n  const { footer } = useContext(Section)\n  const { colors, typography } = useNativeTheme()\n  const text = [\n    heading || footer ? typography.medium : typography.regular,\n    {\n      fontSize: 14,\n      lineHeight: 20,\n      color: colors.foreground,\n      textAlign: align === \"end\" ? (\"right\" as const) : align === \"center\" ? (\"center\" as const) : (\"auto\" as const),\n    },\n    textStyle,\n  ]\n  return (\n    <View\n      role={heading ? \"columnheader\" : \"cell\"}\n      {...props}\n      style={[\n        {\n          width: widths.slice(column, column + Math.max(1, colSpan)).reduce((a, b) => a + b, 0),\n          minHeight: heading ? 39 : 36,\n          paddingHorizontal: 8,\n          paddingVertical: heading ? 0 : 8,\n          paddingEnd: checkbox ? 0 : 8,\n          justifyContent: \"center\",\n          alignItems: align === \"end\" ? \"flex-end\" : align === \"center\" ? \"center\" : \"flex-start\",\n        },\n        style,\n      ]}\n    >\n      {parts(children).map((child, index) =>\n        typeof child === \"string\" || typeof child === \"number\" ? (\n          <Text key={index} numberOfLines={1} style={text}>\n            {child}\n          </Text>\n        ) : (\n          child\n        )\n      )}\n    </View>\n  )\n}\nfunction Head(props: TableHeadProps) {\n  return <Entry {...props} heading />\n}\nfunction Cell(props: TableCellProps) {\n  return <Entry {...props} />\n}\nexport type TableCaptionProps = ComponentPropsWithRef<typeof Text>\nfunction Caption({ style, ...props }: TableCaptionProps) {\n  const { colors, typography } = useNativeTheme()\n  return (\n    <Text\n      {...props}\n      style={[\n        typography.regular,\n        { marginTop: 16, fontSize: 14, lineHeight: 20, color: colors.mutedForeground, textAlign: \"center\" },\n        style,\n      ]}\n    />\n  )\n}\nexport const Table = { Root, Header, Body, Footer, Row, Head, Cell, Caption }\n"
+    }
+  ],
+  "docs": "## How it works\n\nTable renders native Views, Text, and a horizontal ScrollView using the audited web typography, spacing, row dividers, footer tint, and selected/expanded states. It supplies Root, Header, Body, Footer, Row, Head, Cell, and Caption.\n\nText columns are measured across headers, body rows, and footers, then share the available width proportionally. Removing a row removes its measurements from sizing. Captions render below the table even when declared first. colSpan joins adjacent columns for totals and empty states.\n\nUse Root's columnWidths for fixed logical-pixel widths, especially when cells contain custom components. Otherwise plain text is measured; custom components without textual children cannot provide intrinsic widths. minWidth keeps the table readable on smaller screens by allowing horizontal scrolling. scrollViewProps exposes native scrolling callbacks and its ref.\n\nUse Cell/Head align=\"end\" for amounts, textStyle for text overrides, and checkbox to remove trailing padding from a checkbox cell. Nested arkcn controls keep their own styling and behavior. selected and expanded on Row control its background; row selection remains consumer-owned.\n\nThis is the small compositional Table, not Data Table or Data Grid. It does not provide sorting, virtualization, sticky columns, or editing. Those richer components have not been ported yet. Native screen-reader traversal differs from an HTML table; give controls and the root meaningful accessibility labels."
+}

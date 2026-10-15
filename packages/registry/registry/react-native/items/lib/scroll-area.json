@@ -1,0 +1,18 @@
+{
+  "name": "lib/scroll-area",
+  "type": "lib",
+  "description": "Clamp overscroll and preserve proportional thumbs as content and viewport resize.",
+  "exports": [
+    "scrollGeometry"
+  ],
+  "parts": [],
+  "dependencies": {},
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "lib/scroll-area.ts",
+      "content": "/** Clamp overscroll and preserve proportional thumbs as content and viewport resize. */\nexport function scrollGeometry(viewport: number, content: number, offset: number, corner = 0) {\n  const track = Math.max(0, viewport - corner - 2)\n  const maxOffset = Math.max(0, content - viewport)\n  const overflow = viewport > 0 && maxOffset > 0\n  const thumbSize = overflow ? Math.min(track, Math.max(18, (track * viewport) / content)) : track\n  const travel = Math.max(0, track - thumbSize)\n  const thumbOffset = maxOffset > 0 ? (Math.max(0, Math.min(maxOffset, offset)) / maxOffset) * travel : 0\n  return { overflow, maxOffset, thumbSize, travel, thumbOffset }\n}\n"
+    }
+  ],
+  "docs": "## How it works\n\nScroll Area uses a native ScrollView with arkcn’s 10px track, rounded border-color thumb, and light/dark theme tokens. Touch scrolling retains the platform’s momentum. Drag the thumb or press its track to change position; accessibility increment/decrement actions move one page at a time.\n\nRoot automatically supplies Viewport, Content, the required Scrollbars, and Corner. Give it a bounded height and width. Use orientation=\"horizontal\" for a horizontal area or orientation=\"both\" for two-axis content; the default is vertical. viewportProps forwards native scrolling callbacks, contentContainerStyle, and a ScrollView ref. disabled blocks touch scrolling and scrollbar gestures.\n\nUse composed on Root to arrange Viewport, Content, Scrollbar, Thumb, and Corner explicitly. In two-axis mode, provide one Scrollbar for each orientation. RootProvider accepts useScrollArea(), and Context exposes measurements, offset, and scrollTo(position, animated). For two axes, use position.x / position.y, axes.horizontal / axes.vertical, and scrollTo({ x, y }, animated). Omitting an axis preserves its current offset; numeric targets control the primary axis (vertical in two-axis mode). Programmatic scrolling respects reduced motion. A scrollbar appears only when content overflows, and its length responds to content or viewport changes.\n\nTwo-axis content uses nested native ScrollViews: the outer viewport scrolls vertically and the inner viewport scrolls horizontally. Give Content an explicit width when it needs to extend beyond the viewport. horizontalViewportProps forwards callbacks and a ref to the inner viewport. Root’s viewport onScroll reports the outer axis; the inner onScroll callback reports horizontal movement. The corner appears only while both axes overflow, and the thumb calculations account for the shortened tracks. For large datasets, use a virtualized native list instead. Safe-area insets belong on the surrounding layout; custom ScrollView content insets and zoom are not included in scrollbar geometry."
+}

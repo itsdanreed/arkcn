@@ -1,6 +1,6 @@
 # Expo / React Native
 
-The native package supplies **23 components: Button, Card, Input, Textarea, Badge, Separator, Spinner, Skeleton, Checkbox, Switch, Radio Group, Tabs, Collapsible, Progress, Alert, Avatar, Toggle, Toggle Group, Accordion, Input Group, Button Group, Label, and Aspect Ratio**.
+The native package supplies **55 components: Button, Card, Input, Textarea, Badge, Separator, Spinner, Skeleton, Checkbox, Switch, Radio Group, Tabs, Collapsible, Progress, Alert, Avatar, Toggle, Toggle Group, Accordion, Input Group, Button Group, Label, Aspect Ratio, Field, Fieldset, Number Input, Rating Group, Editable, Pagination, Segment Group, Breadcrumb, Empty, Kbd, Pin Input, Item, Steps, Highlight, Format, Tags Input, App Shell, Dialog, Alert Dialog, Sheet, Clipboard, Activity Feed, Timer, Message, Bubble, Marker, Attachment, Table, Password Input, Scroll Area, Slider, and Spreadsheet**.
 It shares state hooks and headless logic with the web package while rendering React Native primitives.
 The rest of the web catalog has not been ported yet.
 
@@ -87,6 +87,10 @@ npx expo install react-native-reanimated react-native-worklets react-native-svg
 npm install lucide-react-native
 ```
 
+Clipboard additionally requires `npx expo install expo-clipboard`. Dialog and Alert Dialog require `npx expo install expo-blur`. Bare React Native apps must configure Expo modules before using these components.
+
 Expo's Babel preset configures Worklets. For bare React Native, use compatible Reanimated/Worklets versions, put `react-native-worklets/plugin` last in Babel's plugins, and rebuild the native app. Reanimated 4 requires the New Architecture.
 
 `NativeThemeProvider reducedMotion` can override the system preference. Leave it unset to follow accessibility settings. Install and load Geist as described in Theming for matching device typography.
+
+Attachment uses `@expo/ui` on Expo SDK 57 for masked upload animation and scrolling edge fades. Install the SDK-compatible version with `npx expo install @expo/ui`.

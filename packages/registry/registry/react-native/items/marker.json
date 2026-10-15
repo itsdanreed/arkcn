@@ -1,0 +1,250 @@
+{
+  "name": "marker",
+  "type": "ui",
+  "description": "Muted icon labels and conversation dividers, matching the web Marker.",
+  "exports": [
+    "Marker"
+  ],
+  "parts": [
+    {
+      "name": "Marker.Root",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "style",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | undefined; height?: DimensionVa…",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "Variant",
+          "required": false,
+          "default": "\"default\"",
+          "description": "Visual variant, using the same semantic colors as the web renderer.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Marker.Icon",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Marker.Content",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "lib/focus",
+    "lib/motion",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/marker.tsx",
+      "content": "/** Muted icon labels and conversation dividers, matching the web Marker. */\nimport {\n  Children,\n  cloneElement,\n  createContext,\n  isValidElement,\n  useContext,\n  useState,\n  type ComponentPropsWithRef,\n  type ReactNode,\n} from \"react\"\nimport { Pressable, Text, View, type StyleProp, type ViewStyle } from \"react-native\"\nimport { useNativeTheme, withOpacity } from \"@/lib/theme\"\nimport { AnimatedPressable, useShadowTransition } from \"@/lib/motion\"\nimport { isFocusVisible } from \"@/lib/focus\"\n\ntype Variant = \"default\" | \"separator\" | \"border\"\nconst Layout = createContext({ variant: \"default\" as Variant, link: false, active: false })\nexport type MarkerRootProps = Omit<ComponentPropsWithRef<typeof Pressable>, \"children\" | \"style\"> & {\n  variant?: Variant\n  children?: ReactNode\n  style?: StyleProp<ViewStyle>\n}\nfunction Root({\n  variant = \"default\",\n  style,\n  children,\n  disabled,\n  onPress,\n  onLongPress,\n  onPressIn,\n  onPressOut,\n  onHoverIn,\n  onHoverOut,\n  onFocus,\n  onBlur,\n  accessibilityState,\n  ...props\n}: MarkerRootProps) {\n  const { colors } = useNativeTheme()\n  const [pressed, setPressed] = useState(false)\n  const [hovered, setHovered] = useState(false)\n  const [focused, setFocused] = useState(false)\n  const interactive = !!(onPress || onLongPress)\n  const link = props.accessibilityRole === \"link\"\n  const shadow = useShadowTransition([\n    {\n      offsetX: 0,\n      offsetY: 0,\n      spreadDistance: focused && !disabled ? 2 : 0,\n      color: withOpacity(colors.ring, focused && !disabled ? 0.5 : 0),\n    },\n  ])\n  const box: StyleProp<ViewStyle> = [\n    {\n      minHeight: 16,\n      width: \"100%\",\n      minWidth: 0,\n      flexShrink: 1,\n      flexDirection: \"row\",\n      alignItems: \"center\",\n      gap: 8,\n      ...(variant === \"border\" ? { borderBottomWidth: 1, borderColor: colors.border, paddingBottom: 8 } : {}),\n      opacity: disabled ? 0.5 : 1,\n    },\n    style,\n  ]\n  const line = (side: \"start\" | \"end\") => (\n    <View\n      accessible={false}\n      pointerEvents=\"none\"\n      style={{\n        flex: 1,\n        minWidth: 0,\n        height: 1,\n        backgroundColor: colors.border,\n        ...(side === \"start\" ? { marginEnd: 4 } : { marginStart: 4 }),\n      }}\n    />\n  )\n  const content = (\n    <Layout.Provider value={{ variant, link, active: !disabled && (pressed || hovered) }}>\n      {variant === \"separator\" && line(\"start\")}\n      {Children.map(children, (child) =>\n        typeof child === \"string\" || typeof child === \"number\" ? <Content>{child}</Content> : child\n      )}\n      {variant === \"separator\" && line(\"end\")}\n    </Layout.Provider>\n  )\n  if (!interactive)\n    return (\n      <View {...props} accessibilityState={accessibilityState} style={box}>\n        {content}\n      </View>\n    )\n  return (\n    <AnimatedPressable\n      accessibilityRole=\"button\"\n      hitSlop={{ top: 12, bottom: 12, left: 0, right: 0 }}\n      {...props}\n      disabled={disabled}\n      accessibilityState={{ ...accessibilityState, disabled: !!disabled }}\n      onPress={(event) => {\n        if (!disabled) onPress?.(event)\n      }}\n      onLongPress={(event) => {\n        if (!disabled) onLongPress?.(event)\n      }}\n      onPressIn={(event) => {\n        setPressed(true)\n        onPressIn?.(event)\n      }}\n      onPressOut={(event) => {\n        setPressed(false)\n        onPressOut?.(event)\n      }}\n      onHoverIn={(event) => {\n        setHovered(true)\n        onHoverIn?.(event)\n      }}\n      onHoverOut={(event) => {\n        setHovered(false)\n        onHoverOut?.(event)\n      }}\n      onFocus={(event) => {\n        setFocused(isFocusVisible(event))\n        onFocus?.(event)\n      }}\n      onBlur={(event) => {\n        setFocused(false)\n        onBlur?.(event)\n      }}\n      style={[box, shadow]}\n    >\n      {content}\n    </AnimatedPressable>\n  )\n}\nexport type MarkerIconProps = ComponentPropsWithRef<typeof View>\nfunction Icon({ children, style, ...props }: MarkerIconProps) {\n  const { colors } = useNativeTheme()\n  const { active } = useContext(Layout)\n  return (\n    <View\n      {...props}\n      accessible={false}\n      accessibilityElementsHidden\n      importantForAccessibility=\"no-hide-descendants\"\n      style={[{ width: 16, height: 16, flexShrink: 0, alignItems: \"center\", justifyContent: \"center\" }, style]}\n    >\n      {Children.map(children, (child) =>\n        isValidElement<{ size?: number; color?: string }>(child)\n          ? cloneElement(child, {\n              size: child.props.size ?? 16,\n              color: child.props.color ?? (active ? colors.foreground : colors.mutedForeground),\n            })\n          : child\n      )}\n    </View>\n  )\n}\nexport type MarkerContentProps = ComponentPropsWithRef<typeof Text>\nfunction Content({ style, ...props }: MarkerContentProps) {\n  const { colors, typography } = useNativeTheme()\n  const { variant, link, active } = useContext(Layout)\n  return (\n    <Text\n      {...props}\n      style={[\n        {\n          ...typography.regular,\n          minWidth: 0,\n          flexShrink: 1,\n          fontSize: 14,\n          lineHeight: 20,\n          color: active ? colors.foreground : colors.mutedForeground,\n          textAlign: variant === \"separator\" ? \"center\" : \"auto\",\n          textDecorationLine: link ? \"underline\" : \"none\",\n        },\n        style,\n      ]}\n    />\n  )\n}\nexport const Marker = { Root, Icon, Content }\n"
+    }
+  ],
+  "docs": "## How it works\n\nMarker provides `Root`, `Icon`, and `Content` for muted labels and conversation dividers. The default, separator, and border variants use the desktop component's 14px/20px regular text, 16px icons, 8px gap, and theme border color. Long labels wrap within the available width. Separator rules shrink to leave room for the label.\n\nRoot accepts native Pressable props, plus `variant` and a static `style`. It renders a passive View until `onPress` or `onLongPress` is supplied. Use `accessibilityRole=\"link\"` with an `onPress` handler for navigation; the label is underlined and both label and icon brighten on hover or press. Navigation is consumer-owned. Disabled actions are dimmed and do not run. Keyboard focus uses the shared ring and reduced-motion setting.\n\nIcon is decorative and hidden from accessibility. It supplies the default size and color to its icon child while preserving explicit overrides. Content accepts native Text props, including nested Text for inline links. Native underlines follow the platform's text rendering; CSS underline offsets and `asChild` are not available. Native writing direction controls row order."
+}

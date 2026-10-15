@@ -1,0 +1,569 @@
+{
+  "name": "scroll-area",
+  "type": "ui",
+  "description": "Native scrolling with arkcn's slim, draggable, theme-aware scrollbar.",
+  "exports": [
+    "useScrollArea",
+    "useScrollAreaContext",
+    "ScrollArea"
+  ],
+  "parts": [
+    {
+      "name": "ScrollArea.Root",
+      "props": [
+        {
+          "name": "composed",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Compose Viewport, Content, and Scrollbar yourself.",
+          "from": "arkcn"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "orientation",
+          "type": "\"both\" | Axis",
+          "required": false,
+          "description": "Layout direction of the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "viewportProps",
+          "type": "ScrollAreaViewportProps",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "ScrollArea.RootProvider",
+      "props": [
+        {
+          "name": "value",
+          "type": "{ overflow: boolean; maxOffset: number; thumbSize: number; travel: number; thumbOffset: number; viewport: number; content: number; offset: number; ref: RefOb…",
+          "required": true,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "ScrollArea.Viewport",
+      "props": [
+        {
+          "name": "horizontalViewportProps",
+          "type": "Omit<Omit<ScrollViewProps, \"ref\"> & { ref?: Ref<ScrollViewInstance> | undefined; }, \"children\" | \"horizontal\">",
+          "required": false,
+          "description": "Props for the inner horizontal ScrollView in two-axis mode.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "ScrollArea.Content",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "ScrollArea.Scrollbar",
+      "props": [
+        {
+          "name": "orientation",
+          "type": "Axis",
+          "required": false,
+          "description": "Layout direction of the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "ScrollArea.Thumb",
+      "props": [
+        {
+          "name": "orientation",
+          "type": "Axis",
+          "required": false,
+          "description": "Layout direction of the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "ScrollArea.Corner",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "ScrollArea.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(api: { overflow: boolean; maxOffset: number; thumbSize: number; travel: number; thumbOffset: number; viewport: number; content: number; offset: number; ref:…",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "lib/motion",
+    "lib/scroll-area",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/scroll-area.tsx",
+      "content": "/** Native scrolling with arkcn's slim, draggable, theme-aware scrollbar. */\nimport {\n  createContext,\n  useContext,\n  useRef,\n  useState,\n  type ComponentPropsWithRef,\n  type ComponentRef,\n  type ReactNode,\n} from \"react\"\nimport { I18nManager, ScrollView, View } from \"react-native\"\nimport { useNativeTheme } from \"@/lib/theme\"\nimport { useMotion } from \"@/lib/motion\"\nimport { scrollGeometry } from \"@/lib/scroll-area\"\n\ntype ViewProps = ComponentPropsWithRef<typeof View>\ntype Axis = \"vertical\" | \"horizontal\"\ntype Size = { width: number; height: number }\ntype Point = { x: number; y: number }\nexport type UseScrollAreaProps = { orientation?: Axis | \"both\"; disabled?: boolean }\nexport function useScrollArea({ orientation = \"vertical\", disabled = false }: UseScrollAreaProps = {}) {\n  const { reduced } = useMotion()\n  const ref = useRef<ComponentRef<typeof ScrollView>>(null)\n  const horizontalRef = useRef<ComponentRef<typeof ScrollView>>(null)\n  const [viewportSize, setViewportSize] = useState<Size>({ width: 0, height: 0 })\n  const [contentSize, setContentSize] = useState<Size>({ width: 0, height: 0 })\n  const [position, setPosition] = useState<Point>({ x: 0, y: 0 })\n  const horizontal = orientation === \"horizontal\"\n  const both = orientation === \"both\"\n  const overflowX = orientation !== \"vertical\" && viewportSize.width > 0 && contentSize.width > viewportSize.width\n  const overflowY = orientation !== \"horizontal\" && viewportSize.height > 0 && contentSize.height > viewportSize.height\n  const corner = overflowX && overflowY ? 10 : 0\n  const axes = {\n    horizontal: {\n      viewport: viewportSize.width,\n      content: contentSize.width,\n      offset: position.x,\n      ...scrollGeometry(viewportSize.width, contentSize.width, position.x, corner),\n      overflow: overflowX,\n    },\n    vertical: {\n      viewport: viewportSize.height,\n      content: contentSize.height,\n      offset: position.y,\n      ...scrollGeometry(viewportSize.height, contentSize.height, position.y, corner),\n      overflow: overflowY,\n    },\n  }\n  const scrollTo = (target: number | Partial<Point>, animated = false) => {\n    if (disabled) return\n    const point = typeof target === \"number\" ? (horizontal ? { x: target } : { y: target }) : target\n    const x = Math.max(0, Math.min(axes.horizontal.maxOffset, point.x ?? position.x))\n    const y = Math.max(0, Math.min(axes.vertical.maxOffset, point.y ?? position.y))\n    const motion = animated && !reduced\n    if (both) {\n      if (point.y !== undefined) ref.current?.scrollTo({ x: 0, y, animated: motion })\n      if (point.x !== undefined) horizontalRef.current?.scrollTo({ x, y: 0, animated: motion })\n    } else ref.current?.scrollTo({ x: horizontal ? x : 0, y: horizontal ? 0 : y, animated: motion })\n  }\n  return {\n    ref,\n    horizontalRef,\n    orientation,\n    horizontal,\n    both,\n    disabled,\n    viewportSize,\n    contentSize,\n    position,\n    setViewportSize,\n    setContentSize,\n    setPosition,\n    axes,\n    corner,\n    scrollTo,\n    ...axes[horizontal ? \"horizontal\" : \"vertical\"],\n  }\n}\ntype ScrollAreaApi = ReturnType<typeof useScrollArea>\nconst AreaContext = createContext<ScrollAreaApi | null>(null)\nexport function useScrollAreaContext() {\n  const value = useContext(AreaContext)\n  if (!value) throw new Error(\"ScrollArea parts must be inside ScrollArea.Root or RootProvider\")\n  return value\n}\nexport type ScrollAreaRootProviderProps = ViewProps & { value: ScrollAreaApi }\nfunction RootProvider({ value, style, ...props }: ScrollAreaRootProviderProps) {\n  return (\n    <AreaContext.Provider value={value}>\n      <View {...props} style={[{ position: \"relative\", overflow: \"hidden\" }, style]} />\n    </AreaContext.Provider>\n  )\n}\nexport type ScrollAreaRootProps = ViewProps &\n  UseScrollAreaProps & {\n    /** Compose Viewport, Content, and Scrollbar yourself. */\n    composed?: boolean\n    viewportProps?: ScrollAreaViewportProps\n  }\nfunction Root({ orientation, disabled, composed = false, viewportProps, children, ...props }: ScrollAreaRootProps) {\n  const api = useScrollArea({ orientation, disabled })\n  return (\n    <RootProvider value={api} {...props}>\n      {composed ? (\n        children\n      ) : (\n        <>\n          <Viewport {...viewportProps}>\n            <Content>{children}</Content>\n          </Viewport>\n          <Scrollbar orientation={api.horizontal ? \"horizontal\" : \"vertical\"} />\n          {api.both && <Scrollbar orientation=\"horizontal\" />}\n          <Corner />\n        </>\n      )}\n    </RootProvider>\n  )\n}\nexport type ScrollAreaViewportProps = ComponentPropsWithRef<typeof ScrollView> & {\n  /** Props for the inner horizontal ScrollView in two-axis mode. */\n  horizontalViewportProps?: Omit<ComponentPropsWithRef<typeof ScrollView>, \"children\" | \"horizontal\">\n}\nfunction Viewport({\n  ref,\n  style,\n  children,\n  onLayout,\n  onContentSizeChange,\n  onScroll,\n  scrollEnabled,\n  horizontalViewportProps,\n  ...props\n}: ScrollAreaViewportProps) {\n  const api = useScrollAreaContext()\n  const { colorScheme } = useNativeTheme()\n  const common = {\n    nestedScrollEnabled: true,\n    bounces: false,\n    contentInsetAdjustmentBehavior: \"never\" as const,\n    keyboardShouldPersistTaps: \"handled\" as const,\n    indicatorStyle: colorScheme === \"dark\" ? (\"white\" as const) : (\"black\" as const),\n    showsHorizontalScrollIndicator: false,\n    showsVerticalScrollIndicator: false,\n    scrollEventThrottle: 16,\n  }\n  return (\n    <ScrollView\n      {...common}\n      {...props}\n      ref={(node) => {\n        api.ref.current = node\n        if (typeof ref === \"function\") return ref(node)\n        if (ref) ref.current = node\n      }}\n      horizontal={api.horizontal}\n      scrollEnabled={!api.disabled && scrollEnabled !== false}\n      onLayout={(event) => {\n        const { width, height } = event.nativeEvent.layout\n        api.setViewportSize({ width, height })\n        onLayout?.(event)\n      }}\n      onContentSizeChange={(width, height) => {\n        // The inner viewport measures the intrinsic width in two-axis mode.\n        if (!api.both) {\n          api.setContentSize({ width, height })\n          onContentSizeChange?.(width, height)\n        }\n      }}\n      onScroll={(event) => {\n        const { x, y } = event.nativeEvent.contentOffset\n        api.setPosition((current) => (api.both ? { ...current, y } : { x, y }))\n        onScroll?.(event)\n      }}\n      style={[{ flex: 1, minHeight: 0, minWidth: 0 }, style]}\n    >\n      {api.both ? (\n        <ScrollView\n          {...common}\n          {...horizontalViewportProps}\n          horizontal\n          ref={(node) => {\n            api.horizontalRef.current = node\n            const innerRef = horizontalViewportProps?.ref\n            if (typeof innerRef === \"function\") return innerRef(node)\n            if (innerRef) innerRef.current = node\n          }}\n          scrollEnabled={!api.disabled && scrollEnabled !== false && horizontalViewportProps?.scrollEnabled !== false}\n          onContentSizeChange={(width, height) => {\n            api.setContentSize({ width, height })\n            onContentSizeChange?.(width, height)\n            horizontalViewportProps?.onContentSizeChange?.(width, height)\n          }}\n          onScroll={(event) => {\n            const x = event.nativeEvent.contentOffset.x\n            api.setPosition((current) => ({ ...current, x }))\n            horizontalViewportProps?.onScroll?.(event)\n          }}\n          style={[{ flexGrow: 0, flexShrink: 0, width: \"100%\" }, horizontalViewportProps?.style]}\n        >\n          {children}\n        </ScrollView>\n      ) : (\n        children\n      )}\n    </ScrollView>\n  )\n}\nexport type ScrollAreaContentProps = ViewProps\nfunction Content({ style, ...props }: ScrollAreaContentProps) {\n  const { orientation } = useScrollAreaContext()\n  return <View {...props} style={[orientation === \"vertical\" && { width: \"100%\" }, style]} />\n}\nexport type ScrollAreaScrollbarProps = ViewProps & { orientation?: Axis }\nconst BarOrientation = createContext<Axis | null>(null)\nfunction Scrollbar({ style, children, ref, orientation, ...props }: ScrollAreaScrollbarProps) {\n  const area = useScrollAreaContext()\n  const axis = orientation ?? (area.horizontal ? \"horizontal\" : \"vertical\")\n  const api = {\n    ...area.axes[axis],\n    disabled: area.disabled,\n    horizontal: axis === \"horizontal\",\n    scrollTo: (value: number) => area.scrollTo(axis === \"horizontal\" ? { x: value } : { y: value }),\n  }\n  const trackRef = useRef<ComponentRef<typeof View>>(null)\n  const start = useRef({ pointer: 0, offset: 0 })\n  if (!api.overflow) return null\n  const horizontal = api.horizontal\n  return (\n    <BarOrientation.Provider value={axis}>\n      <View\n        ref={(node) => {\n          trackRef.current = node\n          if (typeof ref === \"function\") return ref(node)\n          if (ref) ref.current = node\n        }}\n        accessible\n        accessibilityRole=\"adjustable\"\n        accessibilityLabel={`${horizontal ? \"Horizontal\" : \"Vertical\"} scroll position`}\n        accessibilityValue={{\n          min: 0,\n          max: 100,\n          now: Math.round(Math.max(0, Math.min(1, api.offset / api.maxOffset)) * 100),\n        }}\n        accessibilityState={{ disabled: api.disabled }}\n        accessibilityActions={[{ name: \"increment\" }, { name: \"decrement\" }]}\n        onAccessibilityAction={(event) => {\n          const direction = event.nativeEvent.actionName === \"increment\" ? 1 : -1\n          api.scrollTo(api.offset + direction * api.viewport * 0.8)\n        }}\n        {...props}\n        onStartShouldSetResponder={() => !api.disabled}\n        onMoveShouldSetResponder={() => !api.disabled}\n        onResponderTerminationRequest={() => false}\n        onResponderGrant={(event) => {\n          const pointer = horizontal ? event.nativeEvent.pageX : event.nativeEvent.pageY\n          // measure supplies viewport-relative coordinates even when the thumb was touched.\n          trackRef.current?.measure((_x, _y, _w, _h, pageX, pageY) => {\n            const position = pointer - (horizontal ? pageX : pageY) - 1\n            const inThumb = position >= api.thumbOffset && position <= api.thumbOffset + api.thumbSize\n            const offset = inThumb\n              ? api.offset\n              : ((position - api.thumbSize / 2) / Math.max(1, api.travel)) * api.maxOffset\n            start.current = { pointer, offset: Math.max(0, Math.min(api.maxOffset, offset)) }\n            if (!inThumb) api.scrollTo(start.current.offset)\n          })\n        }}\n        onResponderMove={(event) => {\n          const pointer = horizontal ? event.nativeEvent.pageX : event.nativeEvent.pageY\n          api.scrollTo(\n            start.current.offset + ((pointer - start.current.pointer) / Math.max(1, api.travel)) * api.maxOffset\n          )\n        }}\n        style={[\n          {\n            position: \"absolute\",\n            padding: 1,\n            ...(horizontal\n              ? {\n                  left: I18nManager.isRTL ? area.corner : 0,\n                  right: I18nManager.isRTL ? 0 : area.corner,\n                  bottom: 0,\n                  height: 10,\n                  borderTopWidth: 1,\n                }\n              : {\n                  top: 0,\n                  bottom: area.corner,\n                  [I18nManager.isRTL ? \"left\" : \"right\"]: 0,\n                  width: 10,\n                  borderStartWidth: 1,\n                }),\n            borderColor: \"transparent\",\n          },\n          style,\n        ]}\n      >\n        {children ?? <Thumb />}\n      </View>\n    </BarOrientation.Provider>\n  )\n}\nexport type ScrollAreaThumbProps = ViewProps & { orientation?: Axis }\nfunction Thumb({ style, orientation, ...props }: ScrollAreaThumbProps) {\n  const area = useScrollAreaContext()\n  const inherited = useContext(BarOrientation)\n  const axis = orientation ?? inherited ?? (area.horizontal ? \"horizontal\" : \"vertical\")\n  const api = { ...area.axes[axis], horizontal: axis === \"horizontal\" }\n  const { colors, radius } = useNativeTheme()\n  return (\n    <View\n      pointerEvents=\"none\"\n      accessible={false}\n      {...props}\n      style={[\n        {\n          backgroundColor: colors.border,\n          borderRadius: radius.full,\n          ...(api.horizontal\n            ? { height: 7, width: api.thumbSize, transform: [{ translateX: api.thumbOffset }] }\n            : { width: 7, height: api.thumbSize, transform: [{ translateY: api.thumbOffset }] }),\n        },\n        style,\n      ]}\n    />\n  )\n}\nexport type ScrollAreaCornerProps = ViewProps\nfunction Corner({ style, ...props }: ScrollAreaCornerProps) {\n  const { corner } = useScrollAreaContext()\n  if (!corner) return null\n  return (\n    <View\n      pointerEvents=\"none\"\n      accessible={false}\n      {...props}\n      style={[\n        { position: \"absolute\", bottom: 0, [I18nManager.isRTL ? \"left\" : \"right\"]: 0, width: corner, height: corner },\n        style,\n      ]}\n    />\n  )\n}\nexport type ScrollAreaContextProps = { children: (api: ScrollAreaApi) => ReactNode }\nfunction Context({ children }: ScrollAreaContextProps) {\n  return children(useScrollAreaContext())\n}\nexport const ScrollArea = { Root, RootProvider, Viewport, Content, Scrollbar, Thumb, Corner, Context }\n"
+    }
+  ],
+  "docs": "## How it works\n\nScroll Area uses a native ScrollView with arkcn’s 10px track, rounded border-color thumb, and light/dark theme tokens. Touch scrolling retains the platform’s momentum. Drag the thumb or press its track to change position; accessibility increment/decrement actions move one page at a time.\n\nRoot automatically supplies Viewport, Content, the required Scrollbars, and Corner. Give it a bounded height and width. Use orientation=\"horizontal\" for a horizontal area or orientation=\"both\" for two-axis content; the default is vertical. viewportProps forwards native scrolling callbacks, contentContainerStyle, and a ScrollView ref. disabled blocks touch scrolling and scrollbar gestures.\n\nUse composed on Root to arrange Viewport, Content, Scrollbar, Thumb, and Corner explicitly. In two-axis mode, provide one Scrollbar for each orientation. RootProvider accepts useScrollArea(), and Context exposes measurements, offset, and scrollTo(position, animated). For two axes, use position.x / position.y, axes.horizontal / axes.vertical, and scrollTo({ x, y }, animated). Omitting an axis preserves its current offset; numeric targets control the primary axis (vertical in two-axis mode). Programmatic scrolling respects reduced motion. A scrollbar appears only when content overflows, and its length responds to content or viewport changes.\n\nTwo-axis content uses nested native ScrollViews: the outer viewport scrolls vertically and the inner viewport scrolls horizontally. Give Content an explicit width when it needs to extend beyond the viewport. horizontalViewportProps forwards callbacks and a ref to the inner viewport. Root’s viewport onScroll reports the outer axis; the inner onScroll callback reports horizontal movement. The corner appears only while both axes overflow, and the thumb calculations account for the shortened tracks. For large datasets, use a virtualized native list instead. Safe-area insets belong on the surrounding layout; custom ScrollView content insets and zoom are not included in scrollbar geometry."
+}

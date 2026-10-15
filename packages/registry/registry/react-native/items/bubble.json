@@ -1,0 +1,365 @@
+{
+  "name": "bubble",
+  "type": "ui",
+  "description": "Conversation bubbles with all web surfaces and measured reaction placement.",
+  "exports": [
+    "Bubble"
+  ],
+  "parts": [
+    {
+      "name": "Bubble.Root",
+      "props": [
+        {
+          "name": "align",
+          "type": "\"end\" | \"start\"",
+          "required": false,
+          "description": "Alignment along the side.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "Variant",
+          "required": false,
+          "default": "\"default\"",
+          "description": "Visual variant, using the same semantic colors as the web renderer.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Bubble.Group",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Bubble.Content",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "style",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | undefined; height?: DimensionVa…",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "arkcn"
+        },
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Native text styles for a plain button label.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Bubble.Reactions",
+      "props": [
+        {
+          "name": "align",
+          "type": "\"end\" | \"start\"",
+          "required": false,
+          "default": "\"end\"",
+          "description": "Alignment along the side.",
+          "from": "arkcn"
+        },
+        {
+          "name": "interactive",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Removes padding when reactions contain buttons, matching web's button treatment.",
+          "from": "arkcn"
+        },
+        {
+          "name": "side",
+          "type": "\"bottom\" | \"top\"",
+          "required": false,
+          "default": "\"bottom\"",
+          "description": "Which side of the anchor or container the part sits on.",
+          "from": "arkcn"
+        },
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Native text styles for a plain button label.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "lib/bubble-color",
+    "lib/focus",
+    "lib/message-layout",
+    "lib/motion",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/bubble.tsx",
+      "content": "/** Conversation bubbles with all web surfaces and measured reaction placement. */\nimport { createContext, useContext, useState, type ComponentPropsWithRef } from \"react\"\nimport { Pressable, View, type StyleProp, type TextStyle, type ViewStyle } from \"react-native\"\nimport { MessageLayout, messageText } from \"@/lib/message-layout\"\nimport { bubbleTint } from \"@/lib/bubble-color\"\nimport { useNativeTheme, withOpacity } from \"@/lib/theme\"\nimport { AnimatedPressable, useMotion, useShadowTransition } from \"@/lib/motion\"\nimport { isFocusVisible } from \"@/lib/focus\"\n\ntype Variant = \"default\" | \"secondary\" | \"muted\" | \"tinted\" | \"outline\" | \"ghost\" | \"destructive\"\ntype ViewProps = ComponentPropsWithRef<typeof View>\nconst Layout = createContext({ variant: \"default\" as Variant, align: \"start\" as \"start\" | \"end\" })\nexport type BubbleRootProps = ViewProps & { variant?: Variant; align?: \"start\" | \"end\" }\nfunction Root({ variant = \"default\", align, style, children, ...props }: BubbleRootProps) {\n  const message = useContext(MessageLayout)\n  const direction = align ?? message.align\n  return (\n    <Layout.Provider value={{ variant, align: direction }}>\n      <View\n        {...props}\n        style={[\n          {\n            minWidth: 0,\n            maxWidth: variant === \"ghost\" ? \"100%\" : \"80%\",\n            alignSelf: direction === \"end\" ? \"flex-end\" : \"flex-start\",\n            gap: 4,\n          },\n          style,\n        ]}\n      >\n        {children}\n      </View>\n    </Layout.Provider>\n  )\n}\nexport type BubbleGroupProps = ViewProps\nfunction Group({ style, ...props }: BubbleGroupProps) {\n  return <View {...props} style={[{ minWidth: 0, gap: 8 }, style]} />\n}\nexport type BubbleContentProps = Omit<ComponentPropsWithRef<typeof Pressable>, \"children\" | \"style\"> & {\n  children?: React.ReactNode\n  style?: StyleProp<ViewStyle>\n  textStyle?: StyleProp<TextStyle>\n}\nfunction Content({\n  style,\n  textStyle,\n  children,\n  disabled,\n  onPress,\n  onLongPress,\n  onPressIn,\n  onPressOut,\n  onHoverIn,\n  onHoverOut,\n  onFocus,\n  onBlur,\n  accessibilityState,\n  ...props\n}: BubbleContentProps) {\n  const { variant, align } = useContext(Layout)\n  const { colors, colorScheme, typography, radius } = useNativeTheme()\n  const { transition } = useMotion()\n  const [active, setActive] = useState(false)\n  const [hovered, setHovered] = useState(false)\n  const [focused, setFocused] = useState(false)\n  const interactive = !!(onPress || onLongPress)\n  const feedback = interactive && !disabled && (active || hovered)\n  const dark = colorScheme === \"dark\"\n  const color =\n    variant === \"default\"\n      ? colors.primaryForeground\n      : variant === \"secondary\"\n        ? colors.secondaryForeground\n        : variant === \"destructive\"\n          ? colors.destructive\n          : colors.foreground\n  const backgroundColor =\n    variant === \"default\"\n      ? feedback\n        ? withOpacity(colors.primary, 0.8)\n        : colors.primary\n      : variant === \"secondary\" || variant === \"muted\"\n        ? feedback\n          ? colors.secondaryHover\n          : variant === \"secondary\"\n            ? colors.secondary\n            : colors.muted\n        : variant === \"tinted\"\n          ? bubbleTint(colors.primary, dark, feedback)\n          : variant === \"outline\"\n            ? feedback\n              ? dark\n                ? withOpacity(colors.input, 0.3)\n                : colors.muted\n              : colors.background\n            : variant === \"destructive\"\n              ? withOpacity(colors.destructive, (dark ? 0.2 : 0.1) + (feedback ? 0.1 : 0))\n              : feedback\n                ? withOpacity(colors.muted, dark ? 0.5 : 1)\n                : \"transparent\"\n  const shadow = useShadowTransition([\n    {\n      offsetX: 0,\n      offsetY: 0,\n      spreadDistance: focused && !disabled ? 3 : 0,\n      color: withOpacity(colors.ring, focused && !disabled ? 0.5 : 0),\n    },\n  ])\n  const box: StyleProp<ViewStyle> = [\n    {\n      maxWidth: \"100%\",\n      minWidth: 0,\n      alignSelf: align === \"end\" ? \"flex-end\" : \"flex-start\",\n      overflow: \"hidden\",\n      borderRadius: variant === \"ghost\" ? 0 : radius.xl,\n      borderWidth: 1,\n      borderColor: focused && !disabled ? colors.ring : variant === \"outline\" ? colors.border : \"transparent\",\n      paddingHorizontal: variant === \"ghost\" ? 0 : 12,\n      paddingVertical: variant === \"ghost\" ? 0 : 8,\n      backgroundColor,\n      opacity: disabled ? 0.5 : 1,\n    },\n    style,\n  ]\n  const content = messageText(children, [\n    { ...typography.regular, fontSize: 14, lineHeight: 22.75, color, flexShrink: 1 },\n    textStyle,\n  ])\n  if (!interactive)\n    return (\n      <View {...props} accessibilityState={accessibilityState} style={box}>\n        {content}\n      </View>\n    )\n  return (\n    <AnimatedPressable\n      {...props}\n      disabled={disabled}\n      accessibilityRole={props.accessibilityRole ?? \"button\"}\n      accessibilityState={{ ...accessibilityState, disabled: !!disabled }}\n      onPress={onPress}\n      onLongPress={onLongPress}\n      onPressIn={(event) => {\n        setActive(true)\n        onPressIn?.(event)\n      }}\n      onPressOut={(event) => {\n        setActive(false)\n        onPressOut?.(event)\n      }}\n      onHoverIn={(event) => {\n        setHovered(true)\n        onHoverIn?.(event)\n      }}\n      onHoverOut={(event) => {\n        setHovered(false)\n        onHoverOut?.(event)\n      }}\n      onFocus={(event) => {\n        setFocused(isFocusVisible(event))\n        onFocus?.(event)\n      }}\n      onBlur={(event) => {\n        setFocused(false)\n        onBlur?.(event)\n      }}\n      style={[transition([\"backgroundColor\", \"borderColor\"]), box, shadow]}\n    >\n      {content}\n    </AnimatedPressable>\n  )\n}\nexport type BubbleReactionsProps = ViewProps & {\n  align?: \"start\" | \"end\"\n  side?: \"top\" | \"bottom\"\n  /** Removes padding when reactions contain buttons, matching web's button treatment. */\n  interactive?: boolean\n  textStyle?: StyleProp<TextStyle>\n}\nfunction Reactions({\n  align = \"end\",\n  side = \"bottom\",\n  interactive = false,\n  style,\n  textStyle,\n  onLayout,\n  children,\n  ...props\n}: BubbleReactionsProps) {\n  const { colors, typography } = useNativeTheme()\n  const [height, setHeight] = useState(24)\n  return (\n    <View\n      {...props}\n      onLayout={(event) => {\n        setHeight(event.nativeEvent.layout.height)\n        onLayout?.(event)\n      }}\n      style={[\n        {\n          position: \"absolute\",\n          zIndex: 10,\n          flexDirection: \"row\",\n          alignItems: \"center\",\n          justifyContent: \"center\",\n          gap: 4,\n          borderRadius: 9999,\n          backgroundColor: colors.muted,\n          paddingHorizontal: interactive ? 0 : 6,\n          paddingVertical: interactive ? 0 : 2,\n          boxShadow: `0 0 0 3px ${colors.card}`,\n          [side]: 0,\n          [align === \"start\" ? \"start\" : \"end\"]: 12,\n          transform: [{ translateY: height * (side === \"top\" ? -0.75 : 0.75) }],\n        },\n        style,\n      ]}\n    >\n      {messageText(children, [\n        { ...typography.regular, color: colors.foreground, fontSize: 14, lineHeight: 20 },\n        textStyle,\n      ])}\n    </View>\n  )\n}\nexport const Bubble = { Root, Group, Content, Reactions }\n"
+    }
+  ],
+  "docs": "## How it works\n\nBubble supports `Root`, `Group`, `Content`, and `Reactions`, with the web variants: `default`, `secondary`, `muted`, `tinted`, `outline`, `ghost`, and `destructive`. It uses the same 80% maximum width, shared corner radius, 12px/8px content padding, and 14px relaxed text. Ghost bubbles can use the full width and remove padding and rounding. Tinted surfaces derive their hue from the theme's primary color.\n\n`align=\"end\"` places a bubble at the trailing edge. Inside Message, it inherits the sender's alignment unless explicitly overridden. Bare strings become native Text; explicit Text children keep their own styles. `textStyle` customizes the default text, and `style` merges last on each part.\n\nContent becomes an accessible Pressable when given `onPress` or `onLongPress`; otherwise it is a passive View. It supports disabled state, hover/press feedback, keyboard focus rings, and shared reduced-motion behavior. Use native callbacks directly instead of `asChild`. Give interactive content an accessible label when its children do not convey the action.\n\nReactions accepts `side=\"top\" | \"bottom\"` and `align=\"start\" | \"end\"`. Its offset is measured from its actual height, including larger text. Use `interactive` when it contains Buttons to remove the normal text padding. Reaction actions are siblings of Content, so they do not activate the message. Leave extra space between messages when using reactions, just as on web; their intentional overlap does not add layout height.\n\nCustom native fonts may change glyph metrics. Screen-reader navigation and Android visuals remain unverified.\n\nThe iOS 26.3 Simulator used for validation renders emoji as missing-glyph boxes even in unstyled native Text. Reaction labels and actions work; emoji appearance needs verification on a physical device or a corrected simulator runtime."
+}

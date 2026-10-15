@@ -1,0 +1,19 @@
+{
+  "name": "lib/message-layout",
+  "type": "lib",
+  "description": "Inspect composition without rendering arbitrary user components.",
+  "exports": [
+    "MessageLayout",
+    "hasMessagePart",
+    "messageText"
+  ],
+  "parts": [],
+  "dependencies": {},
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "lib/message-layout.ts",
+      "content": "import { Children, Fragment, createContext, createElement, isValidElement, type ReactNode } from \"react\"\nimport { Text, type StyleProp, type TextStyle } from \"react-native\"\n\nexport const MessageLayout = createContext({ align: \"start\" as \"start\" | \"end\", footer: false, ghost: false })\n/** Inspect composition without rendering arbitrary user components. */\nexport function hasMessagePart(\n  children: ReactNode,\n  match: (child: React.ReactElement<Record<string, unknown>>) => boolean\n): boolean {\n  return Children.toArray(children).some(\n    (child) =>\n      isValidElement<Record<string, unknown>>(child) &&\n      (match(child) || hasMessagePart(child.props.children as ReactNode, match))\n  )\n}\n/** Native Views cannot contain bare strings; explicit Text children retain their own styles. */\nexport function messageText(children: ReactNode, style: StyleProp<TextStyle>): ReactNode {\n  const nodes = Children.toArray(children)\n  if (nodes.every((child) => typeof child === \"string\" || typeof child === \"number\"))\n    return createElement(Text, { style }, children)\n  return nodes.map((child, index) => {\n    if (typeof child === \"string\" || typeof child === \"number\") return createElement(Text, { key: index, style }, child)\n    if (isValidElement<{ children?: ReactNode }>(child) && child.type === Fragment)\n      return createElement(Fragment, { key: child.key ?? index }, messageText(child.props.children, style))\n    return child\n  })\n}\n"
+    }
+  ]
+}

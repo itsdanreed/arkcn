@@ -1,0 +1,17 @@
+{
+  "name": "lib/highlight-layout",
+  "type": "lib",
+  "description": "Intersect matching character ranges with native text's already-wrapped lines.",
+  "exports": [
+    "getHighlightSegments"
+  ],
+  "parts": [],
+  "dependencies": {},
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "lib/highlight-layout.ts",
+      "content": "/** Intersect matching character ranges with native text's already-wrapped lines. */\nexport type HighlightLine = {\n  text: string\n  x: number\n  y: number\n  width: number\n  height: number\n  ascender: number\n  descender: number\n}\nexport function getHighlightSegments(chunks: { text: string; match: boolean }[], lines: HighlightLine[]) {\n  let offset = 0\n  const ranges = chunks.flatMap((chunk) => {\n    const start = offset\n    offset += chunk.text.length\n    return chunk.match && offset > start ? [{ start, end: offset }] : []\n  })\n  let lineStart = 0\n  return lines.flatMap((line, lineIndex) => {\n    const start = lineStart\n    lineStart += line.text.length\n    return ranges.flatMap((range) => {\n      const from = Math.max(start, range.start) - start\n      const to = Math.min(lineStart, range.end) - start\n      if (to <= from) return []\n      return [\n        {\n          key: `${lineIndex}:${from}:${to}`,\n          line,\n          before: line.text.slice(0, from),\n          through: line.text.slice(0, to).replace(/[\\r\\n]+$/, \"\"),\n        },\n      ]\n    })\n  })\n}\n"
+    }
+  ]
+}

@@ -1,0 +1,322 @@
+{
+  "name": "fieldset",
+  "type": "ui",
+  "description": "Groups related fields with a legend, description, and inherited disabled state.",
+  "exports": [
+    "useFieldsetContext",
+    "Fieldset"
+  ],
+  "parts": [
+    {
+      "name": "Fieldset.Root",
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Disables the part and everything inside it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Use the destructive border and focus ring; provide an accessible error explanation.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Fieldset.Legend",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Fieldset.HelperText",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Fieldset.ErrorText",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Fieldset.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(state: { disabled: boolean; invalid: boolean; }) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        }
+      ]
+    }
+  ],
+  "dependencies": {},
+  "registryDependencies": [
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/fieldset.tsx",
+      "content": "/** Groups related fields with a legend, description, and inherited disabled state. */\nimport { createContext, useContext, type ComponentPropsWithRef, type ReactNode } from \"react\"\nimport { Text, View } from \"react-native\"\nimport { useNativeTheme } from \"@/lib/theme\"\n\nconst FieldsetState = createContext({ disabled: false, invalid: false })\nexport const useFieldsetContext = () => useContext(FieldsetState)\nexport type FieldsetRootProps = ComponentPropsWithRef<typeof View> & { disabled?: boolean; invalid?: boolean }\nfunction FieldsetRoot({ disabled = false, invalid = false, style, ...props }: FieldsetRootProps) {\n  const parent = useFieldsetContext()\n  return (\n    <FieldsetState value={{ disabled: parent.disabled || disabled, invalid }}>\n      <View {...props} style={[{ minWidth: 0, gap: 16 }, style]} />\n    </FieldsetState>\n  )\n}\nexport type FieldsetLegendProps = ComponentPropsWithRef<typeof Text>\nfunction FieldsetLegend({ style, ...props }: FieldsetLegendProps) {\n  const { typography, fontSize, lineHeight, colors } = useNativeTheme()\n  return (\n    <Text\n      accessibilityRole=\"header\"\n      {...props}\n      style={[\n        {\n          ...typography.medium,\n          fontSize: fontSize.body,\n          lineHeight: lineHeight.body,\n          color: colors.foreground,\n          // HTML legends sit outside the fieldset flex flow: cancel its 16px gap.\n          marginBottom: -10,\n        },\n        style,\n      ]}\n    />\n  )\n}\nexport type FieldsetHelperTextProps = ComponentPropsWithRef<typeof Text>\nfunction FieldsetHelperText({ style, ...props }: FieldsetHelperTextProps) {\n  const { typography, fontSize, colors } = useNativeTheme()\n  return (\n    <Text\n      {...props}\n      style={[\n        { ...typography.regular, fontSize: fontSize.md, lineHeight: 21, color: colors.mutedForeground, marginTop: -6 },\n        style,\n      ]}\n    />\n  )\n}\nexport type FieldsetErrorTextProps = ComponentPropsWithRef<typeof Text>\nfunction FieldsetErrorText({ style, ...props }: FieldsetErrorTextProps) {\n  const { invalid } = useFieldsetContext()\n  const { typography, fontSize, lineHeight, colors } = useNativeTheme()\n  if (!invalid) return null\n  return (\n    <Text\n      accessibilityRole=\"alert\"\n      accessibilityLiveRegion=\"polite\"\n      {...props}\n      style={[\n        { ...typography.regular, fontSize: fontSize.md, lineHeight: lineHeight.md, color: colors.destructive },\n        style,\n      ]}\n    />\n  )\n}\nexport type FieldsetContextProps = { children: (state: ReturnType<typeof useFieldsetContext>) => ReactNode }\nfunction FieldsetContext({ children }: FieldsetContextProps) {\n  return children(useFieldsetContext())\n}\nexport const Fieldset = {\n  Root: FieldsetRoot,\n  Legend: FieldsetLegend,\n  HelperText: FieldsetHelperText,\n  ErrorText: FieldsetErrorText,\n  Context: FieldsetContext,\n}\n"
+    }
+  ],
+  "docs": "## How it works\n\n`Fieldset.Root` groups related fields using `Legend`, `HelperText`, and `ErrorText`. Typography and spacing follow the React component. The legend is exposed as a heading without grouping children into a single accessibility element.\n\nSet `disabled` on the root to disable nested `Field` controls. Nested fieldsets cannot re-enable a disabled parent. Other standalone controls must receive `disabled` explicitly. `invalid` displays the fieldset's `ErrorText` but does not mark every individual field invalid.\n\n`Fieldset.Context` and `useFieldsetContext` expose the current state for custom controls. Use React Native `style` and accessibility props; this port does not use a DOM fieldset or Ark RootProvider."
+}

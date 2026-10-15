@@ -1,0 +1,1951 @@
+{
+  "name": "spreadsheet",
+  "type": "ui",
+  "description": "Native, virtualized spreadsheet with shared formulas, frozen panes, editing, and intent-based history.",
+  "exports": [
+    "cellName",
+    "columnLabel",
+    "useSpreadsheet",
+    "Spreadsheet"
+  ],
+  "parts": [
+    {
+      "name": "Spreadsheet.Root",
+      "props": [
+        {
+          "name": "data",
+          "type": "SpreadsheetData",
+          "required": true,
+          "from": "arkcn"
+        },
+        {
+          "name": "columnCount",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "columnWidth",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "columnWidths",
+          "type": "Record<number, number>",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "defaultColumnWidths",
+          "type": "Record<number, number>",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "defaultRowHeights",
+          "type": "Record<number, number>",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "defaultSelection",
+          "type": "SpreadsheetSelection | null",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "frozenColumns",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "frozenRows",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "functions",
+          "type": "Record<string, FormulaFunction>",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "historyLimit",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "minColumnWidth",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "minRowHeight",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "onCellsChange",
+          "type": "((changes: SpreadsheetChange[]) => void)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "onColumnWidthsChange",
+          "type": "((widths: Record<number, number>) => void)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "onRowHeightsChange",
+          "type": "((heights: Record<number, number>) => void)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "onSelectionChange",
+          "type": "((selection: SpreadsheetSelection | null) => void)",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "overscan",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "description": "Shows the value but prevents changes.",
+          "from": "arkcn"
+        },
+        {
+          "name": "rowCount",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "rowHeaderWidth",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "rowHeight",
+          "type": "number",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "rowHeights",
+          "type": "Record<number, number>",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "selection",
+          "type": "SpreadsheetSelection | null",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(api: { data: SpreadsheetData; rowCount: number; columnCount: number; rowHeight: number; rowHeaderWidth: number; heights: number[]; rowOffsets: number[]; fro…",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.FormulaBar",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.NameBox",
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the destructive border and focus ring; provide an accessible error explanation.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "description": "Provides an initial value that will change when the user starts typing.\nUseful for simple use-cases where you do not want to deal with listening\nto events and updating the value prop to keep the controlled state in sync.",
+          "from": "react-native"
+        },
+        {
+          "name": "editable",
+          "type": "boolean",
+          "required": false,
+          "description": "If `false`, text is not editable. The default value is `true`.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "keyboardType",
+          "type": "KeyboardTypeOptions",
+          "required": false,
+          "description": "Determines which keyboard to open, e.g.`numeric`.\n\nThe following values work across platforms:\n\n- `default`\n- `numeric`\n- `number-pad`\n- `decimal-pad`\n- `email-address`\n- `phone-pad`\n- `url`\n\n*iOS Only*\n\nThe following values work on iOS only:\n\n- `ascii-capable`\n- `numbers-and-punctuation`\n- `name-phone-pad`\n- `twitter`\n- `web-search`\n\n*Android Only*\n\nThe following values work on Android only:\n\n- `visible-password`",
+          "from": "react-native"
+        },
+        {
+          "name": "multiline",
+          "type": "boolean",
+          "required": false,
+          "description": "If `true`, the text input can be multiple lines.\nThe default value is `false`.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "description": "Sets the number of lines for a `TextInput`. Use it with multiline set to\n`true` to be able to fill the lines.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((e: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | undefi…",
+          "required": false,
+          "description": "Callback that is called when the text input is blurred.",
+          "from": "react-native"
+        },
+        {
+          "name": "onChangeText",
+          "type": "((text: string) => unknown)",
+          "required": false,
+          "description": "Callback that is called when the text input's text changes.\nChanged text is passed as an argument to the callback handler.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((e: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | undefi…",
+          "required": false,
+          "description": "Callback that is called when the text input is focused.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called when a single tap gesture is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "The string that will be rendered before text input has been entered.",
+          "from": "react-native"
+        },
+        {
+          "name": "secureTextEntry",
+          "type": "boolean",
+          "required": false,
+          "description": "If `true`, the text input obscures the text entered so that sensitive text\nlike passwords stay secure. The default value is `false`. Does not work with 'multiline={true}'.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Note that not all Text styles are supported, an incomplete list of what is not supported includes:\n\n- `borderLeftWidth`\n- `borderTopWidth`\n- `borderRightWidth`\n- `borderBottomWidth`\n- `borderTopLeftRadius`\n- `borderTopRightRadius`\n- `borderBottomRightRadius`\n- `borderBottomLeftRadius`\n\nsee [Issue#7070](https://github.com/facebook/react-native/issues/7070)\nfor more detail.\n\n[Styles](docs/style.html)",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value to show for the text input. `TextInput` is a controlled\ncomponent, which means the native value will be forced to match this\nvalue prop if provided. For most uses, this works great, but in some\ncases this may cause flickering - one common cause is preventing edits\nby keeping value the same. In addition to simply setting the same value,\neither set `editable={false}`, or set/update `maxLength` to prevent\nunwanted edits without flicker.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.FormulaInput",
+      "props": [
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Disables the part and everything inside it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Use the destructive border and focus ring; provide an accessible error explanation.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "defaultValue",
+          "type": "string",
+          "required": false,
+          "description": "Provides an initial value that will change when the user starts typing.\nUseful for simple use-cases where you do not want to deal with listening\nto events and updating the value prop to keep the controlled state in sync.",
+          "from": "react-native"
+        },
+        {
+          "name": "editable",
+          "type": "boolean",
+          "required": false,
+          "description": "If `false`, text is not editable. The default value is `true`.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "keyboardType",
+          "type": "KeyboardTypeOptions",
+          "required": false,
+          "description": "Determines which keyboard to open, e.g.`numeric`.\n\nThe following values work across platforms:\n\n- `default`\n- `numeric`\n- `number-pad`\n- `decimal-pad`\n- `email-address`\n- `phone-pad`\n- `url`\n\n*iOS Only*\n\nThe following values work on iOS only:\n\n- `ascii-capable`\n- `numbers-and-punctuation`\n- `name-phone-pad`\n- `twitter`\n- `web-search`\n\n*Android Only*\n\nThe following values work on Android only:\n\n- `visible-password`",
+          "from": "react-native"
+        },
+        {
+          "name": "multiline",
+          "type": "boolean",
+          "required": false,
+          "description": "If `true`, the text input can be multiple lines.\nThe default value is `false`.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "description": "Sets the number of lines for a `TextInput`. Use it with multiline set to\n`true` to be able to fill the lines.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((e: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | undefi…",
+          "required": false,
+          "description": "Callback that is called when the text input is blurred.",
+          "from": "react-native"
+        },
+        {
+          "name": "onChangeText",
+          "type": "((text: string) => unknown)",
+          "required": false,
+          "description": "Callback that is called when the text input's text changes.\nChanged text is passed as an argument to the callback handler.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((e: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | undefi…",
+          "required": false,
+          "description": "Callback that is called when the text input is focused.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called when a single tap gesture is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "description": "The string that will be rendered before text input has been entered.",
+          "from": "react-native"
+        },
+        {
+          "name": "secureTextEntry",
+          "type": "boolean",
+          "required": false,
+          "description": "If `true`, the text input obscures the text entered so that sensitive text\nlike passwords stay secure. The default value is `false`. Does not work with 'multiline={true}'.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Note that not all Text styles are supported, an incomplete list of what is not supported includes:\n\n- `borderLeftWidth`\n- `borderTopWidth`\n- `borderRightWidth`\n- `borderBottomWidth`\n- `borderTopLeftRadius`\n- `borderTopRightRadius`\n- `borderBottomRightRadius`\n- `borderBottomLeftRadius`\n\nsee [Issue#7070](https://github.com/facebook/react-native/issues/7070)\nfor more detail.\n\n[Styles](docs/style.html)",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        },
+        {
+          "name": "value",
+          "type": "string",
+          "required": false,
+          "description": "The value to show for the text input. `TextInput` is a controlled\ncomponent, which means the native value will be forced to match this\nvalue prop if provided. For most uses, this works great, but in some\ncases this may cause flickering - one common cause is preventing edits\nby keeping value the same. In addition to simply setting the same value,\neither set `editable={false}`, or set/update `maxLength` to prevent\nunwanted edits without flicker.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.Container",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.Header",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.HeaderRow",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.Corner",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.ColumnHeader",
+      "props": [
+        {
+          "name": "column",
+          "type": "number",
+          "required": true,
+          "description": "Id of the column this part belongs to.",
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.ResizeHandle",
+      "props": [
+        {
+          "name": "withHandle",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.RowResizeHandle",
+      "props": [
+        {
+          "name": "withHandle",
+          "type": "boolean",
+          "required": false,
+          "default": "true",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.Body",
+      "props": [
+        {
+          "name": "children",
+          "type": "((row: number) => ReactNode)",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.Row",
+      "props": [
+        {
+          "name": "row",
+          "type": "number",
+          "required": true,
+          "description": "The row this part belongs to.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.RowHeader",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.Cell",
+      "props": [
+        {
+          "name": "column",
+          "type": "number",
+          "required": true,
+          "description": "Id of the column this part belongs to.",
+          "from": "arkcn"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "row",
+          "type": "number",
+          "required": false,
+          "description": "The row this part belongs to.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.FillHandle",
+      "props": [
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.Empty",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.UndoTrigger",
+      "props": [
+        {
+          "name": "backgroundClip",
+          "type": "\"border-box\" | \"padding-box\"",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Displays the validation border and ring.",
+          "from": "arkcn"
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "required": false,
+          "description": "Shows a loading state.",
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\"",
+          "required": false,
+          "description": "Visible control size, matching the web renderer. Native touch areas extend beyond it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Native text styles for a plain button label.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"destructive\" | \"link\"",
+          "required": false,
+          "description": "Visual variant, using the same semantic colors as the web renderer.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode | ((state: Readonly<{ pressed: boolean; }>) => ReactNode)",
+          "required": false,
+          "description": "Either children or a function that receives a boolean reflecting whether\nthe component is currently pressed.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.RedoTrigger",
+      "props": [
+        {
+          "name": "backgroundClip",
+          "type": "\"border-box\" | \"padding-box\"",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Displays the validation border and ring.",
+          "from": "arkcn"
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "required": false,
+          "description": "Shows a loading state.",
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\"",
+          "required": false,
+          "description": "Visible control size, matching the web renderer. Native touch areas extend beyond it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Native text styles for a plain button label.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"destructive\" | \"link\"",
+          "required": false,
+          "description": "Visual variant, using the same semantic colors as the web renderer.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode | ((state: Readonly<{ pressed: boolean; }>) => ReactNode)",
+          "required": false,
+          "description": "Either children or a function that receives a boolean reflecting whether\nthe component is currently pressed.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Spreadsheet.Toolbar",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "expo-clipboard": ">=55.0.0 <58",
+    "react-native-gesture-handler": ">=2.32.0 <3",
+    "react-native-reanimated": ">=4.1.0 <5",
+    "react-native-worklets": ">=0.5.0 <1"
+  },
+  "registryDependencies": [
+    "button",
+    "input",
+    "lib/context",
+    "lib/controllable",
+    "lib/formula",
+    "lib/motion",
+    "lib/spreadsheet",
+    "lib/spreadsheet-layout",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/spreadsheet.tsx",
+      "content": "/** Native, virtualized spreadsheet with shared formulas, frozen panes, editing, and intent-based history. */\nimport {\n  Children,\n  createContext,\n  useContext,\n  useLayoutEffect,\n  useMemo,\n  useRef,\n  useState,\n  type ComponentPropsWithRef,\n  type ComponentRef,\n  type ReactNode,\n} from \"react\"\nimport { Platform, Pressable, ScrollView, Text, View, type ViewStyle } from \"react-native\"\nimport Animated, {\n  useSharedValue,\n  useAnimatedStyle,\n  useAnimatedScrollHandler,\n  useAnimatedReaction,\n} from \"react-native-reanimated\"\nimport { scheduleOnRN } from \"react-native-worklets\"\nimport { Gesture, GestureDetector, GestureHandlerRootView } from \"react-native-gesture-handler\"\nimport { AnimatedPressable } from \"@/lib/motion\"\nimport { rowMetrics, rowAtOffset } from \"@/lib/spreadsheet-layout\"\nimport * as Clipboard from \"expo-clipboard\"\nimport { useControllable } from \"@/lib/controllable\"\nimport { createRequiredContext } from \"@/lib/context\"\nimport { cellName, columnLabel, createFormulaEvaluator, type FormulaFunction } from \"@/lib/formula\"\nimport {\n  boundsOf,\n  sameCell,\n  parseInput,\n  rawText,\n  fillTarget,\n  fillChanges,\n  type SpreadsheetValue,\n  type SpreadsheetData,\n  type SpreadsheetCellAddress,\n  type SpreadsheetSelection,\n  type SpreadsheetChange,\n} from \"@/lib/spreadsheet\"\nimport { useNativeTheme, withOpacity } from \"@/lib/theme\"\nimport { Input } from \"@/components/ui/input\"\nimport { Button, type ButtonProps } from \"@/components/ui/button\"\nexport * from \"@/lib/spreadsheet\"\nexport { cellName, columnLabel }\ntype ViewProps = ComponentPropsWithRef<typeof View>\ntype PressProps = Omit<ComponentPropsWithRef<typeof Pressable>, \"children\"> & { children?: ReactNode }\ntype InputProps = ComponentPropsWithRef<typeof Input.Root>\nconst clamp = (n: number, min: number, max: number) => Math.min(max, Math.max(min, n))\ntype Editing = SpreadsheetCellAddress & { draft: string; via: \"bar\" | \"cell\" }\nexport type SpreadsheetRootProps = ViewProps & {\n  data: SpreadsheetData\n  rowCount?: number\n  columnCount?: number\n  onCellsChange?: (changes: SpreadsheetChange[]) => void\n  rowHeight?: number\n  minRowHeight?: number\n  rowHeights?: Record<number, number>\n  defaultRowHeights?: Record<number, number>\n  onRowHeightsChange?: (heights: Record<number, number>) => void\n  rowHeaderWidth?: number\n  columnWidth?: number\n  minColumnWidth?: number\n  columnWidths?: Record<number, number>\n  defaultColumnWidths?: Record<number, number>\n  onColumnWidthsChange?: (widths: Record<number, number>) => void\n  selection?: SpreadsheetSelection | null\n  defaultSelection?: SpreadsheetSelection | null\n  onSelectionChange?: (selection: SpreadsheetSelection | null) => void\n  frozenRows?: number\n  frozenColumns?: number\n  overscan?: number\n  readOnly?: boolean\n  functions?: Record<string, FormulaFunction>\n  historyLimit?: number\n}\nfunction useSheet({\n  data,\n  rowCount: rowsProp,\n  columnCount: colsProp,\n  onCellsChange,\n  rowHeight = 32,\n  minRowHeight = 24,\n  rowHeights,\n  defaultRowHeights = {},\n  onRowHeightsChange,\n  rowHeaderWidth = 48,\n  columnWidth = 100,\n  minColumnWidth = 40,\n  columnWidths,\n  defaultColumnWidths = {},\n  onColumnWidthsChange,\n  selection: selectionProp,\n  defaultSelection = null,\n  onSelectionChange,\n  frozenRows: frozenRowsProp = 0,\n  frozenColumns: frozenColumnsProp = 0,\n  overscan = 6,\n  readOnly = false,\n  functions,\n  historyLimit = 100,\n}: SpreadsheetRootProps) {\n  const rowCount = rowsProp ?? data.length\n  const columnCount = colsProp ?? data.reduce((max, row) => Math.max(max, row.length), 0)\n  if (\n    !Number.isInteger(rowCount) ||\n    rowCount < 0 ||\n    !Number.isInteger(columnCount) ||\n    columnCount < 0 ||\n    !Number.isFinite(minRowHeight) ||\n    minRowHeight <= 0 ||\n    !Number.isFinite(rowHeight) ||\n    rowHeight <= 0 ||\n    !Number.isFinite(columnWidth) ||\n    columnWidth <= 0 ||\n    !Number.isFinite(minColumnWidth) ||\n    minColumnWidth <= 0 ||\n    !Number.isFinite(rowHeaderWidth) ||\n    rowHeaderWidth < 0 ||\n    !Number.isFinite(frozenRowsProp) ||\n    !Number.isFinite(frozenColumnsProp) ||\n    !Number.isInteger(overscan) ||\n    overscan < 0 ||\n    !Number.isInteger(historyLimit) ||\n    historyLimit < 1\n  )\n    throw new RangeError(\n      \"Spreadsheet dimensions must be finite and positive; row/column counts must be nonnegative integers\"\n    )\n  const frozenRows = clamp(Math.floor(frozenRowsProp), 0, rowCount)\n  const frozenColumns = clamp(Math.floor(frozenColumnsProp), 0, columnCount)\n  const [rowSizing, setRowSizing] = useControllable(rowHeights, defaultRowHeights, onRowHeightsChange)\n  const { heights, offsets: rowOffsets } = useMemo(\n    () => rowMetrics(rowCount, rowHeight, minRowHeight, rowSizing),\n    [rowCount, rowHeight, minRowHeight, rowSizing]\n  )\n  const frozenHeight = rowOffsets[frozenRows]\n  const [sizing, setSizing] = useControllable(columnWidths, defaultColumnWidths, onColumnWidthsChange)\n  const widths = Array.from({ length: columnCount }, (_, c) =>\n    Math.max(minColumnWidth, Number.isFinite(sizing[c]) ? sizing[c] : columnWidth)\n  )\n  const offsets: number[] = []\n  let totalWidth = rowHeaderWidth\n  for (const width of widths) {\n    offsets.push(totalWidth)\n    totalWidth += width\n  }\n  const [selectionState, setSelection] = useControllable(selectionProp, defaultSelection, onSelectionChange)\n  const validCell = (cell: SpreadsheetCellAddress) => ({\n    row: clamp(Math.floor(cell.row), 0, Math.max(0, rowCount - 1)),\n    column: clamp(Math.floor(cell.column), 0, Math.max(0, columnCount - 1)),\n  })\n  const selection =\n    rowCount && columnCount && selectionState\n      ? { anchor: validCell(selectionState.anchor), focus: validCell(selectionState.focus) }\n      : null\n  const bounds = boundsOf(selection)\n  const [editing, setEditingState] = useState<Editing | null>(null)\n  const editingRef = useRef(editing)\n  const setEditing = (next: Editing | null) => {\n    editingRef.current = next\n    setEditingState(next)\n  }\n  const [extend, setExtend] = useState(false)\n  const [filling, setFilling] = useState(false)\n  const [message, announce] = useState(\"\")\n  const resizePreview = useSharedValue({ axis: \"none\", index: -1, delta: 0 })\n  const [resizeRevision, finishResize] = useState(0)\n  useLayoutEffect(() => {\n    resizePreview.set({ axis: \"none\", index: -1, delta: 0 })\n  }, [resizeRevision, resizePreview])\n  const scrollX = useSharedValue(0)\n  const scrollY = useSharedValue(0)\n  const [scroll, setScroll] = useState({ x: 0, y: 0 })\n  const [viewport, setViewport] = useState({ width: 0, height: 320 })\n  const horizontalRef = useRef<ComponentRef<typeof ScrollView>>(null)\n  const verticalRef = useRef<ComponentRef<typeof ScrollView>>(null)\n  const formulaRef = useRef<ComponentRef<typeof Input.Root>>(null)\n  const getRaw = (cell: SpreadsheetCellAddress): SpreadsheetValue => data[cell.row]?.[cell.column] ?? null\n  const evaluator = useMemo(\n    () => createFormulaEvaluator((cell) => data[cell.row]?.[cell.column] ?? null, { rowCount, columnCount, functions }),\n    [data, rowCount, columnCount, functions]\n  )\n  const history = useRef<{ batches: SpreadsheetChange[][]; cursor: number }>({ batches: [], cursor: 0 })\n  const [, refreshHistory] = useState(0)\n  const applyChanges = (changes: SpreadsheetChange[]) => {\n    if (readOnly || !onCellsChange) return\n    const real = changes.filter(\n      (c) =>\n        c.row >= 0 && c.row < rowCount && c.column >= 0 && c.column < columnCount && !Object.is(c.value, c.previous)\n    )\n    if (!real.length) return\n    onCellsChange(real)\n    const batches = [...history.current.batches.slice(0, history.current.cursor), real].slice(\n      -Math.max(1, historyLimit)\n    )\n    history.current = { batches, cursor: batches.length }\n    refreshHistory((n) => n + 1)\n    announce(`Changed ${real.length} cells`)\n  }\n  const undo = () => {\n    if (readOnly || !onCellsChange || !history.current.cursor) return\n    setEditing(null)\n    const batch = history.current.batches[--history.current.cursor]\n    onCellsChange(batch.map((c) => ({ ...c, value: c.previous, previous: c.value })))\n    refreshHistory((n) => n + 1)\n    announce(\"Undid the last change\")\n  }\n  const redo = () => {\n    if (readOnly || !onCellsChange || history.current.cursor >= history.current.batches.length) return\n    setEditing(null)\n    onCellsChange(history.current.batches[history.current.cursor++])\n    refreshHistory((n) => n + 1)\n    announce(\"Redid the last change\")\n  }\n  const scrollToCell = (cell: SpreadsheetCellAddress) => {\n    let x = scrollX.get(),\n      y = scrollY.get()\n    const frozenWidth = offsets[frozenColumns] ?? totalWidth\n    const height = Math.max(rowHeight, viewport.height - frozenHeight - rowHeight)\n    if (cell.row >= frozenRows) {\n      const top = rowOffsets[cell.row] - frozenHeight\n      if (top < y) y = top\n      else if (top + heights[cell.row] > y + height) y = top + heights[cell.row] - height\n    }\n    if (cell.column >= frozenColumns) {\n      const left = offsets[cell.column] - frozenWidth\n      const width = Math.max(1, viewport.width - frozenWidth)\n      if (left < x) x = left\n      else if (left + widths[cell.column] > x + width) x = left + widths[cell.column] - width\n    }\n    horizontalRef.current?.scrollTo({ x: Math.max(0, x), animated: false })\n    verticalRef.current?.scrollTo({ y: Math.max(0, y), animated: false })\n  }\n  const commitEditing = (options?: { move?: \"down\" | \"up\" | \"left\" | \"right\" | \"none\" }) => {\n    const current = editingRef.current\n    if (!current) return\n    setEditing(null)\n    applyChanges([\n      { row: current.row, column: current.column, previous: getRaw(current), value: parseInput(current.draft) },\n    ])\n    const move = options?.move\n    const cell = validCell({\n      row: current.row + (move === \"down\" ? 1 : move === \"up\" ? -1 : 0),\n      column: current.column + (move === \"right\" ? 1 : move === \"left\" ? -1 : 0),\n    })\n    setSelection({ anchor: cell, focus: cell })\n    scrollToCell(cell)\n  }\n  const select = (next: SpreadsheetSelection | null) => {\n    commitEditing()\n    setSelection(\n      next && rowCount && columnCount ? { anchor: validCell(next.anchor), focus: validCell(next.focus) } : null\n    )\n    setFilling(false)\n  }\n  const focusCell = (address: SpreadsheetCellAddress, options?: { extend?: boolean; scroll?: boolean }) => {\n    if (!rowCount || !columnCount) return\n    const cell = validCell(address)\n    if (filling && bounds) {\n      const target = fillTarget(bounds, cell)\n      applyChanges(fillChanges(bounds, target, getRaw))\n      setSelection({ anchor: { row: target.r0, column: target.c0 }, focus: { row: target.r1, column: target.c1 } })\n      setFilling(false)\n    } else select({ anchor: (options?.extend ?? extend) && selection ? selection.anchor : cell, focus: cell })\n    if (options?.scroll !== false) scrollToCell(cell)\n  }\n  const startEditing = (cell: SpreadsheetCellAddress, seed?: string, via: Editing[\"via\"] = \"cell\") => {\n    if (readOnly || !onCellsChange || !rowCount || !columnCount) return\n    if (editingRef.current && !sameCell(cell, editingRef.current)) commitEditing()\n    const address = validCell(cell)\n    setSelection({ anchor: address, focus: address })\n    setEditing({ ...address, draft: seed ?? rawText(getRaw(address)), via })\n    setFilling(false)\n    setExtend(false)\n  }\n  const clearRange = () => {\n    if (!bounds) return\n    const changes: SpreadsheetChange[] = []\n    for (let row = bounds.r0; row <= bounds.r1; row++)\n      for (let column = bounds.c0; column <= bounds.c1; column++)\n        changes.push({ row, column, value: null, previous: getRaw({ row, column }) })\n    applyChanges(changes)\n  }\n  const copyRange = () => {\n    if (!bounds) return \"\"\n    return Array.from({ length: bounds.r1 - bounds.r0 + 1 }, (_, r) =>\n      Array.from({ length: bounds.c1 - bounds.c0 + 1 }, (_, c) =>\n        evaluator.display({ row: bounds.r0 + r, column: bounds.c0 + c })\n      ).join(\"\\t\")\n    ).join(\"\\n\")\n  }\n  const pasteText = (text: string) => {\n    if (!bounds || readOnly) return\n    const rows = text\n      .replace(/\\r/g, \"\")\n      .replace(/\\n$/, \"\")\n      .split(\"\\n\")\n      .map((line) => line.split(\"\\t\"))\n    const single = rows.length === 1 && rows[0].length === 1\n    const changes: SpreadsheetChange[] = []\n    let r1 = bounds.r0,\n      c1 = bounds.c0\n    for (let r = 0; r < (single ? bounds.r1 - bounds.r0 + 1 : rows.length); r++)\n      for (let c = 0; c < (single ? bounds.c1 - bounds.c0 + 1 : rows[r].length); c++) {\n        const row = bounds.r0 + r,\n          column = bounds.c0 + c\n        if (row >= rowCount || column >= columnCount) continue\n        changes.push({\n          row,\n          column,\n          value: parseInput(single ? rows[0][0] : rows[r][c]),\n          previous: getRaw({ row, column }),\n        })\n        r1 = Math.max(r1, row)\n        c1 = Math.max(c1, column)\n      }\n    applyChanges(changes)\n    setSelection({ anchor: { row: bounds.r0, column: bounds.c0 }, focus: { row: r1, column: c1 } })\n  }\n  const start = clamp(\n    rowAtOffset(rowOffsets, scroll.y + frozenHeight) - frozenRows - overscan,\n    0,\n    Math.max(0, rowCount - frozenRows)\n  )\n  const end = clamp(\n    rowAtOffset(rowOffsets, scroll.y + frozenHeight + viewport.height) - frozenRows + 1 + overscan,\n    start,\n    Math.max(0, rowCount - frozenRows)\n  )\n  const visibleColumns = widths.flatMap((width, column) =>\n    column < frozenColumns ||\n    (offsets[column] + width >= scroll.x && offsets[column] <= scroll.x + viewport.width + columnWidth)\n      ? [column]\n      : []\n  )\n  return {\n    data,\n    rowCount,\n    columnCount,\n    rowHeight,\n    rowHeaderWidth,\n    heights,\n    rowOffsets,\n    frozenHeight,\n    minRowHeight,\n    setHeight: (row: number, height: number) => {\n      if (Number.isFinite(height))\n        setRowSizing((prev) => ({ ...prev, [row]: Math.max(minRowHeight, Math.round(height)) }))\n    },\n    resetHeight: (row: number) =>\n      setRowSizing((prev) => {\n        const next = { ...prev }\n        delete next[row]\n        return next\n      }),\n    frozenRows,\n    frozenColumns,\n    widths,\n    offsets,\n    totalWidth,\n    minColumnWidth,\n    readOnly: readOnly || !onCellsChange,\n    selection,\n    bounds,\n    editing,\n    extend,\n    setExtend,\n    filling,\n    setFilling,\n    message,\n    announce,\n    scroll,\n    scrollX,\n    scrollY,\n    resizePreview,\n    finishResize,\n    setScroll,\n    viewport,\n    setViewport,\n    horizontalRef,\n    verticalRef,\n    formulaRef,\n    visibleRows: { start, end },\n    visibleColumns,\n    getRaw,\n    getText: (cell: SpreadsheetCellAddress) => rawText(getRaw(cell)),\n    getResult: evaluator.evaluate,\n    getDisplay: evaluator.display,\n    setWidth: (column: number, width: number) => {\n      if (Number.isFinite(width)) setSizing({ ...sizing, [column]: Math.max(minColumnWidth, Math.round(width)) })\n    },\n    resetWidth: (column: number) => {\n      const next = { ...sizing }\n      delete next[column]\n      setSizing(next)\n    },\n    select,\n    focusCell,\n    scrollToCell,\n    startEditing,\n    commitEditing,\n    cancelEditing: () => setEditing(null),\n    setDraft: (draft: string) => {\n      if (editingRef.current && !readOnly) setEditing({ ...editingRef.current, draft })\n    },\n    selectRow: (row: number) => select({ anchor: { row, column: 0 }, focus: { row, column: columnCount - 1 } }),\n    selectColumn: (column: number) => select({ anchor: { row: 0, column }, focus: { row: rowCount - 1, column } }),\n    selectAll: () => select({ anchor: { row: 0, column: 0 }, focus: { row: rowCount - 1, column: columnCount - 1 } }),\n    applyChanges,\n    clearRange,\n    copyRange,\n    pasteText,\n    undo,\n    redo,\n    canUndo: history.current.cursor > 0 && !readOnly,\n    canRedo: history.current.cursor < history.current.batches.length && !readOnly,\n  }\n}\ntype SheetApi = ReturnType<typeof useSheet>\nconst [Provider, useSpreadsheet] = createRequiredContext<SheetApi>(\"Spreadsheet\")\nexport { useSpreadsheet }\nconst RowContext = createContext<number | null>(null)\nconst ColumnContext = createContext<number | null>(null)\nconst PaneContext = createContext<\"frozen\" | \"scrolling\" | null>(null)\nfunction Root(props: SpreadsheetRootProps) {\n  const api = useSheet(props)\n  const {\n    children,\n    style,\n    data: _data,\n    rowCount: _rowCount,\n    columnCount: _columnCount,\n    onCellsChange: _onCellsChange,\n    rowHeight: _rowHeight,\n    minRowHeight: _minRowHeight,\n    rowHeights: _rowHeights,\n    defaultRowHeights: _defaultRowHeights,\n    onRowHeightsChange: _onRowHeightsChange,\n    rowHeaderWidth: _rowHeaderWidth,\n    columnWidth: _columnWidth,\n    minColumnWidth: _minColumnWidth,\n    columnWidths: _columnWidths,\n    defaultColumnWidths: _defaultColumnWidths,\n    onColumnWidthsChange: _onColumnWidthsChange,\n    selection: _selection,\n    defaultSelection: _defaultSelection,\n    onSelectionChange: _onSelectionChange,\n    frozenRows: _frozenRows,\n    frozenColumns: _frozenColumns,\n    overscan: _overscan,\n    readOnly: _readOnly,\n    functions: _functions,\n    historyLimit: _historyLimit,\n    ...viewProps\n  } = props\n  return (\n    <Provider value={api}>\n      <GestureHandlerRootView {...viewProps} style={[{ gap: 8, minHeight: 0, width: \"100%\" }, style]}>\n        {children ?? <Container />}\n      </GestureHandlerRootView>\n    </Provider>\n  )\n}\nexport type SpreadsheetContextProps = { children: (api: SheetApi) => ReactNode }\nfunction Context({ children }: SpreadsheetContextProps) {\n  return children(useSpreadsheet())\n}\nexport type SpreadsheetFormulaBarProps = ViewProps\nfunction FormulaBar({ style, ...props }: SpreadsheetFormulaBarProps) {\n  return <View {...props} style={[{ flexDirection: \"row\", alignItems: \"center\", gap: 8, flexWrap: \"wrap\" }, style]} />\n}\nexport type SpreadsheetNameBoxProps = InputProps\nfunction NameBox({ style, ...props }: SpreadsheetNameBoxProps) {\n  const { selection, bounds } = useSpreadsheet()\n  const value =\n    !selection || !bounds\n      ? \"\"\n      : sameCell(selection.anchor, selection.focus)\n        ? cellName(selection.focus)\n        : `${cellName({ row: bounds.r0, column: bounds.c0 })}:${cellName({ row: bounds.r1, column: bounds.c1 })}`\n  return <Input.Root accessibilityLabel=\"Cell name\" {...props} value={value} readOnly style={[{ width: 96 }, style]} />\n}\nexport type SpreadsheetFormulaInputProps = InputProps\nfunction FormulaInput({\n  style,\n  onChangeText,\n  onSubmitEditing,\n  onKeyPress,\n  ref,\n  ...props\n}: SpreadsheetFormulaInputProps) {\n  const sheet = useSpreadsheet()\n  const focus = sheet.selection?.focus\n  return (\n    <Input.Root\n      accessibilityLabel=\"Formula\"\n      placeholder={focus ? undefined : \"Select a cell\"}\n      {...props}\n      ref={(node) => {\n        sheet.formulaRef.current = node\n        if (typeof ref === \"function\") return ref(node)\n        if (ref) ref.current = node\n      }}\n      value={sheet.editing?.draft ?? (focus ? sheet.getText(focus) : \"\")}\n      disabled={!focus}\n      readOnly={sheet.readOnly}\n      autoCorrect={false}\n      autoCapitalize=\"none\"\n      returnKeyType=\"done\"\n      style={[{ flex: 1, minWidth: 100 }, style]}\n      onChangeText={(text) => {\n        onChangeText?.(text)\n        if (!focus) return\n        if (sheet.editing) sheet.setDraft(text)\n        else sheet.startEditing(focus, text, \"bar\")\n      }}\n      onSubmitEditing={(event) => {\n        // React Native Web prevents the browser form submission before this callback.\n        const alreadyPrevented = event.defaultPrevented\n        onSubmitEditing?.(event)\n        if (alreadyPrevented || !event.defaultPrevented) sheet.commitEditing({ move: \"down\" })\n      }}\n      onKeyPress={(event) => {\n        onKeyPress?.(event)\n        if (event.nativeEvent.key === \"Escape\") sheet.cancelEditing()\n      }}\n    />\n  )\n}\nexport type SpreadsheetContainerProps = ViewProps\nfunction Container({ children, style, onLayout, ...props }: SpreadsheetContainerProps) {\n  const sheet = useSpreadsheet()\n  const { colors, radius } = useNativeTheme()\n  const { scrollX, scrollY, setScroll } = sheet\n  const horizontalScroll = useAnimatedScrollHandler(\n    (event) => {\n      scrollX.set(event.contentOffset.x)\n    },\n    [scrollX]\n  )\n  const verticalScroll = useAnimatedScrollHandler(\n    (event) => {\n      scrollY.set(event.contentOffset.y)\n    },\n    [scrollY]\n  )\n  // React only receives coarse virtualization boundaries. Frozen cells never move horizontally.\n  useAnimatedReaction(\n    () => ({ x: Math.floor(scrollX.get() / 64), y: Math.floor(scrollY.get() / 64) }),\n    (current, previous) => {\n      if (!previous || current.x !== previous.x || current.y !== previous.y) {\n        scheduleOnRN(setScroll, { x: current.x * 64, y: current.y * 64 })\n      }\n    },\n    [setScroll, scrollX, scrollY]\n  )\n  const contentLayout = useResizeLayout(\"content\")\n  const bodyViewportLayout = useResizeLayout(\"viewport-body\")\n  const frozenLayout = useResizeLayout(\"frozen\")\n  const headerTranslation = useAnimatedStyle(() => ({ transform: [{ translateX: -scrollX.get() }] }), [scrollX])\n  const [header, ...body] = Children.toArray(\n    children ?? [\n      <Header key=\"header\">\n        <HeaderRow />\n      </Header>,\n      <Body key=\"body\" />,\n      <Empty key=\"empty\">No cells</Empty>,\n    ]\n  )\n  return (\n    <View\n      {...props}\n      onLayout={(event) => {\n        sheet.setViewport({ width: event.nativeEvent.layout.width - 2, height: event.nativeEvent.layout.height - 2 })\n        onLayout?.(event)\n      }}\n      {...(Platform.OS === \"web\" && {\n        tabIndex: 0,\n        role: \"grid\" as const,\n        \"aria-rowcount\": sheet.rowCount,\n        \"aria-colcount\": sheet.columnCount,\n        onKeyDown: (event: {\n          nativeEvent: { key: string; shiftKey?: boolean; metaKey?: boolean; ctrlKey?: boolean }\n          target?: unknown\n          preventDefault: () => void\n        }) => {\n          if ((event.target as { tagName?: string })?.tagName === \"INPUT\") return\n          const { key, shiftKey, metaKey, ctrlKey } = event.nativeEvent\n          const cell = sheet.selection?.focus\n          if ((metaKey || ctrlKey) && key.toLowerCase() === \"z\") {\n            event.preventDefault()\n            if (shiftKey) sheet.redo()\n            else sheet.undo()\n            return\n          }\n          if ((metaKey || ctrlKey) && key.toLowerCase() === \"a\") {\n            event.preventDefault()\n            sheet.selectAll()\n            return\n          }\n          if (!cell) return\n          if (key === \"Escape\") {\n            sheet.cancelEditing()\n            sheet.setFilling(false)\n            return\n          }\n          if (key === \"Delete\" || key === \"Backspace\") {\n            event.preventDefault()\n            sheet.clearRange()\n            return\n          }\n          if (key === \"Enter\" || key === \"F2\") {\n            event.preventDefault()\n            sheet.startEditing(cell)\n            return\n          }\n          let next = { ...cell }\n          if (key === \"ArrowDown\") next.row++\n          else if (key === \"ArrowUp\") next.row--\n          else if (key === \"ArrowRight\" || (key === \"Tab\" && !shiftKey)) next.column++\n          else if (key === \"ArrowLeft\" || key === \"Tab\") next.column--\n          else if (key === \"Home\") {\n            next.column = 0\n            sheet.horizontalRef.current?.scrollTo({ x: 0, animated: false })\n            if (metaKey || ctrlKey) {\n              next.row = 0\n              sheet.verticalRef.current?.scrollTo({ y: 0, animated: false })\n            }\n          } else if (key === \"End\") {\n            next.column = sheet.columnCount - 1\n            if (metaKey || ctrlKey) next.row = sheet.rowCount - 1\n          } else if (key === \"PageDown\") next.row += Math.floor(sheet.viewport.height / sheet.rowHeight)\n          else if (key === \"PageUp\") next.row -= Math.floor(sheet.viewport.height / sheet.rowHeight)\n          else return\n          event.preventDefault()\n          sheet.focusCell(next, { extend: key !== \"Tab\" && shiftKey, scroll: key !== \"Home\" })\n        },\n      })}\n      style={[\n        {\n          minHeight: 0,\n          flex: 1,\n          borderWidth: 1,\n          borderColor: colors.border,\n          borderRadius: radius.lg,\n          backgroundColor: colors.background,\n          overflow: \"hidden\",\n        },\n        style,\n      ]}\n    >\n      <View style={{ overflow: \"hidden\", zIndex: 30 }}>\n        <PaneContext.Provider value=\"scrolling\">\n          <Animated.View style={headerTranslation}>{header}</Animated.View>\n        </PaneContext.Provider>\n        <Animated.View style={[{ position: \"absolute\", top: 0, bottom: 0, left: 0, overflow: \"hidden\" }, frozenLayout]}>\n          <PaneContext.Provider value=\"frozen\">{header}</PaneContext.Provider>\n        </Animated.View>\n      </View>\n      <Animated.ScrollView\n        ref={sheet.verticalRef}\n        nestedScrollEnabled\n        directionalLockEnabled\n        bounces={false}\n        keyboardShouldPersistTaps=\"handled\"\n        keyboardDismissMode=\"none\"\n        removeClippedSubviews={false}\n        scrollEventThrottle={16}\n        onScroll={verticalScroll}\n        style={{ flex: 1, minHeight: 0 }}\n      >\n        <Animated.View style={[{ width: sheet.viewport.width }, bodyViewportLayout]}>\n          <Animated.ScrollView\n            horizontal\n            ref={sheet.horizontalRef}\n            nestedScrollEnabled\n            directionalLockEnabled\n            bounces={false}\n            keyboardShouldPersistTaps=\"handled\"\n            removeClippedSubviews={false}\n            scrollEventThrottle={16}\n            onScroll={horizontalScroll}\n            style={bodyViewportLayout}\n          >\n            <PaneContext.Provider value=\"scrolling\">\n              <Animated.View style={contentLayout}>{body}</Animated.View>\n            </PaneContext.Provider>\n          </Animated.ScrollView>\n          <Animated.View\n            pointerEvents=\"box-none\"\n            style={[{ position: \"absolute\", top: 0, bottom: 0, left: 0, overflow: \"hidden\" }, frozenLayout]}\n          >\n            <PaneContext.Provider value=\"frozen\">{body}</PaneContext.Provider>\n          </Animated.View>\n        </Animated.View>\n      </Animated.ScrollView>\n      <Text accessibilityLiveRegion=\"polite\" style={{ position: \"absolute\", width: 1, height: 1, opacity: 0 }}>\n        {sheet.message}\n      </Text>\n    </View>\n  )\n}\n// The native recognizer owns the touch. Geometry previews run on the UI thread;\n// React and controlled sizing callbacks receive one committed change on release.\nfunction useResizeGesture(axis: \"x\" | \"y\", index: number) {\n  const sheet = useSpreadsheet()\n  const { resizePreview } = sheet\n  const size = axis === \"x\" ? sheet.widths[index] : sheet.heights[index]\n  const minimum = axis === \"x\" ? sheet.minColumnWidth : sheet.minRowHeight\n  const commit = (next: number) => {\n    if (axis === \"x\") sheet.setWidth(index, next)\n    else sheet.setHeight(index, next)\n    sheet.finishResize((revision) => revision + 1)\n  }\n  return Gesture.Pan()\n    .minDistance(0)\n    .maxPointers(1)\n    .shouldCancelWhenOutside(false)\n    .cancelsTouchesInView(true)\n    .onStart(() => {\n      resizePreview.set({ axis, index, delta: 0 })\n    })\n    .onUpdate((event) => {\n      const delta = axis === \"x\" ? event.translationX : event.translationY\n      resizePreview.set({ axis, index, delta: Math.max(minimum - size, Math.round(delta)) })\n    })\n    .onEnd((event, success) => {\n      if (success) {\n        const delta = axis === \"x\" ? event.translationX : event.translationY\n        scheduleOnRN(commit, Math.max(minimum, size + Math.round(delta)))\n      }\n    })\n    .onFinalize((_event, success) => {\n      if (!success) resizePreview.set({ axis: \"none\", index: -1, delta: 0 })\n    })\n}\nfunction useResizeLayout(\n  part: \"content\" | \"viewport-body\" | \"body\" | \"frozen\" | \"header\" | \"row\" | \"position\" | \"column\",\n  index = 0\n) {\n  const sheet = useSpreadsheet()\n  const { resizePreview, totalWidth, frozenColumns, frozenRows, rowHeight, frozenHeight } = sheet\n  const frozenWidth = sheet.offsets[frozenColumns] ?? totalWidth\n  const bodyHeight = sheet.rowOffsets[sheet.rowCount] - frozenHeight\n  const viewportWidth = sheet.viewport.width\n  const viewportHeight = sheet.viewport.height - rowHeight - frozenHeight\n  const size = part === \"row\" ? sheet.heights[index] : sheet.widths[index]\n  const offset = part === \"position\" ? sheet.rowOffsets[index] - frozenHeight : sheet.offsets[index]\n  return useAnimatedStyle((): ViewStyle => {\n    const preview = resizePreview.get()\n    const dx = preview.axis === \"x\" ? preview.delta : 0\n    const dy = preview.axis === \"y\" ? preview.delta : 0\n    const bodyDelta = preview.index >= frozenRows ? dy : 0\n    const viewportDelta = preview.index < frozenRows ? -dy : 0\n    const height = Math.max(bodyHeight + bodyDelta, viewportHeight + viewportDelta, 0)\n    if (part === \"content\") return { width: Math.max(viewportWidth, totalWidth + dx), height }\n    if (part === \"viewport-body\") return { height }\n    if (part === \"body\") return { width: totalWidth + dx, height: bodyHeight + bodyDelta }\n    if (part === \"frozen\") return { width: frozenWidth + (preview.index < frozenColumns ? dx : 0) }\n    if (part === \"header\") return { width: totalWidth + dx }\n    if (part === \"row\") return { width: totalWidth + dx, height: size + (preview.index === index ? dy : 0) }\n    if (part === \"position\") return { top: offset + (preview.index < index ? bodyDelta : 0) }\n    return { left: offset + (preview.index < index ? dx : 0), width: size + (preview.index === index ? dx : 0) }\n  }, [\n    resizePreview,\n    part,\n    index,\n    totalWidth,\n    frozenWidth,\n    frozenColumns,\n    frozenRows,\n    bodyHeight,\n    viewportWidth,\n    viewportHeight,\n    size,\n    offset,\n  ])\n}\nexport type SpreadsheetHeaderProps = ViewProps\nfunction Header({ children, style, ...props }: SpreadsheetHeaderProps) {\n  const sheet = useSpreadsheet(),\n    { colors } = useNativeTheme()\n  return (\n    <View {...props} style={[{ backgroundColor: colors.background, zIndex: 30 }, style]}>\n      {children ?? <HeaderRow />}\n      {Array.from({ length: sheet.frozenRows }, (_, row) => (\n        <Row key={row} row={row} />\n      ))}\n    </View>\n  )\n}\nexport type SpreadsheetHeaderRowProps = ViewProps\nfunction HeaderRow({ children, style, ...props }: SpreadsheetHeaderRowProps) {\n  const sheet = useSpreadsheet(),\n    { colors } = useNativeTheme()\n  const layout = useResizeLayout(\"header\")\n  return (\n    <Animated.View\n      {...props}\n      style={[\n        {\n          width: sheet.totalWidth,\n          height: sheet.rowHeight,\n          borderBottomWidth: 1,\n          borderColor: colors.border,\n          backgroundColor: colors.muted,\n        },\n        layout,\n        style,\n      ]}\n    >\n      {children ?? (\n        <>\n          <Corner />\n          {sheet.visibleColumns.map((column) => (\n            <ColumnHeader key={column} column={column} />\n          ))}\n        </>\n      )}\n    </Animated.View>\n  )\n}\nfunction TextValue({\n  children,\n  muted = false,\n  medium = false,\n  size = 14,\n}: {\n  children: ReactNode\n  muted?: boolean\n  medium?: boolean\n  size?: number\n}) {\n  const { colors, typography } = useNativeTheme()\n  return (\n    <Text\n      numberOfLines={1}\n      style={{\n        ...(medium ? typography.medium : typography.regular),\n        fontSize: size,\n        lineHeight: 20,\n        color: muted ? colors.mutedForeground : colors.foreground,\n      }}\n    >\n      {children}\n    </Text>\n  )\n}\nfunction PinnedPressable({\n  pinned,\n  overlay,\n  column,\n  style,\n  onPressIn,\n  onPressOut,\n  ...props\n}: PressProps & { pinned: boolean; overlay?: ReactNode; column?: number }) {\n  const pane = useContext(PaneContext)\n  const layout = useResizeLayout(\"column\", column ?? 0)\n  const [pressed, setPressed] = useState(false)\n  if ((pane === \"frozen\" && !pinned) || (pane === \"scrolling\" && pinned)) return null\n  // Each control belongs to exactly one pane; frozen hosts are outside the horizontal scroller.\n  if (overlay)\n    return (\n      <Animated.View\n        collapsable={false}\n        style={[typeof style === \"function\" ? style({ pressed }) : style, column === undefined ? undefined : layout]}\n      >\n        <Pressable\n          {...props}\n          onPressIn={(event) => {\n            setPressed(true)\n            onPressIn?.(event)\n          }}\n          onPressOut={(event) => {\n            setPressed(false)\n            onPressOut?.(event)\n          }}\n          style={{ position: \"absolute\", inset: 0, alignItems: \"center\", justifyContent: \"center\" }}\n        />\n        {overlay}\n      </Animated.View>\n    )\n  return (\n    <AnimatedPressable\n      collapsable={false}\n      {...props}\n      onPressIn={(event) => {\n        setPressed(true)\n        onPressIn?.(event)\n      }}\n      onPressOut={(event) => {\n        setPressed(false)\n        onPressOut?.(event)\n      }}\n      style={[typeof style === \"function\" ? style({ pressed }) : style, column === undefined ? undefined : layout]}\n    />\n  )\n}\nexport type SpreadsheetCornerProps = PressProps\nfunction Corner({ style, onPress, ...props }: SpreadsheetCornerProps) {\n  const sheet = useSpreadsheet(),\n    { colors } = useNativeTheme()\n  return (\n    <PinnedPressable\n      pinned={true}\n      accessibilityRole=\"button\"\n      accessibilityLabel=\"Select all cells\"\n      {...props}\n      onPress={(event) => {\n        onPress?.(event)\n        if (!event.defaultPrevented) sheet.selectAll()\n      }}\n      style={(state) => [\n        {\n          position: \"absolute\",\n          left: 0,\n          width: sheet.rowHeaderWidth,\n          height: \"100%\",\n          zIndex: 30,\n          borderRightWidth: 1,\n          borderColor: colors.border,\n          backgroundColor: colors.muted,\n        },\n        typeof style === \"function\" ? style(state) : style,\n      ]}\n    />\n  )\n}\nexport type SpreadsheetColumnHeaderProps = PressProps & { column: number }\nfunction ColumnHeader({ column, style, children, onPress, ...props }: SpreadsheetColumnHeaderProps) {\n  const sheet = useSpreadsheet(),\n    { colors } = useNativeTheme()\n  const selected = !!sheet.bounds && column >= sheet.bounds.c0 && column <= sheet.bounds.c1\n  return (\n    <ColumnContext.Provider value={column}>\n      <PinnedPressable\n        column={column}\n        overlay={<ResizeHandle />}\n        pinned={column < sheet.frozenColumns}\n        accessibilityRole=\"button\"\n        accessibilityLabel={`Select column ${columnLabel(column)}`}\n        {...props}\n        onPress={(event) => {\n          onPress?.(event)\n          if (!event.defaultPrevented) sheet.selectColumn(column)\n        }}\n        style={(state) => [\n          {\n            position: \"absolute\",\n            left: sheet.offsets[column],\n            width: sheet.widths[column],\n            height: \"100%\",\n            alignItems: \"center\",\n            justifyContent: \"center\",\n            zIndex: column < sheet.frozenColumns ? 20 : 1,\n            borderRightWidth: 1,\n            borderColor: colors.border,\n            backgroundColor: colors.muted,\n          },\n          typeof style === \"function\" ? style(state) : style,\n        ]}\n      >\n        {selected && (\n          <View\n            pointerEvents=\"none\"\n            style={{ position: \"absolute\", inset: 0, backgroundColor: withOpacity(colors.primary, 0.1) }}\n          />\n        )}\n        {children ?? (\n          <TextValue medium muted={!selected}>\n            {columnLabel(column)}\n          </TextValue>\n        )}\n      </PinnedPressable>\n    </ColumnContext.Provider>\n  )\n}\nexport type SpreadsheetResizeHandleProps = ViewProps & { withHandle?: boolean }\nfunction ResizeHandle({ withHandle = true, style, ...props }: SpreadsheetResizeHandleProps) {\n  const sheet = useSpreadsheet(),\n    column = useContext(ColumnContext),\n    { colors } = useNativeTheme()\n  const gesture = useResizeGesture(\"x\", column ?? 0)\n  if (column === null) throw new Error(\"Spreadsheet.ResizeHandle requires ColumnHeader\")\n  return (\n    <GestureDetector gesture={gesture} touchAction=\"none\">\n      <View\n        collapsable={false}\n        accessible\n        accessibilityRole=\"adjustable\"\n        accessibilityLabel={`Width of column ${columnLabel(column)}`}\n        accessibilityValue={{\n          min: sheet.minColumnWidth,\n          now: sheet.widths[column],\n          text: `${sheet.widths[column]} pixels`,\n        }}\n        accessibilityActions={[\n          { name: \"increment\" },\n          { name: \"decrement\" },\n          { name: \"activate\", label: \"Reset width\" },\n        ]}\n        {...props}\n        onAccessibilityAction={(event) => {\n          const action = event.nativeEvent.actionName\n          if (action === \"activate\") sheet.resetWidth(column)\n          else if (action === \"increment\" || action === \"decrement\")\n            sheet.setWidth(column, sheet.widths[column] + (action === \"increment\" ? 10 : -10))\n        }}\n        style={[\n          {\n            position: \"absolute\",\n            top: 0,\n            bottom: 0,\n            right: 0,\n            width: 9,\n            zIndex: 40,\n            alignItems: \"center\",\n            justifyContent: \"center\",\n          },\n          style,\n        ]}\n      >\n        {withHandle && (\n          <View\n            pointerEvents=\"none\"\n            style={{\n              position: \"absolute\",\n              right: -0.5,\n              top: \"50%\",\n              transform: [{ translateY: -8 }],\n              width: 2,\n              height: 16,\n              borderRadius: 8,\n              backgroundColor: colors.border,\n            }}\n          />\n        )}\n      </View>\n    </GestureDetector>\n  )\n}\nexport type SpreadsheetBodyProps = Omit<ViewProps, \"children\"> & { children?: (row: number) => ReactNode }\nfunction Body({ children, style, ...props }: SpreadsheetBodyProps) {\n  const sheet = useSpreadsheet()\n  const layout = useResizeLayout(\"body\")\n  if (!sheet.columnCount) return null\n  const rows = Array.from(\n    { length: sheet.visibleRows.end - sheet.visibleRows.start },\n    (_, i) => sheet.frozenRows + sheet.visibleRows.start + i\n  )\n  const editing = sheet.editing\n  if (editing && editing.row >= sheet.frozenRows && editing.row < sheet.rowCount && !rows.includes(editing.row))\n    rows.push(editing.row)\n  return (\n    <Animated.View {...props} style={[layout, style]}>\n      {rows.map((row) => (\n        <BodyRow key={row} row={row}>\n          {children ? children(row) : <Row row={row} />}\n        </BodyRow>\n      ))}\n    </Animated.View>\n  )\n}\nfunction BodyRow({ row, children }: { row: number; children: ReactNode }) {\n  const layout = useResizeLayout(\"position\", row)\n  return <Animated.View style={[{ position: \"absolute\", left: 0, right: 0 }, layout]}>{children}</Animated.View>\n}\nexport type SpreadsheetRowProps = ViewProps & { row: number }\nfunction Row({ row, children, style, ...props }: SpreadsheetRowProps) {\n  const sheet = useSpreadsheet(),\n    { colors } = useNativeTheme()\n  const layout = useResizeLayout(\"row\", row)\n  const columns = [...sheet.visibleColumns]\n  if (sheet.editing?.row === row && !columns.includes(sheet.editing.column)) columns.push(sheet.editing.column)\n  return (\n    <RowContext.Provider value={row}>\n      <Animated.View\n        {...props}\n        style={[\n          {\n            width: sheet.totalWidth,\n            height: sheet.heights[row],\n            borderBottomWidth: row === sheet.frozenRows - 1 ? 2 : row === sheet.rowCount - 1 ? 0 : 1,\n            borderColor: colors.border,\n            backgroundColor: colors.background,\n          },\n          layout,\n          style,\n        ]}\n      >\n        {children ?? (\n          <>\n            <RowHeader />\n            {columns.map((column) => (\n              <Cell key={column} column={column} />\n            ))}\n          </>\n        )}\n      </Animated.View>\n    </RowContext.Provider>\n  )\n}\nexport type SpreadsheetRowHeaderProps = PressProps\nfunction RowHeader({ children, style, onPress, ...props }: SpreadsheetRowHeaderProps) {\n  const sheet = useSpreadsheet(),\n    row = useContext(RowContext),\n    { colors } = useNativeTheme()\n  if (row === null) throw new Error(\"Spreadsheet.RowHeader requires Row\")\n  const selected = !!sheet.bounds && row >= sheet.bounds.r0 && row <= sheet.bounds.r1\n  return (\n    <PinnedPressable\n      overlay={<RowResizeHandle />}\n      pinned={true}\n      accessibilityRole=\"button\"\n      accessibilityLabel={`Select row ${row + 1}`}\n      {...props}\n      onPress={(event) => {\n        onPress?.(event)\n        if (!event.defaultPrevented) sheet.selectRow(row)\n      }}\n      style={(state) => [\n        {\n          position: \"absolute\",\n          left: 0,\n          width: sheet.rowHeaderWidth,\n          height: \"100%\",\n          zIndex: 30,\n          borderRightWidth: 1,\n          borderColor: colors.border,\n          backgroundColor: colors.muted,\n          justifyContent: \"center\",\n          alignItems: \"center\",\n        },\n        typeof style === \"function\" ? style(state) : style,\n      ]}\n    >\n      {selected && (\n        <View\n          pointerEvents=\"none\"\n          style={{ position: \"absolute\", inset: 0, backgroundColor: withOpacity(colors.primary, 0.1) }}\n        />\n      )}\n      <TextValue muted={!selected} size={12}>\n        {children ?? row + 1}\n      </TextValue>\n    </PinnedPressable>\n  )\n}\nexport type SpreadsheetRowResizeHandleProps = ViewProps & { withHandle?: boolean }\nfunction RowResizeHandle({ style, withHandle = true, ...props }: SpreadsheetRowResizeHandleProps) {\n  const sheet = useSpreadsheet(),\n    row = useContext(RowContext),\n    { colors } = useNativeTheme()\n  const gesture = useResizeGesture(\"y\", row ?? 0)\n  if (row === null) throw new Error(\"Spreadsheet.RowResizeHandle requires Row\")\n  return (\n    <GestureDetector gesture={gesture} touchAction=\"none\">\n      <View\n        collapsable={false}\n        {...props}\n        accessible\n        accessibilityRole=\"adjustable\"\n        accessibilityLabel={`Resize row ${row + 1}`}\n        accessibilityValue={{ min: sheet.minRowHeight, now: sheet.heights[row], text: `${sheet.heights[row]}px` }}\n        accessibilityActions={[\n          { name: \"increment\" },\n          { name: \"decrement\" },\n          { name: \"activate\", label: \"Reset row height\" },\n        ]}\n        onAccessibilityAction={(event) => {\n          if (event.nativeEvent.actionName === \"activate\") sheet.resetHeight(row)\n          else sheet.setHeight(row, sheet.heights[row] + (event.nativeEvent.actionName === \"increment\" ? 8 : -8))\n        }}\n        {...(Platform.OS === \"web\" && {\n          tabIndex: 0,\n          onKeyDown: (event: {\n            nativeEvent: { key: string; shiftKey?: boolean }\n            preventDefault: () => void\n            stopPropagation: () => void\n          }) => {\n            const { key, shiftKey } = event.nativeEvent\n            if (![\"ArrowUp\", \"ArrowDown\", \"Home\"].includes(key)) return\n            event.preventDefault()\n            event.stopPropagation()\n            if (key === \"Home\") sheet.resetHeight(row)\n            else sheet.setHeight(row, sheet.heights[row] + (key === \"ArrowDown\" ? 1 : -1) * (shiftKey ? 10 : 1))\n          },\n        })}\n        style={[\n          {\n            position: \"absolute\",\n            left: 0,\n            right: 0,\n            bottom: 0,\n            height: 9,\n            zIndex: 40,\n            alignItems: \"center\",\n            justifyContent: \"center\",\n          },\n          style,\n        ]}\n      >\n        {withHandle && (\n          <View\n            pointerEvents=\"none\"\n            style={{\n              position: \"absolute\",\n              bottom: -0.5,\n              left: \"50%\",\n              transform: [{ translateX: -8 }],\n              width: 16,\n              height: 2,\n              borderRadius: 8,\n              backgroundColor: colors.border,\n            }}\n          />\n        )}\n      </View>\n    </GestureDetector>\n  )\n}\nexport type SpreadsheetCellProps = PressProps & { row?: number; column: number }\nfunction Cell({ row: rowProp, column, style, children, onPress, onLongPress, ...props }: SpreadsheetCellProps) {\n  const sheet = useSpreadsheet(),\n    rowContext = useContext(RowContext),\n    { colors, typography } = useNativeTheme()\n  const row = rowProp ?? rowContext\n  const lastTap = useRef(0)\n  if (row === null) throw new Error(\"Spreadsheet.Cell requires a row\")\n  const cell = { row, column },\n    b = sheet.bounds\n  const focused = sameCell(sheet.selection?.focus, cell)\n  const selected = !!b && row >= b.r0 && row <= b.r1 && column >= b.c0 && column <= b.c1\n  const multi = !!b && (b.r0 !== b.r1 || b.c0 !== b.c1)\n  const isEditing = sheet.editing?.via === \"cell\" && sameCell(sheet.editing, cell)\n  const result = sheet.getResult(cell)\n  const frozen = column < sheet.frozenColumns\n  return (\n    <PinnedPressable\n      pinned={frozen}\n      column={column}\n      accessibilityRole={Platform.OS === \"web\" ? \"none\" : \"button\"}\n      {...(Platform.OS === \"web\" && { role: \"cell\" as const })}\n      accessibilityLabel={`${cellName(cell)}: ${sheet.getDisplay(cell) || \"empty\"}`}\n      accessibilityHint={\n        sheet.readOnly ? \"Read only\" : \"Tap to select. Double tap to edit. Long press to extend selection.\"\n      }\n      accessibilityState={{ selected }}\n      {...props}\n      onPress={(event) => {\n        onPress?.(event)\n        if (event.defaultPrevented || isEditing) return\n        const now = Date.now()\n        if (focused && !sheet.filling && now - lastTap.current < 350) sheet.startEditing(cell)\n        else sheet.focusCell(cell, { scroll: false })\n        lastTap.current = now\n      }}\n      onLongPress={(event) => {\n        onLongPress?.(event)\n        if (!event.defaultPrevented) sheet.focusCell(cell, { extend: true, scroll: false })\n      }}\n      style={(state) => [\n        {\n          position: \"absolute\",\n          left: sheet.offsets[column],\n          width: sheet.widths[column],\n          height: \"100%\",\n          borderRightWidth: frozen && column === sheet.frozenColumns - 1 ? 2 : 1,\n          borderColor: colors.border,\n          backgroundColor: colors.background,\n          justifyContent: \"center\",\n          paddingHorizontal: isEditing ? 0 : 8,\n          zIndex: frozen ? 20 : focused ? 10 : 1,\n        },\n        typeof style === \"function\" ? style(state) : style,\n      ]}\n    >\n      {selected && multi && (\n        <View\n          pointerEvents=\"none\"\n          style={{ position: \"absolute\", inset: 0, backgroundColor: withOpacity(colors.primary, 0.1) }}\n        />\n      )}\n      {isEditing ? (\n        <Input.Root\n          autoFocus\n          selectTextOnFocus\n          accessibilityLabel={`Edit ${cellName(cell)}`}\n          autoCorrect={false}\n          autoCapitalize=\"none\"\n          value={sheet.editing!.draft}\n          onChangeText={sheet.setDraft}\n          onSubmitEditing={() => sheet.commitEditing({ move: \"down\" })}\n          onKeyPress={(event) => {\n            if (event.nativeEvent.key === \"Escape\") sheet.cancelEditing()\n          }}\n          style={{ borderRadius: 0, width: \"100%\", height: \"100%\", minHeight: 0 }}\n        />\n      ) : (\n        (children ?? (\n          <Text\n            numberOfLines={1}\n            style={{\n              ...typography.regular,\n              fontSize: 14,\n              lineHeight: 20,\n              color: result.error ? colors.destructive : colors.foreground,\n              textAlign: typeof result.value === \"number\" ? \"right\" : \"left\",\n              fontVariant: [\"tabular-nums\"],\n            }}\n          >\n            {sheet.getDisplay(cell)}\n          </Text>\n        ))\n      )}\n      {focused && !isEditing && (\n        <View\n          pointerEvents=\"none\"\n          style={{ position: \"absolute\", inset: 0, borderWidth: 2, borderColor: colors.primary }}\n        />\n      )}\n      {b && row === b.r1 && column === b.c1 && !sheet.readOnly && !sheet.editing && <FillHandle />}\n    </PinnedPressable>\n  )\n}\nexport type SpreadsheetFillHandleProps = PressProps\nfunction FillHandle({ style, onPress, ...props }: SpreadsheetFillHandleProps) {\n  const sheet = useSpreadsheet(),\n    { colors } = useNativeTheme()\n  return (\n    <Pressable\n      accessibilityRole=\"button\"\n      accessibilityLabel={sheet.filling ? \"Cancel fill\" : \"Fill selection\"}\n      accessibilityHint=\"Then tap a destination cell to extend the selected values or formulas\"\n      hitSlop={8}\n      {...props}\n      onPress={(event) => {\n        event.stopPropagation()\n        onPress?.(event)\n        if (!event.defaultPrevented) {\n          sheet.setFilling(!sheet.filling)\n          sheet.announce(sheet.filling ? \"Fill cancelled\" : \"Tap a destination cell to fill\")\n        }\n      }}\n      style={(state) => [\n        {\n          position: \"absolute\",\n          bottom: 0,\n          right: 0,\n          width: 8,\n          height: 8,\n          backgroundColor: colors.primary,\n          borderWidth: 1,\n          borderColor: colors.background,\n          zIndex: 40,\n        },\n        typeof style === \"function\" ? style(state) : style,\n      ]}\n    />\n  )\n}\nexport type SpreadsheetEmptyProps = ComponentPropsWithRef<typeof Text>\nfunction Empty({ style, ...props }: SpreadsheetEmptyProps) {\n  const pane = useContext(PaneContext)\n  const sheet = useSpreadsheet(),\n    { colors, typography } = useNativeTheme()\n  return pane === \"frozen\" || (sheet.rowCount && sheet.columnCount) ? null : (\n    <Text\n      {...props}\n      style={[{ ...typography.regular, fontSize: 14, color: colors.mutedForeground, padding: 24 }, style]}\n    />\n  )\n}\nexport type SpreadsheetUndoTriggerProps = ButtonProps\nfunction UndoTrigger({ children, ...props }: SpreadsheetUndoTriggerProps) {\n  const sheet = useSpreadsheet()\n  return (\n    <Button\n      variant=\"outline\"\n      size=\"sm\"\n      {...props}\n      disabled={props.disabled || !sheet.canUndo}\n      onPress={(e) => {\n        props.onPress?.(e)\n        if (!e.defaultPrevented) sheet.undo()\n      }}\n    >\n      {children ?? \"Undo\"}\n    </Button>\n  )\n}\nexport type SpreadsheetRedoTriggerProps = ButtonProps\nfunction RedoTrigger({ children, ...props }: SpreadsheetRedoTriggerProps) {\n  const sheet = useSpreadsheet()\n  return (\n    <Button\n      variant=\"outline\"\n      size=\"sm\"\n      {...props}\n      disabled={props.disabled || !sheet.canRedo}\n      onPress={(e) => {\n        props.onPress?.(e)\n        if (!e.defaultPrevented) sheet.redo()\n      }}\n    >\n      {children ?? \"Redo\"}\n    </Button>\n  )\n}\nexport type SpreadsheetToolbarProps = ViewProps\n/** Touch equivalents for keyboard operations; clipboard failures never clear or change cells. */\nfunction Toolbar({ style, ...props }: SpreadsheetToolbarProps) {\n  const sheet = useSpreadsheet(),\n    { colors, typography } = useNativeTheme()\n  const [busy, setBusy] = useState(false)\n  const latest = useRef(sheet)\n  latest.current = sheet\n  const clipboard = async (action: \"copy\" | \"cut\" | \"paste\") => {\n    if (busy) return\n    const selection = JSON.stringify(sheet.selection)\n    setBusy(true)\n    try {\n      if (action === \"paste\") {\n        const text = await Clipboard.getStringAsync()\n        if (JSON.stringify(latest.current.selection) === selection) latest.current.pasteText(text)\n      } else {\n        const ok = await Clipboard.setStringAsync(sheet.copyRange())\n        if (!ok) throw new Error(\"Clipboard unavailable\")\n        if (action === \"cut\" && JSON.stringify(latest.current.selection) === selection) latest.current.clearRange()\n      }\n      latest.current.announce(action === \"paste\" ? \"Pasted cells\" : \"Copied cells\")\n    } catch {\n      latest.current.announce(\"Clipboard unavailable. Try again.\")\n    } finally {\n      setBusy(false)\n    }\n  }\n  return (\n    <View {...props} style={[{ gap: 8 }, style]}>\n      <View style={{ flexDirection: \"row\", flexWrap: \"wrap\", gap: 8 }}>\n        <Button\n          variant=\"outline\"\n          size=\"sm\"\n          disabled={!sheet.selection || sheet.readOnly}\n          onPress={() => {\n            if (sheet.selection) sheet.startEditing(sheet.selection.focus)\n          }}\n        >\n          Edit\n        </Button>\n        <Button\n          variant={sheet.extend ? \"secondary\" : \"outline\"}\n          size=\"sm\"\n          disabled={!sheet.selection}\n          onPress={() => sheet.setExtend(!sheet.extend)}\n        >\n          Select range\n        </Button>\n        <Button\n          variant={sheet.filling ? \"secondary\" : \"outline\"}\n          size=\"sm\"\n          disabled={!sheet.selection || sheet.readOnly}\n          onPress={() => sheet.setFilling(!sheet.filling)}\n        >\n          Fill\n        </Button>\n        <Button\n          variant=\"outline\"\n          size=\"sm\"\n          disabled={busy || !sheet.selection}\n          onPress={() => {\n            void clipboard(\"copy\")\n          }}\n        >\n          Copy\n        </Button>\n        <Button\n          variant=\"outline\"\n          size=\"sm\"\n          disabled={busy || !sheet.selection || sheet.readOnly}\n          onPress={() => {\n            void clipboard(\"cut\")\n          }}\n        >\n          Cut\n        </Button>\n        <Button\n          variant=\"outline\"\n          size=\"sm\"\n          disabled={busy || !sheet.selection || sheet.readOnly}\n          onPress={() => {\n            void clipboard(\"paste\")\n          }}\n        >\n          Paste\n        </Button>\n        <Button variant=\"outline\" size=\"sm\" disabled={!sheet.selection || sheet.readOnly} onPress={sheet.clearRange}>\n          Clear\n        </Button>\n        {sheet.editing && (\n          <>\n            <Button size=\"sm\" onPress={() => sheet.commitEditing()}>\n              Apply\n            </Button>\n            <Button variant=\"outline\" size=\"sm\" onPress={sheet.cancelEditing}>\n              Cancel\n            </Button>\n          </>\n        )}\n      </View>\n      {(sheet.filling || sheet.extend) && (\n        <Text style={{ ...typography.regular, fontSize: 12, lineHeight: 16, color: colors.mutedForeground }}>\n          {sheet.filling\n            ? \"Tap a destination cell to fill. Tap Fill again to cancel.\"\n            : \"Tap another cell to extend the range. Tap Select range to finish.\"}\n        </Text>\n      )}\n    </View>\n  )\n}\nexport const Spreadsheet = {\n  Root,\n  Context,\n  FormulaBar,\n  NameBox,\n  FormulaInput,\n  Container,\n  Header,\n  HeaderRow,\n  Corner,\n  ColumnHeader,\n  ResizeHandle,\n  RowResizeHandle,\n  Body,\n  Row,\n  RowHeader,\n  Cell,\n  FillHandle,\n  Empty,\n  UndoTrigger,\n  RedoTrigger,\n  Toolbar,\n}\n"
+    }
+  ],
+  "docs": "## How it works\n\nSpreadsheet uses the same formula evaluator as the React component. Data is an array of rows containing strings, numbers, booleans, or null. Formula strings start with `=` and support references, ranges, arithmetic, SUM, AVERAGE, MIN, MAX, COUNT, and custom functions. Errors render as cell values, including cycles and invalid references.\n\nThe consumer owns data. Apply each onCellsChange batch to a new data array; batches contain row, column, value, and previous. Root keeps selection, edit drafts, column widths, and a bounded history of those batches. Read-only mode blocks edits, paste, clear, fill, undo, and redo while allowing selection and copy. Omitting onCellsChange also makes the sheet read only.\n\nCompose FormulaBar, NameBox, FormulaInput, Container, Header, HeaderRow, Body, and Empty. Container supplies the table parts when its children are omitted. Give Root a bounded height. Body renders only visible rows plus overscan; offscreen editing rows stay mounted. Columns are also windowed. frozenRows and frozenColumns keep the leading cells visible, alongside the column letters and row numbers. ColumnHeader includes ResizeHandle; RowHeader includes RowResizeHandle. Drag their edges to resize columns or rows live, or use accessibility increment/decrement/reset actions. rowHeights, defaultRowHeights, and onRowHeightsChange control individual row heights; minRowHeight defaults to 24px. rowHeight remains the default and the column-letter header height.\n\nTap a cell to select it, double tap it or use Toolbar’s Edit button to edit. FormulaInput edits the raw formula or value. Return commits and moves down. Apply commits without moving; Cancel discards the draft. Selecting another cell commits an active draft. Long press a destination to extend the selection, or enable Select range and tap its endpoint. Row and column headers select their entire ranges.\n\nToolbar supplies touch actions for Copy, Cut, Paste, Clear, Select range, Fill, Apply, and Cancel. Clipboard access uses expo-clipboard and reports failures without changing cells. Clipboard text is tab/newline delimited. A single pasted value fills the selected range; a block pastes from its top-left corner and is clipped to the sheet bounds. Copy uses displayed values, matching desktop. For filling, tap the small FillHandle or Toolbar’s Fill button, then tap the destination cell. Numeric sequences continue their step and formulas shift relative references. Tap Fill again to cancel.\n\nUndoTrigger and RedoTrigger replay the consumer’s edit batches. Context exposes useSpreadsheet() state and operations for custom controls, including focusCell, select, startEditing, commitEditing, cancelEditing, copyRange, pasteText, and scrollToCell. Selection and column widths can be controlled independently.\n\nThe browser renderer also supports arrow navigation, Shift+arrow range extension, Home/End, PageUp/PageDown, Enter/F2 editing, Delete, select-all, and undo/redo keys. Native hardware-keyboard navigation, drag-to-select/fill with edge autoscrolling, and complete screen-reader grid navigation are not yet implemented. Touch fill uses a destination tap rather than the desktop drag gesture. The header sits outside the vertical scroll view. Frozen columns and row numbers live outside the horizontal scroller and share one vertical scroll view with the moving cells, so their horizontal position never depends on scroll events or compensating transforms. Only the moving column headers follow the horizontal offset through a UI-thread transform. React receives coarse scroll updates only for virtualization. Physical-device high-speed scrolling still requires verification. Use Toolbar for native clipboard actions. Headers and cells follow the same typography, borders, selection colors, and light/dark tokens as desktop; inputs reuse arkcn Input.\n\nResize gestures use react-native-gesture-handler. Root provides its gesture root; install the Expo-compatible package with `npx expo install react-native-gesture-handler`. The native pan owns touches over the handle, preventing ancestor scroll views from scrolling during a resize. Cell dimensions, neighboring positions, and frozen panes update together on the UI thread while dragging. React sizing state and controlled callbacks commit once on release; cancelled gestures restore the original dimensions."
+}

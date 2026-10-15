@@ -100,7 +100,7 @@
       "props": [
         {
           "name": "children",
-          "type": "(state: { percent: number; indeterminate: boolean; state: \"indeterminate\" | \"loading\" | \"complete\"; }) => ReactNode",
+          "type": "(state: { percent: number; indeterminate: boolean; state: \"loading\" | \"indeterminate\" | \"complete\"; }) => ReactNode",
           "required": true,
           "description": "Receives normalized progress and its state.",
           "from": "arkcn"
@@ -112,7 +112,7 @@
       "props": [
         {
           "name": "state",
-          "type": "\"indeterminate\" | \"loading\" | \"complete\"",
+          "type": "\"loading\" | \"indeterminate\" | \"complete\"",
           "required": true,
           "description": "State in which to render this content.",
           "from": "arkcn"

@@ -1,0 +1,757 @@
+{
+  "name": "attachment",
+  "type": "ui",
+  "description": "File attachments with native actions, image previews, and upload-state shimmer.",
+  "exports": [
+    "Attachment"
+  ],
+  "parts": [
+    {
+      "name": "Attachment.Root",
+      "props": [
+        {
+          "name": "hasContent",
+          "type": "boolean",
+          "required": false,
+          "description": "Supply these when a custom component hides the corresponding part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "hasMedia",
+          "type": "boolean",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "orientation",
+          "type": "\"horizontal\" | \"vertical\"",
+          "required": false,
+          "default": "\"horizontal\"",
+          "description": "Layout direction of the part.",
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "Size",
+          "required": false,
+          "default": "\"default\"",
+          "description": "Visible control size, matching the web renderer. Native touch areas extend beyond it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "state",
+          "type": "State",
+          "required": false,
+          "default": "\"done\"",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Attachment.Group",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Attachment.Media",
+      "props": [
+        {
+          "name": "variant",
+          "type": "\"icon\" | \"image\"",
+          "required": false,
+          "default": "\"icon\"",
+          "description": "Visual variant, using the same semantic colors as the web renderer.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Attachment.Content",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Attachment.Title",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Attachment.Description",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Attachment.Actions",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Attachment.ActionTrigger",
+      "props": [
+        {
+          "name": "backgroundClip",
+          "type": "\"border-box\" | \"padding-box\"",
+          "required": false,
+          "from": "arkcn"
+        },
+        {
+          "name": "invalid",
+          "type": "boolean",
+          "required": false,
+          "description": "Displays the validation border and ring.",
+          "from": "arkcn"
+        },
+        {
+          "name": "loading",
+          "type": "boolean",
+          "required": false,
+          "description": "Shows a loading state.",
+          "from": "arkcn"
+        },
+        {
+          "name": "size",
+          "type": "\"default\" | \"xs\" | \"sm\" | \"lg\" | \"icon\" | \"icon-xs\" | \"icon-sm\" | \"icon-lg\"",
+          "required": false,
+          "default": "\"icon-xs\"",
+          "description": "Visible control size, matching the web renderer. Native touch areas extend beyond it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "textStyle",
+          "type": "StyleProp<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<Omit<Readonly<{ display?: \"flex\" | \"none\" | \"contents\" | undefined; width?: DimensionValue | und…",
+          "required": false,
+          "description": "Native text styles for a plain button label.",
+          "from": "arkcn"
+        },
+        {
+          "name": "variant",
+          "type": "\"default\" | \"secondary\" | \"outline\" | \"ghost\" | \"destructive\" | \"link\"",
+          "required": false,
+          "default": "\"ghost\"",
+          "description": "Visual variant, using the same semantic colors as the web renderer.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode | ((state: Readonly<{ pressed: boolean; }>) => ReactNode)",
+          "required": false,
+          "description": "Either children or a function that receives a boolean reflecting whether\nthe component is currently pressed.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "Attachment.Trigger",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode | ((state: Readonly<{ pressed: boolean; }>) => ReactNode)",
+          "required": false,
+          "description": "Either children or a function that receives a boolean reflecting whether\nthe component is currently pressed.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "@expo/ui": ">=57.0.0 <58",
+    "react-native-reanimated": ">=4.1.0 <5",
+    "react-native-worklets": ">=0.5.0 <1"
+  },
+  "registryDependencies": [
+    "button",
+    "lib/focus",
+    "lib/motion",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/attachment.tsx",
+      "content": "/** File attachments with native actions, image previews, and upload-state shimmer. */\nimport {\n  Children,\n  cloneElement,\n  createContext,\n  isValidElement,\n  useContext,\n  useState,\n  useImperativeHandle,\n  type ComponentPropsWithRef,\n  type ReactNode,\n} from \"react\"\nimport {\n  Image,\n  I18nManager,\n  Platform,\n  Pressable,\n  ScrollView,\n  StyleSheet,\n  Text,\n  View,\n  type TextStyle,\n  type PressableStateCallbackType,\n} from \"react-native\"\nimport Animated, {\n  useAnimatedRef,\n  useScrollOffset,\n  useDerivedValue,\n  useAnimatedStyle,\n  useSharedValue,\n  type SharedValue,\n} from \"react-native-reanimated\"\nimport { MaskedView } from \"@expo/ui/community/masked-view\"\nimport { AnimatedText, AnimatedView, useMotion, useShadowTransition } from \"@/lib/motion\"\nimport { useNativeTheme, withOpacity } from \"@/lib/theme\"\nimport { isFocusVisible } from \"@/lib/focus\"\nimport { Button, type ButtonProps } from \"@/components/ui/button\"\n\ntype Size = \"default\" | \"sm\" | \"xs\"\ntype State = \"idle\" | \"uploading\" | \"processing\" | \"error\" | \"done\"\ntype ViewProps = ComponentPropsWithRef<typeof View>\nconst Layout = createContext({\n  size: \"default\" as Size,\n  state: \"done\" as State,\n  vertical: false,\n  active: false,\n  setActive: (_active: boolean) => {},\n  setFocused: (_focused: boolean) => {},\n})\nfunction contains(children: ReactNode, type: unknown): boolean {\n  return Children.toArray(children).some(\n    (child) =>\n      isValidElement<{ children?: ReactNode }>(child) && (child.type === type || contains(child.props.children, type))\n  )\n}\nexport type AttachmentRootProps = ViewProps & {\n  size?: Size\n  state?: State\n  orientation?: \"horizontal\" | \"vertical\"\n  /** Supply these when a custom component hides the corresponding part. */\n  hasContent?: boolean\n  hasMedia?: boolean\n}\nfunction Root({\n  size = \"default\",\n  state = \"done\",\n  orientation = \"horizontal\",\n  hasContent,\n  hasMedia,\n  style,\n  children,\n  ...props\n}: AttachmentRootProps) {\n  const { colors, radius } = useNativeTheme()\n  const { transition } = useMotion()\n  const [active, setActive] = useState(false)\n  const [focused, setFocused] = useState(false)\n  const vertical = orientation === \"vertical\"\n  const content = hasContent ?? contains(children, Content)\n  const media = hasMedia ?? contains(children, Media)\n  const paddingX = media\n    ? size === \"xs\"\n      ? 4\n      : size === \"sm\"\n        ? 6\n        : 8\n    : content\n      ? size === \"xs\"\n        ? 6\n        : size === \"sm\"\n          ? 8\n          : 10\n      : 0\n  const paddingY = content || media ? (size === \"xs\" ? 4 : size === \"sm\" ? 6 : 8) : 0\n  const shadow = useShadowTransition([\n    { offsetX: 0, offsetY: 0, spreadDistance: focused ? 1 : 0, color: withOpacity(colors.ring, focused ? 0.5 : 0) },\n  ])\n  return (\n    <Layout.Provider value={{ size, state, vertical, active, setActive, setFocused }}>\n      <AnimatedView\n        {...props}\n        style={[\n          transition([\"backgroundColor\", \"borderColor\"]),\n          {\n            position: \"relative\",\n            alignSelf: \"flex-start\",\n            maxWidth: \"100%\",\n            minWidth: vertical ? 0 : 160,\n            ...(vertical ? { width: content ? 120 : 96 } : {}),\n            flexDirection: vertical ? \"column\" : \"row\",\n            flexWrap: \"nowrap\",\n            flexShrink: 0,\n            alignItems: vertical ? \"stretch\" : \"center\",\n            gap: size === \"xs\" ? 6 : size === \"sm\" ? 10 : 8,\n            paddingHorizontal: paddingX,\n            paddingVertical: paddingY,\n            borderWidth: 1,\n            borderRadius: size === \"xs\" ? radius.lg : radius.xl,\n            borderStyle: state === \"idle\" ? \"dashed\" : \"solid\",\n            borderColor: state === \"error\" ? withOpacity(colors.destructive, 0.3) : colors.border,\n            backgroundColor: active ? withOpacity(colors.muted, 0.5) : colors.card,\n          },\n          shadow,\n          style,\n        ]}\n      >\n        {children}\n      </AnimatedView>\n    </Layout.Provider>\n  )\n}\nexport type AttachmentMediaProps = ViewProps & { variant?: \"icon\" | \"image\" }\nfunction Media({ variant = \"icon\", children, style, ...props }: AttachmentMediaProps) {\n  const { size, state, vertical } = useContext(Layout)\n  const { colors, radius } = useNativeTheme()\n  const dimension = size === \"xs\" ? 28 : size === \"sm\" ? 32 : 40\n  const color = state === \"error\" ? colors.destructive : colors.foreground\n  return (\n    <View\n      {...props}\n      style={[\n        {\n          width: vertical ? \"100%\" : dimension,\n          aspectRatio: 1,\n          flexShrink: 0,\n          alignItems: \"center\",\n          justifyContent: \"center\",\n          overflow: \"hidden\",\n          borderRadius: size === \"xs\" ? radius.md : radius.lg,\n          backgroundColor: state === \"error\" ? withOpacity(colors.destructive, 0.1) : colors.muted,\n          opacity: variant === \"image\" && state !== \"done\" && state !== \"idle\" ? 0.6 : 1,\n        },\n        style,\n      ]}\n    >\n      {Children.map(children, (child) => {\n        if (\n          !isValidElement<{\n            size?: number\n            color?: string\n            style?: ComponentPropsWithRef<typeof Image>[\"style\"]\n            resizeMode?: ComponentPropsWithRef<typeof Image>[\"resizeMode\"]\n          }>(child)\n        )\n          return child\n        if (variant === \"image\" && child.type === Image)\n          return cloneElement(child, {\n            resizeMode: child.props.resizeMode ?? \"cover\",\n            style: [{ width: \"100%\", height: \"100%\" }, child.props.style],\n          })\n        if (variant === \"icon\")\n          return cloneElement(child, {\n            size: child.props.size ?? (size === \"xs\" ? 14 : vertical ? 24 : 16),\n            color: child.props.color ?? color,\n          })\n        return child\n      })}\n    </View>\n  )\n}\nexport type AttachmentContentProps = ViewProps\nfunction Content({ style, ...props }: AttachmentContentProps) {\n  const { vertical } = useContext(Layout)\n  return (\n    <View\n      {...props}\n      style={[{ minWidth: 0, maxWidth: \"100%\", flexShrink: 1, ...(vertical ? { paddingHorizontal: 4 } : {}) }, style]}\n    />\n  )\n}\nexport type AttachmentTitleProps = ComponentPropsWithRef<typeof Text>\nfunction Title({ style, onLayout, ...props }: AttachmentTitleProps) {\n  const { size, state } = useContext(Layout)\n  const { colors, colorScheme, typography } = useNativeTheme()\n  const { reduced } = useMotion()\n  const [width, setWidth] = useState(0)\n  const busy = state === \"uploading\" || state === \"processing\"\n  const textStyle = StyleSheet.flatten([\n    {\n      ...typography.medium,\n      fontSize: size === \"default\" ? 14 : 12,\n      lineHeight: size === \"default\" ? 17.5 : 15,\n      color: colors.cardForeground,\n    },\n    style,\n  ])\n  const color = String(textStyle?.color ?? colors.cardForeground)\n  const spread = 40 + Number(textStyle?.fontSize ?? 14) * 1.8\n  const fullWidth = width * 2 + spread * 2\n  const gradient = `linear-gradient(110deg, ${color} calc(50% - ${spread}px), ${colorScheme === \"dark\" ? \"white\" : withOpacity(color, 0.2)} 50%, ${color} calc(50% + ${spread}px))`\n  const animated = busy && !reduced\n  if (Platform.OS === \"web\")\n    return (\n      <AnimatedText\n        numberOfLines={1}\n        {...props}\n        onLayout={onLayout}\n        style={[\n          textStyle,\n          animated &&\n            ({\n              backgroundImage: gradient,\n              backgroundSize: `calc(200% + ${spread * 2}px) 100%`,\n              backgroundRepeat: \"no-repeat\",\n              backgroundClip: \"text\",\n              WebkitTextFillColor: \"transparent\",\n              animationName: { from: { backgroundPosition: \"100% 0\" }, to: { backgroundPosition: \"0 0\" } },\n              animationDuration: 2000,\n              animationTimingFunction: \"linear\",\n              animationIterationCount: \"infinite\",\n              animationDirection: I18nManager.isRTL ? \"reverse\" : \"normal\",\n            } as unknown as TextStyle),\n        ]}\n      />\n    )\n  // The real Text owns layout and accessibility; its duplicate is only an alpha mask.\n  return (\n    <View style={{ maxWidth: \"100%\", minWidth: 0 }}>\n      <Text\n        numberOfLines={1}\n        {...props}\n        onLayout={(event) => {\n          setWidth(event.nativeEvent.layout.width)\n          onLayout?.(event)\n        }}\n        style={[textStyle, animated && width > 0 && { color: \"transparent\" }]}\n      />\n      {animated && width > 0 && (\n        <MaskedView\n          accessible={false}\n          accessibilityElementsHidden\n          importantForAccessibility=\"no-hide-descendants\"\n          pointerEvents=\"none\"\n          style={StyleSheet.absoluteFill}\n          maskElement={\n            <Text numberOfLines={1} {...props} accessible={false} style={[textStyle, { color: \"black\", opacity: 1 }]} />\n          }\n        >\n          <AnimatedView\n            style={{\n              position: \"absolute\",\n              top: 0,\n              bottom: 0,\n              width: fullWidth,\n              experimental_backgroundImage: `linear-gradient(110deg, ${color} ${50 - (spread / fullWidth) * 100}%, ${colorScheme === \"dark\" ? \"white\" : withOpacity(color, 0.2)} 50%, ${color} ${50 + (spread / fullWidth) * 100}%)`,\n              animationName: {\n                from: { transform: [{ translateX: -(width + spread * 2) }] },\n                to: { transform: [{ translateX: 0 }] },\n              },\n              animationDuration: 2000,\n              animationTimingFunction: \"linear\",\n              animationIterationCount: \"infinite\",\n              animationDirection: I18nManager.isRTL ? \"reverse\" : \"normal\",\n            }}\n          />\n        </MaskedView>\n      )}\n    </View>\n  )\n}\nexport type AttachmentDescriptionProps = ComponentPropsWithRef<typeof Text>\nfunction Description({ style, ...props }: AttachmentDescriptionProps) {\n  const { colors, typography } = useNativeTheme()\n  const { state } = useContext(Layout)\n  return (\n    <Text\n      numberOfLines={1}\n      {...props}\n      style={[\n        {\n          ...typography.regular,\n          marginTop: 2,\n          minWidth: 0,\n          maxWidth: \"100%\",\n          fontSize: 12,\n          lineHeight: 16,\n          color: state === \"error\" ? withOpacity(colors.destructive, 0.8) : colors.mutedForeground,\n        },\n        style,\n      ]}\n    />\n  )\n}\nexport type AttachmentActionsProps = ViewProps\nfunction Actions({ style, ...props }: AttachmentActionsProps) {\n  const { vertical } = useContext(Layout)\n  return (\n    <View\n      {...props}\n      pointerEvents=\"box-none\"\n      style={[\n        {\n          zIndex: 20,\n          flexShrink: 0,\n          flexDirection: \"row\",\n          alignItems: \"center\",\n          ...(vertical ? ({ position: \"absolute\", top: 12, end: 12, gap: 4 } as const) : { marginStart: \"auto\" }),\n        },\n        style,\n      ]}\n    />\n  )\n}\nexport type AttachmentActionTriggerProps = ButtonProps\nfunction ActionTrigger({\n  size = \"icon-xs\",\n  variant = \"ghost\",\n  onFocus,\n  onBlur,\n  children,\n  ...props\n}: AttachmentActionTriggerProps) {\n  const { setFocused } = useContext(Layout)\n  const { colors } = useNativeTheme()\n  return (\n    <Button\n      {...props}\n      size={size}\n      variant={variant}\n      onFocus={(event) => {\n        setFocused(isFocusVisible(event))\n        onFocus?.(event)\n      }}\n      onBlur={(event) => {\n        setFocused(false)\n        onBlur?.(event)\n      }}\n    >\n      {typeof children === \"function\"\n        ? children\n        : Children.map(children, (child) =>\n            isValidElement<{ size?: number; color?: string }>(child)\n              ? cloneElement(child, {\n                  size: child.props.size ?? 14,\n                  color:\n                    child.props.color ??\n                    (variant === \"default\"\n                      ? colors.primaryForeground\n                      : variant === \"destructive\"\n                        ? colors.destructive\n                        : colors.foreground),\n                })\n              : child\n          )}\n    </Button>\n  )\n}\nexport type AttachmentTriggerProps = ComponentPropsWithRef<typeof Pressable>\nfunction Trigger({\n  style,\n  disabled,\n  accessibilityState,\n  onPress,\n  onHoverIn,\n  onHoverOut,\n  onPressIn,\n  onPressOut,\n  onFocus,\n  onBlur,\n  ...props\n}: AttachmentTriggerProps) {\n  const { setActive, setFocused } = useContext(Layout)\n  return (\n    <Pressable\n      accessibilityRole=\"button\"\n      {...props}\n      disabled={disabled}\n      accessibilityState={{ ...accessibilityState, disabled: !!disabled }}\n      onPress={(event) => {\n        if (!disabled) onPress?.(event)\n      }}\n      onHoverIn={(event) => {\n        if (!disabled) setActive(true)\n        onHoverIn?.(event)\n      }}\n      onHoverOut={(event) => {\n        setActive(false)\n        onHoverOut?.(event)\n      }}\n      onPressIn={(event) => {\n        if (!disabled) setActive(true)\n        onPressIn?.(event)\n      }}\n      onPressOut={(event) => {\n        setActive(false)\n        onPressOut?.(event)\n      }}\n      onFocus={(event) => {\n        if (!disabled) setFocused(isFocusVisible(event))\n        onFocus?.(event)\n      }}\n      onBlur={(event) => {\n        setFocused(false)\n        onBlur?.(event)\n      }}\n      style={(state: PressableStateCallbackType) => [\n        StyleSheet.absoluteFill,\n        { zIndex: 10 },\n        typeof style === \"function\" ? style(state) : style,\n      ]}\n    />\n  )\n}\nconst AnimatedScrollView = Animated.createAnimatedComponent(ScrollView)\nfunction FadeEdge({\n  progress,\n  width,\n  reverse = false,\n}: {\n  progress: SharedValue<number>\n  width: number\n  reverse?: boolean\n}) {\n  const gradientStyle = useAnimatedStyle(() => ({ transform: [{ scaleX: progress.get() }] }), [progress])\n  const fillStyle = useAnimatedStyle(() => ({ transform: [{ translateX: width * progress.get() }] }), [progress, width])\n  return (\n    <View style={{ width, height: \"100%\", overflow: \"hidden\", transform: [{ scaleX: reverse ? -1 : 1 }] }}>\n      <AnimatedView\n        style={[\n          {\n            position: \"absolute\",\n            inset: 0,\n            transformOrigin: \"left center\",\n            experimental_backgroundImage: \"linear-gradient(90deg, transparent, black)\",\n          },\n          gradientStyle,\n        ]}\n      />\n      <AnimatedView style={[{ position: \"absolute\", inset: 0, backgroundColor: \"black\" }, fillStyle]} />\n    </View>\n  )\n}\nexport type AttachmentGroupProps = ComponentPropsWithRef<typeof ScrollView>\nfunction Group({\n  contentContainerStyle,\n  style,\n  children,\n  onContentSizeChange,\n  onLayout,\n  onScroll,\n  ref,\n  snapToOffsets,\n  ...props\n}: AttachmentGroupProps) {\n  const [heights, setHeights] = useState<Record<string, number>>({})\n  const groupStyle = StyleSheet.flatten(contentContainerStyle)\n  const paddingTop = Number(groupStyle?.paddingTop ?? groupStyle?.paddingVertical ?? groupStyle?.padding ?? 4)\n  const paddingBottom = Number(groupStyle?.paddingBottom ?? groupStyle?.paddingVertical ?? groupStyle?.padding ?? 4)\n  const height =\n    Math.max(\n      0,\n      ...Object.entries(heights)\n        .filter(([index]) => Number(index) < Children.count(children))\n        .map(([, h]) => h)\n    ) +\n    paddingTop +\n    paddingBottom\n  const [width, setWidth] = useState(0)\n  const [offsets, setOffsets] = useState<Record<string, number>>({})\n  const scrollRef = useAnimatedRef<ScrollView>()\n  useImperativeHandle(ref, () => scrollRef.current!, [scrollRef])\n  const offset = useScrollOffset(scrollRef)\n  const viewport = useSharedValue(0)\n  const extent = useSharedValue(0)\n  const leading = useDerivedValue(() => Math.min(1, Math.max(0, Math.abs(offset.get()) / 96)), [offset])\n  const trailing = useDerivedValue(\n    () => Math.min(1, Math.max(0, (extent.get() - viewport.get() - Math.abs(offset.get())) / 96)),\n    [offset, extent, viewport]\n  )\n  const edge = Math.min(width * 0.12, 40)\n  const mask = (\n    <View style={{ flex: 1, flexDirection: \"row\" }}>\n      <FadeEdge progress={leading} width={edge} />\n      <View style={{ flex: 1, backgroundColor: \"black\" }} />\n      <FadeEdge progress={trailing} width={edge} reverse />\n    </View>\n  )\n  // Web uses the same mask through CSS; native bridges the mask to SwiftUI/Compose.\n  const webMask = useAnimatedStyle(\n    () =>\n      Platform.OS === \"web\"\n        ? ({\n            maskImage: `linear-gradient(90deg, transparent, black ${edge * leading.get()}px, black calc(100% - ${edge * trailing.get()}px), transparent)`,\n          } as never)\n        : {},\n    [edge, leading, trailing]\n  )\n  const content = (\n    <AnimatedScrollView\n      horizontal\n      showsHorizontalScrollIndicator={false}\n      decelerationRate=\"fast\"\n      {...props}\n      snapToOffsets={\n        snapToOffsets ??\n        Object.entries(offsets)\n          .filter(([index]) => Number(index) < Children.count(children))\n          .map(([, x]) => x)\n          .sort((a, b) => a - b)\n      }\n      ref={scrollRef}\n      onScroll={onScroll}\n      scrollEventThrottle={16}\n      onContentSizeChange={(w, h) => {\n        extent.set(w)\n        onContentSizeChange?.(w, h)\n      }}\n      onLayout={(event) => {\n        viewport.set(event.nativeEvent.layout.width)\n        setWidth(event.nativeEvent.layout.width)\n        onLayout?.(event)\n      }}\n      style={{ flex: 1 }}\n      contentContainerStyle={[\n        { flexDirection: \"row\", gap: 12, paddingVertical: 4, alignItems: \"flex-start\" },\n        contentContainerStyle,\n      ]}\n    >\n      {Children.map(children, (child, index) =>\n        isValidElement<ViewProps>(child)\n          ? cloneElement(child, {\n              onLayout: (event) => {\n                const { x, height: childHeight } = event.nativeEvent.layout\n                setHeights((current) =>\n                  current[index] === childHeight ? current : { ...current, [index]: childHeight }\n                )\n                setOffsets((current) => (current[index] === x ? current : { ...current, [index]: x }))\n                child.props.onLayout?.(event)\n              },\n            })\n          : child\n      )}\n    </AnimatedScrollView>\n  )\n  return Platform.OS === \"web\" ? (\n    <AnimatedView style={[{ height, minWidth: 0, flexGrow: 0 }, webMask, style]}>{content}</AnimatedView>\n  ) : (\n    <MaskedView style={[{ height, minWidth: 0, flexGrow: 0 }, style]} maskElement={mask}>\n      {content}\n    </MaskedView>\n  )\n}\nexport const Attachment = { Root, Group, Media, Content, Title, Description, Actions, ActionTrigger, Trigger }\n"
+    }
+  ],
+  "docs": "## How it works\n\nAttachment provides Root, Group, Media, Content, Title, Description, Actions, ActionTrigger, and Trigger. It supports default/sm/xs sizes, horizontal/vertical orientation, and idle/uploading/processing/error/done states. Layout and colors follow the audited web component in both themes.\n\nInstall `@expo/ui` with `npx expo install @expo/ui` on Expo SDK 57. Uploading and processing titles use Expo UI MaskedView with a native Text mask and a two-second Reanimated gradient sweep. Reduced motion keeps the title static. Browser previews use background-clipped text. Native text retains font scaling and truncation. The decorative mask is hidden from accessibility.\n\nMedia sizes lucide icons automatically. For images use `variant=\"image\"` with a React Native Image child; it fills the square preview with cover scaling. Supply Image's loading/error handlers and your own fallback when needed. The state does not perform an upload or infer image-loading status.\n\nTrigger covers the card; Actions sit above it so cancel, retry, and download remain independent. Use `accessibilityLabel` on every icon-only action and card trigger. ActionTrigger uses the existing arkcn Button unchanged with ghost/icon-xs defaults. `onPress` replaces web `onClick`; navigation, picking, uploading, downloading, and persistence remain consumer-owned.\n\nGroup is a horizontal native ScrollView with 12px gaps, 4px vertical padding, measured card snap points, and masked edge fades. Scroll-driven masks run on the UI thread. Standard ScrollView callbacks and imperative refs remain available. Root discovers Content and Media through ordinary children and fragments; use `hasContent`/`hasMedia` when custom components hide those parts. All parts accept native style overrides."
+}

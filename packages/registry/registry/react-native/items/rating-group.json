@@ -1,0 +1,418 @@
+{
+  "name": "rating-group",
+  "type": "ui",
+  "description": "Star ratings with half-value selection, shared colors, and an adjustable native accessibility control.",
+  "exports": [
+    "useRatingGroupContext",
+    "useRatingGroupItemContext",
+    "RatingGroup"
+  ],
+  "parts": [
+    {
+      "name": "RatingGroup.Root",
+      "props": [
+        {
+          "name": "allowHalf",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "from": "arkcn"
+        },
+        {
+          "name": "count",
+          "type": "number",
+          "required": false,
+          "default": "5",
+          "from": "arkcn"
+        },
+        {
+          "name": "defaultValue",
+          "type": "number",
+          "required": false,
+          "default": "0",
+          "description": "The initial value when uncontrolled.",
+          "from": "arkcn"
+        },
+        {
+          "name": "dir",
+          "type": "\"ltr\" | \"rtl\"",
+          "required": false,
+          "default": "I18nManager.isRTL ? \"rtl\" : \"ltr\"",
+          "from": "arkcn"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Disables the part and everything inside it.",
+          "from": "arkcn"
+        },
+        {
+          "name": "getValueText",
+          "type": "((value: number, count: number) => string)",
+          "required": false,
+          "default": "(value, count) => `${value} of ${count} stars`",
+          "description": "Localize the value announced by assistive technology.",
+          "from": "arkcn"
+        },
+        {
+          "name": "onValueChange",
+          "type": "((details: { value: number; }) => void)",
+          "required": false,
+          "description": "Called with the new value whenever it changes.",
+          "from": "arkcn"
+        },
+        {
+          "name": "readOnly",
+          "type": "boolean",
+          "required": false,
+          "default": "false",
+          "description": "Shows the value but prevents changes.",
+          "from": "arkcn"
+        },
+        {
+          "name": "value",
+          "type": "number",
+          "required": false,
+          "description": "The controlled value.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "RatingGroup.Label",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "description": "Specifies the disabled state of the text view for testing purposes.",
+          "from": "react-native"
+        },
+        {
+          "name": "numberOfLines",
+          "type": "number",
+          "required": false,
+          "default": "`0`",
+          "description": "Truncate text with an ellipsis after this many lines. `0` means no\nrestriction.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called on press, triggered after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____TextStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "RatingGroup.Control",
+      "props": [
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode",
+          "required": false,
+          "description": "Content rendered inside the part.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "This defines how far a touch event can start away from the view.\nTypical interface guidelines recommend touch targets that are at least\n30 - 40 points/density-independent pixels.\n\n> The touch area never extends past the parent view bounds and the Z-index\n> of sibling views always takes precedence if a touch hits two overlapping\n> views.\n\nSee https://reactnative.dev/docs/view#hitslop",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal",
+          "required": false,
+          "description": "Native styles merged after the component defaults.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Used to locate this view in end-to-end tests.\n\n> This disables the 'layout-only view removal' optimization for this view!\n\nSee https://reactnative.dev/docs/view#testid",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "RatingGroup.Item",
+      "props": [
+        {
+          "name": "index",
+          "type": "number",
+          "required": true,
+          "description": "Position of the item in its list.",
+          "from": "arkcn"
+        },
+        {
+          "name": "accessibilityHint",
+          "type": "string",
+          "required": false,
+          "description": "An accessibility hint helps users understand what will happen when they perform\nan action on the accessibility element when that result is not obvious from the\naccessibility label.\n\n\nSee https://reactnative.dev/docs/view#accessibilityHint",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityLabel",
+          "type": "string",
+          "required": false,
+          "description": "Overrides the text that's read by the screen reader when the user interacts\nwith the element. By default, the label is constructed by traversing all\nthe children and accumulating all the `Text` nodes separated by space.\n\nSee https://reactnative.dev/docs/view#accessibilitylabel",
+          "from": "react-native"
+        },
+        {
+          "name": "accessibilityState",
+          "type": "AccessibilityState",
+          "required": false,
+          "description": "Indicates to accessibility services that UI Component is in a specific State.",
+          "from": "react-native"
+        },
+        {
+          "name": "children",
+          "type": "ReactNode | ((state: Readonly<{ pressed: boolean; }>) => ReactNode)",
+          "required": false,
+          "description": "Either children or a function that receives a boolean reflecting whether\nthe component is currently pressed.",
+          "from": "react-native"
+        },
+        {
+          "name": "disabled",
+          "type": "boolean",
+          "required": false,
+          "default": "`false`",
+          "description": "Whether the press behavior is disabled.",
+          "from": "react-native"
+        },
+        {
+          "name": "hitSlop",
+          "type": "RectOrSize",
+          "required": false,
+          "description": "Additional distance outside of this view in which a press is detected.",
+          "from": "react-native"
+        },
+        {
+          "name": "onBlur",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is blurred.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onFocus",
+          "type": "((event: Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented: boolean | un…",
+          "required": false,
+          "description": "Callback that is called when the view is focused.\n\nNote: This will only be called if the view is focusable.",
+          "from": "react-native"
+        },
+        {
+          "name": "onPress",
+          "type": "((event: Readonly<Omit<Readonly<{ bubbles: boolean | undefined; cancelable: boolean | undefined; currentTarget: number | ReactNativeElement; defaultPrevented…",
+          "required": false,
+          "description": "Called after `onPressOut`.",
+          "from": "react-native"
+        },
+        {
+          "name": "style",
+          "type": "____ViewStyleProp_Internal | ((state: Readonly<{ pressed: boolean; }>) => ____ViewStyleProp_Internal)",
+          "required": false,
+          "description": "Either view styles or a function that receives a boolean reflecting whether\nthe component is currently pressed and returns view styles.",
+          "from": "react-native"
+        },
+        {
+          "name": "testID",
+          "type": "string",
+          "required": false,
+          "description": "Identifier used to find this view in tests.",
+          "from": "react-native"
+        }
+      ]
+    },
+    {
+      "name": "RatingGroup.Context",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: RatingState) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        }
+      ]
+    },
+    {
+      "name": "RatingGroup.ItemContext",
+      "props": [
+        {
+          "name": "children",
+          "type": "(context: ItemState) => ReactNode",
+          "required": true,
+          "description": "Content rendered inside the part.",
+          "from": "arkcn"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "lucide-react-native": "^1.41.0",
+    "react-native-reanimated": ">=4.1.0 <5",
+    "react-native-svg": "^15.0.0",
+    "react-native-worklets": ">=0.5.0 <1"
+  },
+  "registryDependencies": [
+    "fieldset",
+    "lib/context",
+    "lib/controllable",
+    "lib/focus",
+    "lib/motion",
+    "lib/theme"
+  ],
+  "files": [
+    {
+      "path": "components/ui/rating-group.tsx",
+      "content": "/** Star ratings with half-value selection, shared colors, and an adjustable native accessibility control. */\nimport { useId, useLayoutEffect, useRef, useState, type ComponentPropsWithRef, type ReactNode } from \"react\"\nimport { I18nManager, Platform, Pressable, Text, View } from \"react-native\"\nimport { StarIcon, StarHalfIcon } from \"lucide-react-native\"\nimport Svg, { Path } from \"react-native-svg\"\nimport Animated, { Easing, useAnimatedProps, withTiming } from \"react-native-reanimated\"\nimport { useControllable } from \"@/lib/controllable\"\nimport { createRequiredContext } from \"@/lib/context\"\nimport { isFocusVisible } from \"@/lib/focus\"\nimport { AnimatedText, useMotion } from \"@/lib/motion\"\nimport { useNativeTheme, withOpacity } from \"@/lib/theme\"\nimport { useFieldsetContext } from \"@/components/ui/fieldset\"\n\ntype RatingState = {\n  value: number\n  hoveredValue: number | null\n  count: number\n  items: number[]\n  allowHalf: boolean\n  disabled: boolean\n  readOnly: boolean\n  dir: \"ltr\" | \"rtl\"\n  focused: boolean\n  label: string\n  id: string\n  valueText: string\n  setLabel: (value: string) => void\n  setFocused: (value: boolean) => void\n  setHoveredValue: (value: number | null) => void\n  setValue: (value: number) => void\n  clearValue: () => void\n  increment: () => void\n  decrement: () => void\n}\nconst [Provider, useRatingGroupContext] = createRequiredContext<RatingState>(\"RatingGroup\")\ntype ItemState = { index: number; half: boolean; highlighted: boolean; checked: boolean }\nconst [ItemProvider, useRatingGroupItemContext] = createRequiredContext<ItemState>(\"RatingGroup.Item\")\nexport { useRatingGroupContext, useRatingGroupItemContext }\nexport type RatingGroupRootProps = ComponentPropsWithRef<typeof View> & {\n  value?: number\n  defaultValue?: number\n  onValueChange?: (details: { value: number }) => void\n  count?: number\n  allowHalf?: boolean\n  disabled?: boolean\n  readOnly?: boolean\n  dir?: \"ltr\" | \"rtl\"\n  /** Localize the value announced by assistive technology. */\n  getValueText?: (value: number, count: number) => string\n}\nfunction RatingGroupRoot({\n  value,\n  defaultValue = 0,\n  onValueChange,\n  count = 5,\n  allowHalf = false,\n  disabled = false,\n  readOnly = false,\n  dir = I18nManager.isRTL ? \"rtl\" : \"ltr\",\n  getValueText = (value, count) => `${value} of ${count} stars`,\n  children,\n  style,\n  ...props\n}: RatingGroupRootProps) {\n  if (!Number.isInteger(count) || count < 1) throw new RangeError(\"RatingGroup count must be a positive integer\")\n  const normalize = (n: number) =>\n    Math.min(count, Math.max(0, Number.isFinite(n) ? Math.round(n * (allowHalf ? 2 : 1)) / (allowHalf ? 2 : 1) : 0))\n  const [selected, update] = useControllable(value, defaultValue, (value) => onValueChange?.({ value }))\n  const parent = useFieldsetContext()\n  const blocked = disabled || parent.disabled\n  const current = normalize(selected)\n  const [hoveredValue, setHoveredValue] = useState<number | null>(null)\n  const [focused, setFocused] = useState(false)\n  const [label, setLabel] = useState(\"\")\n  const id = useId()\n  const setValue = (next: number) => {\n    if (blocked || readOnly) return\n    setHoveredValue(null)\n    update(normalize(next))\n  }\n  return (\n    <Provider\n      value={{\n        value: current,\n        hoveredValue: blocked || readOnly ? null : hoveredValue,\n        count,\n        items: Array.from({ length: count }, (_, index) => index + 1),\n        allowHalf,\n        disabled: blocked,\n        readOnly,\n        dir,\n        focused,\n        label,\n        id,\n        valueText: getValueText(current, count),\n        setLabel,\n        setFocused,\n        setHoveredValue,\n        setValue,\n        clearValue: () => setValue(0),\n        increment: () => setValue(current + (allowHalf ? 0.5 : 1)),\n        decrement: () => setValue(current - (allowHalf ? 0.5 : 1)),\n      }}\n    >\n      <View {...props} style={[{ gap: 6, direction: dir }, style]}>\n        {children ?? (\n          <RatingGroupControl>\n            {Array.from({ length: count }, (_, index) => (\n              <RatingGroupItem key={index + 1} index={index + 1} />\n            ))}\n          </RatingGroupControl>\n        )}\n      </View>\n    </Provider>\n  )\n}\nexport type RatingGroupContextProps = { children: (context: RatingState) => ReactNode }\nfunction RatingGroupContext({ children }: RatingGroupContextProps) {\n  return children(useRatingGroupContext())\n}\nexport type RatingGroupItemContextProps = { children: (context: ItemState) => ReactNode }\nfunction RatingGroupItemContext({ children }: RatingGroupItemContextProps) {\n  return children(useRatingGroupItemContext())\n}\nexport type RatingGroupLabelProps = ComponentPropsWithRef<typeof Text>\nfunction RatingGroupLabel({ children, accessibilityLabel, style, ...props }: RatingGroupLabelProps) {\n  const { setLabel, id } = useRatingGroupContext()\n  const { colors, typography, fontSize } = useNativeTheme()\n  const label =\n    accessibilityLabel ?? (typeof children === \"string\" || typeof children === \"number\" ? String(children) : \"\")\n  useLayoutEffect(() => {\n    setLabel(label)\n    return () => setLabel(\"\")\n  }, [label, setLabel])\n  return (\n    <Text\n      {...props}\n      nativeID={`${id}-label`}\n      accessibilityLabel={accessibilityLabel}\n      style={[\n        { ...typography.medium, fontSize: fontSize.md, lineHeight: fontSize.md, color: colors.foreground },\n        style,\n      ]}\n    >\n      {children}\n    </Text>\n  )\n}\nexport type RatingGroupControlProps = ComponentPropsWithRef<typeof View>\nfunction RatingGroupControl({\n  style,\n  accessibilityLabel,\n  accessibilityHint,\n  onAccessibilityAction,\n  onFocus,\n  onBlur,\n  onPointerLeave,\n  ...props\n}: RatingGroupControlProps) {\n  const group = useRatingGroupContext()\n  const blocked = group.disabled || group.readOnly\n  return (\n    <View\n      {...props}\n      accessible\n      accessibilityRole=\"adjustable\"\n      accessibilityLabel={accessibilityLabel ?? (group.label || \"Rating\")}\n      accessibilityHint={accessibilityHint ?? (group.readOnly ? \"Read only\" : undefined)}\n      accessibilityValue={{ min: 0, max: group.count, now: group.value, text: group.valueText }}\n      accessibilityState={{ ...props.accessibilityState, disabled: group.disabled }}\n      accessibilityActions={blocked ? [] : [{ name: \"increment\" }, { name: \"decrement\" }]}\n      {...(Platform.OS === \"web\" && {\n        tabIndex: group.disabled ? -1 : 0,\n        \"aria-valuemin\": 0,\n        \"aria-valuemax\": group.count,\n        \"aria-valuenow\": group.value,\n        \"aria-valuetext\": group.valueText,\n        \"aria-readonly\": group.readOnly,\n        onKeyDown: (event: {\n          nativeEvent: { key: string }\n          preventDefault: () => void\n          defaultPrevented?: boolean\n        }) => {\n          if (blocked || event.defaultPrevented) return\n          if (event.nativeEvent.key === \"ArrowRight\") {\n            const adjust = group.dir === \"rtl\" ? group.decrement : group.increment\n            adjust()\n          } else if (event.nativeEvent.key === \"ArrowLeft\") {\n            const adjust = group.dir === \"rtl\" ? group.increment : group.decrement\n            adjust()\n          } else if (event.nativeEvent.key === \"ArrowUp\") group.increment()\n          else if (event.nativeEvent.key === \"ArrowDown\") group.decrement()\n          else if (event.nativeEvent.key === \"Home\") group.setValue(0)\n          else if (event.nativeEvent.key === \"End\") group.setValue(group.count)\n          else return\n          event.preventDefault()\n        },\n      })}\n      onAccessibilityAction={(event) => {\n        onAccessibilityAction?.(event)\n        if (event.defaultPrevented || blocked) return\n        if (event.nativeEvent.actionName === \"increment\") group.increment()\n        if (event.nativeEvent.actionName === \"decrement\") group.decrement()\n      }}\n      onFocus={(event) => {\n        group.setFocused(isFocusVisible(event))\n        onFocus?.(event)\n      }}\n      onBlur={(event) => {\n        group.setFocused(false)\n        group.setHoveredValue(null)\n        onBlur?.(event)\n      }}\n      onPointerLeave={(event) => {\n        group.setHoveredValue(null)\n        onPointerLeave?.(event)\n      }}\n      style={[\n        { flexDirection: \"row\", alignItems: \"center\", alignSelf: \"flex-start\", gap: 2 },\n        Platform.OS === \"web\" && { outlineWidth: 0 },\n        style,\n      ]}\n    />\n  )\n}\n\nconst AnimatedPath = Animated.createAnimatedComponent(Path)\n// Lucide star / star-half paths (ISC), shared with the web icons.\nconst starPath =\n  \"M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z\"\nconst halfStarPath =\n  \"M12 18.338a2.1 2.1 0 0 0-.987.244L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.12 2.12 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.12 2.12 0 0 0 1.597-1.16l2.309-4.679A.53.53 0 0 1 12 2\"\nfunction RatingIcon({ half, highlighted }: { half: boolean; highlighted: boolean }) {\n  const { colors } = useNativeTheme()\n  const { reduced, motion, transition } = useMotion()\n  const color = highlighted ? colors.primary : withOpacity(colors.mutedForeground, 0.4)\n  const animatedProps = useAnimatedProps<{ stroke: string; fill: string }>(() => {\n    if (Platform.OS === \"web\") return {}\n    const timing = {\n      duration: reduced ? 0 : motion.duration,\n      easing: Easing.bezier(...motion.easing),\n    }\n    // Each property needs its own animation instance; Reanimated mutates animation state.\n    return { stroke: withTiming(color, timing), fill: highlighted ? withTiming(color, timing) : \"transparent\" }\n  }, [color, highlighted, reduced, motion.duration, motion.easing])\n  return Platform.OS === \"web\" ? (\n    <AnimatedText style={[{ color, width: 20, height: 20, lineHeight: 20 }, transition(\"all\")]}>\n      {half ? (\n        <StarHalfIcon size={20} color=\"currentColor\" fill=\"currentColor\" />\n      ) : (\n        <StarIcon size={20} color=\"currentColor\" fill={highlighted ? \"currentColor\" : \"none\"} />\n      )}\n    </AnimatedText>\n  ) : (\n    <Svg width={20} height={20} viewBox=\"0 0 24 24\">\n      <AnimatedPath\n        d={half ? halfStarPath : starPath}\n        stroke={color}\n        fill={highlighted ? color : \"transparent\"}\n        strokeWidth={2}\n        strokeLinecap=\"round\"\n        strokeLinejoin=\"round\"\n        animatedProps={animatedProps}\n      />\n    </Svg>\n  )\n}\n\nexport type RatingGroupItemProps = ComponentPropsWithRef<typeof Pressable> & { index: number }\nfunction RatingGroupItem({\n  index,\n  children,\n  style,\n  onPress,\n  onPressIn,\n  onPressOut,\n  onLayout,\n  onPointerMove,\n  ...props\n}: RatingGroupItemProps) {\n  const group = useRatingGroupContext()\n  const { colors, radius, minimumTouchTarget } = useNativeTheme()\n  const width = useRef(20)\n  const [pressed, setPressed] = useState(false)\n  const blocked = group.disabled || group.readOnly || !!props.disabled\n  const preview = group.hoveredValue ?? group.value\n  const half = preview === index - 0.5\n  const highlighted = preview >= index || half\n  const checked = Math.ceil(group.value) === index\n  const focus = group.focused && (checked || (group.value === 0 && index === 1))\n  if (!Number.isInteger(index) || index < 1 || index > group.count)\n    throw new RangeError(\"RatingGroup.Item index must be within the group count\")\n  const pointValue = (x: number | undefined) => {\n    if (!group.allowHalf || x === undefined || !Number.isFinite(x)) return index\n    const firstHalf = group.dir === \"rtl\" ? x > width.current / 2 : x < width.current / 2\n    return index - (firstHalf ? 0.5 : 0)\n  }\n  const eventValue = (event: {\n    nativeEvent: { locationX?: number; offsetX?: number; clientX?: number }\n    currentTarget?: unknown\n  }) => {\n    // RN Web click events use client coordinates; native touch events use locationX.\n    const target = event.currentTarget as { getBoundingClientRect?: () => { left: number; width: number } }\n    if (Platform.OS === \"web\" && typeof event.nativeEvent.clientX === \"number\" && target?.getBoundingClientRect) {\n      const rect = target.getBoundingClientRect()\n      width.current = rect.width\n      return pointValue(event.nativeEvent.clientX - rect.left)\n    }\n    return pointValue(event.nativeEvent.locationX ?? event.nativeEvent.offsetX)\n  }\n  return (\n    <ItemProvider value={{ index, half, highlighted, checked }}>\n      <Pressable\n        {...props}\n        accessible={false}\n        importantForAccessibility=\"no-hide-descendants\"\n        accessibilityElementsHidden\n        focusable={false}\n        {...(Platform.OS === \"web\" && { tabIndex: -1, \"aria-hidden\": true })}\n        disabled={blocked}\n        // Vertical expansion avoids overlapping the neighboring half-star targets.\n        hitSlop={{ top: (minimumTouchTarget - 20) / 2, bottom: (minimumTouchTarget - 20) / 2, left: 0, right: 0 }}\n        onLayout={(event) => {\n          width.current = event.nativeEvent.layout.width\n          onLayout?.(event)\n        }}\n        onPressIn={(event) => {\n          onPressIn?.(event)\n          if (blocked || event.defaultPrevented) return\n          setPressed(true)\n          group.setHoveredValue(eventValue(event))\n        }}\n        onPressOut={(event) => {\n          setPressed(false)\n          group.setHoveredValue(null)\n          onPressOut?.(event)\n        }}\n        onPress={(event) => {\n          onPress?.(event)\n          if (!blocked && !event.defaultPrevented) group.setValue(eventValue(event))\n        }}\n        onPointerMove={(event) => {\n          onPointerMove?.(event)\n          if (blocked || event.defaultPrevented || event.nativeEvent.pointerType === \"touch\") return\n          const next = eventValue(event)\n          if (group.hoveredValue !== next) group.setHoveredValue(next)\n        }}\n        style={(state) => [\n          {\n            width: 20,\n            height: 20,\n            borderRadius: radius.sm,\n            boxShadow: focus ? `0px 0px 0px 3px ${withOpacity(colors.ring, 0.5)}` : \"none\",\n          },\n          Platform.OS === \"web\" && {\n            outlineWidth: 0,\n            cursor: blocked ? \"auto\" : \"pointer\",\n          },\n          typeof style === \"function\" ? style(state) : style,\n        ]}\n      >\n        <View pointerEvents=\"none\">\n          {typeof children === \"function\"\n            ? children({ pressed })\n            : (children ?? <RatingIcon half={half} highlighted={highlighted} />)}\n        </View>\n      </Pressable>\n    </ItemProvider>\n  )\n}\nexport const RatingGroup = {\n  Root: RatingGroupRoot,\n  Label: RatingGroupLabel,\n  Control: RatingGroupControl,\n  Item: RatingGroupItem,\n  Context: RatingGroupContext,\n  ItemContext: RatingGroupItemContext,\n}\n"
+    }
+  ],
+  "docs": "## How it works\n\n`RatingGroup.Root` renders five stars by default. Compose `Label`, `Control`, and one `Item` per index to customize the content. Indices start at one; `Context` provides the `items` array. `ItemContext` provides `highlighted`, `half`, and `checked` for custom icons.\n\nUse `value` / `defaultValue` and `onValueChange({ value })`. Values are bounded to zero through `count`; zero means unrated. Enable `allowHalf` to select half stars by tapping the leading half of a star. `dir` follows the device direction by default and accepts `ltr` / `rtl`. Hover and press previews do not commit a value; cancelling a press restores the selection. `disabled`, `readOnly`, or an enclosing disabled `Fieldset` prevent changes.\n\nThe native control is one adjustable accessibility element: VoiceOver and TalkBack increment/decrement actions change the rating in whole or half steps. The label and current value are announced together. Supply `accessibilityLabel` on `Control` when there is no visible label, and `getValueText` on `Root` to localize the announced value. The compact 20px stars match the web design; accessibility actions avoid requiring precise half-star taps.\n\nIn a browser, focus the control and use arrow keys, Home (unrated), or End (maximum). Native hardware keyboard handling depends on platform accessibility navigation; there is no hidden DOM input. The port does not expose `HiddenInput`, Ark `RootProvider`, or DOM form APIs. Read the current value through `Context` or `useRatingGroupContext`, whose `setValue` and `clearValue` actions respect disabled/read-only state.\n\nColors, 20px Lucide star shapes, spacing, and typography match arkcn in both themes. Color feedback uses the shared 150ms timing; reduced motion makes it immediate. Text retains system font scaling. All parts accept native `style` overrides."
+}

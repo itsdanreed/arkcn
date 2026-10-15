@@ -71,6 +71,97 @@ const download = render(
   { asChild: true, data: "report", fileName: "report.txt", mimeType: "text/plain" },
   h(Button, null, "Download")
 )
+const { Spreadsheet } = await import("@multicomma/arkcn-react/ui/spreadsheet")
+const sheetMarkup = render(
+  Spreadsheet.Root,
+  {
+    data: [["Header"], ["Value"]],
+    defaultRowHeights: { 1: 52 },
+    frozenRows: 1,
+  },
+  h(Spreadsheet.Container, null, h(Spreadsheet.Header), h(Spreadsheet.Body))
+)
+assert.match(sheetMarkup, /data-slot="spreadsheet-row"[^>]*data-row="1"[^>]*style="[^"]*height:52px/)
+assert.match(sheetMarkup, /aria-label="Resize row 2"[^>]*aria-valuemin="24"[^>]*aria-valuenow="52"/)
+// Exercise both viewport axes with a wide sheet, variable column widths, and a frozen pane.
+const { act, create } = await import("react-test-renderer")
+globalThis.IS_REACT_ACT_ENVIRONMENT = true
+const originalResizeObserver = globalThis.ResizeObserver
+let resizeViewport
+const viewport = {
+  clientWidth: 448,
+  clientHeight: 240,
+  scrollLeft: 0,
+  scrollTop: 0,
+  focus() {},
+  querySelector() {
+    return null
+  },
+}
+globalThis.ResizeObserver = class {
+  constructor(callback) {
+    resizeViewport = callback
+  }
+  observe() {}
+  disconnect() {}
+}
+let wideSheet
+await act(() => {
+  wideSheet = create(
+    h(
+      Spreadsheet.Root,
+      {
+        data: [],
+        rowCount: 10000,
+        columnCount: 1000,
+        frozenRows: 1,
+        frozenColumns: 1,
+        columnWidth: 100,
+        rowHeaderWidth: 48,
+        overscan: 1,
+        defaultColumnWidths: { 1: 200 },
+      },
+      h(Spreadsheet.Container, null, h(Spreadsheet.Header, null, h(Spreadsheet.HeaderRow)), h(Spreadsheet.Body))
+    ),
+    {
+      createNodeMock: (element) => (element.props["data-slot"] === "spreadsheet-container" ? viewport : null),
+    }
+  )
+})
+const sheetNodes = (slot) =>
+  wideSheet.root.findAll((node) => typeof node.type === "string" && node.props["data-slot"] === slot)
+const columns = () => sheetNodes("spreadsheet-column-header").map((node) => node.props["data-column"])
+const scrollSheet = async (left, top = 0) => {
+  viewport.scrollLeft = left
+  viewport.scrollTop = top
+  await act(() => sheetNodes("spreadsheet-container")[0].props.onScroll({ currentTarget: viewport }))
+}
+assert.deepEqual(columns(), [0, 1, 2, 3, 4], "initial viewport uses variable column widths")
+assert.ok(sheetNodes("spreadsheet-cell").length < 100, "10,000 by 1,000 sheet mounts only its visible window")
+await scrollSheet(5000)
+assert.deepEqual(columns(), [0, 49, 50, 51, 52, 53, 54])
+assert.equal(sheetNodes("spreadsheet-cell").find((node) => node.props["data-column"] === 50).props.style.gridColumn, 52)
+assert.ok(
+  sheetNodes("spreadsheet-cell").some((node) => node.props["data-row"] === 0 && node.props["data-column"] === 50),
+  "frozen rows use the same column window"
+)
+const editTarget = sheetNodes("spreadsheet-cell").find(
+  (node) => node.props["data-row"] === 1 && node.props["data-column"] === 50
+)
+await act(() => editTarget.props.onDoubleClick({ defaultPrevented: false }))
+await scrollSheet(9000, 2000)
+assert.ok(
+  sheetNodes("spreadsheet-cell").some(
+    (node) => node.props["data-row"] === 1 && node.props["data-column"] === 50 && node.props["data-editing"] === ""
+  ),
+  "editor survives scrolling on both axes"
+)
+assert.ok(columns().includes(0) && columns().includes(90) && !columns().includes(49))
+viewport.clientWidth = 748
+await act(() => resizeViewport())
+assert.ok(columns().includes(97), "viewport resize expands the column window")
+await act(() => wideSheet.unmount())
+globalThis.ResizeObserver = originalResizeObserver
 const plainButton = render(Button, {}, "Download")
 assert.equal(download.match(/class="([^"]*)"/)?.[1], plainButton.match(/class="([^"]*)"/)?.[1])
 assert.equal((download.match(/<button/g) ?? []).length, 1)

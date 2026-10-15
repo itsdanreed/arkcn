@@ -16,6 +16,7 @@ import {
   type FormulaFunction,
   type FormulaResult,
 } from "../../lib/formula"
+import { rowMetrics, rowAtOffset } from "../../lib/spreadsheet-layout"
 import { LiveRegion, useLiveRegion } from "./live-region"
 
 /**
@@ -63,6 +64,11 @@ type SpreadsheetContextValue = {
   rowCount: number
   columnCount: number
   rowHeight: number
+  heights: number[]
+  rowOffsets: number[]
+  minRowHeight: number
+  setHeight: (row: number, height: number) => void
+  resetHeight: (row: number) => void
   rowHeaderWidth: number
   frozenRows: number
   frozenColumns: number
@@ -106,6 +112,9 @@ type SpreadsheetContextValue = {
   containerRef: React.RefObject<HTMLDivElement | null>
   focusContainer: () => void
   window: { start: number; end: number }
+  visibleColumns: number[]
+  setScrollLeft: (left: number) => void
+  setViewportWidth: (width: number) => void
   setScrollTop: (top: number) => void
   setViewportHeight: (height: number) => void
   announce: (message: string) => void
@@ -156,6 +165,10 @@ function SpreadsheetRoot({
   columnCount: columnCountProp,
   onCellsChange,
   rowHeight = 32,
+  minRowHeight = 24,
+  rowHeights,
+  defaultRowHeights,
+  onRowHeightsChange,
   rowHeaderWidth = 48,
   columnWidth = DEFAULT_COLUMN_WIDTH,
   minColumnWidth = MIN_COLUMN_WIDTH,
@@ -184,6 +197,28 @@ function SpreadsheetRoot({
     return longest
   }, [data])
   const columnCount = columnCountProp ?? longestRow
+
+  const [rowSizing, setRowSizing] = useControllable(rowHeights, defaultRowHeights ?? {}, onRowHeightsChange)
+  const { heights, offsets: rowOffsets } = React.useMemo(
+    () => rowMetrics(rowCount, rowHeight, minRowHeight, rowSizing),
+    [rowCount, rowHeight, minRowHeight, rowSizing]
+  )
+  const setHeight = React.useCallback(
+    (row: number, height: number) => {
+      if (Number.isFinite(height))
+        setRowSizing((prev) => ({ ...prev, [row]: Math.max(minRowHeight, Math.round(height)) }))
+    },
+    [minRowHeight, setRowSizing]
+  )
+  const resetHeight = React.useCallback(
+    (row: number) =>
+      setRowSizing((prev) => {
+        const next = { ...prev }
+        delete next[row]
+        return next
+      }),
+    [setRowSizing]
+  )
 
   /* Column widths (controllable) */
   const [initialWidths] = React.useState<Record<number, number>>(() => defaultColumnWidths ?? {})
@@ -256,15 +291,56 @@ function SpreadsheetRoot({
   const [fillPreview, setFillPreview] = React.useState<SpreadsheetBounds | null>(null)
   const [scrollTop, setScrollTopState] = React.useState(0)
   const [viewportHeight, setViewportHeight] = React.useState(0)
+  const [scrollLeft, setScrollLeft] = React.useState(0)
+  const [viewportWidth, setViewportWidth] = React.useState(0)
   const setScrollTop = React.useCallback((top: number) => setScrollTopState(top), [])
   const { message: announcement, announce } = useLiveRegion({ clearAfter: 4000 })
 
   const window = React.useMemo(() => {
     const scrollable = Math.max(0, rowCount - frozenRows)
-    const start = clamp(Math.floor(scrollTop / rowHeight) - overscan, 0, scrollable)
-    const end = clamp(Math.ceil((scrollTop + viewportHeight) / rowHeight) + overscan, 0, scrollable)
+    const start = clamp(
+      rowAtOffset(rowOffsets, scrollTop + rowOffsets[frozenRows]) - frozenRows - overscan,
+      0,
+      scrollable
+    )
+    const end = clamp(
+      rowAtOffset(rowOffsets, scrollTop + viewportHeight + rowOffsets[frozenRows]) - frozenRows + 1 + overscan,
+      0,
+      scrollable
+    )
     return { start, end }
-  }, [scrollTop, viewportHeight, rowHeight, overscan, rowCount, frozenRows])
+  }, [scrollTop, viewportHeight, rowOffsets, overscan, rowCount, frozenRows])
+
+  // Search measured boundaries so resized columns use the same geometry as scrolling.
+  const columnOffsets = React.useMemo(
+    () => [...offsets, totalWidth - rowHeaderWidth],
+    [offsets, totalWidth, rowHeaderWidth]
+  )
+  const visibleColumns = React.useMemo(() => {
+    const frozen = Math.min(frozenColumns, columnCount)
+    const start = Math.max(frozen, rowAtOffset(columnOffsets, scrollLeft + columnOffsets[frozen]) - overscan)
+    const end = Math.min(
+      columnCount,
+      rowAtOffset(columnOffsets, Math.max(0, scrollLeft + viewportWidth - rowHeaderWidth)) + 1 + overscan
+    )
+    const columns = new Set<number>()
+    for (let column = 0; column < frozen; column++) columns.add(column)
+    for (let column = start; column < end; column++) columns.add(column)
+    // Keep the editor mounted and the active descendant available offscreen.
+    if (editing) columns.add(editing.column)
+    if (selection) columns.add(selection.focus.column)
+    return [...columns].filter((column) => column >= 0 && column < columnCount).sort((a, b) => a - b)
+  }, [
+    columnOffsets,
+    frozenColumns,
+    columnCount,
+    scrollLeft,
+    viewportWidth,
+    rowHeaderWidth,
+    overscan,
+    editing,
+    selection,
+  ])
 
   /* Undo stack: `present` is how many of the recorded batches are applied. */
   const history = useHistory<number>(0, historyLimit)
@@ -284,6 +360,8 @@ function SpreadsheetRoot({
     frozenRows,
     frozenColumns,
     rowHeight,
+    heights,
+    rowOffsets,
     rowHeaderWidth,
     readOnly,
     present: history.present,
@@ -302,6 +380,8 @@ function SpreadsheetRoot({
     frozenRows,
     frozenColumns,
     rowHeight,
+    heights,
+    rowOffsets,
     rowHeaderWidth,
     readOnly,
     present: history.present,
@@ -311,12 +391,13 @@ function SpreadsheetRoot({
 
   const scrollCellIntoView = React.useCallback((cell: SpreadsheetCellAddress) => {
     const el = containerRef.current
-    const { frozenRows, frozenColumns, rowHeight, rowHeaderWidth, widths, offsets } = latest.current
+    const { frozenRows, frozenColumns, rowHeight, heights, rowOffsets, rowHeaderWidth, widths, offsets } =
+      latest.current
     if (!el) return
     const headerHeight = el.querySelector<HTMLElement>("[data-slot=spreadsheet-header]")?.offsetHeight ?? rowHeight
     if (cell.row >= frozenRows) {
-      const top = (cell.row - frozenRows) * rowHeight
-      const bottom = top + rowHeight
+      const top = rowOffsets[cell.row] - rowOffsets[frozenRows]
+      const bottom = top + heights[cell.row]
       const viewHeight = el.clientHeight - headerHeight
       if (top < el.scrollTop) el.scrollTop = top
       else if (bottom > el.scrollTop + viewHeight) el.scrollTop = bottom - viewHeight
@@ -656,6 +737,11 @@ function SpreadsheetRoot({
       rowCount,
       columnCount,
       rowHeight,
+      heights,
+      rowOffsets,
+      minRowHeight,
+      setHeight,
+      resetHeight,
       rowHeaderWidth,
       frozenRows,
       frozenColumns,
@@ -696,6 +782,9 @@ function SpreadsheetRoot({
       containerRef,
       focusContainer,
       window,
+      visibleColumns,
+      setScrollLeft,
+      setViewportWidth,
       setScrollTop,
       setViewportHeight,
       announce,
@@ -705,6 +794,11 @@ function SpreadsheetRoot({
       rowCount,
       columnCount,
       rowHeight,
+      heights,
+      rowOffsets,
+      minRowHeight,
+      setHeight,
+      resetHeight,
       rowHeaderWidth,
       frozenRows,
       frozenColumns,
@@ -744,6 +838,9 @@ function SpreadsheetRoot({
       startDrag,
       focusContainer,
       window,
+      visibleColumns,
+      setScrollLeft,
+      setViewportWidth,
       setScrollTop,
       announce,
     ]
@@ -872,16 +969,19 @@ function SpreadsheetContainer({
   ...props
 }: SpreadsheetContainerProps) {
   const sheet = useSpreadsheet()
-  const { containerRef, setScrollTop, setViewportHeight } = sheet
+  const { containerRef, setScrollTop, setViewportHeight, setScrollLeft, setViewportWidth } = sheet
   React.useLayoutEffect(() => {
     const el = containerRef.current
     if (!el) return
-    const update = () => setViewportHeight(el.clientHeight)
+    const update = () => {
+      setViewportHeight(el.clientHeight)
+      setViewportWidth(el.clientWidth)
+    }
     update()
     const observer = new ResizeObserver(update)
     observer.observe(el)
     return () => observer.disconnect()
-  }, [containerRef, setViewportHeight])
+  }, [containerRef, setViewportHeight, setViewportWidth])
 
   const focus = sheet.selection?.focus ?? null
   const move = (dr: number, dc: number, extend: boolean) => {
@@ -1015,6 +1115,7 @@ function SpreadsheetContainer({
       onScroll={(event) => {
         onScroll?.(event)
         setScrollTop(event.currentTarget.scrollTop)
+        setScrollLeft(event.currentTarget.scrollLeft)
       }}
       onKeyDown={handleKeyDown}
       onCopy={(event) => {
@@ -1061,7 +1162,7 @@ function SpreadsheetHeader({ className, children, ...props }: SpreadsheetHeaderP
           {Array.from({ length: Math.min(sheet.frozenRows, sheet.rowCount) }, (_, row) => (
             <SpreadsheetRow key={row} row={row}>
               <SpreadsheetRowHeader />
-              {sheet.widths.map((_, column) => (
+              {sheet.visibleColumns.map((column) => (
                 <SpreadsheetCell key={column} row={row} column={column} />
               ))}
             </SpreadsheetRow>
@@ -1074,7 +1175,7 @@ function SpreadsheetHeader({ className, children, ...props }: SpreadsheetHeaderP
 
 /** The column-letter row. Renders the corner and one header per column unless given children. */
 function SpreadsheetHeaderRow({ className, style, children, ...props }: SpreadsheetHeaderRowProps) {
-  const { templateColumns, totalWidth, rowHeight, widths } = useSpreadsheet()
+  const { templateColumns, totalWidth, rowHeight, visibleColumns } = useSpreadsheet()
   return (
     <ark.div
       data-slot="spreadsheet-header-row"
@@ -1091,7 +1192,7 @@ function SpreadsheetHeaderRow({ className, style, children, ...props }: Spreadsh
         : (children ?? (
             <>
               <SpreadsheetCorner />
-              {widths.map((_, column) => (
+              {visibleColumns.map((column) => (
                 <SpreadsheetColumnHeader key={column} column={column} />
               ))}
             </>
@@ -1133,6 +1234,7 @@ function SpreadsheetColumnHeader({
   ...props
 }: SpreadsheetColumnHeaderProps) {
   const sheet = useSpreadsheet()
+  if (!sheet.visibleColumns.includes(column)) return null
   const frozen = column < sheet.frozenColumns
   const selected = !!sheet.bounds && column >= sheet.bounds.c0 && column <= sheet.bounds.c1
   const whole = selected && !!sheet.bounds && sheet.bounds.r0 === 0 && sheet.bounds.r1 === sheet.rowCount - 1
@@ -1152,7 +1254,12 @@ function SpreadsheetColumnHeader({
           frozen && "sticky z-10 bg-muted",
           className
         )}
-        style={frozen ? { left: sheet.rowHeaderWidth + sheet.offsets[column], ...style } : style}
+        style={{
+          gridColumn: column + 2,
+          gridRow: 1,
+          ...(frozen ? { left: sheet.rowHeaderWidth + sheet.offsets[column] } : {}),
+          ...style,
+        }}
         onPointerDown={(event) => {
           onPointerDown?.(event)
           if (event.defaultPrevented || event.button !== 0) return
@@ -1252,11 +1359,10 @@ function SpreadsheetResizeHandle({
   )
 }
 
-/** Virtualized rows after the frozen ones. `children` renders one row (defaults to a row header plus every cell). */
+/** Virtualized rows after the frozen ones. `children` renders one row (defaults to a row header plus visible cells). */
 function SpreadsheetBody({ className, style, children, ...props }: SpreadsheetBodyProps) {
   const sheet = useSpreadsheet()
-  const { window: win, rowHeight, totalWidth, frozenRows, rowCount, widths, editing } = sheet
-  const scrollable = Math.max(0, rowCount - frozenRows)
+  const { window: win, rowOffsets, totalWidth, frozenRows, rowCount, visibleColumns, editing } = sheet
   const rows: number[] = []
   for (let i = win.start; i < win.end; i++) rows.push(frozenRows + i)
   // The editing row stays mounted even when scrolled out, so the editor keeps its focus.
@@ -1270,7 +1376,7 @@ function SpreadsheetBody({ className, style, children, ...props }: SpreadsheetBo
     ) : (
       <SpreadsheetRow row={row}>
         <SpreadsheetRowHeader />
-        {widths.map((_, column) => (
+        {visibleColumns.map((column) => (
           <SpreadsheetCell key={column} row={row} column={column} />
         ))}
       </SpreadsheetRow>
@@ -1280,7 +1386,7 @@ function SpreadsheetBody({ className, style, children, ...props }: SpreadsheetBo
       data-slot="spreadsheet-body"
       role="rowgroup"
       className={cn("relative", className)}
-      style={{ height: scrollable * rowHeight, minWidth: totalWidth, ...style }}
+      style={{ height: rowOffsets[rowCount] - rowOffsets[frozenRows], minWidth: totalWidth, ...style }}
       {...props}
     >
       {props.asChild ? (
@@ -1289,7 +1395,7 @@ function SpreadsheetBody({ className, style, children, ...props }: SpreadsheetBo
         ) : null
       ) : (
         <>
-          <div style={{ transform: `translateY(${win.start * rowHeight}px)` }}>
+          <div style={{ transform: `translateY(${rowOffsets[win.start + frozenRows] - rowOffsets[frozenRows]}px)` }}>
             {rows.map((row) => (
               <React.Fragment key={row}>{render(row)}</React.Fragment>
             ))}
@@ -1297,7 +1403,7 @@ function SpreadsheetBody({ className, style, children, ...props }: SpreadsheetBo
           {pinned !== null && (
             <div
               className="absolute inset-x-0 top-0"
-              style={{ transform: `translateY(${(pinned - frozenRows) * rowHeight}px)` }}
+              style={{ transform: `translateY(${rowOffsets[pinned] - rowOffsets[frozenRows]}px)` }}
             >
               {render(pinned)}
             </div>
@@ -1309,7 +1415,7 @@ function SpreadsheetBody({ className, style, children, ...props }: SpreadsheetBo
 }
 
 function SpreadsheetRow({ row, className, style, ...props }: SpreadsheetRowProps) {
-  const { templateColumns, rowHeight, bounds, frozenRows, rowCount } = useSpreadsheet()
+  const { templateColumns, heights, bounds, frozenRows, rowCount } = useSpreadsheet()
   const selected = !!bounds && row >= bounds.r0 && row <= bounds.r1
   return (
     <RowContext.Provider value={row}>
@@ -1326,7 +1432,7 @@ function SpreadsheetRow({ row, className, style, ...props }: SpreadsheetRowProps
           row === frozenRows - 1 && "border-b-2",
           className
         )}
-        style={{ gridTemplateColumns: templateColumns, height: rowHeight, ...style }}
+        style={{ gridTemplateColumns: templateColumns, height: heights[row], ...style }}
         {...props}
       />
     </RowContext.Provider>
@@ -1361,7 +1467,83 @@ function SpreadsheetRowHeader({ className, children, onPointerDown, ...props }: 
       }}
       {...props}
     >
-      {props.asChild ? React.isValidElement(children) ? children : null : <>{children ?? row + 1}</>}
+      {props.asChild ? (
+        React.isValidElement(children) ? (
+          children
+        ) : null
+      ) : (
+        <>
+          {children ?? row + 1}
+          <SpreadsheetRowResizeHandle />
+        </>
+      )}
+    </ark.div>
+  )
+}
+
+type SpreadsheetRowResizeHandleProps = React.ComponentProps<typeof ark.div> & { withHandle?: boolean }
+function SpreadsheetRowResizeHandle({
+  withHandle = true,
+  children,
+  className,
+  onPointerDown,
+  onDoubleClick,
+  onKeyDown,
+  ...props
+}: SpreadsheetRowResizeHandleProps) {
+  const sheet = useSpreadsheet(),
+    row = React.useContext(RowContext)
+  if (row === null) throw new Error("Spreadsheet.RowResizeHandle requires Spreadsheet.Row")
+  return (
+    <ark.div
+      data-slot="spreadsheet-row-resize-handle"
+      role="separator"
+      aria-orientation="horizontal"
+      aria-label={`Resize row ${row + 1}`}
+      aria-valuemin={sheet.minRowHeight}
+      aria-valuenow={sheet.heights[row]}
+      tabIndex={-1}
+      className={cn(
+        "absolute inset-x-0 bottom-0 z-30 flex h-px cursor-row-resize touch-none items-center justify-center select-none after:absolute after:inset-x-0 after:top-1/2 after:h-1.5 after:-translate-y-1/2 focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-hidden",
+        className
+      )}
+      onPointerDown={(event) => {
+        onPointerDown?.(event)
+        if (event.defaultPrevented || event.button !== 0) return
+        event.preventDefault()
+        event.stopPropagation()
+        const start = event.clientY,
+          height = sheet.heights[row]
+        const move = (e: PointerEvent) => sheet.setHeight(row, height + e.clientY - start)
+        const up = () => {
+          globalThis.removeEventListener("pointermove", move)
+          globalThis.removeEventListener("pointerup", up)
+        }
+        globalThis.addEventListener("pointermove", move)
+        globalThis.addEventListener("pointerup", up)
+      }}
+      onDoubleClick={(event) => {
+        onDoubleClick?.(event)
+        if (!event.defaultPrevented) sheet.resetHeight(row)
+      }}
+      onKeyDown={(event) => {
+        onKeyDown?.(event)
+        if (event.defaultPrevented || !["ArrowUp", "ArrowDown", "Home"].includes(event.key)) return
+        event.preventDefault()
+        event.stopPropagation()
+        if (event.key === "Home") sheet.resetHeight(row)
+        else sheet.setHeight(row, sheet.heights[row] + (event.key === "ArrowDown" ? 1 : -1) * (event.shiftKey ? 10 : 1))
+      }}
+      {...props}
+    >
+      {props.asChild ? (
+        children
+      ) : (
+        <>
+          {withHandle && <div className="z-10 h-0.5 w-4 shrink-0 rounded-lg bg-border" />}
+          {children}
+        </>
+      )}
     </ark.div>
   )
 }
@@ -1385,6 +1567,7 @@ function SpreadsheetCell({
   const row = rowProp ?? rowCtx
   if (row === null || row === undefined) throw new Error("Spreadsheet.Cell needs a `row` or a <Spreadsheet.Row>")
   const cell = React.useMemo(() => ({ row, column }), [row, column])
+  if (!sheet.visibleColumns.includes(column)) return null
   const focused = sameCell(sheet.selection?.focus, cell)
   const isEditing = !!sheet.editing && sameCell(sheet.editing, cell)
   const b = sheet.bounds
@@ -1435,7 +1618,12 @@ function SpreadsheetCell({
         type === "error" && "text-destructive",
         className
       )}
-      style={frozen ? { left: sheet.rowHeaderWidth + sheet.offsets[column], ...style } : style}
+      style={{
+        gridColumn: column + 2,
+        gridRow: 1,
+        ...(frozen ? { left: sheet.rowHeaderWidth + sheet.offsets[column] } : {}),
+        ...style,
+      }}
       onPointerDown={(event) => {
         onPointerDown?.(event)
         if (event.defaultPrevented || event.button !== 0 || isEditing) return
@@ -1604,8 +1792,13 @@ type SpreadsheetRootProps = Omit<React.ComponentProps<typeof ark.div>, "children
   columnCount?: number
   /** Called with a batch of `{ row, column, value, previous }` for every edit, paste, clear, fill, undo, and redo. */
   onCellsChange?: (changes: SpreadsheetChange[]) => void
-  /** Fixed height of every row in px (the column-letter row too). */
+  /** Default row height in px; also the column-letter header height. */
   rowHeight?: number
+  /** Smallest resizable row height, defaults to 24px. */
+  minRowHeight?: number
+  rowHeights?: Record<number, number>
+  defaultRowHeights?: Record<number, number>
+  onRowHeightsChange?: (heights: Record<number, number>) => void
   /** Width of the row-number gutter in px. */
   rowHeaderWidth?: number
   /** Default width of a column in px. */
@@ -1628,7 +1821,7 @@ type SpreadsheetRootProps = Omit<React.ComponentProps<typeof ark.div>, "children
   frozenRows?: number
   /** Columns kept visible after the row numbers while scrolling sideways. */
   frozenColumns?: number
-  /** Rows rendered beyond the visible window on each side. */
+  /** Rows and columns rendered beyond the visible window on each side. */
   overscan?: number
   /** Disables editing, clearing, pasting, and the fill handle; selection and copy still work. */
   readOnly?: boolean
@@ -1701,6 +1894,7 @@ const Spreadsheet = {
   Corner: SpreadsheetCorner,
   ColumnHeader: SpreadsheetColumnHeader,
   ResizeHandle: SpreadsheetResizeHandle,
+  RowResizeHandle: SpreadsheetRowResizeHandle,
   Body: SpreadsheetBody,
   Row: SpreadsheetRow,
   RowHeader: SpreadsheetRowHeader,
@@ -1732,6 +1926,7 @@ export {
   type SpreadsheetCornerProps,
   type SpreadsheetColumnHeaderProps,
   type SpreadsheetResizeHandleProps,
+  type SpreadsheetRowResizeHandleProps,
   type SpreadsheetBodyProps,
   type SpreadsheetRowProps,
   type SpreadsheetRowHeaderProps,

@@ -1,6 +1,6 @@
 import { useState, type ComponentPropsWithRef } from "react"
 import { AnimatedTextInput, useMotion } from "../../lib/motion"
-import { TextInput, useWindowDimensions } from "react-native"
+import { Platform, TextInput } from "react-native"
 import { useNativeTheme, withOpacity } from "../../lib/theme"
 
 export type InputRootProps = ComponentPropsWithRef<typeof TextInput> & { disabled?: boolean; invalid?: boolean }
@@ -16,7 +16,6 @@ function InputRoot({
   ...props
 }: InputRootProps) {
   const { transition } = useMotion()
-  const { width } = useWindowDimensions()
   const [focused, setFocused] = useState(false)
   const { colors, colorScheme, spacing, radius, fontSize, lineHeight, controlHeight, opacity, typography } =
     useNativeTheme()
@@ -65,12 +64,13 @@ function InputRoot({
               : colors.input,
           borderRadius: radius.lg,
           ...typography.regular,
-          fontSize: width < 768 ? fontSize.body : fontSize.md,
-          lineHeight: width < 768 ? lineHeight.body : lineHeight.md,
+          fontSize: fontSize.md,
+          lineHeight: lineHeight.md,
           includeFontPadding: false,
           opacity: disabled ? opacity.disabled : 1,
         },
         ring,
+        Platform.OS === "web" && { outlineWidth: 0 },
         style,
       ]}
     />

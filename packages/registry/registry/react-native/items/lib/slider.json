@@ -1,0 +1,20 @@
+{
+  "name": "lib/slider",
+  "type": "lib",
+  "description": "Shared slider arithmetic. Thumb centers stay six pixels inside the track ends.",
+  "exports": [
+    "snapSliderValue",
+    "sliderCenter",
+    "sliderValueAt"
+  ],
+  "parts": [],
+  "dependencies": {},
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "lib/slider.ts",
+      "content": "/** Shared slider arithmetic. Thumb centers stay six pixels inside the track ends. */\nexport function snapSliderValue(value: number, min: number, max: number, step: number) {\n  const snapped = min + Math.round((value - min) / step) * step\n  return Math.min(max, Math.max(min, Number(snapped.toFixed(10))))\n}\nexport function sliderCenter(value: number, min: number, max: number, size: number, reverse = false) {\n  const fraction = (value - min) / (max - min)\n  return Math.min(6, size / 2) + Math.max(0, size - 12) * (reverse ? 1 - fraction : fraction)\n}\nexport function sliderValueAt(point: number, size: number, min: number, max: number, step: number, reverse = false) {\n  let fraction = Math.min(1, Math.max(0, (point - 6) / Math.max(1, size - 12)))\n  if (reverse) fraction = 1 - fraction\n  return snapSliderValue(min + fraction * (max - min), min, max, step)\n}\n"
+    }
+  ],
+  "docs": "## How it works\n\nSlider uses the desktop component’s 4px muted track, primary range, and 12px white thumb with a ring-color border. Its focus, hover, and drag ring follows the shared motion settings and respects reduced motion. Colors follow the native theme in light and dark modes.\n\nCompose Root, Label, ValueText, Control, Track, Range, and one Thumb per value. Root also supplies the control automatically when no children are passed. Each Thumb takes an index. RootProvider accepts useSlider(), and Context exposes its state and setThumbValue(index, value, commit).\n\nUse value / onValueChange for controlled arrays or defaultValue for uncontrolled values. onValueChangeEnd fires when a gesture finishes or an accessibility/keyboard adjustment commits. min, max, step, and minStepsBetweenThumbs constrain values. Thumbs cannot cross. Track presses select the nearest thumb; dragging continues outside the control until release. disabled and readOnly block changes, and a disabled Fieldset is inherited.\n\norientation=\"vertical\" places the minimum at the bottom. dir=\"rtl\" reverses horizontal sliders. origin=\"center\" or \"end\" changes the single-value range fill. Thumb centers remain inside both ends of the track. Horizontal MarkerGroup / Marker display ticks, and DraggingIndicator inside a Thumb displays its value while dragging.\n\nEach thumb is an adjustable accessibility control. Provide individual accessibilityLabel values for range thumbs and getValueText for units or localization. Browser keyboard support includes arrows, Home/End, and PageUp/PageDown. Native forms use the value callback; there is no HiddenInput. The native implementation uses React Native responders to preserve arkcn’s exact custom track and range styling. It does not use a platform-styled single-value slider."
+}
